@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-identifier/invalid_id_smp/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,21 +30,21 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unexpected character <emphasis>"}
-						"\u{1f012}"
-						RAW_MARKUP {value: "</emphasis>"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unexpected character <emphasis>"}
+					"\u{1f012}"
+					RAW_MARKUP {value: "</emphasis>"}
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-identifier/invalid_id_smp/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 3
@@ -124,7 +124,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-identifier/invalid_id_smp/input.js:1:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-identifier/invalid_id_smp/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected character 🀒
 

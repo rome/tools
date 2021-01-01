@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2017/trailing-function-commas/4/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

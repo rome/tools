@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2020/optional-chaining/separated-chaining/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

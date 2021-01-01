@@ -14,7 +14,7 @@ JSRoot {
 	directives: Array []
 	filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 	hasHoistedVars: true
-	mtime: undefined
+	integrity: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

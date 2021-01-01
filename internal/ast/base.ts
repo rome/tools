@@ -6,7 +6,7 @@
  */
 
 import {AnyComment} from "@internal/ast";
-import {Diagnostics} from "@internal/diagnostics";
+import {DiagnosticIntegrity, Diagnostics} from "@internal/diagnostics";
 import {NodeBase} from "@internal/parser-core";
 
 export interface NodeBaseWithComments extends NodeBase {
@@ -19,6 +19,6 @@ export interface RootBase {
 	comments: AnyComment[];
 	filename: string;
 	diagnostics: Diagnostics;
-	mtime: undefined | number;
+	integrity: undefined | DiagnosticIntegrity;
 	corrupt: boolean;
 }

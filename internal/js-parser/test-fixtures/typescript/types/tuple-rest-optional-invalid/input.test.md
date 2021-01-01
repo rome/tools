@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "A tuple member cannot be both optional and rest."}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A tuple member cannot be both optional and rest."}
 			}
 			location: Object {
 				filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 21
@@ -218,7 +220,7 @@ JSRoot {
 
 ```
 
- typescript/types/tuple-rest-optional-invalid/input.ts:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/tuple-rest-optional-invalid/input.ts:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A tuple member cannot be both optional and rest.
 

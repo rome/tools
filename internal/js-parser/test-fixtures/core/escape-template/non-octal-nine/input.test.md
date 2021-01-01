@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/escape-template/non-octal-nine/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

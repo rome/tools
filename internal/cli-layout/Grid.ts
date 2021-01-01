@@ -34,9 +34,9 @@ import {
 	ob1Sub,
 } from "@internal/ob1";
 import {
+	humanizeDuration,
 	humanizeFileSize,
 	humanizeNumber,
-	humanizeTime,
 	splitChars,
 } from "@internal/string-utils";
 import {escapeXHTMLEntities} from "@internal/html-parser";
@@ -1517,7 +1517,7 @@ export default class Grid {
 									sourceValue: singleInnerText,
 									value: formatApprox(
 										attributes,
-										humanizeTime(Number(singleInnerText), true),
+										humanizeDuration(Number(singleInnerText), true),
 									),
 								},
 							],

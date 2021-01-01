@@ -32,7 +32,7 @@ function allowedCharacterForKey(char: string) {
 }
 
 const createTomlParser = createParser<TOMLParserTypes>({
-	diagnosticCategory: "parse/toml",
+	diagnosticLanguage: "toml",
 	ignoreWhitespaceTokens: true,
 	getInitialState: () => ({
 		inValue: undefined,
@@ -170,7 +170,6 @@ export const toml: PartialConfigHandler = {
 	type: "toml",
 	language: "toml",
 	extensions: ["toml", "ini"],
-	consumeCategory: "parse/toml",
 	jsonSuperset: false,
 
 	parseExtra(opts: ParserOptions): ConfigParserResult {
@@ -185,7 +184,8 @@ export const toml: PartialConfigHandler = {
 			value: root,
 			// TODO position tracking
 			context: {
-				category: "parse/toml",
+				category: "parse",
+				categoryValue: "toml",
 				normalizeKey: (key) => key,
 				getDiagnosticLocation: () => ({}),
 				getOriginalValue: () => undefined,
@@ -196,7 +196,7 @@ export const toml: PartialConfigHandler = {
 	},
 
 	tokenize(opts: ConfigParserOptions): TokenBase[] {
-		return createTomlParser(opts).tokenizeAll();
+		return createTomlParser(opts).getAllTokens();
 	},
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {

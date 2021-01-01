@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/categorized/filename-specified/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

@@ -44,26 +44,6 @@ function unlink(loc) {
 	}
 }
 
-/**
- * @param count {number}
- * @returns {void}
- */
-function clearLines(count) {
-	const {stdout} = process;
-
-	// Clear lines output by trunk build
-	for (let i = 0; i < count; i++) {
-		// Cursor to beginning of line
-		stdout.write(`${ANSI_ESCAPE}1G`);
-
-		// Cursor up
-		stdout.write(`${ANSI_ESCAPE}1A`);
-
-		// Erase line
-		stdout.write(`${ANSI_ESCAPE}2K`);
-	}
-}
-
 //# Validate Node version
 
 // Format of node.version is "v12.6.0" so we want to slice off the v
@@ -131,10 +111,12 @@ async function buildTrunk() {
 	unlink(tempDevBuildFolder);
 	fs.mkdirSync(tempDevBuildFolder);
 
-	let lines = 0;
+	const isTerminalApp = process.env.TERM_PROGRAM === "Apple_Terminal";
+
+	// Save cursor
+	process.stdout.write(isTerminalApp ? "\x1b7" : `${ANSI_ESCAPE}s`);
 
 	heading("Building trunk");
-	lines++;
 
 	return new Promise((resolve) => {
 		let args = [
@@ -161,24 +143,16 @@ async function buildTrunk() {
 		proc.stdout.pipe(process.stdout);
 		proc.stderr.pipe(process.stderr);
 
-		/**
-		 * @param chunk {Buffer}
-		 */
-		function countLines(chunk) {
-			const match = chunk.toString().match(/\n/g);
-			if (match != null) {
-				lines += match.length;
-			}
-		}
-
-		proc.stdout.on("data", countLines);
-		proc.stderr.on("data", countLines);
-
 		proc.on(
 			"close",
 			(code) => {
 				if (code === 0) {
-					clearLines(lines);
+					// Restore cursor
+					process.stdout.write(isTerminalApp ? "\x1b8" : `${ANSI_ESCAPE}u`);
+
+					// Clear down
+					process.stdout.write(`${ANSI_ESCAPE}J`);
+
 					resolve();
 				} else {
 					console.error(`Trunk build failure. Exit code ${code}`);
@@ -191,6 +165,7 @@ async function buildTrunk() {
 
 async function execDev() {
 	const args = [
+		"--trace-warnings",
 		"--inspect-publish-uid=http",
 		path.join(tempDevBuildFolder, "index.js"),
 		...process.argv.slice(2),

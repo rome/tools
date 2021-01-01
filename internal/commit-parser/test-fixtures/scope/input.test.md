@@ -13,7 +13,7 @@ CommitRoot {
 	custom: false
 	diagnostics: Array []
 	filename: "scope/input.txt"
-	mtime: undefined
+	integrity: undefined
 	rawBody: "commit with an included scope"
 	scope: "test scope"
 	loc: Object {

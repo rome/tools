@@ -44,6 +44,7 @@ import {
 	SelectArguments,
 	SelectOptions,
 	SelectOptionsKeys,
+	WrapperFactory,
 } from "./types";
 import Progress from "./Progress";
 import prettyFormat from "@internal/pretty-format";
@@ -66,9 +67,6 @@ import {
 	mergeObjects,
 } from "@internal/typescript-helpers";
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
-
-// rome-ignore lint/ts/noExplicitAny: future cleanup
-type WrapperFactory = <T extends (...args: any[]) => any>(callback: T) => T;
 
 export type ReporterOptions = {
 	streams?: ReporterStreamAttached[];
@@ -471,7 +469,7 @@ export default class Reporter implements ReporterNamespace {
 	): Promise<void> {
 		this.log(markup`<dim>${message}</dim>`, {noNewline: true});
 
-		await new Promise((resolve) => {
+		await new Promise<void>((resolve) => {
 			const keypress = onKeypress(
 				this,
 				() => {

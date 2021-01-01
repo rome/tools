@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "import missing a source"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "import missing a source"}
 			}
 			location: Object {
 				filename: "esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -160,7 +162,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js:1:16 parse/js ━━
+ esprima/es2015-import-declaration/invalid-import-default-module-specifier/input.js:1:16 parse(js) ━
 
   ✖ import missing a source
 

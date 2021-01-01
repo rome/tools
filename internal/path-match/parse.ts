@@ -31,7 +31,7 @@ type PatchMatchParserTypes = {
 type PatchMatchParser = ParserCore<PatchMatchParserTypes>;
 
 const createPathMatchParser = createParser<PatchMatchParserTypes>({
-	diagnosticCategory: "parse/patchMatch",
+	diagnosticLanguage: "path",
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);
 		const nextChar = parser.getInputCharOnly(index, 1);

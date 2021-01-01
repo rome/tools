@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/cast/null-assertion-then-property-access/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

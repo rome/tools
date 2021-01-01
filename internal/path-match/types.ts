@@ -10,8 +10,8 @@ import {
 	ComplexNode,
 	SimpleNode,
 	SimpleToken,
+	StringToken,
 	ValueNode,
-	ValueToken,
 } from "@internal/parser-core";
 
 //# Tokens
@@ -19,9 +19,9 @@ export type Tokens = BaseTokens & {
 	Exclamation: SimpleToken<"Exclamation">;
 	Star: SimpleToken<"Star">;
 	DoubleStar: SimpleToken<"DoubleStar">;
-	Word: ValueToken<"Word", string>;
+	Word: StringToken<"Word">;
 	Separator: SimpleToken<"Separator">;
-	Comment: ValueToken<"Comment", string>;
+	Comment: StringToken<"Comment">;
 	EOL: SimpleToken<"EOL">;
 };
 

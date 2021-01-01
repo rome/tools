@@ -9,8 +9,8 @@ CSSRoot {
 	corrupt: false
 	diagnostics: Array []
 	filename: "smoke/input.css"
+	integrity: undefined
 	leadingComments: Array []
-	mtime: undefined
 	innerComments: Array ["0"]
 	loc: Object {
 		filename: "smoke/input.css"
@@ -66,19 +66,6 @@ CSSRoot {
 						}
 						start: Object {
 							column: 0
-							line: 2
-						}
-					}
-				}
-				CSSWhitespace {
-					loc: Object {
-						filename: "smoke/input.css"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 4
 							line: 2
 						}
 					}
@@ -335,19 +322,6 @@ CSSRoot {
 									}
 									start: Object {
 										column: 4
-										line: 8
-									}
-								}
-							}
-							CSSWhitespace {
-								loc: Object {
-									filename: "smoke/input.css"
-									end: Object {
-										column: 9
-										line: 8
-									}
-									start: Object {
-										column: 8
 										line: 8
 									}
 								}

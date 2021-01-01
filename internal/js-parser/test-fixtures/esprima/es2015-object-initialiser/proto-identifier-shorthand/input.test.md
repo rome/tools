@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-object-initialiser/proto-identifier-shorthand/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Redefinition of __proto__ property"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
 				filename: "esprima/es2015-object-initialiser/proto-identifier-shorthand/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 29
@@ -198,7 +200,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-object-initialiser/proto-identifier-shorthand/input.js:1:20 parse/js ━━━━━━━━━━━━━━━
+ esprima/es2015-object-initialiser/proto-identifier-shorthand/input.js:1:20 parse(js) ━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
 

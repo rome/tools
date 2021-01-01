@@ -345,6 +345,8 @@ export default class ProjectManager {
 		const project = this.assertProjectExisting(path);
 		const uid = this.getUid(path);
 		const pkg = this.server.memoryFs.getOwnedManifest(path);
+
+		// TODO should we cache this?
 		return {
 			uid,
 			project: project.id,
@@ -430,18 +432,19 @@ export default class ProjectManager {
 			// Notify all workers that it should delete the project
 			for (const {bridge} of this.server.workerManager.getWorkers()) {
 				// Evict project
-				bridge.updateProjects.send({
+				bridge.events.updateProjects.send({
 					projects: [
 						{
 							id: evictProjectId,
 							directory: project.directory,
+							configHashes: [],
 							config: undefined,
 						},
 					],
 				});
 
 				// Evict packages
-				bridge.updateManifests.send({
+				bridge.events.updateManifests.send({
 					manifests: Array.from(
 						project.manifests.values(),
 						(def) => ({
@@ -708,6 +711,7 @@ export default class ProjectManager {
 		const projectsSerial: WorkerProjects = [];
 		for (const project of projects) {
 			projectsSerial.push({
+				configHashes: project.meta.configHashes,
 				config: project.config,
 				id: project.id,
 				directory: project.directory,
@@ -725,10 +729,10 @@ export default class ProjectManager {
 
 		for (const worker of workers) {
 			promises.push(
-				worker.bridge.updateProjects.call({projects: projectsSerial}),
+				worker.bridge.events.updateProjects.call({projects: projectsSerial}),
 			);
 			promises.push(
-				worker.bridge.updateManifests.call({
+				worker.bridge.events.updateManifests.call({
 					manifests: manifestsSerial,
 				}),
 			);

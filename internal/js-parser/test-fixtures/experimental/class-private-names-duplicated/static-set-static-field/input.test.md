@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/class-private-names-duplicated/static-set-static-field/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

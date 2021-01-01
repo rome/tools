@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -89,8 +89,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -183,8 +183,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -308,8 +308,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	trailingComments: Array []
@@ -354,8 +354,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -487,8 +487,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -741,8 +741,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -853,8 +853,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -947,8 +947,8 @@ JSRoot {
 	directives: Array []
 	filename: "unknown"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

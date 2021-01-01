@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/declare/var-new-line/input.ts"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

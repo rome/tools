@@ -1,5 +1,6 @@
 import {
 	ParserCore,
+	ParserCoreTokenizeState,
 	ParserOptions,
 	ParserOptionsWithRequiredPath,
 	createParser,
@@ -64,34 +65,29 @@ type HTMLParser = ParserCore<HTMLParserTypes>;
 
 const createHTMLParser = createParser<HTMLParserTypes>({
 	ignoreWhitespaceTokens: true,
-	diagnosticCategory: "parse/html",
-	getInitialState: () => ({inTagHead: false, insertionMode: "Initial"}),
+	diagnosticLanguage: "html",
+	getInitialState: () => ({inTagHead: false}),
 
-	tokenizeWithState(parser, index, state) {
+	tokenizeWithState(
+		parser,
+		index,
+		state,
+	): ParserCoreTokenizeState<HTMLParserTypes> {
 		const escaped = isEscaped(index, parser.input);
 		const char = parser.getInputCharOnly(index);
 
 		if (!escaped && state.inTagHead) {
 			if (char === "=") {
-				return {
-					state,
-					token: parser.finishToken("Equals"),
-				};
+				return [state, parser.finishToken("Equals")];
 			}
 
 			if (char === "/" && parser.getInputCharOnly(index, 1)) {
-				return {
-					state,
-					token: parser.finishToken("TagSelfClosing", ob1Add(index, 2)),
-				};
+				return [state, parser.finishToken("TagSelfClosing", ob1Add(index, 2))];
 			}
 
 			if (isIdentifierChar(char)) {
 				const [value, end] = parser.readInputFrom(index, isIdentifierChar);
-				return {
-					state,
-					token: parser.finishValueToken("Identifier", value, end),
-				};
+				return [state, parser.finishValueToken("Identifier", value, end)];
 			}
 
 			if (char === '"') {
@@ -105,37 +101,27 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 				}
 
 				const end = ob1Add(stringValueEnd, 1);
-				return {
-					state,
-					token: parser.finishValueToken("String", value, end),
-				};
+				return [state, parser.finishValueToken("String", value, end)];
 			}
 
 			if (char === ">") {
-				return {
-					state: {
-						...state,
+				return [
+					{
 						inTagHead: false,
 					},
-					token: parser.finishToken("TagEnd"),
-				};
+					parser.finishToken("TagEnd"),
+				];
 			}
 		}
 
 		if (parser.getInputCharOnly(index) === "!") {
 			const [isDoctype, value, endIndex] = consumeDOCTYPE(parser, index);
 			if (isDoctype && value && endIndex) {
-				return {
-					state,
-					token: parser.finishValueToken("Doctype", value, endIndex),
-				};
+				return [state, parser.finishValueToken("Doctype", value, endIndex)];
 			} else {
 				const [isCdata, value, endIndex] = consumeCDATA(parser, index);
 				if (isCdata && value && endIndex) {
-					return {
-						state,
-						token: parser.finishValueToken("Cdata", value, endIndex),
-					};
+					return [state, parser.finishValueToken("Cdata", value, endIndex)];
 				}
 			}
 		}
@@ -161,13 +147,12 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 			// Skip -->
 			const end = ob1Add(valueEnd, 3);
 
-			return {
-				state: {
-					...state,
+			return [
+				{
 					inTagHead: false,
 				},
-				token: parser.finishValueToken("Comment", value, end),
-			};
+				parser.finishValueToken("Comment", value, end),
+			];
 		}
 
 		if (isTagStartChar(index, parser.input)) {
@@ -179,26 +164,25 @@ const createHTMLParser = createParser<HTMLParserTypes>({
 				token = parser.finishToken("TagStartOpen");
 			}
 
-			return {
-				state: {
-					...state,
+			return [
+				{
 					inTagHead: true,
 				},
 				token,
-			};
+			];
 		}
 
 		// Keep eating text until we hit a <
 		const [value, end] = parser.readInputFrom(index, isTextChar);
-		return {
+		return [
 			state,
-			token: {
+			{
 				type: "Text",
 				value,
 				start: index,
 				end,
 			},
-		};
+		];
 	},
 });
 
@@ -642,7 +626,7 @@ export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {
 }
 
 export function tokenizeHTML(opts: ParserOptionsWithRequiredPath) {
-	return createHTMLParser(opts).tokenizeAll();
+	return createHTMLParser(opts).getAllTokens();
 }
 
 export * from "./xhtmlEntities";

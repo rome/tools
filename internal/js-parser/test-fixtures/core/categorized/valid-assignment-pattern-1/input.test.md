@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/categorized/valid-assignment-pattern-1/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

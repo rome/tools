@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/types/tuple-optional-invalid/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "A required element cannot follow an optional element."}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "A required element cannot follow an optional element."}
 			}
 			location: Object {
 				filename: "typescript/types/tuple-optional-invalid/input.ts"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 23
@@ -202,7 +204,7 @@ JSRoot {
 
 ```
 
- typescript/types/tuple-optional-invalid/input.ts:1:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/types/tuple-optional-invalid/input.ts:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A required element cannot follow an optional element.
 

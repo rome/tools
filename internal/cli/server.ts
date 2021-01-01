@@ -11,7 +11,6 @@ import {
 	Server,
 	ServerBridge,
 } from "@internal/core";
-import {createBridgeFromSocket} from "@internal/events";
 import setProcessTitle from "./utils/setProcessTitle";
 import net = require("net");
 
@@ -31,14 +30,8 @@ export default async function server() {
 	await server.init();
 
 	const socketServer = net.createServer(function(socket) {
-		const client = createBridgeFromSocket(
-			ServerBridge,
-			socket,
-			{
-				type: "client",
-			},
-		);
-		server.attachToBridge(client);
+		const bridge = ServerBridge.Server.createFromSocket(socket);
+		server.attachToBridge(bridge);
 	});
 
 	if (await exists(SERVER_SOCKET_PATH)) {

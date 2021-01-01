@@ -1,9 +1,9 @@
-import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
+import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
 
 export type Tokens = BaseTokens & {
-	Doctype: ValueToken<"Doctype", string>;
-	Cdata: ValueToken<"Cdata", string>;
-	Text: ValueToken<"Text", string>;
+	Doctype: StringToken<"Doctype">;
+	Cdata: StringToken<"Cdata">;
+	Text: StringToken<"Text">;
 	// <
 	TagStartOpen: SimpleToken<"TagStartOpen">;
 	// />
@@ -13,9 +13,9 @@ export type Tokens = BaseTokens & {
 	// </
 	TagEndOpen: SimpleToken<"TagEndOpen">;
 	Equals: SimpleToken<"Equals">;
-	Identifier: ValueToken<"Identifier", string>;
-	String: ValueToken<"String", string>;
-	Comment: ValueToken<"Comment", string>;
+	Identifier: StringToken<"Identifier">;
+	String: StringToken<"String">;
+	Comment: StringToken<"Comment">;
 };
 export type State = {
 	inTagHead: boolean;

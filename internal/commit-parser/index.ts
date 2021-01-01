@@ -13,7 +13,8 @@ type CommitParserTypes = {
 };
 
 const createCommitParser = createParser<CommitParserTypes>({
-	diagnosticCategory: "parse/commit",
+	diagnosticLanguage: "text",
+	diagnosticCategoryValue: "commit",
 
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);
@@ -171,5 +172,5 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 }
 
 export function tokenizeCommit(opts: ParserOptions): TokenValues<Tokens>[] {
-	return createCommitParser(opts).tokenizeAll();
+	return createCommitParser(opts).getAllTokens();
 }

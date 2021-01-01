@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/invalid-syntax/migrated_0075/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "setter should have exactly one param"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "setter should have exactly one param"}
 			}
 			location: Object {
 				filename: "esprima/invalid-syntax/migrated_0075/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 14
@@ -166,7 +168,7 @@ JSRoot {
 
 ```
 
- esprima/invalid-syntax/migrated_0075/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/invalid-syntax/migrated_0075/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ setter should have exactly one param
 

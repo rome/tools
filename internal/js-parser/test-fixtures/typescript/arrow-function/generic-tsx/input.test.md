@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/arrow-function/generic-tsx/input.tsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array [
 		"ts"

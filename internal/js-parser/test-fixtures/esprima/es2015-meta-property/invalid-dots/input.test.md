@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected an identifier"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
 				filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 29
@@ -281,7 +283,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-meta-property/invalid-dots/input.js:1:29 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-meta-property/invalid-dots/input.js:1:29 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
 

@@ -17,7 +17,7 @@ MISSING DOCUMENTATION
 **ESLint Equivalent:** [curly](https://eslint.org/docs/rules/curly)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:63324dc5e515146c59eea3cdda75bc0e7ccf05f8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e68ddb0f657b321ba2ccde575767876b333a9dfc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -191,7 +191,7 @@ MISSING DOCUMENTATION
 
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token keyword">with</span> <span class="token punctuation">(</span><span class="token variable">x</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1</span> <strong>parse(js)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">&apos;with&apos; in strict mode</span>
 

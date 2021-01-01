@@ -71,7 +71,7 @@ type MarkupParserTypes = {
 type MarkupParser = ParserCore<MarkupParserTypes>;
 
 const createStringMarkupParser = createParser<MarkupParserTypes>({
-	diagnosticCategory: "parse/stringMarkup",
+	diagnosticLanguage: "romemarkup",
 	getInitialState: () => ({inTagHead: false}),
 	tokenizeWithState(parser, index, state) {
 		const escaped = isEscaped(index, parser.input);
@@ -83,25 +83,16 @@ const createStringMarkupParser = createParser<MarkupParserTypes>({
 			}
 
 			if (char === "=") {
-				return {
-					state,
-					token: parser.finishToken("Equals"),
-				};
+				return [state, parser.finishToken("Equals")];
 			}
 
 			if (char === "/") {
-				return {
-					state,
-					token: parser.finishToken("Slash"),
-				};
+				return [state, parser.finishToken("Slash")];
 			}
 
 			if (isAlpha(char)) {
 				const [value, end] = parser.readInputFrom(index, isAlpha);
-				return {
-					state,
-					token: parser.finishValueToken("Word", value, end),
-				};
+				return [state, parser.finishValueToken("Word", value, end)];
 			}
 
 			if (char === '"') {
@@ -118,53 +109,47 @@ const createStringMarkupParser = createParser<MarkupParserTypes>({
 				}
 
 				const end = ob1Add(stringValueEnd, 1);
-				return {
+				return [
 					state,
-					token: parser.finishValueToken(
-						"String",
-						unescapeTextValue(value),
-						end,
-					),
-				};
+					parser.finishValueToken("String", unescapeTextValue(value), end),
+				];
 			}
 
 			if (char === ">") {
-				return {
-					state: {
-						...state,
+				return [
+					{
 						inTagHead: false,
 					},
-					token: parser.finishToken("Greater"),
-				};
+					parser.finishToken("Greater"),
+				];
 			}
 		}
 
 		if (isTagStartChar(index, parser.input)) {
-			return {
-				state: {
-					...state,
+			return [
+				{
 					inTagHead: true,
 				},
-				token: parser.finishToken("Less"),
-			};
+				parser.finishToken("Less"),
+			];
 		}
 
 		// Keep eating text until we hit a <
 		const [value, end] = parser.readInputFrom(index, isTextChar);
-		return {
+		return [
 			state,
-			token: {
+			{
 				type: "Text",
 				value: unescapeTextValue(value),
 				start: index,
 				end,
 			},
-		};
+		];
 	},
 });
 
 function atTagEnd(parser: MarkupParser): boolean {
-	return parser.matchToken("Less") && parser.lookahead().token.type === "Slash";
+	return parser.matchToken("Less") && parser.lookaheadToken().type === "Slash";
 }
 
 function parseTag(
@@ -415,7 +400,7 @@ function parseChild(
 	}
 }
 
-const parseCache: WeakMap<StaticMarkup, MarkupParsedChildren> = new WeakMap();
+const parseCache: WeakMap<Exclude<StaticMarkup, string>, MarkupParsedChildren> = new WeakMap();
 export function parseMarkup(
 	input: string | AnyMarkup,
 	opts: ParserOptions = {},
@@ -426,9 +411,11 @@ export function parseMarkup(
 	if (typeof input !== "string") {
 		cacheKey = serializeLazyMarkup(input);
 
-		const cached = parseCache.get(cacheKey);
-		if (cached !== undefined) {
-			return cached;
+		if (typeof cacheKey !== "string") {
+			const cached = parseCache.get(cacheKey);
+			if (cached !== undefined) {
+				return cached;
+			}
 		}
 
 		// Don't need to parse a single escaped
@@ -436,7 +423,7 @@ export function parseMarkup(
 			children = [
 				{
 					type: "Text",
-					value: cacheKey.parts[0],
+					value: cacheKey[0],
 					source: true,
 				},
 			];
@@ -456,8 +443,9 @@ export function parseMarkup(
 		}
 	}
 
-	if (cacheKey !== undefined) {
+	if (cacheKey !== undefined && typeof cacheKey !== "string") {
 		parseCache.set(cacheKey, children);
 	}
+
 	return children;
 }

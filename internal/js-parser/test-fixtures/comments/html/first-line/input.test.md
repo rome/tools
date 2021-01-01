@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "comments/html/first-line/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	trailingComments: Array []

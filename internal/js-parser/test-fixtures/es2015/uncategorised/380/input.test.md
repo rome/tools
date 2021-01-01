@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/uncategorised/380/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

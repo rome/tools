@@ -21,6 +21,7 @@ import {
 import {AnyRoot} from "@internal/ast";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
+import {DiagnosticsFileHandler} from "./types";
 
 const unicodeControls = /[\u0000-\u001f\u007f-\u00a0]/u;
 
@@ -182,9 +183,51 @@ export function inferDiagnosticLanguageFromRootAST(
 			return "css";
 
 		case "MarkdownRoot":
-			return "md";
+			return "markdown";
 
 		case "CommitRoot":
 			return "commit";
 	}
+}
+
+export function concatFileHandlers(
+	handlers: DiagnosticsFileHandler[],
+): Required<DiagnosticsFileHandler> {
+	return {
+		async exists(path) {
+			for (const handler of handlers) {
+				if (handler.exists !== undefined) {
+					const exists = await handler.exists(path);
+					if (exists !== undefined) {
+						return exists;
+					}
+				}
+			}
+			return undefined;
+		},
+
+		async readAbsolute(path) {
+			for (const handler of handlers) {
+				if (handler.readAbsolute !== undefined) {
+					const content = await handler.readAbsolute(path);
+					if (content !== undefined) {
+						return content;
+					}
+				}
+			}
+			return undefined;
+		},
+
+		async readRelative(path) {
+			for (const handler of handlers) {
+				if (handler.readRelative !== undefined) {
+					const content = await handler.readRelative(path);
+					if (content !== undefined) {
+						return content;
+					}
+				}
+			}
+			return undefined;
+		},
+	};
 }

@@ -13,8 +13,8 @@ JSRoot {
 	diagnostics: Array []
 	filename: "esprima/expression-primary-object/migrated_0030/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

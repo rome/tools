@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/opts/ranges-true/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

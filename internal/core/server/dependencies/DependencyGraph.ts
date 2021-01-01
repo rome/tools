@@ -181,52 +181,46 @@ export default class DependencyGraph {
 		},
 	): Promise<void> {
 		// Initialize sub dependency queue
-		const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(
-			this.server,
-			{
-				callback: async ({path, item}) => {
-					await this.resolve(
-						path,
-						{
-							workerQueue,
-							all: item.all,
-							async: item.async,
-							ancestry: item.ancestry,
-						},
-						diagnosticsProcessor,
-						analyzeProgress,
-					);
-				},
+		const workerQueue: DependencyGraphWorkerQueue = this.server.createWorkerQueue({
+			callback: async ({path, item}) => {
+				await this.resolve(
+					path,
+					{
+						workerQueue,
+						all: item.all,
+						async: item.async,
+						ancestry: item.ancestry,
+					},
+					diagnosticsProcessor,
+					analyzeProgress,
+				);
 			},
-		);
+		});
 		await workerQueue.prepare(paths);
 
 		// Initialize roots
-		const rootQueue: WorkerQueue<void> = new WorkerQueue(
-			this.server,
-			{
-				callback: async ({path}) => {
-					const ret = await FileNotFound.maybeAllowMissing(
-						allowFileNotFound,
-						path,
-						() => {
-							return this.resolve(
-								path,
-								{
-									workerQueue,
-									all: true,
-									async: false,
-									ancestry: [],
-								},
-								diagnosticsProcessor,
-								analyzeProgress,
-							);
-						},
-					);
-					roots.push(ret);
-				},
+		const rootQueue = this.server.createWorkerQueue({
+			callback: async ({path}) => {
+				const ret = await FileNotFound.maybeAllowMissing(
+					allowFileNotFound,
+					path,
+					() => {
+						return this.resolve(
+							path,
+							{
+								workerQueue,
+								all: true,
+								async: false,
+								ancestry: [],
+							},
+							diagnosticsProcessor,
+							analyzeProgress,
+						);
+					},
+				);
+				roots.push(ret);
 			},
-		);
+		});
 		const roots: MissingFileReturn<DependencyNode>[] = [];
 
 		for (const path of paths) {
@@ -337,7 +331,7 @@ export default class DependencyGraph {
 			lock.release();
 		}
 
-		const {dependencies, diagnostics} = res;
+		const {dependencies, diagnostics} = res.value;
 
 		if (diagnostics.length > 0) {
 			diagnosticsProcessor.addDiagnostics(diagnostics);
@@ -367,9 +361,9 @@ export default class DependencyGraph {
 								? undefined
 								: {
 										location: {
-											sourceText: undefined,
 											...dep.loc,
-											mtime: undefined,
+											sourceText: undefined,
+											integrity: undefined,
 										},
 									},
 						);

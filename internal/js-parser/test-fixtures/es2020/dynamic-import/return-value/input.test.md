@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2020/dynamic-import/return-value/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

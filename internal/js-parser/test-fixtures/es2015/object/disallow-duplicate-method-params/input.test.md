@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/object/disallow-duplicate-method-params/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,10 +30,11 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "es2015/object/disallow-duplicate-method-params/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 12
@@ -45,18 +46,17 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Argument <emphasis>"}
-						"a"
-						RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Argument <emphasis>"}
+					"a"
+					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
+				]
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {parts: Array [RAW_MARKUP {value: "Defined already here"}]}
+						text: RAW_MARKUP {value: "Defined already here"}
 					}
 					frame {
 						location: Object {
@@ -252,7 +252,7 @@ JSRoot {
 
 ```
 
- es2015/object/disallow-duplicate-method-params/input.js:2:11 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/object/disallow-duplicate-method-params/input.js:2:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument a name clash in strict mode
 

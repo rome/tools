@@ -13,7 +13,7 @@ CommitRoot {
 	custom: false
 	diagnostics: Array []
 	filename: "feat/input.txt"
-	mtime: undefined
+	integrity: undefined
 	rawBody: "commit with a feat commit type"
 	scope: ""
 	loc: Object {

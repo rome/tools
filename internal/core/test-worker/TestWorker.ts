@@ -7,13 +7,13 @@
 
 import {deriveDiagnosticFromError} from "@internal/diagnostics";
 import {TestWorkerBridge} from "@internal/core";
-import {createBridgeFromWorkerThreadParentPort} from "@internal/events";
 import TestWorkerFile from "./TestWorkerFile";
 import inspector = require("inspector");
 import {AbsoluteFilePathMap} from "@internal/path";
 import {serializeAssembled} from "../server/bundler/utils";
 import {AssembledBundle} from "../common/types/bundler";
-import setupGlobalErrorHandlers from "@internal/core/common/utils/setupGlobalErrorHandlers";
+import FatalErrorHandler from "../common/FatalErrorHandler";
+import {BridgeClient} from "@internal/events";
 
 export type TestWorkerFlags = {
 	inspectorPort: number;
@@ -27,7 +27,7 @@ export default class TestWorker {
 	}
 
 	private runners: AbsoluteFilePathMap<TestWorkerFile>;
-	private bridge: TestWorkerBridge;
+	private bridge: BridgeClient<typeof TestWorkerBridge>;
 	private compiled: AbsoluteFilePathMap<string>;
 
 	public serializeAssembled(assembled: AssembledBundle): string {
@@ -45,53 +45,52 @@ export default class TestWorker {
 		await this.bridge.handshake();
 	}
 
-	private buildBridge(): TestWorkerBridge {
-		const bridge = createBridgeFromWorkerThreadParentPort(
-			TestWorkerBridge,
-			{
-				type: "server",
-			},
-		);
+	private buildBridge(): BridgeClient<typeof TestWorkerBridge> {
+		const bridge = TestWorkerBridge.Client.createFromWorkerThreadParentPort();
 
-		setupGlobalErrorHandlers((err) => {
-			bridge.testDiagnostic.send({
-				testPath: undefined,
-				origin: undefined,
-				diagnostic: deriveDiagnosticFromError(
-					err,
-					{
-						description: {
-							category: "tests/unhandledRejection",
+		const errorHandler = new FatalErrorHandler({
+			getOptions: (err) => {
+				bridge.events.testDiagnostic.send({
+					testPath: undefined,
+					origin: undefined,
+					diagnostic: deriveDiagnosticFromError(
+						err,
+						{
+							description: {
+								category: "tests/unhandledRejection",
+							},
 						},
-					},
-				),
-			});
+					),
+				});
+				return false;
+			},
 		});
+		errorHandler.setupGlobalHandlers();
 
-		bridge.inspectorDetails.subscribe(() => {
+		bridge.events.inspectorDetails.subscribe(() => {
 			return {
 				inspectorUrl: inspector.url(),
 			};
 		});
 
-		bridge.prepareTest.subscribe(async (opts) => {
+		bridge.events.prepareTest.subscribe(async (opts) => {
 			const runner = new TestWorkerFile(this, this.bridge, opts);
 			this.runners.set(opts.path, runner);
 			return await runner.prepare();
 		});
 
-		bridge.teardownTest.subscribe(async (path) => {
+		bridge.events.teardownTest.subscribe(async (path) => {
 			const runner = this.runners.assert(path);
 			return await runner.teardown();
 		});
 
-		bridge.runTest.subscribe(async (opts) => {
+		bridge.events.runTest.subscribe(async (opts) => {
 			const {path} = opts;
 			const runner = this.runners.assert(path);
 			return await runner.run(opts);
 		});
 
-		bridge.receiveCompiled.subscribe((map) => {
+		bridge.events.receiveCompiled.subscribe((map) => {
 			for (const [path, content] of map) {
 				this.compiled.set(path, content);
 			}

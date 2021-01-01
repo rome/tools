@@ -108,6 +108,7 @@ export class ChildProcess {
 				],
 			},
 			location: {
+				language: "binary",
 				filename: this.cwd.join(),
 			},
 		});

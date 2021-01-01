@@ -13,23 +13,23 @@ test(
 	"can parse npm dependency patterns",
 	async (t) => {
 		t.snapshot(
-			parseDependencyPattern(consumeUnknown("npm:foo", "parse/json"), false),
+			parseDependencyPattern(consumeUnknown("npm:foo", "parse", "json"), false),
 		);
 		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("npm:@foo/bar", "parse/json"),
+				consumeUnknown("npm:@foo/bar", "parse", "json"),
 				false,
 			),
 		);
 		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("npm:foo@1.0.0", "parse/json"),
+				consumeUnknown("npm:foo@1.0.0", "parse", "json"),
 				false,
 			),
 		);
 		t.snapshot(
 			parseDependencyPattern(
-				consumeUnknown("npm:@foo/bar@1.0.0", "parse/json"),
+				consumeUnknown("npm:@foo/bar@1.0.0", "parse", "json"),
 				false,
 			),
 		);
@@ -40,7 +40,10 @@ test(
 	"can parse gist patterns",
 	async (t) => {
 		t.snapshot(
-			parseDependencyPattern(consumeUnknown("gist:123456", "parse/json"), false),
+			parseDependencyPattern(
+				consumeUnknown("gist:123456", "parse", "json"),
+				false,
+			),
 		);
 	},
 );
@@ -49,7 +52,10 @@ test(
 	"can parse workspace patterns",
 	async (t) => {
 		t.snapshot(
-			parseDependencyPattern(consumeUnknown("workspace:*", "parse/json"), false),
+			parseDependencyPattern(
+				consumeUnknown("workspace:*", "parse", "json"),
+				false,
+			),
 		);
 	},
 );

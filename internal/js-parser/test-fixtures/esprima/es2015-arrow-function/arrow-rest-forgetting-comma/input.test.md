@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unexpected token, expected "}
-						","
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unexpected token, expected "}
+					","
+				]
 			}
 			location: Object {
 				filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 6
@@ -230,7 +230,7 @@ JSRoot {
 
 ```
 
- esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js:1:3 parse/js ━━━━━━━━━━━━━━━━━━━
+ esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected ,
 

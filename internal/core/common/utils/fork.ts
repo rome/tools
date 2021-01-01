@@ -43,6 +43,7 @@ export function forkThread(
 		`require(${JSON.stringify(getBinPath().join())});`,
 		{
 			...opts,
+			execArgv: CHILD_ARGS,
 			eval: true,
 			env: createEnv(processType),
 		},

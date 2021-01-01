@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/assert-predicate/arrow-function/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}
 			}
 			location: Object {
 				filename: "typescript/assert-predicate/arrow-function/input.ts"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 31
@@ -596,7 +598,7 @@ JSRoot {
 
 ```
 
- typescript/assert-predicate/arrow-function/input.ts:3:17 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/assert-predicate/arrow-function/input.ts:3:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Flow type cast expressions aren't allowed in TypeScript
 

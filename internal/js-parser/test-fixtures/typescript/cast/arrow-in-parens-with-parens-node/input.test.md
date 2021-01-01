@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

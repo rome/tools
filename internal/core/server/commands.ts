@@ -9,7 +9,6 @@ import run from "./commands/run";
 import publish from "./commands/publish";
 import status from "./commands/status";
 import stop from "./commands/stop";
-import develop from "./commands/develop";
 import * as config from "./commands/config";
 import compile from "./commands/compile";
 import resolve from "./commands/resolve";
@@ -34,13 +33,13 @@ import _projectDump from "./commands/_projectDump";
 //
 import {UnknownObject} from "@internal/typescript-helpers";
 import ServerRequest from "./ServerRequest";
-import {JSONPropertyValue} from "@internal/codec-config";
 import {SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
+import {RSERValue} from "@internal/codec-binary-serial";
 
-export type ServerCommandReturn = undefined | Promise<JSONPropertyValue>;
+export type ServerCommandReturn = undefined | Promise<RSERValue>;
 
 export type ServerCommand<Flags extends UnknownObject> = SharedCommand<
 	ServerRequest,
@@ -110,7 +109,6 @@ serverCommands.set("config enable", config.enable);
 serverCommands.set("config push", config.push);
 serverCommands.set("config set", config.set);
 serverCommands.set("config set-directory", config.setDirectory);
-serverCommands.set("develop", develop);
 serverCommands.set("format", format);
 serverCommands.set("init", init);
 serverCommands.set("lsp", lsp);

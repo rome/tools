@@ -28,10 +28,13 @@ Array [
 					onDefinition: undefined
 					path: undefined
 					usedNames: Set ["target"]
-					context: Object {category: "parse/stringMarkup"}
 					keyPath: Array ["target"]
 					parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 2
 					propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
+					context: Object {
+						category: "parse"
+						categoryValue: "romemarkup"
+					}
 				}
 			]
 			handleUnexpected: undefined
@@ -42,7 +45,10 @@ Array [
 			path: undefined
 			propertyMetadata: undefined
 			usedNames: Set ["target"]
-			context: Object {category: "parse/stringMarkup"}
+			context: Object {
+				category: "parse"
+				categoryValue: "romemarkup"
+			}
 		}
 	}
 ]
@@ -74,7 +80,10 @@ Array [
 			path: undefined
 			propertyMetadata: undefined
 			usedNames: Set []
-			context: Object {category: "parse/stringMarkup"}
+			context: Object {
+				category: "parse"
+				categoryValue: "romemarkup"
+			}
 		}
 	}
 ]
@@ -104,7 +113,10 @@ Array [
 			path: undefined
 			propertyMetadata: undefined
 			usedNames: Set []
-			context: Object {category: "parse/stringMarkup"}
+			context: Object {
+				category: "parse"
+				categoryValue: "romemarkup"
+			}
 		}
 		children: Array [
 			Tag {
@@ -129,7 +141,10 @@ Array [
 					path: undefined
 					propertyMetadata: undefined
 					usedNames: Set []
-					context: Object {category: "parse/stringMarkup"}
+					context: Object {
+						category: "parse"
+						categoryValue: "romemarkup"
+					}
 				}
 			}
 		]

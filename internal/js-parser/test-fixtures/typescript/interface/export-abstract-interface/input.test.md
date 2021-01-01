@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/interface/export-abstract-interface/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected a semicolon or a line terminator"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
 				filename: "typescript/interface/export-abstract-interface/input.ts"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -132,7 +134,7 @@ JSRoot {
 
 ```
 
- typescript/interface/export-abstract-interface/input.ts:1:16 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ typescript/interface/export-abstract-interface/input.ts:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

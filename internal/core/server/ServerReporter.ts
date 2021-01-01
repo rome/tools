@@ -15,7 +15,7 @@ import Server from "./Server";
 export default class ServerReporter extends Reporter {
 	constructor(server: Server) {
 		super({
-			wrapperFactory: server.wrapFatal.bind(server),
+			wrapperFactory: server.fatalErrorHandler.wrapBound,
 		});
 		this.server = server;
 	}

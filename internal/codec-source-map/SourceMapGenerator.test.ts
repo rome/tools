@@ -47,19 +47,19 @@ test(
 		generator.setSourceContent(
 			"js/file1.js",
 			dedent`
-		const foo = "foo";
+				const foo = "foo";
 
-		function bar() {
-			return foo + "bar";
-		}
-		`,
+				function bar() {
+					return foo + "bar";
+				}
+			`,
 		);
 
 		generator.setSourceContent(
 			"js/file2.js",
 			dedent`
-		let hello = "world";
-		`,
+				let hello = "world";
+			`,
 		);
 
 		let materializeWasCalled = false;
@@ -79,15 +79,15 @@ test(
 				sources: ["js/file1.js", "js/file2.js"],
 				sourcesContent: [
 					dedent`
-				const foo = "foo";
+						const foo = "foo";
 
-				function bar() {
-					return foo + "bar";
-				}
-				`,
+						function bar() {
+							return foo + "bar";
+						}
+					`,
 					dedent`
-				let hello = "world";
-				`,
+						let hello = "world";
+					`,
 				],
 			},
 		);

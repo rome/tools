@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2020/export-ns-from/ns-and-named/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

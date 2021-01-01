@@ -17,7 +17,7 @@ disallow unnecessary fragments
 **ESLint Equivalent:** [jsx-no-useless-fragment](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-useless-fragment.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3506b3adc8e1997be7bb4c29c0872893faacb0d7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:b7b4661b877f7ff84db836d5a8d9cbe19dfa2182,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -136,24 +136,24 @@ disallow unnecessary fragments
 ---
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">section</span>&gt;
-					&lt;&gt;
-						&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
-						&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
-					&lt;<span class="token operator">/</span>&gt;
-				&lt;<span class="token operator">/</span><span class="token variable">section</span>&gt;</code></pre>{% endraw %}
+	&lt;&gt;
+		&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
+		&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
+	&lt;<span class="token operator">/</span>&gt;
+&lt;<span class="token operator">/</span><span class="token variable">section</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:5</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:1</span> <strong>lint/react/noUselessFragment</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using unnecessary </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;">.</span>
 
   <strong>  1</strong><strong> │ </strong>&lt;<span class="token variable">section</span>&gt;
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>          &lt;&gt;
-     <strong> │ </strong>          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>            &lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 4</strong><strong> │ </strong>            &lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>          &lt;<span class="token operator">/</span>&gt;
-     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  6</strong><strong> │ </strong>        &lt;<span class="token operator">/</span><span class="token variable">section</span>&gt;
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  &lt;&gt;
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>    &lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 4</strong><strong> │ </strong>    &lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 5</strong><strong> │ </strong>  &lt;<span class="token operator">/</span>&gt;
+     <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  6</strong><strong> │ </strong>&lt;<span class="token operator">/</span><span class="token variable">section</span>&gt;
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">A </span><span style="color: DodgerBlue;"><strong>Fragment</strong></span><span style="color: DodgerBlue;"> is redundant if it contains only one child, or if it is</span>
     <span style="color: DodgerBlue;">the child of a html element, and is not a keyed fragment.</span>
