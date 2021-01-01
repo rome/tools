@@ -55,13 +55,12 @@ CSSRoot {
 				}
 			}
 			prelude: Array [
-				CSSIdentifier {
-					value: "body"
+				CSSSelector {
 					leadingComments: undefined
 					loc: Object {
 						filename: "smoke/input.css"
 						end: Object {
-							column: 4
+							column: 5
 							line: 2
 						}
 						start: Object {
@@ -69,6 +68,23 @@ CSSRoot {
 							line: 2
 						}
 					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "body"
+							leadingComments: undefined
+							loc: Object {
+								filename: "smoke/input.css"
+								end: Object {
+									column: 4
+									line: 2
+								}
+								start: Object {
+									column: 0
+									line: 2
+								}
+							}
+						}
+					]
 				}
 			]
 			block: CSSBlock {
@@ -312,12 +328,11 @@ CSSRoot {
 							}
 						}
 						prelude: Array [
-							CSSIdentifier {
-								value: "body"
+							CSSSelector {
 								loc: Object {
 									filename: "smoke/input.css"
 									end: Object {
-										column: 8
+										column: 9
 										line: 8
 									}
 									start: Object {
@@ -325,6 +340,22 @@ CSSRoot {
 										line: 8
 									}
 								}
+								patterns: Array [
+									CSSTypeSelector {
+										value: "body"
+										loc: Object {
+											filename: "smoke/input.css"
+											end: Object {
+												column: 8
+												line: 8
+											}
+											start: Object {
+												column: 4
+												line: 8
+											}
+										}
+									}
+								]
 							}
 						]
 						block: CSSBlock {

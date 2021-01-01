@@ -27,7 +27,9 @@ import {
 	CSSFunction,
 	CSSRoot,
 	CSSRule,
+	CSSSelector,
 } from "@internal/ast";
+import {parseSelectors} from "./parser/selectors";
 
 type CSSParserTypes = {
 	tokens: Tokens;
@@ -36,11 +38,11 @@ type CSSParserTypes = {
 	meta: void;
 };
 
-type CSSParser = ParserCore<CSSParserTypes>;
+export type CSSParser = ParserCore<CSSParserTypes>;
 
 export const createCSSParser = createParser<CSSParserTypes>({
 	diagnosticLanguage: "css",
-	ignoreWhitespaceTokens: true,
+	ignoreWhitespaceTokens: false,
 	tokenize(parser: CSSParser, index: Number0): AnyCSSToken {
 		const char = parser.getInputCharOnly(index);
 
@@ -687,22 +689,19 @@ function parseRules(
 
 function parseRule(parser: CSSParser): CSSRule | undefined {
 	const start = parser.getPosition();
-	const prelude: AnyCSSValue[] = [];
+	let prelude: CSSSelector[] = [];
 	while (!parser.matchToken("EOF")) {
 		if (parser.matchToken("LeftCurlyBracket")) {
 			return parser.finishNode(
 				start,
 				{
 					type: "CSSRule",
-					// TODO: Parse prelude according to selector grammar
-					// https://www.w3.org/TR/css-syntax-3/#style-rules
 					prelude,
 					block: parseDeclarationBlock(parser),
 				},
 			);
 		}
-		const parsedValue = parseComponentValue(parser, true);
-		parsedValue && prelude.push(parsedValue);
+		prelude = parseSelectors(parser);
 	}
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.UNEXPECTED_TOKEN,
