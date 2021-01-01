@@ -6,14 +6,14 @@
  */
 
 import {Builder, Token} from "@internal/formatter";
-import {JSTemplateElement, jsTemplateLiteral, JSTemplateLiteral} from "@internal/ast";
+import {AnyTSPrimary, tsTemplateLiteralTypeAnnotation, TSTemplateElement} from "@internal/ast";
 
-export default function JSTemplateElement(
+export default function TSTemplateElement(
 	builder: Builder,
-	node: JSTemplateElement,
-	parent: JSTemplateLiteral,
+	node: TSTemplateElement,
+	parent: AnyTSPrimary,
 ): Token {
-	parent = jsTemplateLiteral.assert(parent);
+	parent = tsTemplateLiteralTypeAnnotation.assert(parent);
 
 	const isFirst = parent.quasis[0] === node;
 	const isLast = parent.quasis[parent.quasis.length - 1] === node;

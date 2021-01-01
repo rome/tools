@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:1c1163b6d0c13aa9082fce475588a6b1950fc73a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:96d6160ebcc53b453a700acbc36d9dc8368b6402,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -244,6 +244,7 @@ export * from "./js/typescript/TSSignatureDeclarationMeta";
 export * from "./js/typescript/TSStringKeywordTypeAnnotation";
 export * from "./js/typescript/TSStringLiteralTypeAnnotation";
 export * from "./js/typescript/TSSymbolKeywordTypeAnnotation";
+export * from "./js/typescript/TSTemplateElement";
 export * from "./js/typescript/TSTemplateLiteralTypeAnnotation";
 export * from "./js/typescript/TSThisType";
 export * from "./js/typescript/TSTupleElement";
@@ -495,6 +496,7 @@ export type AnyNode =
 	| n.TSStringKeywordTypeAnnotation
 	| n.TSStringLiteralTypeAnnotation
 	| n.TSSymbolKeywordTypeAnnotation
+	| n.TSTemplateElement
 	| n.TSTemplateLiteralTypeAnnotation
 	| n.TSThisType
 	| n.TSTupleElement

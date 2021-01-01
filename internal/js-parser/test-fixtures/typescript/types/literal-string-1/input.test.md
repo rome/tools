@@ -84,7 +84,7 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSTemplateLiteralTypeAnnotation {
-									value: "foo"
+									expressions: Array []
 									loc: Object {
 										filename: "typescript/types/literal-string-1/input.ts"
 										end: Object {
@@ -96,6 +96,24 @@ JSRoot {
 											line: 1
 										}
 									}
+									quasis: Array [
+										TSTemplateElement {
+											cooked: "foo"
+											raw: "foo"
+											tail: true
+											loc: Object {
+												filename: "typescript/types/literal-string-1/input.ts"
+												end: Object {
+													column: 11
+													line: 1
+												}
+												start: Object {
+													column: 8
+													line: 1
+												}
+											}
+										}
+									]
 								}
 							}
 						}

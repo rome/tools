@@ -5,18 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NodeBaseWithComments} from "@internal/ast";
+import {NodeBaseWithComments, TSTemplateElement, AnyTSPrimary} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSTemplateLiteralTypeAnnotation extends NodeBaseWithComments {
 	readonly type: "TSTemplateLiteralTypeAnnotation";
-	readonly value: string;
+	readonly quasis: TSTemplateElement[];
+	readonly expressions: AnyTSPrimary[];
 }
 
 export const tsTemplateLiteralTypeAnnotation = createBuilder<TSTemplateLiteralTypeAnnotation>(
 	"TSTemplateLiteralTypeAnnotation",
 	{
 		bindingKeys: {},
-		visitorKeys: {},
+		visitorKeys: {
+			quasis: true,
+			expressions: true,
+		},
 	},
 );

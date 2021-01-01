@@ -5,14 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
 import {TSTemplateLiteralTypeAnnotation} from "@internal/ast";
-import {escapeJSString} from "@internal/string-escape";
 
 export default function TSTemplateLiteralTypeAnnotation(
 	builder: Builder,
 	node: TSTemplateLiteralTypeAnnotation,
 ): Token {
-	return escapeJSString(node.value, {quote: "`"});
+	const tokens: Token[] = [];
+	const quasis = node.quasis;
+
+	for (let i = 0; i < quasis.length; i++) {
+		tokens.push(builder.tokenize(quasis[i], node));
+
+		if (i + 1 < quasis.length) {
+			tokens.push(builder.tokenize(node.expressions[i], node));
+		}
+	}
+
+	return concat(tokens);
 }
