@@ -51,10 +51,10 @@ import {
 	parseReferenceIdentifier,
 	parseStringLiteral,
 	parseTSConstKeyword,
+	parseTemplateElement,
 	parseVarStatement,
 	toBindingIdentifier,
 	toReferenceIdentifier,
-	parseTemplateElement
 } from "./index";
 import {
 	AnyJSExpression,
@@ -106,6 +106,7 @@ import {
 	TSPropertySignature,
 	TSRestType,
 	TSSignatureDeclarationMeta,
+	TSTemplateElement,
 	TSTemplateLiteralTypeAnnotation,
 	TSThisType,
 	TSTupleElement,
@@ -119,7 +120,6 @@ import {
 	TSTypePredicate,
 	TSTypeQuery,
 	TSTypeReference,
-	TSTemplateElement,
 } from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {NumberTokenValue} from "../tokenizer";
@@ -1209,9 +1209,7 @@ function parseTSConstructorType(parser: JSParser): TSConstructorType {
 }
 
 // Parse template expression.
-export function parseTSTemplateElement(
-	parser: JSParser,
-): TSTemplateElement {
+export function parseTSTemplateElement(parser: JSParser): TSTemplateElement {
 	const start = parser.getPosition();
 	const templateElem = parseTemplateElement(parser, false);
 	return parser.finishNode(

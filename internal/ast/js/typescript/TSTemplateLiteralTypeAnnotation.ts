@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NodeBaseWithComments, TSTemplateElement, AnyTSPrimary} from "@internal/ast";
+import {
+	AnyTSPrimary,
+	NodeBaseWithComments,
+	TSTemplateElement,
+} from "@internal/ast";
 import {createBuilder} from "../../utils";
 
 export interface TSTemplateLiteralTypeAnnotation extends NodeBaseWithComments {

@@ -5,24 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder, Token, concat} from "@internal/formatter";
+import {Builder, Token} from "@internal/formatter";
 
-import {TSTemplateLiteralTypeAnnotation} from "@internal/ast";
+import {AnyNode, TSTemplateLiteralTypeAnnotation} from "@internal/ast";
+import {printTemplateLiteral} from "../utils";
 
 export default function TSTemplateLiteralTypeAnnotation(
 	builder: Builder,
 	node: TSTemplateLiteralTypeAnnotation,
+	parent: AnyNode,
 ): Token {
-	const tokens: Token[] = [];
-	const quasis = node.quasis;
-
-	for (let i = 0; i < quasis.length; i++) {
-		tokens.push(builder.tokenize(quasis[i], node));
-
-		if (i + 1 < quasis.length) {
-			tokens.push(builder.tokenize(node.expressions[i], node));
-		}
-	}
-
-	return concat(tokens);
+	return printTemplateLiteral(builder, node, parent);
 }

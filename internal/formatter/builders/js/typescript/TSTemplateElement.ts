@@ -6,18 +6,11 @@
  */
 
 import {Builder, Token} from "@internal/formatter";
-import {AnyTSPrimary, tsTemplateLiteralTypeAnnotation, TSTemplateElement} from "@internal/ast";
+import {TSTemplateElement} from "@internal/ast";
 
 export default function TSTemplateElement(
 	builder: Builder,
 	node: TSTemplateElement,
-	parent: AnyTSPrimary,
 ): Token {
-	parent = tsTemplateLiteralTypeAnnotation.assert(parent);
-
-	const isFirst = parent.quasis[0] === node;
-	const isLast = parent.quasis[parent.quasis.length - 1] === node;
-
-	const value = (isFirst ? "`" : "}") + node.raw + (isLast ? "`" : "${");
-	return value;
+	return node.raw;
 }
