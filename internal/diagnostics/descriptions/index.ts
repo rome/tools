@@ -117,7 +117,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 
 		if (typeof value === "function") {
 			// rome-ignore lint/ts/noExplicitAny: future cleanup
-			const callback: InputMessagesFactory = (value as any);
+			const callback: InputMessagesFactory = value as any;
 
 			// @ts-ignore trust me lol
 			category[key] = function(...params) {
@@ -130,7 +130,7 @@ export function createDiagnosticsCategory<Input extends InputMessagesCategory>(
 			};
 		} else {
 			// rome-ignore lint/ts/noExplicitAny: future cleanup
-			const {message, advice = [], ...obj} = (value as any);
+			const {message, advice = [], ...obj} = value as any;
 			category[key] = {
 				...obj,
 				advice,

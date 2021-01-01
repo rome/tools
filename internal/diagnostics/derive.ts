@@ -21,7 +21,7 @@ import {
 	getErrorStructure,
 } from "@internal/v8";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {diagnosticLocationToMarkupFilelink} from "./helpers";
+import {diagnosticLocationToMarkupFilelink, joinCategoryName} from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
 
@@ -94,15 +94,9 @@ export function deriveRootAdviceFromDiagnostic(
 
 	if (diag.label !== undefined) {
 		header = markup`<emphasis>${diag.label}</emphasis> ${header}`;
-
-		if (description.category !== undefined) {
-			header = markup`${header} <dim>${description.category}</dim>`;
-		}
-	} else {
-		if (description.category !== undefined) {
-			header = markup`${header} <emphasis>${description.category}</emphasis>`;
-		}
 	}
+
+	header = markup`${header} <emphasis>${joinCategoryName(description)}</emphasis>`;
 
 	if (tags.internal) {
 		header = markup`${header} <inverse><error> INTERNAL </error></inverse>`;
@@ -195,7 +189,6 @@ export function deriveDiagnosticFromErrorStructure(
 	const {filename} = opts;
 
 	let targetFilename: undefined | string = filename;
-	let targetCode = undefined;
 	let targetLoc = undefined;
 
 	let {frames = [], message = "Unknown error"} = struct;
@@ -234,7 +227,6 @@ export function deriveDiagnosticFromErrorStructure(
 			filename: targetFilename,
 			start: targetLoc === undefined ? undefined : targetLoc.start,
 			end: targetLoc === undefined ? undefined : targetLoc.end,
-			sourceText: targetCode,
 		},
 		label: opts.label,
 		tags: opts.tags,

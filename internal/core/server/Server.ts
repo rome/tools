@@ -20,11 +20,16 @@ import {
 } from "@internal/diagnostics";
 import {ServerCommand, serverCommands} from "./commands";
 import {
-	DiagnosticsFileReaders,
+	DiagnosticsFileHandler,
 	printDiagnostics,
 } from "@internal/cli-diagnostics";
 import {ConsumePath, consume} from "@internal/consume";
-import {Event, EventQueue, EventSubscription} from "@internal/events";
+import {
+	BridgeServer,
+	Event,
+	EventQueue,
+	EventSubscription,
+} from "@internal/events";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "./ServerRequest";
 import ProjectManager from "./project/ProjectManager";
 import WorkerManager from "./WorkerManager";
@@ -32,7 +37,7 @@ import Resolver from "./fs/Resolver";
 import FileAllocator from "./fs/FileAllocator";
 import Logger from "../common/utils/Logger";
 import MemoryFileSystem from "./fs/MemoryFileSystem";
-import Cache from "./Cache";
+import ServerCache from "./ServerCache";
 import {
 	Reporter,
 	ReporterProgress,
@@ -49,11 +54,8 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-
-import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
-
 import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
-import {Dict, ErrorCallback, mergeObjects} from "@internal/typescript-helpers";
+import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
 import VirtualModules from "../common/VirtualModules";
@@ -61,15 +63,16 @@ import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProc
 import {toKebabCase} from "@internal/string-utils";
 import {FilePathLocker} from "../../async/lockers";
 import {getEnvVar} from "@internal/cli-environment";
-import {StaticMarkup, markup} from "@internal/markup";
+import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import RecoveryStore from "./fs/RecoveryStore";
-import handleFatalError from "../common/handleFatalError";
+import WorkerQueue, {WorkerQueueOptions} from "./WorkerQueue";
+import FatalErrorHandler from "../common/FatalErrorHandler";
 
 export type ServerClient = {
 	id: number;
 	reporter: Reporter;
-	bridge: ServerBridge;
+	bridge: BridgeServer<typeof ServerBridge>;
 	flags: ClientFlags;
 	version: string;
 	requestsInFlight: Set<ServerRequest>;
@@ -166,12 +169,23 @@ function validateAllowedRequestFlag(
 
 export default class Server {
 	constructor(opts: ServerOptions) {
-		this.onFatalErrorBound = this.onFatalError.bind(this);
-
 		this.profiling = undefined;
 		this.options = opts;
 
 		this.userConfig = opts.userConfig;
+
+		this.fatalErrorHandler = new FatalErrorHandler({
+			getOptions: () => {
+				// Ensure workers are properly ended as they could be hanging
+				this.workerManager.end();
+
+				return {
+					source: markup`server`,
+					reporter: this.getImportantReporter(),
+					exit: this.options.dedicated,
+				};
+			},
+		});
 
 		this.requestFileLocker = new FilePathLocker();
 
@@ -250,7 +264,7 @@ export default class Server {
 		this.workerManager = new WorkerManager(this);
 		this.fileAllocator = new FileAllocator(this);
 		this.resolver = new Resolver(this);
-		this.cache = new Cache(this);
+		this.cache = new ServerCache(this);
 
 		this.logger.info(
 			markup`[Server] Created Server with options: ${prettyFormat(opts)}`,
@@ -258,7 +272,7 @@ export default class Server {
 	}
 
 	public userConfig: UserConfig;
-	public onFatalErrorBound: ErrorCallback;
+	public fatalErrorHandler: FatalErrorHandler;
 	public options: ServerOptions;
 
 	// Public events
@@ -281,7 +295,7 @@ export default class Server {
 	public projectManager: ProjectManager;
 	public workerManager: WorkerManager;
 	public fileAllocator: FileAllocator;
-	public cache: Cache;
+	public cache: ServerCache;
 	public connectedReporters: ServerReporter;
 	public logger: Logger;
 	public requestFileLocker: FilePathLocker;
@@ -312,6 +326,12 @@ export default class Server {
 		return Reporter.concat([this.logger, this.connectedReporters]);
 	}
 
+	public createWorkerQueue<M = void>(
+		opts: WorkerQueueOptions<M>,
+	): WorkerQueue<M> {
+		return new WorkerQueue<M>(this, opts);
+	}
+
 	private emitServerLog(chunk: string) {
 		if (this.clientIdCounter === 0) {
 			this.logInitBuffer += chunk;
@@ -320,23 +340,9 @@ export default class Server {
 		for (const {bridge} of this.connectedClientsListeningForLogs) {
 			// Sometimes the bridge hasn't completely been teardown and we still consider it connected
 			if (bridge.alive) {
-				bridge.log.send({chunk, origin: "server"});
+				bridge.events.log.send({chunk, origin: "server"});
 			}
 		}
-	}
-
-	public onFatalError(error: Error, source: StaticMarkup = markup`server`) {
-		// Ensure workers are properly ended as they could be hanging
-		this.workerManager.end();
-
-		// NB: This will call process.exit. If we want to expose this for other use-cases then we will probably want to
-		// make this customizable
-		handleFatalError({
-			error,
-			source,
-			reporter: this.getImportantReporter(),
-			exit: this.options.dedicated,
-		});
 	}
 
 	// This is so all progress bars are renderer on each client. If we just use this.progressLocal then
@@ -358,25 +364,6 @@ export default class Server {
 		return mergeProgresses(progresses);
 	}
 
-	public wrapFatalPromise(promise: Promise<unknown>) {
-		promise.catch(this.onFatalErrorBound);
-	}
-
-	// rome-ignore lint/ts/noExplicitAny: future cleanup
-	public wrapFatal<T extends (...args: any[]) => any>(callback: T): T {
-		return (((...args: any[]): any => {
-			try {
-				const res = callback(...args);
-				if (res instanceof Promise) {
-					res.catch(this.onFatalErrorBound);
-				}
-				return res;
-			} catch (err) {
-				throw this.onFatalError(err);
-			}
-		}) as T);
-	}
-
 	private async handleDisconnectedDiagnostics(diagnostics: Diagnostics) {
 		this.connectedReporters.error(
 			markup`Generated diagnostics without a current request`,
@@ -388,14 +375,14 @@ export default class Server {
 			printerOptions: {
 				processor: this.createDiagnosticsProcessor(),
 				reporter: this.connectedReporters,
-				fileReaders: this.createDiagnosticsPrinterFileReaders(),
+				fileHandlers: [this.createDiagnosticsPrinterFileHandler()],
 			},
 		});
 	}
 
-	public createDiagnosticsPrinterFileReaders(): DiagnosticsFileReaders {
+	public createDiagnosticsPrinterFileHandler(): DiagnosticsFileHandler {
 		return {
-			read: async (path) => {
+			readAbsolute: async (path) => {
 				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
 					path,
 				);
@@ -405,15 +392,11 @@ export default class Server {
 					return virtualContents;
 				}
 			},
-
-			getMtime: async (path) => {
-				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
-					path,
-				);
-				if (virtualContents === undefined) {
-					return undefined;
+			exists: async (path) => {
+				if (this.virtualModules.isVirtualPath(path)) {
+					return true;
 				} else {
-					return this.memoryFs.getMtime(path);
+					return undefined;
 				}
 			},
 		};
@@ -433,7 +416,9 @@ export default class Server {
 	): DiagnosticsProcessor {
 		return this.createDiagnosticsProcessor({
 			onDiagnostics: (diagnostics: Diagnostics) => {
-				this.wrapFatalPromise(this.handleDisconnectedDiagnostics(diagnostics));
+				this.fatalErrorHandler.wrapPromise(
+					this.handleDisconnectedDiagnostics(diagnostics),
+				);
 			},
 			origins: [
 				...origins,
@@ -450,9 +435,7 @@ export default class Server {
 			return;
 		}
 
-		const teardown = setupGlobalErrorHandlers((err) => {
-			this.onFatalError(err);
-		});
+		const teardown = this.fatalErrorHandler.setupGlobalHandlers();
 
 		this.endEvent.subscribe(() => {
 			teardown();
@@ -485,7 +468,7 @@ export default class Server {
 			}
 
 			// Kill socket
-			client.bridge.end();
+			await client.bridge.end();
 		}
 
 		// We should remove everything that has an external dependency like a socket or process
@@ -505,18 +488,20 @@ export default class Server {
 		});
 	}
 
-	public async attachToBridge(bridge: ServerBridge): Promise<ServerClient> {
+	public async attachToBridge(
+		bridge: BridgeServer<typeof ServerBridge>,
+	): Promise<ServerClient> {
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection
 		// and when that ends. End the Server.
 		if (!this.options.dedicated) {
-			bridge.endEvent.subscribe(() => {
-				this.end();
+			bridge.endEvent.subscribe(async () => {
+				await this.end();
 			});
 		}
 
-		bridge.profilingStart.subscribe(async (data) => {
+		bridge.events.profilingStart.subscribe(async (data) => {
 			if (profiler !== undefined) {
 				throw new Error("Expected no profiler to be running");
 			}
@@ -524,11 +509,11 @@ export default class Server {
 			await profiler.startProfiling(data.samplingInterval);
 			this.profiling = data;
 			for (const {bridge} of this.workerManager.getExternalWorkers()) {
-				await bridge.profilingStart.call(data);
+				await bridge.events.profilingStart.call(data);
 			}
 		});
 
-		bridge.profilingStop.subscribe(async () => {
+		bridge.events.profilingStop.subscribe(async () => {
 			if (profiler === undefined) {
 				throw new Error("Expected profiler to be running");
 			}
@@ -538,7 +523,7 @@ export default class Server {
 			return serverProfile;
 		});
 
-		bridge.profilingGetWorkers.subscribe(async () => {
+		bridge.events.profilingGetWorkers.subscribe(async () => {
 			const ids: number[] = [];
 			for (const {id} of this.workerManager.getExternalWorkers()) {
 				ids.push(id);
@@ -546,15 +531,15 @@ export default class Server {
 			return ids;
 		});
 
-		bridge.profilingStopWorker.subscribe(async (id) => {
+		bridge.events.profilingStopWorker.subscribe(async (id) => {
 			const worker = this.workerManager.getWorkerAssert(id);
-			return await worker.bridge.profilingStop.call();
+			return await worker.bridge.events.profilingStop.call();
 		});
 
 		// When enableWorkerLogs is called we setup subscriptions to the worker logs
 		// Logs are never transported from workers to the server unless there is a subscription
 		let subscribedWorkers = false;
-		bridge.enableWorkerLogs.subscribe(() => {
+		bridge.events.enableWorkerLogs.subscribe(() => {
 			// enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
 			if (subscribedWorkers) {
 				return;
@@ -563,17 +548,19 @@ export default class Server {
 			}
 
 			function onLog(chunk: string) {
-				bridge.log.call({origin: "worker", chunk});
+				bridge.events.log.call({origin: "worker", chunk});
 			}
 
 			// Add on existing workers if there are any
 			for (const worker of this.workerManager.getWorkers()) {
-				bridge.attachEndSubscriptionRemoval(worker.bridge.log.subscribe(onLog));
+				bridge.attachEndSubscriptionRemoval(
+					worker.bridge.events.log.subscribe(onLog),
+				);
 			}
 
 			// Listen for logs for any workers that start later
 			this.workerManager.workerStartEvent.subscribe((worker) => {
-				bridge.attachEndSubscriptionRemoval(worker.log.subscribe(onLog));
+				bridge.attachEndSubscriptionRemoval(worker.events.log.subscribe(onLog));
 			});
 		});
 
@@ -586,15 +573,15 @@ export default class Server {
 			client.reporter.error(
 				markup`Client version ${client.version} does not match server version ${VERSION}. Goodbye lol.`,
 			);
-			client.bridge.end();
+			await client.bridge.end();
 			return client;
 		}
 
-		bridge.query.subscribe(async (request) => {
+		bridge.events.query.subscribe(async (request) => {
 			return await this.handleRequest(client, request);
 		});
 
-		bridge.cancelQuery.subscribe(async (token) => {
+		bridge.events.cancelQuery.subscribe(async (token) => {
 			for (const req of client.requestsInFlight) {
 				if (req.query.cancelToken === token) {
 					await req.cancel("user requested");
@@ -602,26 +589,28 @@ export default class Server {
 			}
 		});
 
-		bridge.endServer.subscribe(async () => this.end());
+		bridge.events.endServer.subscribe(() => this.end());
 
 		await this.clientStartEvent.callOptional(client);
-		await bridge.serverReady.call();
+		await bridge.events.serverReady.call();
 
 		return client;
 	}
 
-	private async createClient(bridge: ServerBridge): Promise<ServerClient> {
+	private async createClient(
+		bridge: BridgeServer<typeof ServerBridge>,
+	): Promise<ServerClient> {
 		const {
 			flags,
 			streamState,
 			outputFormat,
 			outputSupport,
 			version,
-		} = await bridge.getClientInfo.call();
+		} = await bridge.events.getClientInfo.call();
 
 		// Initialize the reporter
 		const reporter = new Reporter({
-			wrapperFactory: this.wrapFatal.bind(this),
+			wrapperFactory: this.fatalErrorHandler.wrapBound,
 			markupOptions: {
 				...this.logger.markupOptions,
 				cwd: flags.cwd,
@@ -637,13 +626,13 @@ export default class Server {
 						return;
 					}
 
-					bridge.write.send([chunk, error]);
+					bridge.events.write.send([chunk, error]);
 				},
 			},
 			streamState,
 		);
 
-		bridge.updateFeatures.subscribe((features) => {
+		bridge.events.updateFeatures.subscribe((features) => {
 			streamHandle.stream.updateFeatures(features);
 		});
 
@@ -680,7 +669,7 @@ export default class Server {
 					let buffer = this.logInitBuffer;
 					buffer += ".".repeat(20);
 					buffer += "\n";
-					bridge.log.send({
+					bridge.events.log.send({
 						chunk: buffer,
 						origin: "server",
 					});
@@ -782,7 +771,7 @@ export default class Server {
 
 			return res;
 		} catch (err) {
-			await this.onFatalErrorBound(err);
+			await this.fatalErrorHandler.handle(err);
 			throw new Error("Should never meet this condition");
 		} finally {
 			// We no longer care if the client dies

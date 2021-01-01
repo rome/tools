@@ -12,7 +12,6 @@ test(
 			fooCalls.push(param);
 		};
 
-		t.false(event.hasSubscribers());
 		t.false(event.hasSubscriptions());
 
 		event.subscribe(foo);

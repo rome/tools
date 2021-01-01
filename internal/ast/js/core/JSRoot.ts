@@ -32,7 +32,7 @@ export const MOCK_PROGRAM: JSRoot = {
 	directives: [],
 	body: [],
 	filename: "unknown",
-	mtime: undefined,
+	integrity: undefined,
 	interpreter: undefined,
 	corrupt: false,
 	sourceType: "module",

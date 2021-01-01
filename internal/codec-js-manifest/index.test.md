@@ -59,7 +59,10 @@ Object {
 						"node"
 						"./foo"
 					]
-					context: Object {category: "parse/manifest"}
+					context: Object {
+						category: "parse"
+						categoryValue: "manifest"
+					}
 					keyPath: Array [
 						"exports"
 						"node"
@@ -82,7 +85,10 @@ Object {
 							"node"
 							"./foo"
 						]
-						context: Object {category: "parse/manifest"}
+						context: Object {
+							category: "parse"
+							categoryValue: "manifest"
+						}
 						keyPath: Array [
 							"exports"
 							"node"
@@ -103,8 +109,11 @@ Object {
 								"exports"
 								"node"
 							]
-							context: Object {category: "parse/manifest"}
 							keyPath: Array ["exports"]
+							context: Object {
+								category: "parse"
+								categoryValue: "manifest"
+							}
 							parent: ___R$project$rome$$internal$consume$Consumer_ts$default {
 								value: Object {
 									name: "test-name"
@@ -126,9 +135,12 @@ Object {
 										path: undefined
 										propertyMetadata: undefined
 										usedNames: Set ["name"]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["name"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									exports => Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
 									type => ___R$project$rome$$internal$consume$Consumer_ts$default {
@@ -147,9 +159,12 @@ Object {
 											"exports"
 											"type"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["type"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									repository => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -168,9 +183,12 @@ Object {
 											"type"
 											"repository"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["repository"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bugs => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -190,9 +208,12 @@ Object {
 											"repository"
 											"bugs"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bugs"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									files => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -213,9 +234,12 @@ Object {
 											"bugs"
 											"files"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["files"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									keywords => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -237,9 +261,12 @@ Object {
 											"files"
 											"keywords"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["keywords"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									cpu => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -262,9 +289,12 @@ Object {
 											"keywords"
 											"cpu"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["cpu"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									os => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -288,9 +318,12 @@ Object {
 											"cpu"
 											"os"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["os"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bundledDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -315,9 +348,12 @@ Object {
 											"os"
 											"bundledDependencies"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bundledDependencies"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bundleDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -343,9 +379,12 @@ Object {
 											"bundledDependencies"
 											"bundleDependencies"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bundleDependencies"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									contributors => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -372,9 +411,12 @@ Object {
 											"bundleDependencies"
 											"contributors"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["contributors"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									maintainers => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -402,9 +444,12 @@ Object {
 											"contributors"
 											"maintainers"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["maintainers"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 								]
 								handleUnexpected: undefined
@@ -429,7 +474,10 @@ Object {
 									"contributors"
 									"maintainers"
 								]
-								context: Object {category: "parse/manifest"}
+								context: Object {
+									category: "parse"
+									categoryValue: "manifest"
+								}
 							}
 						}
 					}
@@ -459,7 +507,10 @@ Object {
 							"node"
 							"./foo"
 						]
-						context: Object {category: "parse/manifest"}
+						context: Object {
+							category: "parse"
+							categoryValue: "manifest"
+						}
 						keyPath: Array [
 							"exports"
 							"node"
@@ -482,7 +533,10 @@ Object {
 								"node"
 								"./foo"
 							]
-							context: Object {category: "parse/manifest"}
+							context: Object {
+								category: "parse"
+								categoryValue: "manifest"
+							}
 							keyPath: Array [
 								"exports"
 								"node"
@@ -503,8 +557,11 @@ Object {
 									"exports"
 									"node"
 								]
-								context: Object {category: "parse/manifest"}
 								keyPath: Array ["exports"]
+								context: Object {
+									category: "parse"
+									categoryValue: "manifest"
+								}
 								parent: ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: Object {
 										name: "test-name"
@@ -526,9 +583,12 @@ Object {
 											path: undefined
 											propertyMetadata: undefined
 											usedNames: Set ["name"]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["name"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										exports => Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
 										type => ___R$project$rome$$internal$consume$Consumer_ts$default {
@@ -547,9 +607,12 @@ Object {
 												"exports"
 												"type"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["type"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										repository => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -568,9 +631,12 @@ Object {
 												"type"
 												"repository"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["repository"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										bugs => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -590,9 +656,12 @@ Object {
 												"repository"
 												"bugs"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["bugs"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										files => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -613,9 +682,12 @@ Object {
 												"bugs"
 												"files"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["files"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										keywords => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -637,9 +709,12 @@ Object {
 												"files"
 												"keywords"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["keywords"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										cpu => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -662,9 +737,12 @@ Object {
 												"keywords"
 												"cpu"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["cpu"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										os => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -688,9 +766,12 @@ Object {
 												"cpu"
 												"os"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["os"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										bundledDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -715,9 +796,12 @@ Object {
 												"os"
 												"bundledDependencies"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["bundledDependencies"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										bundleDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -743,9 +827,12 @@ Object {
 												"bundledDependencies"
 												"bundleDependencies"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["bundleDependencies"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										contributors => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -772,9 +859,12 @@ Object {
 												"bundleDependencies"
 												"contributors"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["contributors"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										maintainers => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -802,9 +892,12 @@ Object {
 												"contributors"
 												"maintainers"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["maintainers"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 									]
 									handleUnexpected: undefined
@@ -829,7 +922,10 @@ Object {
 										"contributors"
 										"maintainers"
 									]
-									context: Object {category: "parse/manifest"}
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 							}
 						}
@@ -898,7 +994,10 @@ Object {
 						"exports"
 						"./foo"
 					]
-					context: Object {category: "parse/manifest"}
+					context: Object {
+						category: "parse"
+						categoryValue: "manifest"
+					}
 					keyPath: Array [
 						"exports"
 						"./foo"
@@ -919,8 +1018,11 @@ Object {
 							"exports"
 							"./foo"
 						]
-						context: Object {category: "parse/manifest"}
 						keyPath: Array ["exports"]
+						context: Object {
+							category: "parse"
+							categoryValue: "manifest"
+						}
 						parent: ___R$project$rome$$internal$consume$Consumer_ts$default {
 							value: Object {
 								name: "test-name"
@@ -942,9 +1044,12 @@ Object {
 									path: undefined
 									propertyMetadata: undefined
 									usedNames: Set ["name"]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["name"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								exports => Circular ___R$project$rome$$internal$consume$Consumer_ts$default 5
 								type => ___R$project$rome$$internal$consume$Consumer_ts$default {
@@ -963,9 +1068,12 @@ Object {
 										"exports"
 										"type"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["type"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								repository => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -984,9 +1092,12 @@ Object {
 										"type"
 										"repository"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["repository"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								bugs => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1006,9 +1117,12 @@ Object {
 										"repository"
 										"bugs"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["bugs"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								files => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1029,9 +1143,12 @@ Object {
 										"bugs"
 										"files"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["files"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								keywords => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1053,9 +1170,12 @@ Object {
 										"files"
 										"keywords"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["keywords"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								cpu => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1078,9 +1198,12 @@ Object {
 										"keywords"
 										"cpu"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["cpu"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								os => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1104,9 +1227,12 @@ Object {
 										"cpu"
 										"os"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["os"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								bundledDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1131,9 +1257,12 @@ Object {
 										"os"
 										"bundledDependencies"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["bundledDependencies"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								bundleDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1159,9 +1288,12 @@ Object {
 										"bundledDependencies"
 										"bundleDependencies"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["bundleDependencies"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								contributors => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1188,9 +1320,12 @@ Object {
 										"bundleDependencies"
 										"contributors"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["contributors"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 								maintainers => ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: undefined
@@ -1218,9 +1353,12 @@ Object {
 										"contributors"
 										"maintainers"
 									]
-									context: Object {category: "parse/manifest"}
 									keyPath: Array ["maintainers"]
 									parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 							]
 							handleUnexpected: undefined
@@ -1245,7 +1383,10 @@ Object {
 								"contributors"
 								"maintainers"
 							]
-							context: Object {category: "parse/manifest"}
+							context: Object {
+								category: "parse"
+								categoryValue: "manifest"
+							}
 						}
 					}
 				}
@@ -1273,7 +1414,10 @@ Object {
 							"exports"
 							"./foo"
 						]
-						context: Object {category: "parse/manifest"}
+						context: Object {
+							category: "parse"
+							categoryValue: "manifest"
+						}
 						keyPath: Array [
 							"exports"
 							"./foo"
@@ -1294,8 +1438,11 @@ Object {
 								"exports"
 								"./foo"
 							]
-							context: Object {category: "parse/manifest"}
 							keyPath: Array ["exports"]
+							context: Object {
+								category: "parse"
+								categoryValue: "manifest"
+							}
 							parent: ___R$project$rome$$internal$consume$Consumer_ts$default {
 								value: Object {
 									name: "test-name"
@@ -1317,9 +1464,12 @@ Object {
 										path: undefined
 										propertyMetadata: undefined
 										usedNames: Set ["name"]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["name"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									exports => Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
 									type => ___R$project$rome$$internal$consume$Consumer_ts$default {
@@ -1338,9 +1488,12 @@ Object {
 											"exports"
 											"type"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["type"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									repository => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1359,9 +1512,12 @@ Object {
 											"type"
 											"repository"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["repository"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bugs => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1381,9 +1537,12 @@ Object {
 											"repository"
 											"bugs"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bugs"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									files => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1404,9 +1563,12 @@ Object {
 											"bugs"
 											"files"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["files"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									keywords => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1428,9 +1590,12 @@ Object {
 											"files"
 											"keywords"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["keywords"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									cpu => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1453,9 +1618,12 @@ Object {
 											"keywords"
 											"cpu"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["cpu"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									os => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1479,9 +1647,12 @@ Object {
 											"cpu"
 											"os"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["os"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bundledDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1506,9 +1677,12 @@ Object {
 											"os"
 											"bundledDependencies"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bundledDependencies"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bundleDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1534,9 +1708,12 @@ Object {
 											"bundledDependencies"
 											"bundleDependencies"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bundleDependencies"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									contributors => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1563,9 +1740,12 @@ Object {
 											"bundleDependencies"
 											"contributors"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["contributors"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									maintainers => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1593,9 +1773,12 @@ Object {
 											"contributors"
 											"maintainers"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["maintainers"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 								]
 								handleUnexpected: undefined
@@ -1620,7 +1803,10 @@ Object {
 									"contributors"
 									"maintainers"
 								]
-								context: Object {category: "parse/manifest"}
+								context: Object {
+									category: "parse"
+									categoryValue: "manifest"
+								}
 							}
 						}
 					}
@@ -1689,7 +1875,10 @@ Object {
 						"./foo"
 						"node"
 					]
-					context: Object {category: "parse/manifest"}
+					context: Object {
+						category: "parse"
+						categoryValue: "manifest"
+					}
 					keyPath: Array [
 						"exports"
 						"./foo"
@@ -1712,7 +1901,10 @@ Object {
 							"./foo"
 							"node"
 						]
-						context: Object {category: "parse/manifest"}
+						context: Object {
+							category: "parse"
+							categoryValue: "manifest"
+						}
 						keyPath: Array [
 							"exports"
 							"./foo"
@@ -1733,8 +1925,11 @@ Object {
 								"exports"
 								"./foo"
 							]
-							context: Object {category: "parse/manifest"}
 							keyPath: Array ["exports"]
+							context: Object {
+								category: "parse"
+								categoryValue: "manifest"
+							}
 							parent: ___R$project$rome$$internal$consume$Consumer_ts$default {
 								value: Object {
 									name: "test-name"
@@ -1756,9 +1951,12 @@ Object {
 										path: undefined
 										propertyMetadata: undefined
 										usedNames: Set ["name"]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["name"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									exports => Circular ___R$project$rome$$internal$consume$Consumer_ts$default 6
 									type => ___R$project$rome$$internal$consume$Consumer_ts$default {
@@ -1777,9 +1975,12 @@ Object {
 											"exports"
 											"type"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["type"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									repository => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1798,9 +1999,12 @@ Object {
 											"type"
 											"repository"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["repository"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bugs => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1820,9 +2024,12 @@ Object {
 											"repository"
 											"bugs"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bugs"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									files => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1843,9 +2050,12 @@ Object {
 											"bugs"
 											"files"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["files"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									keywords => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1867,9 +2077,12 @@ Object {
 											"files"
 											"keywords"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["keywords"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									cpu => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1892,9 +2105,12 @@ Object {
 											"keywords"
 											"cpu"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["cpu"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									os => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1918,9 +2134,12 @@ Object {
 											"cpu"
 											"os"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["os"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bundledDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1945,9 +2164,12 @@ Object {
 											"os"
 											"bundledDependencies"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bundledDependencies"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									bundleDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -1973,9 +2195,12 @@ Object {
 											"bundledDependencies"
 											"bundleDependencies"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["bundleDependencies"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									contributors => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -2002,9 +2227,12 @@ Object {
 											"bundleDependencies"
 											"contributors"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["contributors"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 									maintainers => ___R$project$rome$$internal$consume$Consumer_ts$default {
 										value: undefined
@@ -2032,9 +2260,12 @@ Object {
 											"contributors"
 											"maintainers"
 										]
-										context: Object {category: "parse/manifest"}
 										keyPath: Array ["maintainers"]
 										parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
+										context: Object {
+											category: "parse"
+											categoryValue: "manifest"
+										}
 									}
 								]
 								handleUnexpected: undefined
@@ -2059,7 +2290,10 @@ Object {
 									"contributors"
 									"maintainers"
 								]
-								context: Object {category: "parse/manifest"}
+								context: Object {
+									category: "parse"
+									categoryValue: "manifest"
+								}
 							}
 						}
 					}
@@ -2089,7 +2323,10 @@ Object {
 							"./foo"
 							"node"
 						]
-						context: Object {category: "parse/manifest"}
+						context: Object {
+							category: "parse"
+							categoryValue: "manifest"
+						}
 						keyPath: Array [
 							"exports"
 							"./foo"
@@ -2112,7 +2349,10 @@ Object {
 								"./foo"
 								"node"
 							]
-							context: Object {category: "parse/manifest"}
+							context: Object {
+								category: "parse"
+								categoryValue: "manifest"
+							}
 							keyPath: Array [
 								"exports"
 								"./foo"
@@ -2133,8 +2373,11 @@ Object {
 									"exports"
 									"./foo"
 								]
-								context: Object {category: "parse/manifest"}
 								keyPath: Array ["exports"]
+								context: Object {
+									category: "parse"
+									categoryValue: "manifest"
+								}
 								parent: ___R$project$rome$$internal$consume$Consumer_ts$default {
 									value: Object {
 										name: "test-name"
@@ -2156,9 +2399,12 @@ Object {
 											path: undefined
 											propertyMetadata: undefined
 											usedNames: Set ["name"]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["name"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										exports => Circular ___R$project$rome$$internal$consume$Consumer_ts$default 7
 										type => ___R$project$rome$$internal$consume$Consumer_ts$default {
@@ -2177,9 +2423,12 @@ Object {
 												"exports"
 												"type"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["type"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										repository => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2198,9 +2447,12 @@ Object {
 												"type"
 												"repository"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["repository"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										bugs => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2220,9 +2472,12 @@ Object {
 												"repository"
 												"bugs"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["bugs"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										files => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2243,9 +2498,12 @@ Object {
 												"bugs"
 												"files"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["files"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										keywords => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2267,9 +2525,12 @@ Object {
 												"files"
 												"keywords"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["keywords"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										cpu => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2292,9 +2553,12 @@ Object {
 												"keywords"
 												"cpu"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["cpu"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										os => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2318,9 +2582,12 @@ Object {
 												"cpu"
 												"os"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["os"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										bundledDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2345,9 +2612,12 @@ Object {
 												"os"
 												"bundledDependencies"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["bundledDependencies"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										bundleDependencies => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2373,9 +2643,12 @@ Object {
 												"bundledDependencies"
 												"bundleDependencies"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["bundleDependencies"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										contributors => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2402,9 +2675,12 @@ Object {
 												"bundleDependencies"
 												"contributors"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["contributors"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 										maintainers => ___R$project$rome$$internal$consume$Consumer_ts$default {
 											value: undefined
@@ -2432,9 +2708,12 @@ Object {
 												"contributors"
 												"maintainers"
 											]
-											context: Object {category: "parse/manifest"}
 											keyPath: Array ["maintainers"]
 											parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 8
+											context: Object {
+												category: "parse"
+												categoryValue: "manifest"
+											}
 										}
 									]
 									handleUnexpected: undefined
@@ -2459,7 +2738,10 @@ Object {
 										"contributors"
 										"maintainers"
 									]
-									context: Object {category: "parse/manifest"}
+									context: Object {
+										category: "parse"
+										categoryValue: "manifest"
+									}
 								}
 							}
 						}

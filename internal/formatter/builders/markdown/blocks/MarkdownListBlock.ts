@@ -20,7 +20,7 @@ export default function MarkdownListBlock(
 
 			return tokens;
 		},
-		([] as Tokens),
+		[] as Tokens,
 	);
 	return concat(tokens);
 }

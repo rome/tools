@@ -96,7 +96,7 @@ async function run(
 				test(diag) {
 					return (
 						diag.description.category === category ||
-						diag.description.category === "parse/js"
+						diag.description.category === "parse"
 					);
 				},
 			});
@@ -199,7 +199,7 @@ export async function main() {
 								}
 								lines.push(
 									await run(
-										(`lint/${ruleName}` as DiagnosticCategory),
+										`lint/${ruleName}` as DiagnosticCategory,
 										i,
 										filename,
 										dedent(invalid[i]),

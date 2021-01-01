@@ -5,7 +5,7 @@ import {
 	filePathToCode,
 	instanceToArrayBufferViewCode,
 	instanceToErrorCode,
-} from "./codes";
+} from "./constants";
 import {
 	AnyRSERFilePathMap,
 	IntSize,
@@ -86,9 +86,13 @@ export default class RSERBufferAssembler {
 		this.totalSize += buf.byteLength;
 	}
 
-	public encodeHeader(size: number) {
-		this.writeByte(0);
-		this.writeByte(1);
+	public encodeStreamHeader(version: number) {
+		this.writeByte(VALUE_CODES.STREAM_HEADER);
+		this.encodeInt(version);
+	}
+
+	public encodeMessageHeader(size: number) {
+		this.writeByte(VALUE_CODES.MESSAGE_HEADER);
 		this.encodeInt(size);
 	}
 

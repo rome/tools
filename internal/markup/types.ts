@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
+import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
 import {AbsoluteFilePath} from "@internal/path";
 import {UserConfig} from "@internal/core";
 import {Number0, Number1} from "@internal/ob1";
 import {Consumer} from "@internal/consume";
 
 export type Tokens = BaseTokens & {
-	Text: ValueToken<"Text", string>;
+	Text: StringToken<"Text">;
 	Slash: SimpleToken<"Slash">;
 	Less: SimpleToken<"Less">;
 	Equals: SimpleToken<"Equals">;
 	Greater: SimpleToken<"Greater">;
-	Word: ValueToken<"Word", string>;
-	String: ValueToken<"String", string>;
+	Word: StringToken<"Word">;
+	String: StringToken<"String">;
 };
 
 export type MarkupParsedText = {

@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {humanizeNumber, humanizeTime, splitChars} from "@internal/string-utils";
+import {
+	humanizeDuration,
+	humanizeNumber,
+	splitChars,
+} from "@internal/string-utils";
 import {Reporter, ReporterStreamHandle} from "@internal/cli-reporter";
 import {
 	ReporterProgressOptions,
@@ -310,7 +314,7 @@ export default class Progress extends ProgressBase {
 
 		// Time elapsed eg: elapsed 1m5s
 		if (this.opts.elapsed) {
-			suffix += `elapsed ${humanizeTime(elapsed)} `;
+			suffix += `elapsed ${humanizeDuration(elapsed)} `;
 		}
 
 		// Don't bother with a suffix if we haven't completed a single item
@@ -324,14 +328,14 @@ export default class Progress extends ProgressBase {
 					if (this.approximateETA !== undefined && elapsed < this.approximateETA) {
 						// Approximate ETA
 						const left = elapsed - this.approximateETA;
-						suffix += `eta ~${humanizeTime(left)} `;
+						suffix += `eta ~${humanizeDuration(left)} `;
 					} else if (total !== undefined) {
 						// How many items we have left
 						const itemsLeft = total - current;
 
 						// Total estimated time left
 						const eta = itemsLeft * averagePerItem;
-						suffix += `eta ${humanizeTime(eta)} `;
+						suffix += `eta ${humanizeDuration(eta)} `;
 					} else {
 						const ops = Math.round(1_000 / averagePerItem);
 						suffix += `${humanizeNumber(ops)} op/s `;

@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/function-sent/enabled-asi-funciton-declaration/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

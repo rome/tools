@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/expect-plugin/export-type-named/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

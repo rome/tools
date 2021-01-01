@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/function-sent/invalid-syntax/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unexpected token"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
 				filename: "experimental/function-sent/invalid-syntax/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 22
@@ -209,7 +211,7 @@ JSRoot {
 
 ```
 
- experimental/function-sent/invalid-syntax/input.js:2:21 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/function-sent/invalid-syntax/input.js:2:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token
 

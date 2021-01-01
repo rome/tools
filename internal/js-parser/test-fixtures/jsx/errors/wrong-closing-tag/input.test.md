@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "jsx/errors/wrong-closing-tag/input.jsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
@@ -76,10 +76,11 @@ JSRoot {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "jsx/errors/wrong-closing-tag/input.jsx"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 4
@@ -91,24 +92,21 @@ JSRoot {
 				}
 			}
 			description: Object {
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>"}
-						"Foo"
-						RAW_MARKUP {value: "</emphasis>"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>"}
+					"Foo"
+					RAW_MARKUP {value: "</emphasis>"}
+				]
 				advice: Array [
 					log {
 						category: "info"
-						text: MARKUP {
-							parts: Array [
-								RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-								"Foo"
-								RAW_MARKUP {value: "</emphasis>"}
-							]
-						}
+						text: Array [
+							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
+							"Foo"
+							RAW_MARKUP {value: "</emphasis>"}
+						]
 					}
 					frame {
 						location: Object {
@@ -134,7 +132,7 @@ JSRoot {
 
 ```
 
- jsx/errors/wrong-closing-tag/input.jsx:1:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/wrong-closing-tag/input.jsx:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a corresponding JSX closing tag for Foo
 

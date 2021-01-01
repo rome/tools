@@ -167,3 +167,28 @@ export function diagnosticLocationToMarkupFilelink(
 		start.column,
 	)}" />`;
 }
+
+// Category value can allow arbitrary values so we need to escape bad characters
+export function escapeCategoryValue(categoryValue: string): string {
+	const json = JSON.stringify(categoryValue);
+	if (!categoryValue.includes(")") && json === `"${categoryValue}"`) {
+		// No escaping necessary
+		return categoryValue;
+	} else {
+		return json;
+	}
+}
+
+// Join category
+export function joinCategoryName(
+	{category, categoryValue}: {
+		category: string;
+		categoryValue?: string;
+	},
+): string {
+	let human = category;
+	if (categoryValue !== undefined && categoryValue !== "") {
+		human = `${human}(${escapeCategoryValue(categoryValue)})`;
+	}
+	return human;
+}

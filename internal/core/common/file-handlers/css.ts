@@ -9,11 +9,11 @@ export const cssHandler: PartialExtensionHandler = {
 		format: true,
 	},
 
-	async parse({mtime, path, file, worker}) {
-		const sourceText = await worker.readFile(file.real);
+	async parse({integrity, path, file, worker}) {
+		const sourceText = await worker.readFileText(file);
 		const ast = parseCSS({
 			input: sourceText,
-			mtime,
+			integrity,
 			path,
 		});
 		return {

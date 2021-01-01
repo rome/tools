@@ -22,6 +22,11 @@ export default createVisitor({
 
 			for (const bodyNode of node.body) {
 				if (bodyNode.type === "JSImportDeclaration") {
+					if (bodyNode.namespaceSpecifier !== undefined) {
+						// Ignore if it contains a namespace as you can't really merge them
+						continue;
+					}
+
 					const source = bodyNode.source.value;
 
 					// Allow duplicate sources if the `importKind` is different

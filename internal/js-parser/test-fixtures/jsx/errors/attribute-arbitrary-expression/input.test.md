@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "JSX attribute value should be either an expression or a quoted JSX text"}
 			}
 			location: Object {
 				filename: "jsx/errors/attribute-arbitrary-expression/input.jsx"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 9
@@ -230,7 +232,7 @@ JSRoot {
 
 ```
 
- jsx/errors/attribute-arbitrary-expression/input.jsx:1:9 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ jsx/errors/attribute-arbitrary-expression/input.jsx:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute value should be either an expression or a quoted JSX text
 

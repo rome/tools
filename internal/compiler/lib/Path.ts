@@ -282,7 +282,7 @@ export default class Path {
 		const {fixed: defaultFixed, suggestions} = nodes;
 		const target = nodes.target ?? old;
 
-		const {category} = description;
+		const {category, categoryValue} = description;
 		const advice = [...description.advice];
 		const loc = context.getLoc(target);
 		const canFormat = this.context.project.config.format.enabled;
@@ -327,6 +327,7 @@ export default class Path {
 								action: "fix",
 								filename: context.displayFilename,
 								category,
+								categoryValue,
 								start: loc.start,
 							}),
 							shortcut: "f",
@@ -340,7 +341,11 @@ export default class Path {
 							extra: true,
 							noun: markup`Apply fix for ALL files with this category`,
 							instruction: markup`To apply fix for ALL files with this category run`,
-							decision: buildLintDecisionGlobalString("fix", category),
+							decision: buildLintDecisionGlobalString(
+								"fix",
+								category,
+								undefined,
+							),
 						}),
 					);
 				}
@@ -356,6 +361,8 @@ export default class Path {
 				for (const decision of decisions) {
 					if (
 						decision.category === category &&
+						(decision.categoryValue === undefined ||
+						decision.categoryValue === categoryValue) &&
 						decision.action === "fix" &&
 						decision.id !== undefined
 					) {
@@ -415,6 +422,7 @@ export default class Path {
 									filename: context.displayFilename,
 									action: "fix",
 									category,
+									categoryValue,
 									start: loc.start,
 									id: index,
 								}),

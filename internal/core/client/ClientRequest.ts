@@ -97,7 +97,7 @@ export default class ClientRequest {
 
 		try {
 			const bridge = await client.findOrStartServer();
-			return await bridge.query.call(this.query);
+			return await bridge.events.query.call(this.query);
 		} catch (err) {
 			if (err instanceof BridgeError) {
 				return {

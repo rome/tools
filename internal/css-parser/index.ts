@@ -39,8 +39,8 @@ type CSSParserTypes = {
 type CSSParser = ParserCore<CSSParserTypes>;
 
 export const createCSSParser = createParser<CSSParserTypes>({
-	diagnosticCategory: "parse/css",
-	ignoreWhitespaceTokens: false,
+	diagnosticLanguage: "css",
+	ignoreWhitespaceTokens: true,
 	tokenize(parser: CSSParser, index: Number0): AnyCSSToken {
 		const char = parser.getInputCharOnly(index);
 
@@ -613,7 +613,7 @@ function consumeURLToken(
 }
 
 export function tokenizeCSS(opts: CSSParserOptions): TokenValues<Tokens>[] {
-	return createCSSParser(opts).tokenizeAll();
+	return createCSSParser(opts).getAllTokens();
 }
 
 export function parseCSS(opts: CSSParserOptions): CSSRoot {
@@ -928,7 +928,7 @@ function parseComponentValue(
 	}
 
 	if (parser.matchToken("Hash")) {
-		const hashToken = (parser.getToken() as Tokens["Hash"]);
+		const hashToken = parser.getToken() as Tokens["Hash"];
 		if (hashToken.hashType === "id") {
 			parser.nextToken();
 			return parser.finishNode(

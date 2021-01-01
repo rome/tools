@@ -115,23 +115,22 @@ function generateMarkdown(tagMap: Record<string, Commit[]>): string {
 		const breaking = commits.filter(({meta}) => meta?.breaking);
 		const misc = commits.filter(({meta}) => !meta?.breaking && meta?.custom);
 		return dedent`
-
 			## [${tag}](https://github.com/rome/tools/releases/tag/${tag})
 
-${renderItems(features, "Features")}
-${renderItems(fixes, "Bug fixes")}
-${renderItems(breaking, "BREAKING CHANGES")}
-${renderItems(misc, "Miscellaneous", true)}
+			${renderItems(features, "Features")}
+			${renderItems(fixes, "Bug fixes")}
+			${renderItems(breaking, "BREAKING CHANGES")}
+			${renderItems(misc, "Miscellaneous", true)}
 		`;
 	}).join("\n");
 
 	return dedent`
-# Changelog
+		# Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
-${list}
-<br><br><br><br>
-<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/rome/tools/raw/main/assets/PNG/logomark_transparent.png" width="128px">
+		All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+		${list}
+		<br><br><br><br>
+		<img alt="Rome, logo of an ancient Greek spartan helmet" src="https://github.com/rome/tools/raw/main/assets/PNG/logomark_transparent.png" width="128px">
 	`;
 }
 
@@ -270,7 +269,7 @@ function parseCommitLog(
 
 				return newCommit;
 			},
-			({} as Commit),
+			{} as Commit,
 		);
 	});
 

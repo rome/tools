@@ -366,14 +366,14 @@ function Hello() {
 
 ```
 
- lint/react/useFragmentSyntax/reject/10/file.tsx:2:13 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━
+ lint/react/useFragmentSyntax/reject/10/file.tsx:2:8 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
 
     1 │ function Hello() {
-  > 2 │             return <Fragment><Foo /><Foo /></Fragment>
-      │                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │           }
+  > 2 │   return <Fragment><Foo /><Foo /></Fragment>
+      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 

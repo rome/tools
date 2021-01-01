@@ -43,9 +43,9 @@ import {
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
+	AnyIndexedNumber,
 	Number0,
 	Number1,
-	UnknownNumber,
 	ob1Add,
 	ob1Coerce0,
 	ob1Coerce1,
@@ -438,6 +438,7 @@ export default class Consumer {
 		const diagnostic: Diagnostic = {
 			description: {
 				category: this.context.category,
+				categoryValue: this.context.categoryValue,
 				...description,
 				advice,
 			},
@@ -980,7 +981,7 @@ export default class Consumer {
 				descriptions.CONSUME.INVALID_STRING_SET_VALUE(
 					value,
 					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					((validValues as any) as string[]),
+					(validValues as any) as string[],
 				),
 				{
 					target: "value",
@@ -1231,11 +1232,11 @@ export default class Consumer {
 
 	public asNumberInRange(
 		opts: {
-			min?: UnknownNumber;
-			max?: UnknownNumber;
-			default?: UnknownNumber;
+			min?: number | AnyIndexedNumber;
+			max?: number | AnyIndexedNumber;
+			default?: number | AnyIndexedNumber;
 		},
-	): UnknownNumber {
+	): number | AnyIndexedNumber {
 		const min = ob1Get(opts.min);
 		const max = ob1Get(opts.max);
 		const def = ob1Get(opts.default);
@@ -1289,7 +1290,7 @@ export default class Consumer {
 				descriptions.CONSUME.INVALID_NUMBER_SET_VALUE(
 					value,
 					// rome-ignore lint/ts/noExplicitAny: future cleanup
-					((validValues as any) as number[]),
+					(validValues as any) as number[],
 				),
 				{
 					target: "value",

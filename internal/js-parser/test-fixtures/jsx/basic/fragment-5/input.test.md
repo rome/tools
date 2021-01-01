@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "jsx/basic/fragment-5/input.jsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array ["jsx"]
 	loc: Object {

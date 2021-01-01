@@ -30,12 +30,12 @@ export default createServerCommand({
 
 		const {transport} = lsp;
 
-		bridge.lspFromClientBuffer.subscribe((chunk) => {
+		bridge.events.lspFromClientBuffer.subscribe((chunk) => {
 			transport.append(chunk);
 		});
 
 		transport.writeEvent.subscribe((msg) => {
-			bridge.lspFromServerBuffer.send(msg);
+			bridge.events.lspFromServerBuffer.send(msg);
 		});
 
 		await req.endEvent.wait();

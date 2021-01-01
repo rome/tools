@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/class-private-properties/declared-later-same-class/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

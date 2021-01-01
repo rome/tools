@@ -1,4 +1,4 @@
-import {BaseTokens, SimpleToken, ValueToken} from "@internal/parser-core";
+import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
 
 export const Symbols = {
 	Space: " ",
@@ -11,5 +11,5 @@ export type Tokens = BaseTokens & {
 	LeftParen: SimpleToken<"LeftParen">;
 	RightParen: SimpleToken<"RightParen">;
 	Whitespace: SimpleToken<"Whitespace">;
-	Word: ValueToken<"Word", string>;
+	Word: StringToken<"Word">;
 };

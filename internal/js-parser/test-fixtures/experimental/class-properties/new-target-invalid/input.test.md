@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/class-properties/new-target-invalid/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "new.target can only be used in functions or class properties"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
 				filename: "experimental/class-properties/new-target-invalid/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 18
@@ -160,7 +162,7 @@ JSRoot {
 
 ```
 
- experimental/class-properties/new-target-invalid/input.js:1:8 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/class-properties/new-target-invalid/input.js:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
 

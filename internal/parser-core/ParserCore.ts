@@ -3,6 +3,7 @@ import {
 	EOFToken,
 	NodeBase,
 	ParserCoreImplementation,
+	ParserCoreOverrides,
 	ParserCoreTokenizeState,
 	ParserCoreTypes,
 	ParserUnexpectedOptions,
@@ -19,6 +20,8 @@ import {
 	DiagnosticCategory,
 	DiagnosticDescription,
 	DiagnosticFilter,
+	DiagnosticIntegrity,
+	DiagnosticLanguage,
 	DiagnosticLocation,
 	Diagnostics,
 	DiagnosticsError,
@@ -61,11 +64,11 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		impl: ParserCoreImplementation<Types>,
 		opts: Types["options"],
 		meta: Types["meta"],
-		diagnosticCategory?: DiagnosticCategory,
+		overrides: ParserCoreOverrides = {},
 	) {
 		const {
 			path,
-			mtime,
+			integrity,
 			offsetPosition,
 			sourceText,
 		} = opts;
@@ -83,12 +86,18 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.options = opts;
 		this.meta = meta;
 		this.impl = impl;
-		this.diagnosticCategory = diagnosticCategory ?? impl.diagnosticCategory;
+		this.language = overrides.diagnosticLanguage ?? impl.diagnosticLanguage;
+		this.diagnosticCategory =
+			overrides.diagnosticCategory ?? impl.diagnosticCategory ?? "parse";
+		this.diagnosticCategoryValue =
+			overrides.diagnosticCategoryValue ??
+			impl.diagnosticCategoryValue ??
+			this.language;
 
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownPath(path);
 		this.filename = this.path === undefined ? undefined : this.path.join();
-		this.mtime = mtime;
+		this.integrity = integrity;
 		this.input = input;
 		this.sourceText = sourceText ?? this.input;
 		this.length = ob1Coerce0(this.input.length);
@@ -101,6 +110,47 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		// Parser/tokenizer state
 		this.tokenizing = false;
+
+		this.indexTracker = new PositionTracker({
+			filename: this.filename,
+			input: this.input,
+			offsetPosition,
+			getPosition: this.getPosition.bind(this),
+		});
+
+		this.reset();
+	}
+
+	public options: Types["options"];
+	public meta: Types["meta"];
+	public indexTracker: PositionTracker;
+	private impl: ParserCoreImplementation<Types>;
+	private tokenizing: boolean;
+	private eofToken: EOFToken;
+	public path: undefined | UnknownPath;
+	public filename: undefined | string;
+	public input: string;
+	public language: DiagnosticLanguage;
+	public integrity: undefined | DiagnosticIntegrity;
+	private sourceText: string;
+	public length: Number0;
+	private diagnosticCategory: DiagnosticCategory;
+	private diagnosticCategoryValue: string;
+
+	// Internal mutable state
+	public comments!: CommentsConsumer;
+	private nextTokenIndex!: Number0;
+	public state!: Types["state"] & ParserCoreState;
+	private prevToken!: TokenValues<Types["tokens"]>;
+	private currentToken!: TokenValues<Types["tokens"]>;
+	private currLine!: Number1;
+	private currColumn!: Number0;
+
+	// Reset the parser and it's initial positions to the initial state
+	public reset() {
+		const {offsetPosition} = this.options;
+		const {impl} = this;
+
 		this.currLine =
 			offsetPosition === undefined ? ob1Number1 : offsetPosition.line;
 		this.currColumn =
@@ -109,13 +159,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.currentToken = SOF_TOKEN;
 		this.prevToken = SOF_TOKEN;
 		this.comments = new CommentsConsumer();
-
-		this.indexTracker = new PositionTracker({
-			filename: this.filename,
-			input: this.input,
-			offsetPosition,
-			getPosition: this.getPosition.bind(this),
-		});
 
 		let initialState: undefined | Types["state"];
 		if (initialState === undefined && impl.getInitialState !== undefined) {
@@ -128,27 +171,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			...ParserCore.createInitialState(),
 		};
 	}
-
-	public options: Types["options"];
-	public meta: Types["meta"];
-	public comments: CommentsConsumer;
-	public indexTracker: PositionTracker;
-	private impl: ParserCoreImplementation<Types>;
-	private tokenizing: boolean;
-	private nextTokenIndex: Number0;
-	public state: Types["state"] & ParserCoreState;
-	private prevToken: TokenValues<Types["tokens"]>;
-	private currentToken: TokenValues<Types["tokens"]>;
-	private eofToken: EOFToken;
-	public path: undefined | UnknownPath;
-	public filename: undefined | string;
-	public input: string;
-	public mtime: undefined | number;
-	private sourceText: string;
-	public length: Number0;
-	private diagnosticCategory: DiagnosticCategory;
-	private currLine: Number1;
-	private currColumn: Number0;
 
 	public static createInitialState(): ParserCoreState {
 		return {
@@ -182,7 +204,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	}
 
 	// Run the tokenizer over all tokens
-	public tokenizeAll(): TokenValues<Types["tokens"]>[] {
+	public getAllTokens(): TokenValues<Types["tokens"]>[] {
 		const tokens: TokenValues<Types["tokens"]>[] = [];
 
 		const {diagnostics} = catchDiagnosticsSync(() => {
@@ -229,7 +251,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		const token = this.tokenize(index);
 		if (token !== undefined) {
-			return {token, state};
+			return [state, token];
 		}
 
 		return undefined;
@@ -290,7 +312,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		}
 
 		const prevToken = this.currentToken;
-		const {token: nextToken, state} = this.lookahead();
+		const [state, nextToken] = this.lookahead();
 
 		if (nextToken.end === prevToken.end) {
 			throw new Error(
@@ -357,18 +379,15 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	// Return the token that's after this current token without advancing to it
 	public lookaheadToken(index?: Number0): TokenValues<Types["tokens"]> {
-		return this.lookahead(index).token;
+		return this.lookahead(index)[1];
 	}
 
 	// Return the token and state that's after the current token without advancing to it
 	public lookahead(
 		index: Number0 = this.nextTokenIndex,
-	): {
-		token: TokenValues<Types["tokens"]>;
-		state: ParserCoreState & Types["state"];
-	} {
+	): [Types["state"] & ParserCoreState, TokenValues<Types["tokens"]>] {
 		if (this.isEOF(index)) {
-			return {token: this.eofToken, state: this.state};
+			return [this.state, this.eofToken];
 		}
 
 		// Set the next token index, in the case of a lookahead we'll set it back later
@@ -392,13 +411,13 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.tokenizing = wasTokenizing;
 		this.nextTokenIndex = prevNextTokenIndex;
 
-		return {
-			token: next.token,
-			state: {
+		return [
+			{
 				...beforeState,
-				...next.state,
+				...next[0],
 			},
-		};
+			next[1],
+		];
 	}
 
 	public getPositionFromIndex(index: Number0): Position {
@@ -436,6 +455,9 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			...description,
 			advice: description.advice ?? [],
 			category: description.category ?? this.diagnosticCategory,
+			categoryValue: description.category === undefined
+				? this.diagnosticCategoryValue
+				: description.categoryValue,
 		};
 
 		return {
@@ -510,8 +532,9 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		}
 
 		return {
+			language: this.language,
 			sourceText,
-			mtime: this.mtime,
+			integrity: this.integrity,
 			start,
 			end,
 			filename: this.filename,
@@ -528,11 +551,14 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	}
 
 	// If the current token is the specified type then return the next token, otherwise return null
-	public eatToken(
-		type: keyof Types["tokens"],
-	): undefined | TokenValues<Types["tokens"]> {
-		if (this.matchToken(type)) {
-			return this.nextToken();
+	public eatToken<Type extends keyof Types["tokens"]>(
+		type: Type,
+	): undefined | Types["tokens"][Type] {
+		const token = this.getToken();
+		if (token.type === type) {
+			this.nextToken();
+			// @ts-ignore
+			return token;
 		} else {
 			return undefined;
 		}
@@ -561,10 +587,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		} else {
 			throw this.unexpected({
 				description: _metadata === undefined
-					? descriptions.PARSER_CORE.EXPECTED_TOKEN(
-							token.type,
-							(type as string),
-						)
+					? descriptions.PARSER_CORE.EXPECTED_TOKEN(token.type, type as string)
 					: _metadata,
 			});
 		}
@@ -759,7 +782,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return {
 			...node,
 			corrupt: this.state.corrupt,
-			mtime: this.mtime,
+			integrity: this.integrity,
 			diagnostics: this.getDiagnostics(),
 			filename: this.getFilenameAssert(),
 			comments: this.state.comments,

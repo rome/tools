@@ -6,7 +6,11 @@
  */
 
 import {createVisitor, signals} from "@internal/compiler";
-import {JSCallExpression, JSXElement} from "@internal/ast";
+import {
+	JSCallExpression,
+	JSOptionalCallExpression,
+	JSXElement,
+} from "@internal/ast";
 import {descriptions} from "@internal/diagnostics";
 import {doesNodeMatchPattern} from "@internal/js-ast-utils";
 
@@ -17,7 +21,7 @@ function containsKeyAttr(node: JSXElement): boolean {
 	);
 }
 
-function getMapCallback(node: JSCallExpression) {
+function getMapCallback(node: JSCallExpression | JSOptionalCallExpression) {
 	if (
 		doesNodeMatchPattern(node.callee, "React.Children.map") ||
 		doesNodeMatchPattern(node.callee, "Children.map")
@@ -50,7 +54,10 @@ export default createVisitor({
 			context.addNodeDiagnostic(node, descriptions.LINT.REACT_USE_KEY("array"));
 		}
 
-		const fn = node.type === "JSCallExpression" && getMapCallback(node);
+		const fn =
+			(node.type === "JSCallExpression" ||
+			node.type === "JSOptionalCallExpression") &&
+			getMapCallback(node);
 
 		// Array.prototype.map
 		if (fn) {

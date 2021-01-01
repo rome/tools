@@ -44,7 +44,7 @@ const removeLocTransform: AnyVisitors = [
 					}
 				}
 
-				return signals.replace((newNode as AnyNode));
+				return signals.replace(newNode as AnyNode);
 			}
 		},
 	},
@@ -54,6 +54,7 @@ export function removeLoc(ast: AnyNode): AnyNodes {
 	const context = new CompilerContext({
 		ast: MOCK_PROGRAM,
 		project: {
+			configHashes: [],
 			directory: undefined,
 			config: createDefaultProjectConfig(),
 		},

@@ -17,9 +17,8 @@ import WorkerBridge, {
 import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
-import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
 import {UserConfig} from "@internal/core";
-import {DiagnosticsError} from "@internal/diagnostics";
+import {DiagnosticIntegrity, DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -27,7 +26,12 @@ import {
 	createAbsoluteFilePath,
 	createUnknownPath,
 } from "@internal/path";
-import {lstat, readFileText} from "@internal/fs";
+import {
+	FSReadStream,
+	FSStats,
+	createFakeStats,
+	createReadStream,
+} from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@internal/compiler";
@@ -35,12 +39,16 @@ import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
 import {markup} from "@internal/markup";
-import {BridgeError} from "@internal/events";
+import {BridgeClient, BridgeError} from "@internal/events";
 import {ExtendedMap} from "@internal/collections";
+import WorkerCache from "./WorkerCache";
+import FatalErrorHandler from "../common/FatalErrorHandler";
+import {RSERObject} from "@internal/codec-binary-serial";
 
 export type ParseResult = {
 	ast: AnyRoot;
-	mtime: undefined | number;
+	integrity: undefined | DiagnosticIntegrity;
+	mtimeNs: bigint;
 	project: TransformProjectDefinition;
 	path: AbsoluteFilePath;
 	lastAccessed: number;
@@ -48,10 +56,15 @@ export type ParseResult = {
 	astModifiedFromSource: boolean;
 };
 
+export type WorkerBuffer = {
+	content: string;
+	mtimeNs: bigint;
+};
+
 type WorkerOptions = {
 	userConfig: UserConfig;
 	dedicated: boolean;
-	bridge: WorkerBridge;
+	bridge: BridgeClient<typeof WorkerBridge>;
 	id: number;
 };
 
@@ -71,9 +84,9 @@ export default class Worker {
 			{},
 			{
 				loggerType: "worker",
-				check: () => opts.bridge.log.hasSubscribers(),
+				check: () => opts.bridge.events.log.hasSubscribers(),
 				write(chunk) {
-					opts.bridge.log.send(chunk.toString());
+					opts.bridge.events.log.send(chunk.toString());
 				},
 			},
 		);
@@ -81,13 +94,16 @@ export default class Worker {
 			this.logger.updateStream();
 		});
 
-		this.api = new WorkerAPI(this);
+		this.cache = new WorkerCache(this);
+		this.api = new WorkerAPI(this, this.logger, this.cache);
 
-		if (opts.dedicated) {
-			setupGlobalErrorHandlers((err) => {
+		this.fatalErrorHandler = new FatalErrorHandler({
+			getOptions: (err) => {
 				try {
+					const {bridge} = this;
+
 					// Dispatch error to the server and trigger a fatal
-					opts.bridge.fatalError.send(opts.bridge.serializeError(err));
+					bridge.events.fatalError.send(bridge.serializeError(err));
 				} catch (err) {
 					if (!(err instanceof BridgeError)) {
 						console.error(
@@ -97,7 +113,12 @@ export default class Worker {
 					}
 					process.exit(1);
 				}
-			});
+				return false;
+			},
+		});
+
+		if (opts.dedicated) {
+			this.fatalErrorHandler.setupGlobalHandlers();
 
 			// Pretty sure we'll hit another error condition before this but for completeness
 			/*opts.bridge.monitorHeartbeat(
@@ -115,38 +136,39 @@ export default class Worker {
 	public userConfig: UserConfig;
 	public api: WorkerAPI;
 	public logger: Logger;
+	public fatalErrorHandler: FatalErrorHandler;
+	public virtualModules: VirtualModules;
 
-	private bridge: WorkerBridge;
-	private virtualModules: VirtualModules;
+	private cache: WorkerCache;
+	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: Map<number, TransformProjectDefinition>;
 	private astCache: AbsoluteFilePathMap<ParseResult>;
 	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
-	private buffers: AbsoluteFilePathMap<string>;
+	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
-	private getPartialManifest(id: number): WorkerPartialManifest {
+	public getPartialManifest(id: number): WorkerPartialManifest {
 		return this.partialManifests.assert(id);
 	}
 
-	private end() {
-		// This will only actually be called when a Worker is created inside of the Server
-		// Clear internal maps for memory, in case the Worker instance sticks around
+	private async end() {
 		this.astCache.clear();
 		this.projects.clear();
 		this.moduleSignatureCache.clear();
+		await this.cache.teardown();
 	}
 
 	public async init() {
 		this.virtualModules.init();
 
-		const bridge: WorkerBridge = this.bridge;
+		const bridge: BridgeClient<typeof WorkerBridge> = this.bridge;
 
-		bridge.endEvent.subscribe(() => {
-			this.end();
+		bridge.endEvent.subscribe(async () => {
+			await this.end();
 		});
 
 		let profiler: undefined | Profiler;
-		bridge.profilingStart.subscribe(async (data) => {
+		bridge.events.profilingStart.subscribe(async (data) => {
 			if (profiler !== undefined) {
 				throw new Error("Expected no profiler to be running");
 			}
@@ -154,7 +176,7 @@ export default class Worker {
 			await profiler.startProfiling(data.samplingInterval);
 		});
 
-		bridge.profilingStop.subscribe(async () => {
+		bridge.events.profilingStop.subscribe(async () => {
 			if (profiler === undefined) {
 				throw new Error("Expected a profiler to be running");
 			}
@@ -163,7 +185,7 @@ export default class Worker {
 			return workerProfile;
 		});
 
-		bridge.compile.subscribe((payload) => {
+		bridge.events.compile.subscribe((payload) => {
 			return this.api.compile(
 				payload.ref,
 				payload.stage,
@@ -172,19 +194,20 @@ export default class Worker {
 			);
 		});
 
-		bridge.parse.subscribe((payload) => {
-			return this.api.parse(payload.ref, payload.options);
+		bridge.events.parse.subscribe((payload) => {
+			// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
+			return this.api.parse(payload.ref, payload.options) as RSERObject;
 		});
 
-		bridge.lint.subscribe((payload) => {
+		bridge.events.lint.subscribe((payload) => {
 			return this.api.lint(payload.ref, payload.options, payload.parseOptions);
 		});
 
-		bridge.format.subscribe((payload) => {
+		bridge.events.format.subscribe((payload) => {
 			return this.api.format(payload.ref, payload.options, payload.parseOptions);
 		});
 
-		bridge.updateInlineSnapshots.subscribe((payload) => {
+		bridge.events.updateInlineSnapshots.subscribe((payload) => {
 			return this.api.updateInlineSnapshots(
 				payload.ref,
 				payload.updates,
@@ -192,28 +215,28 @@ export default class Worker {
 			);
 		});
 
-		bridge.analyzeDependencies.subscribe((payload) => {
+		bridge.events.analyzeDependencies.subscribe((payload) => {
 			return this.api.analyzeDependencies(payload.ref, payload.parseOptions);
 		});
 
-		bridge.evict.subscribe((payload) => {
-			this.evict(createAbsoluteFilePath(payload.filename));
+		bridge.events.evict.subscribe(async (payload) => {
+			await this.evict(payload);
 			return undefined;
 		});
 
-		bridge.moduleSignatureJS.subscribe((payload) => {
+		bridge.events.moduleSignatureJS.subscribe((payload) => {
 			return this.api.moduleSignatureJS(payload.ref, payload.parseOptions);
 		});
 
-		bridge.updateProjects.subscribe((payload) => {
+		bridge.events.updateProjects.subscribe((payload) => {
 			return this.updateProjects(payload.projects);
 		});
 
-		bridge.updateManifests.subscribe((payload) => {
+		bridge.events.updateManifests.subscribe((payload) => {
 			return this.updateManifests(payload.manifests);
 		});
 
-		bridge.status.subscribe(() => {
+		bridge.events.status.subscribe(() => {
 			return {
 				astCacheSize: this.astCache.size,
 				pid: process.pid,
@@ -222,54 +245,75 @@ export default class Worker {
 			};
 		});
 
-		bridge.getBuffer.subscribe((payload) => {
+		bridge.events.getBuffer.subscribe((payload) => {
 			return this.getBuffer(payload.ref);
 		});
 
-		bridge.updateBuffer.subscribe((payload) => {
-			return this.updateBuffer(payload.ref, payload.content);
+		bridge.events.updateBuffer.subscribe(async (payload) => {
+			return this.updateBuffer(payload.ref, payload.buffer);
 		});
 
-		bridge.patchBuffer.subscribe((payload) => {
+		bridge.events.patchBuffer.subscribe(async (payload) => {
 			return this.patchBuffer(payload.ref, payload.patches);
 		});
 
-		bridge.clearBuffer.subscribe((payload) => {
+		bridge.events.clearBuffer.subscribe(async (payload) => {
 			return this.clearBuffer(payload.ref);
 		});
 
-		bridge.getFileBuffers.subscribe(() => {
+		bridge.events.getFileBuffers.subscribe(() => {
 			return this.getFileBuffers();
 		});
 	}
 
-	public getBuffer(ref: FileReference) {
+	public isDiskSynced(path: AbsoluteFilePath): boolean {
+		return !this.buffers.has(path) && !this.virtualModules.isVirtualPath(path);
+	}
+
+	public hasBuffer(path: AbsoluteFilePath): boolean {
+		return this.buffers.has(path);
+	}
+
+	public getBufferFakeStats(path: AbsoluteFilePath): FSStats {
+		const buffer = this.buffers.assert(path);
+		return createFakeStats({
+			type: "file",
+			size: BigInt(buffer.content.length),
+			date: new Date(Number(buffer.mtimeNs / 1000000n)),
+		});
+	}
+
+	public getBuffer(ref: FileReference): undefined | string {
 		this.logger.info(markup`Returned ${ref.real} buffer`);
-		return this.buffers.get(ref.real);
+		const buffer = this.buffers.get(ref.real);
+		if (buffer === undefined) {
+			return undefined;
+		} else {
+			return buffer.content;
+		}
 	}
 
-	public clearBuffer({real}: FileReference) {
-		this.logger.info(markup`Cleared ${real} buffer`);
-		this.buffers.delete(real);
-		this.evict(real);
+	public async clearBuffer(ref: FileReference) {
+		this.logger.info(markup`Cleared ${ref.real} buffer`);
+		this.buffers.delete(ref.real);
+		await this.evict(ref);
 	}
 
-	public updateBuffer(ref: FileReference, content: string) {
+	public async updateBuffer(ref: FileReference, buffer: WorkerBuffer) {
 		this.logger.info(markup`Updated ${ref.real} buffer`);
-		this.buffers.set(ref.real, content);
-		this.evict(ref.real);
+		this.buffers.set(ref.real, buffer);
+		await this.evict(ref);
 	}
 
-	private getFileBuffers() {
-		return Array.from(
-			this.buffers,
-			([path, content]) => ({filename: path.join(), content}),
-		);
+	private getFileBuffers(): [AbsoluteFilePath, WorkerBuffer][] {
+		return Array.from(this.buffers);
 	}
 
-	private patchBuffer(ref: FileReference, patches: WorkerBufferPatch[]) {
+	private async patchBuffer(ref: FileReference, patches: WorkerBufferPatch[]) {
 		this.logger.info(markup`Patched ${ref.real} buffer`);
-		let buffer: undefined | string = this.buffers.assert(ref.real);
+		const entry = this.buffers.assert(ref.real);
+		const {mtimeNs: mtime} = entry;
+		let buffer: undefined | string = entry.content;
 
 		// Patches must be applied sequentially
 		for (const patch of patches) {
@@ -280,8 +324,8 @@ export default class Worker {
 			}
 		}
 
-		this.buffers.set(ref.real, buffer);
-		this.evict(ref.real);
+		this.buffers.set(ref.real, {content: buffer, mtimeNs: mtime});
+		await this.evict(ref);
 		return buffer;
 	}
 
@@ -348,18 +392,58 @@ export default class Worker {
 		};
 	}
 
-	public async readFile(path: AbsoluteFilePath): Promise<string> {
-		const buffer = this.buffers.get(path);
+	public async readFileText(ref: FileReference): Promise<string> {
+		const content = await this.readFile(ref);
+
+		if (typeof content === "string") {
+			return content;
+		} else {
+			return new Promise((resolve, reject) => {
+				let buff = "";
+
+				content.on(
+					"error",
+					(err) => {
+						reject(err);
+					},
+				);
+
+				content.on(
+					"data",
+					(chunk) => {
+						buff += chunk;
+					},
+				);
+
+				content.on(
+					"end",
+					() => {
+						resolve(buff);
+					},
+				);
+			});
+		}
+	}
+
+	public async readFile(ref: FileReference): Promise<string | FSReadStream> {
+		const buffer = this.buffers.get(ref.real);
 		if (buffer !== undefined) {
-			return buffer;
+			return buffer.content;
 		}
 
-		const virtual = this.virtualModules.getPossibleVirtualFileContents(path);
+		const virtual = this.virtualModules.getPossibleVirtualFileContents(ref.real);
 		if (virtual !== undefined) {
 			return virtual;
 		}
 
-		return await readFileText(path);
+		// We may have already read this file to hash it for the cache
+		const cache = await this.cache.getFile(ref);
+		const cached = cache.takePossibleReadFile();
+		if (cached !== undefined) {
+			return cached;
+		}
+
+		return createReadStream(ref.real);
 	}
 
 	public async parse(
@@ -425,7 +509,9 @@ export default class Worker {
 
 		this.logger.info(markup`Parsing: ${path}`);
 
-		const mtime = await this.getMtime(path);
+		const cacheFile = await this.cache.getFile(ref);
+		const integrity = await this.cache.getIntegrity(ref);
+		const {mtimeNs} = await cacheFile.getStats();
 
 		let manifestPath: undefined | string;
 		if (ref.manifest !== undefined) {
@@ -436,7 +522,8 @@ export default class Worker {
 			sourceTypeJS,
 			path: createUnknownPath(uid),
 			manifestPath,
-			mtime,
+			integrity,
+			mtimeNs,
 			file: ref,
 			worker: this,
 			project,
@@ -467,7 +554,8 @@ export default class Worker {
 			project,
 			path,
 			astModifiedFromSource,
-			mtime,
+			integrity,
+			mtimeNs,
 		};
 
 		if (cacheEnabled) {
@@ -475,18 +563,6 @@ export default class Worker {
 		}
 
 		return res;
-	}
-
-	// Get the file mtime to warn about outdated diagnostics
-	// If we have a buffer or virtual module for this file then don't set an mtime since our diagnostics
-	// explicitly do not match the file system
-	public async getMtime(path: AbsoluteFilePath): Promise<undefined | number> {
-		if (this.buffers.has(path) || this.virtualModules.isVirtualPath(path)) {
-			return undefined;
-		} else {
-			const stat = await lstat(path);
-			return stat.mtimeMs;
-		}
 	}
 
 	public getProject(id: number): TransformProjectDefinition {
@@ -499,10 +575,16 @@ export default class Worker {
 		return config;
 	}
 
-	private evict(path: AbsoluteFilePath) {
-		this.logger.info(markup`Evicted ${path}`);
-		this.astCache.delete(path);
-		this.moduleSignatureCache.delete(path);
+	private async evict(
+		{real, uid}: {
+			real: AbsoluteFilePath;
+			uid: string;
+		},
+	) {
+		this.logger.info(markup`Evicted ${real}`);
+		this.astCache.delete(real);
+		this.moduleSignatureCache.delete(real);
+		await this.cache.remove(uid, real);
 	}
 
 	private updateManifests(manifests: WorkerPartialManifests) {
@@ -516,7 +598,7 @@ export default class Worker {
 	}
 
 	public updateProjects(projects: WorkerProjects) {
-		for (const {config, directory, id} of projects) {
+		for (const {config, directory, configHashes, id} of projects) {
 			if (config === undefined) {
 				this.projects.delete(id);
 			} else {
@@ -524,6 +606,7 @@ export default class Worker {
 					id,
 					{
 						directory,
+						configHashes,
 						config,
 					},
 				);

@@ -36,7 +36,7 @@ function hello(a, a) {
 
 ```
 
- lint/js/noDupeArgs/reject/2/file.js:1:18 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDupeArgs/reject/2/file.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument a name clash in strict mode
 

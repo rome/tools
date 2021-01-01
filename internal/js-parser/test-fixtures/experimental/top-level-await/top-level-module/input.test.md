@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/top-level-await/top-level-module/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

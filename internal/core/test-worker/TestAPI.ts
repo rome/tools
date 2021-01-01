@@ -111,6 +111,13 @@ function normalizeUserAdviceItem(
 				list: item.list.map((item) => markup`${item}`),
 			};
 
+		case "inspect":
+			return {
+				type: "inspect",
+				// rome-ignore lint/ts/noExplicitAny: can remove this when we add back diagnostics structure validation
+				data: item.data as any,
+			};
+
 		default:
 			return item;
 	}

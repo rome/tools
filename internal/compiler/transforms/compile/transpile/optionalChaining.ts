@@ -42,7 +42,7 @@ function unoptionifyMemberExpression(node: AnyJSExpression): AnyJSExpression {
 				property,
 			})
 		,
-		(root as AnyJSExpression),
+		root as AnyJSExpression,
 	);
 }
 

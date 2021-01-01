@@ -148,7 +148,7 @@ type RegExpParserTypes = {
 type RegExpParser = ParserCore<RegExpParserTypes>;
 
 const createRegExpParser = createParser<RegExpParserTypes>({
-	diagnosticCategory: "parse/regex",
+	diagnosticLanguage: "regex",
 
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);

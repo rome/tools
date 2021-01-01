@@ -3,7 +3,7 @@ import {normalizeManifest} from ".";
 import {consumeUnknown} from "@internal/consume";
 import {AbsoluteFilePath} from "@internal/path";
 
-const PATH = ({} as AbsoluteFilePath);
+const PATH = {} as AbsoluteFilePath;
 
 function getManifest() {
 	return {
@@ -21,7 +21,8 @@ test(
 					"./foo": "./bar",
 				},
 			},
-			"parse/manifest",
+			"parse",
+			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
 	},
@@ -39,7 +40,8 @@ test(
 					},
 				},
 			},
-			"parse/manifest",
+			"parse",
+			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
 	},
@@ -57,7 +59,8 @@ test(
 					},
 				},
 			},
-			"parse/manifest",
+			"parse",
+			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
 	},

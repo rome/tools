@@ -42,6 +42,7 @@ test(
 		const context = new CompilerContext({
 			ast: MOCK_PROGRAM,
 			project: {
+				configHashes: [],
 				directory: undefined,
 				config: createDefaultProjectConfig(),
 			},

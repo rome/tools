@@ -22,10 +22,10 @@ test(
 			parseCSS({
 				path: "unknown",
 				input: dedent`
-		div {
-			background: red;
-		}
-		`,
+					div {
+						background: red;
+					}
+				`,
 			}),
 		);
 		t.is(jsNode.loc, undefined);

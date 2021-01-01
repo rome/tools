@@ -8,8 +8,10 @@
 import {
 	BaseTokens,
 	ComplexNode,
+	NumberToken,
 	SimpleNode,
 	SimpleToken,
+	StringToken,
 	ValueToken,
 } from "@internal/parser-core";
 
@@ -103,8 +105,8 @@ export type RangeNode =
 // TOKENS
 export type Tokens = BaseTokens & {
 	Space: SimpleToken<"Space">;
-	Number: ValueToken<"Number", number>;
-	Word: ValueToken<"Word", string>;
+	Number: NumberToken<"Number">;
+	Word: StringToken<"Word">;
 	Dash: SimpleToken<"Dash">;
 	RangeDash: SimpleToken<"RangeDash">;
 	Plus: SimpleToken<"Plus">;

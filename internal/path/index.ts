@@ -402,9 +402,21 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 		return filename;
 	}
 
-	public equal(other: AnyFilePath): boolean {
+	public equal(otherRaw: CreationArg): boolean {
 		// @ts-ignore
-		if (other === this) {
+		if (otherRaw === this) {
+			return true;
+		}
+
+		// Fast path for string match
+		if (this.join() === otherRaw) {
+			return true;
+		}
+
+		const other = createUnknownPath(otherRaw);
+
+		// Fast path for memoized strings
+		if (this.join() === other.join()) {
 			return true;
 		}
 
@@ -731,7 +743,7 @@ function parsePathSegments(
 ): ParsedPath {
 	let absoluteType: ParsedPathAbsoluteType = "posix";
 	let absoluteTarget: undefined | string;
-	let firstSeg = (segments[0] as undefined | string);
+	let firstSeg = segments[0] as undefined | string;
 
 	// Detect URL
 	if (

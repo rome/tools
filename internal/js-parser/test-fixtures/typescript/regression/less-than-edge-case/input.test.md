@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/regression/less-than-edge-case/input.tsx"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array [
 		"ts"

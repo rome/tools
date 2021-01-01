@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
 				filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 16
@@ -216,7 +218,7 @@ JSRoot {
 
 ```
 
- es2015/for-in/var-objectbindingpattern-initializer/input.js:1:5 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/for-in/var-objectbindingpattern-initializer/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
 

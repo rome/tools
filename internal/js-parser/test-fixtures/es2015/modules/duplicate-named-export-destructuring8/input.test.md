@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/modules/duplicate-named-export-destructuring8/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

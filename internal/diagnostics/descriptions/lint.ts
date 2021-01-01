@@ -147,7 +147,7 @@ export const lint = createDiagnosticsCategory({
 						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
 						return str;
 					},
-					([] as string[]),
+					[] as string[],
 				).join(", ")}`,
 			});
 		}
@@ -716,6 +716,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	JS_NO_UNUSED_VARIABLES: (kind: string, name: string) => ({
 		category: "lint/js/noUnusedVariables",
+		categoryValue: name,
 		message: markup`The ${kind} variable <emphasis>${name}</emphasis> is unused.`,
 		advice: [
 			{
@@ -727,6 +728,7 @@ export const lint = createDiagnosticsCategory({
 	}),
 	JS_NO_UNDECLARED_VARIABLES: (name: string, bindingsInScope: string[]) => ({
 		category: "lint/js/noUndeclaredVariables",
+		categoryValue: name,
 		message: markup`The <emphasis>${name}</emphasis> variable is undeclared`,
 		advice: buildSuggestionAdvice(name, bindingsInScope),
 	}),
@@ -1129,7 +1131,7 @@ export const lint = createDiagnosticsCategory({
 				language,
 				diff: stringDiff(original, formatted),
 			},
-			({
+			{
 				type: "action",
 				command: "check",
 				shortcut: "f",
@@ -1139,8 +1141,8 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					apply: true,
 				},
-			} as DiagnosticAdviceAction),
-			({
+			} as DiagnosticAdviceAction,
+			{
 				type: "action",
 				hidden: true,
 				command: "check",
@@ -1151,7 +1153,7 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					format: true,
 				},
-			} as DiagnosticAdviceAction),
+			} as DiagnosticAdviceAction,
 		],
 	}),
 	TS_NO_EXPLICIT_ANY: {

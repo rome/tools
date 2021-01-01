@@ -28,7 +28,7 @@ import {
 	getFilenameTimestamp,
 } from "@internal/core/client/Client";
 import {commandCategories} from "@internal/core/common/commands";
-import {WriteStream, createWriteStream, writeFile} from "@internal/fs";
+import {FSWriteStream, createWriteStream, writeFile} from "@internal/fs";
 import {markupToPlainText} from "@internal/cli-layout";
 import {
 	convertToMarkupFromRandomString,
@@ -519,7 +519,7 @@ export default async function cli() {
 		}
 
 		if (cliFlags.logs) {
-			let fileout: undefined | WriteStream;
+			let fileout: undefined | FSWriteStream;
 			if (cliFlags.logPath !== undefined) {
 				fileout = createWriteStream(clientFlags.cwd.resolve(cliFlags.logPath));
 

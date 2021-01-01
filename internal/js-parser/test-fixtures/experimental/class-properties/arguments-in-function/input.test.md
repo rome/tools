@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/class-properties/arguments-in-function/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

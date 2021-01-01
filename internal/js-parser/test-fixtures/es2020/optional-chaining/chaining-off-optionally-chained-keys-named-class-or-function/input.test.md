@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

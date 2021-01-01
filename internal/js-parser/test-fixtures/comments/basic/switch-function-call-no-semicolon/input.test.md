@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "comments/basic/switch-function-call-no-semicolon/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

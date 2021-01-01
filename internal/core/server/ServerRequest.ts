@@ -29,6 +29,7 @@ import {
 	getOrDeriveDiagnosticsFromError,
 } from "@internal/diagnostics";
 import {
+	DiagnosticsFileHandler,
 	DiagnosticsPrinter,
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
@@ -48,9 +49,10 @@ import Server, {
 	ServerUnfinishedMarker,
 } from "./Server";
 import {Reporter, ReporterNamespace} from "@internal/cli-reporter";
-import {Event} from "@internal/events";
+import {BridgeServer, Event} from "@internal/events";
 import {
 	FlagValue,
+	SerializeCLILocation,
 	SerializeCLITarget,
 	serializeCLIFlags,
 } from "@internal/cli-flags";
@@ -74,6 +76,7 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyFilePath,
+	RelativeFilePath,
 	UnknownPath,
 	createAbsoluteFilePath,
 	createUnknownPath,
@@ -82,13 +85,10 @@ import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
-import {JSONObject} from "@internal/codec-config";
 import {VCSClient} from "@internal/vcs";
 import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
-import {CacheEntry} from "./Cache";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
-import crypto = require("crypto");
 import {GlobOptions, Globber} from "./fs/glob";
 
 type ServerRequestOptions = {
@@ -208,12 +208,6 @@ export class ServerRequestInvalid extends DiagnosticsError {
 	public showHelp: boolean;
 }
 
-function hash(val: JSONObject): string {
-	return val === undefined || Object.keys(val).length === 0
-		? "none"
-		: crypto.createHash("sha256").update(JSON.stringify(val)).digest("hex");
-}
-
 export class ServerRequestCancelled extends Error {
 	constructor(reason: string) {
 		super(
@@ -265,7 +259,7 @@ export default class ServerRequest {
 
 	public id: number;
 	public query: ServerQueryRequest;
-	public bridge: ServerBridge;
+	public bridge: BridgeServer<typeof ServerBridge>;
 	public client: ServerClient;
 	public logger: ReporterNamespace;
 	public server: Server;
@@ -559,6 +553,28 @@ export default class ServerRequest {
 		});
 	}
 
+	private maybeReadMemoryFile(path: RelativeFilePath): undefined | string {
+		switch (path.join()) {
+			case "argv":
+				return this.getDiagnosticLocationFromFlags("none").sourceText;
+
+			case "cwd":
+				return this.client.flags.cwd.join();
+		}
+		return undefined;
+	}
+
+	private createDiagnosticsPrinterFileHandlers(): DiagnosticsFileHandler[] {
+		return [
+			this.server.createDiagnosticsPrinterFileHandler(),
+			{
+				readRelative: async (path) => {
+					return this.maybeReadMemoryFile(path);
+				},
+			},
+		];
+	}
+
 	public createDiagnosticsPrinter(
 		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
 	): DiagnosticsPrinter {
@@ -573,7 +589,7 @@ export default class ServerRequest {
 			cwd: this.client.flags.cwd,
 			wrapErrors: true,
 			flags: this.getDiagnosticsPrinterFlags(),
-			fileReaders: this.server.createDiagnosticsPrinterFileReaders(),
+			fileHandlers: this.createDiagnosticsPrinterFileHandlers(),
 		});
 	}
 
@@ -693,8 +709,17 @@ export default class ServerRequest {
 	}
 
 	public getDiagnosticLocationFromFlags(
+		target: "none",
+	): RequiredProps<DiagnosticLocation, "sourceText">
+	public getDiagnosticLocationFromFlags(
+		target: Exclude<SerializeCLITarget, "none">,
+	): SerializeCLILocation
+	public getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
-	): RequiredProps<DiagnosticLocation, "sourceText"> {
+	): DiagnosticLocation
+	public getDiagnosticLocationFromFlags(
+		target: SerializeCLITarget,
+	): DiagnosticLocation {
 		const {query} = this;
 		const clientFlags = this.client.flags;
 
@@ -751,18 +776,6 @@ export default class ServerRequest {
 		};
 	}
 
-	private normalizeCompileResult(res: WorkerCompileResult): WorkerCompileResult {
-		const {projectManager} = this.server;
-
-		// Turn all the cacheDependencies entries from 'absolute paths to UIDs
-		return {
-			...res,
-			cacheDependencies: res.cacheDependencies.map((filename) => {
-				return projectManager.getFileReference(createAbsoluteFilePath(filename)).uid;
-			}),
-		};
-	}
-
 	private startMarker(
 		opts: Omit<ServerUnfinishedMarker, "start">,
 	): ServerUnfinishedMarker {
@@ -786,14 +799,17 @@ export default class ServerRequest {
 	private async wrapRequestDiagnostic<T>(
 		method: string,
 		path: AbsoluteFilePath,
-		factory: (bridge: WorkerBridge, ref: FileReference) => Promise<T>,
+		factory: (
+			bridge: BridgeServer<typeof WorkerBridge>,
+			ref: FileReference,
+		) => Promise<T>,
 		opts: WrapRequestDiagnosticOpts = {},
 	): Promise<T> {
 		await this.server.memoryFs.processingLock.wait();
 
 		const {server} = this;
 		const owner = await server.fileAllocator.getOrAssignOwner(path);
-		const startMtime = server.memoryFs.maybeGetMtime(path);
+		const startMtime = server.memoryFs.maybeGetMtimeNs(path);
 		const start = Date.now();
 		const lock = await server.requestFileLocker.getLock(path);
 		const ref = server.projectManager.getFileReference(path);
@@ -855,7 +871,7 @@ export default class ServerRequest {
 			lock.release();
 			clearInterval(interval);
 
-			const endMtime = this.server.memoryFs.maybeGetMtime(path);
+			const endMtime = this.server.memoryFs.maybeGetMtimeNs(path);
 			if (endMtime !== startMtime && !opts.noRetry) {
 				return this.wrapRequestDiagnostic(method, path, factory);
 			}
@@ -871,7 +887,7 @@ export default class ServerRequest {
 			"getBuffer",
 			path,
 			async (bridge, ref) => {
-				return bridge.getBuffer.call({ref});
+				return bridge.events.getBuffer.call({ref});
 			},
 		);
 	}
@@ -886,8 +902,14 @@ export default class ServerRequest {
 			"updateBuffer",
 			path,
 			async (bridge, ref) => {
-				await bridge.updateBuffer.call({ref, content});
-				this.server.memoryFs.addBuffer(path, content);
+				const mtimeNs = this.server.memoryFs.addBuffer(path, content);
+				await bridge.events.updateBuffer.call({
+					ref,
+					buffer: {
+						content,
+						mtimeNs,
+					},
+				});
 				await this.server.refreshFileEvent.push(path);
 			},
 			{noRetry: true},
@@ -904,7 +926,7 @@ export default class ServerRequest {
 			"patchBuffer",
 			path,
 			async (bridge, ref) => {
-				const buffer = await bridge.patchBuffer.call({ref, patches});
+				const buffer = await bridge.events.patchBuffer.call({ref, patches});
 				this.server.memoryFs.addBuffer(path, buffer);
 				this.server.refreshFileEvent.push(path);
 				return buffer;
@@ -920,7 +942,7 @@ export default class ServerRequest {
 			"clearBuffer",
 			path,
 			async (bridge, ref) => {
-				await bridge.clearBuffer.call({ref});
+				await bridge.events.clearBuffer.call({ref});
 				this.server.memoryFs.clearBuffer(path);
 				this.server.refreshFileEvent.push(path);
 			},
@@ -934,10 +956,11 @@ export default class ServerRequest {
 	): Promise<AnyRoot> {
 		this.checkCancelled();
 
+		// @ts-ignore: AST is a bunch of interfaces which we cannot match with an object index
 		return this.wrapRequestDiagnostic(
 			"parse",
 			path,
-			(bridge, ref) => bridge.parse.call({ref, options: opts}),
+			(bridge, ref) => bridge.events.parse.call({ref, options: opts}),
 		);
 	}
 
@@ -952,7 +975,7 @@ export default class ServerRequest {
 			"updateInlineSnapshots",
 			path,
 			(bridge, ref) =>
-				bridge.updateInlineSnapshots.call({ref, updates, parseOptions})
+				bridge.events.updateInlineSnapshots.call({ref, updates, parseOptions})
 			,
 		);
 	}
@@ -963,15 +986,6 @@ export default class ServerRequest {
 	): Promise<WorkerLintResult> {
 		this.checkCancelled();
 
-		const {cache} = this.server;
-		const cacheEntry = await cache.get(path);
-
-		const cacheKey = hash(optionsWithoutModSigs);
-		const cached = cacheEntry.lint[cacheKey];
-		if (cached !== undefined) {
-			return cached;
-		}
-
 		const prefetchedModuleSignatures = await this.maybePrefetchModuleSignatures(
 			path,
 		);
@@ -981,25 +995,11 @@ export default class ServerRequest {
 			prefetchedModuleSignatures,
 		};
 
-		const res = await this.wrapRequestDiagnostic(
+		return await this.wrapRequestDiagnostic(
 			"lint",
 			path,
-			(bridge, ref) => bridge.lint.call({ref, options, parseOptions: {}}),
+			(bridge, ref) => bridge.events.lint.call({ref, options, parseOptions: {}}),
 		);
-
-		await cache.update(
-			path,
-			(cacheEntry) =>
-				({
-					lint: {
-						...cacheEntry.lint,
-						[cacheKey]: res,
-					},
-				} as CacheEntry)
-			,
-		);
-
-		return res;
 	}
 
 	public async requestWorkerFormat(
@@ -1012,7 +1012,7 @@ export default class ServerRequest {
 		return await this.wrapRequestDiagnostic(
 			"format",
 			path,
-			(bridge, ref) => bridge.format.call({ref, options, parseOptions}),
+			(bridge, ref) => bridge.events.format.call({ref, options, parseOptions}),
 		);
 	}
 
@@ -1022,22 +1022,10 @@ export default class ServerRequest {
 		options: WorkerCompilerOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<WorkerCompileResult> {
+		const {projectManager} = this.server;
 		this.checkCancelled();
 
-		const {cache} = this.server;
-
-		// Create a cache key comprised of the stage and hash of the options
-		const cacheKey = `${stage}:${hash(options)}`;
-
-		// Check cache for this stage and options
-		const cacheEntry = await cache.get(path);
-		const cached = cacheEntry.compile[cacheKey];
-		if (cached !== undefined) {
-			// TODO check cacheDependencies
-			return cached;
-		}
-
-		const compileRes = await this.wrapRequestDiagnostic(
+		const res = await this.wrapRequestDiagnostic(
 			"compile",
 			path,
 			(bridge, ref) => {
@@ -1046,32 +1034,22 @@ export default class ServerRequest {
 					options = {};
 				}
 
-				return bridge.compile.call({ref, stage, options, parseOptions});
+				return bridge.events.compile.call({ref, stage, options, parseOptions});
 			},
 		);
 
-		const res = this.normalizeCompileResult({
-			...compileRes,
-			cached: false,
-		});
-
-		// There's a race condition here between the file being opened and then rewritten
-		await cache.update(
-			path,
-			(cacheEntry) =>
-				({
-					compile: {
-						...cacheEntry.compile,
-						[cacheKey]: {
-							...res,
-							cached: true,
-						},
-					},
-				} as CacheEntry)
-			,
-		);
-
-		return res;
+		// Turn all the cacheDependencies entries from 'absolute paths to UIDs
+		return {
+			...res,
+			value: {
+				...res.value,
+				cacheDependencies: res.value.cacheDependencies.map((filename) => {
+					return projectManager.getFileReference(
+						createAbsoluteFilePath(filename),
+					).uid;
+				}),
+			},
+		};
 	}
 
 	public async requestWorkerAnalyzeDependencies(
@@ -1080,32 +1058,13 @@ export default class ServerRequest {
 	): Promise<WorkerAnalyzeDependencyResult> {
 		this.checkCancelled();
 
-		const {cache} = this.server;
-
-		const cacheEntry = await cache.get(path);
-		if (cacheEntry.analyzeDependencies !== undefined) {
-			return cacheEntry.analyzeDependencies;
-		}
-
-		const res = await this.wrapRequestDiagnostic(
+		return await this.wrapRequestDiagnostic(
 			"analyzeDependencies",
 			path,
-			(bridge, ref) => bridge.analyzeDependencies.call({ref, parseOptions}),
+			(bridge, ref) =>
+				bridge.events.analyzeDependencies.call({ref, parseOptions})
+			,
 		);
-		await cache.update(
-			path,
-			{
-				analyzeDependencies: {
-					...res,
-					cached: true,
-				},
-			},
-		);
-
-		return {
-			...res,
-			cached: false,
-		};
 	}
 
 	public async requestWorkerModuleSignature(
@@ -1114,25 +1073,11 @@ export default class ServerRequest {
 	): Promise<ModuleSignature> {
 		this.checkCancelled();
 
-		const {cache} = this.server;
-
-		const cacheEntry = await cache.get(path);
-		if (cacheEntry.moduleSignature !== undefined) {
-			return cacheEntry.moduleSignature;
-		}
-
-		const res = await this.wrapRequestDiagnostic(
+		return await this.wrapRequestDiagnostic(
 			"moduleSignature",
 			path,
-			(bridge, ref) => bridge.moduleSignatureJS.call({ref, parseOptions}),
+			(bridge, ref) => bridge.events.moduleSignatureJS.call({ref, parseOptions}),
 		);
-		await cache.update(
-			path,
-			{
-				moduleSignature: res,
-			},
-		);
-		return res;
 	}
 
 	private async maybePrefetchModuleSignatures(

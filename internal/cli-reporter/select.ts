@@ -103,7 +103,7 @@ export default async function select<Options extends SelectOptions>(
 	}
 
 	function render() {
-		const optionNames = (Object.keys(options) as SelectOptionsKeys<Options>[]);
+		const optionNames = Object.keys(options) as SelectOptionsKeys<Options>[];
 		for (let i = 0; i < optionNames.length; i++) {
 			const key = optionNames[i];
 			const option = options[key]!;
@@ -156,7 +156,7 @@ export default async function select<Options extends SelectOptions>(
 
 	setRawMode(stdin, true);
 
-	await new Promise((resolve) => {
+	await new Promise<void>((resolve) => {
 		const keypress = onKeypress(
 			reporter,
 			(key) => {

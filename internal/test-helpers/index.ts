@@ -197,12 +197,7 @@ export async function createFixtureTests(
 
 				t.addToAdvice({
 					type: "list",
-					list: Array.from(
-						fixture.files,
-						([basename, info]) =>
-							`<filelink target="${info.absolute}">${basename}</filelink>`
-						,
-					),
+					list: Array.from(fixture.files, ([basename]) => `${basename}`),
 				});
 
 				await callback(fixture, t);

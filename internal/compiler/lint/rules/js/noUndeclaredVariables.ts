@@ -92,11 +92,6 @@ export default createVisitor({
 						name,
 						scope.getBindingNames(),
 					),
-					{
-						meta: {
-							identifierName: name,
-						},
-					},
 				);
 			}
 		}

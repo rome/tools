@@ -70,7 +70,37 @@ const a = [1, 2].map((x) =>
 
 ```
 
- lint/react/useKey/reject/3/file.tsx:1:34 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useKey/reject/3/file.tsx:1:24 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a key prop with a unique value for each element in iterator.
+
+    const a = foo?.map(x => <div>{x}</div>);
+                            ^^^^^^^^^^^^^^
+
+  ℹ Keys help React identify which items have changed, are added, or are removed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```tsx
+const a = foo?.map((x) =>
+	<div>
+		{x}
+	</div>
+);
+
+```
+
+### `3`
+
+```
+
+ lint/react/useKey/reject/4/file.tsx:1:34 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -85,43 +115,10 @@ const a = [1, 2].map((x) =>
 
 ```
 
-### `2: formatted`
-
-```tsx
-React.Children.map(
-	children,
-	(x) =>
-		<div>
-			{x}
-		</div>
-	,
-);
-
-```
-
-### `3`
-
-```
-
- lint/react/useKey/reject/4/file.tsx:1:28 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Provide a key prop with a unique value for each element in iterator.
-
-    Children.map(children, x => <div>{x}</div>);
-                                ^^^^^^^^^^^^^^
-
-  ℹ Keys help React identify which items have changed, are added, or are removed.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
 ### `3: formatted`
 
 ```tsx
-Children.map(
+React.Children.map(
 	children,
 	(x) =>
 		<div>
@@ -136,7 +133,40 @@ Children.map(
 
 ```
 
- lint/react/useKey/reject/5/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useKey/reject/5/file.tsx:1:28 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a key prop with a unique value for each element in iterator.
+
+    Children.map(children, x => <div>{x}</div>);
+                                ^^^^^^^^^^^^^^
+
+  ℹ Keys help React identify which items have changed, are added, or are removed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```tsx
+Children.map(
+	children,
+	(x) =>
+		<div>
+			{x}
+		</div>
+	,
+);
+
+```
+
+### `5`
+
+```
+
+ lint/react/useKey/reject/6/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -153,7 +183,7 @@ Children.map(
 
 ```
 
-### `4: formatted`
+### `5: formatted`
 
 ```tsx
 const a = [1, 2].map((x) => {
@@ -164,11 +194,11 @@ const a = [1, 2].map((x) => {
 
 ```
 
-### `5`
+### `6`
 
 ```
 
- lint/react/useKey/reject/6/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useKey/reject/7/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -185,45 +215,10 @@ const a = [1, 2].map((x) => {
 
 ```
 
-### `5: formatted`
-
-```tsx
-React.Children.map(
-	children,
-	(x) => {
-		return <div>
-			{x}
-		</div>;
-	},
-);
-
-```
-
-### `6`
-
-```
-
- lint/react/useKey/reject/7/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Provide a key prop with a unique value for each element in iterator.
-
-    1 │ Children.map(children, x => {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
-    3 │ });
-
-  ℹ Keys help React identify which items have changed, are added, or are removed.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
 ### `6: formatted`
 
 ```tsx
-Children.map(
+React.Children.map(
 	children,
 	(x) => {
 		return <div>
@@ -242,7 +237,7 @@ Children.map(
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    1 │ const a = [1, 2].map(function(x) {
+    1 │ Children.map(children, x => {
   > 2 │   return <div>{x}</div>;
       │          ^^^^^^^^^^^^^^
     3 │ });
@@ -258,11 +253,14 @@ Children.map(
 ### `7: formatted`
 
 ```tsx
-const a = [1, 2].map(function(x) {
-	return <div>
-		{x}
-	</div>;
-});
+Children.map(
+	children,
+	(x) => {
+		return <div>
+			{x}
+		</div>;
+	},
+);
 
 ```
 
@@ -271,6 +269,38 @@ const a = [1, 2].map(function(x) {
 ```
 
  lint/react/useKey/reject/9/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Provide a key prop with a unique value for each element in iterator.
+
+    1 │ const a = [1, 2].map(function(x) {
+  > 2 │   return <div>{x}</div>;
+      │          ^^^^^^^^^^^^^^
+    3 │ });
+
+  ℹ Keys help React identify which items have changed, are added, or are removed.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```tsx
+const a = [1, 2].map(function(x) {
+	return <div>
+		{x}
+	</div>;
+});
+
+```
+
+### `9`
+
+```
+
+ lint/react/useKey/reject/10/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -287,7 +317,7 @@ const a = [1, 2].map(function(x) {
 
 ```
 
-### `8: formatted`
+### `9: formatted`
 
 ```tsx
 React.Children.map(
@@ -301,11 +331,11 @@ React.Children.map(
 
 ```
 
-### `9`
+### `10`
 
 ```
 
- lint/react/useKey/reject/10/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useKey/reject/11/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
@@ -322,7 +352,7 @@ React.Children.map(
 
 ```
 
-### `9: formatted`
+### `10: formatted`
 
 ```tsx
 Children.map(
@@ -336,20 +366,6 @@ Children.map(
 
 ```
 
-### `10`
-
-```
-✔ No known problems!
-
-```
-
-### `10: formatted`
-
-```tsx
-const a = [<div key="a" />, <div key={"b"} />];
-
-```
-
 ### `11`
 
 ```
@@ -360,11 +376,7 @@ const a = [<div key="a" />, <div key={"b"} />];
 ### `11: formatted`
 
 ```tsx
-const a = [1, 2].map((x) =>
-	<div key={x}>
-		{x}
-	</div>
-);
+const a = [<div key="a" />, <div key={"b"} />];
 
 ```
 
@@ -378,13 +390,10 @@ const a = [1, 2].map((x) =>
 ### `12: formatted`
 
 ```tsx
-React.Children.map(
-	children,
-	(x) =>
-		<div key={x}>
-			{x}
-		</div>
-	,
+const a = [1, 2].map((x) =>
+	<div key={x}>
+		{x}
+	</div>
 );
 
 ```
@@ -399,7 +408,7 @@ React.Children.map(
 ### `13: formatted`
 
 ```tsx
-Children.map(
+React.Children.map(
 	children,
 	(x) =>
 		<div key={x}>
@@ -420,11 +429,14 @@ Children.map(
 ### `14: formatted`
 
 ```tsx
-const a = [1, 2].map((x) => {
-	return <div key={x}>
-		{x}
-	</div>;
-});
+Children.map(
+	children,
+	(x) =>
+		<div key={x}>
+			{x}
+		</div>
+	,
+);
 
 ```
 
@@ -438,14 +450,11 @@ const a = [1, 2].map((x) => {
 ### `15: formatted`
 
 ```tsx
-React.Children.map(
-	children,
-	(x) => {
-		return <div key={x}>
-			{x}
-		</div>;
-	},
-);
+const a = [1, 2].map((x) => {
+	return <div key={x}>
+		{x}
+	</div>;
+});
 
 ```
 
@@ -459,7 +468,7 @@ React.Children.map(
 ### `16: formatted`
 
 ```tsx
-Children.map(
+React.Children.map(
 	children,
 	(x) => {
 		return <div key={x}>
@@ -480,11 +489,14 @@ Children.map(
 ### `17: formatted`
 
 ```tsx
-const a = [1, 2].map(function(x) {
-	return <div key={x}>
-		{x}
-	</div>;
-});
+Children.map(
+	children,
+	(x) => {
+		return <div key={x}>
+			{x}
+		</div>;
+	},
+);
 
 ```
 
@@ -498,14 +510,11 @@ const a = [1, 2].map(function(x) {
 ### `18: formatted`
 
 ```tsx
-React.Children.map(
-	children,
-	function(x) {
-		return <div key={x}>
-			{x}
-		</div>;
-	},
-);
+const a = [1, 2].map(function(x) {
+	return <div key={x}>
+		{x}
+	</div>;
+});
 
 ```
 
@@ -517,6 +526,27 @@ React.Children.map(
 ```
 
 ### `19: formatted`
+
+```tsx
+React.Children.map(
+	children,
+	function(x) {
+		return <div key={x}>
+			{x}
+		</div>;
+	},
+);
+
+```
+
+### `20`
+
+```
+✔ No known problems!
+
+```
+
+### `20: formatted`
 
 ```tsx
 Children.map(

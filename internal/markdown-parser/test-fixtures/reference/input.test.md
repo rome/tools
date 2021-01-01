@@ -12,7 +12,7 @@ MarkdownRoot {
 	corrupt: false
 	diagnostics: Array []
 	filename: "reference/input.md"
-	mtime: undefined
+	integrity: undefined
 	loc: Object {
 		filename: "reference/input.md"
 		end: Object {

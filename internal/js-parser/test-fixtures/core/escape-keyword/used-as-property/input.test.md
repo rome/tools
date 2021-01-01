@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/escape-keyword/used-as-property/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Escape sequence in keyword "}
-						"break"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Escape sequence in keyword "}
+					"break"
+				]
 			}
 			location: Object {
 				filename: "core/escape-keyword/used-as-property/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 4
@@ -193,7 +193,7 @@ JSRoot {
 
 ```
 
- core/escape-keyword/used-as-property/input.js:2:4 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/escape-keyword/used-as-property/input.js:2:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword break
 

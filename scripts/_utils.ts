@@ -16,6 +16,8 @@ import crypto = require("crypto");
 import child = require("child_process");
 import {markup} from "@internal/markup";
 import {regex} from "@internal/string-escape";
+import {formatAST} from "@internal/formatter";
+import {valueToNode} from "@internal/js-ast-utils";
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();
@@ -305,4 +307,8 @@ export async function languageCategoryExists(
 	const categories = await getLanguageCategories(language);
 
 	return categories.includes(category);
+}
+
+export function valueToCode(value: unknown): string {
+	return formatAST(valueToNode(value)).code;
 }

@@ -264,7 +264,7 @@ export default class Parser<T> {
 					command: this.currentCommand,
 					definition: def,
 				});
-				defaultFlags[key] = (def.default as FlagValue);
+				defaultFlags[key] = def.default as FlagValue;
 
 				// Automatically convert number strings
 				if (def.type === "number" && typeof value !== "number") {
@@ -912,11 +912,11 @@ export default class Parser<T> {
     `;
 
 		return dedent`
-      ${mainScript}
-      ${commandFuncs}
-      ${romeFunc}
-      complete -F __${prg}_gen_completions ${prg}
-    `;
+			${mainScript}
+			${commandFuncs}
+			${romeFunc}
+			complete -F __${prg}_gen_completions ${prg}
+		`;
 	}
 
 	private genZshCompletions(prg: string): string {

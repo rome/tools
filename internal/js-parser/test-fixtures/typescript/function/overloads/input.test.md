@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/function/overloads/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

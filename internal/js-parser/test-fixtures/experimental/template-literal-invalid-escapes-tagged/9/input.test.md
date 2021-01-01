@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/template-literal-invalid-escapes-tagged/9/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

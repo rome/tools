@@ -11,7 +11,7 @@ HTMLRoot {
 	corrupt: false
 	diagnostics: Array []
 	filename: "smoke/input.html"
-	mtime: undefined
+	integrity: undefined
 	loc: Object {
 		filename: "smoke/input.html"
 		end: Object {

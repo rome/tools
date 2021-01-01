@@ -57,10 +57,11 @@ function wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
 export {FileNotFound} from "./FileNotFound";
 
 // Reexported types: Only file that ever imports the fs module is this one
-export type FileHandle = fs.promises.FileHandle;
-export type WriteStream = fs.WriteStream;
-export type ReadStream = fs.ReadStream;
+export type FSHandle = fs.promises.FileHandle;
+export type FSWriteStream = fs.WriteStream;
+export type FSReadStream = fs.ReadStream;
 export type FSWatcher = fs.FSWatcher;
+export type FSStats = fs.BigIntStats;
 
 // This file contains some wrappers around Node's fs module. Except here we support passing in AbsoluteFilePath instances.
 // NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.
@@ -156,7 +157,7 @@ export async function readFileTextMeta(
 // writeFile
 export function writeFile(
 	path: AbsoluteFilePath,
-	content: string | Buffer,
+	content: string | NodeJS.ArrayBufferView,
 ): Promise<void> {
 	return promisifyVoid(
 		path,
@@ -208,10 +209,12 @@ export function readDirectory(
 }
 
 // lstat
-export function lstat(path: AbsoluteFilePath): Promise<fs.Stats> {
+export function lstat(path: AbsoluteFilePath): Promise<fs.BigIntStats> {
 	return promisifyData(
 		path,
-		(filename, callback) => fs.lstat(filename, callback),
+		(filename, callback) =>
+			(fs.lstat as typeof fs.stat)(filename, {bigint: true}, callback)
+		,
 	);
 }
 
@@ -327,4 +330,50 @@ export function readFileTextSync(path: AbsoluteFilePath): string {
 
 export function lstatSync(path: AbsoluteFilePath): fs.Stats {
 	return fs.lstatSync(path.join());
+}
+
+// Mock helpers
+
+export function createFakeStats(
+	{date, size, type}: {
+		type: "directory" | "file";
+		size: bigint;
+		date: Date;
+	},
+): FSStats {
+	const ms = BigInt(Math.floor(date.valueOf()));
+	const ns = BigInt(date.valueOf()) * 1000000n;
+
+	return {
+		isFile: () => type === "file",
+		isDirectory: () => type === "directory",
+		isBlockDevice: () => false,
+		isCharacterDevice: () => false,
+		isSymbolicLink: () => false,
+		isFIFO: () => false,
+		isSocket: () => false,
+
+		dev: 0n,
+		ino: 0n,
+		mode: 16895n,
+		nlink: 0n,
+		uid: 0n,
+		gid: 0n,
+		rdev: 0n,
+		size,
+		blksize: 0n,
+		blocks: 0n,
+		atimeMs: ms,
+		mtimeMs: ms,
+		ctimeMs: ms,
+		birthtimeMs: ms,
+		atime: date,
+		mtime: date,
+		ctime: date,
+		birthtime: date,
+		atimeNs: ns,
+		mtimeNs: ns,
+		ctimeNs: ns,
+		birthtimeNs: ns,
+	};
 }

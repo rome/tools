@@ -91,9 +91,7 @@ export default createVisitor({
 				node.name.name.indexOf("aria-") === 0
 			) {
 				if (node.value) {
-					const ariaAttribute = ariaPropsMap.get(
-						(node.name.name as ARIAProperty),
-					);
+					const ariaAttribute = ariaPropsMap.get(node.name.name as ARIAProperty);
 					if (ariaAttribute) {
 						if (node.value.type === "JSStringLiteral") {
 							if (

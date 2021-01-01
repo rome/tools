@@ -18,9 +18,13 @@ export type Number1 = {
 	_tag: "ONE_OFFSET";
 };
 
-type AnyNumber = Number0 | Number1;
+export type AnyIndexedNumber = Number0 | Number1;
 
-export type UnknownNumber = AnyNumber | number;
+export type UnknownNumber = AnyIndexedNumber | number | bigint;
+
+export function isNumber(value: unknown): value is UnknownNumber {
+	return typeof value === "number" || typeof value === "bigint";
+}
 
 // Add two offsets or numbers.
 export function ob1Add(a: Number1, b: Number1): Number1;
@@ -31,7 +35,10 @@ export function ob1Add(a: number, b: Number0): Number0;
 export function ob1Add(a: Number1, b: Number0): Number1;
 export function ob1Add(a: Number0, b: Number1): Number1;
 export function ob1Add(a: Number0, b: Number0): Number0;
-export function ob1Add(a: number | AnyNumber, b: number | AnyNumber): AnyNumber {
+export function ob1Add(
+	a: number | AnyIndexedNumber,
+	b: number | AnyIndexedNumber,
+): AnyIndexedNumber {
 	// @ts-ignore
 	return a + b;
 }
@@ -44,7 +51,10 @@ export function ob1Sub(a: Number0, b: number): Number0;
 export function ob1Sub(a: Number1, b: Number0): Number1;
 export function ob1Sub(a: Number0, b: Number0): Number0;
 export function ob1Sub(a: Number1, b: Number1): Number1;
-export function ob1Sub(a: number | AnyNumber, b: number | AnyNumber): AnyNumber {
+export function ob1Sub(
+	a: number | AnyIndexedNumber,
+	b: number | AnyIndexedNumber,
+): AnyIndexedNumber {
 	// @ts-ignore
 	return a - b;
 }
@@ -65,10 +75,26 @@ export function ob1Get1(x: undefined | Number1): undefined | number {
 	return x;
 }
 
-export function ob1Get(x: UnknownNumber): number;
-export function ob1Get(x: undefined | UnknownNumber): undefined | number;
+export function ob1Get(x: Number0): number;
+export function ob1Get(x: Number1): number;
+export function ob1Get(x: number | AnyIndexedNumber): number;
+export function ob1Get(x: UnknownNumber): number | bigint;
+export function ob1Get(x: AnyIndexedNumber): number;
+
+export function ob1Get(x: undefined | Number0): undefined | number;
+export function ob1Get(x: undefined | Number1): undefined | number;
+export function ob1Get(
+	x: undefined | number | AnyIndexedNumber,
+): undefined | number;
+export function ob1Get(x: undefined | AnyIndexedNumber): undefined | number;
+export function ob1Get(
+	x: undefined | UnknownNumber,
+): undefined | number | bigint;
+
 export function ob1Get(x: undefined): undefined;
-export function ob1Get(x: undefined | UnknownNumber): undefined | number {
+export function ob1Get(
+	x: undefined | UnknownNumber,
+): undefined | number | bigint {
 	// @ts-ignore
 	return x;
 }
@@ -78,9 +104,9 @@ export function ob1Coerce0(x: number): Number0;
 export function ob1Coerce0(x: undefined): undefined;
 export function ob1Coerce0(x: undefined | number): Number0 | undefined;
 export function ob1Coerce0(
-	x: undefined | number | AnyNumber,
+	x: undefined | number | AnyIndexedNumber,
 ): Number0 | undefined {
-	return (x as Number0);
+	return x as Number0;
 }
 
 export const ob1Number0 = ob1Coerce0(0);
@@ -91,9 +117,9 @@ export function ob1Coerce1(x: number): Number1;
 export function ob1Coerce1(x: undefined): undefined;
 export function ob1Coerce1(x: undefined | number): Number1 | undefined;
 export function ob1Coerce1(
-	x: undefined | number | AnyNumber,
+	x: undefined | number | AnyIndexedNumber,
 ): Number1 | undefined {
-	return (x as Number1);
+	return x as Number1;
 }
 
 export const ob1Number1 = ob1Coerce1(1);
@@ -102,18 +128,18 @@ export const ob1Number1Neg1 = ob1Coerce1(-1);
 // Add 1 to a 0-based offset, thus converting it to 1-based.
 export function ob1Coerce0To1(x: Number0): Number1 {
 	// @ts-ignore
-	return (x + 1 as Number1);
+	return x + 1 as Number1;
 }
 
 export function ob1Coerce1To0(x: Number1 | number): Number0 {
 	// @ts-ignore
-	return (x - 1 as Number0);
+	return x - 1 as Number0;
 }
 
 // Increment
 export function ob1Inc(a: Number0): Number0;
 export function ob1Inc(a: Number1): Number1;
-export function ob1Inc(x: AnyNumber): AnyNumber {
+export function ob1Inc(x: AnyIndexedNumber): AnyIndexedNumber {
 	// @ts-ignore
 	return x + 1;
 }
@@ -121,7 +147,7 @@ export function ob1Inc(x: AnyNumber): AnyNumber {
 // Decrement
 export function ob1Dec(a: Number0): Number0;
 export function ob1Dec(a: Number1): Number1;
-export function ob1Dec(x: AnyNumber): AnyNumber {
+export function ob1Dec(x: AnyIndexedNumber): AnyIndexedNumber {
 	// @ts-ignore
 	return x - 1;
 }

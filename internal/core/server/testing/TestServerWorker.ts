@@ -7,7 +7,6 @@ import {
 } from "@internal/v8";
 import workerThreads = require("worker_threads");
 import {forkThread} from "@internal/core/common/utils/fork";
-import {createBridgeFromWorkerThread} from "@internal/events";
 import {createClient} from "@internal/codec-websocket";
 import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import TestServer, {BridgeDiagnosticsError} from "@internal/core/server/testing/TestServer";
@@ -19,6 +18,7 @@ import {AbsoluteFilePathMap, AbsoluteFilePathSet} from "@internal/path";
 import {ansiEscapes} from "@internal/cli-layout";
 import {FilePathLocker} from "@internal/async/lockers";
 import TestServerFile from "@internal/core/server/testing/TestServerFile";
+import {BridgeServer} from "@internal/events";
 
 export default class TestServerWorker {
 	constructor(
@@ -33,23 +33,9 @@ export default class TestServerWorker {
 		this.runner = runner;
 		this.request = request;
 
-		this.thread = forkThread(
-			"test-worker",
-			{
-				workerData: flags,
-				stdin: true,
-				stdout: true,
-				stderr: true,
-			},
-		);
+		this.thread = this.createThread(flags);
 
-		this.bridge = createBridgeFromWorkerThread(
-			TestWorkerBridge,
-			this.thread,
-			{
-				type: "client",
-			},
-		);
+		this.bridge = TestWorkerBridge.Server.createFromWorkerThread(this.thread);
 
 		this.inspector = undefined;
 
@@ -65,12 +51,21 @@ export default class TestServerWorker {
 	private preparedPaths: AbsoluteFilePathSet;
 	private prepareLock: FilePathLocker;
 
-	public bridge: TestWorkerBridge;
+	public bridge: BridgeServer<typeof TestWorkerBridge>;
 	public thread: workerThreads.Worker;
 	public inspector: undefined | InspectorClient;
 
-	public async init() {
-		const {thread, bridge, runner} = this;
+	private createThread(flags: TestWorkerFlags): workerThreads.Worker {
+		const thread = forkThread(
+			"test-worker",
+			{
+				workerData: flags,
+				stdin: true,
+				stdout: true,
+				stderr: true,
+			},
+		);
+
 		const {stdout, stderr} = thread;
 
 		stdout.on(
@@ -97,17 +92,25 @@ export default class TestServerWorker {
 			},
 		);
 
+		return thread;
+	}
+
+	public async init() {
+		const {bridge, runner} = this;
+
 		await bridge.handshake();
 
 		bridge.monitorHeartbeat(
 			5_000,
 			async () => {
-				this.server.wrapFatalPromise(this.handleTimeout("10 seconds"));
+				this.server.fatalErrorHandler.wrapPromise(
+					this.handleTimeout("10 seconds"),
+				);
 			},
 		);
 
 		// Start debugger
-		const {inspectorUrl} = await bridge.inspectorDetails.call();
+		const {inspectorUrl} = await bridge.events.inspectorDetails.call();
 		if (inspectorUrl !== undefined) {
 			const client = new InspectorClient(await createClient(inspectorUrl));
 			this.inspector = client;
@@ -126,7 +129,7 @@ export default class TestServerWorker {
 			});
 		}
 
-		bridge.testDiagnostic.subscribe(({testPath, diagnostic, origin}) => {
+		bridge.events.testDiagnostic.subscribe(({testPath, diagnostic, origin}) => {
 			if (testPath !== undefined) {
 				this.runner.files.assert(testPath).onDiagnostics();
 			}
@@ -142,6 +145,7 @@ export default class TestServerWorker {
 					resolve(
 						this.bridge.end(
 							`Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but we timed out again trying to fetch it...`,
+							false,
 						),
 					);
 				},
@@ -154,8 +158,9 @@ export default class TestServerWorker {
 			}).catch((err) => {
 				clearTimeout(timeout);
 				if (err instanceof InspectorClientCloseError) {
-					return this.bridge.end(
+					this.bridge.end(
 						`Test worker was unresponsive for ${duration}. We tried to collect some additional metadata but the inspector connection closed abruptly`,
+						false,
 					);
 				} else {
 					reject(err);
@@ -167,8 +172,9 @@ export default class TestServerWorker {
 	private async _handleTimeout(duration: string): Promise<void> {
 		const {inspector, bridge} = this;
 		if (inspector === undefined) {
-			bridge.end(
+			await bridge.end(
 				`Test worker was unresponsive for ${duration}. There was no inspector connected so we were unable to capture stack frames before it was terminated.`,
+				false,
 			);
 			return undefined;
 		}
@@ -212,7 +218,7 @@ export default class TestServerWorker {
 			});
 		}
 
-		bridge.endWithError(
+		await bridge.endWithError(
 			new BridgeDiagnosticsError(
 				deriveDiagnosticFromErrorStructure(
 					{
@@ -299,16 +305,16 @@ export default class TestServerWorker {
 						this.transferredCompiled.add(path);
 						const compiled = bundle.bundler.compiles.get(path);
 						if (compiled !== undefined) {
-							pending.set(path, compiled.compiledCode);
+							pending.set(path, compiled.value.compiledCode);
 						}
 					}
 				}
 			}
 			if (pending.size > 0) {
-				await bridge.receiveCompiled.call(pending);
+				await bridge.events.receiveCompiled.call(pending);
 			}
 
-			const {focusedTests, foundTests} = await bridge.prepareTest.call({
+			const {focusedTests, foundTests} = await bridge.events.prepareTest.call({
 				globalOptions,
 				partial,
 				projectDirectory: req.server.projectManager.assertProjectExisting(
@@ -351,7 +357,7 @@ export default class TestServerWorker {
 			for (const testName of file.getPendingTests()) {
 				file.removePendingTest(testName);
 				await this.prepareLock.waitLock(path);
-				await bridge.runTest.call({
+				await bridge.events.runTest.call({
 					path,
 					testNames: [testName],
 				});
@@ -388,7 +394,7 @@ export default class TestServerWorker {
 			await Promise.all(promises);
 
 			for (const path of this.preparedPaths) {
-				const result = await bridge.teardownTest.call(path);
+				const result = await bridge.events.teardownTest.call(path);
 				await this.runner.files.assert(path).addResult(result);
 			}
 		} catch (err) {

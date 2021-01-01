@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-arrow-function/migrated_0007/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

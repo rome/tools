@@ -17,14 +17,14 @@ enforce that the `accessKey` prop is not used on any element to avoid complicati
 **ESLint Equivalent:** [no-access-key](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-access-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:29837c29929345956cc71f83a60c08dda48954c9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:540bb5d3a898a71235d522dc7f6b5c240fcd1ec0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">input</span> <span class="token attr-name">accessKey</span><span class="token operator">=</span><span class="token string">&apos;key /&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:24</span> <strong>parse/js</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:24</span> <strong>parse(js)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unterminated string constant</span>
 

@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/categorized/06-regex/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

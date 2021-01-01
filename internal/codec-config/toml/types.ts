@@ -3,11 +3,12 @@ import {
 	ParserCore,
 	ParserOptions,
 	SimpleToken,
-	ValueToken,
+	StringToken,
 } from "@internal/parser-core";
 import {JSONValue} from "../json/types";
 
 export type Tokens = BaseTokens & {
+	Text: StringToken<"Text">;
 	// [
 	OpenSquareBracket: SimpleToken<"OpenSquareBracket">;
 	// ]
@@ -20,14 +21,13 @@ export type Tokens = BaseTokens & {
 	Equals: SimpleToken<"Equals">;
 	// "VALUE"
 	// 'VALUE'
-	String: ValueToken<"String", string>;
+	String: StringToken<"String">;
 	// .
 	Dot: SimpleToken<"Dot">;
 	// ,
 	Comma: SimpleToken<"Comma">;
 	// #
 	Hash: SimpleToken<"Hash">;
-	Text: ValueToken<"Text", string>;
 };
 
 export type TOMLParserTypes = {

@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	DiagnosticCategory,
-	DiagnosticLocation,
-	descriptions,
-} from "@internal/diagnostics";
+import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
 import {
 	Comments,
 	ConfigCommentMap,
@@ -136,7 +132,7 @@ type JSONParserTypes = {
 type JSONParser = ParserCore<JSONParserTypes>;
 
 export const createJSONParser = createParser<JSONParserTypes>({
-	diagnosticCategory: "parse/json",
+	diagnosticLanguage: "json",
 	ignoreWhitespaceTokens: true,
 	retainCarriageReturn: true,
 	getInitialState() {
@@ -823,17 +819,15 @@ function parseEntry(parser: JSONParser): JSONValue {
 export function parseJSONExtra(
 	opts: ParserOptions,
 	type: ConfigType,
-	category: DiagnosticCategory,
 ): ConfigParserResult {
 	const parser = createJSONParser(
 		opts,
 		{
 			type,
 		},
-		category,
+		{diagnosticLanguage: type},
 	);
-	const consumeDiagnosticCategory: DiagnosticCategory =
-		parser.options.consumeDiagnosticCategory ?? category;
+	const categoryValue = parser.options.consumeDiagnosticCategoryValue ?? "json";
 
 	let expectSyntaxError = false;
 
@@ -846,7 +840,7 @@ export function parseJSONExtra(
 			let context: undefined | Required<ConsumeContext>;
 			function getContext(): Required<ConsumeContext> {
 				if (context === undefined) {
-					const res = _parse(parser, consumeDiagnosticCategory);
+					const res = _parse(parser, categoryValue);
 					context = res.context;
 					return res.context;
 				} else {
@@ -858,7 +852,8 @@ export function parseJSONExtra(
 				type: "json",
 				comments: new Map(),
 				context: {
-					category: consumeDiagnosticCategory,
+					category: "parse",
+					categoryValue,
 					normalizeKey(path) {
 						return getContext().normalizeKey(path);
 					},
@@ -881,7 +876,7 @@ export function parseJSONExtra(
 		}
 	}
 
-	const res: ConfigParserResult = _parse(parser, consumeDiagnosticCategory);
+	const res: ConfigParserResult = _parse(parser, categoryValue);
 
 	if (expectSyntaxError) {
 		throw new Error(
@@ -892,10 +887,7 @@ export function parseJSONExtra(
 	return res;
 }
 
-function _parse(
-	parser: JSONParser,
-	category: DiagnosticCategory,
-): ConfigParserResult {
+function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 	const leadingComments = eatComments(parser);
 
 	const expr = parseEntry(parser);
@@ -912,7 +904,8 @@ function _parse(
 	parser.finalize();
 
 	const context: Required<ConsumeContext> = {
-		category,
+		category: "parse",
+		categoryValue,
 		normalizeKey: (key) => key,
 		getDiagnosticLocation: (
 			keys: ConsumePath,
@@ -921,7 +914,7 @@ function _parse(
 			const info = getPathInfo(parser, keys);
 			if (info === undefined) {
 				return {
-					language: "json",
+					language: parser.language,
 					filename: parser.filename,
 				};
 			}
@@ -963,9 +956,9 @@ function _parse(
 			}
 
 			return {
-				language: "json",
+				language: parser.language,
 				...loc,
-				mtime: parser.mtime,
+				integrity: parser.integrity,
 				sourceText: undefined,
 			};
 		},

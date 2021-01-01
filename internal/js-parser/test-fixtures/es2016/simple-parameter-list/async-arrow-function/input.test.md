@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
 	hasHoistedVars: true
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
 				filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 15
@@ -223,7 +225,7 @@ JSRoot {
 
 ```
 
- es2016/simple-parameter-list/async-arrow-function/input.js:2:2 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2016/simple-parameter-list/async-arrow-function/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
 

@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "experimental/module-attributes/without-plugin/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Expected a semicolon or a line terminator"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
 				filename: "experimental/module-attributes/without-plugin/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 26
@@ -214,7 +216,7 @@ JSRoot {
 
 ```
 
- experimental/module-attributes/without-plugin/input.js:1:27 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ experimental/module-attributes/without-plugin/input.js:1:27 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
 

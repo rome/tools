@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/uncategorised/436/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						RAW_MARKUP {value: "Unknown start to an "}
-						"statement expression"
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					RAW_MARKUP {value: "Unknown start to an "}
+					"statement expression"
+				]
 			}
 			location: Object {
 				filename: "core/uncategorised/436/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 0
@@ -92,7 +92,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/436/input.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/436/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 

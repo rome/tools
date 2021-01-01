@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/uncategorised/363/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {
@@ -30,15 +30,17 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Can't use await outside of an async function"}]}
+				category: "parse"
+				categoryValue: "js"
+				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
 				filename: "es2015/uncategorised/363/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 20
@@ -212,7 +214,7 @@ JSRoot {
 
 ```
 
- es2015/uncategorised/363/input.js:1:15 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ es2015/uncategorised/363/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't use await outside of an async function
 

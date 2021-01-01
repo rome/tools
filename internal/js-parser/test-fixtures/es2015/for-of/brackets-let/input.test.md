@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "es2015/for-of/brackets-let/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

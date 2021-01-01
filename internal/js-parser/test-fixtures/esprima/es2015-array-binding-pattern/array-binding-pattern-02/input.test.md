@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-02/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {

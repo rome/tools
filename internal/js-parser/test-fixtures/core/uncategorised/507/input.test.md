@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "core/uncategorised/507/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: Object {
@@ -30,20 +30,20 @@ JSRoot {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "parse/js"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse/js"
-				message: MARKUP {
-					parts: Array [
-						"private"
-						RAW_MARKUP {value: " is a reserved word"}
-					]
-				}
+				category: "parse"
+				categoryValue: "js"
+				message: Array [
+					"private"
+					RAW_MARKUP {value: " is a reserved word"}
+				]
 			}
 			location: Object {
 				filename: "core/uncategorised/507/input.js"
-				mtime: undefined
+				integrity: undefined
+				language: "js"
 				sourceText: undefined
 				end: Object {
 					column: 44
@@ -203,7 +203,7 @@ JSRoot {
 
 ```
 
- core/uncategorised/507/input.js:1:37 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ core/uncategorised/507/input.js:1:37 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ private is a reserved word
 

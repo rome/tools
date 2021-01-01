@@ -13,8 +13,8 @@ JSRoot {
 	directives: Array []
 	filename: "comments/regression/10892/input.js"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: Object {

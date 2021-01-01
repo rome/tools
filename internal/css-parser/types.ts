@@ -1,9 +1,10 @@
 import {
 	BaseTokens,
 	ComplexToken,
+	NumberToken,
 	ParserOptionsWithRequiredPath,
 	SimpleToken,
-	ValueToken,
+	StringToken,
 } from "@internal/parser-core";
 import {
 	CSSBlock,
@@ -39,30 +40,30 @@ export interface NumberData {
 }
 
 export type Tokens = BaseTokens & {
-	AtKeyword: ValueToken<"AtKeyword", string>;
+	AtKeyword: StringToken<"AtKeyword">;
 	BadString: SimpleToken<"BadString">;
 	BadURL: SimpleToken<"BadURL">;
 	CDC: SimpleToken<"CDC">;
 	CDO: SimpleToken<"CDO">;
 	Colon: SimpleToken<"Colon">;
 	Comma: SimpleToken<"Comma">;
-	Comment: ValueToken<"Comment", string>;
-	Delim: ValueToken<"Delim", string>;
+	Comment: StringToken<"Comment">;
+	Delim: StringToken<"Delim">;
 	Dimension: ComplexToken<"Dimension", DimensionData>;
-	Function: ValueToken<"Function", string>;
+	Function: StringToken<"Function">;
 	Hash: ComplexToken<"Hash", HashData>;
-	Ident: ValueToken<"Ident", string>;
+	Ident: StringToken<"Ident">;
 	LeftCurlyBracket: SimpleToken<"LeftCurlyBracket">;
 	LeftParen: SimpleToken<"LeftParen">;
 	LeftSquareBracket: SimpleToken<"LeftSquareBracket">;
 	Number: ComplexToken<"Number", NumberData>;
-	Percentage: ValueToken<"Percentage", number>;
+	Percentage: NumberToken<"Percentage">;
 	RightCurlyBracket: SimpleToken<"RightCurlyBracket">;
 	RightParen: SimpleToken<"RightParen">;
 	RightSquareBracket: SimpleToken<"RightSquareBracket">;
 	Semi: SimpleToken<"Semi">;
-	String: ValueToken<"String", string>;
-	URL: ValueToken<"URL", string>;
+	String: StringToken<"String">;
+	URL: StringToken<"URL">;
 	Whitespace: SimpleToken<"Whitespace">;
 };
 

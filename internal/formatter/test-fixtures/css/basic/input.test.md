@@ -31,15 +31,15 @@ span.something {
 ### `Output`
 
 ```css
-.a {
+.a{
 	text-decoration: none;
 }
 
-span.something {
+span.something{
 	margin-bottom: 2px;
 }
 
-#id .class:hover {
+#id.class:hover{
 	background-color: red;
 }
 

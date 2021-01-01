@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Bridge from "./Bridge";
+import {AnyBridge} from "./types";
 
 export default class BridgeError extends Error {
-	constructor(message: string, bridge: Bridge) {
+	constructor(message: string, bridge: AnyBridge) {
 		super(message);
 		this.bridge = bridge;
 	}
 
-	public bridge: Bridge;
+	public bridge: AnyBridge;
 }

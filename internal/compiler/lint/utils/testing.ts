@@ -103,7 +103,7 @@ async function testLintExpect(
 	processor.addFilter({
 		test: (diag) =>
 			diag.description.category === category ||
-			diag.description.category === "parse/js"
+			diag.description.category === "parse"
 		,
 	});
 	processor.addDiagnostics(res.diagnostics);

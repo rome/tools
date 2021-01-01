@@ -22,14 +22,14 @@ export type AsyncCallback<Return, Args extends unknown[] = []> = Args extends []
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 
-// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables: future cleanup
+// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables(I): future cleanup
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((
 	k: infer I,
 ) => void)
 	? I
 	: never;
 
-// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables: future cleanup
+// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables(R): future cleanup
 type ClassConstructorParams<T> = T extends {
 	new (
 		...args: infer R

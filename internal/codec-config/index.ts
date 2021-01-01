@@ -68,7 +68,7 @@ function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 
 		stringify(value: unknown, comments: ConfigCommentMap = new Map()): string {
 			return partial.stringifyFromConsumer({
-				consumer: consumeUnknown(value, partial.consumeCategory),
+				consumer: consumeUnknown(value, "parse", partial.language),
 				comments,
 			});
 		},

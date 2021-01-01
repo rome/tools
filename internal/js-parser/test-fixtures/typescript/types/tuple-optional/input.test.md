@@ -14,8 +14,8 @@ JSRoot {
 	directives: Array []
 	filename: "typescript/types/tuple-optional/input.ts"
 	hasHoistedVars: false
+	integrity: undefined
 	interpreter: undefined
-	mtime: undefined
 	sourceType: "module"
 	syntax: Array ["ts"]
 	loc: Object {

@@ -28,7 +28,7 @@ type StatusWorkerResult = {
 	heapTotal: number;
 	pid: number;
 	uptime: number;
-	ownedBytes: number;
+	ownedBytes: bigint;
 	ownedFileCount: number;
 };
 
@@ -45,7 +45,7 @@ export default createServerCommand({
 			server.workerManager.getWorkers().map(async (
 				worker,
 			): Promise<StatusWorkerResult> => {
-				const workerStatus: WorkerStatus = await worker.bridge.status.call();
+				const workerStatus: WorkerStatus = await worker.bridge.events.status.call();
 
 				return {
 					astCacheSize: workerStatus.astCacheSize,
