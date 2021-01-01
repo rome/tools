@@ -96,9 +96,9 @@ export type DiagnosticCategoryPrefix =
 
 /* GENERATED:START(hash:50973c34a29e65c33bd4c9ba8086455190e6a6f1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
+	| "lint/a11y/useHtmlLang"
+	| "lint/a11y/useValidLang"
 	| "lint/html/useClosingNonVoid"
-	| "lint/html/useHtmlLang"
-	| "lint/html/useValidLang"
 	| "lint/js/noArguments"
 	| "lint/js/noAsyncPromiseExecutor"
 	| "lint/js/noCatchAssign"
@@ -165,13 +165,11 @@ export type DiagnosticLintCategory =
 	| "lint/jsx-a11y/useAriaPropsForRole"
 	| "lint/jsx-a11y/useAriaProptypes"
 	| "lint/jsx-a11y/useHeadingContent"
-	| "lint/jsx-a11y/useHtmlLang"
 	| "lint/jsx-a11y/useIframeTitle"
 	| "lint/jsx-a11y/useKeyWithClickEvents"
 	| "lint/jsx-a11y/useKeyWithMouseEvents"
 	| "lint/jsx-a11y/useMediaCaption"
 	| "lint/jsx-a11y/useValidAnchor"
-	| "lint/jsx-a11y/useValidLang"
 	| "lint/jsx/noCommentText"
 	| "lint/jsx/noDuplicateProps"
 	| "lint/jsx/noImplicitBoolean"
