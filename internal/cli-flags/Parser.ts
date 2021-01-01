@@ -913,9 +913,9 @@ export default class Parser<T> {
 
 		return dedent`
 			${mainScript}
-																								      ${commandFuncs}
-																								      ${romeFunc}
-																								      complete -F __${prg}_gen_completions ${prg}
+						${commandFuncs}
+						${romeFunc}
+						complete -F __${prg}_gen_completions ${prg}
 		`;
 	}
 
