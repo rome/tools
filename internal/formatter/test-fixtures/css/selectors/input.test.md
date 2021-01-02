@@ -61,7 +61,8 @@ div {
 #id {
 }
 
-div, #id {
+div,
+#id {
 }
 
 .class {
@@ -73,7 +74,8 @@ a:hover {
 a::before {
 }
 
-a:hover, a::before {
+a:hover,
+a::before {
 }
 
 div #id {
@@ -88,7 +90,9 @@ div ~ #id {
 div > #id {
 }
 
-div + #id, div ~ #id, div > #id {
+div + #id,
+div ~ #id,
+div > #id {
 }
 
 ```

@@ -183,7 +183,6 @@ export function parseSelectors(parser: CSSParser): CSSSelector[] {
 	while (!parser.matchToken("LeftCurlyBracket") && !parser.matchToken("EOF")) {
 		const selector = parseSelector(parser);
 		selectors.push(selector);
-		console.log(selector.patterns.map((pattern) => pattern.type));
 		parser.eatToken("Comma");
 	}
 	return selectors;
