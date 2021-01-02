@@ -11,7 +11,6 @@ Object {
 	corrupt: false
 	diagnostics: Array []
 	filename: "0.test"
-	mtime: 78_235_964
 	comments: Array [
 		CommentLine {
 			id: "0"
@@ -118,18 +117,19 @@ Object {
 	comments: Array []
 	corrupt: false
 	filename: "1.test"
-	mtime: undefined
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "tests/failure"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "tests/failure"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Invalid token"}]}
+				category: "parse"
+				categoryValue: "unknown"
+				message: RAW_MARKUP {value: "Invalid token"}
 			}
 			location: Object {
 				filename: "1.test"
-				mtime: undefined
+				integrity: undefined
+				language: "unknown"
 				sourceText: undefined
 				end: Object {
 					column: 0
@@ -179,18 +179,19 @@ Object {
 	comments: Array []
 	corrupt: false
 	filename: "2.test"
-	mtime: undefined
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: "tests/failure"}]
+			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "tests/failure"
-				message: MARKUP {parts: Array [RAW_MARKUP {value: "Unterminated string"}]}
+				category: "parse"
+				categoryValue: "unknown"
+				message: RAW_MARKUP {value: "Unterminated string"}
 			}
 			location: Object {
 				filename: "2.test"
-				mtime: undefined
+				integrity: undefined
+				language: "unknown"
 				sourceText: undefined
 				end: Object {
 					column: 0
