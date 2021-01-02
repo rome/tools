@@ -39,46 +39,54 @@ function parseIdSelector(parser: CSSParser): CSSIdSelector {
 	);
 }
 
-function parseClassSelector(parser: CSSParser): CSSClassSelector {
+function parseClassSelector(parser: CSSParser): CSSClassSelector | undefined {
 	const start = parser.getPosition();
 	parser.eatToken("Delim");
-	const nextToken = parser.expectToken("Ident");
-	parser.eatToken("Ident");
-	return parser.finishNode(
-		start,
-		{
-			type: "CSSClassSelector",
-			value: nextToken.value,
-		},
-	);
+	if (parser.matchToken("Ident")) {
+		const token = parser.eatToken("Ident") as Tokens["Ident"];
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSClassSelector",
+				value: token.value,
+			},
+		);
+	}
+	parser.unexpectedDiagnostic({
+		description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+	});
+	return undefined;
 }
 
 function parsePseudoSelector(
 	parser: CSSParser,
-): CSSPseudoClassSelector | CSSPseudoElementSelector {
+): CSSPseudoClassSelector | CSSPseudoElementSelector | undefined {
 	const start = parser.getPosition();
-	parser.eatToken("Colon");
 	if (parser.eatToken("Colon")) {
-		const ident = parser.expectToken("Ident");
-		parser.eatToken("Ident");
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSPseudoElementSelector",
-				value: ident.value,
-			},
-		);
-	} else {
-		const ident = parser.expectToken("Ident");
-		parser.eatToken("Ident");
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSPseudoClassSelector",
-				value: ident.value,
-			},
-		);
+		if (parser.matchToken("Ident")) {
+			const token = parser.eatToken("Ident") as Tokens["Ident"];
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSPseudoClassSelector",
+					value: token.value,
+				},
+			)
+		} else if (parser.matchToken("Colon")) {
+			const token = parser.eatToken("Ident") as Tokens["Ident"];
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSPseudoElementSelector",
+					value: token.value,
+				}
+			)
+		}
 	}
+	parser.unexpectedDiagnostic({
+		description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+	});
+	return undefined;
 }
 
 function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
@@ -125,17 +133,17 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 }
 
 function tryParseSelector(parser: CSSParser) {
-	if (parser.matchToken("Hash")) {
+	if (parser.matchToken("Colon")) {
+		return parsePseudoSelector(parser);
+	}  else if (parser.matchToken("Hash")) {
 		return parseIdSelector(parser);
 	} else if (parser.matchToken("Ident")) {
 		return parseTypeSelector(parser);
-	} else if (
-		parser.matchToken("Delim") &&
-		parser.lookaheadToken().type === "Ident"
-	) {
-		return parseClassSelector(parser);
-	} else if (parser.matchToken("Colon")) {
-		return parsePseudoSelector(parser);
+	} else if (parser.matchToken("Delim")) {
+		const token = parser.eatToken("Delim") as Tokens["Delim"];
+		if (token.value === ".") {
+			return parseClassSelector(parser);
+		}
 	}
 	return undefined;
 }
