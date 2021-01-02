@@ -44,11 +44,13 @@ function createLintTransformSuppressions(
 					{
 						action: "suppress",
 						category: "lint/js/noVar",
+						categoryValue: undefined
 					},
 				],
 			},
 		},
 		project: {
+			configHashes: [],
 			config: mutateConfig(createDefaultProjectConfig()),
 			directory: undefined,
 		},
