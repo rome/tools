@@ -103,12 +103,14 @@ type DeclareManifestOpts = {
 	diagnostics: DiagnosticsProcessor;
 	dirname: AbsoluteFilePath;
 	path: AbsoluteFilePath;
+	isPartialProject: boolean;
 	content: undefined | string;
 };
 
 type CrawlOptions = {
 	reason: "watch" | "initial";
 	watcherId?: number;
+	partialAllowlist?: AbsoluteFilePath[];
 	diagnostics: DiagnosticsProcessor;
 	onFoundDirectory?: (path: AbsoluteFilePath) => void;
 	tick?: (path: AbsoluteFilePath) => void;
@@ -188,6 +190,7 @@ export default class MemoryFileSystem {
 	private logger: ReporterNamespace;
 
 	private watchers: AbsoluteFilePathMap<{
+		partial: boolean;
 		path: AbsoluteFilePath;
 		close: WatcherClose;
 	}>;
@@ -218,6 +221,7 @@ export default class MemoryFileSystem {
 
 				if (isValidManifest(path)) {
 					await this.declareManifest({
+						isPartialProject: false,
 						content,
 						diagnostics: this.server.createDisconnectedDiagnosticsProcessor([]),
 						dirname: path.getParent(),
@@ -255,6 +259,7 @@ export default class MemoryFileSystem {
 		diagnostics: DiagnosticsProcessor,
 		projectDirectory: AbsoluteFilePath,
 		id: number,
+		partialAllowlist?: AbsoluteFilePath[],
 	): Promise<WatcherClose> {
 		const {server} = this;
 		const {logger} = server;
@@ -320,6 +325,7 @@ export default class MemoryFileSystem {
 				projectDirectory,
 				stats,
 				{
+					partialAllowlist,
 					diagnostics,
 					onFoundDirectory,
 					reason: "initial",
@@ -504,28 +510,44 @@ export default class MemoryFileSystem {
 		}
 	}
 
-	public async watch(projectDirectory: AbsoluteFilePath): Promise<void> {
+	public async watch(
+		projectDirectory: AbsoluteFilePath,
+		target: AbsoluteFilePath = projectDirectory,
+		partial: boolean = false,
+	): Promise<void> {
 		const directoryLink = markup`<emphasis>${projectDirectory}</emphasis>`;
 
 		// Defer if we're already currently initializing this project
 		const cached = this.watchPromises.get(projectDirectory);
 		if (cached !== undefined) {
 			await cached;
-			return undefined;
 		}
 
 		// Check if we're already watching this directory
-		if (this.watchers.has(projectDirectory)) {
-			return undefined;
+		const existingWatcher = this.watchers.get(projectDirectory);
+		if (existingWatcher !== undefined) {
+			if (existingWatcher.partial) {
+				// Already loaded but only partially so refresh it
+				existingWatcher.close();
+			} else {
+				// Already loaded
+				return undefined;
+			}
 		}
 
 		// Check if we're already watching a parent directory
-		for (const {path} of this.watchers.values()) {
+		for (const {path, close, partial} of this.watchers.values()) {
 			if (projectDirectory.isRelativeTo(path)) {
-				this.logger.info(
-					markup`Skipped crawl for ${directoryLink} because we're already watching the parent directory ${path}`,
-				);
-				return undefined;
+				if (partial) {
+					// If this directory was loaded as partial then reload it as complete
+					close();
+					return this.watch(path);
+				} else {
+					this.logger.info(
+						markup`Skipped crawl for ${directoryLink} because we're already watching the parent directory ${path}`,
+					);
+					return undefined;
+				}
 			}
 		}
 
@@ -540,6 +562,9 @@ export default class MemoryFileSystem {
 			if (path.isRelativeTo(projectDirectory)) {
 				this.watchers.delete(loc);
 				close();
+
+				// Don't allow partial watching as we need at a minimum to include this directory
+				partial = false;
 			}
 		}
 
@@ -554,7 +579,12 @@ export default class MemoryFileSystem {
 
 		this.logger.info(markup`Watching ${directoryLink}`);
 		const id = this.watcherCounter++;
-		const promise = this.createWatcher(diagnostics, projectDirectory, id);
+		const promise = this.createWatcher(
+			diagnostics,
+			projectDirectory,
+			id,
+			partial ? [target] : undefined,
+		);
 		this.watchPromises.set(projectDirectory, promise);
 
 		await this.processingLock.wrap(async () => {
@@ -562,6 +592,7 @@ export default class MemoryFileSystem {
 			this.watchers.set(
 				projectDirectory,
 				{
+					partial,
 					path: projectDirectory,
 					close: watcherClose,
 				},
@@ -651,6 +682,7 @@ export default class MemoryFileSystem {
 			path,
 			diagnostics,
 			content,
+			isPartialProject,
 		}: DeclareManifestOpts,
 	): Promise<void> {
 		// Fetch the manifest
@@ -712,6 +744,7 @@ export default class MemoryFileSystem {
 			await projectManager.addDiskProject({
 				projectDirectory: directory,
 				configPath: path,
+				isPartial: isPartialProject,
 			});
 		}
 
@@ -753,11 +786,47 @@ export default class MemoryFileSystem {
 		return oldStats === undefined || newStats.mtimeNs !== oldStats.mtimeNs;
 	}
 
+	private getPartialAllowlist(
+		path: AbsoluteFilePath,
+		opts: CrawlOptions,
+	): undefined | (AbsoluteFilePath[]) {
+		// No use doing these potentially expensive path checks if we don't even have an allowlist to return
+		if (opts.partialAllowlist === undefined) {
+			return undefined;
+		}
+
+		// Always process and include a package.json or other priority file
+		if (PRIORITY_FILES.has(path.getBasename())) {
+			return undefined;
+		}
+
+		// Also always include files inside of those blessed directory names
+		if (path.hasParent() && PRIORITY_FILES.has(path.getParent().getBasename())) {
+			return undefined;
+		}
+
+		return opts.partialAllowlist;
+	}
+
 	private async addDirectory(
 		directoryPath: AbsoluteFilePath,
 		stats: SimpleStats,
 		opts: CrawlOptions,
 	): Promise<boolean> {
+		const partialAllowlist = this.getPartialAllowlist(directoryPath, opts);
+		if (partialAllowlist !== undefined) {
+			let allowed = false;
+			for (const onlyAllowPath of partialAllowlist) {
+				if (onlyAllowPath.isRelativeTo(directoryPath)) {
+					allowed = true;
+					break;
+				}
+			}
+			if (!allowed) {
+				return false;
+			}
+		}
+
 		if (!this.hasStatsChanged(directoryPath, stats)) {
 			return false;
 		}
@@ -901,6 +970,20 @@ export default class MemoryFileSystem {
 		stats: SimpleStats,
 		opts: CrawlOptions,
 	): Promise<boolean> {
+		const partialAllowlist = this.getPartialAllowlist(path, opts);
+		if (partialAllowlist !== undefined) {
+			let allowed = false;
+			for (const onlyAllowPath of partialAllowlist) {
+				if (path.equal(onlyAllowPath)) {
+					allowed = true;
+					break;
+				}
+			}
+			if (!allowed) {
+				return false;
+			}
+		}
+
 		if (!this.hasStatsChanged(path, stats)) {
 			return false;
 		}
@@ -958,6 +1041,7 @@ export default class MemoryFileSystem {
 			}
 
 			await projectManager.addDiskProject({
+				isPartial: opts.partialAllowlist !== undefined,
 				// Get the directory above .config
 				projectDirectory: dirname.getParent(),
 				configPath: path,
@@ -966,6 +1050,7 @@ export default class MemoryFileSystem {
 
 		if (isValidManifest(path)) {
 			await this.declareManifest({
+				isPartialProject: opts.partialAllowlist !== undefined,
 				content: undefined,
 				diagnostics: opts.diagnostics,
 				dirname,

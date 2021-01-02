@@ -29,6 +29,7 @@ export type ProjectDefinition = {
 	children: Set<ProjectDefinition>;
 	parent: undefined | ProjectDefinition;
 	initialized: boolean;
+	partial: boolean;
 };
 
 export type InvalidLicenses = Map<

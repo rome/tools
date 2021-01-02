@@ -48,6 +48,8 @@ export default createVisitor({
 					source: node.argument.value,
 					optional: isOptional(path),
 					all: true,
+					imported: true,
+					exported: false,
 				}),
 			);
 		}
@@ -172,6 +174,8 @@ export default createVisitor({
 					source: source.value,
 					optional: isOptional(path),
 					all: false,
+					imported: false,
+					exported: true,
 				}),
 			);
 		}
@@ -191,6 +195,8 @@ export default createVisitor({
 					names: [],
 					all: true,
 					async: false,
+					imported: true,
+					exported: false,
 				}),
 			);
 		}
@@ -207,6 +213,8 @@ export default createVisitor({
 					names: [],
 					source: node.source.value,
 					all: true,
+					imported: false,
+					exported: true,
 				}),
 			);
 
@@ -271,6 +279,8 @@ export default createVisitor({
 					source: node.source.value,
 					all: hasNamespaceSpecifier,
 					names,
+					imported: true,
+					exported: false,
 				}),
 			);
 		}

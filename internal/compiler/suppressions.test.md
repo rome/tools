@@ -6,6 +6,80 @@
 
 ```javascript
 Object {
+	suppressions: Array [
+		Object {
+			category: "parse"
+			categoryValue: "dog"
+			endLine: 2
+			filename: "unknown"
+			startLine: 2
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 23
+					line: 1
+				}
+				start: Object {
+					column: 15
+					line: 1
+				}
+			}
+		}
+		Object {
+			category: "parse"
+			categoryValue: "dog"
+			endLine: 5
+			filename: "unknown"
+			startLine: 5
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 23
+					line: 1
+				}
+				start: Object {
+					column: 15
+					line: 4
+				}
+			}
+		}
+		Object {
+			category: "parse"
+			categoryValue: "cat"
+			endLine: 5
+			filename: "unknown"
+			startLine: 5
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 34
+					line: 1
+				}
+				start: Object {
+					column: 26
+					line: 4
+				}
+			}
+		}
+		Object {
+			category: "parse"
+			categoryValue: undefined
+			endLine: 8
+			filename: "unknown"
+			startLine: 8
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 18
+					line: 1
+				}
+				start: Object {
+					column: 15
+					line: 7
+				}
+			}
+		}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -15,7 +89,7 @@ Object {
 				categoryValue: undefined
 				message: Array [
 					RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}
-					"dog"
+					"parse(dog)"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
@@ -25,11 +99,11 @@ Object {
 				language: "text"
 				sourceText: undefined
 				end: Object {
-					column: 22
+					column: 31
 					line: 1
 				}
 				start: Object {
-					column: 19
+					column: 26
 					line: 1
 				}
 			}
@@ -42,7 +116,34 @@ Object {
 				categoryValue: undefined
 				message: Array [
 					RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}
-					"dog"
+					"parse(dog)"
+					RAW_MARKUP {value: "</emphasis>"}
+				]
+			}
+			location: Object {
+				filename: "unknown"
+				integrity: undefined
+				language: "text"
+				sourceText: undefined
+				end: Object {
+					column: 42
+					line: 4
+				}
+				start: Object {
+					column: 37
+					line: 4
+				}
+			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				category: "suppressions/duplicate"
+				categoryValue: undefined
+				message: Array [
+					RAW_MARKUP {value: "Duplicate suppression category <emphasis>"}
+					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
@@ -53,67 +154,11 @@ Object {
 				sourceText: undefined
 				end: Object {
 					column: 26
-					line: 4
+					line: 7
 				}
 				start: Object {
-					column: 23
-					line: 4
-				}
-			}
-		}
-	]
-	suppressions: Array [
-		Object {
-			category: "dog"
-			categoryValue: undefined
-			endLine: 2
-			filename: "unknown"
-			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
-		}
-		Object {
-			category: "dog"
-			categoryValue: undefined
-			endLine: 5
-			filename: "unknown"
-			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 4
-				}
-			}
-		}
-		Object {
-			category: "cat"
-			categoryValue: undefined
-			endLine: 5
-			filename: "unknown"
-			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 4
+					column: 21
+					line: 7
 				}
 			}
 		}
@@ -298,7 +343,7 @@ Object {
 Object {
 	suppressions: Array [
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 2
 			filename: "unknown"
@@ -306,7 +351,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 1
 				}
 				start: Object {
@@ -316,7 +361,7 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 5
 			filename: "unknown"
@@ -324,7 +369,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 16
+					column: 18
 					line: 1
 				}
 				start: Object {
@@ -392,15 +437,15 @@ Object {
 	diagnostics: Array []
 	suppressions: Array [
 		Object {
-			category: "foo"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "foo"
 			endLine: 2
 			filename: "unknown"
 			startLine: 2
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 16
+					column: 23
 					line: 1
 				}
 				start: Object {
@@ -410,33 +455,33 @@ Object {
 			}
 		}
 		Object {
-			category: "dog"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "dog"
 			endLine: 2
 			filename: "unknown"
 			startLine: 2
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 22
+					column: 36
 					line: 1
 				}
 				start: Object {
-					column: 19
+					column: 26
 					line: 1
 				}
 			}
 		}
 		Object {
-			category: "bar"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "bar"
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 17
+					column: 24
 					line: 1
 				}
 				start: Object {
@@ -446,33 +491,33 @@ Object {
 			}
 		}
 		Object {
-			category: "cat"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "cat"
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 23
+					column: 37
 					line: 4
 				}
 				start: Object {
-					column: 20
+					column: 27
 					line: 4
 				}
 			}
 		}
 		Object {
-			category: "yes"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "yes"
 			endLine: 10
 			filename: "unknown"
 			startLine: 10
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 25
 					line: 2
 				}
 				start: Object {
@@ -482,33 +527,33 @@ Object {
 			}
 		}
 		Object {
-			category: "frog"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "frog"
 			endLine: 10
 			filename: "unknown"
 			startLine: 10
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 23
+					column: 37
 					line: 8
 				}
 				start: Object {
-					column: 19
+					column: 26
 					line: 8
 				}
 			}
 		}
 		Object {
-			category: "wow"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "wow"
 			endLine: 16
 			filename: "unknown"
 			startLine: 16
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 25
 					line: 3
 				}
 				start: Object {
@@ -518,19 +563,19 @@ Object {
 			}
 		}
 		Object {
-			category: "fish"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "fish"
 			endLine: 16
 			filename: "unknown"
 			startLine: 16
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 23
+					column: 37
 					line: 14
 				}
 				start: Object {
-					column: 19
+					column: 26
 					line: 14
 				}
 			}
@@ -551,14 +596,14 @@ Object {
 				category: "suppressions/overlap"
 				message: Array [
 					RAW_MARKUP {value: "overlap suppression category <emphasis>"}
-					"foo"
+					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 3
 				}
 				start: Object {
@@ -574,14 +619,14 @@ Object {
 				category: "suppressions/overlap"
 				message: Array [
 					RAW_MARKUP {value: "overlap suppression category <emphasis>"}
-					"foo"
+					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 4
 				}
 				start: Object {
@@ -593,7 +638,7 @@ Object {
 	]
 	suppressions: Array [
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 6
 			filename: "unknown"
@@ -601,7 +646,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 1
 				}
 				start: Object {
@@ -611,7 +656,7 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 5
 			filename: "unknown"
@@ -619,7 +664,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 3
 				}
 				start: Object {
@@ -629,7 +674,7 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 5
 			filename: "unknown"
@@ -637,7 +682,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 4
 				}
 				start: Object {
@@ -647,7 +692,7 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 9
 			filename: "unknown"
@@ -655,7 +700,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 8
 				}
 				start: Object {
@@ -680,14 +725,14 @@ Object {
 				category: "suppressions/overlap"
 				message: Array [
 					RAW_MARKUP {value: "overlap suppression category <emphasis>"}
-					"foo"
+					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 3
 				}
 				start: Object {
@@ -699,7 +744,7 @@ Object {
 	]
 	suppressions: Array [
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 5
 			filename: "unknown"
@@ -707,7 +752,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 1
 				}
 				start: Object {
@@ -717,7 +762,7 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 4
 			filename: "unknown"
@@ -725,7 +770,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 3
 				}
 				start: Object {
@@ -735,7 +780,7 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 8
 			filename: "unknown"
@@ -743,7 +788,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 7
 				}
 				start: Object {
@@ -768,14 +813,14 @@ Object {
 				category: "suppressions/overlap"
 				message: Array [
 					RAW_MARKUP {value: "overlap suppression category <emphasis>"}
-					"foo"
+					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 3
 				}
 				start: Object {
@@ -787,7 +832,7 @@ Object {
 	]
 	suppressions: Array [
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 5
 			filename: "unknown"
@@ -795,7 +840,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 1
 				}
 				start: Object {
@@ -805,7 +850,7 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 4
 			filename: "unknown"
@@ -813,7 +858,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 22
 					line: 3
 				}
 				start: Object {
@@ -838,14 +883,14 @@ Object {
 				category: "suppressions/overlap"
 				message: Array [
 					RAW_MARKUP {value: "overlap suppression category <emphasis>"}
-					"foo"
+					"parse(foo)"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
 			location: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 27
 					line: 5
 				}
 				start: Object {
@@ -857,15 +902,15 @@ Object {
 	]
 	suppressions: Array [
 		Object {
-			category: "foo"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "foo"
 			endLine: 7
 			filename: "unknown"
 			startLine: 2
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 25
 					line: 1
 				}
 				start: Object {
@@ -875,15 +920,15 @@ Object {
 			}
 		}
 		Object {
-			category: "bar"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "bar"
 			endLine: 6
 			filename: "unknown"
 			startLine: 6
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 27
 					line: 3
 				}
 				start: Object {
@@ -893,15 +938,15 @@ Object {
 			}
 		}
 		Object {
-			category: "baz"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "baz"
 			endLine: 6
 			filename: "unknown"
 			startLine: 6
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 27
 					line: 4
 				}
 				start: Object {
@@ -911,15 +956,15 @@ Object {
 			}
 		}
 		Object {
-			category: "foo"
-			categoryValue: undefined
+			category: "parse"
+			categoryValue: "foo"
 			endLine: 6
 			filename: "unknown"
 			startLine: 6
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 20
+					column: 27
 					line: 5
 				}
 				start: Object {
@@ -939,7 +984,7 @@ Object {
 	diagnostics: Array []
 	suppressions: Array [
 		Object {
-			category: "foo"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 2
 			filename: "unknown"
@@ -947,7 +992,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 1
 				}
 				start: Object {
@@ -957,7 +1002,7 @@ Object {
 			}
 		}
 		Object {
-			category: "bar"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 5
 			filename: "unknown"
@@ -965,7 +1010,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 19
+					column: 21
 					line: 4
 				}
 				start: Object {
@@ -975,7 +1020,7 @@ Object {
 			}
 		}
 		Object {
-			category: "yes"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 10
 			filename: "unknown"
@@ -983,7 +1028,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 8
 				}
 				start: Object {
@@ -993,7 +1038,7 @@ Object {
 			}
 		}
 		Object {
-			category: "wow"
+			category: "parse"
 			categoryValue: undefined
 			endLine: 16
 			filename: "unknown"
@@ -1001,7 +1046,7 @@ Object {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
-					column: 18
+					column: 20
 					line: 14
 				}
 				start: Object {

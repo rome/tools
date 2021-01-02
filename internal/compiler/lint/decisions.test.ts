@@ -14,7 +14,7 @@ test(
 			filename: "test",
 			decisions: [
 				{
-					value: "fix-lint/js/doubleEquals-foo.ts-2:0-0",
+					value: "fix-lint/js/noDoubleEquals-foo.ts-2:0-0",
 					start: {line: ob1Number1, column: ob1Number0},
 				},
 			],

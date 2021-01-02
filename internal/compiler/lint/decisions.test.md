@@ -6,6 +6,6 @@
 
 ```
 let foo;
-foo == "bar";
+foo === "bar";
 
 ```

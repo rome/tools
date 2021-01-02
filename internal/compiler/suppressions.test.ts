@@ -37,20 +37,20 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore foo: explanation
+				// rome-ignore parse: explanation1
 				foo();
 
-				/** rome-ignore bar: explanation */
+				/** rome-ignore parse: explanation2 */
 				bar();
 
 				/**
-				 * rome-ignore yes: explanation
+				 * rome-ignore parse: explanation3
 				 */
 				yes();
 
 				/**
 				 * hello
-				 * rome-ignore wow: explanation
+				 * rome-ignore parse: explanation4
 				 */
 				wow();
 			`,
@@ -68,20 +68,20 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore foo dog: explanation
+				// rome-ignore parse(foo) parse(dog): explanation
 				foo();
 
-				/** rome-ignore bar cat: explanation */
+				/** rome-ignore parse(bar) parse(cat): explanation */
 				bar();
 
 				/**
-				 * rome-ignore yes frog: explanation
+				 * rome-ignore parse(yes) parse(frog): explanation
 				 */
 				yes();
 
 				/**
 				 * hello
-				 * rome-ignore wow fish: explanation
+				 * rome-ignore parse(wow) parse(fish): explanation
 				 */
 				wow();
 			`,
@@ -99,16 +99,19 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore dog dog: explanation
+				// rome-ignore parse(dog) parse(dog): explanation
 				foo();
 
-				// rome-ignore dog cat dog: explanation
+				// rome-ignore parse(dog) parse(cat) parse(dog): explanation
+				bar();
+
+				// rome-ignore parse parse: explanation
 				bar();
 			`,
 		);
 
-		t.is(result.suppressions.length, 3);
-		t.is(result.diagnostics.length, 2);
+		t.is(result.suppressions.length, 4);
+		t.is(result.diagnostics.length, 3);
 		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/duplicate");
 		}
@@ -122,9 +125,9 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore foo: explanation
+				// rome-ignore parse: explanation
 				function foo_bar() {
-				  // rome-ignore foo: explanation
+				  // rome-ignore parse: explanation
 				  bar_foo;
 				}
 			`,
@@ -145,18 +148,20 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore foo: explanation
+				// rome-ignore parse(foo): explanation
 				function foo_bar() {
-				  // rome-ignore bar: explanation
-				  // rome-ignore baz: explanation
-				  // rome-ignore foo: explanation
+				  // rome-ignore parse(bar): explanation
+				  // rome-ignore parse(baz): explanation
+				  // rome-ignore parse(foo): explanation
 				  bar_foo;
 				}
 			`,
 		);
 
+		console.log(result);
 		t.is(result.suppressions.length, 4);
 		t.is(result.diagnostics.length, 1);
+
 		for (const diagnostic of result.diagnostics) {
 			t.is(diagnostic.description.category, "suppressions/overlap");
 		}
@@ -170,13 +175,13 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore foo: explanation
+				// rome-ignore parse: foo
 				function foo_bar() {
-				  // rome-ignore foo: explanation
+				  // rome-ignore parse: foo
 				  bar_foo;
 				}
 
-				// rome-ignore foo: explanation
+				// rome-ignore parse: foo
 				baz()
 			`,
 		);
@@ -196,14 +201,14 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore foo: explanation
+				// rome-ignore parse: foo
 				function foo_bar() {
-				  // rome-ignore foo: explanation
-				  // rome-ignore foo: explanation
+				  // rome-ignore parse: foo
+				  // rome-ignore parse: foo
 				  bar_foo;
 				}
 
-				// rome-ignore foo: explanation
+				// rome-ignore parse: foo
 				baz()
 			`,
 		);
@@ -223,30 +228,29 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// @rome-ignore foo1
+				// @rome-ignore parse: foo1
 				boo()
 
-				// rome-disable foo2
+				// rome-disable parse: foo2
 				boo()
 
-				// @rome-disable foo3
+				// @rome-disable parse: foo3
 				boo()
 
-				// @rometools-ignore foo4
+				// @rometools-ignore parse: foo4
 				boo()
 
-				// romefrontend-ignore foo5
+				// romefrontend-ignore parse: foo5
 				boo()
 
-				// @rometools-disable foo6
+				// @rometools-disable parse: foo6
 				boo()
 
-				// romefrontend-disable foo7
+				// romefrontend-disable parse: foo7
 				boo()
 			`,
 		);
 
-		console.log(result);
 		t.is(result.suppressions.length, 0);
 		t.is(result.diagnostics.length, 7);
 		for (const diagnostic of result.diagnostics) {
@@ -265,10 +269,10 @@ test(
 	async (t) => {
 		const result = extractSuppressionsFromSource(
 			dedent`
-				// rome-ignore foo
+				// rome-ignore parse
 				boo()
 
-				// rome-ignore foo:
+				// rome-ignore parse:
 				boo()
 			`,
 		);

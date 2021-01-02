@@ -1141,7 +1141,7 @@ export const lint = createDiagnosticsCategory({
 				commandFlags: {
 					apply: true,
 				},
-			} as DiagnosticAdviceAction,
+			},
 			{
 				type: "action",
 				hidden: true,
