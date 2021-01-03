@@ -11,5 +11,7 @@ export const cssParser = createDiagnosticsCategory({
 	UNTERMINATED_FUNCTION: {message: markup`Unterminated function`},
 	UNTERMINATED_STRING: {message: markup`Unterminated string`},
 	UNTERMINATED_URL: {message: markup`Unterminated URL`},
-	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier`}
+	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier`},
+	EXPECTED_SELECTOR: {message: markup`Expected a selector`},
+	UNEXPECTED_EMPTY_SELECTOR: {message: markup`Unexpected empty selectors`},
 });

@@ -71,16 +71,18 @@ function parsePseudoSelector(
 					type: "CSSPseudoClassSelector",
 					value: token.value,
 				},
-			)
-		} else if (parser.matchToken("Colon")) {
-			const token = parser.eatToken("Ident") as Tokens["Ident"];
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSPseudoElementSelector",
-					value: token.value,
-				}
-			)
+			);
+		} else if (parser.eatToken("Colon")) {
+			if (parser.matchToken("Ident")) {
+				const token = parser.eatToken("Ident") as Tokens["Ident"];
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSPseudoElementSelector",
+						value: token.value,
+					},
+				);
+			}
 		}
 	}
 	parser.unexpectedDiagnostic({
@@ -94,8 +96,12 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 	if (parser.eatToken("Whitespace")) {
 		const nextCombinator = tryParseCombinator(parser);
 		if (nextCombinator) {
+			parser.eatToken("Whitespace");
 			// Whitespace preceding the combinator is not a combinator.
 			return nextCombinator;
+		}
+		if (parser.matchToken("LeftCurlyBracket") || parser.matchToken("Comma")) {
+			return undefined;
 		}
 		return parser.finishNode(
 			start,
@@ -135,7 +141,7 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 function tryParseSelector(parser: CSSParser) {
 	if (parser.matchToken("Colon")) {
 		return parsePseudoSelector(parser);
-	}  else if (parser.matchToken("Hash")) {
+	} else if (parser.matchToken("Hash")) {
 		return parseIdSelector(parser);
 	} else if (parser.matchToken("Ident")) {
 		return parseTypeSelector(parser);
@@ -152,29 +158,54 @@ function parseSelector(parser: CSSParser): CSSSelector {
 	const start = parser.getPosition();
 	const patterns: AnyCSSPattern[] = [];
 
+	parser.eatToken("Comma");
+	parser.eatToken("Whitespace");
+
 	while (
+		!parser.matchToken("EOF") &&
 		!parser.matchToken("Comma") &&
-		!parser.matchToken("LeftCurlyBracket") &&
-		!parser.matchToken("EOF")
+		!parser.matchToken("LeftCurlyBracket")
 	) {
+		const selectorStart = parser.getPosition();
 		const last = patterns[patterns.length - 1];
 		const combinator = tryParseCombinator(parser);
 		const selector = tryParseSelector(parser);
 
-		if (selector && combinator && last && last.type !== "CSSCombinator") {
-			patterns.push(combinator);
+		if (combinator) {
+			if (!selector || !last || last.type === "CSSCombinator") {
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.EXPECTED_SELECTOR,
+					start: last ? undefined : selectorStart,
+				});
+				break;
+			} else {
+				patterns.push(combinator);
+			}
 		}
 
 		if (selector) {
 			patterns.push(selector);
 		}
 
-		if (!selector && !combinator) {
+		if (
+			!selector &&
+			!combinator &&
+			!parser.matchToken("Comma") &&
+			!parser.matchToken("LeftCurlyBracket")
+		) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNEXPECTED_TOKEN,
+				start: selectorStart,
 			});
 			break;
 		}
+	}
+
+	if (patterns.length <= 0) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.UNEXPECTED_EMPTY_SELECTOR,
+			start,
+		});
 	}
 
 	return parser.finishNode(
@@ -191,7 +222,6 @@ export function parseSelectors(parser: CSSParser): CSSSelector[] {
 	while (!parser.matchToken("LeftCurlyBracket") && !parser.matchToken("EOF")) {
 		const selector = parseSelector(parser);
 		selectors.push(selector);
-		parser.eatToken("Comma");
 	}
 	return selectors;
 }

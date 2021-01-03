@@ -88,7 +88,7 @@ CSSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 4
+							column: 3
 							line: 1
 						}
 					}
@@ -145,7 +145,7 @@ CSSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 15
+							column: 14
 							line: 1
 						}
 					}
@@ -202,7 +202,7 @@ CSSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 26
+							column: 25
 							line: 1
 						}
 					}
