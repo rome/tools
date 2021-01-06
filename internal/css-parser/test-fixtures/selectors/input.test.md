@@ -15,7 +15,7 @@ CSSRoot {
 		filename: "selectors/input.css"
 		end: Object {
 			column: 1
-			line: 3
+			line: 7
 		}
 		start: Object {
 			column: 0
@@ -246,6 +246,65 @@ CSSRoot {
 								start: Object {
 									column: 33
 									line: 1
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 7
+				}
+				start: Object {
+					column: 0
+					line: 5
+				}
+			}
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 7
+					}
+					start: Object {
+						column: 22
+						line: 5
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 22
+							line: 5
+						}
+						start: Object {
+							column: 0
+							line: 5
+						}
+					}
+					patterns: Array [
+						CSSClassSelector {
+							value: "escapedclassname"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 21
+									line: 5
+								}
+								start: Object {
+									column: 1
+									line: 5
 								}
 							}
 						}
