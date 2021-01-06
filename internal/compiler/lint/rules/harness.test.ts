@@ -8,6 +8,7 @@ for (const name in tests) {
 	test(
 		name,
 		async (t) => {
+			t.extendTimeout(10000);
 			let cases = tests[name];
 
 			if (!Array.isArray(cases)) {
