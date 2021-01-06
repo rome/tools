@@ -194,7 +194,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 			!parser.matchToken("LeftCurlyBracket")
 		) {
 			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.UNEXPECTED_TOKEN,
+				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 				start: selectorStart,
 			});
 			break;

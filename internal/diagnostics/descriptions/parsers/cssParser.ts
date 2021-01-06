@@ -13,5 +13,8 @@ export const cssParser = createDiagnosticsCategory({
 	UNTERMINATED_URL: {message: markup`Unterminated URL`},
 	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier`},
 	EXPECTED_SELECTOR: {message: markup`Expected a selector`},
+	EXPECTED_LBRACKET: {
+		message: markup`Expected a left bracket </emphasis>{</emphasis>`,
+	},
 	UNEXPECTED_EMPTY_SELECTOR: {message: markup`Unexpected empty selectors`},
 });
