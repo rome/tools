@@ -661,8 +661,7 @@ function Hello() {
 
 ```tsx
 function Hello() {
-	return <>
-	</>;
+	return <></>;
 }
 
 ```
