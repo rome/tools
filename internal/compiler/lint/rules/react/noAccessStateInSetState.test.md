@@ -307,3 +307,21 @@ class MyComponent extends Component {
 }
 
 ```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
+
+```tsx
+class MyComponent extends Component {
+	increment() {
+		this.setState();
+	}
+}
+
+```
