@@ -388,7 +388,7 @@ export default class TestServerWorker {
 
 		try {
 			const promises: Promise<void>[] = [];
-			for (let i = 0; i < 10; i++) {
+			for (let i = 0; i < 5; i++) {
 				promises.push(this.runTest());
 			}
 			await Promise.all(promises);
