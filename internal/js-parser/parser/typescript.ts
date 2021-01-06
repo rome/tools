@@ -51,7 +51,7 @@ import {
 	parseReferenceIdentifier,
 	parseStringLiteral,
 	parseTSConstKeyword,
-	parseTemplate,
+	parseTemplateElement,
 	parseVarStatement,
 	toBindingIdentifier,
 	toReferenceIdentifier,
@@ -106,6 +106,7 @@ import {
 	TSPropertySignature,
 	TSRestType,
 	TSSignatureDeclarationMeta,
+	TSTemplateElement,
 	TSTemplateLiteralTypeAnnotation,
 	TSThisType,
 	TSTupleElement,
@@ -1205,26 +1206,61 @@ function parseTSConstructorType(parser: JSParser): TSConstructorType {
 	);
 }
 
-function parseTSTemplateLiteralType(
+// Parse template expression.
+export function parseTSTemplateElement(parser: JSParser): TSTemplateElement {
+	const start = parser.getPosition();
+	const templateElem = parseTemplateElement(parser, false);
+	return parser.finishNode(
+		start,
+		{
+			...templateElem,
+			type: "TSTemplateElement",
+		},
+	);
+}
+
+export function parseTSTemplateLiteralType(
 	parser: JSParser,
 ): TSTemplateLiteralTypeAnnotation {
-	const templateNode = parseTemplate(parser, false);
+	const start = parser.getPosition();
+	const openContext = expectOpening(
+		parser,
+		tt.backQuote,
+		tt.backQuote,
+		"template literal type",
+	);
+	const expressions = [];
+	let curElt = parseTSTemplateElement(parser);
+	const quasis = [curElt];
 
-	if (templateNode.expressions.length > 0) {
-		unexpectedDiagnostic(
+	while (true) {
+		if (match(parser, tt.eof) || curElt.tail === true) {
+			break;
+		}
+
+		const exprPpenContext = expectOpening(
 			parser,
-			{
-				loc: parser.getLoc(templateNode.expressions[0]),
-				description: descriptions.JS_PARSER.TS_TEMPLATE_LITERAL_WITH_SUBSTITUION,
-			},
+			tt.dollarBraceL,
+			tt.braceR,
+			"template expression type",
 		);
+		expressions.push(parseTSType(parser));
+		expectClosing(parser, exprPpenContext);
+
+		curElt = parseTSTemplateElement(parser);
+		quasis.push(curElt);
 	}
 
-	return {
-		type: "TSTemplateLiteralTypeAnnotation",
-		value: templateNode.quasis[0].raw,
-		loc: templateNode.loc,
-	};
+	expectClosing(parser, openContext);
+
+	return parser.finishNode(
+		start,
+		{
+			type: "TSTemplateLiteralTypeAnnotation",
+			expressions,
+			quasis,
+		},
+	);
 }
 
 function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {

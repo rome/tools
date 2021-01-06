@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:0c4c9a924c7fdee8f4210a9810329cc3f5fcdb65,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:9190686a3eb5d728688ec4e02a8da94a411a813e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -488,6 +488,8 @@ import TSStringLiteralTypeAnnotation from "./js/typescript/TSStringLiteralTypeAn
 builders.set("TSStringLiteralTypeAnnotation", TSStringLiteralTypeAnnotation);
 import TSSymbolKeywordTypeAnnotation from "./js/typescript/TSSymbolKeywordTypeAnnotation";
 builders.set("TSSymbolKeywordTypeAnnotation", TSSymbolKeywordTypeAnnotation);
+import TSTemplateElement from "./js/typescript/TSTemplateElement";
+builders.set("TSTemplateElement", TSTemplateElement);
 import TSTemplateLiteralTypeAnnotation from "./js/typescript/TSTemplateLiteralTypeAnnotation";
 builders.set("TSTemplateLiteralTypeAnnotation", TSTemplateLiteralTypeAnnotation);
 import TSThisType from "./js/typescript/TSThisType";

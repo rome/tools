@@ -10,6 +10,7 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
+	diagnostics: Array []
 	directives: Array []
 	filename: "typescript/types/literal-string-2/input.ts"
 	hasHoistedVars: false
@@ -28,31 +29,6 @@ JSRoot {
 			line: 1
 		}
 	}
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Template literal types cannot have any substitution"}
-			}
-			location: Object {
-				filename: "typescript/types/literal-string-2/input.ts"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
-		}
-	]
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: Object {
@@ -108,7 +84,6 @@ JSRoot {
 									}
 								}
 								typeAnnotation: TSTemplateLiteralTypeAnnotation {
-									value: "foo-"
 									loc: Object {
 										filename: "typescript/types/literal-string-2/input.ts"
 										end: Object {
@@ -120,6 +95,71 @@ JSRoot {
 											line: 1
 										}
 									}
+									expressions: Array [
+										TSTypeReference {
+											typeParameters: undefined
+											loc: Object {
+												filename: "typescript/types/literal-string-2/input.ts"
+												end: Object {
+													column: 17
+													line: 1
+												}
+												start: Object {
+													column: 14
+													line: 1
+												}
+											}
+											typeName: JSReferenceIdentifier {
+												name: "bar"
+												loc: Object {
+													filename: "typescript/types/literal-string-2/input.ts"
+													identifierName: "bar"
+													end: Object {
+														column: 17
+														line: 1
+													}
+													start: Object {
+														column: 14
+														line: 1
+													}
+												}
+											}
+										}
+									]
+									quasis: Array [
+										TSTemplateElement {
+											cooked: "foo-"
+											raw: "foo-"
+											tail: false
+											loc: Object {
+												filename: "typescript/types/literal-string-2/input.ts"
+												end: Object {
+													column: 12
+													line: 1
+												}
+												start: Object {
+													column: 8
+													line: 1
+												}
+											}
+										}
+										TSTemplateElement {
+											cooked: ""
+											raw: ""
+											tail: true
+											loc: Object {
+												filename: "typescript/types/literal-string-2/input.ts"
+												end: Object {
+													column: 18
+													line: 1
+												}
+												start: Object {
+													column: 18
+													line: 1
+												}
+											}
+										}
+									]
 								}
 							}
 						}
@@ -146,16 +186,6 @@ JSRoot {
 ### `diagnostics`
 
 ```
-
- typescript/types/literal-string-2/input.ts:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Template literal types cannot have any substitution
-
-    let x: `foo-${bar}`;
-                  ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
