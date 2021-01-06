@@ -44,7 +44,7 @@ function createLintTransformSuppressions(
 					{
 						action: "suppress",
 						category: "lint/js/noVar",
-						categoryValue: undefined
+						categoryValue: undefined,
 					},
 				],
 			},
@@ -135,8 +135,8 @@ test(
 	"should add a new suppression on an existing suppression",
 	async (t) => {
 		const code = dedent`
-		// rome-ignore lint/js/noUnusedVariables: suppressed via --review
-		var foo = 5;
+			// rome-ignore lint/js/noUnusedVariables: suppressed via --review
+			var foo = 5;
 		`;
 		const res = await lint(
 			createLintTransformSuppressions(
