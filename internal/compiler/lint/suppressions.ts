@@ -68,7 +68,6 @@ export function addSuppressions(
 		) {
 			updateComment = lastComment;
 		}
-
 		// Insert new comment if there's none to update
 		if (updateComment === undefined) {
 			const id = injectComment(
@@ -97,14 +96,21 @@ export function addSuppressions(
 
 		// We may have eliminated them all
 		if (suppressionCategories.size > 0) {
+			// get from comment possible existing categories
+			// TODO: make sure that category matches the rules we have (remove "lint/" from category)
+			updateComment.value.slice(
+				updateComment.value.indexOf(SUPPRESSION_START),
+				updateComment.value.indexOf(":"),
+			).replace(SUPPRESSION_START, "").split(" ").filter(Boolean).forEach((
+				category,
+			) => {
+				suppressionCategories.add(category);
+			});
 			injectComment(
 				path,
 				{
 					...updateComment,
-					value: updateComment.value.replace(
-						SUPPRESSION_START,
-						buildSuppressionCommentValue(suppressionCategories),
-					),
+					value: buildSuppressionCommentValue(suppressionCategories),
 				},
 			);
 		}

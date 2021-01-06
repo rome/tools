@@ -2,6 +2,7 @@ import {test} from "rome";
 import {LintRequest, LintResult, lint, lintRuleNames} from "@internal/compiler";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 import {parseJS} from "@internal/js-parser";
+import {dedent} from "@internal/string-utils";
 
 function createLintTransformOptions(
 	sourceText: string,
@@ -16,6 +17,38 @@ function createLintTransformOptions(
 			input: sourceText,
 		}),
 		options: {},
+		project: {
+			configHashes: [],
+			config: mutateConfig(createDefaultProjectConfig()),
+			directory: undefined,
+		},
+	};
+}
+
+function createLintTransformSuppressions(
+	sourceText: string,
+	mutateConfig: (config: ProjectConfig) => ProjectConfig,
+): LintRequest {
+	return {
+		applySafeFixes: true,
+		suppressionExplanation: "test suppression",
+		sourceText,
+		ast: parseJS({
+			path: "unknown",
+			input: sourceText,
+		}),
+		options: {
+			lint: {
+				hasDecisions: true,
+				globalDecisions: [
+					{
+						action: "suppress",
+						category: "lint/js/noVar",
+						categoryValue: undefined,
+					},
+				],
+			},
+		},
 		project: {
 			configHashes: [],
 			config: mutateConfig(createDefaultProjectConfig()),
@@ -95,5 +128,37 @@ test(
 			),
 		);
 		t.is(res.src, code);
+	},
+);
+
+test(
+	"should add a new suppression on an existing suppression",
+	async (t) => {
+		const code = dedent`
+			// rome-ignore lint/js/noUnusedVariables: suppressed via --review
+			var foo = 5;
+		`;
+		const res = await lint(
+			createLintTransformSuppressions(
+				code,
+				(config) => ({
+					...config,
+					lint: {
+						...config.lint,
+						requireSuppressionExplanations: true,
+					},
+					format: {
+						...config.format,
+						enabled: true,
+					},
+				}),
+			),
+		);
+
+		t.true(
+			res.src.includes(
+				"rome-ignore lint/js/noVar lint/js/noUnusedVariables: suppressed via --review",
+			),
+		);
 	},
 );
