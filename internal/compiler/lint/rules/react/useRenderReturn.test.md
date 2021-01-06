@@ -313,8 +313,7 @@ class Foo extends React.Component {
 ```tsx
 class Foo {
 	render = () => {
-		return <>
-		</>;
+		return <></>;
 	};
 }
 
@@ -331,10 +330,7 @@ class Foo {
 
 ```tsx
 class Foo {
-	render = () =>
-		<>
-		</>
-	;
+	render = () => <></>;
 }
 
 ```
