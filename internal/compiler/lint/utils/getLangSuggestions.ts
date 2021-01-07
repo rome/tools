@@ -11,7 +11,7 @@ export function getLangSuggestions() {
 	}
 
 	if (countries && languages) {
-		suggestions = [...Array.from(countries)];
+		suggestions = Array.from(countries);
 		for (const language of languages) {
 			for (const country of countries) {
 				suggestions.push(`${language}-${country}`);
