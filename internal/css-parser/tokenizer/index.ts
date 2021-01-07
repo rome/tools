@@ -3,7 +3,7 @@ import {AnyCSSToken, CSSParser, Tokens} from "../types";
 type TokenType = AnyCSSToken["type"];
 
 function skipComments(parser: CSSParser) {
-	while (!parser.matchToken("EOF") && parser.matchToken("Comment")) {
+	while (parser.matchToken("Comment")) {
 		parser.registerComment(
 			parser.comments.createComment({
 				type: "CommentBlock",
