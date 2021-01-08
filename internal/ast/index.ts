@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:a40c55a7a92e859f2530c7f0307dcbda5d6677a1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:5cd032d505b9cde873e760e5c458a98937af984e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -33,6 +33,7 @@ export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
 export * from "./css/selectors/CSSSelector";
+export * from "./css/core/CSSString";
 export * from "./css/selectors/CSSTypeSelector";
 export * from "./css/selectors/CSSUniversalSelector";
 export * from "./css/core/CSSWhitespace";
@@ -293,6 +294,7 @@ export type AnyNode =
 	| n.CSSRoot
 	| n.CSSRule
 	| n.CSSSelector
+	| n.CSSString
 	| n.CSSTypeSelector
 	| n.CSSUniversalSelector
 	| n.CSSWhitespace

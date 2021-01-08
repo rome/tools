@@ -26,6 +26,10 @@ span.something {
 	background-color: red;
 }
 
+h1::before  {
+  content: " content ";
+}
+
 ```
 
 ### `Output`
@@ -41,6 +45,10 @@ span.something {
 
 #id .class:hover {
 	background-color: red;
+}
+
+h1::before {
+	content: " content ";
 }
 
 ```
