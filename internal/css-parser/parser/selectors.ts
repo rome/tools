@@ -1,4 +1,3 @@
-import {CSSParser} from "../index";
 import {
 	CSSClassSelector,
 	CSSCombinator,
@@ -10,13 +9,14 @@ import {
 	Combinator,
 } from "@internal/ast";
 import {AnyCSSPattern} from "@internal/ast/css/unions";
-import {Tokens} from "../types";
+import {CSSParser, Tokens} from "../types";
+import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
 function parseTypeSelector(parser: CSSParser): CSSTypeSelector {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Ident");
-	parser.eatToken("Ident");
+	readToken(parser, "Ident");
 	return parser.finishNode(
 		start,
 		{
@@ -29,7 +29,7 @@ function parseTypeSelector(parser: CSSParser): CSSTypeSelector {
 function parseIdSelector(parser: CSSParser): CSSIdSelector {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Hash");
-	parser.eatToken("Hash");
+	readToken(parser, "Hash");
 	return parser.finishNode(
 		start,
 		{
@@ -41,9 +41,9 @@ function parseIdSelector(parser: CSSParser): CSSIdSelector {
 
 function parseClassSelector(parser: CSSParser): CSSClassSelector | undefined {
 	const start = parser.getPosition();
-	parser.eatToken("Delim");
-	if (parser.matchToken("Ident")) {
-		const token = parser.eatToken("Ident") as Tokens["Ident"];
+	readToken(parser, "Delim");
+	if (matchToken(parser, "Ident")) {
+		const token = readToken(parser, "Ident") as Tokens["Ident"];
 		return parser.finishNode(
 			start,
 			{
@@ -62,9 +62,9 @@ function parsePseudoSelector(
 	parser: CSSParser,
 ): CSSPseudoClassSelector | CSSPseudoElementSelector | undefined {
 	const start = parser.getPosition();
-	if (parser.eatToken("Colon")) {
-		if (parser.matchToken("Ident")) {
-			const token = parser.eatToken("Ident") as Tokens["Ident"];
+	if (readToken(parser, "Colon")) {
+		if (matchToken(parser, "Ident")) {
+			const token = readToken(parser, "Ident") as Tokens["Ident"];
 			return parser.finishNode(
 				start,
 				{
@@ -72,9 +72,9 @@ function parsePseudoSelector(
 					value: token.value,
 				},
 			);
-		} else if (parser.eatToken("Colon")) {
-			if (parser.matchToken("Ident")) {
-				const token = parser.eatToken("Ident") as Tokens["Ident"];
+		} else if (readToken(parser, "Colon")) {
+			if (matchToken(parser, "Ident")) {
+				const token = readToken(parser, "Ident") as Tokens["Ident"];
 				return parser.finishNode(
 					start,
 					{
@@ -93,14 +93,14 @@ function parsePseudoSelector(
 
 function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 	const start = parser.getPosition();
-	if (parser.eatToken("Whitespace")) {
+	if (readToken(parser, "Whitespace")) {
 		const nextCombinator = tryParseCombinator(parser);
 		if (nextCombinator) {
-			parser.eatToken("Whitespace");
+			readToken(parser, "Whitespace");
 			// Whitespace preceding the combinator is not a combinator.
 			return nextCombinator;
 		}
-		if (parser.matchToken("LeftCurlyBracket") || parser.matchToken("Comma")) {
+		if (matchToken(parser, "LeftCurlyBracket") || matchToken(parser, "Comma")) {
 			return undefined;
 		}
 		return parser.finishNode(
@@ -112,7 +112,7 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 		);
 	}
 
-	if (parser.matchToken("Delim")) {
+	if (matchToken(parser, "Delim")) {
 		let combinator: Combinator | undefined;
 		const value = (parser.getToken() as Tokens["Delim"]).value;
 		if (value === ">") {
@@ -124,8 +124,8 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 		}
 
 		if (combinator) {
-			parser.eatToken("Delim");
-			parser.eatToken("Whitespace"); // Eats trailing Whitespace after combinator.
+			readToken(parser, "Delim");
+			readToken(parser, "Whitespace"); // Eats trailing Whitespace after combinator.
 			return parser.finishNode(
 				start,
 				{
@@ -139,14 +139,14 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 }
 
 function tryParseSelector(parser: CSSParser) {
-	if (parser.matchToken("Colon")) {
+	if (matchToken(parser, "Colon")) {
 		return parsePseudoSelector(parser);
-	} else if (parser.matchToken("Hash")) {
+	} else if (matchToken(parser, "Hash")) {
 		return parseIdSelector(parser);
-	} else if (parser.matchToken("Ident")) {
+	} else if (matchToken(parser, "Ident")) {
 		return parseTypeSelector(parser);
-	} else if (parser.matchToken("Delim")) {
-		const token = parser.eatToken("Delim") as Tokens["Delim"];
+	} else if (matchToken(parser, "Delim")) {
+		const token = readToken(parser, "Delim") as Tokens["Delim"];
 		if (token.value === ".") {
 			return parseClassSelector(parser);
 		}
@@ -158,13 +158,13 @@ function parseSelector(parser: CSSParser): CSSSelector {
 	const start = parser.getPosition();
 	const patterns: AnyCSSPattern[] = [];
 
-	parser.eatToken("Comma");
-	parser.eatToken("Whitespace");
+	readToken(parser, "Comma");
+	readToken(parser, "Whitespace");
 
 	while (
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("Comma") &&
-		!parser.matchToken("LeftCurlyBracket")
+		!matchToken(parser, "EOF") &&
+		!matchToken(parser, "Comma") &&
+		!matchToken(parser, "LeftCurlyBracket")
 	) {
 		const selectorStart = parser.getPosition();
 		const last = patterns[patterns.length - 1];
@@ -190,8 +190,8 @@ function parseSelector(parser: CSSParser): CSSSelector {
 		if (
 			!selector &&
 			!combinator &&
-			!parser.matchToken("Comma") &&
-			!parser.matchToken("LeftCurlyBracket")
+			!matchToken(parser, "Comma") &&
+			!matchToken(parser, "LeftCurlyBracket")
 		) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
@@ -219,7 +219,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 
 export function parseSelectors(parser: CSSParser): CSSSelector[] {
 	const selectors = [];
-	while (!parser.matchToken("LeftCurlyBracket") && !parser.matchToken("EOF")) {
+	while (!matchToken(parser, "LeftCurlyBracket") && !matchToken(parser, "EOF")) {
 		const selector = parseSelector(parser);
 		selectors.push(selector);
 	}
