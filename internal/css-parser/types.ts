@@ -2,6 +2,7 @@ import {
 	BaseTokens,
 	ComplexToken,
 	NumberToken,
+	ParserCore,
 	ParserOptionsWithRequiredPath,
 	SimpleToken,
 	StringToken,
@@ -79,3 +80,12 @@ export type AnyCSSValue =
 	| CSSHash
 	| CSSWhitespace
 	| CSSRaw;
+
+export type CSSParserTypes = {
+	tokens: Tokens;
+	state: {};
+	options: CSSParserOptions;
+	meta: void;
+};
+
+export type CSSParser = ParserCore<CSSParserTypes>;
