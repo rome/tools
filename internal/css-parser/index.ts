@@ -934,8 +934,8 @@ function parseComponentValue(
 			{
 				type: "CSSString",
 				value: stringToken.value,
-			}
-		)
+			},
+		);
 	}
 
 	const value = (parser.getToken() as ValueToken<string, string>).value;
