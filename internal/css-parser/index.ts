@@ -926,6 +926,18 @@ function parseComponentValue(
 		}
 	}
 
+	if (matchToken(parser, "String")) {
+		const stringToken = parser.getToken() as Tokens["String"];
+		nextToken(parser);
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSString",
+				value: stringToken.value,
+			},
+		);
+	}
+
 	const value = (parser.getToken() as ValueToken<string, string>).value;
 	nextToken(parser);
 	return parser.finishNode(
