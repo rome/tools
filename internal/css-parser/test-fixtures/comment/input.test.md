@@ -28,7 +28,7 @@ CSSRoot {
 			loc: Object {
 				filename: "comment/input.css"
 				end: Object {
-					column: 15
+					column: 28
 					line: 2
 				}
 				start: Object {
@@ -43,7 +43,7 @@ CSSRoot {
 			loc: Object {
 				filename: "comment/input.css"
 				end: Object {
-					column: 8
+					column: 21
 					line: 6
 				}
 				start: Object {
@@ -58,7 +58,7 @@ CSSRoot {
 			loc: Object {
 				filename: "comment/input.css"
 				end: Object {
-					column: 2
+					column: 15
 					line: 9
 				}
 				start: Object {

@@ -10,8 +10,6 @@ CSSRoot {
 	diagnostics: Array []
 	filename: "smoke/input.css"
 	integrity: undefined
-	leadingComments: Array []
-	innerComments: Array ["0"]
 	loc: Object {
 		filename: "smoke/input.css"
 		end: Object {
@@ -30,7 +28,7 @@ CSSRoot {
 			loc: Object {
 				filename: "smoke/input.css"
 				end: Object {
-					column: 0
+					column: 21
 					line: 1
 				}
 				start: Object {
@@ -42,7 +40,7 @@ CSSRoot {
 	]
 	body: Array [
 		CSSRule {
-			leadingComments: undefined
+			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "smoke/input.css"
 				end: Object {
