@@ -1,6 +1,12 @@
-import {AnyCSSToken, AnyCSSValue, CSSParserOptions, Tokens} from "./types";
 import {
-	ParserCore,
+	AnyCSSToken,
+	AnyCSSValue,
+	CSSParser,
+	CSSParserOptions,
+	CSSParserTypes,
+	Tokens,
+} from "./types";
+import {
 	TokenValues,
 	ValueToken,
 	createParser,
@@ -30,15 +36,7 @@ import {
 	CSSSelector,
 } from "@internal/ast";
 import {parseSelectors} from "./parser/selectors";
-
-type CSSParserTypes = {
-	tokens: Tokens;
-	state: {};
-	options: CSSParserOptions;
-	meta: void;
-};
-
-export type CSSParser = ParserCore<CSSParserTypes>;
+import {matchToken, nextToken, readToken} from "./tokenizer";
 
 export const createCSSParser = createParser<CSSParserTypes>({
 	diagnosticLanguage: "css",
@@ -640,32 +638,20 @@ function parseRules(
 	endingTokenType?: keyof Tokens,
 ): Array<CSSAtRule | CSSRule> {
 	const rules: Array<CSSAtRule | CSSRule> = [];
-	while (!parser.matchToken("EOF")) {
-		if (endingTokenType && parser.matchToken(endingTokenType)) {
-			parser.nextToken();
+	while (!matchToken(parser, "EOF")) {
+		if (endingTokenType && matchToken(parser, endingTokenType)) {
+			nextToken(parser);
 			break;
 		}
 
-		if (parser.matchToken("Comment")) {
-			parser.registerComment(
-				parser.comments.createComment({
-					type: "CommentBlock",
-					loc: parser.finishLoc(parser.getPosition()),
-					value: (parser.getToken() as Tokens["Comment"]).value,
-				}),
-			);
-			parser.eatToken("Comment");
+		if (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
 			continue;
 		}
 
-		if (parser.matchToken("Whitespace")) {
-			parser.eatToken("Whitespace");
-			continue;
-		}
-
-		if (parser.matchToken("CDO") || parser.matchToken("CDC")) {
+		if (matchToken(parser, "CDO") || matchToken(parser, "CDC")) {
 			if (topLevel) {
-				parser.nextToken();
+				nextToken(parser);
 				continue;
 			}
 			const rule = parseRule(parser);
@@ -673,7 +659,7 @@ function parseRules(
 			continue;
 		}
 
-		if (parser.matchToken("AtKeyword")) {
+		if (matchToken(parser, "AtKeyword")) {
 			rules.push(parseAtRule(parser));
 			continue;
 		}
@@ -690,8 +676,8 @@ function parseRules(
 function parseRule(parser: CSSParser): CSSRule | undefined {
 	const start = parser.getPosition();
 	let prelude: CSSSelector[] = [];
-	while (!parser.matchToken("EOF")) {
-		if (parser.matchToken("LeftCurlyBracket")) {
+	while (!matchToken(parser, "EOF")) {
+		if (matchToken(parser, "LeftCurlyBracket")) {
 			return parser.finishNode(
 				start,
 				{
@@ -716,16 +702,16 @@ function parseAtRule(parser: CSSParser): CSSAtRule {
 	const name = token.value;
 	let block = undefined;
 	while (true) {
-		if (parser.matchToken("Semi")) {
+		if (matchToken(parser, "Semi")) {
 			break;
 		}
-		if (parser.matchToken("EOF")) {
+		if (matchToken(parser, "EOF")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_AT_RULE,
 			});
 			break;
 		}
-		if (parser.matchToken("LeftCurlyBracket")) {
+		if (matchToken(parser, "LeftCurlyBracket")) {
 			block = parseComplexBlock(parser);
 			break;
 		}
@@ -754,14 +740,14 @@ function parseSimpleBlock(parser: CSSParser): CSSBlock | undefined {
 		return undefined;
 	}
 
-	parser.nextToken();
+	nextToken(parser);
 
 	while (true) {
-		if (parser.matchToken(endingTokenType)) {
-			parser.nextToken();
+		if (matchToken(parser, endingTokenType)) {
+			nextToken(parser);
 			break;
 		}
-		if (parser.matchToken("EOF")) {
+		if (matchToken(parser, "EOF")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_BLOCK,
 			});
@@ -792,7 +778,7 @@ function parseDeclarationBlock(parser: CSSParser): CSSBlock | undefined {
 		return undefined;
 	}
 
-	parser.nextToken();
+	nextToken(parser);
 
 	value = parseDeclarations(parser, endingTokenType);
 
@@ -817,7 +803,7 @@ function parseComplexBlock(parser: CSSParser): CSSBlock | undefined {
 		return undefined;
 	}
 
-	parser.nextToken();
+	nextToken(parser);
 
 	value = parseRules(parser, false, endingTokenType);
 
@@ -836,14 +822,14 @@ function parseComponentValue(
 	isPrelude: boolean = false,
 ): AnyCSSValue | undefined {
 	if (
-		parser.matchToken("LeftCurlyBracket") ||
-		parser.matchToken("LeftParen") ||
-		parser.matchToken("LeftSquareBracket")
+		matchToken(parser, "LeftCurlyBracket") ||
+		matchToken(parser, "LeftParen") ||
+		matchToken(parser, "LeftSquareBracket")
 	) {
 		return parseSimpleBlock(parser);
 	}
 
-	if (parser.matchToken("Function")) {
+	if (matchToken(parser, "Function")) {
 		return parseFunction(parser);
 	}
 
@@ -851,8 +837,8 @@ function parseComponentValue(
 
 	// NOTE: even though the spec says to ignore whitespaces
 	// Inside the prelude, it has a meaning so we need to have a token
-	if (parser.matchToken("Whitespace")) {
-		parser.nextToken();
+	if (matchToken(parser, "Whitespace")) {
+		nextToken(parser);
 
 		if (isPrelude) {
 			return parser.finishNode(
@@ -865,10 +851,10 @@ function parseComponentValue(
 		return undefined;
 	}
 
-	if (parser.matchToken("Dimension")) {
+	if (matchToken(parser, "Dimension")) {
 		const unit = (parser.getToken() as Tokens["Dimension"]).unit;
 		const value = (parser.getToken() as Tokens["Dimension"]).value;
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
@@ -879,9 +865,9 @@ function parseComponentValue(
 		);
 	}
 
-	if (parser.matchToken("Percentage")) {
+	if (matchToken(parser, "Percentage")) {
 		const value = (parser.getToken() as Tokens["Percentage"]).value;
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
@@ -891,9 +877,9 @@ function parseComponentValue(
 		);
 	}
 
-	if (parser.matchToken("Ident")) {
+	if (matchToken(parser, "Ident")) {
 		const value = (parser.getToken() as Tokens["Ident"]).value;
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
@@ -903,9 +889,9 @@ function parseComponentValue(
 		);
 	}
 
-	if (parser.matchToken("Number")) {
+	if (matchToken(parser, "Number")) {
 		const value = (parser.getToken() as Tokens["Number"]).value;
-		parser.nextToken();
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
@@ -915,8 +901,8 @@ function parseComponentValue(
 		);
 	}
 
-	if (parser.matchToken("Colon")) {
-		parser.nextToken();
+	if (matchToken(parser, "Colon")) {
+		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
@@ -926,10 +912,10 @@ function parseComponentValue(
 		);
 	}
 
-	if (parser.matchToken("Hash")) {
+	if (matchToken(parser, "Hash")) {
 		const hashToken = parser.getToken() as Tokens["Hash"];
 		if (hashToken.hashType === "id") {
-			parser.nextToken();
+			nextToken(parser);
 			return parser.finishNode(
 				start,
 				{
@@ -941,7 +927,7 @@ function parseComponentValue(
 	}
 
 	const value = (parser.getToken() as ValueToken<string, string>).value;
-	parser.nextToken();
+	nextToken(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -958,11 +944,11 @@ function parseFunction(parser: CSSParser): CSSFunction {
 	const value = [];
 
 	while (true) {
-		if (parser.matchToken("RightParen")) {
-			parser.nextToken();
+		if (matchToken(parser, "RightParen")) {
+			nextToken(parser);
 			break;
 		}
-		if (parser.matchToken("EOF")) {
+		if (matchToken(parser, "EOF")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
 			});
@@ -988,22 +974,22 @@ function parseDeclarations(
 ): Array<CSSAtRule | CSSDeclaration> {
 	const declarations: Array<CSSAtRule | CSSDeclaration> = [];
 
-	while (!parser.matchToken("EOF")) {
-		if (parser.eatToken("Whitespace") || parser.eatToken("Semi")) {
+	while (!matchToken(parser, "EOF")) {
+		if (readToken(parser, "Whitespace") || readToken(parser, "Semi")) {
 			continue;
 		}
-		if (endingTokenType && parser.matchToken(endingTokenType)) {
-			parser.nextToken();
+		if (endingTokenType && matchToken(parser, endingTokenType)) {
+			nextToken(parser);
 			break;
 		}
-		if (parser.matchToken("AtKeyword")) {
+		if (matchToken(parser, "AtKeyword")) {
 			declarations.push(parseAtRule(parser));
 			continue;
 		}
-		if (parser.matchToken("Ident")) {
+		if (matchToken(parser, "Ident")) {
 			const declaration = parseDeclaration(parser);
 			declaration && declarations.push(declaration);
-			while (!parser.matchToken("Semi") && !parser.matchToken("EOF")) {
+			while (!matchToken(parser, "Semi") && !matchToken(parser, "EOF")) {
 				const declaration = parseDeclaration(parser);
 				declaration && declarations.push(declaration);
 			}
@@ -1012,7 +998,7 @@ function parseDeclarations(
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.INVALID_DECLARATION,
 		});
-		while (!parser.matchToken("Semi") && !parser.matchToken("EOF")) {
+		while (!matchToken(parser, "Semi") && !matchToken(parser, "EOF")) {
 			parseComponentValue(parser);
 		}
 	}
@@ -1021,7 +1007,7 @@ function parseDeclarations(
 }
 
 function parseDeclaration(parser: CSSParser): CSSDeclaration | undefined {
-	while (!parser.matchToken("Semi")) {
+	while (!matchToken(parser, "Semi")) {
 		const currentToken = parser.getToken();
 		if (currentToken.type !== "Ident") {
 			parser.unexpectedDiagnostic({
@@ -1034,23 +1020,23 @@ function parseDeclaration(parser: CSSParser): CSSDeclaration | undefined {
 		const start = parser.getPosition();
 		let important = false;
 		let value: Array<AnyCSSValue | undefined> = [];
-		parser.nextToken();
+		nextToken(parser);
 
-		while (parser.matchToken("Whitespace")) {
-			parser.eatToken("Whitespace");
+		while (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
 		}
-		if (!parser.matchToken("Colon")) {
+		if (!matchToken(parser, "Colon")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.INVALID_DECLARATION,
 			});
 			return undefined;
 		}
-		parser.nextToken();
-		while (parser.matchToken("Whitespace")) {
-			parser.eatToken("Whitespace");
+		nextToken(parser);
+		while (matchToken(parser, "Whitespace")) {
+			readToken(parser, "Whitespace");
 		}
-		while (!parser.matchToken("EOF")) {
-			if (parser.matchToken("Semi")) {
+		while (!matchToken(parser, "EOF")) {
+			if (matchToken(parser, "Semi")) {
 				const lastTwoTokens = [...value].slice(-2);
 				if (
 					lastTwoTokens[0]?.type === "CSSRaw" &&

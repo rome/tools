@@ -8,15 +8,15 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
 
-const NODE_VARIABLES = [
+const NODE_VARIABLES_SET = new Set([
 	"require",
 	"__dirname",
 	"__filename",
 	"module",
 	"exports",
-];
+]);
 
-const BROWSER_VARIABLES = [
+const BROWSER_VARIABLES_SET = new Set([
 	"fetch",
 	"document",
 	"window",
@@ -31,10 +31,10 @@ const BROWSER_VARIABLES = [
 	"Text",
 	"Document",
 	"performance",
-];
+]);
 
 // This is gross...
-const TS_VARIABLES = [
+const TS_VARIABLES_SET = new Set([
 	"MethodDecorator",
 	"ParameterDecorator",
 	"PromiseConstructorLike",
@@ -64,7 +64,7 @@ const TS_VARIABLES = [
 	"BufferEncoding",
 	"Console",
 	"Thenable",
-];
+]);
 
 export default createVisitor({
 	name: "js/noUndeclaredVariables",
@@ -81,9 +81,9 @@ export default createVisitor({
 			const isDefined =
 				binding !== undefined ||
 				scope.isGlobal(name) ||
-				BROWSER_VARIABLES.includes(name) ||
-				NODE_VARIABLES.includes(name) ||
-				TS_VARIABLES.includes(name);
+				BROWSER_VARIABLES_SET.has(name) ||
+				NODE_VARIABLES_SET.has(name) ||
+				TS_VARIABLES_SET.has(name);
 
 			if (!isDefined) {
 				path.context.addNodeDiagnostic(
