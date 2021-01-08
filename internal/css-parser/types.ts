@@ -16,6 +16,7 @@ import {
 	CSSNumber,
 	CSSPercentage,
 	CSSRaw,
+	CSSString,
 	CSSWhitespace,
 } from "@internal/ast";
 
@@ -79,6 +80,7 @@ export type AnyCSSValue =
 	| CSSNumber
 	| CSSHash
 	| CSSWhitespace
+	| CSSString
 	| CSSRaw;
 
 export type CSSParserTypes = {
