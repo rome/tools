@@ -28,7 +28,7 @@ CSSRoot {
 			loc: Object {
 				filename: "comment/input.css"
 				end: Object {
-					column: 14
+					column: 28
 					line: 2
 				}
 				start: Object {
@@ -43,7 +43,7 @@ CSSRoot {
 			loc: Object {
 				filename: "comment/input.css"
 				end: Object {
-					column: 7
+					column: 21
 					line: 6
 				}
 				start: Object {
@@ -58,7 +58,7 @@ CSSRoot {
 			loc: Object {
 				filename: "comment/input.css"
 				end: Object {
-					column: 1
+					column: 15
 					line: 9
 				}
 				start: Object {
@@ -82,12 +82,11 @@ CSSRoot {
 				}
 			}
 			prelude: Array [
-				CSSIdentifier {
-					value: "a"
+				CSSSelector {
 					loc: Object {
 						filename: "comment/input.css"
 						end: Object {
-							column: 1
+							column: 2
 							line: 1
 						}
 						start: Object {
@@ -95,6 +94,22 @@ CSSRoot {
 							line: 1
 						}
 					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: Object {
+								filename: "comment/input.css"
+								end: Object {
+									column: 1
+									line: 1
+								}
+								start: Object {
+									column: 0
+									line: 1
+								}
+							}
+						}
+					]
 				}
 			]
 			block: CSSBlock {
@@ -158,12 +173,11 @@ CSSRoot {
 				}
 			}
 			prelude: Array [
-				CSSIdentifier {
-					value: "a"
+				CSSSelector {
 					loc: Object {
 						filename: "comment/input.css"
 						end: Object {
-							column: 1
+							column: 2
 							line: 5
 						}
 						start: Object {
@@ -171,6 +185,22 @@ CSSRoot {
 							line: 5
 						}
 					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: Object {
+								filename: "comment/input.css"
+								end: Object {
+									column: 1
+									line: 5
+								}
+								start: Object {
+									column: 0
+									line: 5
+								}
+							}
+						}
+					]
 				}
 			]
 			block: CSSBlock {
@@ -235,12 +265,11 @@ CSSRoot {
 				}
 			}
 			prelude: Array [
-				CSSIdentifier {
-					value: "a"
+				CSSSelector {
 					loc: Object {
 						filename: "comment/input.css"
 						end: Object {
-							column: 1
+							column: 16
 							line: 9
 						}
 						start: Object {
@@ -248,6 +277,22 @@ CSSRoot {
 							line: 9
 						}
 					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: Object {
+								filename: "comment/input.css"
+								end: Object {
+									column: 1
+									line: 9
+								}
+								start: Object {
+									column: 0
+									line: 9
+								}
+							}
+						}
+					]
 				}
 			]
 			block: CSSBlock {
@@ -257,7 +302,6 @@ CSSRoot {
 						value: Array [
 							CSSIdentifier {
 								value: "white"
-								leadingComments: undefined
 								loc: Object {
 									filename: "comment/input.css"
 									end: Object {
@@ -272,7 +316,6 @@ CSSRoot {
 							}
 						]
 						important: false
-						leadingComments: undefined
 						loc: Object {
 							filename: "comment/input.css"
 							end: Object {
@@ -287,7 +330,6 @@ CSSRoot {
 					}
 				]
 				startingTokenValue: "{"
-				leadingComments: Array ["2"]
 				loc: Object {
 					filename: "comment/input.css"
 					end: Object {
