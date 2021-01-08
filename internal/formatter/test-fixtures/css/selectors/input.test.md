@@ -50,6 +50,14 @@ div > #id {
 div + #id, div ~ #id, div > #id {
 }
 
+* {
+
+}
+
+.field + * {
+
+}
+
 ```
 
 ### `Output`
@@ -93,6 +101,12 @@ div > #id {
 div + #id,
 div ~ #id,
 div > #id {
+}
+
+* {
+}
+
+.field + * {
 }
 
 ```

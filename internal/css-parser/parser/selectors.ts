@@ -6,6 +6,7 @@ import {
 	CSSPseudoElementSelector,
 	CSSSelector,
 	CSSTypeSelector,
+	CSSUniversalSelector,
 	Combinator,
 } from "@internal/ast";
 import {AnyCSSPattern} from "@internal/ast/css/unions";
@@ -91,6 +92,18 @@ function parsePseudoSelector(
 	return undefined;
 }
 
+function parseUniversalSelector(parser: CSSParser): CSSUniversalSelector {
+	const start = parser.getPosition();
+	parser.expectToken("Delim");
+	readToken(parser, "Delim");
+	return parser.finishNode(
+		start,
+		{
+			type: "CSSUniversalSelector",
+		},
+	);
+}
+
 function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 	const start = parser.getPosition();
 	if (readToken(parser, "Whitespace")) {
@@ -146,9 +159,11 @@ function tryParseSelector(parser: CSSParser) {
 	} else if (matchToken(parser, "Ident")) {
 		return parseTypeSelector(parser);
 	} else if (matchToken(parser, "Delim")) {
-		const token = readToken(parser, "Delim") as Tokens["Delim"];
+		const token = parser.getToken() as Tokens["Delim"];
 		if (token.value === ".") {
 			return parseClassSelector(parser);
+		} else if (token.value === "*") {
+			return parseUniversalSelector(parser);
 		}
 	}
 	return undefined;
