@@ -92,16 +92,19 @@ function parsePseudoSelector(
 	return undefined;
 }
 
-function parseUniversalSelector(parser: CSSParser): CSSUniversalSelector {
+function parseUniversalSelector(
+	parser: CSSParser,
+): CSSUniversalSelector | undefined {
 	const start = parser.getPosition();
-	parser.expectToken("Delim");
-	readToken(parser, "Delim");
-	return parser.finishNode(
-		start,
-		{
-			type: "CSSUniversalSelector",
-		},
-	);
+	if (readToken(parser, "Delim")) {
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSUniversalSelector",
+			},
+		);
+	}
+	return undefined;
 }
 
 function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
