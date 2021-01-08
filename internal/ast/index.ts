@@ -11,22 +11,29 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:96d6160ebcc53b453a700acbc36d9dc8368b6402,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:f611cf7d37bcc11eb0ff292609f4026b6e02ecf0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
 export * from "./css/core/CSSAtRule";
 export * from "./css/core/CSSBlock";
+export * from "./css/selectors/CSSClassSelector";
+export * from "./css/selectors/CSSCombinator";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
 export * from "./css/core/CSSFunction";
 export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
+export * from "./css/selectors/CSSIdSelector";
 export * from "./css/core/CSSNumber";
 export * from "./css/core/CSSPercentage";
+export * from "./css/selectors/CSSPseudoClassSelector";
+export * from "./css/selectors/CSSPseudoElementSelector";
 export * from "./css/core/CSSRaw";
 export * from "./css/core/CSSRoot";
 export * from "./css/core/CSSRule";
+export * from "./css/selectors/CSSSelector";
+export * from "./css/selectors/CSSTypeSelector";
 export * from "./css/core/CSSWhitespace";
 export * from "./html/attributes/HTMLAttribute";
 export * from "./html/tags/HTMLCdataTag";
@@ -269,16 +276,23 @@ export type AnyNode =
 	| n.CommitRoot
 	| n.CSSAtRule
 	| n.CSSBlock
+	| n.CSSClassSelector
+	| n.CSSCombinator
 	| n.CSSDeclaration
 	| n.CSSDimension
 	| n.CSSFunction
 	| n.CSSHash
 	| n.CSSIdentifier
+	| n.CSSIdSelector
 	| n.CSSNumber
 	| n.CSSPercentage
+	| n.CSSPseudoClassSelector
+	| n.CSSPseudoElementSelector
 	| n.CSSRaw
 	| n.CSSRoot
 	| n.CSSRule
+	| n.CSSSelector
+	| n.CSSTypeSelector
 	| n.CSSWhitespace
 	| n.HTMLAttribute
 	| n.HTMLCdataTag

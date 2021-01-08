@@ -1,10 +1,9 @@
-import {CSSBlock, NodeBaseWithComments} from "@internal/ast";
+import {CSSBlock, CSSSelector, NodeBaseWithComments} from "@internal/ast";
 import {createBuilder} from "../../utils";
-import {AnyCSSValue} from "../../../css-parser/types";
 
 export interface CSSRule extends NodeBaseWithComments {
 	readonly type: "CSSRule";
-	readonly prelude: AnyCSSValue[];
+	readonly prelude: CSSSelector[];
 	readonly block?: CSSBlock;
 }
 export const cssRule = createBuilder<CSSRule>(

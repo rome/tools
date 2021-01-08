@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:9190686a3eb5d728688ec4e02a8da94a411a813e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:a1aac6b4c3cc169c1e78bdf5ab7f0a1d05698d2a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -25,6 +25,10 @@ import CSSAtRule from "./css/core/CSSAtRule";
 builders.set("CSSAtRule", CSSAtRule);
 import CSSBlock from "./css/core/CSSBlock";
 builders.set("CSSBlock", CSSBlock);
+import CSSClassSelector from "./css/selectors/CSSClassSelector";
+builders.set("CSSClassSelector", CSSClassSelector);
+import CSSCombinator from "./css/selectors/CSSCombinator";
+builders.set("CSSCombinator", CSSCombinator);
 import CSSDeclaration from "./css/core/CSSDeclaration";
 builders.set("CSSDeclaration", CSSDeclaration);
 import CSSDimension from "./css/core/CSSDimension";
@@ -35,16 +39,26 @@ import CSSHash from "./css/core/CSSHash";
 builders.set("CSSHash", CSSHash);
 import CSSIdentifier from "./css/core/CSSIdentifier";
 builders.set("CSSIdentifier", CSSIdentifier);
+import CSSIdSelector from "./css/selectors/CSSIdSelector";
+builders.set("CSSIdSelector", CSSIdSelector);
 import CSSNumber from "./css/core/CSSNumber";
 builders.set("CSSNumber", CSSNumber);
 import CSSPercentage from "./css/core/CSSPercentage";
 builders.set("CSSPercentage", CSSPercentage);
+import CSSPseudoClassSelector from "./css/selectors/CSSPseudoClassSelector";
+builders.set("CSSPseudoClassSelector", CSSPseudoClassSelector);
+import CSSPseudoElementSelector from "./css/selectors/CSSPseudoElementSelector";
+builders.set("CSSPseudoElementSelector", CSSPseudoElementSelector);
 import CSSRaw from "./css/core/CSSRaw";
 builders.set("CSSRaw", CSSRaw);
 import CSSRoot from "./css/core/CSSRoot";
 builders.set("CSSRoot", CSSRoot);
 import CSSRule from "./css/core/CSSRule";
 builders.set("CSSRule", CSSRule);
+import CSSSelector from "./css/selectors/CSSSelector";
+builders.set("CSSSelector", CSSSelector);
+import CSSTypeSelector from "./css/selectors/CSSTypeSelector";
+builders.set("CSSTypeSelector", CSSTypeSelector);
 import CSSWhitespace from "./css/core/CSSWhitespace";
 builders.set("CSSWhitespace", CSSWhitespace);
 import HTMLAttribute from "./html/attributes/HTMLAttribute";
