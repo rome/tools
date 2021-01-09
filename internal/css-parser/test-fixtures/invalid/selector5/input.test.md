@@ -28,7 +28,7 @@ CSSRoot {
 				advice: Array []
 				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Unknown attribute selector matcher"}
+				message: RAW_MARKUP {value: "Unknown attribute matcher"}
 			}
 			location: Object {
 				filename: "invalid/selector5/input.css"

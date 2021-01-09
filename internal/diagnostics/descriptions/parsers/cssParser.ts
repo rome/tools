@@ -18,10 +18,10 @@ export const cssParser = createDiagnosticsCategory({
 	},
 	UNEXPECTED_EMPTY_SELECTOR: {message: markup`Unexpected empty selectors`},
 	EXPECTED_CLOSING_ATTRIBUTE_SELECTOR: {
-		message: markup`Expected to close attribute selector with right bracket <emphasis>]</emphasis>`,
+		message: markup`Expected to close attribute selector with a right bracket <emphasis>]</emphasis>`,
 	},
 	UNKNOWN_ATTRIBUTE_MATCHER: {
-		message: markup`Unknown attribute selector matcher`,
+		message: markup`Unknown attribute matcher`,
 	},
 	UNKNOWN_ATTRIBUTE_MODIFIER: {message: markup`Unknown attribute modifier`},
 });

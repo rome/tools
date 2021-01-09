@@ -28,7 +28,7 @@ CSSRoot {
 				advice: Array []
 				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Expected to close attribute selector with right bracket <emphasis>]</emphasis>"}
+				message: RAW_MARKUP {value: "Expected to close attribute selector with a right bracket <emphasis>]</emphasis>"}
 			}
 			location: Object {
 				filename: "invalid/selector4/input.css"
