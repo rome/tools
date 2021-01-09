@@ -324,11 +324,11 @@ function parseSelector(parser: CSSParser): CSSSelector {
 			!matchToken(parser, "Comma") &&
 			!matchToken(parser, "LeftCurlyBracket")
 		) {
-			parser.nextToken();
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 				start: selectorStart,
 			});
+			parser.nextToken();
 			break;
 		}
 	}
