@@ -14,7 +14,14 @@ export const cssParser = createDiagnosticsCategory({
 	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier`},
 	EXPECTED_SELECTOR: {message: markup`Expected a selector`},
 	EXPECTED_LBRACKET: {
-		message: markup`Expected a left bracket </emphasis>{</emphasis>`,
+		message: markup`Expected a left bracket <emphasis>{</emphasis>`,
 	},
 	UNEXPECTED_EMPTY_SELECTOR: {message: markup`Unexpected empty selectors`},
+	EXPECTED_CLOSING_ATTRIBUTE_SELECTOR: {
+		message: markup`Expected to close attribute selector with right bracket <emphasis>]</emphasis>`,
+	},
+	UNKNOWN_ATTRIBUTE_MATCHER: {
+		message: markup`Unknown attribute selector matcher`,
+	},
+	UNKNOWN_ATTRIBUTE_MODIFIER: {message: markup`Unknown attribute modifier`},
 });

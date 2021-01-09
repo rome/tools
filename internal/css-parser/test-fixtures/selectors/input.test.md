@@ -15,7 +15,7 @@ CSSRoot {
 		filename: "selectors/input.css"
 		end: Object {
 			column: 1
-			line: 7
+			line: 19
 		}
 		start: Object {
 			column: 0
@@ -305,6 +305,395 @@ CSSRoot {
 								start: Object {
 									column: 1
 									line: 5
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 11
+				}
+				start: Object {
+					column: 0
+					line: 9
+				}
+			}
+			block: CSSBlock {
+				value: Array [
+					CSSDeclaration {
+						name: "color"
+						value: Array [
+							CSSIdentifier {
+								value: "purple"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 15
+										line: 10
+									}
+									start: Object {
+										column: 9
+										line: 10
+									}
+								}
+							}
+						]
+						important: false
+						loc: Object {
+							filename: "selectors/input.css"
+							end: Object {
+								column: 15
+								line: 10
+							}
+							start: Object {
+								column: 2
+								line: 10
+							}
+						}
+					}
+				]
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 11
+					}
+					start: Object {
+						column: 9
+						line: 9
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 9
+							line: 9
+						}
+						start: Object {
+							column: 0
+							line: 9
+						}
+					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 1
+									line: 9
+								}
+								start: Object {
+									column: 0
+									line: 9
+								}
+							}
+						}
+						CSSAttributeSelector {
+							value: undefined
+							matcher: undefined
+							modifier: undefined
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 8
+									line: 9
+								}
+								start: Object {
+									column: 1
+									line: 9
+								}
+							}
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 7
+										line: 9
+									}
+									start: Object {
+										column: 2
+										line: 9
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 15
+				}
+				start: Object {
+					column: 0
+					line: 13
+				}
+			}
+			block: CSSBlock {
+				value: Array [
+					CSSDeclaration {
+						name: "color"
+						value: Array [
+							CSSIdentifier {
+								value: "purple"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 15
+										line: 14
+									}
+									start: Object {
+										column: 9
+										line: 14
+									}
+								}
+							}
+						]
+						important: false
+						loc: Object {
+							filename: "selectors/input.css"
+							end: Object {
+								column: 15
+								line: 14
+							}
+							start: Object {
+								column: 2
+								line: 14
+							}
+						}
+					}
+				]
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 15
+					}
+					start: Object {
+						column: 19
+						line: 13
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 19
+							line: 13
+						}
+						start: Object {
+							column: 0
+							line: 13
+						}
+					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 1
+									line: 13
+								}
+								start: Object {
+									column: 0
+									line: 13
+								}
+							}
+						}
+						CSSAttributeSelector {
+							value: CSSString {
+								value: "title"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 17
+										line: 13
+									}
+									start: Object {
+										column: 10
+										line: 13
+									}
+								}
+							}
+							matcher: "="
+							modifier: undefined
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 18
+									line: 13
+								}
+								start: Object {
+									column: 1
+									line: 13
+								}
+							}
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 7
+										line: 13
+									}
+									start: Object {
+										column: 2
+										line: 13
+									}
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 19
+				}
+				start: Object {
+					column: 0
+					line: 17
+				}
+			}
+			block: CSSBlock {
+				value: Array [
+					CSSDeclaration {
+						name: "color"
+						value: Array [
+							CSSIdentifier {
+								value: "purple"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 15
+										line: 18
+									}
+									start: Object {
+										column: 9
+										line: 18
+									}
+								}
+							}
+						]
+						important: false
+						loc: Object {
+							filename: "selectors/input.css"
+							end: Object {
+								column: 15
+								line: 18
+							}
+							start: Object {
+								column: 2
+								line: 18
+							}
+						}
+					}
+				]
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 19
+					}
+					start: Object {
+						column: 20
+						line: 17
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 20
+							line: 17
+						}
+						start: Object {
+							column: 0
+							line: 17
+						}
+					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 1
+									line: 17
+								}
+								start: Object {
+									column: 0
+									line: 17
+								}
+							}
+						}
+						CSSAttributeSelector {
+							value: CSSString {
+								value: "title"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 16
+										line: 17
+									}
+									start: Object {
+										column: 9
+										line: 17
+									}
+								}
+							}
+							matcher: "~="
+							modifier: "i"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 19
+									line: 17
+								}
+								start: Object {
+									column: 1
+									line: 17
+								}
+							}
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 7
+										line: 17
+									}
+									start: Object {
+										column: 2
+										line: 17
+									}
 								}
 							}
 						}

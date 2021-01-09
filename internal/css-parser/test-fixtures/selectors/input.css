@@ -5,3 +5,15 @@ div, div + #id, div ~ #id, div > #id {
 .escaped\.class\.name {
 
 }
+
+a[title] {
+  color: purple;
+}
+
+a[title = "title"] {
+  color: purple;
+}
+
+a[title~="title" i] {
+  color: purple;
+}

@@ -1,15 +1,20 @@
 import {
+	AttributeMatcher,
+	AttributeModifier,
+	CSSAttributeSelector,
 	CSSClassSelector,
 	CSSCombinator,
 	CSSIdSelector,
+	CSSIdentifier,
 	CSSPseudoClassSelector,
 	CSSPseudoElementSelector,
 	CSSSelector,
+	CSSString,
 	CSSTypeSelector,
 	Combinator,
 } from "@internal/ast";
 import {AnyCSSPattern} from "@internal/ast/css/unions";
-import {CSSParser, Tokens} from "../types";
+import {AnyCSSValue, CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
@@ -122,7 +127,6 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 		} else if (value === "~") {
 			combinator = "subsequentSibiling";
 		}
-
 		if (combinator) {
 			readToken(parser, "Delim");
 			readToken(parser, "Whitespace"); // Eats trailing Whitespace after combinator.
@@ -134,6 +138,131 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 				},
 			);
 		}
+	}
+	return undefined;
+}
+
+function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined {
+	let matcher: string | undefined;
+	if (matchToken(parser, "Delim")) {
+		const first = (parser.getToken() as Tokens["Delim"]).value;
+		if (first === "=") {
+			matcher = "=";
+			parser.nextToken();
+		} else if (["~", "^", "$", "*"].includes(first)) {
+			matcher = first;
+			parser.nextToken();
+
+			const second = parser.getToken();
+			if (second.type !== "Delim" || second.value !== "=") {
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER,
+				});
+				return undefined;
+			}
+			matcher += second.value;
+			parser.nextToken();
+		} else {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER,
+			});
+			return undefined;
+		}
+	}
+	return matcher as (AttributeMatcher | undefined);
+}
+
+function parseAttributeValue(parser: CSSParser): AnyCSSValue | undefined {
+	const start = parser.getPosition();
+	let value: CSSIdentifier | CSSString | undefined;
+	if (matchToken(parser, "Ident")) {
+		const token = readToken(parser, "Ident") as Tokens["Ident"];
+		value = parser.finishNode(
+			start,
+			{
+				type: "CSSIdentifier",
+				value: token.value,
+			},
+		);
+	}
+	if (matchToken(parser, "String")) {
+		const token = readToken(parser, "String") as Tokens["String"];
+		value = parser.finishNode(
+			start,
+			{
+				type: "CSSString",
+				value: token.value,
+			},
+		);
+	}
+	return value;
+}
+
+function parseAttributeSelector(
+	parser: CSSParser,
+): CSSAttributeSelector | undefined {
+	const start = parser.getPosition();
+	if (matchToken(parser, "LeftSquareBracket")) {
+		parser.nextToken();
+		readToken(parser, "Whitespace");
+
+		if (matchToken(parser, "Ident")) {
+			const ident = parser.getToken() as Tokens["Ident"];
+			const idStart = parser.getPosition();
+			parser.nextToken();
+			const attribute = parser.finishNode(
+				idStart,
+				{
+					type: "CSSIdentifier",
+					value: ident.value,
+				},
+			);
+
+			readToken(parser, "Whitespace");
+
+			const matcher = parseAttributeMatcher(parser);
+			readToken(parser, "Whitespace");
+
+			const value = matcher && parseAttributeValue(parser);
+			readToken(parser, "Whitespace");
+
+			let modifier: AttributeModifier | undefined;
+			if (matchToken(parser, "Ident")) {
+				const ident = parser.getToken() as Tokens["Ident"];
+				if (ident.value === "i") {
+					modifier = ident.value;
+					parser.nextToken();
+				} else {
+					parser.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MODIFIER,
+					});
+					return undefined;
+				}
+			}
+
+			readToken(parser, "Whitespace");
+
+			if (!matchToken(parser, "RightSquareBracket")) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.EXPECTED_CLOSING_ATTRIBUTE_SELECTOR,
+				});
+				return undefined;
+			}
+			parser.nextToken();
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSAttributeSelector",
+					value,
+					attribute,
+					matcher,
+					modifier,
+				},
+			);
+		}
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+		});
 	}
 	return undefined;
 }
@@ -150,6 +279,8 @@ function tryParseSelector(parser: CSSParser) {
 		if (token.value === ".") {
 			return parseClassSelector(parser);
 		}
+	} else if (matchToken(parser, "LeftSquareBracket")) {
+		return parseAttributeSelector(parser);
 	}
 	return undefined;
 }
@@ -193,6 +324,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 			!matchToken(parser, "Comma") &&
 			!matchToken(parser, "LeftCurlyBracket")
 		) {
+			parser.nextToken();
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 				start: selectorStart,
