@@ -14,7 +14,7 @@ import {
 	Combinator,
 } from "@internal/ast";
 import {AnyCSSPattern} from "@internal/ast/css/unions";
-import {AnyCSSValue, CSSParser, Tokens} from "../types";
+import {CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
@@ -172,7 +172,9 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 	return matcher as (AttributeMatcher | undefined);
 }
 
-function parseAttributeValue(parser: CSSParser): AnyCSSValue | undefined {
+function parseAttributeValue(
+	parser: CSSParser,
+): CSSIdentifier | CSSString | undefined {
 	const start = parser.getPosition();
 	let value: CSSIdentifier | CSSString | undefined;
 	if (matchToken(parser, "Ident")) {
