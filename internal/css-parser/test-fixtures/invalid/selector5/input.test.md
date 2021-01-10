@@ -24,12 +24,6 @@ CSSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "css"
-				message: RAW_MARKUP {value: "Unknown attribute matcher."}
-			}
 			location: Object {
 				filename: "invalid/selector5/input.css"
 				integrity: undefined
@@ -43,6 +37,48 @@ CSSRoot {
 					column: 9
 					line: 1
 				}
+			}
+			description: Object {
+				category: "parse"
+				categoryValue: "css"
+				message: RAW_MARKUP {value: "Unknown attribute matcher."}
+				advice: Array [
+					log {
+						category: "info"
+						text: Array [
+							RAW_MARKUP {value: "Did you mean <emphasis>"}
+							"~="
+							RAW_MARKUP {value: "</emphasis>?"}
+						]
+					}
+					diff {
+						language: "unknown"
+						diff: Array [
+							Array [
+								-1
+								"*"
+							]
+							Array [
+								1
+								"~="
+							]
+						]
+					}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Or one of these?"}
+					}
+					list {
+						truncate: true
+						list: Array [
+							"|="
+							"^="
+							"$="
+							"*="
+							"="
+						]
+					}
+				]
 			}
 		}
 	]

@@ -23,7 +23,7 @@ export const cssParser = createDiagnosticsCategory({
 	},
 	UNKNOWN_ATTRIBUTE_MATCHER: (matcher: string, validMatchers: string[]) => ({
 		message: markup`Unknown attribute matcher.`,
-		advice: buildSuggestionAdvice(matcher, validMatchers),
+		advice: buildSuggestionAdvice(matcher, validMatchers, {minRating: 0}),
 	}),
 	UNKNOWN_ATTRIBUTE_MODIFIER: {message: markup`Unknown attribute modifier`},
 });
