@@ -179,7 +179,7 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 		}
 	}
 	if (matcher) {
-		if ( ATTRIBUTE_SELECTOR_MATCHERS.includes(matcher)) {
+		if (ATTRIBUTE_SELECTOR_MATCHERS.includes(matcher)) {
 			parser.nextToken();
 			return matcher as AttributeMatcher;
 		}
