@@ -148,7 +148,6 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 		const first = (parser.getToken() as Tokens["Delim"]).value;
 		if (first === "=") {
 			matcher = "=";
-			parser.nextToken();
 		} else if (["~", "^", "$", "*"].includes(first)) {
 			matcher = first;
 			parser.nextToken();
@@ -161,13 +160,13 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 				return undefined;
 			}
 			matcher += second.value;
-			parser.nextToken();
 		} else {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER,
 			});
 			return undefined;
 		}
+		parser.nextToken();
 	}
 	return matcher as (AttributeMatcher | undefined);
 }
@@ -211,65 +210,65 @@ function parseAttributeSelector(
 	parser.nextToken();
 	readToken(parser, "Whitespace");
 
+	if (!matchToken(parser, "Ident")) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+		});
+		return undefined;
+	}
+
+	const ident = parser.getToken() as Tokens["Ident"];
+	const idStart = parser.getPosition();
+	parser.nextToken();
+	const attribute = parser.finishNode(
+		idStart,
+		{
+			type: "CSSIdentifier",
+			value: ident.value,
+		},
+	);
+
+	readToken(parser, "Whitespace");
+
+	const matcher = parseAttributeMatcher(parser);
+	readToken(parser, "Whitespace");
+
+	const value = matcher && parseAttributeValue(parser);
+	readToken(parser, "Whitespace");
+
+	let modifier: AttributeModifier | undefined;
 	if (matchToken(parser, "Ident")) {
 		const ident = parser.getToken() as Tokens["Ident"];
-		const idStart = parser.getPosition();
-		parser.nextToken();
-		const attribute = parser.finishNode(
-			idStart,
-			{
-				type: "CSSIdentifier",
-				value: ident.value,
-			},
-		);
-
-		readToken(parser, "Whitespace");
-
-		const matcher = parseAttributeMatcher(parser);
-		readToken(parser, "Whitespace");
-
-		const value = matcher && parseAttributeValue(parser);
-		readToken(parser, "Whitespace");
-
-		let modifier: AttributeModifier | undefined;
-		if (matchToken(parser, "Ident")) {
-			const ident = parser.getToken() as Tokens["Ident"];
-			if (ident.value === "i") {
-				modifier = ident.value;
-				parser.nextToken();
-			} else {
-				parser.unexpectedDiagnostic({
-					description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MODIFIER,
-				});
-				return undefined;
-			}
-		}
-
-		readToken(parser, "Whitespace");
-
-		if (!matchToken(parser, "RightSquareBracket")) {
+		if (ident.value === "i") {
+			modifier = ident.value;
+			parser.nextToken();
+		} else {
 			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.EXPECTED_CLOSING_ATTRIBUTE_SELECTOR,
+				description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MODIFIER,
 			});
 			return undefined;
 		}
-		parser.nextToken();
-		return parser.finishNode(
-			start,
-			{
-				type: "CSSAttributeSelector",
-				value,
-				attribute,
-				matcher,
-				modifier,
-			},
-		);
 	}
-	parser.unexpectedDiagnostic({
-		description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
-	});
 
-	return undefined;
+	readToken(parser, "Whitespace");
+
+	if (!matchToken(parser, "RightSquareBracket")) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.EXPECTED_CLOSING_ATTRIBUTE_SELECTOR,
+		});
+		return undefined;
+	}
+	parser.nextToken();
+	return parser.finishNode(
+		start,
+		{
+			type: "CSSAttributeSelector",
+			value,
+			attribute,
+			matcher,
+			modifier,
+		},
+	);
 }
 
 function tryParseSelector(parser: CSSParser) {
