@@ -66,6 +66,10 @@ div[attr="value"] {
 
 }
 
+.longlonglonglonglong_class_name[longlonglonglong_attr_name="longlonglonglonglonglong_value"] {
+
+}
+
 ```
 
 ### `Output`
@@ -121,6 +125,9 @@ div[attr="value"] {
 }
 
 [attr=value i] {
+}
+
+.longlonglonglonglong_class_name[longlonglonglong_attr_name="longlonglonglonglonglong_value"] {
 }
 
 ```
