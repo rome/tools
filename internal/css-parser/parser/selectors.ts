@@ -19,7 +19,7 @@ import {CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
-const ATTRIBUTE_MATCHER_START_CHARS = ["~", "^", "$", "*", "="];
+const ATTRIBUTE_SELECTOR_MATCHERS = ["~=", "|=", "^=", "$=", "*=", "="];
 
 function parseTypeSelector(parser: CSSParser): CSSTypeSelector {
 	const start = parser.getPosition();
@@ -161,32 +161,36 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 }
 
 function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined {
-	let matcher: string | undefined;
+	let matcher: string = "";
 	if (matchToken(parser, "Delim")) {
 		const first = (parser.getToken() as Tokens["Delim"]).value;
 		if (first === "=") {
 			matcher = "=";
-		} else if (ATTRIBUTE_MATCHER_START_CHARS.includes(first)) {
+		} else if (
+			ATTRIBUTE_SELECTOR_MATCHERS.some((valid) => valid.startsWith(first))
+		) {
 			matcher = first;
 			parser.nextToken();
 
 			const second = parser.getToken();
-			if (second.type !== "Delim" || second.value !== "=") {
-				parser.unexpectedDiagnostic({
-					description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER,
-				});
-				return undefined;
+			if (second.type === "Delim" && second.value === "=") {
+				matcher += second.value;
 			}
-			matcher += second.value;
-		} else {
-			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER,
-			});
-			return undefined;
 		}
-		parser.nextToken();
 	}
-	return matcher as (AttributeMatcher | undefined);
+	if (matcher) {
+		if ( ATTRIBUTE_SELECTOR_MATCHERS.includes(matcher)) {
+			parser.nextToken();
+			return matcher as AttributeMatcher;
+		}
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER(
+				matcher,
+				ATTRIBUTE_SELECTOR_MATCHERS,
+			),
+		});
+	}
+	return undefined;
 }
 
 function parseAttributeValue(

@@ -1,4 +1,5 @@
 import {createDiagnosticsCategory} from "../index";
+import {buildSuggestionAdvice} from "../../helpers";
 import {markup} from "@internal/markup";
 
 export const cssParser = createDiagnosticsCategory({
@@ -20,8 +21,9 @@ export const cssParser = createDiagnosticsCategory({
 	EXPECTED_CLOSING_ATTRIBUTE_SELECTOR: {
 		message: markup`Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>.`,
 	},
-	UNKNOWN_ATTRIBUTE_MATCHER: {
-		message: markup`Unknown attribute matcher`,
-	},
+	UNKNOWN_ATTRIBUTE_MATCHER: (matcher: string, validMatchers: string[]) => ({
+		message: markup`Unknown attribute matcher.`,
+		advice: buildSuggestionAdvice(matcher, validMatchers),
+	}),
 	UNKNOWN_ATTRIBUTE_MODIFIER: {message: markup`Unknown attribute modifier`},
 });
