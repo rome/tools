@@ -15,7 +15,7 @@ CSSRoot {
 		filename: "selectors/input.css"
 		end: Object {
 			column: 1
-			line: 7
+			line: 11
 		}
 		start: Object {
 			column: 0
@@ -303,8 +303,94 @@ CSSRoot {
 									line: 5
 								}
 								start: Object {
-									column: 1
+									column: 0
 									line: 5
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 11
+				}
+				start: Object {
+					column: 0
+					line: 9
+				}
+			}
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 11
+					}
+					start: Object {
+						column: 11
+						line: 9
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 11
+							line: 9
+						}
+						start: Object {
+							column: 0
+							line: 9
+						}
+					}
+					patterns: Array [
+						CSSClassSelector {
+							value: "class"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 6
+									line: 9
+								}
+								start: Object {
+									column: 0
+									line: 9
+								}
+							}
+						}
+						CSSCombinator {
+							combinator: "nextSibiling"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 9
+									line: 9
+								}
+								start: Object {
+									column: 7
+									line: 9
+								}
+							}
+						}
+						CSSUniversalSelector {
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 10
+									line: 9
+								}
+								start: Object {
+									column: 9
+									line: 9
 								}
 							}
 						}

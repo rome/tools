@@ -6,4 +6,5 @@ export type AnyCSSPattern =
 	| n.CSSClassSelector
 	| n.CSSPseudoClassSelector
 	| n.CSSPseudoElementSelector
+	| n.CSSUniversalSelector
 	| n.CSSCombinator;
