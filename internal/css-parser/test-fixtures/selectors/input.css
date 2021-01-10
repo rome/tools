@@ -6,6 +6,10 @@ div, div + #id, div ~ #id, div > #id {
 
 }
 
+.class + * {
+
+}
+
 a[title] {
   color: purple;
 }
@@ -19,5 +23,5 @@ a[title~="title" i] {
 }
 
 a[title = "title"][href*="image/*" S] {
-  color: purple;
+	color: purple;
 }

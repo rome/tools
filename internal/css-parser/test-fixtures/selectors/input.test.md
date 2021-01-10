@@ -15,7 +15,7 @@ CSSRoot {
 		filename: "selectors/input.css"
 		end: Object {
 			column: 1
-			line: 23
+			line: 27
 		}
 		start: Object {
 			column: 0
@@ -303,7 +303,7 @@ CSSRoot {
 									line: 5
 								}
 								start: Object {
-									column: 1
+									column: 0
 									line: 5
 								}
 							}
@@ -325,39 +325,7 @@ CSSRoot {
 				}
 			}
 			block: CSSBlock {
-				value: Array [
-					CSSDeclaration {
-						name: "color"
-						value: Array [
-							CSSIdentifier {
-								value: "purple"
-								loc: Object {
-									filename: "selectors/input.css"
-									end: Object {
-										column: 15
-										line: 10
-									}
-									start: Object {
-										column: 9
-										line: 10
-									}
-								}
-							}
-						]
-						important: false
-						loc: Object {
-							filename: "selectors/input.css"
-							end: Object {
-								column: 15
-								line: 10
-							}
-							start: Object {
-								column: 2
-								line: 10
-							}
-						}
-					}
-				]
+				value: Array []
 				startingTokenValue: "{"
 				loc: Object {
 					filename: "selectors/input.css"
@@ -366,7 +334,7 @@ CSSRoot {
 						line: 11
 					}
 					start: Object {
-						column: 9
+						column: 11
 						line: 9
 					}
 				}
@@ -376,7 +344,7 @@ CSSRoot {
 					loc: Object {
 						filename: "selectors/input.css"
 						end: Object {
-							column: 9
+							column: 11
 							line: 9
 						}
 						start: Object {
@@ -385,12 +353,12 @@ CSSRoot {
 						}
 					}
 					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
+						CSSClassSelector {
+							value: "class"
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
-									column: 1
+									column: 6
 									line: 9
 								}
 								start: Object {
@@ -399,33 +367,30 @@ CSSRoot {
 								}
 							}
 						}
-						CSSAttributeSelector {
-							value: undefined
-							matcher: undefined
-							modifier: undefined
+						CSSCombinator {
+							combinator: "nextSibiling"
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
-									column: 8
+									column: 9
 									line: 9
 								}
 								start: Object {
-									column: 1
+									column: 7
 									line: 9
 								}
 							}
-							attribute: CSSIdentifier {
-								value: "title"
-								loc: Object {
-									filename: "selectors/input.css"
-									end: Object {
-										column: 7
-										line: 9
-									}
-									start: Object {
-										column: 2
-										line: 9
-									}
+						}
+						CSSUniversalSelector {
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 10
+									line: 9
+								}
+								start: Object {
+									column: 9
+									line: 9
 								}
 							}
 						}
@@ -487,7 +452,7 @@ CSSRoot {
 						line: 15
 					}
 					start: Object {
-						column: 19
+						column: 9
 						line: 13
 					}
 				}
@@ -497,7 +462,7 @@ CSSRoot {
 					loc: Object {
 						filename: "selectors/input.css"
 						end: Object {
-							column: 19
+							column: 9
 							line: 13
 						}
 						start: Object {
@@ -521,26 +486,13 @@ CSSRoot {
 							}
 						}
 						CSSAttributeSelector {
-							value: CSSString {
-								value: "title"
-								loc: Object {
-									filename: "selectors/input.css"
-									end: Object {
-										column: 17
-										line: 13
-									}
-									start: Object {
-										column: 10
-										line: 13
-									}
-								}
-							}
-							matcher: "="
+							value: undefined
+							matcher: undefined
 							modifier: undefined
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
-									column: 18
+									column: 8
 									line: 13
 								}
 								start: Object {
@@ -621,7 +573,7 @@ CSSRoot {
 						line: 19
 					}
 					start: Object {
-						column: 20
+						column: 19
 						line: 17
 					}
 				}
@@ -631,7 +583,7 @@ CSSRoot {
 					loc: Object {
 						filename: "selectors/input.css"
 						end: Object {
-							column: 20
+							column: 19
 							line: 17
 						}
 						start: Object {
@@ -660,21 +612,21 @@ CSSRoot {
 								loc: Object {
 									filename: "selectors/input.css"
 									end: Object {
-										column: 16
+										column: 17
 										line: 17
 									}
 									start: Object {
-										column: 9
+										column: 10
 										line: 17
 									}
 								}
 							}
-							matcher: "~="
-							modifier: "i"
+							matcher: "="
+							modifier: undefined
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
-									column: 19
+									column: 18
 									line: 17
 								}
 								start: Object {
@@ -755,7 +707,7 @@ CSSRoot {
 						line: 23
 					}
 					start: Object {
-						column: 38
+						column: 20
 						line: 21
 					}
 				}
@@ -765,7 +717,7 @@ CSSRoot {
 					loc: Object {
 						filename: "selectors/input.css"
 						end: Object {
-							column: 38
+							column: 20
 							line: 21
 						}
 						start: Object {
@@ -794,21 +746,21 @@ CSSRoot {
 								loc: Object {
 									filename: "selectors/input.css"
 									end: Object {
-										column: 17
+										column: 16
 										line: 21
 									}
 									start: Object {
-										column: 10
+										column: 9
 										line: 21
 									}
 								}
 							}
-							matcher: "="
-							modifier: undefined
+							matcher: "~="
+							modifier: "i"
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
-									column: 18
+									column: 19
 									line: 21
 								}
 								start: Object {
@@ -831,6 +783,140 @@ CSSRoot {
 								}
 							}
 						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 27
+				}
+				start: Object {
+					column: 0
+					line: 25
+				}
+			}
+			block: CSSBlock {
+				value: Array [
+					CSSDeclaration {
+						name: "color"
+						value: Array [
+							CSSIdentifier {
+								value: "purple"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 14
+										line: 26
+									}
+									start: Object {
+										column: 8
+										line: 26
+									}
+								}
+							}
+						]
+						important: false
+						loc: Object {
+							filename: "selectors/input.css"
+							end: Object {
+								column: 14
+								line: 26
+							}
+							start: Object {
+								column: 1
+								line: 26
+							}
+						}
+					}
+				]
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 27
+					}
+					start: Object {
+						column: 38
+						line: 25
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 38
+							line: 25
+						}
+						start: Object {
+							column: 0
+							line: 25
+						}
+					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 1
+									line: 25
+								}
+								start: Object {
+									column: 0
+									line: 25
+								}
+							}
+						}
+						CSSAttributeSelector {
+							value: CSSString {
+								value: "title"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 17
+										line: 25
+									}
+									start: Object {
+										column: 10
+										line: 25
+									}
+								}
+							}
+							matcher: "="
+							modifier: undefined
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 18
+									line: 25
+								}
+								start: Object {
+									column: 1
+									line: 25
+								}
+							}
+							attribute: CSSIdentifier {
+								value: "title"
+								loc: Object {
+									filename: "selectors/input.css"
+									end: Object {
+										column: 7
+										line: 25
+									}
+									start: Object {
+										column: 2
+										line: 25
+									}
+								}
+							}
+						}
 						CSSAttributeSelector {
 							value: CSSString {
 								value: "image/*"
@@ -838,11 +924,11 @@ CSSRoot {
 									filename: "selectors/input.css"
 									end: Object {
 										column: 34
-										line: 21
+										line: 25
 									}
 									start: Object {
 										column: 25
-										line: 21
+										line: 25
 									}
 								}
 							}
@@ -852,11 +938,11 @@ CSSRoot {
 								filename: "selectors/input.css"
 								end: Object {
 									column: 37
-									line: 21
+									line: 25
 								}
 								start: Object {
 									column: 18
-									line: 21
+									line: 25
 								}
 							}
 							attribute: CSSIdentifier {
@@ -865,11 +951,11 @@ CSSRoot {
 									filename: "selectors/input.css"
 									end: Object {
 										column: 23
-										line: 21
+										line: 25
 									}
 									start: Object {
 										column: 19
-										line: 21
+										line: 25
 									}
 								}
 							}

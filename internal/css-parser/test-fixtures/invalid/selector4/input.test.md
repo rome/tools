@@ -97,7 +97,7 @@ CSSRoot {
 									line: 1
 								}
 								start: Object {
-									column: 1
+									column: 0
 									line: 1
 								}
 							}

@@ -34,6 +34,14 @@ div > #id {
 div + #id, div ~ #id, div > #id {
 }
 
+* {
+
+}
+
+.field + * {
+
+}
+
 div[attr="value"] {
 
 }

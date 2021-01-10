@@ -36,11 +36,11 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Object {
-					column: 8
+					column: 7
 					line: 1
 				}
 				start: Object {
-					column: 8
+					column: 7
 					line: 1
 				}
 			}
@@ -79,7 +79,7 @@ CSSRoot {
 					loc: Object {
 						filename: "invalid/selector2/input.css"
 						end: Object {
-							column: 8
+							column: 7
 							line: 1
 						}
 						start: Object {
@@ -113,7 +113,7 @@ CSSRoot {
 							line: 1
 						}
 						start: Object {
-							column: 8
+							column: 7
 							line: 1
 						}
 					}

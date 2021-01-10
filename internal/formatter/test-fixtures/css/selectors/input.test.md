@@ -50,6 +50,14 @@ div > #id {
 div + #id, div ~ #id, div > #id {
 }
 
+* {
+
+}
+
+.field + * {
+
+}
+
 div[attr="value"] {
 
 }
@@ -101,6 +109,12 @@ div > #id {
 div + #id,
 div ~ #id,
 div > #id {
+}
+
+* {
+}
+
+.field + * {
 }
 
 div[attr="value"] {
