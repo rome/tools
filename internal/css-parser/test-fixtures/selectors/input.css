@@ -17,3 +17,7 @@ a[title = "title"] {
 a[title~="title" i] {
   color: purple;
 }
+
+a[title~="title" S] {
+  color: purple;
+}

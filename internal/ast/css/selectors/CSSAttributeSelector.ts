@@ -12,7 +12,7 @@ export interface CSSAttributeSelector extends NodeBaseWithComments {
 
 export type AttributeMatcher = "~=" | "|=" | "^=" | "$=" | "*=" | "=";
 
-export type AttributeModifier = "i";
+export type AttributeModifier = "i" | "s";
 
 export const cssAttributeSelector = createBuilder<CSSAttributeSelector>(
 	"CSSAttributeSelector",

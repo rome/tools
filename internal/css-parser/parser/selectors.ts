@@ -238,9 +238,9 @@ function parseAttributeSelector(
 
 	let modifier: AttributeModifier | undefined;
 	if (matchToken(parser, "Ident")) {
-		const ident = parser.getToken() as Tokens["Ident"];
-		if (ident.value === "i") {
-			modifier = ident.value;
+		const identValue = (parser.getToken() as Tokens["Ident"]).value.toLocaleLowerCase();
+		if (identValue === "i" || identValue === "s") {
+			modifier = identValue;
 			parser.nextToken();
 		} else {
 			parser.unexpectedDiagnostic({
