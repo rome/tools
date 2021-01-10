@@ -18,6 +18,8 @@ import {CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
 
+const ATTRIBUTE_MATCHER_START_CHARS = ["~", "^", "$", "*", "="];
+
 function parseTypeSelector(parser: CSSParser): CSSTypeSelector {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Ident");
@@ -148,7 +150,7 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 		const first = (parser.getToken() as Tokens["Delim"]).value;
 		if (first === "=") {
 			matcher = "=";
-		} else if (["~", "^", "$", "*"].includes(first)) {
+		} else if (ATTRIBUTE_MATCHER_START_CHARS.includes(first)) {
 			matcher = first;
 			parser.nextToken();
 

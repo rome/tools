@@ -18,6 +18,6 @@ a[title~="title" i] {
   color: purple;
 }
 
-a[title~="title" S] {
+a[title = "title"][href*="image/*" S] {
   color: purple;
 }
