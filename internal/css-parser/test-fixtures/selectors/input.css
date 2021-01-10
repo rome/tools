@@ -5,3 +5,7 @@ div, div + #id, div ~ #id, div > #id {
 .escaped\.class\.name {
 
 }
+
+.class + * {
+
+}
