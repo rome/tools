@@ -16,8 +16,11 @@ export default function JSNumericLiteral(
 	builder: Builder,
 	node: JSNumericLiteral,
 ): Token {
-	if (builder.options.format === "pretty" && !SCIENTIFIC_NOTATION.test(node.raw)) {
+	if (builder.options.format === "pretty") {
 		if (node.format === undefined) {
+			if (SCIENTIFIC_NOTATION.test(node.raw)) {
+				return node.raw;
+			}
 			return humanizeNumber(node.value);
 		} else {
 			switch (node.format) {
