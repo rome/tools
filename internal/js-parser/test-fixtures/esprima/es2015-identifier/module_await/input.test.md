@@ -73,6 +73,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-identifier/module_await/input.js"
 						end: Object {

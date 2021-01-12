@@ -119,6 +119,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
+							raw: "0"
 							loc: Object {
 								filename: "typescript/regression/less-than-edge-case/input.tsx"
 								end: Object {

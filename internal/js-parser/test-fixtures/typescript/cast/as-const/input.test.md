@@ -364,21 +364,6 @@ JSRoot {
 									line: 5
 								}
 							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: Object {
-									filename: "typescript/cast/as-const/input.ts"
-									end: Object {
-										column: 11
-										line: 5
-									}
-									start: Object {
-										column: 9
-										line: 5
-									}
-								}
-							}
 							typeAnnotation: TSConstKeyword {
 								name: "const"
 								loc: Object {
@@ -390,6 +375,22 @@ JSRoot {
 									}
 									start: Object {
 										column: 15
+										line: 5
+									}
+								}
+							}
+							expression: JSNumericLiteral {
+								value: 10
+								format: undefined
+								raw: "10"
+								loc: Object {
+									filename: "typescript/cast/as-const/input.ts"
+									end: Object {
+										column: 11
+										line: 5
+									}
+									start: Object {
+										column: 9
 										line: 5
 									}
 								}
@@ -496,6 +497,7 @@ JSRoot {
 								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
+									raw: "10"
 									loc: Object {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
@@ -611,6 +613,7 @@ JSRoot {
 								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
+									raw: "10"
 									loc: Object {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
@@ -694,21 +697,6 @@ JSRoot {
 									line: 8
 								}
 							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: Object {
-									filename: "typescript/cast/as-const/input.ts"
-									end: Object {
-										column: 11
-										line: 8
-									}
-									start: Object {
-										column: 9
-										line: 8
-									}
-								}
-							}
 							typeAnnotation: TSConstKeyword {
 								name: "const"
 								loc: Object {
@@ -720,6 +708,22 @@ JSRoot {
 									}
 									start: Object {
 										column: 15
+										line: 8
+									}
+								}
+							}
+							expression: JSNumericLiteral {
+								value: 10
+								format: undefined
+								raw: "10"
+								loc: Object {
+									filename: "typescript/cast/as-const/input.ts"
+									end: Object {
+										column: 11
+										line: 8
+									}
+									start: Object {
+										column: 9
 										line: 8
 									}
 								}
@@ -826,6 +830,7 @@ JSRoot {
 								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
+									raw: "10"
 									loc: Object {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
@@ -1237,6 +1242,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 1
 										format: undefined
+										raw: "1"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -1252,6 +1258,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 2
 										format: undefined
+										raw: "2"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -1267,6 +1274,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 3
 										format: undefined
+										raw: "3"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -1382,6 +1390,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 10
 										format: undefined
+										raw: "10"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -1550,6 +1559,7 @@ JSRoot {
 												JSNumericLiteral {
 													value: 1
 													format: undefined
+													raw: "1"
 													loc: Object {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
@@ -1565,6 +1575,7 @@ JSRoot {
 												JSNumericLiteral {
 													value: 2
 													format: undefined
+													raw: "2"
 													loc: Object {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
@@ -1580,6 +1591,7 @@ JSRoot {
 												JSNumericLiteral {
 													value: 3
 													format: undefined
+													raw: "3"
 													loc: Object {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
@@ -1671,6 +1683,7 @@ JSRoot {
 								JSNumericLiteral {
 									value: 1
 									format: undefined
+									raw: "1"
 									loc: Object {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
@@ -1686,6 +1699,7 @@ JSRoot {
 								JSNumericLiteral {
 									value: 2
 									format: undefined
+									raw: "2"
 									loc: Object {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
@@ -1701,6 +1715,7 @@ JSRoot {
 								JSNumericLiteral {
 									value: 3
 									format: undefined
+									raw: "3"
 									loc: Object {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
@@ -2114,6 +2129,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 10
 											format: undefined
+											raw: "10"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -2170,6 +2186,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 20
 											format: undefined
+											raw: "20"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -2326,6 +2343,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 1
 											format: undefined
+											raw: "1"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -2381,6 +2399,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 2
 											format: undefined
+											raw: "2"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -2436,6 +2455,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 3
 											format: undefined
+											raw: "3"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -2597,6 +2617,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 4
 											format: undefined
+											raw: "4"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -3167,6 +3188,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 10
 											format: undefined
+											raw: "10"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -3295,6 +3317,7 @@ JSRoot {
 														right: JSNumericLiteral {
 															value: 20
 															format: undefined
+															raw: "20"
 															loc: Object {
 																filename: "typescript/cast/as-const/input.ts"
 																end: Object {
@@ -3443,21 +3466,6 @@ JSRoot {
 									line: 28
 								}
 							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: Object {
-									filename: "typescript/cast/as-const/input.ts"
-									end: Object {
-										column: 12
-										line: 28
-									}
-									start: Object {
-										column: 10
-										line: 28
-									}
-								}
-							}
 							typeAnnotation: TSConstKeyword {
 								name: "const"
 								loc: Object {
@@ -3469,6 +3477,22 @@ JSRoot {
 									}
 									start: Object {
 										column: 17
+										line: 28
+									}
+								}
+							}
+							expression: JSNumericLiteral {
+								value: 10
+								format: undefined
+								raw: "10"
+								loc: Object {
+									filename: "typescript/cast/as-const/input.ts"
+									end: Object {
+										column: 12
+										line: 28
+									}
+									start: Object {
+										column: 10
 										line: 28
 									}
 								}
@@ -3575,6 +3599,7 @@ JSRoot {
 								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
+									raw: "10"
 									loc: Object {
 										filename: "typescript/cast/as-const/input.ts"
 										end: Object {
@@ -3689,6 +3714,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 10
 										format: undefined
+										raw: "10"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -3843,6 +3869,7 @@ JSRoot {
 															JSNumericLiteral {
 																value: 10
 																format: undefined
+																raw: "10"
 																loc: Object {
 																	filename: "typescript/cast/as-const/input.ts"
 																	end: Object {
@@ -3993,6 +4020,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 10
 											format: undefined
+											raw: "10"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -4062,6 +4090,7 @@ JSRoot {
 												JSNumericLiteral {
 													value: 20
 													format: undefined
+													raw: "20"
 													loc: Object {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
@@ -4077,6 +4106,7 @@ JSRoot {
 												JSNumericLiteral {
 													value: 30
 													format: undefined
+													raw: "30"
 													loc: Object {
 														filename: "typescript/cast/as-const/input.ts"
 														end: Object {
@@ -4219,6 +4249,7 @@ JSRoot {
 																value: JSNumericLiteral {
 																	value: 42
 																	format: undefined
+																	raw: "42"
 																	loc: Object {
 																		filename: "typescript/cast/as-const/input.ts"
 																		end: Object {
@@ -4343,21 +4374,6 @@ JSRoot {
 									line: 35
 								}
 							}
-							expression: JSNumericLiteral {
-								value: 10
-								format: undefined
-								loc: Object {
-									filename: "typescript/cast/as-const/input.ts"
-									end: Object {
-										column: 19
-										line: 35
-									}
-									start: Object {
-										column: 17
-										line: 35
-									}
-								}
-							}
 							typeAnnotation: TSConstKeyword {
 								name: "const"
 								loc: Object {
@@ -4369,6 +4385,22 @@ JSRoot {
 									}
 									start: Object {
 										column: 10
+										line: 35
+									}
+								}
+							}
+							expression: JSNumericLiteral {
+								value: 10
+								format: undefined
+								raw: "10"
+								loc: Object {
+									filename: "typescript/cast/as-const/input.ts"
+									end: Object {
+										column: 19
+										line: 35
+									}
+									start: Object {
+										column: 17
 										line: 35
 									}
 								}
@@ -4672,6 +4704,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 1
 										format: undefined
+										raw: "1"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -4687,6 +4720,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 2
 										format: undefined
+										raw: "2"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -4702,6 +4736,7 @@ JSRoot {
 									JSNumericLiteral {
 										value: 3
 										format: undefined
+										raw: "3"
 										loc: Object {
 											filename: "typescript/cast/as-const/input.ts"
 											end: Object {
@@ -4846,6 +4881,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 10
 											format: undefined
+											raw: "10"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {
@@ -4902,6 +4938,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 20
 											format: undefined
+											raw: "20"
 											loc: Object {
 												filename: "typescript/cast/as-const/input.ts"
 												end: Object {

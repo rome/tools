@@ -70,6 +70,7 @@ JSRoot {
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
+				raw: "1"
 				loc: Object {
 					filename: "es2015/uncategorised/328/input.js"
 					end: Object {
@@ -154,6 +155,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 10
 					format: undefined
+					raw: "10"
 					loc: Object {
 						filename: "es2015/uncategorised/328/input.js"
 						end: Object {

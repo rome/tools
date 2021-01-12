@@ -85,6 +85,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "typescript/arrow-function/destructuring/input.ts"
 						end: Object {
@@ -267,6 +268,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
+				raw: "0"
 				loc: Object {
 					filename: "typescript/arrow-function/destructuring/input.ts"
 					end: Object {

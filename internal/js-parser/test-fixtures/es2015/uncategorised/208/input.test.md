@@ -72,6 +72,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "binary"
+				raw: "0b"
 				loc: Object {
 					filename: "es2015/uncategorised/208/input.js"
 					end: Object {
@@ -100,6 +101,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 9
 				format: undefined
+				raw: "9"
 				loc: Object {
 					filename: "es2015/uncategorised/208/input.js"
 					end: Object {

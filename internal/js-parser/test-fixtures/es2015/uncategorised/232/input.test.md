@@ -113,6 +113,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 2
 							format: undefined
+							raw: "2"
 							loc: Object {
 								filename: "es2015/uncategorised/232/input.js"
 								end: Object {

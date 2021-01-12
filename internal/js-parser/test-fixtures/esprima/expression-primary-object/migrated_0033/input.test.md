@@ -252,6 +252,7 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 42
 										format: undefined
+										raw: "42"
 										loc: Object {
 											filename: "esprima/expression-primary-object/migrated_0033/input.js"
 											end: Object {

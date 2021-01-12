@@ -128,6 +128,7 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 1
 										format: undefined
+										raw: "1"
 										loc: Object {
 											filename: "es2017/async-functions/15/input.js"
 											end: Object {

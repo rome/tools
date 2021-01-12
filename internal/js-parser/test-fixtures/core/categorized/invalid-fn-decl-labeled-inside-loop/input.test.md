@@ -69,6 +69,7 @@ JSRoot {
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
+				raw: "1"
 				loc: Object {
 					filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
 					end: Object {

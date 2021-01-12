@@ -86,6 +86,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
+							raw: "42"
 							loc: Object {
 								filename: "core/uncategorised/218/input.js"
 								end: Object {

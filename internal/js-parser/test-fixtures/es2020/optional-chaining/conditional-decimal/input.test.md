@@ -71,6 +71,7 @@ JSRoot {
 				alternate: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
@@ -86,6 +87,7 @@ JSRoot {
 				consequent: JSNumericLiteral {
 					value: 0.3
 					format: undefined
+					raw: ".3"
 					loc: Object {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
@@ -141,6 +143,7 @@ JSRoot {
 				alternate: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {
@@ -156,6 +159,7 @@ JSRoot {
 				consequent: JSNumericLiteral {
 					value: 0.3
 					format: undefined
+					raw: ".3"
 					loc: Object {
 						filename: "es2020/optional-chaining/conditional-decimal/input.js"
 						end: Object {

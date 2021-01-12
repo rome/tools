@@ -217,6 +217,7 @@ JSRoot {
 											argument: JSNumericLiteral {
 												value: 42
 												format: undefined
+												raw: "42"
 												loc: Object {
 													filename: "esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js"
 													end: Object {

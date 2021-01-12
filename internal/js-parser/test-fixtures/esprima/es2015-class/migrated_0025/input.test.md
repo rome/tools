@@ -88,6 +88,7 @@ JSRoot {
 					superClass: JSNumericLiteral {
 						value: 0
 						format: undefined
+						raw: "0"
 						loc: Object {
 							filename: "esprima/es2015-class/migrated_0025/input.js"
 							end: Object {

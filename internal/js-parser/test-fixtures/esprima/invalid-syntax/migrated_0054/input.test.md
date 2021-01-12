@@ -59,6 +59,7 @@ JSRoot {
 				argument: JSNumericLiteral {
 					value: 1
 					format: undefined
+					raw: "1"
 					loc: Object {
 						filename: "esprima/invalid-syntax/migrated_0054/input.js"
 						end: Object {

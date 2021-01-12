@@ -97,6 +97,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
+				raw: "0"
 				loc: Object {
 					filename: "experimental/top-level-await/top-level-script/input.js"
 					end: Object {

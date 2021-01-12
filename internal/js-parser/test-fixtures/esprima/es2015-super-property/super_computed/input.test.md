@@ -228,6 +228,7 @@ JSRoot {
 											value: JSNumericLiteral {
 												value: 1
 												format: undefined
+												raw: "1"
 												loc: Object {
 													filename: "esprima/es2015-super-property/super_computed/input.js"
 													end: Object {

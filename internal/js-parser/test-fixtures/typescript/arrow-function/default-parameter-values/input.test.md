@@ -57,6 +57,7 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "typescript/arrow-function/default-parameter-values/input.ts"
 						end: Object {
@@ -103,6 +104,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 0
 								format: undefined
+								raw: "0"
 								loc: Object {
 									filename: "typescript/arrow-function/default-parameter-values/input.ts"
 									end: Object {

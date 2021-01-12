@@ -126,6 +126,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 123
 								format: undefined
+								raw: "123"
 								loc: Object {
 									filename: "core/object/invalid-property-initializer/input.js"
 									end: Object {
@@ -284,6 +285,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 123
 							format: undefined
+							raw: "123"
 							loc: Object {
 								filename: "core/object/invalid-property-initializer/input.js"
 								end: Object {

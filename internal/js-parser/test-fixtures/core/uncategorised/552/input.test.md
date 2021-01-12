@@ -125,6 +125,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 8
 							format: undefined
+							raw: "08"
 							loc: Object {
 								filename: "core/uncategorised/552/input.js"
 								end: Object {

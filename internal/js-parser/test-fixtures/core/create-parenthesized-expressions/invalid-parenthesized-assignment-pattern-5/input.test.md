@@ -125,6 +125,7 @@ JSRoot {
 					right: JSNumericLiteral {
 						value: 1
 						format: undefined
+						raw: "1"
 						loc: Object {
 							filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-5/input.js"
 							end: Object {

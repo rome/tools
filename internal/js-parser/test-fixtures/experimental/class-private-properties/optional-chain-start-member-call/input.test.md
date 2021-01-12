@@ -130,6 +130,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 								end: Object {
@@ -376,6 +377,7 @@ JSRoot {
 											JSNumericLiteral {
 												value: 2
 												format: undefined
+												raw: "2"
 												loc: Object {
 													filename: "experimental/class-private-properties/optional-chain-start-member-call/input.js"
 													end: Object {

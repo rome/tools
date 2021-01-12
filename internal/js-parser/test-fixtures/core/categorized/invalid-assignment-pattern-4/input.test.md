@@ -186,6 +186,7 @@ JSRoot {
 														right: JSNumericLiteral {
 															value: 1
 															format: undefined
+															raw: "1"
 															loc: Object {
 																filename: "core/categorized/invalid-assignment-pattern-4/input.js"
 																end: Object {

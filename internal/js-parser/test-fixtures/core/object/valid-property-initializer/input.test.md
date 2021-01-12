@@ -126,6 +126,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 123
 								format: undefined
+								raw: "123"
 								loc: Object {
 									filename: "core/object/valid-property-initializer/input.js"
 									end: Object {
@@ -284,6 +285,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 123
 							format: undefined
+							raw: "123"
 							loc: Object {
 								filename: "core/object/valid-property-initializer/input.js"
 								end: Object {
@@ -369,6 +371,7 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 24
 										format: undefined
+										raw: "24"
 										loc: Object {
 											filename: "core/object/valid-property-initializer/input.js"
 											end: Object {
@@ -425,6 +428,7 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 45
 										format: undefined
+										raw: "45"
 										loc: Object {
 											filename: "core/object/valid-property-initializer/input.js"
 											end: Object {

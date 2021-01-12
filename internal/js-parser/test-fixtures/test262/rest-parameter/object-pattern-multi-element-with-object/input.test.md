@@ -448,6 +448,7 @@ JSRoot {
 											right: JSNumericLiteral {
 												value: 0
 												format: undefined
+												raw: "0"
 												loc: Object {
 													filename: "test262/rest-parameter/object-pattern-multi-element-with-object/input.js"
 													end: Object {

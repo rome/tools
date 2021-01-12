@@ -133,6 +133,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "experimental/private-in/private-in-parenthesized/input.js"
 								end: Object {

@@ -95,6 +95,7 @@ JSRoot {
 						JSNumericLiteral {
 							value: 42
 							format: undefined
+							raw: "42"
 							loc: Object {
 								filename: "typescript/cast/destructure-and-assign/input.ts"
 								end: Object {
@@ -209,6 +210,7 @@ JSRoot {
 						JSNumericLiteral {
 							value: 42
 							format: undefined
+							raw: "42"
 							loc: Object {
 								filename: "typescript/cast/destructure-and-assign/input.ts"
 								end: Object {

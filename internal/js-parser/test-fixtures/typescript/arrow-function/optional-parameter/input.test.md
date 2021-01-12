@@ -212,6 +212,7 @@ JSRoot {
 						right: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "typescript/arrow-function/optional-parameter/input.ts"
 								end: Object {

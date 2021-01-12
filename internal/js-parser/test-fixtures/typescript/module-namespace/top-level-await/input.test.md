@@ -138,6 +138,7 @@ JSRoot {
 										argument: JSNumericLiteral {
 											value: 42
 											format: undefined
+											raw: "42"
 											loc: Object {
 												filename: "typescript/module-namespace/top-level-await/input.ts"
 												end: Object {

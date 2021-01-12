@@ -58,6 +58,7 @@ JSRoot {
 				left: JSNumericLiteral {
 					value: 4
 					format: undefined
+					raw: "4"
 					loc: Object {
 						filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 						end: Object {
@@ -85,6 +86,7 @@ JSRoot {
 					body: JSNumericLiteral {
 						value: 2
 						format: undefined
+						raw: "2"
 						loc: Object {
 							filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
 							end: Object {
