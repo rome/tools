@@ -89,6 +89,7 @@ JSRoot {
 					initializer: JSNumericLiteral {
 						value: 0
 						format: undefined
+						raw: "0"
 						loc: Object {
 							filename: "typescript/enum/members-trailing-comma-with-initializer/input.ts"
 							end: Object {

@@ -83,6 +83,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 2
 				format: undefined
+				raw: "2"
 				loc: Object {
 					filename: "esprima/invalid-syntax/migrated_0119/input.js"
 					end: Object {

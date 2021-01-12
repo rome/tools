@@ -99,6 +99,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 4
 					format: undefined
+					raw: "4"
 					loc: Object {
 						filename: "esprima/invalid-syntax/migrated_0046/input.js"
 						end: Object {

@@ -69,6 +69,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 3
 				format: undefined
+				raw: "3e"
 				loc: Object {
 					filename: "core/uncategorised/347/input.js"
 					end: Object {

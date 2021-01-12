@@ -82,6 +82,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js"
 						end: Object {

@@ -10,11 +10,13 @@ import {Builder, Token} from "@internal/formatter";
 import {JSNumericLiteral} from "@internal/ast";
 import {humanizeNumber} from "@internal/string-utils";
 
+const SCIENTIFIC_NOTATION = /e/i;
+
 export default function JSNumericLiteral(
 	builder: Builder,
 	node: JSNumericLiteral,
 ): Token {
-	if (builder.options.format === "pretty") {
+	if (builder.options.format === "pretty" && !SCIENTIFIC_NOTATION.test(node.raw)) {
 		if (node.format === undefined) {
 			return humanizeNumber(node.value);
 		} else {
@@ -28,6 +30,6 @@ export default function JSNumericLiteral(
 			}
 		}
 	} else {
-		return String(node.value);
+		return node.raw;
 	}
 }

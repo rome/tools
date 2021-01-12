@@ -69,6 +69,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 9.5
 				format: undefined
+				raw: "09.5"
 				loc: Object {
 					filename: "core/regression/non-octal-float-strict-mode/input.js"
 					end: Object {

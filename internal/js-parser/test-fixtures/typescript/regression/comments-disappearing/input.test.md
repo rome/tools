@@ -195,6 +195,7 @@ JSRoot {
 											value: 1
 											format: undefined
 											leadingComments: undefined
+											raw: "1"
 											loc: Object {
 												filename: "typescript/regression/comments-disappearing/input.ts"
 												end: Object {

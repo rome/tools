@@ -103,6 +103,7 @@ JSRoot {
 					body: JSNumericLiteral {
 						value: 42
 						format: undefined
+						raw: "42"
 						loc: Object {
 							filename: "esprima/es2015-arrow-function/migrated_0016/input.js"
 							end: Object {

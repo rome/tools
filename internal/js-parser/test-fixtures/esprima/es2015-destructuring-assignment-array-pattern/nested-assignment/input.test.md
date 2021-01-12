@@ -58,6 +58,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 						end: Object {
@@ -130,6 +131,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 0
 								format: undefined
+								raw: "0"
 								loc: Object {
 									filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 									end: Object {
@@ -230,6 +232,7 @@ JSRoot {
 										value: JSNumericLiteral {
 											value: 0
 											format: undefined
+											raw: "0"
 											loc: Object {
 												filename: "esprima/es2015-destructuring-assignment-array-pattern/nested-assignment/input.js"
 												end: Object {

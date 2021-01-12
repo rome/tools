@@ -73,6 +73,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
+					raw: "1"
 					loc: Object {
 						filename: "es2020/nullish-coalescing-operator/expression/input.js"
 						end: Object {

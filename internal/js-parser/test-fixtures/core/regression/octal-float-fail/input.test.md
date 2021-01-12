@@ -69,6 +69,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 7
 				format: "octal"
+				raw: "07"
 				loc: Object {
 					filename: "core/regression/octal-float-fail/input.js"
 					end: Object {
@@ -97,6 +98,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0.5
 				format: undefined
+				raw: ".5"
 				loc: Object {
 					filename: "core/regression/octal-float-fail/input.js"
 					end: Object {

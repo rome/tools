@@ -161,6 +161,7 @@ JSRoot {
 								right: JSNumericLiteral {
 									value: 1
 									format: undefined
+									raw: "1"
 									loc: Object {
 										filename: "esprima/es2015-identifier/invalid_expression_await/input.js"
 										end: Object {

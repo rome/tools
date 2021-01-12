@@ -157,6 +157,7 @@ JSRoot {
 							expression: JSNumericLiteral {
 								value: 10
 								format: undefined
+								raw: "10"
 								loc: Object {
 									filename: "es2015/yield/in-plain-function/input.js"
 									end: Object {

@@ -303,6 +303,7 @@ JSRoot {
 										right: JSNumericLiteral {
 											value: 0
 											format: undefined
+											raw: "0"
 											loc: Object {
 												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
 												end: Object {
@@ -387,6 +388,7 @@ JSRoot {
 										right: JSNumericLiteral {
 											value: 0
 											format: undefined
+											raw: "0"
 											loc: Object {
 												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
 												end: Object {

@@ -87,6 +87,7 @@ JSRoot {
 						argument: JSNumericLiteral {
 							value: 0.5
 							format: undefined
+							raw: ".5"
 							loc: Object {
 								filename: "esprima/es2015-spread-element/new-spread-number/input.js"
 								end: Object {

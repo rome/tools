@@ -140,6 +140,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
+							raw: "0"
 							loc: Object {
 								filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
 								end: Object {

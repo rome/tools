@@ -207,6 +207,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
+							raw: "0"
 							loc: Object {
 								filename: "experimental/class-private-names-duplicated/static-method-instance-field/input.js"
 								end: Object {

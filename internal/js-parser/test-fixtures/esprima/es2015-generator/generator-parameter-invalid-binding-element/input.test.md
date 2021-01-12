@@ -188,35 +188,6 @@ JSRoot {
 												line: 2
 											}
 										}
-										right: JSYieldExpression {
-											delegate: false
-											loc: Object {
-												filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-												end: Object {
-													column: 25
-													line: 2
-												}
-												start: Object {
-													column: 18
-													line: 2
-												}
-											}
-											argument: JSNumericLiteral {
-												value: 3
-												format: undefined
-												loc: Object {
-													filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
-													end: Object {
-														column: 25
-														line: 2
-													}
-													start: Object {
-														column: 24
-														line: 2
-													}
-												}
-											}
-										}
 										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
@@ -242,6 +213,36 @@ JSRoot {
 													}
 													start: Object {
 														column: 14
+														line: 2
+													}
+												}
+											}
+										}
+										right: JSYieldExpression {
+											delegate: false
+											loc: Object {
+												filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
+												end: Object {
+													column: 25
+													line: 2
+												}
+												start: Object {
+													column: 18
+													line: 2
+												}
+											}
+											argument: JSNumericLiteral {
+												value: 3
+												format: undefined
+												raw: "3"
+												loc: Object {
+													filename: "esprima/es2015-generator/generator-parameter-invalid-binding-element/input.js"
+													end: Object {
+														column: 25
+														line: 2
+													}
+													start: Object {
+														column: 24
 														line: 2
 													}
 												}

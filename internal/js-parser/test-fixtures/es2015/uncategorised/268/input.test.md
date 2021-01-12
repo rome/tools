@@ -153,6 +153,7 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							trailingComments: undefined
 							loc: Object {
 								filename: "es2015/uncategorised/268/input.js"

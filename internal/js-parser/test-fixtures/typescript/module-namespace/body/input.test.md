@@ -126,6 +126,7 @@ JSRoot {
 									init: JSNumericLiteral {
 										value: 0
 										format: undefined
+										raw: "0"
 										loc: Object {
 											filename: "typescript/module-namespace/body/input.ts"
 											end: Object {

@@ -82,6 +82,7 @@ JSRoot {
 					JSNumericLiteral {
 						value: 1
 						format: undefined
+						raw: "1_"
 						loc: Object {
 							filename: "experimental/numeric-separator/invalid-76/input.js"
 							end: Object {

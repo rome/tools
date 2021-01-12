@@ -57,6 +57,7 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-arrow-function/arrow-with-only-rest/input.js"
 						end: Object {

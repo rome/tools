@@ -379,6 +379,7 @@ JSRoot {
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
+										raw: "0"
 										loc: Object {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {
@@ -456,6 +457,7 @@ JSRoot {
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
+										raw: "0"
 										loc: Object {
 											filename: "typescript/class/parameter-properties/input.ts"
 											end: Object {

@@ -272,6 +272,7 @@ JSRoot {
 														argument: JSNumericLiteral {
 															value: 2
 															format: undefined
+															raw: "2"
 															loc: Object {
 																filename: "es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js"
 																end: Object {

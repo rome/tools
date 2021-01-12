@@ -58,6 +58,7 @@ JSRoot {
 					JSNumericLiteral {
 						value: 2_014
 						format: undefined
+						raw: "2014"
 						loc: Object {
 							filename: "esprima/expression-left-hand-side/migrated_0018/input.js"
 							end: Object {

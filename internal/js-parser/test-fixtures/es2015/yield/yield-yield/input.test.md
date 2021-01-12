@@ -131,6 +131,7 @@ JSRoot {
 									argument: JSNumericLiteral {
 										value: 10
 										format: undefined
+										raw: "10"
 										loc: Object {
 											filename: "es2015/yield/yield-yield/input.js"
 											end: Object {

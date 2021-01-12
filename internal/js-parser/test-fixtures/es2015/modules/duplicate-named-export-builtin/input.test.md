@@ -86,6 +86,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 								end: Object {

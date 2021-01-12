@@ -238,6 +238,7 @@ JSRoot {
 										right: JSNumericLiteral {
 											value: 1
 											format: undefined
+											raw: "1"
 											loc: Object {
 												filename: "es2015/class-methods/malformed-super-expression/input.js"
 												end: Object {

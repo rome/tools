@@ -115,6 +115,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 5
 				format: "octal"
+				raw: "05"
 				loc: Object {
 					filename: "es2015/regression/11183/input.js"
 					end: Object {
@@ -222,6 +223,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 5
 				format: "octal"
+				raw: "05"
 				loc: Object {
 					filename: "es2015/regression/11183/input.js"
 					end: Object {

@@ -546,6 +546,7 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 5
 							format: "octal"
+							raw: "05"
 							loc: Object {
 								filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 								end: Object {
@@ -654,6 +655,7 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 4
 							format: "octal"
+							raw: "04"
 							loc: Object {
 								filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 								end: Object {
@@ -682,6 +684,7 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 5
 							format: "octal"
+							raw: "05"
 							loc: Object {
 								filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 								end: Object {

@@ -146,6 +146,7 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 17
 							format: "octal"
+							raw: "021"
 							loc: Object {
 								filename: "esprima/invalid-syntax/migrated_0218/input.js"
 								end: Object {

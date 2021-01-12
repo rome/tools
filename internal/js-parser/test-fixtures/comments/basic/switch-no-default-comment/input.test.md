@@ -90,6 +90,7 @@ JSRoot {
 					test: JSNumericLiteral {
 						value: 1
 						format: undefined
+						raw: "1"
 						loc: Object {
 							filename: "comments/basic/switch-no-default-comment/input.js"
 							end: Object {
