@@ -109,6 +109,7 @@ JSRoot {
 				value: 1
 				format: undefined
 				leadingComments: undefined
+				raw: "1"
 				loc: Object {
 					filename: "comments/basic/create-parenthesized-expressions/input.js"
 					end: Object {
@@ -139,6 +140,7 @@ JSRoot {
 				value: 2
 				format: undefined
 				leadingComments: undefined
+				raw: "2"
 				loc: Object {
 					filename: "comments/basic/create-parenthesized-expressions/input.js"
 					end: Object {
@@ -167,6 +169,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 3
 				format: undefined
+				raw: "3"
 				leadingComments: Array ["2"]
 				loc: Object {
 					filename: "comments/basic/create-parenthesized-expressions/input.js"
@@ -196,6 +199,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 4
 				format: undefined
+				raw: "4"
 				leadingComments: Array ["3"]
 				loc: Object {
 					filename: "comments/basic/create-parenthesized-expressions/input.js"

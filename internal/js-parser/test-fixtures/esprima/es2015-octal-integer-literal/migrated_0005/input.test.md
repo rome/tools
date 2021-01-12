@@ -45,6 +45,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "octal"
+				raw: "0O0"
 				loc: Object {
 					filename: "esprima/es2015-octal-integer-literal/migrated_0005/input.js"
 					end: Object {

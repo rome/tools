@@ -3590,6 +3590,7 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 5
 							format: "octal"
+							raw: "05"
 							loc: Object {
 								filename: "core/categorized/not-directive/input.js"
 								end: Object {

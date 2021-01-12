@@ -82,6 +82,7 @@ JSRoot {
 					JSNumericLiteral {
 						value: 0
 						format: undefined
+						raw: "0"
 						loc: Object {
 							filename: "experimental/template-literal-invalid-escapes-untagged/44/input.js"
 							end: Object {
@@ -97,6 +98,7 @@ JSRoot {
 					JSNumericLiteral {
 						value: 1
 						format: undefined
+						raw: "1"
 						loc: Object {
 							filename: "experimental/template-literal-invalid-escapes-untagged/44/input.js"
 							end: Object {

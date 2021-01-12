@@ -45,6 +45,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 8
 				format: undefined
+				raw: "0_8"
 				loc: Object {
 					filename: "experimental/numeric-separator/invalid-leading-zero/input.js"
 					end: Object {

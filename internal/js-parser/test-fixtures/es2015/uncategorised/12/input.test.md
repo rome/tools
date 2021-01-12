@@ -45,6 +45,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "binary"
+				raw: "0b0"
 				loc: Object {
 					filename: "es2015/uncategorised/12/input.js"
 					end: Object {

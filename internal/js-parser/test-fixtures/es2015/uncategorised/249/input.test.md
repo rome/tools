@@ -96,6 +96,7 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: "octal"
+					raw: "00"
 					loc: Object {
 						filename: "es2015/uncategorised/249/input.js"
 						end: Object {

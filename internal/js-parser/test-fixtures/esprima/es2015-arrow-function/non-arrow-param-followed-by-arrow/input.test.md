@@ -81,6 +81,7 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-arrow-function/non-arrow-param-followed-by-arrow/input.js"
 						end: Object {

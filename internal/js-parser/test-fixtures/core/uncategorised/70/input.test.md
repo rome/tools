@@ -45,6 +45,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0.14
 				format: undefined
+				raw: ".14"
 				loc: Object {
 					filename: "core/uncategorised/70/input.js"
 					end: Object {

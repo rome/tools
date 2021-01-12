@@ -45,6 +45,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 6.02214179e+23
 				format: undefined
+				raw: "6.02214179e+23"
 				loc: Object {
 					filename: "esprima/expression-primary-literal-numeric/migrated_0006/input.js"
 					end: Object {

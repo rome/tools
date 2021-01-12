@@ -153,13 +153,15 @@ export class RegExpTokenValue {
 }
 
 export class NumberTokenValue {
-	constructor(value: number, format: JSNumericLiteral["format"]) {
+	constructor(value: number, format: JSNumericLiteral["format"], raw: string) {
 		this.value = value;
 		this.format = format;
+		this.raw = raw;
 	}
 
 	public value: number;
 	public format: JSNumericLiteral["format"];
+	public raw: string;
 }
 
 // ## Tokenizer
@@ -1303,17 +1305,14 @@ function readRadixNumber(
 			},
 		);
 	}
-
+	const raw = parser.getRawInput(start, parser.state.index);
 	if (isBigInt) {
-		const str = parser.getRawInput(start, parser.state.index).replace(
-			/[_n]/g,
-			"",
-		);
+		const str = raw.replace(/[_n]/g, "");
 		finishToken(parser, tt.bigint, str);
 		return undefined;
 	}
 
-	finishToken(parser, tt.num, new NumberTokenValue(val, format));
+	finishToken(parser, tt.num, new NumberTokenValue(val, format, raw));
 }
 
 // Read an integer, octal integer, or floating-point number.
@@ -1418,9 +1417,9 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 			},
 		);
 	}
-
+	const raw = parser.getRawInput(start, parser.state.index);
 	// Remove "_" for numeric literal separator, and "n" for BigInts
-	const str = parser.getRawInput(start, parser.state.index).replace(/[_n]/g, "");
+	const str = raw.replace(/[_n]/g, "");
 
 	if (isBigInt) {
 		finishToken(parser, tt.bigint, str);
@@ -1431,7 +1430,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	finishToken(
 		parser,
 		tt.num,
-		new NumberTokenValue(num, isOctal ? "octal" : undefined),
+		new NumberTokenValue(num, isOctal ? "octal" : undefined, raw),
 	);
 }
 

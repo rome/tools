@@ -58,6 +58,7 @@ JSRoot {
 				left: JSNumericLiteral {
 					value: 1
 					format: undefined
+					raw: "1"
 					loc: Object {
 						filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 						end: Object {
@@ -73,6 +74,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
+					raw: "2"
 					loc: Object {
 						filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
 						end: Object {

@@ -130,6 +130,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "experimental/class-private-properties/optional-chain-start-simple/input.js"
 								end: Object {

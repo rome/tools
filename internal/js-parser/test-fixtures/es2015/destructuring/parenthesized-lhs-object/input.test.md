@@ -82,6 +82,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
+					raw: "2"
 					loc: Object {
 						filename: "es2015/destructuring/parenthesized-lhs-object/input.js"
 						end: Object {

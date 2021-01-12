@@ -217,6 +217,7 @@ JSRoot {
 											left: JSNumericLiteral {
 												value: 3
 												format: undefined
+												raw: "3"
 												loc: Object {
 													filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js"
 													end: Object {
@@ -245,6 +246,7 @@ JSRoot {
 												right: JSNumericLiteral {
 													value: 2
 													format: undefined
+													raw: "2"
 													loc: Object {
 														filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js"
 														end: Object {

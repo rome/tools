@@ -94,6 +94,7 @@ JSRoot {
 						JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 								end: Object {

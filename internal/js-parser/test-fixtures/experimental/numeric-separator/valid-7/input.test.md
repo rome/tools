@@ -45,6 +45,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 161
 				format: "hex"
+				raw: "0xA_1"
 				loc: Object {
 					filename: "experimental/numeric-separator/valid-7/input.js"
 					end: Object {

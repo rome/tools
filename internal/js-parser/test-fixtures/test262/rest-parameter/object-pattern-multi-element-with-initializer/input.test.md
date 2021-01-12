@@ -179,6 +179,7 @@ JSRoot {
 								right: JSNumericLiteral {
 									value: 0
 									format: undefined
+									raw: "0"
 									loc: Object {
 										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										end: Object {
@@ -319,6 +320,7 @@ JSRoot {
 								right: JSNumericLiteral {
 									value: 1
 									format: undefined
+									raw: "1"
 									loc: Object {
 										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
 										end: Object {

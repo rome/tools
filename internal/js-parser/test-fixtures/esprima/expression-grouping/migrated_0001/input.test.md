@@ -58,6 +58,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 6
 					format: undefined
+					raw: "6"
 					loc: Object {
 						filename: "esprima/expression-grouping/migrated_0001/input.js"
 						end: Object {
@@ -86,6 +87,7 @@ JSRoot {
 					left: JSNumericLiteral {
 						value: 4
 						format: undefined
+						raw: "4"
 						loc: Object {
 							filename: "esprima/expression-grouping/migrated_0001/input.js"
 							end: Object {
@@ -101,6 +103,7 @@ JSRoot {
 					right: JSNumericLiteral {
 						value: 5
 						format: undefined
+						raw: "5"
 						loc: Object {
 							filename: "esprima/expression-grouping/migrated_0001/input.js"
 							end: Object {

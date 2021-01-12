@@ -3977,7 +3977,7 @@ export function parseNumericLiteral(parser: JSParser): JSNumericLiteral {
 		throw new Error("Expected NumberTokenValue");
 	}
 
-	const {value, format} = tokenValue;
+	const {value, format, raw} = tokenValue;
 	next(parser);
 	return parser.finishNode(
 		start,
@@ -3985,6 +3985,7 @@ export function parseNumericLiteral(parser: JSParser): JSNumericLiteral {
 			type: "JSNumericLiteral",
 			format,
 			value,
+			raw,
 		},
 	);
 }

@@ -57,6 +57,7 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: "octal"
+					raw: "00"
 					loc: Object {
 						filename: "esprima/es2015-arrow-function/migrated_0011/input.js"
 						end: Object {

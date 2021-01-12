@@ -191,6 +191,7 @@ JSRoot {
 								right: JSNumericLiteral {
 									value: 10
 									format: undefined
+									raw: "10"
 									loc: Object {
 										filename: "es2017/async-functions/21/input.js"
 										end: Object {

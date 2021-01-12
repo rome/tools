@@ -69,6 +69,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 1
 				format: "binary"
+				raw: "0b1"
 				loc: Object {
 					filename: "esprima/invalid-syntax/migrated_0018/input.js"
 					end: Object {

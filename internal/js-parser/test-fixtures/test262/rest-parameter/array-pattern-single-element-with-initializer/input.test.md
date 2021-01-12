@@ -135,6 +135,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 0
 								format: undefined
+								raw: "0"
 								loc: Object {
 									filename: "test262/rest-parameter/array-pattern-single-element-with-initializer/input.js"
 									end: Object {
