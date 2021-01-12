@@ -160,6 +160,10 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 	return undefined;
 }
 
+function isAttributeMatcher(value: string): value is AttributeMatcher {
+	return ATTRIBUTE_SELECTOR_MATCHERS.includes(value);
+}
+
 function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined {
 	let matcher: string = "";
 	if (matchToken(parser, "Delim")) {
@@ -174,15 +178,17 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 
 			const second = parser.getToken();
 			if (second.type === "Delim" && second.value === "=") {
-				matcher += second.value;
+				matcher += "=";
 			}
 		}
 	}
+
 	if (matcher) {
-		if (ATTRIBUTE_SELECTOR_MATCHERS.includes(matcher)) {
+		if (isAttributeMatcher(matcher)) {
 			parser.nextToken();
-			return matcher as AttributeMatcher;
+			return matcher;
 		}
+
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER(
 				matcher,
