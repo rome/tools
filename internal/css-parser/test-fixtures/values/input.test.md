@@ -240,13 +240,12 @@ CSSRoot {
 					CSSDeclaration {
 						name: "width"
 						value: Array [
-							CSSDimension {
+							CSSPercentage {
 								value: 20
-								unit: "px"
 								loc: Object {
 									filename: "values/input.css"
 									end: Object {
-										column: 12
+										column: 11
 										line: 8
 									}
 									start: Object {
@@ -260,7 +259,7 @@ CSSRoot {
 						loc: Object {
 							filename: "values/input.css"
 							end: Object {
-								column: 12
+								column: 11
 								line: 8
 							}
 							start: Object {
@@ -272,13 +271,12 @@ CSSRoot {
 					CSSDeclaration {
 						name: "margin-top"
 						value: Array [
-							CSSDimension {
+							CSSPercentage {
 								value: -5
-								unit: "px"
 								loc: Object {
 									filename: "values/input.css"
 									end: Object {
-										column: 17
+										column: 16
 										line: 9
 									}
 									start: Object {
@@ -292,7 +290,7 @@ CSSRoot {
 						loc: Object {
 							filename: "values/input.css"
 							end: Object {
-								column: 17
+								column: 16
 								line: 9
 							}
 							start: Object {

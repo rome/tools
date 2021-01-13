@@ -17,8 +17,8 @@
 .number {
 	opacity: 1e-3;
 	line-height: 0.2;
-	width: 20px;
-	margin-top: -5px;
+	width: 20%;
+	margin-top: -5%;
 }
 
 ```
@@ -29,8 +29,8 @@
 .number {
 	opacity: 1e-3;
 	line-height: 0.2;
-	width: 20px;
-	margin-top: -5px;
+	width: 20%;
+	margin-top: -5%;
 }
 
 ```

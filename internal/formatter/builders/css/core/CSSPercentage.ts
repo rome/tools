@@ -5,5 +5,5 @@ export default function CSSPercentage(
 	builder: Builder,
 	node: CSSPercentage,
 ): Token {
-	return concat([String(node.value), "px"]);
+	return concat([String(node.value), "%"]);
 }
