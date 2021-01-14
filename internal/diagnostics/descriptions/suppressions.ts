@@ -1,7 +1,8 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticSuppression} from "../types";
 import {markup} from "@internal/markup";
-import {joinCategoryName} from "../helpers";
+import {buildSuggestionAdvice, joinCategoryName} from "../helpers";
+import {VALID_DIAGNOSTIC_CATEGORIES} from "../categories";
 
 export const suppressions = createDiagnosticsCategory({
 	UNUSED: (suppression: DiagnosticSuppression) => {
@@ -40,6 +41,14 @@ export const suppressions = createDiagnosticsCategory({
 		category: "suppressions/missingExplanation",
 		message: markup`Suppression comments must have an explanation`,
 	},
+	INVALID_CATEGORY_NAME: (category: string) => ({
+		category: "suppressions/invalidCategory",
+		message: markup`Unknown category <emphasis>${category}</emphasis>`,
+		advice: buildSuggestionAdvice(
+			category,
+			Array.from(VALID_DIAGNOSTIC_CATEGORIES),
+		),
+	}),
 	DUPLICATE: (category: string) => ({
 		category: "suppressions/duplicate",
 		message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,

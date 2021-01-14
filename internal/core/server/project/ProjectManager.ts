@@ -172,6 +172,7 @@ export default class ProjectManager {
 		// TODO find a way to do th
 		await createDirectory(defaultVendorPath);
 		await this.declareProject({
+			isPartial: false,
 			projectDirectory: defaultVendorPath,
 			meta: createDefaultProjectConfigMeta(),
 			config: vendorProjectConfig,
@@ -190,6 +191,7 @@ export default class ProjectManager {
 		};
 
 		await this.declareProject({
+			isPartial: false,
 			projectDirectory,
 			meta: createDefaultProjectConfigMeta(),
 			config: projectConfig,
@@ -564,11 +566,12 @@ export default class ProjectManager {
 
 	public addDiskProject(
 		opts: {
+			isPartial: boolean;
 			projectDirectory: AbsoluteFilePath;
 			configPath: AbsoluteFilePath;
 		},
 	): Promise<void> {
-		const {projectDirectory, configPath} = opts;
+		const {projectDirectory, configPath, isPartial} = opts;
 
 		return this.projectLoadingLocks.wrapLock(
 			projectDirectory,
@@ -584,6 +587,7 @@ export default class ProjectManager {
 				);
 
 				await this.declareProject({
+					isPartial,
 					projectDirectory: opts.projectDirectory,
 					meta,
 					config,
@@ -597,7 +601,9 @@ export default class ProjectManager {
 			projectDirectory,
 			meta,
 			config,
+			isPartial,
 		}: {
+			isPartial: boolean;
 			projectDirectory: AbsoluteFilePath;
 			meta: ProjectConfigMeta;
 			config: ProjectConfig;
@@ -625,6 +631,7 @@ export default class ProjectManager {
 			parent: parentProject,
 			children: new Set(),
 			initialized: false,
+			partial: isPartial,
 		};
 
 		this.logger.info(
@@ -849,12 +856,28 @@ export default class ProjectManager {
 	// Attempt to find a project on the real disk and seed it into the memory file system
 	public async findProject(
 		cwd: AbsoluteFilePath,
+		partial: boolean = false,
 	): Promise<undefined | ProjectDefinition> {
 		await this.server.memoryFs.processingLock.wait();
 
 		// Check if we have an existing project
 		const syncProject = this.findLoadedProject(cwd);
 		if (syncProject !== undefined) {
+			let rewatch = false;
+			// They want the whole project but we only have a partial project loaded
+			if (syncProject.partial && !partial) {
+				rewatch = true;
+			}
+			// They want a partial project, we only have a partial project loaded, but we don't have this file!
+			if (syncProject.partial && partial && !this.server.memoryFs.exists(cwd)) {
+				rewatch = true;
+			}
+			if (rewatch) {
+				await this.server.memoryFs.watch(
+					assertHardMeta(syncProject.meta).projectDirectory,
+				);
+			}
+
 			return syncProject;
 		}
 
@@ -880,10 +903,11 @@ export default class ProjectManager {
 						// Would have emitted a diagnostic
 						return;
 					}
-					await this.server.memoryFs.watch(dir);
+					await this.server.memoryFs.watch(dir, cwd, partial);
 					return this.assertProjectExisting(cwd);
 				}
 			}
+
 			// Check for package.json
 			const packagePath = dir.append("package.json");
 			if (await this.server.memoryFs.existsHard(packagePath)) {
@@ -895,7 +919,7 @@ export default class ProjectManager {
 						return;
 					}
 
-					await this.server.memoryFs.watch(dir);
+					await this.server.memoryFs.watch(dir, cwd, partial);
 					return this.assertProjectExisting(cwd);
 				}
 			}

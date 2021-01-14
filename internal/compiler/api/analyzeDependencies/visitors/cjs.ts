@@ -50,6 +50,8 @@ export default createVisitor({
 						names: [],
 						all: true,
 						async: false,
+						imported: true,
+						exported: false,
 					}),
 				);
 			}

@@ -81,21 +81,32 @@ type SeedQueueItem = {
 	ancestry: string[];
 	type: AnalyzeModuleType;
 	loc: undefined | SourceLocation;
+	shallowUsedExports: undefined | Set<string>;
 };
 
 export type DependencyGraphWorkerQueue = WorkerQueue<SeedQueueItem>;
 
+export type DependencyGraphOptions = {
+	shallow?: boolean;
+};
+
 export default class DependencyGraph {
-	constructor(request: ServerRequest, resolverOpts: ResolverOptions) {
+	constructor(
+		request: ServerRequest,
+		resolverOpts: ResolverOptions,
+		graphOpts: DependencyGraphOptions = {},
+	) {
 		this.request = request;
 		this.server = request.server;
 		this.nodes = new AbsoluteFilePathMap();
+		this.graphOpts = graphOpts;
 		this.resolverOpts = resolverOpts;
 		this.locker = new Locker();
 	}
 
 	private request: ServerRequest;
 	private resolverOpts: ResolverOptions;
+	private graphOpts: DependencyGraphOptions;
 	private server: Server;
 	private nodes: AbsoluteFilePathMap<DependencyNode>;
 	private locker: Locker<string>;
@@ -190,6 +201,8 @@ export default class DependencyGraph {
 						all: item.all,
 						async: item.async,
 						ancestry: item.ancestry,
+						shallowUsedExports: item.shallowUsedExports,
+						isRoot: false,
 					},
 					diagnosticsProcessor,
 					analyzeProgress,
@@ -212,6 +225,7 @@ export default class DependencyGraph {
 								all: true,
 								async: false,
 								ancestry: [],
+								isRoot: true,
 							},
 							diagnosticsProcessor,
 							analyzeProgress,
@@ -285,6 +299,8 @@ export default class DependencyGraph {
 			async: boolean;
 			ancestry: string[];
 			workerQueue: DependencyGraphWorkerQueue;
+			isRoot: boolean;
+			shallowUsedExports?: Set<string>;
 		},
 		diagnosticsProcessor: DiagnosticsProcessor,
 		analyzeProgress?: ReporterProgress,
@@ -293,23 +309,24 @@ export default class DependencyGraph {
 		const {async, all, ancestry} = opts;
 		const {server} = this;
 
+		let res: undefined | WorkerAnalyzeDependencyResult;
+		let node: undefined | DependencyNode;
+
 		// We have a lock here in case we hit `this.resolve` while we're waiting for the `analyzeDependencies` result
 		const lock = await this.locker.getLock(filename);
 
 		if (this.nodes.has(path)) {
-			const node = this.getNode(path);
+			node = this.getNode(path);
+			res = node.analyze;
+			node.setAll(all);
+			node.setUsedAsync(async);
 
-			if (all) {
-				node.setAll(true);
+			// If this node is shallow then it is incomplete and we haven't checked all of it's dependencies
+			// So recalculate it
+			if (!node.shallow) {
+				lock.release();
+				return node;
 			}
-
-			if (async) {
-				node.setUsedAsync(true);
-			}
-
-			lock.release();
-
-			return node;
 		}
 
 		const progressText = markup`<filelink target="${filename}" />`;
@@ -319,19 +336,22 @@ export default class DependencyGraph {
 			progressId = analyzeProgress.pushText(progressText);
 		}
 
-		let res: WorkerAnalyzeDependencyResult;
-		let node: DependencyNode;
 		try {
-			res = await this.request.requestWorkerAnalyzeDependencies(path, {});
+			if (res === undefined) {
+				res = await this.request.requestWorkerAnalyzeDependencies(path, {});
+			}
 
-			node = this.addNode(path, res);
+			if (node === undefined) {
+				node = this.addNode(path, res);
+			}
+
 			node.setAll(all);
 			node.setUsedAsync(async);
 		} finally {
 			lock.release();
 		}
 
-		const {dependencies, diagnostics} = res.value;
+		let {dependencies, diagnostics, exports} = res.value;
 
 		if (diagnostics.length > 0) {
 			diagnosticsProcessor.addDiagnostics(diagnostics);
@@ -341,13 +361,54 @@ export default class DependencyGraph {
 		const remote = this.server.projectManager.getRemoteFromLocalPath(path);
 		const origin = remote === undefined ? path : remote.getParent();
 
+		let isShallowNode = false;
+
+		dependencies = dependencies.filter((dep) => {
+			const {source} = dep;
+
+			if (this.isExternal(path, source)) {
+				return false;
+			}
+
+			// If we've been given a shallowUsedExports list then only include this dependency if it could include that export
+			const {shallowUsedExports} = opts;
+			if (shallowUsedExports !== undefined) {
+				if (!dep.exported) {
+					isShallowNode = true;
+					return false;
+				}
+
+				for (const exp of exports) {
+					if (exp.type === "local") {
+						continue;
+					}
+
+					if (exp.source !== source) {
+						continue;
+					}
+
+					if (exp.type === "externalAll") {
+						return true;
+					}
+
+					if (exp.type === "external" && shallowUsedExports.has(exp.exported)) {
+						return true;
+					}
+				}
+
+				isShallowNode = true;
+				return false;
+			}
+
+			return true;
+		});
+
+		node.setShallow(isShallowNode);
+
 		// Resolve full locations
 		await Promise.all(
 			dependencies.map(async (dep) => {
 				const {source, optional} = dep;
-				if (this.isExternal(path, source)) {
-					return;
-				}
 
 				const {diagnostics} = await catchDiagnostics(
 					async () => {
@@ -368,7 +429,7 @@ export default class DependencyGraph {
 									},
 						);
 
-						node.addDependency(source, resolved.path, dep);
+						node!.addDependency(source, resolved.path, dep);
 					},
 					{
 						category: "DependencyGraph",
@@ -385,7 +446,14 @@ export default class DependencyGraph {
 		// Queue our dependencies...
 		const subAncestry = [...ancestry, filename];
 		for (const path of node.getAbsoluteDependencies()) {
-			const dep = node.getDependencyInfoFromAbsolute(path).analyze;
+			const dep = node.getDependencyInfoFromAbsolute(path);
+
+			let shallowUsedExports: undefined | Set<string>;
+			if (this.graphOpts.shallow) {
+				// Get all the export names that we use from this module
+				shallowUsedExports = new Set(dep.names.map((elem) => elem.name));
+			}
+
 			await opts.workerQueue.pushPath(
 				path,
 				{
@@ -394,6 +462,7 @@ export default class DependencyGraph {
 					type: dep.type,
 					loc: dep.loc,
 					ancestry: subAncestry,
+					shallowUsedExports,
 				},
 			);
 		}

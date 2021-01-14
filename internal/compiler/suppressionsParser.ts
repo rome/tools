@@ -4,6 +4,7 @@ import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	descriptions,
+	isValidDiagnosticCategoryName,
 	joinCategoryName,
 } from "@internal/diagnostics";
 import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
@@ -42,6 +43,7 @@ type Tokens = BaseTokens & {
 	BadPrefixTypo: StringToken<"BadPrefixTypo">;
 	BadPrefixMissingSpace: SimpleToken<"BadPrefixMissingSpace">;
 	ValidPrefix: SimpleToken<"ValidPrefix">;
+	InvalidCategory: ValueToken<"InvalidCategory", string>;
 	Category: ValueToken<"Category", DiagnosticCategory>;
 	CategoryValue: StringToken<"CategoryValue">;
 	Explanation: StringToken<"Explanation">;
@@ -181,7 +183,7 @@ const createSuppressionCommentParser = createParser<ParserTypes>({
 					// Ensure next character is a closing quote
 					const [endChar, stringValueEnd] = parser.getInputChar(innerValueEnd);
 					if (endChar !== '"') {
-						// Unclosed quote
+						// TODO Unclosed quote
 					}
 
 					value = unescapeJSONString(
@@ -205,34 +207,40 @@ const createSuppressionCommentParser = createParser<ParserTypes>({
 				// Ensure next character is a closing )
 				const [closeChar, end] = parser.getInputChar(valueEnd);
 				if (closeChar !== ")") {
-					// Unclosed category value
+					// TODO Unclosed category value
 				}
 
 				return [state, parser.finishValueToken("CategoryValue", value, end)];
 			}
 
 			// Read a category name!
-			// TODO actually validate categoryName
 			const [categoryName, end] = parser.readInputFrom(
 				index,
 				isCategoryNameChar,
 			);
-			return [
-				state,
-				parser.finishValueToken(
-					"Category",
-					categoryName as DiagnosticCategory,
-					end,
-				),
-			];
+
+			let token;
+			if (isValidDiagnosticCategoryName(categoryName)) {
+				token = parser.finishValueToken("Category", categoryName, end);
+			} else {
+				token = parser.finishValueToken("InvalidCategory", categoryName, end);
+			}
+
+			return [state, token];
 		}
 	},
 });
 
 export function parseCategoryPair(
 	parser: SuppressionCommentParser,
-): [Tokens["Category"], undefined | Tokens["CategoryValue"]] {
-	return [parser.expectToken("Category"), parser.eatToken("CategoryValue")];
+): [
+	Tokens["Category"] | Tokens["InvalidCategory"],
+	undefined | Tokens["CategoryValue"]
+] {
+	return [
+		parser.eatToken("InvalidCategory") || parser.expectToken("Category"),
+		parser.eatToken("CategoryValue"),
+	];
 }
 
 // Avoid parsing comments without suppressions with a fast regex
@@ -306,7 +314,10 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 				const endLine = targetNode.loc.end.line;
 
 				const categories = [];
-				while (parser.matchToken("Category")) {
+				while (
+					parser.matchToken("Category") ||
+					parser.matchToken("InvalidCategory")
+				) {
 					categories.push(parseCategoryPair(parser));
 				}
 
@@ -336,19 +347,30 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 					} else {
 						suppressedCategories.add(dupeKey);
 
-						suppressions.push({
-							filename: parser.getFilenameAssert(),
-							category,
-							categoryValue,
-							loc: parser.finishLocAt(
-								parser.getPositionFromIndex(categoryToken.start),
-								parser.getPositionFromIndex(
-									(categoryValueToken ?? categoryToken).end,
-								),
+						const loc = parser.finishLocAt(
+							parser.getPositionFromIndex(categoryToken.start),
+							parser.getPositionFromIndex(
+								(categoryValueToken ?? categoryToken).end,
 							),
-							startLine,
-							endLine,
-						});
+						);
+
+						if (categoryToken.type === "InvalidCategory") {
+							parser.unexpectedDiagnostic({
+								description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
+									category,
+								),
+								location: loc,
+							});
+						} else {
+							suppressions.push({
+								filename: parser.getFilenameAssert(),
+								category: categoryToken.value,
+								categoryValue,
+								loc,
+								startLine,
+								endLine,
+							});
+						}
 					}
 				}
 
@@ -391,6 +413,15 @@ export function parseCommentSuppressionLoneCategory(
 	);
 	const [category, categoryValue] = parseCategoryPair(parser);
 	parser.finalize();
+
+	if (category.type === "InvalidCategory") {
+		throw parser.unexpected({
+			description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
+				category.value,
+			),
+			token: category,
+		});
+	}
 
 	return {
 		category: category.value,

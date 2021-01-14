@@ -158,6 +158,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.missingFileSources = new UnknownPathSet();
 		this.fileSources = new UnknownPathMap();
 		this.fileHashes = new UnknownPathMap();
+		this.dependenciesByDiagnostic = new Map();
 		this.onFooterPrintCallbacks = [];
 	}
 
@@ -177,6 +178,7 @@ export default class DiagnosticsPrinter extends Error {
 	private missingFileSources: UnknownPathSet;
 	private fileSources: DiagnosticsPrinterFileSources;
 	private fileHashes: DiagnosticsPrinterFileHashes;
+	private dependenciesByDiagnostic: Map<Diagnostic, FileDependency[]>;
 
 	private displayedCount: number;
 	private problemCount: number;
@@ -235,9 +237,7 @@ export default class DiagnosticsPrinter extends Error {
 		return false;
 	}
 
-	private async addFileSource(
-		dep: ChangeFileDependency | ReferenceFileDependency,
-	) {
+	private async addFileSource(dep: FileDependency) {
 		const path = dep.path.assertAbsolute();
 
 		let needsHash = dep.integrity !== undefined;
@@ -342,96 +342,109 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	private getDependenciesFromDiagnostics(
-		diagnostics: Diagnostics,
-	): FileDependency[] {
+	private getDependenciesFromDiagnostic(diag: Diagnostic): FileDependency[] {
+		const cached = this.dependenciesByDiagnostic.get(diag);
+		if (cached !== undefined) {
+			return cached;
+		}
+
 		const deps: FileDependency[] = [];
 
-		for (const diag of diagnostics) {
-			const {
-				dependencies,
-				description: {advice},
-				location: {language, sourceTypeJS, sourceText, integrity, filename},
-			} = diag;
+		const {
+			dependencies,
+			description: {advice},
+			location: {language, sourceTypeJS, sourceText, integrity, filename},
+		} = diag;
 
-			if (filename !== undefined) {
-				const path = this.createFilePath(filename);
-				if (hasFrame(diag.location)) {
-					deps.push({
-						type: "reference",
-						path,
-						integrity,
-						language,
-						sourceTypeJS,
-						sourceText,
-					});
-				} else {
-					deps.push({
-						type: "change",
-						path,
-						integrity,
-					});
+		if (filename !== undefined) {
+			const path = this.createFilePath(filename);
+			if (hasFrame(diag.location)) {
+				deps.push({
+					type: "reference",
+					path,
+					integrity,
+					language,
+					sourceTypeJS,
+					sourceText,
+				});
+			} else {
+				deps.push({
+					type: "change",
+					path,
+					integrity,
+				});
+			}
+		}
+
+		if (dependencies !== undefined) {
+			for (const {filename, integrity} of dependencies) {
+				deps.push({
+					type: "change",
+					path: this.createFilePath(filename),
+					integrity,
+				});
+			}
+		}
+
+		for (const item of advice) {
+			if (item.type === "frame") {
+				const {location} = item;
+				if (location.filename !== undefined) {
+					const path = this.createFilePath(location.filename);
+					if (hasFrame(location)) {
+						deps.push({
+							type: "reference",
+							path,
+							language: location.language,
+							sourceTypeJS: location.sourceTypeJS,
+							integrity: location.integrity,
+							sourceText: location.sourceText,
+						});
+					} else {
+						deps.push({
+							type: "change",
+							path,
+							integrity,
+						});
+					}
 				}
 			}
 
-			if (dependencies !== undefined) {
-				for (const {filename, integrity} of dependencies) {
-					deps.push({
-						type: "change",
-						path: this.createFilePath(filename),
-						integrity,
-					});
-				}
-			}
-
-			for (const item of advice) {
-				if (item.type === "frame") {
-					const {location} = item;
-					if (location.filename !== undefined) {
-						const path = this.createFilePath(location.filename);
-						if (hasFrame(location)) {
+			if (item.type === "stacktrace") {
+				for (const {filename, line, column, sourceText} of item.frames) {
+					if (filename !== undefined) {
+						const path = this.createFilePath(filename);
+						if (line !== undefined && column !== undefined) {
 							deps.push({
 								type: "reference",
 								path,
-								language: location.language,
-								sourceTypeJS: location.sourceTypeJS,
-								integrity: location.integrity,
-								sourceText: location.sourceText,
+								language: undefined,
+								sourceTypeJS: undefined,
+								integrity: undefined,
+								sourceText,
 							});
 						} else {
 							deps.push({
 								type: "change",
 								path,
-								integrity,
+								integrity: undefined,
 							});
 						}
 					}
 				}
-
-				if (item.type === "stacktrace") {
-					for (const {filename, line, column, sourceText} of item.frames) {
-						if (filename !== undefined) {
-							const path = this.createFilePath(filename);
-							if (line !== undefined && column !== undefined) {
-								deps.push({
-									type: "reference",
-									path,
-									language: undefined,
-									sourceTypeJS: undefined,
-									integrity: undefined,
-									sourceText,
-								});
-							} else {
-								deps.push({
-									type: "change",
-									path,
-									integrity: undefined,
-								});
-							}
-						}
-					}
-				}
 			}
+		}
+
+		this.dependenciesByDiagnostic.set(diag, deps);
+		return deps;
+	}
+
+	private getDependenciesFromDiagnostics(
+		diagnostics: Diagnostics,
+	): FileDependency[] {
+		let deps: FileDependency[] = [];
+		for (const diag of diagnostics) {
+			deps = [...deps, ...this.getDependenciesFromDiagnostic(diag)];
 		}
 
 		const depsMap: UnknownPathMap<FileDependency> = new UnknownPathMap();
@@ -538,8 +551,13 @@ export default class DiagnosticsPrinter extends Error {
 		reporter.redirectOutToErr(restoreRedirect);
 	}
 
-	public getOutdatedFiles(diag: Diagnostic): UnknownPathSet {
+	public getDiagnosticDependencyMeta(
+		diag: Diagnostic,
+	): {
+		outdatedFiles: UnknownPathSet;
+	} {
 		let outdatedFiles: UnknownPathSet = new UnknownPathSet();
+
 		for (const {
 			path,
 			integrity: expectedIntegrity,
@@ -549,14 +567,13 @@ export default class DiagnosticsPrinter extends Error {
 			}
 
 			const actualHash = this.fileHashes.get(path);
-
-			// Consider us outdated if the other file is newer than what we want or doesn't have an mtime
 			const isOutdated = actualHash !== expectedIntegrity.hash;
 			if (isOutdated) {
 				outdatedFiles.add(path);
 			}
 		}
-		return outdatedFiles;
+
+		return {outdatedFiles};
 	}
 
 	private printAuxiliaryDiagnostic(diag: Diagnostic) {
@@ -641,7 +658,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Check for outdated files
 		const outdatedAdvice: DiagnosticAdvice = [];
-		const outdatedFiles = this.getOutdatedFiles(diag);
+		const {outdatedFiles} = this.getDiagnosticDependencyMeta(diag);
 
 		// Check if this file doesn't even exist
 		if (filename !== undefined) {
