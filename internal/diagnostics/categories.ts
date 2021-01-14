@@ -94,7 +94,7 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:1505e392d2d9b5fef8382f095b9af6c7440aa99c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:14fb403cc8e83a473eb8d446817166315360b2a8,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| "lint/html/useClosingNonVoid"
 	| "lint/html/useHtmlLang"
@@ -210,7 +210,6 @@ export type DiagnosticLintCategory =
 	| "lint/ts/noExplicitAny"
 	| "lint/ts/preferShorthandArrayType"
 	| "lint/ts/useInterfaces";
-
 const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/html/useClosingNonVoid": true,
 	"lint/html/useHtmlLang": true,
