@@ -239,3 +239,32 @@ export function areAnalyzeDependencyResultsEqual(
 
 	return true;
 }
+
+export function mergeAnalyzeDependency(
+	a: AnalyzeDependency,
+	b: undefined | AnalyzeDependency,
+): AnalyzeDependency {
+	if (b === undefined) {
+		return a;
+	}
+
+	let kind: ConstJSImportModuleKind;
+	if (a.kind === b.kind) {
+		kind = a.kind;
+	} else {
+		kind = "value";
+	}
+
+	return {
+		type: a.type === "es" && b.type === "es" ? "es" : "cjs",
+		kind,
+		optional: b.optional && a.optional,
+		async: b.async || a.async,
+		source: a.source,
+		all: b.all || a.all,
+		names: [...b.names, ...a.names],
+		loc: b.loc || a.loc,
+		imported: b.imported || a.imported,
+		exported: b.exported || a.exported,
+	};
+}

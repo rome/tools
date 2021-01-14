@@ -15,7 +15,10 @@ import {
 } from "./types";
 import {addOriginsToDiagnostics} from "./derive";
 import {DiagnosticsError} from "./errors";
-import {DiagnosticCategoryPrefix} from "./categories";
+import {
+	DIAGNOSTIC_CATEGORIES_SUPPRESS_DEPENDENCIES,
+	DiagnosticCategoryPrefix,
+} from "./categories";
 import {descriptions} from "./descriptions";
 import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
@@ -38,7 +41,6 @@ type UniqueRules = UniqueRule[];
 export type DiagnosticsProcessorOptions = {
 	filters?: DiagnosticFilterWithTest[];
 	unique?: UniqueRules;
-	max?: number;
 	onDiagnostics?: (diags: Diagnostics) => void;
 	origins?: DiagnosticOrigin[];
 	markupOptions?: MarkupFormatNormalizeOptions;
@@ -70,16 +72,20 @@ export default class DiagnosticsProcessor {
 			this.sourceMaps,
 		);
 
-		this.diagnostics = new Set();
+		this.ignoreDiagnosticsForDependentsOf = new Set();
+
+		this.diagnostics = [];
 		this.cachedDiagnostics = undefined;
 	}
 
 	public normalizer: DiagnosticsNormalizer;
 
+	private ignoreDiagnosticsForDependentsOf: Set<string>;
+
 	private sourceMaps: SourceMapConsumerCollection;
 	private unique: UniqueRules;
 	private includedKeys: Set<string>;
-	private diagnostics: Set<Diagnostic>;
+	private diagnostics: Diagnostic[];
 	private filters: DiagnosticFilterWithTest[];
 	private allowedUnusedSuppressionPrefixes: Set<string>;
 	private usedSuppressions: Set<DiagnosticSuppression>;
@@ -276,10 +282,6 @@ export default class DiagnosticsProcessor {
 		return this.addDiagnostics([diag], origin)[0];
 	}
 
-	public deleteDiagnostic(diag: Diagnostic) {
-		this.diagnostics.delete(diag);
-	}
-
 	public addDiagnostics(
 		diags: Diagnostics,
 		origin?: DiagnosticOrigin,
@@ -291,7 +293,6 @@ export default class DiagnosticsProcessor {
 
 		this.cachedDiagnostics = undefined;
 
-		const {max} = this.options;
 		const added: Diagnostics = [];
 
 		// Add origins to diagnostics
@@ -303,10 +304,6 @@ export default class DiagnosticsProcessor {
 
 		// Filter diagnostics
 		diagLoop: for (let diag of diags) {
-			if (!force && max !== undefined && this.diagnostics.size > max) {
-				break;
-			}
-
 			// Check before normalization
 			if (!force && this.doesMatchFilter(diag)) {
 				continue;
@@ -329,7 +326,18 @@ export default class DiagnosticsProcessor {
 				}
 			}
 
-			this.diagnostics.add(diag);
+			if (
+				DIAGNOSTIC_CATEGORIES_SUPPRESS_DEPENDENCIES.has(
+					diag.description.category,
+				)
+			) {
+				const {filename} = diag.location;
+				if (filename !== undefined) {
+					this.ignoreDiagnosticsForDependentsOf.add(filename);
+				}
+			}
+
+			this.diagnostics.push(diag);
 			added.push(diag);
 
 			for (const key of keys) {
@@ -343,7 +351,7 @@ export default class DiagnosticsProcessor {
 		}
 
 		const {throwAfter} = this;
-		if (throwAfter !== undefined && this.diagnostics.size >= throwAfter) {
+		if (throwAfter !== undefined && this.diagnostics.length >= throwAfter) {
 			this.maybeThrowDiagnosticsError();
 		}
 
@@ -372,7 +380,25 @@ export default class DiagnosticsProcessor {
 			return cachedDiagnostics;
 		}
 
-		const diagnostics: Diagnostics = [...this.diagnostics];
+		const diagnostics: Diagnostics = [];
+
+		for (const diag of this.diagnostics) {
+			let ignore = false;
+
+			// Ignore diagnostics that are dependents of a file with a prioritized diagnostic category
+			if (diag.dependencies !== undefined) {
+				for (const dep of diag.dependencies) {
+					if (this.ignoreDiagnosticsForDependentsOf.has(dep.filename)) {
+						ignore = true;
+						break;
+					}
+				}
+			}
+
+			if (!ignore) {
+				diagnostics.push(diag);
+			}
+		}
 
 		// Add errors for remaining suppressions
 		for (const suppression of this.suppressions) {

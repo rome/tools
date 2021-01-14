@@ -8,6 +8,7 @@
 import {
 	Diagnostic,
 	DiagnosticAdviceItem,
+	DiagnosticDependencies,
 	DiagnosticIntegrity,
 	DiagnosticLocation,
 	DiagnosticTags,
@@ -234,6 +235,17 @@ export default class DiagnosticsNormalizer {
 		return markup === undefined ? undefined : this.normalizeMarkup(markup);
 	}
 
+	private normalizeDependencies(
+		deps: DiagnosticDependencies,
+	): DiagnosticDependencies {
+		return deps.map((dep) => {
+			return {
+				...dep,
+				filename: this.normalizeFilename(dep.filename),
+			};
+		});
+	}
+
 	private normalizeDiagnosticAdviceItem(
 		item: DiagnosticAdviceItem,
 	): DiagnosticAdviceItem {
@@ -336,7 +348,6 @@ export default class DiagnosticsNormalizer {
 		});
 
 		let merge: Partial<Diagnostic> = {
-			label: this.maybeNormalizeMarkup(diag.label),
 			location: this.normalizeLocation(diag.location),
 			description: {
 				...description,
@@ -344,6 +355,14 @@ export default class DiagnosticsNormalizer {
 				advice,
 			},
 		};
+
+		if (diag.label !== undefined) {
+			merge.label = this.normalizeMarkup(diag.label);
+		}
+
+		if (diag.dependencies !== undefined) {
+			merge.dependencies = this.normalizeDependencies(diag.dependencies);
+		}
 
 		// Add on any specified tags
 		if (this.options.tags) {

@@ -61,6 +61,8 @@ export type AnalyzeDependency = {
 	all: boolean;
 	optional: boolean;
 	source: string;
+	imported: boolean;
+	exported: boolean;
 };
 
 export type AnalyzeDependencyImportUsageItem = {

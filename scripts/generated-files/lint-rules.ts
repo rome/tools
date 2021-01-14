@@ -141,6 +141,14 @@ export async function main() {
 				lines.push(`	| "lint/${ruleName}"`);
 			}
 			lines.push(";");
+
+			lines.push(
+				"const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {",
+			);
+			for (const {ruleName} of defs) {
+				lines.push(`  "lint/${ruleName}": true,`);
+			}
+			lines.push("};");
 			return {lines};
 		},
 	);

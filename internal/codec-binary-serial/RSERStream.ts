@@ -127,11 +127,6 @@ export default class RSERStream {
 
 		if (leftover > 0 && reader.readOffset < writer.writeOffset) {
 			const bytes = writer.bytes.slice(reader.readOffset, writer.writeOffset);
-			console.log({
-				bytes,
-				readOffset: reader.readOffset,
-				writeOffset: writer.writeOffset,
-			});
 			this.overflow.unshift(bytes);
 		}
 	}

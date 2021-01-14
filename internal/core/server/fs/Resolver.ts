@@ -25,12 +25,11 @@ import {
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {writeFile} from "@internal/fs";
-import https = require("https");
-
+import {exists, writeFile} from "@internal/fs";
 import {MOCKS_DIRECTORY_NAME} from "@internal/core/common/constants";
 import {Consumer} from "@internal/consume";
 import {markup} from "@internal/markup";
+import https = require("https");
 
 function request(
 	url: string,
@@ -340,6 +339,11 @@ export default class Resolver {
 		query: ResolverRemoteQuery,
 		querySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
+		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
+		if (attempt !== undefined) {
+			return attempt;
+		}
+
 		await this.findProjectFromQuery(query);
 		return this.resolveAssert({...query, entry: true}, querySource);
 	}
@@ -356,8 +360,48 @@ export default class Resolver {
 	public async resolveEntry(
 		query: ResolverRemoteQuery,
 	): Promise<ResolverQueryResponse> {
+		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
+		if (attempt !== undefined) {
+			return attempt;
+		}
+
 		await this.findProjectFromQuery(query);
 		return this.resolveRemote({...query, entry: true});
+	}
+
+	private async maybeResolveEntryWithoutFileSystem(
+		query: ResolverRemoteQuery,
+	): Promise<undefined | ResolverQueryResponseFound> {
+		const {projectManager} = this.server;
+		let absolute: AbsoluteFilePath;
+
+		if (query.source.isAbsolute()) {
+			absolute = query.source.assertAbsolute();
+		} else if (query.origin.isAbsolute()) {
+			absolute = query.origin.assertAbsolute().append(
+				query.source.assertRelative(),
+			);
+		} else {
+			// URL or something?
+			return undefined;
+		}
+
+		// If we have loaded projects then there's no point doing our dirty checks
+		if (projectManager.findLoadedProject(absolute) !== undefined) {
+			return undefined;
+		}
+
+		// Found an exact match
+		if (await exists(absolute)) {
+			const project = await projectManager.findProject(absolute, true);
+			if (project === undefined) {
+				return undefined;
+			}
+
+			return this.finishResolverQueryResponse(absolute);
+		}
+
+		return undefined;
 	}
 
 	public async resolveAssert(
@@ -560,7 +604,7 @@ export default class Resolver {
 	private finishResolverQueryResponse(
 		path: AbsoluteFilePath,
 		types: ResolverQueryResponseFoundType[] = [],
-	): ResolverQueryResponse {
+	): ResolverQueryResponseFound {
 		return {
 			type: "FOUND",
 			types,

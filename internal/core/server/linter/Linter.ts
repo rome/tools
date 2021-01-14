@@ -505,6 +505,7 @@ export default class Linter {
 					diag.location.filename,
 				);
 				return (
+					diag.description.category === "parse" ||
 					absolute === undefined ||
 					evictedPaths.has(absolute) ||
 					(runner !== undefined && runner.hasCompilerDiagnostics(absolute))
@@ -519,6 +520,7 @@ export default class Linter {
 		const graph = new DependencyGraph(
 			this.request,
 			this.request.getResolverOptionsFromFlags(),
+			{shallow: true},
 		);
 
 		const runner = new LintRunner(this, {events, graph});
