@@ -1,7 +1,3 @@
-p::before {
-	content: ' content ';
-}
-
 .number {
 	opacity: 1e-3;
 	line-height: 0.2;

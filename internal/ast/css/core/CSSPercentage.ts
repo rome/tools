@@ -9,8 +9,6 @@ export const cssPercentage = createBuilder<CSSPercentage>(
 	"CSSPercentage",
 	{
 		bindingKeys: {},
-		visitorKeys: {
-			value: true,
-		},
+		visitorKeys: {},
 	},
 );

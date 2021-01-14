@@ -39,6 +39,7 @@ export interface HashData {
 export interface NumberData {
 	numberType: string;
 	value: number;
+	raw: string;
 }
 
 export type Tokens = BaseTokens & {
