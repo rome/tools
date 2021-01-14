@@ -18,7 +18,7 @@ function crawl(root: string): Iterable<string> {
 		[Symbol.iterator]() {
 			return {
 				next() {
-					const value = process.platform === 'win32' ? root.slice(1) : root;
+					const value = process.platform === "win32" ? root.slice(1) : root;
 					root = path.dirname(value);
 
 					return {
@@ -41,7 +41,8 @@ async function tryChain(
 		try {
 			await fs.promises.access(possible);
 			return possible;
-		} catch (err) {}
+		} catch (err) {
+		}
 	}
 	return undefined;
 }
