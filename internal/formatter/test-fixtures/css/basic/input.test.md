@@ -30,6 +30,10 @@ h1::before  {
   content: " content ";
 }
 
+a {
+	transition: background-color 0.3s ease-in-out;
+}
+
 ```
 
 ### `Output`
@@ -49,6 +53,10 @@ span.something {
 
 h1::before {
 	content: " content ";
+}
+
+a {
+	transition: background-color 0.3s ease-in-out;
 }
 
 ```
