@@ -64,6 +64,7 @@ Members listed in alphabetical order.
 - [Emanuele Stoppa @ematipico](https://github.com/ematipico)
 - [Florent Cailhol @ooflorent](https://github.com/ooflorent)
 - [Jamie Kyle @jamiebuilds](https://github.com/jamiebuilds)
+- [Jeremy Bagnall @jer3m01](https://github.com/jer3m01)
 - [Kevin Kelbie @Kelbie](https://github.com/Kelbie)
 - [Olivier Dusabimana @diokey](https://github.com/diokey)
 - [Paul Bouchon @bitpshr](https://github.com/bitpshr)
