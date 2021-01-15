@@ -17,7 +17,7 @@ disallow the use of `arguments`
 **ESLint Equivalent:** [prefer-rest-params](https://eslint.org/docs/rules/prefer-rest-params)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:4b08477456818e445044952fa637776ec69603ec,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:830cc4471b8a55f4dd1f99eec15da60babffbcb3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -35,8 +35,8 @@ disallow the use of `arguments`
      <strong> │ </strong>              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Arguments does not have Array.prototype methods and can be</span>
-    <span style="color: DodgerBlue;">inconvenient to use.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Arguments does not have Array.prototype methods and can be</span>
+    <span style="color: rgb(38, 148, 255);">inconvenient to use.</span>
 
 </code></pre>{% endraw %}
 
@@ -55,8 +55,8 @@ disallow the use of `arguments`
      <strong> │ </strong>              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Arguments does not have Array.prototype methods and can be</span>
-    <span style="color: DodgerBlue;">inconvenient to use.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Arguments does not have Array.prototype methods and can be</span>
+    <span style="color: rgb(38, 148, 255);">inconvenient to use.</span>
 
 </code></pre>{% endraw %}
 
@@ -79,8 +79,8 @@ disallow the use of `arguments`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Arguments does not have Array.prototype methods and can be</span>
-    <span style="color: DodgerBlue;">inconvenient to use.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Arguments does not have Array.prototype methods and can be</span>
+    <span style="color: rgb(38, 148, 255);">inconvenient to use.</span>
 
 </code></pre>{% endraw %}
 
@@ -103,8 +103,8 @@ disallow the use of `arguments`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span><span class="token punctuation">,</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Arguments does not have Array.prototype methods and can be</span>
-    <span style="color: DodgerBlue;">inconvenient to use.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Arguments does not have Array.prototype methods and can be</span>
+    <span style="color: rgb(38, 148, 255);">inconvenient to use.</span>
 
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

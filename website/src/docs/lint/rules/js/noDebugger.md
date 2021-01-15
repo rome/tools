@@ -17,7 +17,7 @@ disallow the use of `debugger`
 **ESLint Equivalent:** [no-debugger](https://eslint.org/docs/rules/no-debugger)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ef04ae4e36bde1970e7eba8dd919ad8d03d9e56f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:7ea609f4affaa94d61fda960465b655b385b9885,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,7 +31,7 @@ disallow the use of `debugger`
     <span class="token keyword">debugger</span><span class="token punctuation">;</span>
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>debugger;</strong></span>
 

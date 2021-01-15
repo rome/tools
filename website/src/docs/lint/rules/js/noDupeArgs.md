@@ -17,7 +17,7 @@ disallow duplicate arguments in `function` definitions
 **ESLint Equivalent:** [no-dupe-args](https://eslint.org/docs/rules/no-dupe-args)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b1e14023c45b7f6bfad109b3fa8793e5fce4e452,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:895b48cac975d683f9affdc4c9aa1e37fe3c0032,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -47,7 +47,7 @@ disallow duplicate arguments in `function` definitions
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Argument </span><span style="color: Tomato;"><strong>a</strong></span><span style="color: Tomato;"> name clash in strict mode</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">hello</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token variable">a</span><span class="token punctuation">,</span> <span class="token variable">a</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
      <strong> │ </strong>                  <span style="color: Tomato;"><strong>^</strong></span>

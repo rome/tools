@@ -14,7 +14,7 @@ eleventyNavigation:
 disallow the use of single character alternations in regular expressions
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:d51f90fb727096a82c23efd04ae942dd506bc20b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:d25a5b9517d5cbd4bc98eb11eb7e22c996ece31a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -29,7 +29,7 @@ disallow the use of single character alternations in regular expressions
     <span class="token regex">/a|b/</span>
      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">a</span><span style="color: Tomato;"><strong>|</strong></span><span style="color: Tomato;">b</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>[</strong></span><span style="color: MediumSeaGreen;">ab</span><span style="color: MediumSeaGreen;"><strong>]</strong></span>
@@ -48,7 +48,7 @@ disallow the use of single character alternations in regular expressions
     <span class="token regex">/a|b|c/</span>
      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">a</span><span style="color: Tomato;"><strong>|</strong></span><span style="color: Tomato;">b</span><span style="color: Tomato;"><strong>|</strong></span><span style="color: Tomato;">c</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>[</strong></span><span style="color: MediumSeaGreen;">abc</span><span style="color: MediumSeaGreen;"><strong>]</strong></span>

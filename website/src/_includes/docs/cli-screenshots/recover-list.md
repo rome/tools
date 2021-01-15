@@ -19,4 +19,4 @@
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">To apply </span><span style="color: DodgerBlue;"><strong>everything</strong></span><span style="color: DodgerBlue;"> in this patch run:</span>
   <span style="opacity: 0.8;">$ rome recover apply 1595570309210-lint-0</span>"
 
-</code><div aria-hidden="true" class="expand">Click to Expand</div></pre>
+</code><button aria-hidden="true" class="expand">Click to Expand</button></pre>

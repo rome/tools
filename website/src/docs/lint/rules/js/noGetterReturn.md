@@ -17,7 +17,7 @@ enforce `return` statements in getters
 **ESLint Equivalent:** [getter-return](https://eslint.org/docs/rules/getter-return)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:7819711d4f79afb075b786497f7228bc90b9ce60,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:96dd6efbc516cb703c782c4f4317366016a2ce70,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -40,8 +40,8 @@ enforce `return` statements in getters
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Getters that do not return values are either typos or should not be</span>
-    <span style="color: DodgerBlue;">getters.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Getters that do not return values are either typos or should not be</span>
+    <span style="color: rgb(38, 148, 255);">getters.</span>
 
 </code></pre>{% endraw %}
 
@@ -65,8 +65,8 @@ enforce `return` statements in getters
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Getters that do not return values are either typos or should not be</span>
-    <span style="color: DodgerBlue;">getters.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Getters that do not return values are either typos or should not be</span>
+    <span style="color: rgb(38, 148, 255);">getters.</span>
 
 </code></pre>{% endraw %}
 

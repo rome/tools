@@ -17,4 +17,4 @@
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">username</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">==</span><span style="color: MediumSeaGreen;"><strong>=</strong></span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">&quot;sebmck&quot;</span>
 
   <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">This may be unsafe if you are relying on type coercion</span>
- </code><div aria-hidden="true" class="expand">Click to Expand</div></pre>
+ </code><button aria-hidden="true" class="expand">Click to Expand</button></pre>

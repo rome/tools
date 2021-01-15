@@ -17,7 +17,7 @@ comments inside children section of tag should be placed inside braces
 **ESLint Equivalent:** [jsx-no-comment-textnodes](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-comment-textnodes.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:31b50974faa9da78b3d9ef02b6d36b5013a157db,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:24e14fd1211e1b1dd0e513f32c4741864603a5bc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,10 +31,10 @@ comments inside children section of tag should be placed inside braces
     <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token variable">div</span>&gt;// comment&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">JavaScript comment sequences are not supported by JSX and result in</span>
-    <span style="color: DodgerBlue;">unwanted characters on-screen.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">JavaScript comment sequences are not supported by JSX and result in</span>
+    <span style="color: rgb(38, 148, 255);">unwanted characters on-screen.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>/</strong></span><span style="color: Tomato;">/</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">comment</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>{</strong></span><span style="color: MediumSeaGreen;">/</span><span style="color: MediumSeaGreen;"><strong>**</strong></span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">comment</span><span style="color: MediumSeaGreen;"><strong>*/}</strong></span>
@@ -52,10 +52,10 @@ comments inside children section of tag should be placed inside braces
     <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token variable">div</span>&gt;/* comment */&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">JavaScript comment sequences are not supported by JSX and result in</span>
-    <span style="color: DodgerBlue;">unwanted characters on-screen.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">JavaScript comment sequences are not supported by JSX and result in</span>
+    <span style="color: rgb(38, 148, 255);">unwanted characters on-screen.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">/*</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">comment</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">*/</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>{</strong></span><span style="color: MediumSeaGreen;">/</span><span style="color: MediumSeaGreen;"><strong>*</strong></span><span style="color: MediumSeaGreen;">*</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">comment</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">*/</span><span style="color: MediumSeaGreen;"><strong>}</strong></span>
@@ -73,10 +73,10 @@ comments inside children section of tag should be placed inside braces
     <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> &lt;<span class="token variable">div</span>&gt;/** comment */&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">JavaScript comment sequences are not supported by JSX and result in</span>
-    <span style="color: DodgerBlue;">unwanted characters on-screen.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">JavaScript comment sequences are not supported by JSX and result in</span>
+    <span style="color: rgb(38, 148, 255);">unwanted characters on-screen.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">/**</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">comment</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">*/</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>{</strong></span><span style="color: MediumSeaGreen;">/**</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">comment</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">*/</span><span style="color: MediumSeaGreen;"><strong>}</strong></span>

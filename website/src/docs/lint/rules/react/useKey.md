@@ -17,7 +17,7 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
 **ESLint Equivalent:** [jsx-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:5de559e7182478912c7155e484be01212a5e442f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:bf919a2accd43b15d2207e89938040812d8874ba,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,15 +31,15 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
     <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token punctuation">[</span>&lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">,</span> &lt;<span class="token variable">div</span> <span class="token operator">/</span>&gt;<span class="token punctuation">]</span>
                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:20</span> <strong>lint/react/useKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide a </span><span style="color: Tomato;"><strong>key</strong></span><span style="color: Tomato;"> prop with a unique value for each element in </span><span style="color: Tomato;"><strong>array</strong></span><span style="color: Tomato;">.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -54,8 +54,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
     <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token variable">x</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
                               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -70,8 +70,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
     <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token variable">foo</span><span class="token punctuation">?.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token variable">x</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
                             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -86,8 +86,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
     <span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token variable">x</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
                                       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -102,8 +102,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
     <span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token variable">x</span> <span class="token operator">=&gt;</span> &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
                                 <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -122,8 +122,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -142,8 +142,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -162,8 +162,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -182,8 +182,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -202,8 +202,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 
@@ -222,8 +222,8 @@ This rule detects a missing `key` prop in a element that requires it. Keys help 
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Keys help React identify which items have changed, are added, or are</span>
-    <span style="color: DodgerBlue;">removed.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Keys help React identify which items have changed, are added, or are</span>
+    <span style="color: rgb(38, 148, 255);">removed.</span>
 
 </code></pre>{% endraw %}
 

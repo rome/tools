@@ -17,7 +17,7 @@ disallow sparse arrays
 **ESLint Equivalent:** [no-sparse-arrays](https://eslint.org/docs/rules/no-sparse-arrays)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ba8dfd7e8046e26b21ec57cae47e33c764911770,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:eab8f198abcc03f3cf33040a3d96745f8f6d9034,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,9 +31,9 @@ disallow sparse arrays
     <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">]</span>
        <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Sparse arrays without values for some items can lead to confusion.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Sparse arrays without values for some items can lead to confusion.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>undefined</strong></span>

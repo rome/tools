@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:6703a3a2ac3ef83c9d46b2ccdf3191c8dc7eeaf9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:857f6a82bf80886c8f05c52cc81d461df4b89ffd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -28,8 +28,8 @@ MISSING DOCUMENTATION
     <span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[:alpha:]]/</span>
                       <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">This functionality is not supported in JavaScript regular</span>
-    <span style="color: DodgerBlue;">expressions.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">This functionality is not supported in JavaScript regular</span>
+    <span style="color: rgb(38, 148, 255);">expressions.</span>
 
 </code></pre>{% endraw %}
 
@@ -44,8 +44,8 @@ MISSING DOCUMENTATION
     <span class="token keyword">const</span> <span class="token variable">pattern</span> <span class="token operator">=</span> <span class="token regex">/[[.ch.]]/</span>
                       <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">This functionality is not supported in JavaScript regular</span>
-    <span style="color: DodgerBlue;">expressions.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">This functionality is not supported in JavaScript regular</span>
+    <span style="color: rgb(38, 148, 255);">expressions.</span>
 
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

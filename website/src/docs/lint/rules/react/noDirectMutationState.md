@@ -17,7 +17,7 @@ prevent direct mutation of `this.state`
 **ESLint Equivalent:** [no-direct-mutation-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-direct-mutation-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:187f0042c0c79effafee05773f69e2393bcd3933,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:dacf9bbdf0bf45f72310207e8e26a24933f54315,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -40,9 +40,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">return</span> &lt;<span class="token variable">div</span>&gt;Hello <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">name</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -66,9 +66,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">return</span> &lt;<span class="token variable">div</span>&gt;Hello <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">name</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -92,9 +92,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">return</span> &lt;<span class="token variable">div</span>&gt;Hello <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">name</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -118,9 +118,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">return</span> &lt;<span class="token variable">div</span>&gt;Hello <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">name</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -144,9 +144,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">return</span> &lt;<span class="token variable">div</span>&gt;Hello&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -171,17 +171,17 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">state</span><span class="token punctuation">.</span><span class="token variable">person</span><span class="token punctuation">.</span><span class="token variable">name</span><span class="token punctuation">.</span><span class="token variable">last</span> <span class="token operator">=</span> <span class="token string">&apos;baz&apos;</span><span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token keyword">return</span> &lt;<span class="token variable">div</span>&gt;Hello&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;<span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:4</span> <strong>lint/react/noDirectMutationState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid mutating </span><span style="color: Tomato;"><strong>this.state</strong></span><span style="color: Tomato;"> directly.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -207,9 +207,9 @@ prevent direct mutation of `this.state`
   <strong>  7</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  8</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -235,9 +235,9 @@ prevent direct mutation of `this.state`
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  7</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -260,9 +260,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -285,9 +285,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -310,9 +310,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -335,9 +335,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -360,9 +360,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -385,9 +385,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -410,9 +410,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -435,9 +435,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -460,9 +460,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
@@ -485,9 +485,9 @@ prevent direct mutation of `this.state`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Calling </span><span style="color: DodgerBlue;"><strong>setState()</strong></span><span style="color: DodgerBlue;"> after mutating </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly may replace the</span>
-    <span style="color: DodgerBlue;">mutation you made. The only place you may set </span><span style="color: DodgerBlue;"><strong>this.state</strong></span><span style="color: DodgerBlue;"> directly is</span>
-    <span style="color: DodgerBlue;">in a constructor of a react class component.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
+    <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
+    <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
 </code></pre>{% endraw %}
 
