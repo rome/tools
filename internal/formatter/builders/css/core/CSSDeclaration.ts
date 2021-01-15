@@ -9,8 +9,11 @@ export default function CSSDeclaration(
 
 	tokens.push(node.name);
 	tokens.push(":");
-	tokens.push(space);
-	tokens.push(...node.value.map((value) => builder.tokenize(value, node)));
+	tokens.push(
+		...node.value.map((value) => {
+			return concat([space, builder.tokenize(value, node)]);
+		}),
+	);
 	if (node.important) {
 		tokens.push(space);
 		tokens.push("!important");
