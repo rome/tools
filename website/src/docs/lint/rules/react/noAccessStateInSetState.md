@@ -17,7 +17,7 @@ prevent using `this.state` within a `this.setState`
 **ESLint Equivalent:** [no-access-state-in-setstate](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ccbaaef978d695e3838d463aa293d0827ee1911f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5c1b7170ca3d349f997f26186f65e6ac14aee510,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -130,8 +130,8 @@ prevent using `this.state` within a `this.setState`
   <strong>  7</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  8</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Batched state calls could result in unexpected errors due to stale</span>
-    <span style="color: DodgerBlue;">state data.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
+    <span style="color: rgb(38, 148, 255);">state data.</span>
 
 </code></pre>{% endraw %}
 
@@ -161,8 +161,8 @@ prevent using `this.state` within a `this.setState`
   <strong>  7</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  8</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Batched state calls could result in unexpected errors due to stale</span>
-    <span style="color: DodgerBlue;">state data.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
+    <span style="color: rgb(38, 148, 255);">state data.</span>
 
 </code></pre>{% endraw %}
 
@@ -190,8 +190,8 @@ prevent using `this.state` within a `this.setState`
   <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  7</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Batched state calls could result in unexpected errors due to stale</span>
-    <span style="color: DodgerBlue;">state data.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
+    <span style="color: rgb(38, 148, 255);">state data.</span>
 
 </code></pre>{% endraw %}
 
@@ -221,8 +221,8 @@ prevent using `this.state` within a `this.setState`
   <strong>  7</strong><strong> │ </strong>  <span class="token punctuation">}</span>
   <strong>  8</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Batched state calls could result in unexpected errors due to stale</span>
-    <span style="color: DodgerBlue;">state data.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
+    <span style="color: rgb(38, 148, 255);">state data.</span>
 
 </code></pre>{% endraw %}
 

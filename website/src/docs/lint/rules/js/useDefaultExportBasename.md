@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:27edb3df9997f3b857b5277fc3b6db58bfb3d894,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3dadeb39a682f94bb29b9c5aad7d6fbae431665f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -28,9 +28,9 @@ MISSING DOCUMENTATION
     <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
                             <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The filename should be </span><span style="color: DodgerBlue;"><strong>test.ts</strong></span><span style="color: DodgerBlue;"> or the function name should be </span><span style="color: DodgerBlue;"><strong>foo</strong></span><span style="color: DodgerBlue;">.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The filename should be </span><span style="color: rgb(38, 148, 255);"><strong>test.ts</strong></span><span style="color: rgb(38, 148, 255);"> or the function name should be </span><span style="color: rgb(38, 148, 255);"><strong>foo</strong></span><span style="color: rgb(38, 148, 255);">.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
 </code></pre>{% endraw %}
 
@@ -45,9 +45,9 @@ MISSING DOCUMENTATION
     <span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token keyword">class</span> <span class="token variable">Test</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
                          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The filename should be </span><span style="color: DodgerBlue;"><strong>Test.ts</strong></span><span style="color: DodgerBlue;"> or the class name should be </span><span style="color: DodgerBlue;"><strong>Foo</strong></span><span style="color: DodgerBlue;">.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The filename should be </span><span style="color: rgb(38, 148, 255);"><strong>Test.ts</strong></span><span style="color: rgb(38, 148, 255);"> or the class name should be </span><span style="color: rgb(38, 148, 255);"><strong>Foo</strong></span><span style="color: rgb(38, 148, 255);">.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
 </code></pre>{% endraw %}
 

@@ -17,7 +17,7 @@ require `let` or `const` instead of `var`
 **ESLint Equivalent:** [no-var](https://eslint.org/docs/rules/no-var)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f95dacde2889cd44f34c4d76095cc3096c790503,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:152156b6c6d43972f726fae1e39fd0f227c8cf47,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -33,7 +33,7 @@ require `let` or `const` instead of `var`
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  2</strong><strong> │ </strong><span class="token variable">foobar</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use let or const instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use let or const instead.</span>
 
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

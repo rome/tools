@@ -17,7 +17,7 @@ disallow assigning to imported bindings
 **ESLint Equivalent:** [no-import-assign](https://eslint.org/docs/rules/no-import-assign)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e9a6aae5ba5539b23fd5be85a067a50ddf03ba27,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:11343b9cabce7616fb365576ce0d28e26b01fe18,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -33,7 +33,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -50,7 +50,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">[</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong> <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -67,7 +67,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -84,7 +84,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">++</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -101,7 +101,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">[</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">]</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong>    <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -118,7 +118,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token operator">...</span><span class="token variable">x</span><span class="token punctuation">}</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <strong> │ </strong>     <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -135,7 +135,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token variable">x</span> <span class="token keyword">in</span> <span class="token variable">y</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <strong> │ </strong>     <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -152,7 +152,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">+=</span><span class="token number">1</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -169,7 +169,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 
@@ -186,7 +186,7 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Use a local variable instead of reassigning an import.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

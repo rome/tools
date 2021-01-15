@@ -17,7 +17,7 @@ disallow labels that share a name with a variable
 **ESLint Equivalent:** [no-label-var](https://eslint.org/docs/rules/no-label-var)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:d94181852c6323d1e3a1cd8d300bbd8bc42978c1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e7560116b3e89cc4dd88a71f5c3ec861bebf7c4f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -33,8 +33,8 @@ disallow labels that share a name with a variable
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">x</span><span class="token punctuation">:</span> <span class="token variable">expr</span><span class="token punctuation">;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Creating a label with the same name as an in-scope variable leads to</span>
-    <span style="color: DodgerBlue;">confusion.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Creating a label with the same name as an in-scope variable leads to</span>
+    <span style="color: rgb(38, 148, 255);">confusion.</span>
 
 </code></pre>{% endraw %}
 

@@ -16,7 +16,7 @@ This rule makes sure the value of `lang` attribute is valid.
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f074e0af514cf8968a4f78af8c3e6c7852dde671,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3a849e8dd594331c1a2721a92dd75b0bab08775f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -69,12 +69,12 @@ This rule makes sure the value of `lang` attribute is valid.
     &lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;aa-zz&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Did you mean </span><span style="color: DodgerBlue;"><strong>aa-AF</strong></span><span style="color: DodgerBlue;">?</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Did you mean </span><span style="color: rgb(38, 148, 255);"><strong>aa-AF</strong></span><span style="color: rgb(38, 148, 255);">?</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">aa-</span><span style="color: Tomato;"><strong>zz</strong></span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">aa-</span><span style="color: MediumSeaGreen;"><strong>AF</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Or one of these?</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Or one of these?</span>
 
   <span style="opacity: 0.8;">- </span>aa-AL
   <span style="opacity: 0.8;">- </span>aa-DZ
@@ -101,12 +101,12 @@ This rule makes sure the value of `lang` attribute is valid.
     &lt;<span class="token variable">html</span> <span class="token attr-name">lang</span><span class="token operator">=</span><span class="token string">&apos;zz-AA&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">html</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Did you mean </span><span style="color: DodgerBlue;"><strong>az-AF</strong></span><span style="color: DodgerBlue;">?</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Did you mean </span><span style="color: rgb(38, 148, 255);"><strong>az-AF</strong></span><span style="color: rgb(38, 148, 255);">?</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>z</strong></span><span style="color: Tomato;">z-A</span><span style="color: Tomato;"><strong>A</strong></span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;"><strong>a</strong></span><span style="color: MediumSeaGreen;">z-A</span><span style="color: MediumSeaGreen;"><strong>F</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Or one of these?</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Or one of these?</span>
 
   <span style="opacity: 0.8;">- </span>az-AL
   <span style="opacity: 0.8;">- </span>az-AS

@@ -526,7 +526,7 @@ for (const elem of collapsed) {
 
 //# Color scheme switcher
 
-function toggleColorSchemeSwitch() {
+function toggleColorSchemeSwitch(evt) {
 	let currentScheme = window.localStorage.getItem("data-theme");
 	if (currentScheme == null) {
 		const prefersDarkMode = matchMedia("(prefers-color-scheme: dark)").matches;
@@ -535,6 +535,7 @@ function toggleColorSchemeSwitch() {
 
 	const newScheme = currentScheme === "dark" ? "light" : "dark";
 	window.localStorage.setItem("data-theme", newScheme);
+	evt.currentTarget.setAttribute("aria-checked", newScheme === "dark");
 	document.documentElement.classList.add("transition");
 	document.documentElement.setAttribute("data-theme", newScheme);
 }

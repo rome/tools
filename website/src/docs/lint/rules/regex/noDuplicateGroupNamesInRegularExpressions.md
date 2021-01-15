@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:7f7565f034bfecdadf88dbee32a88939fb2a04d1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c941d62c9619911d6a034172e1c7b335bd37a555,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -25,7 +25,7 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate group names. Check the </span><span style="color: Tomato;"><strong>month</strong></span><span style="color: Tomato;"> group.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
     <span class="token regex">/(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;month&gt;[0-9])-(?&lt;year&gt;[0-9])-(?&lt;day</span>
     <span class="token regex">  &gt;[0-9])-([0-9])-(?&lt;month&gt;[0-9])/</span>
@@ -35,7 +35,7 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate group names. Check the </span><span style="color: Tomato;"><strong>year</strong></span><span style="color: Tomato;"> group.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

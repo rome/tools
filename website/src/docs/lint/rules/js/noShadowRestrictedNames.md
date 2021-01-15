@@ -17,7 +17,7 @@ disallow identifiers from shadowing restricted names
 **ESLint Equivalent:** [no-shadow-restricted-names](https://eslint.org/docs/rules/no-shadow-restricted-names)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ef4dfdb4f9c186517c0f6fde3d96070e5e6d0bd7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:19df3dfa5ed1ce4e9a7fb2eb578284d77a69713a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,8 +31,8 @@ disallow identifiers from shadowing restricted names
     <span class="token keyword">function</span> <span class="token function">NaN</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
-    <span style="color: DodgerBlue;">variables when they&apos;re named after a known global.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
+    <span style="color: rgb(38, 148, 255);">variables when they&apos;re named after a known global.</span>
 
 </code></pre>{% endraw %}
 
@@ -47,8 +47,8 @@ disallow identifiers from shadowing restricted names
     <span class="token keyword">let</span> <span class="token variable">Set</span><span class="token punctuation">;</span>
         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
-    <span style="color: DodgerBlue;">variables when they&apos;re named after a known global.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
+    <span style="color: rgb(38, 148, 255);">variables when they&apos;re named after a known global.</span>
 
 </code></pre>{% endraw %}
 
@@ -63,8 +63,8 @@ disallow identifiers from shadowing restricted names
     <span class="token keyword">try</span> <span class="token punctuation">{</span>  <span class="token punctuation">}</span> <span class="token keyword">catch</span><span class="token punctuation">(</span><span class="token variable">Object</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
-    <span style="color: DodgerBlue;">variables when they&apos;re named after a known global.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
+    <span style="color: rgb(38, 148, 255);">variables when they&apos;re named after a known global.</span>
 
 </code></pre>{% endraw %}
 
@@ -79,8 +79,8 @@ disallow identifiers from shadowing restricted names
     <span class="token operator">!</span><span class="token keyword">function</span> <span class="token function">Array</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
-    <span style="color: DodgerBlue;">variables when they&apos;re named after a known global.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
+    <span style="color: rgb(38, 148, 255);">variables when they&apos;re named after a known global.</span>
 
 </code></pre>{% endraw %}
 
@@ -95,8 +95,8 @@ disallow identifiers from shadowing restricted names
     <span class="token keyword">function</span> <span class="token function">test</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">JSON</span><span class="token punctuation">)</span><span class="token punctuation">}</span>
                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
-    <span style="color: DodgerBlue;">variables when they&apos;re named after a known global.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Consider renaming this variable. It&apos;s easy to confuse the origin of</span>
+    <span style="color: rgb(38, 148, 255);">variables when they&apos;re named after a known global.</span>
 
 </code></pre>{% endraw %}
 <!-- GENERATED:END(id:examples) -->

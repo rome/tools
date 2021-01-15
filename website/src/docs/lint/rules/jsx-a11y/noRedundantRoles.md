@@ -17,7 +17,7 @@ enforce explicit role property is not the same as implicit/default role property
 **ESLint Equivalent:** [no-redundant-roles](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-redundant-roles.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a51e7dd9a07885bcce72da6d010727788ae88d01,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:6af979214cf2389b4e8907a9b9eb934a3e67106c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -37,7 +37,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;article&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/article&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -58,7 +58,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;button&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/button&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -79,7 +79,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;h1&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/h1&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -100,7 +100,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;h1&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/h1&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -121,7 +121,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;dialog&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/dialog&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -141,7 +141,7 @@ enforce explicit role property is not the same as implicit/default role property
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;input</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">type=&quot;checkbox&quot;</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;"><strong>role=&quot;checkbox&quot;</strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;">/&gt;</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;input</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">type=&quot;checkbox&quot;</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -162,7 +162,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;figure&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/figure&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -183,7 +183,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;form&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/form&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -204,7 +204,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;table&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/table&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -225,7 +225,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;td&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/td&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -246,7 +246,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;fieldset&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/fieldset&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -266,7 +266,7 @@ enforce explicit role property is not the same as implicit/default role property
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;img</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">src=&quot;foo&quot;</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">alt=&quot;bar&quot;</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;"><strong>role=&quot;img&quot;</strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;">/&gt;</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;img</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">src=&quot;foo&quot;</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">alt=&quot;bar&quot;</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -287,7 +287,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/a&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -307,7 +307,7 @@ enforce explicit role property is not the same as implicit/default role property
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;link</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;"><strong>role=&quot;link&quot;</strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;">/&gt;</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;link</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -328,7 +328,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;ol&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/ol&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -349,7 +349,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;ul&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/ul&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -370,7 +370,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;select&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/select&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -391,7 +391,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;li&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/li&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -412,7 +412,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;nav&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/nav&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -433,7 +433,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;option&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/option&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -454,7 +454,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;tr&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/tr&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -475,7 +475,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;tbody&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/tbody&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -496,7 +496,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;tfoot&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/tfoot&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -517,7 +517,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;thead&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/thead&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -538,7 +538,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;th</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">scope=&quot;row&quot;&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/th&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -558,7 +558,7 @@ enforce explicit role property is not the same as implicit/default role property
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;input</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">type=&quot;search&quot;</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;"><strong>role=&quot;searchbox&quot;</strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;">/&gt;</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;input</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">type=&quot;search&quot;</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -579,7 +579,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;table&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/table&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -600,7 +600,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;dt&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/dt&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -622,7 +622,7 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;textarea&gt;</span>
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/textarea&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -642,7 +642,7 @@ enforce explicit role property is not the same as implicit/default role property
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;input</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">type=&quot;text&quot;</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;"><strong>role=&quot;textbox&quot;</strong></span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;">/&gt;</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;input</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">type=&quot;text&quot;</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">/&gt;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
