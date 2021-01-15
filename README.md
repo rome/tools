@@ -1,5 +1,5 @@
 <p align="center">
-	<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="https://github.com/rome/tools/raw/main/assets/PNG/logo_transparent.png" width="700">
+	<img alt="Rome's logo depicting an ancient Roman arch with the word Rome to its side" src="assets/SVG/logo_readme.svg" width="700">
 </p>
 
 <!-- This intro is synced with the website via the `./rome run scripts/generate-files/website-intro` script. Make sure you run it after modifying anything between these comments. -->
