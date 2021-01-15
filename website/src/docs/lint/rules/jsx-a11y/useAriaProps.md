@@ -17,7 +17,7 @@ enforce all `aria-*` props are valid
 **ESLint Equivalent:** [aria-props](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:43f59bad4a8c786c3b41bad75ee285e9f1a7fa13,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:6168daa7d5d27b7cd75a949188de3648e48b78aa,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -36,7 +36,7 @@ enforce all `aria-*` props are valid
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">aria-label</span><span style="color: Tomato;"><strong>l</strong></span><span style="color: Tomato;">=&quot;&quot;</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">aria-label=&quot;&quot;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 
@@ -69,7 +69,7 @@ enforce all `aria-*` props are valid
   <span style="color: Tomato;">-</span> <span style="color: Tomato;">aria-labeledby=&quot;foobar&quot;</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">aria-label</span><span style="color: MediumSeaGreen;"><strong>l</strong></span><span style="color: MediumSeaGreen;">edby=&quot;foobar&quot;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
 
 </code></pre>{% endraw %}
 

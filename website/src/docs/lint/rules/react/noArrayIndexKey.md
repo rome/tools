@@ -17,7 +17,7 @@ prevent usage of Array index in keys
 **ESLint Equivalent:** [no-array-index-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a88978a3c4cdede17f544cff95058b63299a5435,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:e80945e1fb6c6c1928d1231886f7e05d4464be94,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -35,15 +35,15 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -63,15 +63,15 @@ prevent usage of Array index in keys
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -93,15 +93,15 @@ prevent usage of Array index in keys
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -120,8 +120,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -140,8 +140,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -162,8 +162,8 @@ prevent usage of Array index in keys
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -182,15 +182,15 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -209,8 +209,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -229,15 +229,15 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -257,15 +257,15 @@ prevent usage of Array index in keys
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -287,15 +287,15 @@ prevent usage of Array index in keys
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -314,8 +314,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -334,8 +334,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -356,8 +356,8 @@ prevent usage of Array index in keys
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
   <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -376,15 +376,15 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -403,8 +403,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -423,8 +423,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -443,8 +443,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -463,15 +463,15 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -490,8 +490,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -510,8 +510,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -530,8 +530,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -550,8 +550,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -570,8 +570,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -590,8 +590,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -610,8 +610,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -630,8 +630,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -650,8 +650,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -670,8 +670,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -690,8 +690,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -710,8 +710,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 
@@ -730,8 +730,8 @@ prevent usage of Array index in keys
      <strong> │ </strong>                           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">See </span><span style="color: DodgerBlue;"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: DodgerBlue;"> for more</span>
-    <span style="color: DodgerBlue;">information.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
+    <span style="color: rgb(38, 148, 255);">information.</span>
 
 </code></pre>{% endraw %}
 

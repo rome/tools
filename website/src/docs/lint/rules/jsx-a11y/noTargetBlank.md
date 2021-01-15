@@ -17,7 +17,7 @@ Prevent usage of unsafe `target="_blank"`
 **ESLint Equivalent:** [jsx-no-target-blank](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-target-blank.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:29c2aef6e18e8afe38bb85bf32f999dbcd5ad449,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0e64736a4aed285be464cc7569f794ee57a9473d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,12 +31,12 @@ Prevent usage of unsafe `target="_blank"`
     &lt;<span class="token variable">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token string">&apos;http://external.link&apos;</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;
                                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Opening external links in new tabs without rel=&quot;noreferrer&quot; is a</span>
-    <span style="color: DodgerBlue;">security risk. See </span>
-    <span style="color: DodgerBlue;"><a href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">https://html.spec.whatwg.org/multipage/links.html#link-type-noopener</a></span>
-    <span style="color: DodgerBlue;">for more details.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Opening external links in new tabs without rel=&quot;noreferrer&quot; is a</span>
+    <span style="color: rgb(38, 148, 255);">security risk. See </span>
+    <span style="color: rgb(38, 148, 255);"><a href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">https://html.spec.whatwg.org/multipage/links.html#link-type-noopener</a></span>
+    <span style="color: rgb(38, 148, 255);">for more details.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;a</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">href=&quot;http://external.link&quot;</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">href=&quot;http://external.link&quot;&gt;</span>
@@ -55,12 +55,12 @@ Prevent usage of unsafe `target="_blank"`
     &lt;<span class="token variable">a</span> <span class="token attr-name">href</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">dynamicLink</span><span class="token punctuation">}</span> <span class="token attr-name">target</span><span class="token operator">=</span><span class="token string">&apos;_blank&apos;</span>&gt;child&lt;<span class="token operator">/</span><span class="token variable">a</span>&gt;
                           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Opening external links in new tabs without rel=&quot;noreferrer&quot; is a</span>
-    <span style="color: DodgerBlue;">security risk. See </span>
-    <span style="color: DodgerBlue;"><a href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">https://html.spec.whatwg.org/multipage/links.html#link-type-noopener</a></span>
-    <span style="color: DodgerBlue;">for more details.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Opening external links in new tabs without rel=&quot;noreferrer&quot; is a</span>
+    <span style="color: rgb(38, 148, 255);">security risk. See </span>
+    <span style="color: rgb(38, 148, 255);"><a href="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener">https://html.spec.whatwg.org/multipage/links.html#link-type-noopener</a></span>
+    <span style="color: rgb(38, 148, 255);">for more details.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Safe fix</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <strong>  </strong><strong>1</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;a</span><span style="color: Tomato;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: Tomato;">href={dynamicLink}</span><span style="color: Tomato;"><strong><span style="opacity: 0.8;">&middot;</span></strong></span><span style="color: Tomato;"><strong>target=&quot;_blank&quot;</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>1</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;a</span><span style="color: MediumSeaGreen;"><span style="opacity: 0.8;">&middot;</span></span><span style="color: MediumSeaGreen;">href={dynamicLink}&gt;</span>

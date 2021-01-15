@@ -17,7 +17,7 @@ pevent usage of `setState` in `componentDidUpdate`
 **ESLint Equivalent:** [no-did-update-set-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:95e5cc32fc1f45700799625af760f884988f2ab8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2e0c1f51e21d125812deb9a991b7b21ec71cb7cc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -41,8 +41,8 @@ pevent usage of `setState` in `componentDidUpdate`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately after a previous update causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -68,8 +68,8 @@ pevent usage of `setState` in `componentDidUpdate`
   <strong>  5</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately after a previous update causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -94,8 +94,8 @@ pevent usage of `setState` in `componentDidUpdate`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately after a previous update causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -121,8 +121,8 @@ pevent usage of `setState` in `componentDidUpdate`
   <strong>  5</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately after a previous update causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 

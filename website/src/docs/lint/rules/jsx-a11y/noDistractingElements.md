@@ -17,7 +17,7 @@ enforce distracting elements are not used
 **ESLint Equivalent:** [no-distracting-elements](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-distracting-elements.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8d49092188f5337f4c2d4d8c0ccd45360b646fe6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:baa9c8096d58de99da989c7718536a7c05b20fdd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,8 +31,8 @@ enforce distracting elements are not used
     &lt;<span class="token variable">blink</span> <span class="token operator">/</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Deprecated blink are difficult to read and distract attention away</span>
-    <span style="color: DodgerBlue;">from page content, especially for users with visual impairments.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Deprecated blink are difficult to read and distract attention away</span>
+    <span style="color: rgb(38, 148, 255);">from page content, especially for users with visual impairments.</span>
 
 </code></pre>{% endraw %}
 
@@ -47,8 +47,8 @@ enforce distracting elements are not used
     &lt;<span class="token variable">marquee</span> <span class="token operator">/</span>&gt;
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Deprecated marquee are difficult to read and distract attention away</span>
-    <span style="color: DodgerBlue;">from page content, especially for users with visual impairments.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Deprecated marquee are difficult to read and distract attention away</span>
+    <span style="color: rgb(38, 148, 255);">from page content, especially for users with visual impairments.</span>
 
 </code></pre>{% endraw %}
 

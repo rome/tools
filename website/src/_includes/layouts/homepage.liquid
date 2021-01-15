@@ -5,7 +5,7 @@ social-image: social-logo.png
 
 {% assign post = collections.post | reverse | first %}
 
-<article class="latest-post">
+<aside class="latest-post" aria-labelledby="latest-post">
 	<h2>Latest blog post</h2>
 	<div class="info">
 		<h3>
@@ -16,9 +16,9 @@ social-image: social-logo.png
 			at {{ post.date | dateFormat }}
 		</div>
 	</div>
-</article>
+</aside>
 
-<div class="hero">
+<header class="hero">
 	<h1>
 		<div>
 			<div class="left"></div>
@@ -27,7 +27,7 @@ social-image: social-logo.png
 		</div>
 	</h1>
 	<h2>Unifying the frontend development toolchain</h2>
-</div>
+</header>
 
 <main id="main-content" class="content split homepage">
 	{{ content | safe }}

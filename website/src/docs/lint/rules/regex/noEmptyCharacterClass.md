@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:eb5f2948aa35dc9c654af0115dc10c876adb33cc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5350d135967b5543ec88132192d23afb9ff05ecb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -28,7 +28,7 @@ MISSING DOCUMENTATION
     <span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/^abc[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span>
                    <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty character classes are usually typos.</span>
 
 </code></pre>{% endraw %}
 
@@ -43,7 +43,7 @@ MISSING DOCUMENTATION
     <span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/foo[]bar/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span>
                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty character classes are usually typos.</span>
 
 </code></pre>{% endraw %}
 
@@ -58,7 +58,7 @@ MISSING DOCUMENTATION
     <span class="token punctuation">;</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">.</span><span class="token function">match</span><span class="token punctuation">(</span><span class="token regex">/^abc[]/</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">foo</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
                         <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty character classes are usually typos.</span>
 
 </code></pre>{% endraw %}
 
@@ -73,7 +73,7 @@ MISSING DOCUMENTATION
     <span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/[]]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span>
                <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty character classes are usually typos.</span>
 
 </code></pre>{% endraw %}
 
@@ -88,7 +88,7 @@ MISSING DOCUMENTATION
     <span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/\[[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span>
                  <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty character classes are usually typos.</span>
 
 </code></pre>{% endraw %}
 
@@ -103,7 +103,7 @@ MISSING DOCUMENTATION
     <span class="token keyword">let</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token regex">/\[\[\]a-z[]/</span><span class="token punctuation">;</span><span class="token variable">foo</span><span class="token punctuation">;</span>
                         <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty character classes are usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty character classes are usually typos.</span>
 
 </code></pre>{% endraw %}
 

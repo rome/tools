@@ -17,7 +17,7 @@ disallow returning values from setters
 **ESLint Equivalent:** [no-setter-return](https://eslint.org/docs/rules/no-setter-return)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:799963ddf523df75f554bbf0892c9e215f4fc2c3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:f468d25cfb2d4fbde14df232d589119ab6e77cf7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -41,7 +41,7 @@ disallow returning values from setters
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span>
   <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Setters that return values are either typos or should not be setters.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setters that return values are either typos or should not be setters.</span>
 
 </code></pre>{% endraw %}
 
@@ -66,7 +66,7 @@ disallow returning values from setters
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span>
   <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Setters that return values are either typos or should not be setters.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setters that return values are either typos or should not be setters.</span>
 
 </code></pre>{% endraw %}
 
@@ -91,7 +91,7 @@ disallow returning values from setters
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span>
   <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Setters that return values are either typos or should not be setters.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setters that return values are either typos or should not be setters.</span>
 
 </code></pre>{% endraw %}
 

@@ -17,7 +17,7 @@ disallow empty block statements
 **ESLint Equivalent:** [no-empty](https://eslint.org/docs/rules/no-empty)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:3044522a262eff277792c5eb0a42c2245f4d4c41,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:fb36d9d5c4cd04b4a1599c1e64082a3f2beb8019,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,7 +31,7 @@ disallow empty block statements
     <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">foo</span><span class="token punctuation">)</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty logic blocks usually result from incomplete refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty logic blocks usually result from incomplete refactoring.</span>
 
 </code></pre>{% endraw %}
 
@@ -50,7 +50,7 @@ disallow empty block statements
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong><span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
      <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Empty logic blocks usually result from incomplete refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Empty logic blocks usually result from incomplete refactoring.</span>
 
 </code></pre>{% endraw %}
 

@@ -2,3 +2,5 @@
 Profile-*.json
 .vscode
 .idea
+# ignore test files that contributors could create locally
+/test.*

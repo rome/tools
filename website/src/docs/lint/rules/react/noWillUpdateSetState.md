@@ -17,7 +17,7 @@ prevent usage of `setState` in `componentWillUpdate`
 **ESLint Equivalent:** [no-will-update-set-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-will-update-set-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ad38ed416991e9c5e05f09624466e1d1c278af26,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:edc90442f5253496b372b0bec29d173f66967785,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -41,8 +41,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately before a scheduled render causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -68,8 +68,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong>  5</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately before a scheduled render causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -94,8 +94,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately before a scheduled render causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -121,8 +121,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong>  5</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately before a scheduled render causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -147,8 +147,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately before a scheduled render causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -173,8 +173,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state immediately before a scheduled render causes a second</span>
-    <span style="color: DodgerBlue;">render that can cause visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
+    <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 

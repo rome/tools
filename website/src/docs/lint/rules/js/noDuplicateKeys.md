@@ -17,7 +17,7 @@ disallow duplicate keys in object literals
 **ESLint Equivalent:** [no-dupe-keys](https://eslint.org/docs/rules/no-dupe-keys)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:5dd7e94be1e573fa21ed69b1bcefbf111a2e9c92,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:80a25be25015eb7084bddd65f82aff62eb0660db,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -32,7 +32,7 @@ disallow duplicate keys in object literals
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate component key. Check the </span><span style="color: Tomato;"><strong>test</strong></span><span style="color: Tomato;"> key.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">test</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>
   <strong>  3</strong><strong> │ </strong>  <span class="token variable">test2</span><span class="token punctuation">:</span> <span class="token boolean">true</span><span class="token punctuation">,</span>

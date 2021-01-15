@@ -17,7 +17,7 @@ report `this` being used in stateless components
 **ESLint Equivalent:** [no-this-in-sfc](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:92adb475f51c14d0eca411419a2ece00be4fce5f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:12c5c3969a6d08b1411ba5246fe9162e87fc8221,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -52,8 +52,8 @@ report `this` being used in stateless components
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -76,8 +76,8 @@ report `this` being used in stateless components
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token punctuation">(</span>
   <strong>  4</strong><strong> │ </strong>    &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -100,8 +100,8 @@ report `this` being used in stateless components
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -126,8 +126,8 @@ report `this` being used in stateless components
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token punctuation">(</span>
   <strong>  4</strong><strong> │ </strong>    &lt;<span class="token variable">div</span>&gt;
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -152,15 +152,15 @@ report `this` being used in stateless components
   <strong>  5</strong><strong> │ </strong>    &lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
   <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:23</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -186,15 +186,15 @@ report `this` being used in stateless components
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
   <strong>  4</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token punctuation">(</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -221,15 +221,15 @@ report `this` being used in stateless components
   <strong>  3</strong><strong> │ </strong>    <span class="token keyword">return</span> &lt;<span class="token variable">Loader</span> <span class="token operator">/</span>&gt;<span class="token punctuation">;</span>
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:7:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -258,15 +258,15 @@ report `this` being used in stateless components
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token punctuation">{</span> <span class="token variable">bar</span> <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">;</span>
   <strong>  4</strong><strong> │ </strong>  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token variable">loading</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:17</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -291,8 +291,8 @@ report `this` being used in stateless components
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -315,8 +315,8 @@ report `this` being used in stateless components
   <strong>  4</strong><strong> │ </strong>  &lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -339,8 +339,8 @@ report `this` being used in stateless components
   <strong>  4</strong><strong> │ </strong>  &lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
@@ -364,8 +364,8 @@ report `this` being used in stateless components
   <strong>  4</strong><strong> │ </strong>    &lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">)</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The </span><span style="color: DodgerBlue;"><strong>this</strong></span><span style="color: DodgerBlue;"> keyword has no binding in functional components. Use hooks</span>
-    <span style="color: DodgerBlue;">instead.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
+    <span style="color: rgb(38, 148, 255);">instead.</span>
 
 </code></pre>{% endraw %}
 
