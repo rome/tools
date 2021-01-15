@@ -5,26 +5,24 @@ import {
 	prefixCSSProperty,
 } from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
 
-// https://caniuse.com/mdn-css_properties_transition
+// https://caniuse.com/?search=transform
 function getPrefixes(prefixConfig: PrefixConfig) {
 	const prefixes = new Set<string>();
-	if (matchBrowser(prefixConfig.target, "firefox 4-15")) {
+	if (matchBrowser(prefixConfig.target, "firefox 3.5-15")) {
 		prefixes.add("-moz-");
 	}
 
 	if (
-		matchBrowser(prefixConfig.target, "chrome 4-25") ||
+		matchBrowser(prefixConfig.target, "chrome 4-35") ||
 		matchBrowser(prefixConfig.target, "safari 3.1-8") ||
 		matchBrowser(prefixConfig.target, "ios 3.2-8.4") ||
+		matchBrowser(prefixConfig.target, "opera 15-22") ||
 		matchBrowser(prefixConfig.target, "android 2.1-4.4.4")
 	) {
 		prefixes.add("-webkit-");
 	}
 
-	if (
-		matchBrowser(prefixConfig.target, "opera 10.5") ||
-		matchBrowser(prefixConfig.target, "op_mob 12")
-	) {
+	if (matchBrowser(prefixConfig.target, "opera 11.5")) {
 		prefixes.add("-o-");
 	}
 
@@ -32,12 +30,8 @@ function getPrefixes(prefixConfig: PrefixConfig) {
 }
 
 export default createPrefixVisitor({
-	name: "transition",
+	name: "transform",
 	enter(path, prefixConfig) {
-		return prefixCSSProperty(
-			path,
-			"transition",
-			() => getPrefixes(prefixConfig),
-		);
+		return prefixCSSProperty(path, "transform", () => getPrefixes(prefixConfig));
 	},
 });

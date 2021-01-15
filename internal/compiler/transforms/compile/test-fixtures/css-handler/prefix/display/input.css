@@ -1,0 +1,35 @@
+.style {
+	text-align: center;
+	display: flex;
+	align-content: center;
+}
+
+.style {
+	display: flex;
+}
+
+.style {
+	text-align: center;
+	display: flex;
+	display: -webkit-flex;
+	align-content: center;
+}
+
+.style {
+	text-align: center;
+	display: inline flex;
+	align-content: center;
+}
+
+.style {
+	text-align: center;
+	display: inline-flex;
+	align-content: center;
+}
+
+.style {
+	text-align: center;
+	display: inline-flex;
+	display: -webkit-inline-flex;
+	align-content: center;
+}

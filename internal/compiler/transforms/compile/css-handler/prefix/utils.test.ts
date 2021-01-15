@@ -1,86 +1,190 @@
 import {test} from "rome";
-import {nodeHasPrefix, nodeValueHasPrefix} from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
-import {cssBlock, cssDeclaration, cssString} from "@internal/ast";
+import {
+	nodeHasPrefixedProperty,
+	nodeHasPrefixedPropertyValue,
+	nodePropertyIndex,
+	nodePropertyValueIndex,
+} from "@internal/compiler/transforms/compile/css-handler/prefix/utils";
+import {cssBlock, cssDeclaration, cssIdentifier} from "@internal/ast";
 
 test(
 	"css prefix utils",
 	(t) => {
-		t.false(nodeHasPrefix(cssBlock.create({
-			value: [
-				cssDeclaration.create({
-					important: false,
-					name: "transition",
-					value: []
-				}),
-				cssDeclaration.create({
-					important: false,
-					name: "-moz-transition",
-					value: []
-				})
-			],
-		}), "-webkit-"));
-
-		t.true(nodeHasPrefix(cssBlock.create({
-			value: [
-				cssDeclaration.create({
-					important: false,
-					name: "transition",
-					value: []
-				}),
-				cssDeclaration.create({
-					important: false,
-					name: "-webkit-transition",
-					value: []
-				})
-			],
-		}), "-webkit-"));
-
-
-		t.false(nodeValueHasPrefix(cssBlock.create({
-			value: [
-				cssDeclaration.create({
-					important: false,
-					name: "display",
+		t.false(
+			nodeHasPrefixedProperty(
+				cssBlock.create({
 					value: [
-						cssString.create({
-							value: "flex"
-						})
-					]
+						cssDeclaration.create({
+							important: false,
+							name: "transition",
+							value: [],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "-webkit-transform",
+							value: [],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "-moz-transition",
+							value: [],
+						}),
+					],
 				}),
-				cssDeclaration.create({
-					important: false,
-					name: "display",
-					value: [
-						cssString.create({
-							value: "-moz-flex"
-						})
-					]
-				})
-			],
-		}), "display", "-webkit-"));
+				"transition",
+				"-webkit-",
+			),
+		);
 
-
-		t.true(nodeValueHasPrefix(cssBlock.create({
-			value: [
-				cssDeclaration.create({
-					important: false,
-					name: "display",
+		t.true(
+			nodeHasPrefixedProperty(
+				cssBlock.create({
 					value: [
-						cssString.create({
-							value: "flex"
-						})
-					]
+						cssDeclaration.create({
+							important: false,
+							name: "transition",
+							value: [],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "-webkit-transition",
+							value: [],
+						}),
+					],
 				}),
-				cssDeclaration.create({
-					important: false,
-					name: "display",
+				"transition",
+				"-webkit-",
+			),
+		);
+
+		t.is(
+			nodePropertyIndex(
+				cssBlock.create({
 					value: [
-						cssString.create({
-							value: "-webkit-flex"
-						})
-					]
-				})
-			],
-		}), "display", "-webkit-"));
-	}
-)
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "color",
+							value: [],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "transition",
+							value: [],
+						}),
+					],
+				}),
+				"transition",
+			),
+			2,
+		);
+
+		t.false(
+			nodeHasPrefixedPropertyValue(
+				cssBlock.create({
+					value: [
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [
+								cssIdentifier.create({
+									value: "flex",
+								}),
+							],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [
+								cssIdentifier.create({
+									value: "-moz-flex",
+								}),
+							],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [
+								cssIdentifier.create({
+									value: "-webkit-block",
+								}),
+							],
+						}),
+					],
+				}),
+				"display",
+				"flex",
+				"-webkit-",
+			),
+		);
+
+		t.true(
+			nodeHasPrefixedPropertyValue(
+				cssBlock.create({
+					value: [
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [
+								cssIdentifier.create({
+									value: "flex",
+								}),
+							],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [
+								cssIdentifier.create({
+									value: "-webkit-flex",
+								}),
+							],
+						}),
+					],
+				}),
+				"display",
+				"flex",
+				"-webkit-",
+			),
+		);
+
+		t.is(
+			nodePropertyValueIndex(
+				cssBlock.create({
+					value: [
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [
+								cssIdentifier.create({
+									value: "-webkit-flex",
+								}),
+							],
+						}),
+						cssDeclaration.create({
+							important: false,
+							name: "display",
+							value: [
+								cssIdentifier.create({
+									value: "flex",
+								}),
+							],
+						}),
+					],
+				}),
+				"display",
+				"flex",
+			),
+			2,
+		);
+	},
+);
