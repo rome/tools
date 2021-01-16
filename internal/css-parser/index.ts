@@ -919,8 +919,7 @@ function parseComponentValue(
 		return parser.finishNode(
 			start,
 			{
-				type: "CSSRaw",
-				value: ",",
+				type: "CSSComma",
 			},
 		);
 	}

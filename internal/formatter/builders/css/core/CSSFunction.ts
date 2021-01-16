@@ -9,9 +9,7 @@ export default function CSSFunction(builder: Builder, node: CSSFunction): Token 
 	const commaSeperatedTokens: Token[] = [];
 
 	while (params.length) {
-		const commaIndex = params.findIndex((param) =>
-			param?.type === "CSSRaw" && param.value === ","
-		);
+		const commaIndex = params.findIndex((param) => param?.type === "CSSComma");
 		const values = params.splice(0, commaIndex > 0 ? commaIndex : params.length);
 		commaSeperatedTokens.push(
 			join(space, values.map((value) => builder.tokenize(value, node))),
