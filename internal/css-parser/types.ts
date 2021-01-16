@@ -9,6 +9,7 @@ import {
 } from "@internal/parser-core";
 import {
 	CSSBlock,
+	CSSComma,
 	CSSDimension,
 	CSSFunction,
 	CSSHash,
@@ -82,6 +83,7 @@ export type AnyCSSValue =
 	| CSSHash
 	| CSSWhitespace
 	| CSSString
+	| CSSComma
 	| CSSRaw;
 
 export type CSSParserTypes = {
