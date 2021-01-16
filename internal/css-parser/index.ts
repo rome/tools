@@ -914,6 +914,17 @@ function parseComponentValue(
 		);
 	}
 
+	if (matchToken(parser, "Comma")) {
+		nextToken(parser);
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSRaw",
+				value: ",",
+			},
+		);
+	}
+
 	if (matchToken(parser, "Hash")) {
 		const hashToken = parser.getToken() as Tokens["Hash"];
 		if (hashToken.hashType === "id") {
@@ -955,7 +966,7 @@ function parseFunction(parser: CSSParser): CSSFunction {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Function");
 	const name = token.value;
-	const value = [];
+	const params = [];
 
 	while (true) {
 		if (matchToken(parser, "RightParen")) {
@@ -969,7 +980,7 @@ function parseFunction(parser: CSSParser): CSSFunction {
 			break;
 		}
 		const parsedValue = parseComponentValue(parser);
-		parsedValue && value.push(parsedValue);
+		parsedValue && params.push(parsedValue);
 	}
 
 	return parser.finishNode(
@@ -977,7 +988,7 @@ function parseFunction(parser: CSSParser): CSSFunction {
 		{
 			type: "CSSFunction",
 			name,
-			value,
+			params,
 		},
 	);
 }

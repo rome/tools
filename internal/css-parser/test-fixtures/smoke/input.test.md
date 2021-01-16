@@ -123,7 +123,18 @@ CSSRoot {
 						value: Array [
 							CSSFunction {
 								name: "calc"
-								value: Array [
+								loc: Object {
+									filename: "smoke/input.css"
+									end: Object {
+										column: 25
+										line: 4
+									}
+									start: Object {
+										column: 11
+										line: 4
+									}
+								}
+								params: Array [
 									CSSDimension {
 										value: 1
 										unit: "px"
@@ -168,17 +179,6 @@ CSSRoot {
 										}
 									}
 								]
-								loc: Object {
-									filename: "smoke/input.css"
-									end: Object {
-										column: 25
-										line: 4
-									}
-									start: Object {
-										column: 11
-										line: 4
-									}
-								}
 							}
 						]
 						important: false
@@ -394,7 +394,18 @@ CSSRoot {
 									value: Array [
 										CSSFunction {
 											name: "calc"
-											value: Array [
+											loc: Object {
+												filename: "smoke/input.css"
+												end: Object {
+													column: 29
+													line: 10
+												}
+												start: Object {
+													column: 15
+													line: 10
+												}
+											}
+											params: Array [
 												CSSDimension {
 													value: 2
 													unit: "px"
@@ -439,17 +450,6 @@ CSSRoot {
 													}
 												}
 											]
-											loc: Object {
-												filename: "smoke/input.css"
-												end: Object {
-													column: 29
-													line: 10
-												}
-												start: Object {
-													column: 15
-													line: 10
-												}
-											}
 										}
 									]
 									important: false
