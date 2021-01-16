@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:5cd032d505b9cde873e760e5c458a98937af984e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:8ca6d83b519b7ab60d3e6b910bd4507b42e0b19d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -19,6 +19,7 @@ export * from "./css/core/CSSAtRule";
 export * from "./css/core/CSSBlock";
 export * from "./css/selectors/CSSClassSelector";
 export * from "./css/selectors/CSSCombinator";
+export * from "./css/core/CSSComma";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
 export * from "./css/core/CSSFunction";
@@ -280,6 +281,7 @@ export type AnyNode =
 	| n.CSSBlock
 	| n.CSSClassSelector
 	| n.CSSCombinator
+	| n.CSSComma
 	| n.CSSDeclaration
 	| n.CSSDimension
 	| n.CSSFunction
