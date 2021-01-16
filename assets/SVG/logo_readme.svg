@@ -3,7 +3,7 @@
     .text {
       fill: #27272A;
     }
-    @media (prefers-color-scheme: dark) {
+    [data-color-mode="auto"] @media (prefers-color-scheme: dark), [data-color-mode="dark"] {
       .text {
         fill: #dfdfe1;
       }
