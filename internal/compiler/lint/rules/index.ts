@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:697b54d3ce71731f6c9b5a7927aa606961ab6b2b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:2abf582d6d32ba164533f488cda46cad4e939bbf,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import htmlUseClosingNonVoid from "./html/useClosingNonVoid";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
@@ -123,6 +123,8 @@ import jsxA11YNoRedundantAlt from "./jsx-a11y/noRedundantAlt";
 import jsxA11YNoRedundantRoles from "./jsx-a11y/noRedundantRoles";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoTargetBlank from "./jsx-a11y/noTargetBlank";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
+import jsxA11YSvgHasTitle from "./jsx-a11y/svgHasTitle";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YUseAltText from "./jsx-a11y/useAltText";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
@@ -307,6 +309,7 @@ lintTransforms.set("jsx-a11y/noPositiveTabindex", jsxA11YNoPositiveTabindex);
 lintTransforms.set("jsx-a11y/noRedundantAlt", jsxA11YNoRedundantAlt);
 lintTransforms.set("jsx-a11y/noRedundantRoles", jsxA11YNoRedundantRoles);
 lintTransforms.set("jsx-a11y/noTargetBlank", jsxA11YNoTargetBlank);
+lintTransforms.set("jsx-a11y/svgHasTitle", jsxA11YSvgHasTitle);
 lintTransforms.set("jsx-a11y/useAltText", jsxA11YUseAltText);
 lintTransforms.set("jsx-a11y/useAnchorContent", jsxA11YUseAnchorContent);
 lintTransforms.set("jsx-a11y/useAriaProps", jsxA11YUseAriaProps);
@@ -451,6 +454,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"jsx-a11y/noRedundantAlt",
 	"jsx-a11y/noRedundantRoles",
 	"jsx-a11y/noTargetBlank",
+	"jsx-a11y/svgHasTitle",
 	"jsx-a11y/useAltText",
 	"jsx-a11y/useAnchorContent",
 	"jsx-a11y/useAriaProps",
@@ -570,6 +574,7 @@ export type LintRuleName =
 	| "jsx-a11y/noRedundantAlt"
 	| "jsx-a11y/noRedundantRoles"
 	| "jsx-a11y/noTargetBlank"
+	| "jsx-a11y/svgHasTitle"
 	| "jsx-a11y/useAltText"
 	| "jsx-a11y/useAnchorContent"
 	| "jsx-a11y/useAriaProps"

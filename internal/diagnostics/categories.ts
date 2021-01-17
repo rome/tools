@@ -94,7 +94,7 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:14fb403cc8e83a473eb8d446817166315360b2a8,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:bcfabd11da3a2b018a9ccbc3a7053813f0f7182e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| "lint/html/useClosingNonVoid"
 	| "lint/html/useHtmlLang"
@@ -159,6 +159,7 @@ export type DiagnosticLintCategory =
 	| "lint/jsx-a11y/noRedundantAlt"
 	| "lint/jsx-a11y/noRedundantRoles"
 	| "lint/jsx-a11y/noTargetBlank"
+	| "lint/jsx-a11y/svgHasTitle"
 	| "lint/jsx-a11y/useAltText"
 	| "lint/jsx-a11y/useAnchorContent"
 	| "lint/jsx-a11y/useAriaProps"
@@ -274,6 +275,7 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/jsx-a11y/noRedundantAlt": true,
 	"lint/jsx-a11y/noRedundantRoles": true,
 	"lint/jsx-a11y/noTargetBlank": true,
+	"lint/jsx-a11y/svgHasTitle": true,
 	"lint/jsx-a11y/useAltText": true,
 	"lint/jsx-a11y/useAnchorContent": true,
 	"lint/jsx-a11y/useAriaProps": true,

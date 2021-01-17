@@ -398,6 +398,28 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	JSX_A11Y_SVG_TITLE_IS_EMPTY: {
+		category: "lint/jsx-a11y/svgHasTitle",
+		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
+			},
+		],
+	},
+	JSX_A11Y_SVG_HAS_TITLE: {
+		category: "lint/jsx-a11y/svgHasTitle",
+		message: markup`Provide <emphasis>title</emphasis> when using <emphasis>svg</emphasis>`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
+			},
+		],
+	},
 	JSX_A11Y_HEADING_USE_CONTENT: {
 		category: "lint/jsx-a11y/useHeadingContent",
 		message: markup`Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.`,
