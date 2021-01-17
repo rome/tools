@@ -25,7 +25,7 @@
 
 ### `0: formatted`
 
-```
+```tsx
 <svg>
 	foo
 </svg>;
@@ -36,15 +36,15 @@
 
 ```
 
- lint/jsx-a11y/svgHasTitle/reject/2/file.tsx:2:8 lint/jsx-a11y/svgHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/svgHasTitle/reject/2/file.tsx:2:4 lint/jsx-a11y/svgHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Alternative text title element cannot be empty
 
     1 │ <svg>
-  > 2 │         <title></title>
-      │         ^^^^^^^^^^^^^^^
-    3 │         <circle />
-    4 │     </svg>
+  > 2 │     <title></title>
+      │     ^^^^^^^^^^^^^^^
+    3 │     <circle />
+    4 │ </svg>
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
@@ -56,7 +56,7 @@
 
 ### `1: formatted`
 
-```
+```tsx
 <svg>
 	<title />
 	<circle />
@@ -73,7 +73,7 @@
 
 ### `2: formatted`
 
-```
+```tsx
 <svg>
 	<rect />
 	<rect />
@@ -101,7 +101,7 @@
 
 ### `3: formatted`
 
-```
+```tsx
 <svg>
 	<title>
 		Pass
