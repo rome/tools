@@ -70,3 +70,7 @@ MISSING DOCUMENTATION
         &lt;<span class="token attr-name">circle</span> <span class="token operator">/</span>&gt;
     &lt;<span class="token operator">/</span><span class="token attr-name">svg</span>&gt;</code></pre>{% endraw %}
 <!-- GENERATED:END(id:main) -->
+
+<!-- GENERATED:START(hash:da39a3ee5e6b4b0d3255bfef95601890afd80709,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+
+<!-- GENERATED:END(id:description) -->
