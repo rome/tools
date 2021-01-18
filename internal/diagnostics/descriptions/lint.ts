@@ -399,7 +399,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_SVG_TITLE_IS_EMPTY: {
-		category: "lint/jsx-a11y/svgHasTitle",
+		category: "lint/jsx-a11y/noSvgWithoutTitle",
 		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
 		advice: [
 			{
@@ -410,7 +410,7 @@ export const lint = createDiagnosticsCategory({
 		],
 	},
 	JSX_A11Y_SVG_HAS_TITLE: {
-		category: "lint/jsx-a11y/svgHasTitle",
+		category: "lint/jsx-a11y/noSvgWithoutTitle",
 		message: markup`Provide <emphasis>title</emphasis> when using <emphasis>svg</emphasis>`,
 		advice: [
 			{

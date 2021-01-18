@@ -62,7 +62,7 @@ function processChild(node: AnyNode, path: Path): boolean {
 }
 
 export default createVisitor({
-	name: "jsx-a11y/svgHasTitle",
+	name: "jsx-a11y/noSvgWithoutTitle",
 	enter(path) {
 		const {node} = path;
 		if (
