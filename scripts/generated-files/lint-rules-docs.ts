@@ -176,18 +176,9 @@ export async function main() {
 
 				let hasInvalid = false;
 				let hasValid = false;
-				for (const singleCase of cases) {
-					if (Array.isArray(singleCase)) {
-						for (const {invalid, valid} of singleCase) {
-							if (invalid && invalid.length > 0) {
-								hasInvalid = true;
-							}
-							if (valid && valid.length > 0) {
-								hasValid = true;
-							}
-						}
-					} else {
-						const {invalid, valid} = singleCase;
+				for (const elem of cases) {
+					const cases = Array.isArray(elem) ? elem : [elem];
+					for (const {invalid, valid} of cases) {
 						if (invalid && invalid.length > 0) {
 							hasInvalid = true;
 						}

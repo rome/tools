@@ -19,7 +19,7 @@ This rule is applied to HTML and JSX files.
 **ESLint Equivalent:** [html-has-lang](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/html-has-lang.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:4669cc0617d2a05b632d21ce6753c7035e70e92e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3b6202313fee1b15356a8941034f401c6aea8039,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -185,8 +185,8 @@ This rule is applied to HTML and JSX files.
     <span class="token punctuation">&lt;</span><span class="token tag">html</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span>
     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Setting a lang attribute on HTML elements configures the language</span>
-    <span style="color: DodgerBlue;">used by screen readers when no user default is specified.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting a lang attribute on HTML elements configures the language</span>
+    <span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
 
 </code></pre>{% endraw %}
 
@@ -204,8 +204,8 @@ This rule is applied to HTML and JSX files.
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token attr-value">&quot;</span><span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">html</span><span class="token punctuation">&gt;</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Setting a lang attribute on HTML elements configures the language</span>
-    <span style="color: DodgerBlue;">used by screen readers when no user default is specified.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting a lang attribute on HTML elements configures the language</span>
+    <span style="color: rgb(38, 148, 255);">used by screen readers when no user default is specified.</span>
 
 </code></pre>{% endraw %}
 
