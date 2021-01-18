@@ -1,14 +1,14 @@
 ---
-title: Lint Rule jsx-a11y/svgHasTitle
+title: Lint Rule jsx-a11y/noSvgWithoutTitle
 layout: layouts/rule.liquid
 description: MISSING DOCUMENTATION
 eleventyNavigation:
-	key: lint-rules/jsx-a11y/svgHasTitle
+	key: lint-rules/jsx-a11y/noSvgWithoutTitle
 	parent: lint-rules
-	title: jsx-a11y/svgHasTitle
+	title: jsx-a11y/noSvgWithoutTitle
 ---
 
-# jsx-a11y/svgHasTitle
+# jsx-a11y/noSvgWithoutTitle
 
 MISSING DOCUMENTATION
 
@@ -75,14 +75,14 @@ MISSING DOCUMENTATION
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:d212b39f0f10dd203f4fb4d3083c25cb9d4447d0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a6238e741b6d12f3a662ebbfe9bef4050debb0b4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
 
 {% raw %}<pre class="language-text"><code class="language-text">&lt;<span class="token variable">svg</span>&gt;foo&lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/svgHasTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1</span> <strong>lint/jsx-a11y/noSvgWithoutTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Provide </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> when using </span><span style="color: Tomato;"><strong>svg</strong></span>
 
@@ -101,7 +101,7 @@ MISSING DOCUMENTATION
     &lt;<span class="token variable">circle</span> <span class="token operator">/</span>&gt;
 &lt;<span class="token operator">/</span><span class="token variable">svg</span>&gt;</code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
- <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:4</span> <strong>lint/jsx-a11y/svgHasTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:4</span> <strong>lint/jsx-a11y/noSvgWithoutTitle</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Alternative text </span><span style="color: Tomato;"><strong>title</strong></span><span style="color: Tomato;"> element cannot be empty</span>
 
