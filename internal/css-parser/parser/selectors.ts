@@ -1,10 +1,15 @@
 import {
+	AttributeMatcher,
+	AttributeModifier,
+	CSSAttributeSelector,
 	CSSClassSelector,
 	CSSCombinator,
 	CSSIdSelector,
+	CSSIdentifier,
 	CSSPseudoClassSelector,
 	CSSPseudoElementSelector,
 	CSSSelector,
+	CSSString,
 	CSSTypeSelector,
 	CSSUniversalSelector,
 	Combinator,
@@ -13,6 +18,8 @@ import {AnyCSSPattern} from "@internal/ast/css/unions";
 import {CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
+
+const ATTRIBUTE_SELECTOR_MATCHERS = ["~=", "|=", "^=", "$=", "*=", "="];
 
 function parseTypeSelector(parser: CSSParser): CSSTypeSelector {
 	const start = parser.getPosition();
@@ -138,7 +145,6 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 		} else if (value === "~") {
 			combinator = "subsequentSibiling";
 		}
-
 		if (combinator) {
 			readToken(parser, "Delim");
 			readToken(parser, "Whitespace"); // Eats trailing Whitespace after combinator.
@@ -152,6 +158,145 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 		}
 	}
 	return undefined;
+}
+
+function isAttributeMatcher(value: string): value is AttributeMatcher {
+	return ATTRIBUTE_SELECTOR_MATCHERS.includes(value);
+}
+
+function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined {
+	let matcher: string = "";
+	if (matchToken(parser, "Delim")) {
+		const first = (parser.getToken() as Tokens["Delim"]).value;
+		if (first === "=") {
+			matcher = "=";
+		} else if (
+			ATTRIBUTE_SELECTOR_MATCHERS.some((valid) => valid.startsWith(first))
+		) {
+			matcher = first;
+			parser.nextToken();
+
+			const second = parser.getToken();
+			if (second.type === "Delim" && second.value === "=") {
+				matcher += "=";
+			}
+		}
+	}
+
+	if (matcher) {
+		if (isAttributeMatcher(matcher)) {
+			parser.nextToken();
+			return matcher;
+		}
+
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MATCHER(
+				matcher,
+				ATTRIBUTE_SELECTOR_MATCHERS,
+			),
+		});
+	}
+	return undefined;
+}
+
+function parseAttributeValue(
+	parser: CSSParser,
+): CSSIdentifier | CSSString | undefined {
+	const start = parser.getPosition();
+	let value: CSSIdentifier | CSSString | undefined;
+	if (matchToken(parser, "Ident")) {
+		const token = readToken(parser, "Ident") as Tokens["Ident"];
+		value = parser.finishNode(
+			start,
+			{
+				type: "CSSIdentifier",
+				value: token.value,
+			},
+		);
+	}
+	if (matchToken(parser, "String")) {
+		const token = readToken(parser, "String") as Tokens["String"];
+		value = parser.finishNode(
+			start,
+			{
+				type: "CSSString",
+				value: token.value,
+			},
+		);
+	}
+	return value;
+}
+
+function parseAttributeSelector(
+	parser: CSSParser,
+): CSSAttributeSelector | undefined {
+	if (!matchToken(parser, "LeftSquareBracket")) {
+		return undefined;
+	}
+
+	const start = parser.getPosition();
+	parser.nextToken();
+	readToken(parser, "Whitespace");
+
+	if (!matchToken(parser, "Ident")) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+		});
+		return undefined;
+	}
+
+	const ident = parser.getToken() as Tokens["Ident"];
+	const idStart = parser.getPosition();
+	parser.nextToken();
+	const attribute = parser.finishNode(
+		idStart,
+		{
+			type: "CSSIdentifier",
+			value: ident.value,
+		},
+	);
+
+	readToken(parser, "Whitespace");
+
+	const matcher = parseAttributeMatcher(parser);
+	readToken(parser, "Whitespace");
+
+	const value = matcher && parseAttributeValue(parser);
+	readToken(parser, "Whitespace");
+
+	let modifier: AttributeModifier | undefined;
+	if (matchToken(parser, "Ident")) {
+		const identValue = (parser.getToken() as Tokens["Ident"]).value.toLocaleLowerCase();
+		if (identValue === "i" || identValue === "s") {
+			modifier = identValue;
+			parser.nextToken();
+		} else {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MODIFIER,
+			});
+			return undefined;
+		}
+	}
+
+	readToken(parser, "Whitespace");
+
+	if (!matchToken(parser, "RightSquareBracket")) {
+		parser.unexpectedDiagnostic({
+			description: descriptions.CSS_PARSER.EXPECTED_CLOSING_ATTRIBUTE_SELECTOR,
+		});
+		return undefined;
+	}
+	parser.nextToken();
+	return parser.finishNode(
+		start,
+		{
+			type: "CSSAttributeSelector",
+			value,
+			attribute,
+			matcher,
+			modifier,
+		},
+	);
 }
 
 function tryParseSelector(parser: CSSParser) {
@@ -168,6 +313,8 @@ function tryParseSelector(parser: CSSParser) {
 		} else if (token.value === "*") {
 			return parseUniversalSelector(parser);
 		}
+	} else if (matchToken(parser, "LeftSquareBracket")) {
+		return parseAttributeSelector(parser);
 	}
 	return undefined;
 }
@@ -215,6 +362,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 				start: selectorStart,
 			});
+			parser.nextToken();
 			break;
 		}
 	}
