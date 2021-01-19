@@ -163,6 +163,7 @@ JSRoot {
 									argument: JSNumericLiteral {
 										value: 42
 										format: undefined
+										raw: "42"
 										loc: Object {
 											filename: "experimental/class-properties/await-in-async-in-class-property/input.js"
 											end: Object {

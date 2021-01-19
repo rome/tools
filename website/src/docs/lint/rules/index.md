@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:6dddc6f2a96f7e35047dc98f9753b08695dbdc72,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:5a065604afb283496899a7a623d57c84771585d3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -448,6 +448,13 @@ enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;pictur
 	<a class="header-anchor" href="#noRedundantRoles"></a>
 </h3>
 enforce explicit role property is not the same as implicit/default role property on element
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noSvgWithoutTitle">
+	<a href="/docs/lint/rules/jsx-a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
+	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
+</h3>
+MISSING DOCUMENTATION
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noTargetBlank">

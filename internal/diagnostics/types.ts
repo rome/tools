@@ -91,14 +91,18 @@ export type Diagnostic = {
 	location: DiagnosticLocation;
 	label?: StaticMarkup;
 	origins?: DiagnosticOrigin[];
-	dependencies?: {
-		filename: string;
-		integrity: DiagnosticIntegrity;
-	}[];
+	dependencies?: DiagnosticDependencies;
 	tags?: DiagnosticTags;
 };
 
 export type Diagnostics = Diagnostic[];
+
+export type DiagnosticDependency = {
+	filename: string;
+	integrity?: DiagnosticIntegrity;
+};
+
+export type DiagnosticDependencies = DiagnosticDependency[];
 
 export type DiagnosticIntegrity = {
 	hash: string;

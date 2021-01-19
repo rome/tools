@@ -73,6 +73,7 @@ JSRoot {
 					test: JSNumericLiteral {
 						value: 1
 						format: undefined
+						raw: "1"
 						loc: Object {
 							filename: "core/uncategorised/337/input.js"
 							end: Object {

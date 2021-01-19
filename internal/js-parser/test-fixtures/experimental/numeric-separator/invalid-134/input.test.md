@@ -83,6 +83,7 @@ JSRoot {
 					expression: JSNumericLiteral {
 						value: 17
 						format: "hex"
+						raw: "0x1_1_"
 						loc: Object {
 							filename: "experimental/numeric-separator/invalid-134/input.js"
 							end: Object {

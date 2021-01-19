@@ -36,6 +36,12 @@ Rome has a loose governance model that values core contributor autonomy. See [Go
 		</a>
 	</li>
 	<li>
+		<a href="https://github.com/jer3m01">
+			<img src="https://github.com/jer3m01.png?s=176">
+			<span>Jeremy Bagnall</span>
+		</a>
+	</li>
+	<li>
 		<a href="https://github.com/Kelbie">
 			<img src="https://github.com/Kelbie.png?s=176">
 			<span>Kevin Kelbie</span>

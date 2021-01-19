@@ -86,6 +86,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
+							raw: "42"
 							loc: Object {
 								filename: "esprima/es2015-yield/yield-lexical-declaration/input.js"
 								end: Object {

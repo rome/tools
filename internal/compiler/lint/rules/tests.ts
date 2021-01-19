@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | (Test[])>;
 
-/* GENERATED:START(hash:a7cd9498d72550437da5594b936ef02cf2d1f589,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:c7adcd2ed9b9125da6746adaeddddf1ea3226075,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import htmlUseClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
@@ -189,6 +189,9 @@ import jsxA11YNoRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
+// @ts-ignore
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
+import jsxA11YNoSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
@@ -401,6 +404,7 @@ export const tests: Tests = {
 	"jsx-a11y/noPositiveTabindex": jsxA11YNoPositiveTabindex,
 	"jsx-a11y/noRedundantAlt": jsxA11YNoRedundantAlt,
 	"jsx-a11y/noRedundantRoles": jsxA11YNoRedundantRoles,
+	"jsx-a11y/noSvgWithoutTitle": jsxA11YNoSvgWithoutTitle,
 	"jsx-a11y/noTargetBlank": jsxA11YNoTargetBlank,
 	"jsx-a11y/useAltText": jsxA11YUseAltText,
 	"jsx-a11y/useAnchorContent": jsxA11YUseAnchorContent,

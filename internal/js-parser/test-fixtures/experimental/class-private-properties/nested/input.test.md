@@ -106,6 +106,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
@@ -186,6 +187,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 2
 							format: undefined
+							raw: "2"
 							loc: Object {
 								filename: "experimental/class-private-properties/nested/input.js"
 								end: Object {
@@ -333,6 +335,7 @@ JSRoot {
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
+										raw: "0"
 										loc: Object {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
@@ -391,6 +394,7 @@ JSRoot {
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
+										raw: "0"
 										loc: Object {
 											filename: "experimental/class-private-properties/nested/input.js"
 											end: Object {
@@ -840,6 +844,7 @@ JSRoot {
 														value: JSNumericLiteral {
 															value: 1
 															format: undefined
+															raw: "1"
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
@@ -920,6 +925,7 @@ JSRoot {
 														value: JSNumericLiteral {
 															value: 2
 															format: undefined
+															raw: "2"
 															loc: Object {
 																filename: "experimental/class-private-properties/nested/input.js"
 																end: Object {
@@ -1067,6 +1073,7 @@ JSRoot {
 																	right: JSNumericLiteral {
 																		value: 0
 																		format: undefined
+																		raw: "0"
 																		loc: Object {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {
@@ -1125,6 +1132,7 @@ JSRoot {
 																	right: JSNumericLiteral {
 																		value: 0
 																		format: undefined
+																		raw: "0"
 																		loc: Object {
 																			filename: "experimental/class-private-properties/nested/input.js"
 																			end: Object {

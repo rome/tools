@@ -17,7 +17,7 @@ disallow assignment operators in conditional expressions
 **ESLint Equivalent:** [no-cond-assign](https://eslint.org/docs/rules/no-cond-assign)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e35adc8f2471358ebd11983d917884d173465122,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:9124ed19d81f158747a6b1338f441993f5f7a0d0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -35,8 +35,8 @@ disallow assignment operators in conditional expressions
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is a common typo to mistype an equality operator as an assignment</span>
-    <span style="color: DodgerBlue;">operator.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">It is a common typo to mistype an equality operator as an assignment</span>
+    <span style="color: rgb(38, 148, 255);">operator.</span>
 
 </code></pre>{% endraw %}
 
@@ -55,8 +55,8 @@ disallow assignment operators in conditional expressions
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is a common typo to mistype an equality operator as an assignment</span>
-    <span style="color: DodgerBlue;">operator.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">It is a common typo to mistype an equality operator as an assignment</span>
+    <span style="color: rgb(38, 148, 255);">operator.</span>
 
 </code></pre>{% endraw %}
 
@@ -75,8 +75,8 @@ disallow assignment operators in conditional expressions
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is a common typo to mistype an equality operator as an assignment</span>
-    <span style="color: DodgerBlue;">operator.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">It is a common typo to mistype an equality operator as an assignment</span>
+    <span style="color: rgb(38, 148, 255);">operator.</span>
 
 </code></pre>{% endraw %}
 
@@ -95,8 +95,8 @@ disallow assignment operators in conditional expressions
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong><span class="token punctuation">}</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">=</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span>
      <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is a common typo to mistype an equality operator as an assignment</span>
-    <span style="color: DodgerBlue;">operator.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">It is a common typo to mistype an equality operator as an assignment</span>
+    <span style="color: rgb(38, 148, 255);">operator.</span>
 
 </code></pre>{% endraw %}
 
@@ -111,8 +111,8 @@ disallow assignment operators in conditional expressions
     <span class="token punctuation">(</span><span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">bar</span><span class="token punctuation">)</span> <span class="token punctuation">?</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">:</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">It is a common typo to mistype an equality operator as an assignment</span>
-    <span style="color: DodgerBlue;">operator.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">It is a common typo to mistype an equality operator as an assignment</span>
+    <span style="color: rgb(38, 148, 255);">operator.</span>
 
 </code></pre>{% endraw %}
 

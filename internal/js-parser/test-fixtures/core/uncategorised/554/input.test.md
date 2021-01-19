@@ -122,6 +122,7 @@ JSRoot {
 							object: JSNumericLiteral {
 								value: 83
 								format: "octal"
+								raw: "0123"
 								loc: Object {
 									filename: "core/uncategorised/554/input.js"
 									end: Object {

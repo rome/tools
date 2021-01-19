@@ -133,6 +133,7 @@ JSRoot {
 								right: JSNumericLiteral {
 									value: 10
 									format: undefined
+									raw: "10"
 									loc: Object {
 										filename: "es2015/yield/yield-star-inside-plain-function/input.js"
 										end: Object {

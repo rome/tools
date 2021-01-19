@@ -285,6 +285,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
+							raw: "0"
 							loc: Object {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {
@@ -365,6 +366,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "experimental/class-private-properties/inline/input.js"
 								end: Object {

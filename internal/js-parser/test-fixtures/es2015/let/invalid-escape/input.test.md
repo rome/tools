@@ -125,6 +125,7 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 5
 					format: undefined
+					raw: "5"
 					loc: Object {
 						filename: "es2015/let/invalid-escape/input.js"
 						end: Object {

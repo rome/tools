@@ -98,6 +98,7 @@ JSRoot {
 						right: JSNumericLiteral {
 							value: 42
 							format: undefined
+							raw: "42"
 							loc: Object {
 								filename: "core/object/member-expression-after-property-initializer-1/input.js"
 								end: Object {

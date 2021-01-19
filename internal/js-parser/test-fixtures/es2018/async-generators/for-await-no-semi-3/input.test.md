@@ -187,6 +187,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 0
 								format: undefined
+								raw: "0"
 								loc: Object {
 									filename: "es2018/async-generators/for-await-no-semi-3/input.js"
 									end: Object {

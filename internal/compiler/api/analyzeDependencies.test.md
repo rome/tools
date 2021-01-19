@@ -139,6 +139,8 @@ Object {
 			kind: "value"
 			all: false
 			async: false
+			exported: false
+			imported: true
 			names: Array []
 			optional: false
 			source: "bar"
@@ -212,6 +214,8 @@ Object {
 			kind: "value"
 			all: false
 			async: false
+			exported: false
+			imported: true
 			optional: false
 			source: "foo"
 			loc: Object {
@@ -378,6 +382,8 @@ Object {
 			kind: "value"
 			all: true
 			async: true
+			exported: false
+			imported: true
 			names: Array []
 			optional: false
 			source: "./foo"
@@ -397,6 +403,8 @@ Object {
 			kind: "value"
 			all: true
 			async: true
+			exported: false
+			imported: true
 			names: Array []
 			optional: false
 			source: "./bar"
@@ -708,6 +716,8 @@ Object {
 			kind: "value"
 			all: false
 			async: false
+			exported: true
+			imported: false
 			optional: false
 			source: "foobar"
 			loc: Object {
@@ -815,6 +825,8 @@ Object {
 			kind: "value"
 			all: true
 			async: false
+			exported: true
+			imported: false
 			names: Array []
 			optional: false
 			source: "foobar"
@@ -862,6 +874,8 @@ Object {
 			kind: "value"
 			all: false
 			async: false
+			exported: false
+			imported: true
 			optional: false
 			source: "foobar"
 			loc: Object {
@@ -960,6 +974,8 @@ Object {
 			kind: "value"
 			all: false
 			async: false
+			exported: false
+			imported: true
 			optional: false
 			source: "foobar"
 			loc: Object {
@@ -1051,6 +1067,8 @@ Object {
 			kind: "value"
 			all: false
 			async: false
+			exported: false
+			imported: true
 			names: Array []
 			optional: false
 			source: "foobar"
@@ -1164,6 +1182,8 @@ Object {
 			kind: "value"
 			all: false
 			async: false
+			exported: false
+			imported: true
 			names: Array []
 			optional: false
 			source: "foo"
@@ -1183,6 +1203,8 @@ Object {
 			kind: "value"
 			all: true
 			async: false
+			exported: false
+			imported: true
 			names: Array []
 			optional: false
 			source: "bar"

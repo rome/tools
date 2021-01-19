@@ -337,7 +337,7 @@ function consumeName(parser: CSSParser, index: Number0): [string, Number0] {
 function consumeNumber(
 	parser: CSSParser,
 	index: Number0,
-): [Number0, number, string] {
+): [Number0, number, string, string] {
 	const char = parser.getInputCharOnly(index);
 	let value = "";
 	let type = "integer";
@@ -398,7 +398,7 @@ function consumeNumber(
 		}
 	}
 
-	return [index, parseFloat(value), type];
+	return [index, parseFloat(value), type, value];
 }
 
 function consumeIdentLikeToken(
@@ -495,7 +495,7 @@ function consumeNumberToken(
 	parser: CSSParser,
 	index: Number0,
 ): Tokens["Percentage"] | Tokens["Dimension"] | Tokens["Number"] {
-	const [newIndex, numberValue, numberType] = consumeNumber(parser, index);
+	const [newIndex, numberValue, numberType, raw] = consumeNumber(parser, index);
 	index = newIndex;
 
 	if (
@@ -526,6 +526,7 @@ function consumeNumberToken(
 		{
 			numberType,
 			value: numberValue,
+			raw,
 		},
 		index,
 	);
@@ -890,13 +891,14 @@ function parseComponentValue(
 	}
 
 	if (matchToken(parser, "Number")) {
-		const value = (parser.getToken() as Tokens["Number"]).value;
+		const numberToken = parser.getToken() as Tokens["Number"];
 		nextToken(parser);
 		return parser.finishNode(
 			start,
 			{
 				type: "CSSNumber",
-				value,
+				value: numberToken.value,
+				raw: numberToken.raw,
 			},
 		);
 	}
@@ -908,6 +910,16 @@ function parseComponentValue(
 			{
 				type: "CSSRaw",
 				value: ":",
+			},
+		);
+	}
+
+	if (matchToken(parser, "Comma")) {
+		nextToken(parser);
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSComma",
 			},
 		);
 	}
@@ -953,7 +965,7 @@ function parseFunction(parser: CSSParser): CSSFunction {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Function");
 	const name = token.value;
-	const value = [];
+	const params = [];
 
 	while (true) {
 		if (matchToken(parser, "RightParen")) {
@@ -967,7 +979,7 @@ function parseFunction(parser: CSSParser): CSSFunction {
 			break;
 		}
 		const parsedValue = parseComponentValue(parser);
-		parsedValue && value.push(parsedValue);
+		parsedValue && params.push(parsedValue);
 	}
 
 	return parser.finishNode(
@@ -975,7 +987,7 @@ function parseFunction(parser: CSSParser): CSSFunction {
 		{
 			type: "CSSFunction",
 			name,
-			value,
+			params,
 		},
 	);
 }

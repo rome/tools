@@ -232,6 +232,7 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
+				raw: "0"
 				loc: Object {
 					filename: "esprima/invalid-syntax/migrated_0080/input.js"
 					end: Object {

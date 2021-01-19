@@ -152,6 +152,9 @@ pre.collapsable {
 		line-height: 40px;
 		color: #fff;
 		font-family: inherit;
+		font-size: 1rem;
+		border: none;
+		width: 100%;
 	}
 
 	&.collapsed {
@@ -172,7 +175,7 @@ pre.collapsable {
 	}
 }
 
-article.latest-post {
+.latest-post {
 	border-bottom: 1px solid var(--soft-border-color);
 	padding: $unit $unit;
 	margin-left: $unit;

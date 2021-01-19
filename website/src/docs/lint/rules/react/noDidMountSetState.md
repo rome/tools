@@ -17,7 +17,7 @@ prevent usage of `setState` in `componentDidMount`
 **ESLint Equivalent:** [no-did-mount-set-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-mount-set-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:fbb4b8be7fe2b86cce5058944c94ae8603a48183,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:149ed75df8e83679164dcc168cdaa4298827452e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -41,8 +41,8 @@ prevent usage of `setState` in `componentDidMount`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state after mounting causes a second render that can cause</span>
-    <span style="color: DodgerBlue;">visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
+    <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -68,8 +68,8 @@ prevent usage of `setState` in `componentDidMount`
   <strong>  5</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state after mounting causes a second render that can cause</span>
-    <span style="color: DodgerBlue;">visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
+    <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -94,8 +94,8 @@ prevent usage of `setState` in `componentDidMount`
   <strong>  4</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state after mounting causes a second render that can cause</span>
-    <span style="color: DodgerBlue;">visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
+    <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 
@@ -121,8 +121,8 @@ prevent usage of `setState` in `componentDidMount`
   <strong>  5</strong><strong> │ </strong>      <span class="token variable">name</span><span class="token punctuation">:</span> <span class="token string">&apos;John&apos;</span>
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Updating state after mounting causes a second render that can cause</span>
-    <span style="color: DodgerBlue;">visual layout thrashing.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
+    <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
 
 </code></pre>{% endraw %}
 

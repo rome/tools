@@ -17,7 +17,7 @@ flag `shouldComponentUpdate` when extending `PureComponent`
 **ESLint Equivalent:** [no-redundant-should-component-update](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-redundant-should-component-update.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:4d0a6b8e3e5d957566e16fc098e7b2c1abbb1efa,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:05076bce9504716812ab0456126a5df412d24d6e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -37,8 +37,8 @@ flag `shouldComponentUpdate` when extending `PureComponent`
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong><span class="token punctuation">}</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">When the shouldComponentUpdate method is implemented, extending</span>
-    <span style="color: DodgerBlue;">React.PureComponent provides no benefit.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">When the shouldComponentUpdate method is implemented, extending</span>
+    <span style="color: rgb(38, 148, 255);">React.PureComponent provides no benefit.</span>
 
 </code></pre>{% endraw %}
 
@@ -59,8 +59,8 @@ flag `shouldComponentUpdate` when extending `PureComponent`
   <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong><span class="token punctuation">}</span>
      <strong> │ </strong><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">When the shouldComponentUpdate method is implemented, extending</span>
-    <span style="color: DodgerBlue;">React.PureComponent provides no benefit.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">When the shouldComponentUpdate method is implemented, extending</span>
+    <span style="color: rgb(38, 148, 255);">React.PureComponent provides no benefit.</span>
 
 </code></pre>{% endraw %}
 

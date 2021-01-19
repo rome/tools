@@ -57,6 +57,7 @@ JSRoot {
 				argument: JSNumericLiteral {
 					value: 0
 					format: undefined
+					raw: "0"
 					loc: Object {
 						filename: "experimental/top-level-await/export-default/input.js"
 						end: Object {

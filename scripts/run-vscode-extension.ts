@@ -9,8 +9,10 @@ export async function main(args: string[]) {
 	await execDev(["bundle", "vscode-rome", outFolder]);
 
 	reporter.heading(markup`Running VSCode`);
+	const cmd = process.platform === "win32" ? "code.cmd" : "code";
+
 	await exec(
-		"code",
+		cmd,
 		["--extensionDevelopmentPath", outFolder, "--disable-extensions", ...args],
 	);
 }

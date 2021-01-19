@@ -132,6 +132,7 @@ JSRoot {
 								argument: JSNumericLiteral {
 									value: 0
 									format: undefined
+									raw: "0"
 									loc: Object {
 										filename: "experimental/top-level-await/inside-class-property/input.js"
 										end: Object {

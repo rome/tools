@@ -96,6 +96,7 @@ JSRoot {
 				left: JSNumericLiteral {
 					value: 3
 					format: "hex"
+					raw: "0x3"
 					loc: Object {
 						filename: "core/uncategorised/359/input.js"
 						end: Object {

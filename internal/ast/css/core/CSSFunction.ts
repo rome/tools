@@ -5,7 +5,7 @@ import {AnyCSSValue} from "../../../css-parser/types";
 export interface CSSFunction extends NodeBaseWithComments {
 	readonly type: "CSSFunction";
 	readonly name: string;
-	readonly value: Array<AnyCSSValue | undefined>;
+	readonly params: AnyCSSValue[];
 }
 
 export const cssFunction = createBuilder<CSSFunction>(
@@ -13,7 +13,7 @@ export const cssFunction = createBuilder<CSSFunction>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true,
+			params: true,
 		},
 	},
 );

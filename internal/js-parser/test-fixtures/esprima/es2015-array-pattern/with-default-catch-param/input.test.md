@@ -114,6 +114,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 0
 								format: undefined
+								raw: "0"
 								loc: Object {
 									filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
 									end: Object {

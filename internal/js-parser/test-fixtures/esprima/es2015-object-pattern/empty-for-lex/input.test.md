@@ -58,6 +58,7 @@ JSRoot {
 			right: JSNumericLiteral {
 				value: 0
 				format: undefined
+				raw: "0"
 				loc: Object {
 					filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 					end: Object {

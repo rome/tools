@@ -32,6 +32,7 @@ import {ExtensionHandler} from "../../common/file-handlers/types";
 
 import {FileReference} from "@internal/core/common/types/files";
 import {ExtendedMap} from "@internal/collections";
+import {mergeAnalyzeDependency} from "@internal/compiler/api/analyzeDependencies/utils";
 
 type ResolvedImportFound = {
 	type: "FOUND";
@@ -74,11 +75,6 @@ function equalKind(
 	return false;
 }
 
-type DependencyNodeDependency = {
-	analyze: AnalyzeDependency;
-	path: AbsoluteFilePath;
-};
-
 type ResolveImportsResult = {
 	diagnostics: Diagnostics;
 	resolved: BundleCompileResolvedImports;
@@ -108,6 +104,8 @@ export default class DependencyNode {
 
 		const {handler} = getFileHandlerFromPath(ref.real, this.project.config);
 		this.handler = handler;
+
+		this.shallow = false;
 	}
 
 	public uid: string;
@@ -119,9 +117,10 @@ export default class DependencyNode {
 	public handler: undefined | ExtensionHandler;
 	public usedAsync: boolean;
 	public relativeToAbsolutePath: ExtendedMap<string, AbsoluteFilePath>;
+	public shallow: boolean;
 
 	private graph: DependencyGraph;
-	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<DependencyNodeDependency>;
+	private absoluteToAnalyzeDependency: AbsoluteFilePathMap<AnalyzeDependency>;
 	private project: ProjectDefinition;
 	private resolveImportsCache: undefined | ResolveImportsResult;
 
@@ -131,10 +130,19 @@ export default class DependencyNode {
 
 	public setUsedAsync(usedAsync: boolean) {
 		this.usedAsync = usedAsync;
+		if (usedAsync) {
+			this.usedAsync = true;
+		}
 	}
 
 	public setAll(all: boolean) {
-		this.all = all;
+		if (all) {
+			this.all = true;
+		}
+	}
+
+	public setShallow(shallow: boolean) {
+		this.shallow = shallow;
 	}
 
 	public getDependents(): DependencyNode[] {
@@ -153,24 +161,30 @@ export default class DependencyNode {
 		dep: AnalyzeDependency,
 	) {
 		this.relativeToAbsolutePath.set(relative, absolute);
-		this.absoluteToAnalyzeDependency.set(
-			absolute,
-			{
-				analyze: dep,
-				path: absolute,
-			},
-		);
+
+		const existing = this.absoluteToAnalyzeDependency.get(absolute);
+		if (existing !== undefined) {
+			dep = mergeAnalyzeDependency(dep, existing);
+		}
+
+		this.absoluteToAnalyzeDependency.set(absolute, dep);
 	}
 
 	public getDependencyInfoFromAbsolute(
 		path: AbsoluteFilePath,
-	): DependencyNodeDependency {
+	): AnalyzeDependency {
 		return this.absoluteToAnalyzeDependency.assert(path);
 	}
 
-	public getNodeFromRelativeDependency(relative: string): DependencyNode {
-		const absolute = this.relativeToAbsolutePath.assert(relative);
-		return this.graph.getNode(absolute);
+	public getNodeFromRelativeDependency(
+		relative: string,
+	): undefined | DependencyNode {
+		const absolute = this.relativeToAbsolutePath.get(relative);
+		if (absolute === undefined) {
+			return undefined;
+		} else {
+			return this.graph.maybeGetNode(absolute);
+		}
 	}
 
 	public getAbsoluteDependencies(): AbsoluteFilePath[] {
@@ -197,7 +211,9 @@ export default class DependencyNode {
 				exp.type === "externalAll" &&
 				this.relativeToAbsolutePath.has(exp.source)
 			) {
-				this.getNodeFromRelativeDependency(exp.source).getExportedModules(chain);
+				this.getNodeFromRelativeDependency(exp.source)?.getExportedModules(
+					chain,
+				);
 			}
 		}
 
@@ -228,11 +244,11 @@ export default class DependencyNode {
 				}
 
 				case "external": {
-					const resolved = this.getNodeFromRelativeDependency(exp.source).resolveImport(
+					const resolved = this.getNodeFromRelativeDependency(exp.source)?.resolveImport(
 						exp.imported,
 						exp.loc,
 					);
-					if (resolved.type === "FOUND" && equalKind(resolved.record, kind)) {
+					if (resolved?.type === "FOUND" && equalKind(resolved.record, kind)) {
 						names.add(exp.exported);
 					}
 					break;
@@ -244,13 +260,10 @@ export default class DependencyNode {
 				}
 
 				case "externalAll": {
-					names = new Set([
-						...names,
-						...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
-							kind,
-							seen,
-						),
-					]);
+					const node = this.getNodeFromRelativeDependency(exp.source);
+					if (node !== undefined) {
+						names = new Set([...names, ...node.getExportedNames(kind, seen)]);
+					}
 					break;
 				}
 			}
@@ -283,6 +296,7 @@ export default class DependencyNode {
 				const localLoc = mod.analyze.value.topLevelLocalBindings[expectedName];
 				if (localLoc !== undefined) {
 					return {
+						dependencies: [{filename: fromSource}],
 						description: descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
 							expectedName,
 							fromSource,
@@ -295,6 +309,7 @@ export default class DependencyNode {
 		}
 
 		return {
+			dependencies: [{filename: fromSource}],
 			description: descriptions.RESOLVER.UNKNOWN_EXPORT(
 				expectedName,
 				fromSource,
@@ -343,7 +358,7 @@ export default class DependencyNode {
 				continue;
 			}
 
-			const usedNames = this.getDependencyInfoFromAbsolute(absolute).analyze.names;
+			const usedNames = this.getDependencyInfoFromAbsolute(absolute).names;
 
 			// Try to resolve these exports
 			for (const nameInfo of usedNames) {
@@ -417,24 +432,31 @@ export default class DependencyNode {
 			}
 
 			if (record.type === "external" && record.exported === name) {
-				return this.getNodeFromRelativeDependency(record.source).resolveImport(
-					record.imported,
-					record.loc,
-					false,
-					subAncestry,
-				);
+				const node = this.getNodeFromRelativeDependency(record.source);
+				if (node !== undefined) {
+					return node.resolveImport(
+						record.imported,
+						record.loc,
+						false,
+						subAncestry,
+					);
+				}
 			}
 
 			if (record.type === "externalAll") {
-				const resolved = this.getNodeFromRelativeDependency(record.source).resolveImport(
-					name,
-					record.loc,
-					true,
-					subAncestry,
-				);
+				const node = this.getNodeFromRelativeDependency(record.source);
 
-				if (resolved.type === "FOUND") {
-					return resolved;
+				if (node !== undefined) {
+					const resolved = node.resolveImport(
+						name,
+						record.loc,
+						true,
+						subAncestry,
+					);
+
+					if (resolved.type === "FOUND") {
+						return resolved;
+					}
 				}
 			}
 		}

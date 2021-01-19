@@ -301,6 +301,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
+							raw: "0"
 							loc: Object {
 								filename: "typescript/class/members-with-modifier-names/input.ts"
 								end: Object {

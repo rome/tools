@@ -195,6 +195,16 @@
 .docsearch-container {
 	position: relative;
 
+	.docsearch-label {
+		border: 0;
+		clip: rect(0 0 0 0);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute;
+		width: 1px;
+	}
 	.search.icon {
 		z-index: 99999;
 		position: absolute;
@@ -274,6 +284,7 @@
 	flex-shrink: 0;
 	cursor: pointer;
 	display: flex;
+	border: none;
 
 	svg {
 		pointer-events: none;

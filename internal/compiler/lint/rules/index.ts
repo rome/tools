@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:697b54d3ce71731f6c9b5a7927aa606961ab6b2b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:e60df9e198e48762b193c91fc9d207b947b922a2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import htmlUseClosingNonVoid from "./html/useClosingNonVoid";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
@@ -121,6 +121,8 @@ import jsxA11YNoPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
 import jsxA11YNoRedundantAlt from "./jsx-a11y/noRedundantAlt";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoRedundantRoles from "./jsx-a11y/noRedundantRoles";
+// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
+import jsxA11YNoSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
 import jsxA11YNoTargetBlank from "./jsx-a11y/noTargetBlank";
 // rome-ignore lint/js/useDefaultImportBasename: avoid clashing
@@ -306,6 +308,7 @@ lintTransforms.set("jsx-a11y/noOnChange", jsxA11YNoOnChange);
 lintTransforms.set("jsx-a11y/noPositiveTabindex", jsxA11YNoPositiveTabindex);
 lintTransforms.set("jsx-a11y/noRedundantAlt", jsxA11YNoRedundantAlt);
 lintTransforms.set("jsx-a11y/noRedundantRoles", jsxA11YNoRedundantRoles);
+lintTransforms.set("jsx-a11y/noSvgWithoutTitle", jsxA11YNoSvgWithoutTitle);
 lintTransforms.set("jsx-a11y/noTargetBlank", jsxA11YNoTargetBlank);
 lintTransforms.set("jsx-a11y/useAltText", jsxA11YUseAltText);
 lintTransforms.set("jsx-a11y/useAnchorContent", jsxA11YUseAnchorContent);
@@ -449,6 +452,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"jsx-a11y/noPositiveTabindex",
 	"jsx-a11y/noRedundantAlt",
 	"jsx-a11y/noRedundantRoles",
+	"jsx-a11y/noSvgWithoutTitle",
 	"jsx-a11y/noTargetBlank",
 	"jsx-a11y/useAltText",
 	"jsx-a11y/useAnchorContent",
@@ -566,6 +570,7 @@ export type LintRuleName =
 	| "jsx-a11y/noPositiveTabindex"
 	| "jsx-a11y/noRedundantAlt"
 	| "jsx-a11y/noRedundantRoles"
+	| "jsx-a11y/noSvgWithoutTitle"
 	| "jsx-a11y/noTargetBlank"
 	| "jsx-a11y/useAltText"
 	| "jsx-a11y/useAnchorContent"

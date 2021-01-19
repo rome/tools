@@ -17,7 +17,7 @@ disallow unused variables
 **ESLint Equivalent:** [no-unused-vars](https://eslint.org/docs/rules/no-unused-vars)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:2ee3d5d72576c6e4052b92bd8d9d7d0e64de30cc,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:61318b06b97f4768b396be132b89a4a78f724ba6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -31,8 +31,8 @@ disallow unused variables
     <span class="token keyword">const</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
           <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
-    <span style="color: DodgerBlue;">refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
+    <span style="color: rgb(38, 148, 255);">refactoring.</span>
 
 </code></pre>{% endraw %}
 
@@ -47,8 +47,8 @@ disallow unused variables
     <span class="token keyword">let</span> <span class="token variable">a</span> <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
         <span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
-    <span style="color: DodgerBlue;">refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
+    <span style="color: rgb(38, 148, 255);">refactoring.</span>
 
 </code></pre>{% endraw %}
 
@@ -67,15 +67,15 @@ disallow unused variables
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
-    <span style="color: DodgerBlue;">refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
+    <span style="color: rgb(38, 148, 255);">refactoring.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:9</span> <strong>lint/js/noUnusedVariables(foo)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The function variable </span><span style="color: Tomato;"><strong>foo</strong></span><span style="color: Tomato;"> is unused.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
-    <span style="color: DodgerBlue;">refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
+    <span style="color: rgb(38, 148, 255);">refactoring.</span>
 
 </code></pre>{% endraw %}
 
@@ -95,8 +95,8 @@ disallow unused variables
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
-    <span style="color: DodgerBlue;">refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
+    <span style="color: rgb(38, 148, 255);">refactoring.</span>
 
 </code></pre>{% endraw %}
 
@@ -115,15 +115,15 @@ disallow unused variables
   <strong>  2</strong><strong> │ </strong>  <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">;</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
-    <span style="color: DodgerBlue;">refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
+    <span style="color: rgb(38, 148, 255);">refactoring.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:6</span> <strong>lint/js/noUnusedVariables(foo)</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The const variable </span><span style="color: Tomato;"><strong>foo</strong></span><span style="color: Tomato;"> is unused.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Unused variables are dead code and usually the result of incomplete</span>
-    <span style="color: DodgerBlue;">refactoring.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Unused variables are dead code and usually the result of incomplete</span>
+    <span style="color: rgb(38, 148, 255);">refactoring.</span>
 
 </code></pre>{% endraw %}
 

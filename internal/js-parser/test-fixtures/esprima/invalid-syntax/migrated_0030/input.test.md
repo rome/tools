@@ -96,6 +96,7 @@ JSRoot {
 				left: JSNumericLiteral {
 					value: 3
 					format: "hex"
+					raw: "0x3"
 					loc: Object {
 						filename: "esprima/invalid-syntax/migrated_0030/input.js"
 						end: Object {

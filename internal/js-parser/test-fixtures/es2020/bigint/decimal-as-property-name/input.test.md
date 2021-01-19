@@ -111,6 +111,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
+							raw: "0"
 							loc: Object {
 								filename: "es2020/bigint/decimal-as-property-name/input.js"
 								end: Object {

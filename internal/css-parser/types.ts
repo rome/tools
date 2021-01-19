@@ -9,6 +9,7 @@ import {
 } from "@internal/parser-core";
 import {
 	CSSBlock,
+	CSSComma,
 	CSSDimension,
 	CSSFunction,
 	CSSHash,
@@ -39,6 +40,7 @@ export interface HashData {
 export interface NumberData {
 	numberType: string;
 	value: number;
+	raw: string;
 }
 
 export type Tokens = BaseTokens & {
@@ -81,6 +83,7 @@ export type AnyCSSValue =
 	| CSSHash
 	| CSSWhitespace
 	| CSSString
+	| CSSComma
 	| CSSRaw;
 
 export type CSSParserTypes = {

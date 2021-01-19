@@ -319,6 +319,7 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "typescript/class/properties/input.ts"
 								end: Object {

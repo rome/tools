@@ -86,6 +86,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
+							raw: "1"
 							loc: Object {
 								filename: "core/opts/ranges-true/input.js"
 								end: Object {
@@ -186,6 +187,7 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 1
 								format: undefined
+								raw: "1"
 								loc: Object {
 									filename: "core/opts/ranges-true/input.js"
 									end: Object {

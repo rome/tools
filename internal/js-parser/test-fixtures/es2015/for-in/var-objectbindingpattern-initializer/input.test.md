@@ -194,6 +194,7 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
+							raw: "0"
 							loc: Object {
 								filename: "es2015/for-in/var-objectbindingpattern-initializer/input.js"
 								end: Object {

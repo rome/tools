@@ -57,6 +57,7 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 1
 					format: undefined
+					raw: "1"
 					loc: Object {
 						filename: "es2017/trailing-function-commas/4/input.js"
 						end: Object {

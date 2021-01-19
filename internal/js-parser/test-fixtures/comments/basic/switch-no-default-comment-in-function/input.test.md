@@ -179,21 +179,6 @@ JSRoot {
 										line: 3
 									}
 								}
-								test: JSNumericLiteral {
-									value: 2
-									format: undefined
-									loc: Object {
-										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-										end: Object {
-											column: 14
-											line: 3
-										}
-										start: Object {
-											column: 13
-											line: 3
-										}
-									}
-								}
 								consequent: Array [
 									JSBreakStatement {
 										label: undefined
@@ -210,6 +195,22 @@ JSRoot {
 										}
 									}
 								]
+								test: JSNumericLiteral {
+									value: 2
+									format: undefined
+									raw: "2"
+									loc: Object {
+										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
+										end: Object {
+											column: 14
+											line: 3
+										}
+										start: Object {
+											column: 13
+											line: 3
+										}
+									}
+								}
 							}
 							JSSwitchCase {
 								trailingComments: Array ["0"]
@@ -227,6 +228,7 @@ JSRoot {
 								test: JSNumericLiteral {
 									value: 1
 									format: undefined
+									raw: "1"
 									loc: Object {
 										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
 										end: Object {

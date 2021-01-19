@@ -17,7 +17,7 @@ enforce ARIA state and property values are valid
 **ESLint Equivalent:** [aria-proptypes](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-proptypes.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:4fdb37a0b8dc6fb76577d83e0ae67ff822e8297b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a3eacff61bf12cc54575a656ccf9d804099e83f9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -44,8 +44,8 @@ enforce ARIA state and property values are valid
     &lt;<span class="token variable">span</span> <span class="token attr-name">aria-autocomplete</span><span class="token operator">=</span><span class="token string">&apos;test&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The supported values for the </span><span style="color: DodgerBlue;"><strong>aria-autocomplete</strong></span><span style="color: DodgerBlue;"> attribute are:</span>
-    <span style="color: DodgerBlue;">&quot;inline&quot;, &quot;list&quot;, &quot;both&quot;, &quot;none&quot;</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The supported values for the </span><span style="color: rgb(38, 148, 255);"><strong>aria-autocomplete</strong></span><span style="color: rgb(38, 148, 255);"> attribute are:</span>
+    <span style="color: rgb(38, 148, 255);">&quot;inline&quot;, &quot;list&quot;, &quot;both&quot;, &quot;none&quot;</span>
 
 </code></pre>{% endraw %}
 
@@ -60,8 +60,8 @@ enforce ARIA state and property values are valid
     &lt;<span class="token variable">span</span> <span class="token attr-name">aria-invalid</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The supported values for the </span><span style="color: DodgerBlue;"><strong>aria-invalid</strong></span><span style="color: DodgerBlue;"> attribute are: &quot;grammar&quot;,</span>
-    <span style="color: DodgerBlue;">false, &quot;spelling&quot;, true</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The supported values for the </span><span style="color: rgb(38, 148, 255);"><strong>aria-invalid</strong></span><span style="color: rgb(38, 148, 255);"> attribute are: &quot;grammar&quot;,</span>
+    <span style="color: rgb(38, 148, 255);">false, &quot;spelling&quot;, true</span>
 
 </code></pre>{% endraw %}
 
@@ -89,8 +89,8 @@ enforce ARIA state and property values are valid
     &lt;<span class="token variable">span</span> <span class="token attr-name">aria-relevant</span><span class="token operator">=</span><span class="token string">&apos;fancy&apos;</span> &gt;&lt;<span class="token operator">/</span><span class="token variable">span</span>&gt;
           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">The supported values for the </span><span style="color: DodgerBlue;"><strong>aria-relevant</strong></span><span style="color: DodgerBlue;"> attribute are:</span>
-    <span style="color: DodgerBlue;">&quot;additions&quot;, &quot;all&quot;, &quot;removals&quot;, &quot;text&quot;</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The supported values for the </span><span style="color: rgb(38, 148, 255);"><strong>aria-relevant</strong></span><span style="color: rgb(38, 148, 255);"> attribute are:</span>
+    <span style="color: rgb(38, 148, 255);">&quot;additions&quot;, &quot;all&quot;, &quot;removals&quot;, &quot;text&quot;</span>
 
 </code></pre>{% endraw %}
 

@@ -17,7 +17,7 @@ disallow duplicate case labels
 **ESLint Equivalent:** [no-duplicate-case](https://eslint.org/docs/rules/no-duplicate-case)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ee411174a98503cf90356c30438c18d20b7bfa02,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2d62878b5117b86787215a423dbad796aad6d002,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -42,9 +42,9 @@ disallow duplicate case labels
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>&quot;c&quot;</strong></span><span style="color: Tomato;"> case.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Duplicated switch logic paths are hard to follow and usually typos.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
    <strong>  9</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;d&apos;</span><span class="token punctuation">:</span>
   <strong>  10</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -75,9 +75,9 @@ disallow duplicate case labels
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>2</strong></span><span style="color: Tomato;"> case.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Duplicated switch logic paths are hard to follow and usually typos.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
    <strong>  7</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
    <strong>  8</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -108,9 +108,9 @@ disallow duplicate case labels
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>2n</strong></span><span style="color: Tomato;"> case.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Duplicated switch logic paths are hard to follow and usually typos.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
    <strong>  7</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token number">3</span><span class="token punctuation">:</span>
    <strong>  8</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -137,9 +137,9 @@ disallow duplicate case labels
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>&quot;a&quot;</strong></span><span style="color: Tomato;"> case.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Duplicated switch logic paths are hard to follow and usually typos.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token variable">foo</span><span class="token punctuation">:</span>
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -166,9 +166,9 @@ disallow duplicate case labels
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>&quot;foo&quot;</strong></span><span style="color: Tomato;"> case.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Duplicated switch logic paths are hard to follow and usually typos.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">:</span>
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
@@ -195,9 +195,9 @@ disallow duplicate case labels
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not duplicate the </span><span style="color: Tomato;"><strong>null</strong></span><span style="color: Tomato;"> case.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Duplicated switch logic paths are hard to follow and usually typos.</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Duplicated switch logic paths are hard to follow and usually typos.</span>
 
-  <strong><span style="color: DodgerBlue;">ℹ </span></strong><span style="color: DodgerBlue;">Defined already here</span>
+  <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
   <strong>  3</strong><strong> │ </strong>  <span class="token keyword">case</span> <span class="token boolean">null</span><span class="token punctuation">:</span>
   <strong>  4</strong><strong> │ </strong>    <span class="token keyword">break</span><span class="token punctuation">;</span>
