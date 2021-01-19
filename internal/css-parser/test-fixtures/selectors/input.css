@@ -9,3 +9,19 @@ div, div + #id, div ~ #id, div > #id {
 .class + * {
 
 }
+
+a[title] {
+  color: purple;
+}
+
+a[title = "title"] {
+  color: purple;
+}
+
+a[title~="title" i] {
+  color: purple;
+}
+
+a[title = "title"][href*="image/*" S] {
+	color: purple;
+}

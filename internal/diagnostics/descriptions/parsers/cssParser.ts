@@ -1,4 +1,5 @@
 import {createDiagnosticsCategory} from "../index";
+import {buildSuggestionAdvice} from "../../helpers";
 import {markup} from "@internal/markup";
 
 export const cssParser = createDiagnosticsCategory({
@@ -14,7 +15,15 @@ export const cssParser = createDiagnosticsCategory({
 	EXPECTED_IDENTIFIER: {message: markup`Expected an identifier`},
 	EXPECTED_SELECTOR: {message: markup`Expected a selector`},
 	EXPECTED_LBRACKET: {
-		message: markup`Expected a left bracket </emphasis>{</emphasis>`,
+		message: markup`Expected a left curly bracket <emphasis>{</emphasis>.`,
 	},
 	UNEXPECTED_EMPTY_SELECTOR: {message: markup`Unexpected empty selectors`},
+	EXPECTED_CLOSING_ATTRIBUTE_SELECTOR: {
+		message: markup`Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>.`,
+	},
+	UNKNOWN_ATTRIBUTE_MATCHER: (matcher: string, validMatchers: string[]) => ({
+		message: markup`Unknown attribute matcher.`,
+		advice: buildSuggestionAdvice(matcher, validMatchers, {minRating: 0}),
+	}),
+	UNKNOWN_ATTRIBUTE_MODIFIER: {message: markup`Unknown attribute modifier`},
 });

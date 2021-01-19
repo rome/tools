@@ -58,6 +58,18 @@ div + #id, div ~ #id, div > #id {
 
 }
 
+div[attr="value"] {
+
+}
+
+[ attr = value i ] {
+
+}
+
+.longlonglonglonglong_class_name[longlonglonglong_attr_name="longlonglonglonglonglong_value"] {
+
+}
+
 ```
 
 ### `Output`
@@ -107,6 +119,15 @@ div > #id {
 }
 
 .field + * {
+}
+
+div[attr="value"] {
+}
+
+[attr=value i] {
+}
+
+.longlonglonglonglong_class_name[longlonglonglong_attr_name="longlonglonglonglonglong_value"] {
 }
 
 ```
