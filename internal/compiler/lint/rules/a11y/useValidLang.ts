@@ -1,6 +1,6 @@
 import {createVisitor, signals} from "@internal/compiler";
 import {descriptions} from "@internal/diagnostics";
-import {JSXElement} from "@internal/ast";
+import {HTMLAttribute, JSXElement} from "@internal/ast";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
@@ -27,8 +27,17 @@ function jsxSupportedLang(node: JSXElement): undefined | string {
 	return undefined;
 }
 
+// Will return the attribute value if invalid
+function htmlSupportedLang(attribute: HTMLAttribute): undefined | string {
+	if (!langSupported(attribute.value?.value ?? "")) {
+		return attribute.value?.value;
+	}
+
+	return undefined;
+}
+
 export default createVisitor({
-	name: "jsx-a11y/useValidLang",
+	name: "a11y/useValidLang",
 	enter(path) {
 		const {node} = path;
 
@@ -38,8 +47,20 @@ export default createVisitor({
 				// TODO add an autofix suggestion
 				path.context.addNodeDiagnostic(
 					getJSXAttribute(node, "lang"),
-					descriptions.LINT.JSX_A11Y_LANG(invalidValue, getLangSuggestions()),
+					descriptions.LINT.A11Y_LANG(invalidValue, getLangSuggestions()),
 				);
+			}
+		} else if (node.type === "HTMLElement" && node.name.name === "html") {
+			const langAttr = node.attributes.find((a) => a.name.name === "lang");
+			if (langAttr !== undefined) {
+				const invalidValue = htmlSupportedLang(langAttr);
+
+				if (invalidValue !== undefined) {
+					path.context.addNodeDiagnostic(
+						langAttr.value,
+						descriptions.LINT.A11Y_LANG(invalidValue, getLangSuggestions()),
+					);
+				}
 			}
 		}
 

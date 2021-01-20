@@ -17,22 +17,6 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
-	HTML_USE_VALID_LANG: (value: string, suggestions: string[]) => ({
-		category: "lint/html/useValidLang",
-		message: markup`Provide a valid value for the <emphasis>lang</emphasis> attribute.`,
-		advice: buildSuggestionAdvice(value, suggestions),
-	}),
-	HTML_USE_HTML_LANG: {
-		category: "lint/html/useHtmlLang",
-		message: markup`Provide a <emphasis>lang</emphasis> attribute when using the <emphasis>html</emphasis> element.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Setting a lang attribute on HTML elements configures the language used by screen readers when no user default is specified.`,
-			},
-		],
-	},
 	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
 		category: "lint/js/noSingleCharRegexAlternatives",
 		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
@@ -382,8 +366,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_LANG: (value: string, suggestions: string[]) => ({
-		category: "lint/jsx-a11y/useValidLang",
+	A11Y_LANG: (value: string, suggestions: string[]) => ({
+		category: "lint/a11y/useValidLang",
 		message: markup`Provide a valid value for the <emphasis>lang</emphasis> attribute.`,
 		advice: buildSuggestionAdvice(value, suggestions),
 	}),
@@ -431,8 +415,8 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_HTML_USE_LANG: {
-		category: "lint/jsx-a11y/useHtmlLang",
+	A11Y_HTML_USE_LANG: {
+		category: "lint/a11y/useHtmlLang",
 		message: markup`Provide a <emphasis>lang</emphasis> attribute when using the <emphasis>html</emphasis> element.`,
 		advice: [
 			{

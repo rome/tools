@@ -32,7 +32,7 @@ function validLang(node: JSXElement) {
 }
 
 export default createVisitor({
-	name: "jsx-a11y/useHtmlLang",
+	name: "a11y/useHtmlLang",
 
 	enter(path) {
 		const {node} = path;
@@ -40,7 +40,15 @@ export default createVisitor({
 			if (!(hasJSXAttribute(node, "lang") && validLang(node))) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JSX_A11Y_HTML_USE_LANG,
+					descriptions.LINT.A11Y_HTML_USE_LANG,
+				);
+			}
+		} else if (node.type === "HTMLElement" && node.name.name === "html") {
+			const langAttr = node.attributes.find((a) => a.name.name === "lang");
+			if (!langAttr || langAttr?.value?.value === "") {
+				path.context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.A11Y_HTML_USE_LANG,
 				);
 			}
 		}
