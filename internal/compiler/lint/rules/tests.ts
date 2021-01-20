@@ -6,454 +6,337 @@ type Test = {
 	filename: string;
 };
 
-type Tests = Dict<Test | (Test[])>;
+type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:c7adcd2ed9b9125da6746adaeddddf1ea3226075,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:2d1ec3e608bbed41c4d2aac1eb46b0f2cdbf38ac,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import htmlUseClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
+import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import htmlUseHtmlLang from "./html/useHtmlLang.test.rjson";
+import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import htmlUseValidLang from "./html/useValidLang.test.rjson";
+import useClosingNonVoid from "./html/useClosingNonVoid.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoArguments from "./js/noArguments.test.rjson";
+import noArguments from "./js/noArguments.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor.test.rjson";
+import noAsyncPromiseExecutor from "./js/noAsyncPromiseExecutor.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoCatchAssign from "./js/noCatchAssign.test.rjson";
+import noCatchAssign from "./js/noCatchAssign.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoCommaOperator from "./js/noCommaOperator.test.rjson";
+import noCommaOperator from "./js/noCommaOperator.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoCompareNegZero from "./js/noCompareNegZero.test.rjson";
+import noCompareNegZero from "./js/noCompareNegZero.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoCondAssign from "./js/noCondAssign.test.rjson";
+import noCondAssign from "./js/noCondAssign.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDebugger from "./js/noDebugger.test.rjson";
+import noDebugger from "./js/noDebugger.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDelete from "./js/noDelete.test.rjson";
+import noDelete from "./js/noDelete.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDeleteVars from "./js/noDeleteVars.test.rjson";
+import noDeleteVars from "./js/noDeleteVars.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDoubleEquals from "./js/noDoubleEquals.test.rjson";
+import noDoubleEquals from "./js/noDoubleEquals.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDupeArgs from "./js/noDupeArgs.test.rjson";
+import noDupeArgs from "./js/noDupeArgs.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDuplicateCase from "./js/noDuplicateCase.test.rjson";
+import noDuplicateCase from "./js/noDuplicateCase.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDuplicateImportSource from "./js/noDuplicateImportSource.test.rjson";
+import noDuplicateImportSource from "./js/noDuplicateImportSource.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoDuplicateKeys from "./js/noDuplicateKeys.test.rjson";
+import noDuplicateKeys from "./js/noDuplicateKeys.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoEmptyBlocks from "./js/noEmptyBlocks.test.rjson";
+import noEmptyBlocks from "./js/noEmptyBlocks.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoExtraBooleanCast from "./js/noExtraBooleanCast.test.rjson";
+import noExtraBooleanCast from "./js/noExtraBooleanCast.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoFunctionAssign from "./js/noFunctionAssign.test.rjson";
+import noFunctionAssign from "./js/noFunctionAssign.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoGetterReturn from "./js/noGetterReturn.test.rjson";
+import noGetterReturn from "./js/noGetterReturn.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoImportAssign from "./js/noImportAssign.test.rjson";
+import noImportAssign from "./js/noImportAssign.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoLabelVar from "./js/noLabelVar.test.rjson";
+import noLabelVar from "./js/noLabelVar.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoNegationElse from "./js/noNegationElse.test.rjson";
+import noNegationElse from "./js/noNegationElse.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoNestedTernary from "./js/noNestedTernary.test.rjson";
+import noNestedTernary from "./js/noNestedTernary.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoRestrictedGlobals from "./js/noRestrictedGlobals.test.rjson";
+import noRestrictedGlobals from "./js/noRestrictedGlobals.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoSetterReturn from "./js/noSetterReturn.test.rjson";
+import noSetterReturn from "./js/noSetterReturn.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoShadowRestrictedNames from "./js/noShadowRestrictedNames.test.rjson";
+import noShadowRestrictedNames from "./js/noShadowRestrictedNames.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoShoutyConstants from "./js/noShoutyConstants.test.rjson";
+import noShoutyConstants from "./js/noShoutyConstants.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoSingleCharRegexAlternatives from "./js/noSingleCharRegexAlternatives.test.rjson";
+import noSingleCharRegexAlternatives from "./js/noSingleCharRegexAlternatives.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoSparseArray from "./js/noSparseArray.test.rjson";
+import noSparseArray from "./js/noSparseArray.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoTemplateCurlyInString from "./js/noTemplateCurlyInString.test.rjson";
+import noTemplateCurlyInString from "./js/noTemplateCurlyInString.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoUndeclaredVariables from "./js/noUndeclaredVariables.test.rjson";
+import noUndeclaredVariables from "./js/noUndeclaredVariables.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoUnnecessaryContinue from "./js/noUnnecessaryContinue.test.rjson";
+import noUnnecessaryContinue from "./js/noUnnecessaryContinue.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoUnsafeFinally from "./js/noUnsafeFinally.test.rjson";
+import noUnsafeFinally from "./js/noUnsafeFinally.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoUnsafeNegation from "./js/noUnsafeNegation.test.rjson";
+import noUnsafeNegation from "./js/noUnsafeNegation.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral.test.rjson";
+import noUnusedTemplateLiteral from "./js/noUnusedTemplateLiteral.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoUnusedVariables from "./js/noUnusedVariables.test.rjson";
+import noUnusedVariables from "./js/noUnusedVariables.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsNoVar from "./js/noVar.test.rjson";
+import noVar from "./js/noVar.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsPreferOptionalChaining from "./js/preferOptionalChaining.test.rjson";
+import preferOptionalChaining from "./js/preferOptionalChaining.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseBlockStatements from "./js/useBlockStatements.test.rjson";
+import useBlockStatements from "./js/useBlockStatements.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseDefaultExportBasename from "./js/useDefaultExportBasename.test.rjson";
+import useDefaultExportBasename from "./js/useDefaultExportBasename.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseDefaultImportBasename from "./js/useDefaultImportBasename.test.rjson";
+import useDefaultImportBasename from "./js/useDefaultImportBasename.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseFunctionDeclarations from "./js/useFunctionDeclarations.test.rjson";
+import useFunctionDeclarations from "./js/useFunctionDeclarations.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseSingleCaseStatement from "./js/useSingleCaseStatement.test.rjson";
+import useSingleCaseStatement from "./js/useSingleCaseStatement.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseSingleVarDeclarator from "./js/useSingleVarDeclarator.test.rjson";
+import useSingleVarDeclarator from "./js/useSingleVarDeclarator.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseSortedSpecifiers from "./js/useSortedSpecifiers.test.rjson";
+import useSortedSpecifiers from "./js/useSortedSpecifiers.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseTemplate from "./js/useTemplate.test.rjson";
+import useTemplate from "./js/useTemplate.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsUseWhile from "./js/useWhile.test.rjson";
+import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
+import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements.test.rjson";
+import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
+import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoDistractingElements from "./jsx-a11y/noDistractingElements.test.rjson";
+import noDistractingElements from "./jsx-a11y/noDistractingElements.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
+import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
+import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex.test.rjson";
+import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoOnChange from "./jsx-a11y/noOnChange.test.rjson";
+import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoPositiveTabindex from "./jsx-a11y/noPositiveTabindex.test.rjson";
+import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
+import noRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
+import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle.test.rjson";
+import noSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YNoTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
+import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseAltText from "./jsx-a11y/useAltText.test.rjson";
+import useAltText from "./jsx-a11y/useAltText.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
+import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
+import useAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
+import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseAriaProptypes from "./jsx-a11y/useAriaProptypes.test.rjson";
+import useAriaProptypes from "./jsx-a11y/useAriaProptypes.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
+import useHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseHtmlLang from "./jsx-a11y/useHtmlLang.test.rjson";
+import useIframeTitle from "./jsx-a11y/useIframeTitle.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseIframeTitle from "./jsx-a11y/useIframeTitle.test.rjson";
+import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.rjson";
+import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.rjson";
+import useMediaCaption from "./jsx-a11y/useMediaCaption.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseMediaCaption from "./jsx-a11y/useMediaCaption.test.rjson";
+import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
+import noCommentText from "./jsx/noCommentText.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxA11YUseValidLang from "./jsx-a11y/useValidLang.test.rjson";
+import noDuplicateProps from "./jsx/noDuplicateProps.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxNoCommentText from "./jsx/noCommentText.test.rjson";
+import noImplicitBoolean from "./jsx/noImplicitBoolean.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxNoDuplicateProps from "./jsx/noDuplicateProps.test.rjson";
+import noPropSpreading from "./jsx/noPropSpreading.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxNoImplicitBoolean from "./jsx/noImplicitBoolean.test.rjson";
+import useJSXFileExtension from "./jsx/useJSXFileExtension.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxNoPropSpreading from "./jsx/noPropSpreading.test.rjson";
+import usePascalCase from "./jsx/usePascalCase.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxUseJSXFileExtension from "./jsx/useJSXFileExtension.test.rjson";
+import useSelfClosingElements from "./jsx/useSelfClosingElements.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxUsePascalCase from "./jsx/usePascalCase.test.rjson";
+import noAccessStateInSetState from "./react/noAccessStateInSetState.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import jsxUseSelfClosingElements from "./jsx/useSelfClosingElements.test.rjson";
+import noArrayIndexKey from "./react/noArrayIndexKey.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoAccessStateInSetState from "./react/noAccessStateInSetState.test.rjson";
+import noChildrenProp from "./react/noChildrenProp.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoArrayIndexKey from "./react/noArrayIndexKey.test.rjson";
+import noDanger from "./react/noDanger.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoChildrenProp from "./react/noChildrenProp.test.rjson";
+import noDangerWithChildren from "./react/noDangerWithChildren.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoDanger from "./react/noDanger.test.rjson";
+import noDidMountSetState from "./react/noDidMountSetState.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoDangerWithChildren from "./react/noDangerWithChildren.test.rjson";
+import noDidUpdateSetState from "./react/noDidUpdateSetState.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoDidMountSetState from "./react/noDidMountSetState.test.rjson";
+import noDirectMutationState from "./react/noDirectMutationState.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoDidUpdateSetState from "./react/noDidUpdateSetState.test.rjson";
+import noFindDOMNode from "./react/noFindDOMNode.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoDirectMutationState from "./react/noDirectMutationState.test.rjson";
+import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoFindDOMNode from "./react/noFindDOMNode.test.rjson";
+import noRenderReturnValue from "./react/noRenderReturnValue.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate.test.rjson";
+import noStringRefs from "./react/noStringRefs.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoRenderReturnValue from "./react/noRenderReturnValue.test.rjson";
+import noThisInSFC from "./react/noThisInSFC.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoStringRefs from "./react/noStringRefs.test.rjson";
+import noUnsafe from "./react/noUnsafe.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoThisInSFC from "./react/noThisInSFC.test.rjson";
+import noUselessFragment from "./react/noUselessFragment.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoUnsafe from "./react/noUnsafe.test.rjson";
+import noVoidElementsWithChildren from "./react/noVoidElementsWithChildren.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoUselessFragment from "./react/noUselessFragment.test.rjson";
+import noWillUpdateSetState from "./react/noWillUpdateSetState.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoVoidElementsWithChildren from "./react/noVoidElementsWithChildren.test.rjson";
+import useButtonType from "./react/useButtonType.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactNoWillUpdateSetState from "./react/noWillUpdateSetState.test.rjson";
+import useFragmentSyntax from "./react/useFragmentSyntax.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactUseButtonType from "./react/useButtonType.test.rjson";
+import useKey from "./react/useKey.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactUseFragmentSyntax from "./react/useFragmentSyntax.test.rjson";
+import useRenderReturn from "./react/useRenderReturn.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactUseKey from "./react/useKey.test.rjson";
+import useSortComp from "./react/useSortComp.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactUseRenderReturn from "./react/useRenderReturn.test.rjson";
+import useStylePropObject from "./react/useStylePropObject.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactUseSortComp from "./react/useSortComp.test.rjson";
+import noDuplicateGroupNamesInRegularExpressions from "./regex/noDuplicateGroupNamesInRegularExpressions.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import reactUseStylePropObject from "./react/useStylePropObject.test.rjson";
+import noEmptyCharacterClass from "./regex/noEmptyCharacterClass.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import regexNoDuplicateGroupNamesInRegularExpressions from "./regex/noDuplicateGroupNamesInRegularExpressions.test.rjson";
+import noEmptyMatches from "./regex/noEmptyMatches.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import regexNoEmptyCharacterClass from "./regex/noEmptyCharacterClass.test.rjson";
+import noMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import regexNoEmptyMatches from "./regex/noEmptyMatches.test.rjson";
+import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.rjson";
 // @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import regexNoMultipleSpacesInRegularExpressionLiterals from "./regex/noMultipleSpacesInRegularExpressionLiterals.test.rjson";
-// @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import regexNoPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.rjson";
-// @ts-ignore
-// rome-ignore lint/js/useDefaultImportBasename: avoid clashing
-import tsPreferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
+import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
-	"html/useClosingNonVoid": htmlUseClosingNonVoid,
-	"html/useHtmlLang": htmlUseHtmlLang,
-	"html/useValidLang": htmlUseValidLang,
-	"js/noArguments": jsNoArguments,
-	"js/noAsyncPromiseExecutor": jsNoAsyncPromiseExecutor,
-	"js/noCatchAssign": jsNoCatchAssign,
-	"js/noCommaOperator": jsNoCommaOperator,
-	"js/noCompareNegZero": jsNoCompareNegZero,
-	"js/noCondAssign": jsNoCondAssign,
-	"js/noDebugger": jsNoDebugger,
-	"js/noDelete": jsNoDelete,
-	"js/noDeleteVars": jsNoDeleteVars,
-	"js/noDoubleEquals": jsNoDoubleEquals,
-	"js/noDupeArgs": jsNoDupeArgs,
-	"js/noDuplicateCase": jsNoDuplicateCase,
-	"js/noDuplicateImportSource": jsNoDuplicateImportSource,
-	"js/noDuplicateKeys": jsNoDuplicateKeys,
-	"js/noEmptyBlocks": jsNoEmptyBlocks,
-	"js/noExtraBooleanCast": jsNoExtraBooleanCast,
-	"js/noFunctionAssign": jsNoFunctionAssign,
-	"js/noGetterReturn": jsNoGetterReturn,
-	"js/noImportAssign": jsNoImportAssign,
-	"js/noLabelVar": jsNoLabelVar,
-	"js/noNegationElse": jsNoNegationElse,
-	"js/noNestedTernary": jsNoNestedTernary,
-	"js/noRestrictedGlobals": jsNoRestrictedGlobals,
-	"js/noSetterReturn": jsNoSetterReturn,
-	"js/noShadowRestrictedNames": jsNoShadowRestrictedNames,
-	"js/noShoutyConstants": jsNoShoutyConstants,
-	"js/noSingleCharRegexAlternatives": jsNoSingleCharRegexAlternatives,
-	"js/noSparseArray": jsNoSparseArray,
-	"js/noTemplateCurlyInString": jsNoTemplateCurlyInString,
-	"js/noUndeclaredVariables": jsNoUndeclaredVariables,
-	"js/noUnnecessaryContinue": jsNoUnnecessaryContinue,
-	"js/noUnsafeFinally": jsNoUnsafeFinally,
-	"js/noUnsafeNegation": jsNoUnsafeNegation,
-	"js/noUnusedTemplateLiteral": jsNoUnusedTemplateLiteral,
-	"js/noUnusedVariables": jsNoUnusedVariables,
-	"js/noVar": jsNoVar,
-	"js/preferOptionalChaining": jsPreferOptionalChaining,
-	"js/useBlockStatements": jsUseBlockStatements,
-	"js/useDefaultExportBasename": jsUseDefaultExportBasename,
-	"js/useDefaultImportBasename": jsUseDefaultImportBasename,
-	"js/useFunctionDeclarations": jsUseFunctionDeclarations,
-	"js/useSingleCaseStatement": jsUseSingleCaseStatement,
-	"js/useSingleVarDeclarator": jsUseSingleVarDeclarator,
-	"js/useSortedSpecifiers": jsUseSortedSpecifiers,
-	"js/useTemplate": jsUseTemplate,
-	"js/useWhile": jsUseWhile,
-	"jsx-a11y/noAccessKey": jsxA11YNoAccessKey,
-	"jsx-a11y/noAriaUnsupportedElements": jsxA11YNoAriaUnsupportedElements,
-	"jsx-a11y/noAutofocus": jsxA11YNoAutofocus,
-	"jsx-a11y/noDistractingElements": jsxA11YNoDistractingElements,
-	"jsx-a11y/noHeaderScope": jsxA11YNoHeaderScope,
-	"jsx-a11y/noNoninteractiveElementToInteractiveRole": jsxA11YNoNoninteractiveElementToInteractiveRole,
-	"jsx-a11y/noNoninteractiveTabindex": jsxA11YNoNoninteractiveTabindex,
-	"jsx-a11y/noOnChange": jsxA11YNoOnChange,
-	"jsx-a11y/noPositiveTabindex": jsxA11YNoPositiveTabindex,
-	"jsx-a11y/noRedundantAlt": jsxA11YNoRedundantAlt,
-	"jsx-a11y/noRedundantRoles": jsxA11YNoRedundantRoles,
-	"jsx-a11y/noSvgWithoutTitle": jsxA11YNoSvgWithoutTitle,
-	"jsx-a11y/noTargetBlank": jsxA11YNoTargetBlank,
-	"jsx-a11y/useAltText": jsxA11YUseAltText,
-	"jsx-a11y/useAnchorContent": jsxA11YUseAnchorContent,
-	"jsx-a11y/useAriaProps": jsxA11YUseAriaProps,
-	"jsx-a11y/useAriaPropsForRole": jsxA11YUseAriaPropsForRole,
-	"jsx-a11y/useAriaProptypes": jsxA11YUseAriaProptypes,
-	"jsx-a11y/useHeadingContent": jsxA11YUseHeadingContent,
-	"jsx-a11y/useHtmlLang": jsxA11YUseHtmlLang,
-	"jsx-a11y/useIframeTitle": jsxA11YUseIframeTitle,
-	"jsx-a11y/useKeyWithClickEvents": jsxA11YUseKeyWithClickEvents,
-	"jsx-a11y/useKeyWithMouseEvents": jsxA11YUseKeyWithMouseEvents,
-	"jsx-a11y/useMediaCaption": jsxA11YUseMediaCaption,
-	"jsx-a11y/useValidAnchor": jsxA11YUseValidAnchor,
-	"jsx-a11y/useValidLang": jsxA11YUseValidLang,
-	"jsx/noCommentText": jsxNoCommentText,
-	"jsx/noDuplicateProps": jsxNoDuplicateProps,
-	"jsx/noImplicitBoolean": jsxNoImplicitBoolean,
-	"jsx/noPropSpreading": jsxNoPropSpreading,
-	"jsx/useJSXFileExtension": jsxUseJSXFileExtension,
-	"jsx/usePascalCase": jsxUsePascalCase,
-	"jsx/useSelfClosingElements": jsxUseSelfClosingElements,
-	"react/noAccessStateInSetState": reactNoAccessStateInSetState,
-	"react/noArrayIndexKey": reactNoArrayIndexKey,
-	"react/noChildrenProp": reactNoChildrenProp,
-	"react/noDanger": reactNoDanger,
-	"react/noDangerWithChildren": reactNoDangerWithChildren,
-	"react/noDidMountSetState": reactNoDidMountSetState,
-	"react/noDidUpdateSetState": reactNoDidUpdateSetState,
-	"react/noDirectMutationState": reactNoDirectMutationState,
-	"react/noFindDOMNode": reactNoFindDOMNode,
-	"react/noRedundantShouldComponentUpdate": reactNoRedundantShouldComponentUpdate,
-	"react/noRenderReturnValue": reactNoRenderReturnValue,
-	"react/noStringRefs": reactNoStringRefs,
-	"react/noThisInSFC": reactNoThisInSFC,
-	"react/noUnsafe": reactNoUnsafe,
-	"react/noUselessFragment": reactNoUselessFragment,
-	"react/noVoidElementsWithChildren": reactNoVoidElementsWithChildren,
-	"react/noWillUpdateSetState": reactNoWillUpdateSetState,
-	"react/useButtonType": reactUseButtonType,
-	"react/useFragmentSyntax": reactUseFragmentSyntax,
-	"react/useKey": reactUseKey,
-	"react/useRenderReturn": reactUseRenderReturn,
-	"react/useSortComp": reactUseSortComp,
-	"react/useStylePropObject": reactUseStylePropObject,
-	"regex/noDuplicateGroupNamesInRegularExpressions": regexNoDuplicateGroupNamesInRegularExpressions,
-	"regex/noEmptyCharacterClass": regexNoEmptyCharacterClass,
-	"regex/noEmptyMatches": regexNoEmptyMatches,
-	"regex/noMultipleSpacesInRegularExpressionLiterals": regexNoMultipleSpacesInRegularExpressionLiterals,
-	"regex/noPosixInRegularExpression": regexNoPosixInRegularExpression,
-	"ts/preferShorthandArrayType": tsPreferShorthandArrayType,
+	"a11y/useHtmlLang": useHtmlLang,
+	"a11y/useValidLang": useValidLang,
+	"html/useClosingNonVoid": useClosingNonVoid,
+	"js/noArguments": noArguments,
+	"js/noAsyncPromiseExecutor": noAsyncPromiseExecutor,
+	"js/noCatchAssign": noCatchAssign,
+	"js/noCommaOperator": noCommaOperator,
+	"js/noCompareNegZero": noCompareNegZero,
+	"js/noCondAssign": noCondAssign,
+	"js/noDebugger": noDebugger,
+	"js/noDelete": noDelete,
+	"js/noDeleteVars": noDeleteVars,
+	"js/noDoubleEquals": noDoubleEquals,
+	"js/noDupeArgs": noDupeArgs,
+	"js/noDuplicateCase": noDuplicateCase,
+	"js/noDuplicateImportSource": noDuplicateImportSource,
+	"js/noDuplicateKeys": noDuplicateKeys,
+	"js/noEmptyBlocks": noEmptyBlocks,
+	"js/noExtraBooleanCast": noExtraBooleanCast,
+	"js/noFunctionAssign": noFunctionAssign,
+	"js/noGetterReturn": noGetterReturn,
+	"js/noImportAssign": noImportAssign,
+	"js/noLabelVar": noLabelVar,
+	"js/noNegationElse": noNegationElse,
+	"js/noNestedTernary": noNestedTernary,
+	"js/noRestrictedGlobals": noRestrictedGlobals,
+	"js/noSetterReturn": noSetterReturn,
+	"js/noShadowRestrictedNames": noShadowRestrictedNames,
+	"js/noShoutyConstants": noShoutyConstants,
+	"js/noSingleCharRegexAlternatives": noSingleCharRegexAlternatives,
+	"js/noSparseArray": noSparseArray,
+	"js/noTemplateCurlyInString": noTemplateCurlyInString,
+	"js/noUndeclaredVariables": noUndeclaredVariables,
+	"js/noUnnecessaryContinue": noUnnecessaryContinue,
+	"js/noUnsafeFinally": noUnsafeFinally,
+	"js/noUnsafeNegation": noUnsafeNegation,
+	"js/noUnusedTemplateLiteral": noUnusedTemplateLiteral,
+	"js/noUnusedVariables": noUnusedVariables,
+	"js/noVar": noVar,
+	"js/preferOptionalChaining": preferOptionalChaining,
+	"js/useBlockStatements": useBlockStatements,
+	"js/useDefaultExportBasename": useDefaultExportBasename,
+	"js/useDefaultImportBasename": useDefaultImportBasename,
+	"js/useFunctionDeclarations": useFunctionDeclarations,
+	"js/useSingleCaseStatement": useSingleCaseStatement,
+	"js/useSingleVarDeclarator": useSingleVarDeclarator,
+	"js/useSortedSpecifiers": useSortedSpecifiers,
+	"js/useTemplate": useTemplate,
+	"js/useWhile": useWhile,
+	"jsx-a11y/noAccessKey": noAccessKey,
+	"jsx-a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
+	"jsx-a11y/noAutofocus": noAutofocus,
+	"jsx-a11y/noDistractingElements": noDistractingElements,
+	"jsx-a11y/noHeaderScope": noHeaderScope,
+	"jsx-a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
+	"jsx-a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,
+	"jsx-a11y/noOnChange": noOnChange,
+	"jsx-a11y/noPositiveTabindex": noPositiveTabindex,
+	"jsx-a11y/noRedundantAlt": noRedundantAlt,
+	"jsx-a11y/noRedundantRoles": noRedundantRoles,
+	"jsx-a11y/noSvgWithoutTitle": noSvgWithoutTitle,
+	"jsx-a11y/noTargetBlank": noTargetBlank,
+	"jsx-a11y/useAltText": useAltText,
+	"jsx-a11y/useAnchorContent": useAnchorContent,
+	"jsx-a11y/useAriaProps": useAriaProps,
+	"jsx-a11y/useAriaPropsForRole": useAriaPropsForRole,
+	"jsx-a11y/useAriaProptypes": useAriaProptypes,
+	"jsx-a11y/useHeadingContent": useHeadingContent,
+	"jsx-a11y/useIframeTitle": useIframeTitle,
+	"jsx-a11y/useKeyWithClickEvents": useKeyWithClickEvents,
+	"jsx-a11y/useKeyWithMouseEvents": useKeyWithMouseEvents,
+	"jsx-a11y/useMediaCaption": useMediaCaption,
+	"jsx-a11y/useValidAnchor": useValidAnchor,
+	"jsx/noCommentText": noCommentText,
+	"jsx/noDuplicateProps": noDuplicateProps,
+	"jsx/noImplicitBoolean": noImplicitBoolean,
+	"jsx/noPropSpreading": noPropSpreading,
+	"jsx/useJSXFileExtension": useJSXFileExtension,
+	"jsx/usePascalCase": usePascalCase,
+	"jsx/useSelfClosingElements": useSelfClosingElements,
+	"react/noAccessStateInSetState": noAccessStateInSetState,
+	"react/noArrayIndexKey": noArrayIndexKey,
+	"react/noChildrenProp": noChildrenProp,
+	"react/noDanger": noDanger,
+	"react/noDangerWithChildren": noDangerWithChildren,
+	"react/noDidMountSetState": noDidMountSetState,
+	"react/noDidUpdateSetState": noDidUpdateSetState,
+	"react/noDirectMutationState": noDirectMutationState,
+	"react/noFindDOMNode": noFindDOMNode,
+	"react/noRedundantShouldComponentUpdate": noRedundantShouldComponentUpdate,
+	"react/noRenderReturnValue": noRenderReturnValue,
+	"react/noStringRefs": noStringRefs,
+	"react/noThisInSFC": noThisInSFC,
+	"react/noUnsafe": noUnsafe,
+	"react/noUselessFragment": noUselessFragment,
+	"react/noVoidElementsWithChildren": noVoidElementsWithChildren,
+	"react/noWillUpdateSetState": noWillUpdateSetState,
+	"react/useButtonType": useButtonType,
+	"react/useFragmentSyntax": useFragmentSyntax,
+	"react/useKey": useKey,
+	"react/useRenderReturn": useRenderReturn,
+	"react/useSortComp": useSortComp,
+	"react/useStylePropObject": useStylePropObject,
+	"regex/noDuplicateGroupNamesInRegularExpressions": noDuplicateGroupNamesInRegularExpressions,
+	"regex/noEmptyCharacterClass": noEmptyCharacterClass,
+	"regex/noEmptyMatches": noEmptyMatches,
+	"regex/noMultipleSpacesInRegularExpressionLiterals": noMultipleSpacesInRegularExpressionLiterals,
+	"regex/noPosixInRegularExpression": noPosixInRegularExpression,
+	"ts/preferShorthandArrayType": preferShorthandArrayType,
 };
 /* GENERATED:END(id:main) */

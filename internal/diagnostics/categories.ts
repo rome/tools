@@ -94,11 +94,11 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:50973c34a29e65c33bd4c9ba8086455190e6a6f1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:3be7e2589f63907fa0d74b56941ed97eaebecb9d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
+	| "lint/a11y/useHtmlLang"
+	| "lint/a11y/useValidLang"
 	| "lint/html/useClosingNonVoid"
-	| "lint/html/useHtmlLang"
-	| "lint/html/useValidLang"
 	| "lint/js/noArguments"
 	| "lint/js/noAsyncPromiseExecutor"
 	| "lint/js/noCatchAssign"
@@ -165,13 +165,11 @@ export type DiagnosticLintCategory =
 	| "lint/jsx-a11y/useAriaPropsForRole"
 	| "lint/jsx-a11y/useAriaProptypes"
 	| "lint/jsx-a11y/useHeadingContent"
-	| "lint/jsx-a11y/useHtmlLang"
 	| "lint/jsx-a11y/useIframeTitle"
 	| "lint/jsx-a11y/useKeyWithClickEvents"
 	| "lint/jsx-a11y/useKeyWithMouseEvents"
 	| "lint/jsx-a11y/useMediaCaption"
 	| "lint/jsx-a11y/useValidAnchor"
-	| "lint/jsx-a11y/useValidLang"
 	| "lint/jsx/noCommentText"
 	| "lint/jsx/noDuplicateProps"
 	| "lint/jsx/noImplicitBoolean"
@@ -212,9 +210,9 @@ export type DiagnosticLintCategory =
 	| "lint/ts/preferShorthandArrayType"
 	| "lint/ts/useInterfaces";
 const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
+	"lint/a11y/useHtmlLang": true,
+	"lint/a11y/useValidLang": true,
 	"lint/html/useClosingNonVoid": true,
-	"lint/html/useHtmlLang": true,
-	"lint/html/useValidLang": true,
 	"lint/js/noArguments": true,
 	"lint/js/noAsyncPromiseExecutor": true,
 	"lint/js/noCatchAssign": true,
@@ -281,13 +279,11 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/jsx-a11y/useAriaPropsForRole": true,
 	"lint/jsx-a11y/useAriaProptypes": true,
 	"lint/jsx-a11y/useHeadingContent": true,
-	"lint/jsx-a11y/useHtmlLang": true,
 	"lint/jsx-a11y/useIframeTitle": true,
 	"lint/jsx-a11y/useKeyWithClickEvents": true,
 	"lint/jsx-a11y/useKeyWithMouseEvents": true,
 	"lint/jsx-a11y/useMediaCaption": true,
 	"lint/jsx-a11y/useValidAnchor": true,
-	"lint/jsx-a11y/useValidLang": true,
 	"lint/jsx/noCommentText": true,
 	"lint/jsx/noDuplicateProps": true,
 	"lint/jsx/noImplicitBoolean": true,

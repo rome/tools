@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:5a065604afb283496899a7a623d57c84771585d3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:84c460410ab7094e73f6f9b825ae2eba35d452a0,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -506,13 +506,6 @@ enforce ARIA state and property values are valid
 enforce heading (`h1`, `h2`, etc) elements contain accessible content
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="useHtmlLang">
-	<a href="/docs/lint/rules/jsx-a11y/useHtmlLang">useHtmlLang</a>
-	<a class="header-anchor" href="#useHtmlLang"></a>
-</h3>
-the `lang` attribute is mandatory
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="useIframeTitle">
 	<a href="/docs/lint/rules/jsx-a11y/useIframeTitle">useIframeTitle</a>
 	<a class="header-anchor" href="#useIframeTitle"></a>
@@ -546,13 +539,6 @@ enforces that `audio` and `video` elements must have a `track` for captions
 	<a class="header-anchor" href="#useValidAnchor"></a>
 </h3>
 enforce all anchors are valid, navigable elements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useValidLang">
-	<a href="/docs/lint/rules/jsx-a11y/useValidLang">useValidLang</a>
-	<a class="header-anchor" href="#useValidLang"></a>
-</h3>
-check if `lang` attribute is valid
 </div>
 </section>
 <section>
