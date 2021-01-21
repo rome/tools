@@ -6,9 +6,8 @@ export function printCommaList(
 	nodes: AnyNode[],
 	parent: AnyNode,
 ) {
-	const commaSeperatedTokens: Token[] = [];
-
 	const list = [...nodes];
+	const commaSeperatedTokens: Token[] = [];
 	while (list.length) {
 		const commaIndex = list.findIndex((value) => value?.type === "CSSComma");
 		const values = list.splice(0, commaIndex > 0 ? commaIndex : nodes.length);
