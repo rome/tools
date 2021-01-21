@@ -15,7 +15,7 @@ CSSRoot {
 		filename: "selectors/input.css"
 		end: Object {
 			column: 1
-			line: 27
+			line: 39
 		}
 		start: Object {
 			column: 0
@@ -959,6 +959,360 @@ CSSRoot {
 									}
 								}
 							}
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 30
+				}
+				start: Object {
+					column: 0
+					line: 29
+				}
+			}
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 30
+					}
+					start: Object {
+						column: 22
+						line: 29
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 22
+							line: 29
+						}
+						start: Object {
+							column: 0
+							line: 29
+						}
+					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "p"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 1
+									line: 29
+								}
+								start: Object {
+									column: 0
+									line: 29
+								}
+							}
+						}
+						CSSPseudoClassSelector {
+							value: "nth-last-of-type"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 21
+									line: 29
+								}
+								start: Object {
+									column: 1
+									line: 29
+								}
+							}
+							params: Array [
+								CSSNumber {
+									value: 2
+									raw: "2"
+									loc: Object {
+										filename: "selectors/input.css"
+										end: Object {
+											column: 20
+											line: 29
+										}
+										start: Object {
+											column: 19
+											line: 29
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 33
+				}
+				start: Object {
+					column: 0
+					line: 32
+				}
+			}
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 33
+					}
+					start: Object {
+						column: 14
+						line: 32
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 14
+							line: 32
+						}
+						start: Object {
+							column: 0
+							line: 32
+						}
+					}
+					patterns: Array [
+						CSSPseudoClassSelector {
+							value: "lang"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 13
+									line: 32
+								}
+								start: Object {
+									column: 0
+									line: 32
+								}
+							}
+							params: Array [
+								CSSIdentifier {
+									value: "en"
+									loc: Object {
+										filename: "selectors/input.css"
+										end: Object {
+											column: 8
+											line: 32
+										}
+										start: Object {
+											column: 6
+											line: 32
+										}
+									}
+								}
+								CSSComma {
+									loc: Object {
+										filename: "selectors/input.css"
+										end: Object {
+											column: 9
+											line: 32
+										}
+										start: Object {
+											column: 8
+											line: 32
+										}
+									}
+								}
+								CSSIdentifier {
+									value: "ko"
+									loc: Object {
+										filename: "selectors/input.css"
+										end: Object {
+											column: 12
+											line: 32
+										}
+										start: Object {
+											column: 10
+											line: 32
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 36
+				}
+				start: Object {
+					column: 0
+					line: 35
+				}
+			}
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 36
+					}
+					start: Object {
+						column: 16
+						line: 35
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 16
+							line: 35
+						}
+						start: Object {
+							column: 0
+							line: 35
+						}
+					}
+					patterns: Array [
+						CSSPseudoElementSelector {
+							value: "pseudo-elem"
+							params: Array []
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 15
+									line: 35
+								}
+								start: Object {
+									column: 0
+									line: 35
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+		CSSRule {
+			loc: Object {
+				filename: "selectors/input.css"
+				end: Object {
+					column: 1
+					line: 39
+				}
+				start: Object {
+					column: 0
+					line: 38
+				}
+			}
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "selectors/input.css"
+					end: Object {
+						column: 1
+						line: 39
+					}
+					start: Object {
+						column: 20
+						line: 38
+					}
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "selectors/input.css"
+						end: Object {
+							column: 20
+							line: 38
+						}
+						start: Object {
+							column: 0
+							line: 38
+						}
+					}
+					patterns: Array [
+						CSSPseudoElementSelector {
+							value: "pseudo-elem"
+							loc: Object {
+								filename: "selectors/input.css"
+								end: Object {
+									column: 19
+									line: 38
+								}
+								start: Object {
+									column: 0
+									line: 38
+								}
+							}
+							params: Array [
+								CSSIdentifier {
+									value: "a"
+									loc: Object {
+										filename: "selectors/input.css"
+										end: Object {
+											column: 15
+											line: 38
+										}
+										start: Object {
+											column: 14
+											line: 38
+										}
+									}
+								}
+								CSSComma {
+									loc: Object {
+										filename: "selectors/input.css"
+										end: Object {
+											column: 16
+											line: 38
+										}
+										start: Object {
+											column: 15
+											line: 38
+										}
+									}
+								}
+								CSSIdentifier {
+									value: "b"
+									loc: Object {
+										filename: "selectors/input.css"
+										end: Object {
+											column: 18
+											line: 38
+										}
+										start: Object {
+											column: 17
+											line: 38
+										}
+									}
+								}
+							]
 						}
 					]
 				}

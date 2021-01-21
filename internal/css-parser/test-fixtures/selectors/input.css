@@ -25,3 +25,15 @@ a[title~="title" i] {
 a[title = "title"][href*="image/*" S] {
 	color: purple;
 }
+
+p:nth-last-of-type(2) {
+}
+
+:lang(en, ko) {
+}
+
+::pseudo-elem() {
+}
+
+::pseudo-elem(a, b) {
+}
