@@ -128,7 +128,7 @@ export async function main(args: string[]) {
 						username,
 					)}">`,
 				);
-				lines.push(`<img src="${escapeXHTMLEntities(avatar)}">`);
+				lines.push(`<img src="${escapeXHTMLEntities(avatar)}" alt="avatar">`);
 				lines.push(`<span>${escapeXHTMLEntities(username)}</span>`);
 				lines.push("</a></li>");
 			}
