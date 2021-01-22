@@ -18,6 +18,7 @@ import {AnyCSSPattern} from "@internal/ast/css/unions";
 import {CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
+import {parseFunction} from "../index";
 
 const ATTRIBUTE_SELECTOR_MATCHERS = ["~=", "|=", "^=", "$=", "*=", "="];
 
@@ -80,14 +81,24 @@ function parsePseudoSelector(
 					value: token.value,
 				},
 			);
-		} else if (readToken(parser, "Colon")) {
-			if (matchToken(parser, "Ident")) {
-				const token = readToken(parser, "Ident") as Tokens["Ident"];
+		} else if (matchToken(parser, "Function")) {
+			const func = parseFunction(parser);
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSPseudoClassSelector",
+					value: func.name,
+					params: func.params,
+				},
+			);
+		} else if (matchToken(parser, "Colon")) {
+			const pseudoClass = parsePseudoSelector(parser);
+			if (pseudoClass) {
 				return parser.finishNode(
 					start,
 					{
+						...pseudoClass,
 						type: "CSSPseudoElementSelector",
-						value: token.value,
 					},
 				);
 			}

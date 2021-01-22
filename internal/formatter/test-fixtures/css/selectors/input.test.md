@@ -70,6 +70,18 @@ div[attr="value"] {
 
 }
 
+p:nth-last-of-type(2) {
+}
+
+:lang(en, ko) {
+}
+
+::pseudo-elem() {
+}
+
+::pseudo-elem(a, b) {
+}
+
 ```
 
 ### `Output`
@@ -128,6 +140,18 @@ div[attr="value"] {
 }
 
 .longlonglonglonglong_class_name[longlonglonglong_attr_name="longlonglonglonglonglong_value"] {
+}
+
+p:nth-last-of-type(2) {
+}
+
+:lang(en, ko) {
+}
+
+::pseudo-elem() {
+}
+
+::pseudo-elem(a, b) {
 }
 
 ```
