@@ -961,7 +961,7 @@ function parseComponentValue(
 	);
 }
 
-function parseFunction(parser: CSSParser): CSSFunction {
+export function parseFunction(parser: CSSParser): CSSFunction {
 	const start = parser.getPosition();
 	const token = parser.expectToken("Function");
 	const name = token.value;
