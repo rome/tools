@@ -152,9 +152,9 @@ function tryParseCombinator(parser: CSSParser): CSSCombinator | undefined {
 		if (value === ">") {
 			combinator = "child";
 		} else if (value === "+") {
-			combinator = "nextSibiling";
+			combinator = "nextSibling";
 		} else if (value === "~") {
-			combinator = "subsequentSibiling";
+			combinator = "subsequentSibling";
 		}
 		if (combinator) {
 			readToken(parser, "Delim");

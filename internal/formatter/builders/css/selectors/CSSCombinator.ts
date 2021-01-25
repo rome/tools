@@ -4,8 +4,8 @@ import {Builder, Token, concat, space} from "@internal/formatter";
 const COMBINATOR_PRINT_MAP = {
 	descendant: " ",
 	child: ">",
-	nextSibiling: "+",
-	subsequentSibiling: "~",
+	nextSibling: "+",
+	subsequentSibling: "~",
 } as const;
 
 export default function CSSCombinator(
