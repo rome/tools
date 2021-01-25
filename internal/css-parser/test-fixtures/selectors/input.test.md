@@ -108,7 +108,7 @@ CSSRoot {
 							}
 						}
 						CSSCombinator {
-							combinator: "nextSibiling"
+							combinator: "nextSibling"
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
@@ -165,7 +165,7 @@ CSSRoot {
 							}
 						}
 						CSSCombinator {
-							combinator: "subsequentSibiling"
+							combinator: "subsequentSibling"
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
@@ -368,7 +368,7 @@ CSSRoot {
 							}
 						}
 						CSSCombinator {
-							combinator: "nextSibiling"
+							combinator: "nextSibling"
 							loc: Object {
 								filename: "selectors/input.css"
 								end: Object {
