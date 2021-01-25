@@ -4,8 +4,8 @@ import {createBuilder} from "../../utils";
 export type Combinator =
 	| "descendant"
 	| "child"
-	| "nextSibiling"
-	| "subsequentSibiling";
+	| "nextSibling"
+	| "subsequentSibling";
 
 export interface CSSCombinator extends NodeBaseWithComments {
 	readonly type: "CSSCombinator";
