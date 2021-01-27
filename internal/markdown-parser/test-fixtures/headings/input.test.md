@@ -50,8 +50,8 @@ MarkdownRoot {
 					line: 2
 				}
 				start: Object {
-					column: 7
-					line: 1
+					column: 0
+					line: 2
 				}
 			}
 		}
@@ -65,8 +65,8 @@ MarkdownRoot {
 					line: 3
 				}
 				start: Object {
-					column: 8
-					line: 2
+					column: 0
+					line: 3
 				}
 			}
 		}
@@ -80,8 +80,8 @@ MarkdownRoot {
 					line: 4
 				}
 				start: Object {
-					column: 9
-					line: 3
+					column: 0
+					line: 4
 				}
 			}
 		}
@@ -95,8 +95,8 @@ MarkdownRoot {
 					line: 5
 				}
 				start: Object {
-					column: 10
-					line: 4
+					column: 0
+					line: 5
 				}
 			}
 		}
@@ -110,8 +110,8 @@ MarkdownRoot {
 					line: 6
 				}
 				start: Object {
-					column: 11
-					line: 5
+					column: 0
+					line: 6
 				}
 			}
 		}
@@ -123,8 +123,8 @@ MarkdownRoot {
 					line: 7
 				}
 				start: Object {
-					column: 12
-					line: 6
+					column: 0
+					line: 7
 				}
 			}
 			children: Array [
@@ -133,12 +133,12 @@ MarkdownRoot {
 					loc: Object {
 						filename: "headings/input.md"
 						end: Object {
-							column: 12
-							line: 6
+							column: 0
+							line: 7
 						}
 						start: Object {
-							column: 12
-							line: 6
+							column: 0
+							line: 7
 						}
 					}
 				}

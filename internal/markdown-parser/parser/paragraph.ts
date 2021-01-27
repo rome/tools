@@ -29,6 +29,7 @@ export function parseParagraph(
 						if (unknownToken.type === "OpenSquareBracket") {
 							return parseReference(parser);
 						}
+
 						return parseText(parser);
 					},
 				);
@@ -65,7 +66,7 @@ export function parseParagraph(
 				} else {
 					children.push(reference);
 				}
-				parser.nextToken();
+				// NOTE: do not go to the next token, parseReference already did that
 				break;
 			}
 			default: {

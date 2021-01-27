@@ -26,7 +26,6 @@ import {
 } from "@internal/markdown-parser/parser/listItem";
 import {tokenizeInline} from "@internal/markdown-parser/parser/inline";
 import {parseParagraph} from "@internal/markdown-parser/parser/paragraph";
-import {parseText} from "@internal/markdown-parser/parser/text";
 import {parseReference} from "@internal/markdown-parser/parser/reference";
 
 export type MarkdownParser = ParserCore<MarkdownParserTypes>;
@@ -41,6 +40,15 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 		const escaped = isEscaped(index, parser.input);
 
 		if (!escaped) {
+			if (char === "\n") {
+				return [
+					{
+						isParagraph: false,
+					},
+					parser.finishToken("NewLine"),
+				];
+			}
+
 			if (char === "[") {
 				return [state, parser.finishToken("OpenSquareBracket")];
 			}
@@ -312,24 +320,13 @@ function parseListBlock(parser: MarkdownParser): MarkdownListBlock {
 function parseCode(parser: MarkdownParser): MarkdownCodeBlock {
 	const token = parser.expectToken("Code");
 	const start = parser.getPosition();
-	let value;
-
-	while (!parser.matchToken("EOF") && !parser.matchToken("Code")) {
-		const token = parser.getToken();
-		if (token.type === "Text") {
-			value = parseText(parser);
-		}
-
-		parser.nextToken();
-	}
-	parser.nextToken();
 
 	return parser.finishNode(
 		start,
 		{
 			type: "MarkdownCodeBlock",
 			language: token.language,
-			value,
+			value: token.value,
 		},
 	);
 }
@@ -398,17 +395,29 @@ function consumeCode(parser: MarkdownParser, index: Number0) {
 	const nextChar = parser.getInputCharOnly(index, 1);
 	const nextNextChar = parser.getInputCharOnly(index, 2);
 	if (nextChar === "`" && nextNextChar === "`") {
-		const [languageValue, endIndex] = parser.readInputFrom(
+		const [languageValue, languageIndex] = parser.readInputFrom(
 			ob1Add(index, 3),
 			isntLineBreak,
+		);
+
+		const [value, endIndex] = parser.readInputFrom(
+			languageIndex,
+			(_, index) => {
+				const firstChar = parser.getInputCharOnly(index, 1);
+				const secondChar = parser.getInputCharOnly(index, 2);
+				const thirdChar = parser.getInputCharOnly(index, 3);
+				return !(firstChar === "`" && secondChar === "`" && thirdChar === "`");
+			},
 		);
 
 		return parser.finishComplexToken<"Code", CodeProperties>(
 			"Code",
 			{
 				language: languageValue || "unknown",
+				value,
 			},
-			endIndex,
+			// skip the three back ticks and let's point to their next char
+			ob1Add(endIndex, 4),
 		);
 	}
 

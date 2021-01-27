@@ -578,6 +578,20 @@ MarkdownRoot {
 										}
 									}
 								}
+								MarkdownText {
+									value: " something"
+									loc: Object {
+										filename: "lists/input.md"
+										end: Object {
+											column: 4
+											line: 11
+										}
+										start: Object {
+											column: 4
+											line: 11
+										}
+									}
+								}
 							]
 						}
 					]

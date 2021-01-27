@@ -76,7 +76,9 @@ export type WorkerLintOptions = {
 	save: boolean;
 };
 
-export type WorkerFormatOptions = Omit<FormatterOptions, "projectConfig">;
+export type WorkerFormatOptions = Omit<FormatterOptions, "projectConfig"> & {
+	forceFormat?: boolean;
+};
 
 export type WorkerParseOptions = {
 	sourceTypeJS?: ConstJSSourceType;
