@@ -21,6 +21,15 @@
 	margin-top: -5%;
 }
 
+foo {
+	color: yellow
+}
+
+bar {
+	color: yellow;
+	background: none
+}
+
 ```
 
 ### `Output`
@@ -31,6 +40,15 @@
 	line-height: 0.2;
 	width: 20%;
 	margin-top: -5%;
+}
+
+foo {
+	color: yellow;
+}
+
+bar {
+	color: yellow;
+	background: none;
 }
 
 ```
