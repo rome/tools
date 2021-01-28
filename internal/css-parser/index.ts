@@ -818,10 +818,7 @@ function parseComplexBlock(parser: CSSParser): CSSBlock | undefined {
 	);
 }
 
-function parseComponentValue(
-	parser: CSSParser,
-	isPrelude: boolean = false,
-): AnyCSSValue | undefined {
+function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
 	if (
 		matchToken(parser, "LeftCurlyBracket") ||
 		matchToken(parser, "LeftParen") ||
@@ -836,19 +833,8 @@ function parseComponentValue(
 
 	const start = parser.getPosition();
 
-	// NOTE: even though the spec says to ignore whitespaces
-	// Inside the prelude, it has a meaning so we need to have a token
 	if (matchToken(parser, "Whitespace")) {
 		nextToken(parser);
-
-		if (isPrelude) {
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSWhitespace",
-				},
-			);
-		}
 		return undefined;
 	}
 
@@ -992,9 +978,20 @@ export function parseFunction(parser: CSSParser): CSSFunction {
 	);
 }
 
+function matchEndOfDeclaration(
+	parser: CSSParser,
+	endingTokenType: keyof Tokens,
+): boolean {
+	return (
+		matchToken(parser, "EOF") ||
+		matchToken(parser, "Semi") ||
+		matchToken(parser, endingTokenType)
+	);
+}
+
 function parseDeclarations(
 	parser: CSSParser,
-	endingTokenType?: keyof Tokens,
+	endingTokenType: keyof Tokens,
 ): Array<CSSAtRule | CSSDeclaration> {
 	const declarations: Array<CSSAtRule | CSSDeclaration> = [];
 
@@ -1002,7 +999,7 @@ function parseDeclarations(
 		if (readToken(parser, "Whitespace") || readToken(parser, "Semi")) {
 			continue;
 		}
-		if (endingTokenType && matchToken(parser, endingTokenType)) {
+		if (matchToken(parser, endingTokenType)) {
 			nextToken(parser);
 			break;
 		}
@@ -1011,10 +1008,8 @@ function parseDeclarations(
 			continue;
 		}
 		if (matchToken(parser, "Ident")) {
-			const declaration = parseDeclaration(parser);
-			declaration && declarations.push(declaration);
-			while (!matchToken(parser, "Semi") && !matchToken(parser, "EOF")) {
-				const declaration = parseDeclaration(parser);
+			while (!matchEndOfDeclaration(parser, endingTokenType)) {
+				const declaration = parseDeclaration(parser, endingTokenType);
 				declaration && declarations.push(declaration);
 			}
 			continue;
@@ -1030,8 +1025,11 @@ function parseDeclarations(
 	return declarations;
 }
 
-function parseDeclaration(parser: CSSParser): CSSDeclaration | undefined {
-	while (!matchToken(parser, "Semi")) {
+function parseDeclaration(
+	parser: CSSParser,
+	endingTokenType: keyof Tokens,
+): CSSDeclaration | undefined {
+	while (!matchEndOfDeclaration(parser, endingTokenType)) {
 		const currentToken = parser.getToken();
 		if (currentToken.type !== "Ident") {
 			parser.unexpectedDiagnostic({
@@ -1059,31 +1057,33 @@ function parseDeclaration(parser: CSSParser): CSSDeclaration | undefined {
 		while (matchToken(parser, "Whitespace")) {
 			readToken(parser, "Whitespace");
 		}
-		while (!matchToken(parser, "EOF")) {
-			if (matchToken(parser, "Semi")) {
-				const lastTwoTokens = [...value].slice(-2);
-				if (
-					lastTwoTokens[0]?.type === "CSSRaw" &&
-					lastTwoTokens[0].value === "!" &&
-					lastTwoTokens[1]?.type === "CSSIdentifier" &&
-					/^important$/i.test(lastTwoTokens[1].value)
-				) {
-					value = value.slice(0, -2);
-					important = true;
-				}
-				return parser.finishNode(
-					start,
-					{
-						type: "CSSDeclaration",
-						important,
-						name,
-						value,
-					},
-				);
-			}
+		while (!matchEndOfDeclaration(parser, endingTokenType)) {
 			const parsedValue = parseComponentValue(parser);
 			parsedValue && value.push(parsedValue);
 		}
+
+		if (value.length >= 2) {
+			const lastTwoTokens = [...value].slice(-2);
+			if (
+				lastTwoTokens[0]?.type === "CSSRaw" &&
+				lastTwoTokens[0].value === "!" &&
+				lastTwoTokens[1]?.type === "CSSIdentifier" &&
+				/^important$/i.test(lastTwoTokens[1].value)
+			) {
+				value = value.slice(0, -2);
+				important = true;
+			}
+		}
+
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSDeclaration",
+				important,
+				name,
+				value,
+			},
+		);
 	}
 	return undefined;
 }

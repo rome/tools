@@ -15,7 +15,7 @@ CSSRoot {
 		filename: "values/input.css"
 		end: Object {
 			column: 1
-			line: 10
+			line: 19
 		}
 		start: Object {
 			column: 0
@@ -310,6 +310,219 @@ CSSRoot {
 					start: Object {
 						column: 8
 						line: 5
+					}
+				}
+			}
+		}
+		CSSRule {
+			loc: Object {
+				filename: "values/input.css"
+				end: Object {
+					column: 1
+					line: 14
+				}
+				start: Object {
+					column: 0
+					line: 12
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "values/input.css"
+						end: Object {
+							column: 4
+							line: 12
+						}
+						start: Object {
+							column: 0
+							line: 12
+						}
+					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "foo"
+							loc: Object {
+								filename: "values/input.css"
+								end: Object {
+									column: 3
+									line: 12
+								}
+								start: Object {
+									column: 0
+									line: 12
+								}
+							}
+						}
+					]
+				}
+			]
+			block: CSSBlock {
+				value: Array [
+					CSSDeclaration {
+						name: "color"
+						value: Array [
+							CSSIdentifier {
+								value: "yellow"
+								loc: Object {
+									filename: "values/input.css"
+									end: Object {
+										column: 14
+										line: 13
+									}
+									start: Object {
+										column: 8
+										line: 13
+									}
+								}
+							}
+						]
+						important: false
+						loc: Object {
+							filename: "values/input.css"
+							end: Object {
+								column: 0
+								line: 14
+							}
+							start: Object {
+								column: 1
+								line: 13
+							}
+						}
+					}
+				]
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "values/input.css"
+					end: Object {
+						column: 1
+						line: 14
+					}
+					start: Object {
+						column: 4
+						line: 12
+					}
+				}
+			}
+		}
+		CSSRule {
+			loc: Object {
+				filename: "values/input.css"
+				end: Object {
+					column: 1
+					line: 19
+				}
+				start: Object {
+					column: 0
+					line: 16
+				}
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: Object {
+						filename: "values/input.css"
+						end: Object {
+							column: 4
+							line: 16
+						}
+						start: Object {
+							column: 0
+							line: 16
+						}
+					}
+					patterns: Array [
+						CSSTypeSelector {
+							value: "bar"
+							loc: Object {
+								filename: "values/input.css"
+								end: Object {
+									column: 3
+									line: 16
+								}
+								start: Object {
+									column: 0
+									line: 16
+								}
+							}
+						}
+					]
+				}
+			]
+			block: CSSBlock {
+				value: Array [
+					CSSDeclaration {
+						name: "color"
+						value: Array [
+							CSSIdentifier {
+								value: "yellow"
+								loc: Object {
+									filename: "values/input.css"
+									end: Object {
+										column: 14
+										line: 17
+									}
+									start: Object {
+										column: 8
+										line: 17
+									}
+								}
+							}
+						]
+						important: false
+						loc: Object {
+							filename: "values/input.css"
+							end: Object {
+								column: 14
+								line: 17
+							}
+							start: Object {
+								column: 1
+								line: 17
+							}
+						}
+					}
+					CSSDeclaration {
+						name: "background"
+						value: Array [
+							CSSIdentifier {
+								value: "none"
+								loc: Object {
+									filename: "values/input.css"
+									end: Object {
+										column: 17
+										line: 18
+									}
+									start: Object {
+										column: 13
+										line: 18
+									}
+								}
+							}
+						]
+						important: false
+						loc: Object {
+							filename: "values/input.css"
+							end: Object {
+								column: 0
+								line: 19
+							}
+							start: Object {
+								column: 1
+								line: 18
+							}
+						}
+					}
+				]
+				startingTokenValue: "{"
+				loc: Object {
+					filename: "values/input.css"
+					end: Object {
+						column: 1
+						line: 19
+					}
+					start: Object {
+						column: 4
+						line: 16
 					}
 				}
 			}
