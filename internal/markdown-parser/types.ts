@@ -43,6 +43,7 @@ export type ListProperties = {
 
 export type CodeProperties = {
 	language: string;
+	value: string;
 };
 
 /**

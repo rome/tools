@@ -9,7 +9,7 @@ export default function MarkdownCodeBlock(
 		"```",
 		node.language !== "unknown" ? node.language : "",
 		hardline,
-		builder.tokenize(node.value, node),
+		node.value ?? "",
 		hardline,
 		"```",
 	]);
