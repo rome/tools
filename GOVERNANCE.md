@@ -70,6 +70,7 @@ Members listed in alphabetical order.
 - [Paul Bouchon @bitpshr](https://github.com/bitpshr)
 - [Victor Hom @VictorHom](https://github.com/VictorHom)
 - [Yasser Elassal @yassere](https://github.com/yassere)
+- [Yeon Juan @yeonjuan](https://github.com/yeonjuan)
 
 ## Project direction and planning
 
