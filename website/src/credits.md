@@ -77,6 +77,12 @@ Rome has a loose governance model that values core contributor autonomy. See [Go
 			<span>Yasser Elassal</span>
 		</a>
 	</li>
+	<li>
+		<a href="https://github.com/yeonjuan">
+			<img src="https://github.com/yeonjuan.png?s=176">
+			<span>Yeon Juan</span>
+		</a>
+	</li>
 </ul>
 
 ## Code Contributors
