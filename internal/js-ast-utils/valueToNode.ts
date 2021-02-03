@@ -34,6 +34,7 @@ export function valueToNode(
 	ancestry: unknown[] = [],
 ):
 	| JSStringLiteral
+	| JSBigIntLiteral
 	| JSBooleanLiteral
 	| JSNumericLiteral
 	| JSObjectExpression
@@ -57,6 +58,9 @@ export function valueToNode(
 
 		case "bigint":
 			return jsBigIntLiteral.quick(String(value));
+
+		case "bigint":
+			return jsBigIntLiteral.create(jsStringLiteral.quick(String(value)));
 
 		case "undefined":
 			return jsReferenceIdentifier.quick("undefined");
