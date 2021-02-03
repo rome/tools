@@ -22,7 +22,7 @@ test(
 		t.looksLike(valueToNode(123), jsNumericLiteral.quick(123));
 		t.looksLike(
 			valueToNode(BigInt(10)),
-			jsBigIntLiteral.create(jsStringLiteral.quick("10")),
+			jsBigIntLiteral.quick("10"),
 		);
 		t.looksLike(
 			valueToNode(undefined),
