@@ -297,7 +297,7 @@ parens.set(
 	},
 );
 
-function needsParenUnaryExpression(
+function needsParenUnaryLikeExpression(
 	node:
 		| JSUnaryExpression
 		| JSArrowFunctionExpression
@@ -317,9 +317,20 @@ function needsParenUnaryExpression(
 	);
 }
 
-parens.set("JSUnaryExpression", needsParenUnaryExpression);
-parens.set("JSSpreadElement", needsParenUnaryExpression);
-parens.set("JSSpreadProperty", needsParenUnaryExpression);
+parens.set(
+	"JSUnaryExpression",
+	(node: JSUnaryExpression, parent: AnyNode) => {
+		return (
+			((node.operator === "-" || node.operator === "+") &&
+			parent.type === "JSUnaryExpression" &&
+			parent.operator === node.operator) ||
+			needsParenUnaryLikeExpression(node, parent)
+		);
+	},
+);
+
+parens.set("JSSpreadElement", needsParenUnaryLikeExpression);
+parens.set("JSSpreadProperty", needsParenUnaryLikeExpression);
 
 parens.set(
 	"JSFunctionExpression",
@@ -361,7 +372,7 @@ function needsParenConditionalExpression(
 		return true;
 	}
 
-	return needsParenUnaryExpression(node, parent);
+	return needsParenUnaryLikeExpression(node, parent);
 }
 
 parens.set("JSConditionalExpression", needsParenConditionalExpression);
