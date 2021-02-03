@@ -456,12 +456,16 @@ async function updateData() {
 						continue;
 					}
 
-					tempFeature.s[agent] = {};
+					const tempFeatureAgent = (<feature["s"][""]>{});
 
 					for (const v in rawData.data[feature].stats[agent]) {
 						if (rawData.data[feature].stats[agent][v].includes("x")) {
-							tempFeature.s[agent][v] = true;
+							tempFeatureAgent[v] = true;
 						}
+					}
+
+					if (Object.keys(tempFeatureAgent).length !== 0) {
+						tempFeature.s[agent] = tempFeatureAgent;
 					}
 				}
 
