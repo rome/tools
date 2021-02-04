@@ -153,15 +153,13 @@ export class RegExpTokenValue {
 }
 
 export class NumberTokenValue {
-	constructor(value: number, format: JSNumericLiteral["format"], raw: string) {
+	constructor(value: number, format: JSNumericLiteral["format"]) {
 		this.value = value;
 		this.format = format;
-		this.raw = raw;
 	}
 
 	public value: number;
 	public format: JSNumericLiteral["format"];
-	public raw: string;
 }
 
 // ## Tokenizer
@@ -1305,14 +1303,15 @@ function readRadixNumber(
 			},
 		);
 	}
-	const raw = parser.getRawInput(start, parser.state.index);
+
 	if (isBigInt) {
+		const raw = parser.getRawInput(start, parser.state.index);
 		const str = raw.replace(/[_n]/g, "");
 		finishToken(parser, tt.bigint, str);
 		return undefined;
 	}
 
-	finishToken(parser, tt.num, new NumberTokenValue(val, format, raw));
+	finishToken(parser, tt.num, new NumberTokenValue(val, format));
 }
 
 // Read an integer, octal integer, or floating-point number.
@@ -1358,10 +1357,9 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 		next = parser.input.charCodeAt(getIndex(parser));
 	}
 
-	if (
-		(next === charCodes.uppercaseE || next === charCodes.lowercaseE) &&
-		!isOctal
-	) {
+	const isScientific =
+		(next === charCodes.uppercaseE || next === charCodes.lowercaseE) && !isOctal;
+	if (isScientific) {
 		next = parser.input.charCodeAt(ob1Get0(bumpIndex(parser)));
 
 		if (next === charCodes.plusSign || next === charCodes.dash) {
@@ -1417,7 +1415,9 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 			},
 		);
 	}
+
 	const raw = parser.getRawInput(start, parser.state.index);
+
 	// Remove "_" for numeric literal separator, and "n" for BigInts
 	const str = raw.replace(/[_n]/g, "");
 
@@ -1427,11 +1427,15 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	}
 
 	const num = isOctal ? parseInt(str, 8) : parseFloat(str);
-	finishToken(
-		parser,
-		tt.num,
-		new NumberTokenValue(num, isOctal ? "octal" : undefined, raw),
-	);
+
+	let format: JSNumericLiteral["format"] = undefined;
+	if (isOctal) {
+		format = "octal";
+	} else if (isScientific) {
+		format = "scientific";
+	}
+
+	finishToken(parser, tt.num, new NumberTokenValue(num, format));
 }
 
 // Read a string value, interpreting backslash-escapes.

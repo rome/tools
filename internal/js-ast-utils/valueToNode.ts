@@ -54,7 +54,7 @@ export function valueToNode(
 			return jsBooleanLiteral.quick(value);
 
 		case "number":
-			return jsNumericLiteral.quick(value, {raw: String(value)});
+			return jsNumericLiteral.quick(value);
 
 		case "bigint":
 			return jsBigIntLiteral.quick(String(value));
