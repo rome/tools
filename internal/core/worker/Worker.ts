@@ -61,16 +61,19 @@ export type WorkerBuffer = {
 	mtimeNs: bigint;
 };
 
-type WorkerOptions = {
+export type WorkerOptions = {
 	userConfig: UserConfig;
 	dedicated: boolean;
 	bridge: BridgeClient<typeof WorkerBridge>;
 	id: number;
+	cacheWriteDisabled: boolean;
+	cacheReadDisabled: boolean;
 };
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
 		this.bridge = opts.bridge;
+		this.options = opts;
 
 		this.userConfig = opts.userConfig;
 		this.partialManifests = new ExtendedMap("partialManifests");
@@ -135,6 +138,7 @@ export default class Worker {
 
 	public userConfig: UserConfig;
 	public api: WorkerAPI;
+	public options: WorkerOptions;
 	public logger: Logger;
 	public fatalErrorHandler: FatalErrorHandler;
 	public virtualModules: VirtualModules;

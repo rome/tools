@@ -18,7 +18,7 @@ export default class FileAllocator {
 		this.server = server;
 		this.fileToWorker = new AbsoluteFilePathMap();
 		this.locker = new FilePathLocker();
-		this.logger = server.logger.namespace(markup`[FileAllocator]`);
+		this.logger = server.logger.namespace(markup`FileAllocator`);
 	}
 
 	private server: Server;

@@ -3,18 +3,18 @@ import {AnyNode} from "@internal/ast";
 import {isRoot} from "./isRoot";
 
 function createNode(type: string): AnyNode {
-	return ({
+	return {
 		type,
-	} as AnyNode);
+	} as AnyNode;
 }
 
 test(
 	"valid roots return true",
 	async (t) => {
 		function createNode(type: string) {
-			return ({
+			return {
 				type,
-			} as AnyNode);
+			} as AnyNode;
 		}
 
 		const validRoots = [

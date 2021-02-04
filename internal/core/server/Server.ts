@@ -645,7 +645,7 @@ export default class Server {
 		);
 
 		// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
-		if (this.cache.disabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
+		if (this.cache.writeDisabled && getEnvVar("ROME_DEV").type !== "ENABLED") {
 			reporter.warn(
 				markup`Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable`,
 			);
@@ -771,7 +771,7 @@ export default class Server {
 
 			return res;
 		} catch (err) {
-			await this.fatalErrorHandler.handle(err);
+			await this.fatalErrorHandler.handleAsync(err);
 			throw new Error("Should never meet this condition");
 		} finally {
 			// We no longer care if the client dies

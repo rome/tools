@@ -884,8 +884,13 @@ export default class Reporter implements ReporterNamespace {
 		this.log(highlighted);
 	}
 
-	public namespace(prefix: AnyMarkup): ReporterNamespace {
+	public namespace(...prefixes: AnyMarkup[]): ReporterNamespace {
+		const prefix = concatMarkup(prefixes.map((prefix) => markup`[${prefix}]`));
+
 		return {
+			namespace: (...addPrefixes) => {
+				return this.namespace(...prefixes, ...addPrefixes);
+			},
 			success: (suffix) => this.success(markup`${prefix} ${suffix}`),
 			info: (suffix) => this.info(markup`${prefix} ${suffix}`),
 			error: (suffix) => this.error(markup`${prefix} ${suffix}`),

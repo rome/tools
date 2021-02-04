@@ -75,6 +75,7 @@ export interface ReporterNamespace {
 	warn: (msg: AnyMarkup) => void;
 	log: (msg: AnyMarkup) => void;
 	list: (items: AnyMarkups, opts?: ReporterListOptions) => void;
+	namespace: (...prefixes: AnyMarkup[]) => ReporterNamespace;
 }
 
 export type ReporterConditionalStream = {

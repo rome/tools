@@ -30,7 +30,7 @@ export {default as Server} from "./server/Server";
 export {serverCommands} from "./server/commands";
 export {default as ServerRequest} from "./server/ServerRequest";
 
-export {default as Worker} from "./worker/Worker";
+export {WorkerOptions, default as Worker} from "./worker/Worker";
 
 export {default as TestAPI} from "./test-worker/TestAPI";
 export {default as TestWorker} from "./test-worker/TestWorker";

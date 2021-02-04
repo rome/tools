@@ -12,6 +12,7 @@ import {Consumer, consumeUnknown} from "@internal/consume";
 import {JSONObject} from "@internal/codec-config";
 import {sha256} from "@internal/string-utils";
 import {DiagnosticIntegrity} from "@internal/diagnostics";
+import {markup} from "@internal/markup";
 
 // This can be shared across multiple machines safely
 export type PortableCacheMetadata = {
@@ -89,8 +90,8 @@ function serializeCacheKey(rawParts: CacheKeyParts): string {
 
 export class CacheEntry<Value extends RSERValue = RSERValue> {
 	constructor(
-		cache: Cache,
 		file: CacheFile,
+		cache: Cache,
 		name: string,
 		loader: CacheEntryLoader<Value>,
 	) {
@@ -116,15 +117,24 @@ export class CacheEntry<Value extends RSERValue = RSERValue> {
 			return undefined;
 		}
 
+		if (this.cache.readDisabled) {
+			return undefined;
+		}
+
 		const {path} = this;
 		if (!(await exists(path))) {
 			return undefined;
 		}
 
 		const stream = createReadStream(path);
-		const data = await decodeSingleMessageRSERStream(stream);
-		const consumer = consumeUnknown(data, "parse", "rser");
+		const decoded = await decodeSingleMessageRSERStream(stream);
 
+		if (decoded.type === "INCOMPATIBLE") {
+			this.cache.logger.warn(markup`Incompatible cache file ${path} ignored`);
+			return undefined;
+		}
+
+		const consumer = consumeUnknown(decoded.value, "parse", "rser");
 		const value = this.loader.validate(consumer);
 		this.value = value;
 		return value;
@@ -344,8 +354,8 @@ class CacheFile {
 		}
 
 		const entry: CacheEntry<Value> = new CacheEntry(
-			this.cache,
 			this,
+			this.cache,
 			key,
 			loader,
 		);
@@ -360,8 +370,10 @@ export default class WorkerCache extends Cache {
 			"worker",
 			{
 				userConfig: worker.userConfig,
-				logger: worker.logger,
+				parentLogger: worker.logger,
 				fatalErrorHandler: worker.fatalErrorHandler,
+				writeDisabled: worker.options.cacheWriteDisabled,
+				readDisabled: worker.options.cacheReadDisabled,
 			},
 		);
 		this.worker = worker;

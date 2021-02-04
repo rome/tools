@@ -84,10 +84,21 @@ export type BridgeServer<Factories> = Factories extends BridgeFactories<
 
 export type BridgeType = "server" | "client";
 
-export type BridgeOptions = {
+export type BridgeDefinition<
+	ClientEvents extends BridgeEventsDeclaration,
+	ServerEvents extends BridgeEventsDeclaration,
+	SharedEvents extends BridgeEventsDeclaration
+> = {
 	debugName: string;
-	type: BridgeType;
+	client: ClientEvents;
+	server: ServerEvents;
+	shared: SharedEvents;
+	init?: BridgeInitCallback<SharedEvents>;
 };
+
+export type BridgeInitCallback<SharedEvents extends BridgeEventsDeclaration> = (
+	bridge: Bridge<{}, {}, SharedEvents>,
+) => void;
 
 export type EventOptions = {
 	name: string;

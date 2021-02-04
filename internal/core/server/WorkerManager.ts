@@ -13,7 +13,13 @@ import {
 	MAX_MASTER_BYTES_BEFORE_WORKERS,
 	MAX_WORKER_BYTES_BEFORE_ADD,
 } from "../common/constants";
-import {MAX_WORKER_COUNT, Server, Worker, WorkerBridge} from "@internal/core";
+import {
+	MAX_WORKER_COUNT,
+	Server,
+	Worker,
+	WorkerBridge,
+	WorkerOptions,
+} from "@internal/core";
 import {Locker} from "../../async/lockers";
 import {BridgeServer, Event} from "@internal/events";
 import {AbsoluteFilePath} from "@internal/path";
@@ -47,7 +53,7 @@ export default class WorkerManager {
 		this.workers = new ExtendedMap("workers");
 		this.idCounter = 0;
 
-		this.logger = server.logger.namespace(markup`[WorkerManager]`);
+		this.logger = server.logger.namespace(markup`WorkerManager`);
 	}
 
 	public workerStartEvent: Event<BridgeServer<typeof WorkerBridge>, void>;
@@ -139,10 +145,10 @@ export default class WorkerManager {
 		});
 
 		const worker = new Worker({
-			id: 0,
 			userConfig: this.server.userConfig,
 			bridge: bridges.client,
 			dedicated: false,
+			...this.buildPartialWorkerOptions(0),
 		});
 
 		// We make an assumption elsewhere in the code that this is always the first worker
@@ -246,6 +252,16 @@ export default class WorkerManager {
 		}
 	}
 
+	private buildPartialWorkerOptions(
+		workerId: number,
+	): Pick<WorkerOptions, "id" | "cacheReadDisabled" | "cacheWriteDisabled"> {
+		return {
+			id: workerId,
+			cacheReadDisabled: this.server.cache.readDisabled,
+			cacheWriteDisabled: this.server.cache.writeDisabled,
+		};
+	}
+
 	private async _spawnWorker(
 		workerId: number,
 		isGhost: boolean,
@@ -256,9 +272,7 @@ export default class WorkerManager {
 		const thread = forkThread(
 			"worker",
 			{
-				workerData: {
-					id: workerId,
-				},
+				workerData: this.buildPartialWorkerOptions(workerId),
 			},
 		);
 

@@ -119,3 +119,18 @@ export function getOrDeriveDiagnosticsFromError(
 		return diagnostics;
 	}
 }
+
+export function isUserDiagnosticError(err: Error): boolean {
+	const diagnostics = getDiagnosticsFromError(err);
+	if (diagnostics === undefined) {
+		return false;
+	} else {
+		for (const diag of diagnostics) {
+			if (diag.tags?.internal) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+}

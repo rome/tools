@@ -34,6 +34,7 @@ import {
 import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";
+import RSERParserError from "./RSERParserError";
 
 const sharedCachedKeyDecoder = new CachedKeyDecoder();
 
@@ -61,7 +62,7 @@ export default class RSERBufferParser {
 	private assertReadableSize(size: number) {
 		let remaining = this.getReadableSize();
 		if (remaining < size) {
-			throw new Error(
+			throw this.unexpected(
 				`Expected at least ${size} bytes to read but only have ${remaining}`,
 			);
 		}
@@ -105,7 +106,7 @@ export default class RSERBufferParser {
 				return this.view.getBigInt64(this.readOffset + offset);
 
 			default:
-				throw new Error(`Invalid integer size ${size}`);
+				throw this.unexpected(`Invalid integer size ${size}`);
 		}
 	}
 
@@ -124,12 +125,16 @@ export default class RSERBufferParser {
 		return ival;
 	}
 
+	private unexpected(message: string, offset: number = this.readOffset) {
+		throw new RSERParserError(`${message} at offset ${offset}`);
+	}
+
 	private expectCode(expected: number): void {
 		const got = this.peekCode();
 		if (got === expected) {
 			this.readOffset++;
 		} else {
-			throw new Error(
+			this.unexpected(
 				`Expected code ${formatCode(expected)} but got ${formatCode(got)}`,
 			);
 		}
@@ -139,27 +144,32 @@ export default class RSERBufferParser {
 		return this.bytes.slice(this.readOffset);
 	}
 
-	public maybeDecodeStreamHeader(): boolean {
+	public maybeDecodeStreamHeader(): "INCOMPLETE" | "INCOMPATIBLE" | "VALID" {
 		const prevReadOffset = this.readOffset;
 
 		if (this.canRead(1)) {
-			this.expectCode(VALUE_CODES.STREAM_HEADER);
+			const got = this.peekCode();
+			if (got === VALUE_CODES.STREAM_HEADER) {
+				this.expectCode(VALUE_CODES.STREAM_HEADER);
+			} else {
+				return "INCOMPATIBLE";
+			}
 		} else {
 			this.readOffset = prevReadOffset;
-			return false;
+			return "INCOMPLETE";
 		}
 
 		const version = this.maybeDecodeNumber();
 		if (version === undefined) {
 			this.readOffset = prevReadOffset;
-			return false;
+			return "INCOMPLETE";
 		}
 
 		if (version !== VERSION) {
-			throw new Error("Version mismatch");
+			return "INCOMPATIBLE";
 		}
 
-		return true;
+		return "VALID";
 	}
 
 	public maybeDecodeMessageHeader(): false | number {
@@ -252,7 +262,9 @@ export default class RSERBufferParser {
 		} else if (code === VALUE_CODES.ARRAY_BUFFER) {
 			val = this.decodeArrayBuffer();
 		} else {
-			throw new Error(`Don't know how to decode reference ${formatCode(code)}`);
+			throw this.unexpected(
+				`Don't know how to decode reference ${formatCode(code)}`,
+			);
 		}
 		this.references.set(id, val);
 		return val;
@@ -353,7 +365,7 @@ export default class RSERBufferParser {
 				return this.decodeArrayBuffer();
 
 			default:
-				throw new Error(`Unhandled ${formatCode(code)} code`);
+				throw this.unexpected(`Unhandled ${formatCode(code)} code`);
 		}
 	}
 
@@ -612,7 +624,7 @@ export default class RSERBufferParser {
 		} else if (code === VALUE_CODES.STRING) {
 			return this.decodeString();
 		} else {
-			throw new Error(
+			throw this.unexpected(
 				`Expected string or undefined but got ${formatCode(code)}`,
 			);
 		}
@@ -654,7 +666,7 @@ export default class RSERBufferParser {
 			case VALUE_CODES.INT32: {
 				const num = this.decodeInt();
 				if (typeof num === "bigint") {
-					throw new Error("Did not expect a bigint");
+					throw this.unexpected("Did not expect a bigint");
 				} else {
 					return num;
 				}
@@ -664,10 +676,12 @@ export default class RSERBufferParser {
 				return this.decodeFloat();
 
 			case VALUE_CODES.INT64:
-				throw new Error("Unexpected bigint, only regular numbers accepted");
+				throw this.unexpected(
+					"Unexpected bigint, only regular numbers accepted",
+				);
 
 			default:
-				throw new Error(`${formatCode(code)} is not a valid number code`);
+				throw this.unexpected(`${formatCode(code)} is not a valid number code`);
 		}
 	}
 
@@ -687,7 +701,7 @@ export default class RSERBufferParser {
 				return 8;
 
 			default:
-				throw new Error(`No int encoding for ${formatCode(code)}`);
+				throw this.unexpected(`No int encoding for ${formatCode(code)}`);
 		}
 	}
 }

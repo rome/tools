@@ -1,5 +1,6 @@
 import {
 	VALUE_CODES,
+	VERSION,
 	filePathMapToCode,
 	filePathSetToCode,
 	filePathToCode,
@@ -86,9 +87,9 @@ export default class RSERBufferAssembler {
 		this.totalSize += buf.byteLength;
 	}
 
-	public encodeStreamHeader(version: number) {
+	public encodeStreamHeader() {
 		this.writeByte(VALUE_CODES.STREAM_HEADER);
-		this.encodeInt(version);
+		this.encodeInt(VERSION);
 	}
 
 	public encodeMessageHeader(size: number) {

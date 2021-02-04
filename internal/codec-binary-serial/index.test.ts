@@ -13,10 +13,10 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {TestHelper, test} from "rome";
-import {encodeValueToRSERBufferMessage} from "./index";
+import {encodeValueToRSERMessage} from "./index";
 
 function assert(t: TestHelper, val: RSERValue) {
-	const buf = encodeValueToRSERBufferMessage(val);
+	const buf = encodeValueToRSERMessage(val);
 
 	const parser = new RSERBufferParser(new DataView(buf));
 	t.true(typeof parser.maybeDecodeMessageHeader() === "number");
