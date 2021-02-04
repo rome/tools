@@ -48,8 +48,7 @@ test(
 					let value = "";
 
 					while (
-						!isNewline(parser.getInputCharOnly(index)) &&
-						!parser.isEOF(index)
+						!(isNewline(parser.getInputCharOnly(index)) || parser.isEOF(index))
 					) {
 						value += parser.getInputCharOnly(index);
 						index = ob1Add(index, 1);

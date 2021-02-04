@@ -73,10 +73,10 @@ export function parseListItem(parser: MarkdownParser): MarkdownListItem {
 	const children: MarkdownListChildren[] = [];
 
 	while (
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("NewLine") &&
-		!parser.matchToken("ListItem") &&
-		!parser.matchToken("Break")
+		!(parser.matchToken("EOF") ||
+		parser.matchToken("NewLine") ||
+		parser.matchToken("ListItem") ||
+		parser.matchToken("Break"))
 	) {
 		children.push(parseParagraph(parser, true));
 	}

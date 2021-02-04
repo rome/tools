@@ -244,7 +244,7 @@ export default class DiagnosticsPrinter extends Error {
 		let needsSource = dep.type === "reference";
 
 		// If we don't need the source then just do an existence check
-		if (!needsSource && !needsHash) {
+		if (!(needsSource || needsHash)) {
 			let exists: undefined | boolean;
 			if (path.isRelative()) {
 				// Always assume relative paths exist

@@ -216,7 +216,7 @@ export function getCurContext(parser: JSParser): undefined | TokContext {
 export function nextToken(parser: JSParser): void {
 	const curContext = getCurContext(parser);
 
-	if (!(curContext && curContext.preserveSpace)) {
+	if (!curContext?.preserveSpace) {
 		skipSpace(parser);
 	}
 

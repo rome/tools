@@ -30,7 +30,7 @@ function jsxMissingType(node: AnyNode, scope: Scope) {
 		return true;
 	}
 	const valueNode = getJSXAttribute(node, "type");
-	if (!(valueNode && valueNode.value)) {
+	if (!valueNode?.value) {
 		return false;
 	}
 

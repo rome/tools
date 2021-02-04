@@ -29,7 +29,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 function foo(x: boolean) {
 	return x;
 }
@@ -61,7 +61,7 @@ function foo(x: boolean) {
 
 ### `1: formatted`
 
-```
+```ts
 function foo(x: boolean) {
 	return x;
 }
@@ -93,7 +93,7 @@ function foo(x: boolean) {
 
 ### `2: formatted`
 
-```
+```ts
 function foo(x: boolean) {
 	return !x;
 }
@@ -125,7 +125,7 @@ function foo(x: boolean) {
 
 ### `3: formatted`
 
-```
+```ts
 function foo(x: boolean, y: boolean) {
 	return x || y;
 }
@@ -141,7 +141,7 @@ function foo(x: boolean, y: boolean) {
 
 ### `4: formatted`
 
-```
+```ts
 function foo(x?: boolean) {
 	return !!x;
 }
@@ -157,7 +157,7 @@ function foo(x?: boolean) {
 
 ### `5: formatted`
 
-```
+```ts
 function foo(x: boolean | number) {
 	return x === true;
 }
@@ -173,7 +173,7 @@ function foo(x: boolean | number) {
 
 ### `6: formatted`
 
-```
+```ts
 function foo(x: boolean | undefined) {
 	return false === x;
 }

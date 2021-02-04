@@ -1,4 +1,4 @@
-/* GENERATED:START(hash:c3dae93249cdd4589799b8c235e491771b58bed7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:b6a27a9bf0dff1f3d68c6b9f0bfd3997f14fad8b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import useHtmlLang from "./a11y/useHtmlLang";
 import useValidLang from "./a11y/useValidLang";
 import useClosingNonVoid from "./html/useClosingNonVoid";
@@ -44,6 +44,7 @@ import useCamelCase from "./js/useCamelCase";
 import useDefaultExportBasename from "./js/useDefaultExportBasename";
 import useDefaultImportBasename from "./js/useDefaultImportBasename";
 import useFunctionDeclarations from "./js/useFunctionDeclarations";
+import useSimplifiedLogicalExpression from "./js/useSimplifiedLogicalExpression";
 import useSingleCaseStatement from "./js/useSingleCaseStatement";
 import useSingleVarDeclarator from "./js/useSingleVarDeclarator";
 import useSortedSpecifiers from "./js/useSortedSpecifiers";
@@ -112,6 +113,7 @@ import noReferenceToNonExistingGroup from "./regex/noReferenceToNonExistingGroup
 import noExplicitAny from "./ts/noExplicitAny";
 import preferShorthandArrayType from "./ts/preferShorthandArrayType";
 import useInterfaces from "./ts/useInterfaces";
+import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression";
 import {AnyVisitor} from "@internal/compiler";
 
 export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
@@ -163,6 +165,10 @@ lintTransforms.set("js/useCamelCase", useCamelCase);
 lintTransforms.set("js/useDefaultExportBasename", useDefaultExportBasename);
 lintTransforms.set("js/useDefaultImportBasename", useDefaultImportBasename);
 lintTransforms.set("js/useFunctionDeclarations", useFunctionDeclarations);
+lintTransforms.set(
+	"js/useSimplifiedLogicalExpression",
+	useSimplifiedLogicalExpression,
+);
 lintTransforms.set("js/useSingleCaseStatement", useSingleCaseStatement);
 lintTransforms.set("js/useSingleVarDeclarator", useSingleVarDeclarator);
 lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
@@ -258,6 +264,10 @@ lintTransforms.set(
 lintTransforms.set("ts/noExplicitAny", noExplicitAny);
 lintTransforms.set("ts/preferShorthandArrayType", preferShorthandArrayType);
 lintTransforms.set("ts/useInterfaces", useInterfaces);
+lintTransforms.set(
+	"ts/useSimplifiedBooleanExpression",
+	useSimplifiedBooleanExpression,
+);
 
 export const lintRuleNames: LintRuleName[] = [
 	"a11y/useHtmlLang",
@@ -491,5 +501,6 @@ export type LintRuleName =
 	| "regex/noReferenceToNonExistingGroup"
 	| "ts/noExplicitAny"
 	| "ts/preferShorthandArrayType"
-	| "ts/useInterfaces";
+	| "ts/useInterfaces"
+	| "ts/useSimplifiedBooleanExpression";
 /* GENERATED:END(id:main) */

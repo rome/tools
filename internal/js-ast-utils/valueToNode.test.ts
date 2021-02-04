@@ -20,10 +20,7 @@ test(
 		t.looksLike(valueToNode("string"), jsStringLiteral.quick("string"));
 		t.looksLike(valueToNode(true), jsBooleanLiteral.quick(true));
 		t.looksLike(valueToNode(123), jsNumericLiteral.quick(123));
-		t.looksLike(
-			valueToNode(BigInt(10)),
-			jsBigIntLiteral.quick("10"),
-		);
+		t.looksLike(valueToNode(BigInt(10)), jsBigIntLiteral.quick("10"));
 		t.looksLike(
 			valueToNode(undefined),
 			jsReferenceIdentifier.quick("undefined"),

@@ -30,7 +30,7 @@
 
 ### `0: formatted`
 
-```
+```ts
 const boolExp = true;
 const r = boolExp;
 
@@ -62,7 +62,7 @@ const r = boolExp;
 
 ### `1: formatted`
 
-```
+```ts
 const boolExp = true;
 const r = true;
 
@@ -94,7 +94,7 @@ const r = true;
 
 ### `2: formatted`
 
-```
+```ts
 const nonNullExp = 123;
 const r = nonNullExp;
 
@@ -127,7 +127,7 @@ const r = nonNullExp;
 
 ### `3: formatted`
 
-```
+```ts
 const boolExpr1 = true;
 const boolExpr2 = false;
 const r = !(boolExpr1 && boolExpr2);
@@ -143,7 +143,7 @@ const r = !(boolExpr1 && boolExpr2);
 
 ### `4: formatted`
 
-```
+```ts
 const boolExpr1 = true;
 const boolExpr2 = false;
 const r = !(boolExpr1 && boolExpr2);
@@ -159,7 +159,7 @@ const r = !(boolExpr1 && boolExpr2);
 
 ### `5: formatted`
 
-```
+```ts
 const boolExpr1 = true;
 const boolExpr2 = false;
 const r = boolExpr1 || boolExpr2;

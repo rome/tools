@@ -94,7 +94,7 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:3be7e2589f63907fa0d74b56941ed97eaebecb9d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:92539582bfc1d4c5d6912e9ef9f03a1c826f693f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| "lint/a11y/useHtmlLang"
 	| "lint/a11y/useValidLang"
@@ -209,7 +209,8 @@ export type DiagnosticLintCategory =
 	| "lint/regex/noReferenceToNonExistingGroup"
 	| "lint/ts/noExplicitAny"
 	| "lint/ts/preferShorthandArrayType"
-	| "lint/ts/useInterfaces";
+	| "lint/ts/useInterfaces"
+	| "lint/ts/useSimplifiedBooleanExpression";
 const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/a11y/useHtmlLang": true,
 	"lint/a11y/useValidLang": true,
@@ -256,6 +257,7 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/js/useDefaultExportBasename": true,
 	"lint/js/useDefaultImportBasename": true,
 	"lint/js/useFunctionDeclarations": true,
+	"lint/js/useSimplifiedLogicalExpression": true,
 	"lint/js/useSingleCaseStatement": true,
 	"lint/js/useSingleVarDeclarator": true,
 	"lint/js/useSortedSpecifiers": true,
@@ -324,6 +326,7 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/ts/noExplicitAny": true,
 	"lint/ts/preferShorthandArrayType": true,
 	"lint/ts/useInterfaces": true,
+	"lint/ts/useSimplifiedBooleanExpression": true,
 };
 /* GENERATED:END(id:main) */
 

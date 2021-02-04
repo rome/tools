@@ -116,12 +116,11 @@ function isBooleanType(node: AnyNode, scope: Scope): boolean {
 	if (node.type === "JSReferenceIdentifier") {
 		const binding = scope.getBinding(node.name);
 		return (
-			binding !== undefined &&
-			(binding?.node).type === "JSBindingIdentifier" &&
+			binding?.node.type === "JSBindingIdentifier" &&
 			binding.node.meta?.optional !== true &&
-			((binding.node.meta?.typeAnnotation)?.type ===
+			(binding.node.meta?.typeAnnotation?.type ===
 			"TSBooleanKeywordTypeAnnotation" ||
-			(binding.node.meta?.typeAnnotation)?.type ===
+			binding.node.meta?.typeAnnotation?.type ===
 			"TSBooleanLiteralTypeAnnotation")
 		);
 	}

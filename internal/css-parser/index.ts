@@ -1017,7 +1017,7 @@ function parseDeclarations(
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.INVALID_DECLARATION,
 		});
-		while (!matchToken(parser, "Semi") && !matchToken(parser, "EOF")) {
+		while (!(matchToken(parser, "Semi") || matchToken(parser, "EOF"))) {
 			parseComponentValue(parser);
 		}
 	}

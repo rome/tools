@@ -267,7 +267,7 @@ export default class Worker {
 	}
 
 	public isDiskSynced(path: AbsoluteFilePath): boolean {
-		return !this.buffers.has(path) && !this.virtualModules.isVirtualPath(path);
+		return !(this.buffers.has(path) || this.virtualModules.isVirtualPath(path));
 	}
 
 	public hasBuffer(path: AbsoluteFilePath): boolean {

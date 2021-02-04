@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:2d1ec3e608bbed41c4d2aac1eb46b0f2cdbf38ac,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:78aa0051db9297a41a2d2402844728b255bb3b75,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
 // @ts-ignore
@@ -97,6 +97,8 @@ import useDefaultExportBasename from "./js/useDefaultExportBasename.test.rjson";
 import useDefaultImportBasename from "./js/useDefaultImportBasename.test.rjson";
 // @ts-ignore
 import useFunctionDeclarations from "./js/useFunctionDeclarations.test.rjson";
+// @ts-ignore
+import useSimplifiedLogicalExpression from "./js/useSimplifiedLogicalExpression.test.rjson";
 // @ts-ignore
 import useSingleCaseStatement from "./js/useSingleCaseStatement.test.rjson";
 // @ts-ignore
@@ -273,6 +275,7 @@ export const tests: Tests = {
 	"js/useDefaultExportBasename": useDefaultExportBasename,
 	"js/useDefaultImportBasename": useDefaultImportBasename,
 	"js/useFunctionDeclarations": useFunctionDeclarations,
+	"js/useSimplifiedLogicalExpression": useSimplifiedLogicalExpression,
 	"js/useSingleCaseStatement": useSingleCaseStatement,
 	"js/useSingleVarDeclarator": useSingleVarDeclarator,
 	"js/useSortedSpecifiers": useSortedSpecifiers,
