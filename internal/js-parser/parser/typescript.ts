@@ -186,15 +186,13 @@ function tsNextTokenCanFollowModifier(parser: JSParser) {
 	// This implementation only handles modifiers not handled by @babel/parser itself. And 'static'.
 	// TODO: Would be nice to avoid lookahead. Want a hasLineBreakUpNext() method...
 	next(parser);
-	return (
-		!hasPrecedingLineBreak(parser) &&
-		!match(parser, tt.parenL) &&
-		!match(parser, tt.parenR) &&
-		!match(parser, tt.colon) &&
-		!match(parser, tt.eq) &&
-		!match(parser, tt.question) &&
-		!match(parser, tt.bang)
-	);
+	return !(hasPrecedingLineBreak(parser) ||
+	match(parser, tt.parenL) ||
+	match(parser, tt.parenR) ||
+	match(parser, tt.colon) ||
+	match(parser, tt.eq) ||
+	match(parser, tt.question) ||
+	match(parser, tt.bang));
 }
 
 /** Parses a modifier matching one the given modifier names.*/

@@ -11,7 +11,7 @@ export function parseParagraph(
 ): MarkdownParagraph {
 	const start = parser.getPosition();
 	const children: AnyMarkdownInlineNode[] = [];
-	while (!parser.matchToken("EOF") && !isBlockToken(parser)) {
+	while (!(parser.matchToken("EOF") || isBlockToken(parser))) {
 		const token = parser.getToken();
 
 		if (isList && token.type === "NewLine") {

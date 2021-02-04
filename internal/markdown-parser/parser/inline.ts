@@ -51,8 +51,9 @@ export function parseInline(
 		parser.nextToken();
 		let exit = false;
 		while (
-			!parser.matchToken("EOF") &&
-			!(parser.matchToken("Emphasis") || parser.matchToken("Strong")) &&
+			!(parser.matchToken("EOF") ||
+			parser.matchToken("Emphasis") ||
+			parser.matchToken("Strong")) &&
 			parser.getToken().start <= closingIndexOfDelimiter &&
 			!exit
 		) {

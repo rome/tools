@@ -66,7 +66,7 @@ const createMarkdownParser = createParser<MarkdownParserTypes>({
 			}
 		}
 
-		if (!escaped && !state.isParagraph) {
+		if (!(escaped || state.isParagraph)) {
 			if (char === "#") {
 				return [state, consumeHeading(parser, index)];
 			}

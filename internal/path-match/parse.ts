@@ -165,10 +165,10 @@ function parseSegment(parser: PatchMatchParser): PatternSegmentNode {
 
 	// Keep consuming tokens until we hit a separator or a comment
 	while (
-		!parser.matchToken("Comment") &&
-		!parser.matchToken("EOF") &&
-		!eatSeparators(parser) &&
-		!parser.matchToken("EOL")
+		!(parser.matchToken("Comment") ||
+		parser.matchToken("EOF") ||
+		eatSeparators(parser) ||
+		parser.matchToken("EOL"))
 	) {
 		parts.push(parsePatternSegmentPart(parser));
 	}
@@ -250,9 +250,9 @@ function parsePatternNode(parser: PatchMatchParser): PathPattern {
 
 	// Keep parsing segments until we hit the end of the input or a comment
 	while (
-		!parser.matchToken("Comment") &&
-		!parser.matchToken("EOF") &&
-		!parser.matchToken("EOL")
+		!(parser.matchToken("Comment") ||
+		parser.matchToken("EOF") ||
+		parser.matchToken("EOL"))
 	) {
 		segments.push(parseSegment(parser));
 	}

@@ -338,9 +338,9 @@ function parseSelector(parser: CSSParser): CSSSelector {
 	readToken(parser, "Whitespace");
 
 	while (
-		!matchToken(parser, "EOF") &&
-		!matchToken(parser, "Comma") &&
-		!matchToken(parser, "LeftCurlyBracket")
+		!(matchToken(parser, "EOF") ||
+		matchToken(parser, "Comma") ||
+		matchToken(parser, "LeftCurlyBracket"))
 	) {
 		const selectorStart = parser.getPosition();
 		const last = patterns[patterns.length - 1];
@@ -348,7 +348,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 		const selector = tryParseSelector(parser);
 
 		if (combinator) {
-			if (!selector || !last || last.type === "CSSCombinator") {
+			if (!(selector && last) || last.type === "CSSCombinator") {
 				parser.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.EXPECTED_SELECTOR,
 					start: last ? undefined : selectorStart,
@@ -364,10 +364,10 @@ function parseSelector(parser: CSSParser): CSSSelector {
 		}
 
 		if (
-			!selector &&
-			!combinator &&
-			!matchToken(parser, "Comma") &&
-			!matchToken(parser, "LeftCurlyBracket")
+			!(selector ||
+			combinator ||
+			matchToken(parser, "Comma") ||
+			matchToken(parser, "LeftCurlyBracket"))
 		) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
@@ -396,7 +396,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 
 export function parseSelectors(parser: CSSParser): CSSSelector[] {
 	const selectors = [];
-	while (!matchToken(parser, "LeftCurlyBracket") && !matchToken(parser, "EOF")) {
+	while (!(matchToken(parser, "LeftCurlyBracket") || matchToken(parser, "EOF"))) {
 		const selector = parseSelector(parser);
 		selectors.push(selector);
 	}

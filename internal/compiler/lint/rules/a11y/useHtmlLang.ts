@@ -37,7 +37,7 @@ export default createVisitor({
 	enter(path) {
 		const {node} = path;
 		if (isJSXDOMElement(node) && isJSXElement(node, "html")) {
-			if (!hasJSXAttribute(node, "lang") || !validLang(node)) {
+			if (!(hasJSXAttribute(node, "lang") && validLang(node))) {
 				path.context.addNodeDiagnostic(
 					node,
 					descriptions.LINT.A11Y_HTML_USE_LANG,

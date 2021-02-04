@@ -5,15 +5,13 @@ import {insideClassComponent} from "../../utils/react";
 
 function inComponentDidMount(path: Path): boolean {
 	const func = path.findAncestry(({node}) => isConditional(node)) !== undefined;
-	return (
-		!func &&
-		!!path.findAncestry(({node}) =>
-			node.type === "JSClassMethod" &&
-			node.key.type === "JSStaticPropertyKey" &&
-			node.key.value.type === "JSIdentifier" &&
-			node.key.value.name === "componentDidMount"
-		)
-	);
+	return !(func ||
+	!path.findAncestry(({node}) =>
+		node.type === "JSClassMethod" &&
+		node.key.type === "JSStaticPropertyKey" &&
+		node.key.value.type === "JSIdentifier" &&
+		node.key.value.name === "componentDidMount"
+	));
 }
 
 export default createVisitor({

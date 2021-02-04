@@ -58,8 +58,8 @@ export async function main([filename]: string[]): Promise<number> {
 	}
 
 	if (
-		!whitelistedPrefix.includes(nodeType.slice(0, 2)) &&
-		!nodeType.toLowerCase().startsWith(language)
+		!(whitelistedPrefix.includes(nodeType.slice(0, 2)) ||
+		nodeType.toLowerCase().startsWith(language))
 	) {
 		reporter.error(
 			markup`Node type argument "${nodeType}" must have the language prefix "${language}"`,

@@ -267,7 +267,7 @@ export default class Worker {
 	}
 
 	public isDiskSynced(path: AbsoluteFilePath): boolean {
-		return !this.buffers.has(path) && !this.virtualModules.isVirtualPath(path);
+		return !(this.buffers.has(path) || this.virtualModules.isVirtualPath(path));
 	}
 
 	public hasBuffer(path: AbsoluteFilePath): boolean {
@@ -537,8 +537,7 @@ export default class Worker {
 
 		// Sometimes we may want to allow the "fixed" AST
 		if (
-			!options.allowParserDiagnostics &&
-			!options.allowCorrupt &&
+			!(options.allowParserDiagnostics || options.allowCorrupt) &&
 			ast.diagnostics.length > 0
 		) {
 			throw new DiagnosticsError(

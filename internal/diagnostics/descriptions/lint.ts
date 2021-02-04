@@ -1173,4 +1173,12 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	JS_USE_SIMPLIFIED_LOGICAL_EXPRESSION: {
+		category: "lint/js/useSimplifiedLogicalExpression",
+		message: markup`Logical expression contains unnecessary complexity.`,
+	},
+	TS_USE_SIMPLIFIED_BOOLEAN_EXPRESSION: {
+		category: "lint/ts/useSimplifiedBooleanExpression",
+		message: markup`Boolean expression contains unnecessary complexity.`,
+	},
 });

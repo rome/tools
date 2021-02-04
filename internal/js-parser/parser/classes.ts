@@ -363,7 +363,7 @@ function parseClassMemberWithIsStatic(
 		abstract,
 	};
 
-	if (!abstract && !isStatic && accessibility === undefined) {
+	if (!(abstract || isStatic) && accessibility === undefined) {
 		const indexSignature = tryTSParseIndexSignature(parser, start);
 		if (indexSignature) {
 			return {

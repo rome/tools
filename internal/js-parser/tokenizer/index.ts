@@ -192,7 +192,7 @@ function codePointToString(code: number): string {
 export function setStrict(parser: JSParser, isStrict: boolean): void {
 	pushScope(parser, "STRICT", isStrict);
 
-	if (!match(parser, tt.num) && !match(parser, tt.string)) {
+	if (!(match(parser, tt.num) || match(parser, tt.string))) {
 		return undefined;
 	}
 
@@ -216,7 +216,7 @@ export function getCurContext(parser: JSParser): undefined | TokContext {
 export function nextToken(parser: JSParser): void {
 	const curContext = getCurContext(parser);
 
-	if (!curContext || !curContext.preserveSpace) {
+	if (!curContext?.preserveSpace) {
 		skipSpace(parser);
 	}
 
@@ -1817,7 +1817,7 @@ function readWord(parser: JSParser): void {
 		);
 	}
 
-	if (parser.state.isIterator && (!isIterator(word) || !inScope(parser, "TYPE"))) {
+	if (parser.state.isIterator && !(isIterator(word) && inScope(parser, "TYPE"))) {
 		unexpectedDiagnostic(
 			parser,
 			{

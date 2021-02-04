@@ -61,9 +61,9 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 			parser.eatToken("Word");
 		}
 		while (
-			!parser.matchToken("LeftParen") &&
-			!parser.matchToken("Exclamation") &&
-			!parser.matchToken("Colon")
+			!(parser.matchToken("LeftParen") ||
+			parser.matchToken("Exclamation") ||
+			parser.matchToken("Colon"))
 		) {
 			if (!parser.matchToken("Word")) {
 				parser.unexpectedDiagnostic({
@@ -75,9 +75,9 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 			parser.nextToken();
 		}
 		if (
-			!parser.matchToken("LeftParen") &&
-			!parser.matchToken("Exclamation") &&
-			!parser.matchToken("Colon")
+			!(parser.matchToken("LeftParen") ||
+			parser.matchToken("Exclamation") ||
+			parser.matchToken("Colon"))
 		) {
 			commitType = "";
 		}
@@ -87,7 +87,7 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 		});
 	}
 
-	const custom = !/^fix$/i.test(commitType) && !/^feat$/i.test(commitType);
+	const custom = !(/^fix$/i.test(commitType) || /^feat$/i.test(commitType));
 
 	let scope = "";
 	if (parser.eatToken("LeftParen")) {

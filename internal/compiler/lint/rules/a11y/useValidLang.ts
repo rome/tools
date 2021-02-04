@@ -13,7 +13,7 @@ import {langSupported} from "@internal/compiler/lint/utils/getLangSupported";
 function jsxSupportedLang(node: JSXElement): undefined | string {
 	const attr = getJSXAttribute(node, "lang");
 
-	if (!attr || !attr.value) {
+	if (!attr?.value) {
 		return "undefined";
 	}
 

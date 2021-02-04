@@ -13,8 +13,8 @@ function isContinueInsideLastAncestorPath(
 			const bodySize = node.body.length;
 			const lastBodyNode = node.body[bodySize - 1];
 			if (
-				!(length === 1 && lastBodyNode === path.node) &&
-				!(length > 1 && lastBodyNode === ancestryArr[index - 2].node)
+				!((length === 1 && lastBodyNode === path.node) ||
+				(length > 1 && lastBodyNode === ancestryArr[index - 2].node))
 			) {
 				return false;
 			}

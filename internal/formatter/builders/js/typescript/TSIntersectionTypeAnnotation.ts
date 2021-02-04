@@ -39,12 +39,7 @@ export default function TSIntersectionTypeAnnotation(
 			//     d: string;
 			//   };
 			parts.push(space, "&", space, shouldIndent ? indent(printed) : printed);
-		} else if (!isObjectType(previous) && !isObjectType(type)) {
-			//   let foo: XXXX &
-			//     YYYY &&
-			//     ZZZZ;
-			parts.push(indent(concat([space, "&", lineOrSpace, printed])));
-		} else {
+		} else if (isObjectType(previous) || isObjectType(type)) {
 			//   let z: AAA & {
 			//     a: string;
 			//     b: string;
@@ -58,6 +53,11 @@ export default function TSIntersectionTypeAnnotation(
 			}
 
 			parts.push(space, "&", space, shouldIndent ? indent(printed) : printed);
+		} else {
+			//   let foo: XXXX &
+			//     YYYY &&
+			//     ZZZZ;
+			parts.push(indent(concat([space, "&", lineOrSpace, printed])));
 		}
 
 		previous = type;

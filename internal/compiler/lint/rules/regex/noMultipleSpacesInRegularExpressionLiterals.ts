@@ -30,7 +30,7 @@ function checkRegex(path: Path, node: JSRegExpSubExpression): ExitSignal {
 		const item = node.body[index];
 
 		// Push the item unchanged if it's not the start of consecutive spaces
-		if (!isSpaceChar(item) || !isSpaceChar(node.body[index + 1])) {
+		if (!(isSpaceChar(item) && isSpaceChar(node.body[index + 1]))) {
 			newBody.push(item);
 			index++;
 			continue;

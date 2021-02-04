@@ -652,7 +652,7 @@ export function parseExpressionOp(
 	}
 
 	const prec = parser.state.tokenType.binop;
-	if (prec !== undefined && (!noIn || !match(parser, tt._in))) {
+	if (prec !== undefined && !(noIn && match(parser, tt._in))) {
 		if (prec > minPrec) {
 			const operator = String(parser.state.tokenValue) as
 				| BinaryOperator
@@ -2207,8 +2207,8 @@ export function parseNew(parser: JSParser): JSNewExpression | JSMetaProperty {
 		const metaProp = parseMetaProperty(parser, start, meta, "target");
 
 		if (
-			!inScope(parser, "NON_ARROW_FUNCTION") &&
-			!inScope(parser, "CLASS_PROPERTY")
+			!(inScope(parser, "NON_ARROW_FUNCTION") ||
+			inScope(parser, "CLASS_PROPERTY"))
 		) {
 			unexpectedDiagnostic(
 				parser,
@@ -3453,7 +3453,7 @@ export function checkFunctionNameAndParams(
 	const startIndex = parser.getIndexFromPosition(start, parser.filename);
 	if (
 		isArrowFunction &&
-		force !== true &&
+		!force &&
 		parser.state.noArrowParamsConversionAt.includes(startIndex)
 	) {
 		return undefined;
@@ -3919,7 +3919,7 @@ export function parseYield(parser: JSParser, noIn?: boolean): JSYieldExpression 
 	let argument: undefined | AnyJSExpression;
 	if (
 		match(parser, tt.semi) ||
-		(!match(parser, tt.star) && !parser.state.tokenType.startsExpr) ||
+		!(match(parser, tt.star) || parser.state.tokenType.startsExpr) ||
 		canInsertSemicolon(parser)
 	) {
 		delegate = false;
@@ -4110,8 +4110,7 @@ function parseImportCall(parser: JSParser): JSImportCall {
 
 function parseSuper(parser: JSParser): JSSuper {
 	if (
-		!inScope(parser, "METHOD") &&
-		!inScope(parser, "CLASS_PROPERTY") &&
+		!(inScope(parser, "METHOD") || inScope(parser, "CLASS_PROPERTY")) &&
 		parser.options.sourceType !== "template"
 	) {
 		unexpectedDiagnostic(
@@ -4126,9 +4125,9 @@ function parseSuper(parser: JSParser): JSSuper {
 	next(parser);
 
 	if (
-		!match(parser, tt.parenL) &&
-		!match(parser, tt.bracketL) &&
-		!match(parser, tt.dot)
+		!(match(parser, tt.parenL) ||
+		match(parser, tt.bracketL) ||
+		match(parser, tt.dot))
 	) {
 		unexpectedDiagnostic(
 			parser,

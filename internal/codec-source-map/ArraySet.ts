@@ -33,7 +33,7 @@ export default class ArraySet {
 		const isDuplicate = this.has(str);
 		const idx = this.array.length;
 
-		if (!isDuplicate || allowDuplicates === true) {
+		if (!isDuplicate || allowDuplicates) {
 			this.array.push(str);
 		}
 

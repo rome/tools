@@ -60,7 +60,7 @@ export class ChildProcess {
 	}
 
 	public getOutput(out: boolean = true, err: boolean = true): string {
-		if (!out && !err) {
+		if (!(out || err)) {
 			return "";
 		}
 
