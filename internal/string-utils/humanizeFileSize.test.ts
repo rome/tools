@@ -33,11 +33,11 @@ test(
 			{input: 1_000_000_000_000_000_000, expected: "1EB"},
 			{input: 10_000_000_000_000_000_000, expected: "10EB"},
 			{input: 100_000_000_000_000_000_000, expected: "100EB"},
-			{input: 1e+21, expected: "1ZB"},
-			{input: 1e+22, expected: "10ZB"},
-			{input: 1e+23, expected: "100ZB"},
-			{input: 1e+24, expected: "1YB"},
-			{input: 1e+25, expected: "10YB"},
+			{input: 1e21, expected: "1ZB"},
+			{input: 1e22, expected: "10ZB"},
+			{input: 1e23, expected: "100ZB"},
+			{input: 1e24, expected: "1YB"},
+			{input: 1e25, expected: "10YB"},
 		];
 
 		testCases.forEach((td) => {

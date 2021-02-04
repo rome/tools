@@ -14,18 +14,27 @@ export default function JSNumericLiteral(
 	builder: Builder,
 	node: JSNumericLiteral,
 ): Token {
-	if (node.format === undefined) {
-		return humanizeNumber(node.value);
-	} else {
-		switch (node.format) {
-			case "binary":
-				return `0b${node.value.toString(2)}`;
-			case "octal":
-				return `0o${node.value.toString(8)}`;
-			case "hex":
-				return `0x${node.value.toString(16)}`;
-			case "scientific":
-				return node.value.toExponential();
+	const {format, value} = node;
+
+	switch (format) {
+		case "binary":
+			return `0b${value.toString(2)}`;
+
+		case "octal":
+			return `0o${value.toString(8)}`;
+
+		case "hex":
+			return `0x${value.toString(16)}`;
+
+		case "scientific": {
+			let str = value.toExponential();
+
+			// The plus in the form of 5e+0 is redundant
+			str = str.replace(/e\+/g, "e");
+
+			return str;
 		}
 	}
+
+	return humanizeNumber(value);
 }
