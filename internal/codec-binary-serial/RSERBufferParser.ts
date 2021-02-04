@@ -34,6 +34,7 @@ import {
 import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";
+import RSERParserError from "./RSERParserError";
 
 const sharedCachedKeyDecoder = new CachedKeyDecoder();
 
@@ -61,7 +62,7 @@ export default class RSERBufferParser {
 	private assertReadableSize(size: number) {
 		let remaining = this.getReadableSize();
 		if (remaining < size) {
-			throw new Error(
+			throw new RSERParserError(
 				`Expected at least ${size} bytes to read but only have ${remaining}`,
 			);
 		}
@@ -105,7 +106,7 @@ export default class RSERBufferParser {
 				return this.view.getBigInt64(this.readOffset + offset);
 
 			default:
-				throw new Error(`Invalid integer size ${size}`);
+				throw new RSERParserError(`Invalid integer size ${size}`);
 		}
 	}
 
@@ -129,7 +130,7 @@ export default class RSERBufferParser {
 		if (got === expected) {
 			this.readOffset++;
 		} else {
-			throw new Error(
+			throw new RSERParserError(
 				`Expected code ${formatCode(expected)} but got ${formatCode(got)}`,
 			);
 		}
@@ -257,7 +258,9 @@ export default class RSERBufferParser {
 		} else if (code === VALUE_CODES.ARRAY_BUFFER) {
 			val = this.decodeArrayBuffer();
 		} else {
-			throw new Error(`Don't know how to decode reference ${formatCode(code)}`);
+			throw new RSERParserError(
+				`Don't know how to decode reference ${formatCode(code)}`,
+			);
 		}
 		this.references.set(id, val);
 		return val;
@@ -358,7 +361,7 @@ export default class RSERBufferParser {
 				return this.decodeArrayBuffer();
 
 			default:
-				throw new Error(`Unhandled ${formatCode(code)} code`);
+				throw new RSERParserError(`Unhandled ${formatCode(code)} code`);
 		}
 	}
 
@@ -617,7 +620,7 @@ export default class RSERBufferParser {
 		} else if (code === VALUE_CODES.STRING) {
 			return this.decodeString();
 		} else {
-			throw new Error(
+			throw new RSERParserError(
 				`Expected string or undefined but got ${formatCode(code)}`,
 			);
 		}
@@ -659,7 +662,7 @@ export default class RSERBufferParser {
 			case VALUE_CODES.INT32: {
 				const num = this.decodeInt();
 				if (typeof num === "bigint") {
-					throw new Error("Did not expect a bigint");
+					throw new RSERParserError("Did not expect a bigint");
 				} else {
 					return num;
 				}
@@ -669,10 +672,14 @@ export default class RSERBufferParser {
 				return this.decodeFloat();
 
 			case VALUE_CODES.INT64:
-				throw new Error("Unexpected bigint, only regular numbers accepted");
+				throw new RSERParserError(
+					"Unexpected bigint, only regular numbers accepted",
+				);
 
 			default:
-				throw new Error(`${formatCode(code)} is not a valid number code`);
+				throw new RSERParserError(
+					`${formatCode(code)} is not a valid number code`,
+				);
 		}
 	}
 
@@ -692,7 +699,7 @@ export default class RSERBufferParser {
 				return 8;
 
 			default:
-				throw new Error(`No int encoding for ${formatCode(code)}`);
+				throw new RSERParserError(`No int encoding for ${formatCode(code)}`);
 		}
 	}
 }

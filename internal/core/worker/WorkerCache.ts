@@ -117,7 +117,7 @@ export class CacheEntry<Value extends RSERValue = RSERValue> {
 			return undefined;
 		}
 
-		if (this.cache.disabled) {
+		if (this.cache.readDisabled) {
 			return undefined;
 		}
 
@@ -365,16 +365,17 @@ class CacheFile {
 }
 
 export default class WorkerCache extends Cache {
-	constructor(worker: Worker, disabled: boolean) {
+	constructor(worker: Worker) {
 		super(
 			"worker",
 			{
 				userConfig: worker.userConfig,
 				parentLogger: worker.logger,
 				fatalErrorHandler: worker.fatalErrorHandler,
+				writeDisabled: worker.options.cacheWriteDisabled,
+				readDisabled: worker.options.cacheReadDisabled,
 			},
 		);
-		this.disabled = disabled;
 		this.worker = worker;
 		this.loadedFiles = new AbsoluteFilePathMap();
 	}

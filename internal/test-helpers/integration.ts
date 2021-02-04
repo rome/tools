@@ -153,7 +153,8 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		id: 0,
 		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
-		cacheDisabled: true,
+		cacheWriteDisabled: true,
+		cacheReadDisabled: true,
 
 		// This wont actually be used, it's just for setting up subscriptions
 		bridge: WorkerBridge.createFromLocal().client,
@@ -337,7 +338,7 @@ export function createIntegrationTest(
 		const userConfig: UserConfig = {
 			configPath: undefined,
 			recoveryPath,
-			cachePath,
+			cacheDirectory: cachePath,
 			syntaxTheme: undefined,
 		};
 

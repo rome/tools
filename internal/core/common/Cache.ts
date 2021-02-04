@@ -1,4 +1,3 @@
-import {getEnvVar} from "@internal/cli-environment";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {
 	RSERValue,
@@ -31,26 +30,19 @@ type WriteOperation =
 export default class Cache {
 	constructor(
 		namespace: string,
-		{fatalErrorHandler, userConfig, parentLogger, forceEnabled}: {
+		{fatalErrorHandler, userConfig, parentLogger, writeDisabled, readDisabled}: {
 			fatalErrorHandler: FatalErrorHandler;
 			userConfig: UserConfig;
 			parentLogger: ReporterNamespace;
-			forceEnabled?: boolean;
+			writeDisabled: boolean;
+			readDisabled: boolean;
 		},
 	) {
-		let disabled = false;
-		if (getEnvVar("ROME_DEV").type === "ENABLED") {
-			disabled = true;
-		}
-		if (getEnvVar("ROME_CACHE").type === "DISABLED") {
-			disabled = true;
-		}
-		if (forceEnabled) {
-			disabled = false;
-		}
-		this.disabled = disabled;
+		this.writeDisabled = writeDisabled;
+		this.readDisabled = readDisabled;
 
-		this.cachePath = userConfig.cachePath.append(namespace);
+		this.directoryPath = userConfig.cacheDirectory.append(namespace);
+
 		this.logger = parentLogger.namespace(markup`Cache`);
 		this.fatalErrorHandler = fatalErrorHandler;
 		this.runningWritePromise = undefined;
@@ -58,17 +50,19 @@ export default class Cache {
 		this.pendingWrites = new AbsoluteFilePathMap();
 	}
 
-	private fatalErrorHandler: FatalErrorHandler;
-
-	public disabled: boolean;
+	public writeDisabled: boolean;
+	public readDisabled: boolean;
 	public logger: ReporterNamespace;
-	protected cachePath: AbsoluteFilePath;
+
+	private fatalErrorHandler: FatalErrorHandler;
+	protected directoryPath: AbsoluteFilePath;
+
 	protected runningWritePromise: undefined | Promise<void>;
 	protected pendingWrites: AbsoluteFilePathMap<AbsoluteFilePathMap<WriteOperation>>;
 	protected pendingWriteTimer: undefined | NodeJS.Timeout;
 
 	public getDirectory(): AbsoluteFilePath {
-		return this.cachePath;
+		return this.directoryPath;
 	}
 
 	public async remove(uid: string, path: AbsoluteFilePath) {
@@ -83,7 +77,7 @@ export default class Cache {
 	}
 
 	protected getCacheDirectory(uid: string): AbsoluteFilePath {
-		return this.cachePath.append(uid);
+		return this.directoryPath.append(uid);
 	}
 
 	public getCacheFilename(uid: string, name: string): AbsoluteFilePath {
@@ -110,10 +104,10 @@ export default class Cache {
 
 		// Write pending files
 		const filelinks: AnyMarkups = [];
-		for (const [directory, files] of pendingWrites) {
+		for (const [directory, ops] of pendingWrites) {
 			await createDirectory(directory);
 
-			for (const [path, op] of files) {
+			for (const [path, op] of ops) {
 				filelinks.push(markup`${path}`);
 				switch (op.type) {
 					case "delete": {
@@ -141,7 +135,7 @@ export default class Cache {
 	}
 
 	public addPendingWrite(path: AbsoluteFilePath, op: WriteOperation) {
-		if (this.disabled) {
+		if (this.writeDisabled) {
 			return;
 		}
 

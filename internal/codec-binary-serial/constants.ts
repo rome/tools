@@ -20,6 +20,7 @@ import {
 	AnyRSERFilePathMap,
 	RSERArrayBufferView,
 } from "@internal/codec-binary-serial/types";
+import RSERParserError from "./RSERParserError";
 
 // Bump whenever we make backwards incompatible changes
 export const VERSION = 1;
@@ -105,7 +106,7 @@ export function validateValueCode(code: number): VALUE_CODES {
 			return code;
 
 		default:
-			throw new Error(`Invalid value code ${code}`);
+			throw new RSERParserError(`Invalid value code ${code}`);
 	}
 }
 
@@ -143,7 +144,7 @@ export function validateArrayBufferViewCode(
 			return code;
 
 		default:
-			throw new Error(`Invalid typed array code ${code}`);
+			throw new RSERParserError(`Invalid typed array code ${code}`);
 	}
 }
 
@@ -175,7 +176,7 @@ export function instanceToArrayBufferViewCode(
 	} else if (val instanceof DataView) {
 		return ARRAY_BUFFER_VIEW_CODES.DATA_VIEW;
 	} else {
-		throw new Error("Unknown typed array instance");
+		throw new RSERParserError("Unknown typed array instance");
 	}
 }
 export function arrayBufferViewCodeToInstance(
@@ -245,7 +246,7 @@ export function validateErrorCode(code: number): ERROR_CODES {
 			return code;
 
 		default:
-			throw new Error(`Invalid error code ${code}`);
+			throw new RSERParserError(`Invalid error code ${code}`);
 	}
 }
 
@@ -291,7 +292,7 @@ export function errorCodeToInstance(code: ERROR_CODES): Error {
 			return new Error();
 
 		default:
-			throw new Error(`Invalid error code ${code}`);
+			throw new RSERParserError(`Invalid error code ${code}`);
 	}
 }
 
@@ -311,7 +312,7 @@ export function validateFileCode(code: number): FILE_CODES {
 			return code;
 
 		default:
-			throw new Error(`Unknown file code ${code}`);
+			throw new RSERParserError(`Unknown file code ${code}`);
 	}
 }
 
@@ -323,7 +324,7 @@ export function filePathMapToCode(map: AnyRSERFilePathMap): FILE_CODES {
 	} else if (map instanceof UnknownPathMap) {
 		return FILE_CODES.UNKNOWN;
 	} else {
-		throw new Error("Unknown FilePath type");
+		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
@@ -335,7 +336,7 @@ export function filePathSetToCode(set: AnyFilePathSet): FILE_CODES {
 	} else if (set instanceof UnknownPathSet) {
 		return FILE_CODES.UNKNOWN;
 	} else {
-		throw new Error("Unknown FilePath type");
+		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
@@ -349,7 +350,7 @@ export function filePathToCode(path: AnyFilePath): FILE_CODES {
 	} else if (path instanceof URLPath) {
 		return FILE_CODES.URL;
 	} else {
-		throw new Error("Unknown FilePath type");
+		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
@@ -384,7 +385,7 @@ export function filePathMapFromCode(code: FILE_CODES): AnyRSERFilePathMap {
 			return new AbsoluteFilePathMap();
 
 		default:
-			throw new Error(`File path code ${code} cannot be a map`);
+			throw new RSERParserError(`File path code ${code} cannot be a map`);
 	}
 }
 
@@ -400,6 +401,6 @@ export function filePathSetFromCode(code: FILE_CODES): AnyFilePathSet {
 			return new AbsoluteFilePathSet();
 
 		default:
-			throw new Error(`File path code ${code} cannot be a map`);
+			throw new RSERParserError(`File path code ${code} cannot be a map`);
 	}
 }

@@ -8,9 +8,11 @@
 import {CHILD_ARGS, VERSION, getBinPath} from "@internal/core";
 import workerThreads = require("worker_threads");
 import child = require("child_process");
-import {Dict} from "@internal/typescript-helpers";
 
-function createEnv(processType: string, env?: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
+function createEnv(
+	processType: string,
+	env?: NodeJS.ProcessEnv,
+): NodeJS.ProcessEnv {
 	return {
 		...process.env,
 		...env,
@@ -38,7 +40,9 @@ export function forkProcess(
 
 export function forkThread(
 	processType: string,
-	opts: Omit<workerThreads.WorkerOptions, "env"> & {env?: NodeJS.ProcessEnv} = {},
+	opts: Omit<workerThreads.WorkerOptions, "env"> & {
+		env?: NodeJS.ProcessEnv;
+	} = {},
 ): workerThreads.Worker {
 	return new workerThreads.Worker(
 		`require(${JSON.stringify(getBinPath().join())});`,
