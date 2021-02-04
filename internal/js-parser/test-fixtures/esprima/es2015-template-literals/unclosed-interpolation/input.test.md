@@ -157,7 +157,6 @@ JSRoot {
 					JSNumericLiteral {
 						value: 10
 						format: undefined
-						raw: "10"
 						loc: Object {
 							filename: "esprima/es2015-template-literals/unclosed-interpolation/input.js"
 							end: Object {

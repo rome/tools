@@ -99,7 +99,6 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 42
 					format: undefined
-					raw: "42"
 					loc: Object {
 						filename: "esprima/invalid-syntax/migrated_0087/input.js"
 						end: Object {
@@ -161,7 +160,6 @@ JSRoot {
 							right: JSNumericLiteral {
 								value: 10
 								format: undefined
-								raw: "10"
 								loc: Object {
 									filename: "esprima/invalid-syntax/migrated_0087/input.js"
 									end: Object {

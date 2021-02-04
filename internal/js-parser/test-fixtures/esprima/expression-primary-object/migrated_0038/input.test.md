@@ -146,7 +146,6 @@ JSRoot {
 									right: JSNumericLiteral {
 										value: 0
 										format: undefined
-										raw: "0"
 										loc: Object {
 											filename: "esprima/expression-primary-object/migrated_0038/input.js"
 											end: Object {

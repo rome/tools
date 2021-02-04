@@ -113,7 +113,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 123
 							format: undefined
-							raw: "123"
 							loc: Object {
 								filename: "es2015/identifiers/invalid-escape-seq-export/input.js"
 								end: Object {

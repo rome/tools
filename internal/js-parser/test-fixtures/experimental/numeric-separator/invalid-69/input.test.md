@@ -82,7 +82,6 @@ JSRoot {
 					JSNumericLiteral {
 						value: 9
 						format: "octal"
-						raw: "0o_11"
 						loc: Object {
 							filename: "experimental/numeric-separator/invalid-69/input.js"
 							end: Object {
@@ -98,7 +97,6 @@ JSRoot {
 					JSNumericLiteral {
 						value: 0
 						format: undefined
-						raw: "0"
 						loc: Object {
 							filename: "experimental/numeric-separator/invalid-69/input.js"
 							end: Object {

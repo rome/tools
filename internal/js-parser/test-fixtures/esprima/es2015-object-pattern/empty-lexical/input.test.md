@@ -86,7 +86,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "esprima/es2015-object-pattern/empty-lexical/input.js"
 								end: Object {

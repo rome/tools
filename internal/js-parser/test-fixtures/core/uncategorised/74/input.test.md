@@ -45,7 +45,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "hex"
-				raw: "0x0"
 				loc: Object {
 					filename: "core/uncategorised/74/input.js"
 					end: Object {

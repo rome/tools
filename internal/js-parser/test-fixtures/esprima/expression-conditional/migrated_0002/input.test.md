@@ -85,7 +85,6 @@ JSRoot {
 					alternate: JSNumericLiteral {
 						value: 2
 						format: undefined
-						raw: "2"
 						loc: Object {
 							filename: "esprima/expression-conditional/migrated_0002/input.js"
 							end: Object {
@@ -101,7 +100,6 @@ JSRoot {
 					consequent: JSNumericLiteral {
 						value: 1
 						format: undefined
-						raw: "1"
 						loc: Object {
 							filename: "esprima/expression-conditional/migrated_0002/input.js"
 							end: Object {
@@ -117,7 +115,6 @@ JSRoot {
 					test: JSNumericLiteral {
 						value: 0
 						format: undefined
-						raw: "0"
 						loc: Object {
 							filename: "esprima/expression-conditional/migrated_0002/input.js"
 							end: Object {

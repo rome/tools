@@ -116,7 +116,6 @@ JSRoot {
 					initializer: JSNumericLiteral {
 						value: 1
 						format: undefined
-						raw: "1"
 						loc: Object {
 							filename: "typescript/enum/members-strings/input.ts"
 							end: Object {

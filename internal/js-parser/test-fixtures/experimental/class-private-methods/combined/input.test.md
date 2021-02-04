@@ -106,7 +106,6 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							raw: "1"
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
@@ -346,7 +345,6 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 2
 							format: undefined
-							raw: "2"
 							loc: Object {
 								filename: "experimental/class-private-methods/combined/input.js"
 								end: Object {
@@ -509,7 +507,6 @@ JSRoot {
 									argument: JSNumericLiteral {
 										value: 9_999
 										format: undefined
-										raw: "9999"
 										loc: Object {
 											filename: "experimental/class-private-methods/combined/input.js"
 											end: Object {

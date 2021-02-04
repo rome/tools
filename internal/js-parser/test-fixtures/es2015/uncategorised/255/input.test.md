@@ -190,7 +190,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 3
 				format: undefined
-				raw: "3"
 				loc: Object {
 					filename: "es2015/uncategorised/255/input.js"
 					end: Object {

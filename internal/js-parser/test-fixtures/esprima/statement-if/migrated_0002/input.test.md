@@ -114,7 +114,6 @@ JSRoot {
 							init: JSNumericLiteral {
 								value: 0
 								format: undefined
-								raw: "0"
 								loc: Object {
 									filename: "esprima/statement-if/migrated_0002/input.js"
 									end: Object {

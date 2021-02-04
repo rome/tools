@@ -206,7 +206,6 @@ JSRoot {
 											argument: JSNumericLiteral {
 												value: 0
 												format: undefined
-												raw: "0"
 												loc: Object {
 													filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 													end: Object {

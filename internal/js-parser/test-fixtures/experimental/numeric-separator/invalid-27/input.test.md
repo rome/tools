@@ -72,7 +72,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "hex"
-				raw: "0x"
 				loc: Object {
 					filename: "experimental/numeric-separator/invalid-27/input.js"
 					end: Object {

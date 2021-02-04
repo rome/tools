@@ -100,7 +100,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 10
 				format: undefined
-				raw: "10"
 				loc: Object {
 					filename: "core/uncategorised/426/input.js"
 					end: Object {

@@ -147,7 +147,6 @@ JSRoot {
 								argument: JSNumericLiteral {
 									value: 2
 									format: undefined
-									raw: "2"
 									loc: Object {
 										filename: "es2017/async-functions/await-inside-parenthesized-assign/input.js"
 										end: Object {

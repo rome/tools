@@ -63,7 +63,6 @@ JSRoot {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				raw: "42"
 				loc: Object {
 					filename: "core/uncategorised/46/input.js"
 					end: Object {

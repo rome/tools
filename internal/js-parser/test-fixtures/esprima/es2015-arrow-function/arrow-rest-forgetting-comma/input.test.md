@@ -209,7 +209,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
-				raw: "0"
 				loc: Object {
 					filename: "esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js"
 					end: Object {

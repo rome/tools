@@ -73,7 +73,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					raw: "42"
 					loc: Object {
 						filename: "esprima/es2015-export-declaration/export-default-from-as-identifier-3/input.js"
 						end: Object {

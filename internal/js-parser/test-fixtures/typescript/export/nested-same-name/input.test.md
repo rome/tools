@@ -100,7 +100,6 @@ JSRoot {
 							init: JSNumericLiteral {
 								value: 0
 								format: undefined
-								raw: "0"
 								loc: Object {
 									filename: "typescript/export/nested-same-name/input.ts"
 									end: Object {
@@ -242,7 +241,6 @@ JSRoot {
 											init: JSNumericLiteral {
 												value: 1
 												format: undefined
-												raw: "1"
 												loc: Object {
 													filename: "typescript/export/nested-same-name/input.ts"
 													end: Object {

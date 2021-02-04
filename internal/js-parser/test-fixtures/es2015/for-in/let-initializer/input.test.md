@@ -137,7 +137,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "es2015/for-in/let-initializer/input.js"
 								end: Object {

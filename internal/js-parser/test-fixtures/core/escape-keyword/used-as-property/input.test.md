@@ -155,7 +155,6 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 2
 										format: undefined
-										raw: "2"
 										loc: Object {
 											filename: "core/escape-keyword/used-as-property/input.js"
 											end: Object {

@@ -80,7 +80,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
-				raw: "42"
 				trailingComments: undefined
 				loc: Object {
 					filename: "core/uncategorised/48/input.js"

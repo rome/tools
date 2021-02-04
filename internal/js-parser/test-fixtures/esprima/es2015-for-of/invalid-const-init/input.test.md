@@ -139,7 +139,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
-							raw: "1"
 							loc: Object {
 								filename: "esprima/es2015-for-of/invalid-const-init/input.js"
 								end: Object {

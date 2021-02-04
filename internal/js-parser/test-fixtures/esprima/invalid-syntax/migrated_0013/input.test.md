@@ -72,7 +72,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "octal"
-				raw: "0O"
 				loc: Object {
 					filename: "esprima/invalid-syntax/migrated_0013/input.js"
 					end: Object {

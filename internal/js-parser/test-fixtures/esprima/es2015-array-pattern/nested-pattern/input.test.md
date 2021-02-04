@@ -117,7 +117,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "esprima/es2015-array-pattern/nested-pattern/input.js"
 								end: Object {

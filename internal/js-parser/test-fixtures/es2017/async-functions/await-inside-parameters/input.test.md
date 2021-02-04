@@ -143,7 +143,6 @@ JSRoot {
 							argument: JSNumericLiteral {
 								value: 2
 								format: undefined
-								raw: "2"
 								loc: Object {
 									filename: "es2017/async-functions/await-inside-parameters/input.js"
 									end: Object {

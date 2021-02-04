@@ -118,7 +118,6 @@ JSRoot {
 								argument: JSNumericLiteral {
 									value: 3
 									format: undefined
-									raw: "3"
 									loc: Object {
 										filename: "esprima/es2015-generator/generator-expression-with-yield/input.js"
 										end: Object {

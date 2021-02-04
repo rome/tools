@@ -58,7 +58,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					raw: "1"
 					loc: Object {
 						filename: "typescript/cast/type-assertion-before-operator/input.ts"
 						end: Object {
@@ -99,7 +98,6 @@ JSRoot {
 					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
-						raw: "1"
 						loc: Object {
 							filename: "typescript/cast/type-assertion-before-operator/input.ts"
 							end: Object {

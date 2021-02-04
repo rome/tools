@@ -83,7 +83,6 @@ JSRoot {
 					expression: JSNumericLiteral {
 						value: 3
 						format: "binary"
-						raw: "0b_0_1_1"
 						loc: Object {
 							filename: "experimental/numeric-separator/invalid-143/input.js"
 							end: Object {

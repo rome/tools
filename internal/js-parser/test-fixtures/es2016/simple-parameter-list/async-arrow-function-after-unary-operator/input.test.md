@@ -71,7 +71,6 @@ JSRoot {
 					body: JSNumericLiteral {
 						value: 3
 						format: undefined
-						raw: "3"
 						loc: Object {
 							filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
 							end: Object {

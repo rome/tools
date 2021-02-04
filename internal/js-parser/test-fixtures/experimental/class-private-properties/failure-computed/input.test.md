@@ -210,7 +210,6 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							raw: "1"
 							loc: Object {
 								filename: "experimental/class-private-properties/failure-computed/input.js"
 								end: Object {

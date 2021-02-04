@@ -57,7 +57,6 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-array-binding-pattern/elision/input.js"
 						end: Object {

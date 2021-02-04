@@ -72,7 +72,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "binary"
-				raw: "0b"
 				loc: Object {
 					filename: "experimental/numeric-separator/invalid-26/input.js"
 					end: Object {
@@ -101,7 +100,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 21
 				format: undefined
-				raw: "2_1"
 				loc: Object {
 					filename: "experimental/numeric-separator/invalid-26/input.js"
 					end: Object {

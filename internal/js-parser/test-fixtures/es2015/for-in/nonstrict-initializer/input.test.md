@@ -86,7 +86,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								end: Object {
@@ -159,7 +158,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "es2015/for-in/nonstrict-initializer/input.js"
 								end: Object {
@@ -406,7 +404,6 @@ JSRoot {
 									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
-										raw: "1"
 										loc: Object {
 											filename: "es2015/for-in/nonstrict-initializer/input.js"
 											end: Object {
@@ -527,7 +524,6 @@ JSRoot {
 								value: JSNumericLiteral {
 									value: 0
 									format: undefined
-									raw: "0"
 									loc: Object {
 										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
@@ -584,7 +580,6 @@ JSRoot {
 								value: JSNumericLiteral {
 									value: 1
 									format: undefined
-									raw: "1"
 									loc: Object {
 										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {
@@ -641,7 +636,6 @@ JSRoot {
 								value: JSNumericLiteral {
 									value: 2
 									format: undefined
-									raw: "2"
 									loc: Object {
 										filename: "es2015/for-in/nonstrict-initializer/input.js"
 										end: Object {

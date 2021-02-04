@@ -108,7 +108,6 @@ JSRoot {
 						value: 1
 						format: undefined
 						leadingComments: undefined
-						raw: "1"
 						loc: Object {
 							filename: "comments/basic/switch-fallthrough-comment/input.js"
 							end: Object {
@@ -139,7 +138,6 @@ JSRoot {
 						value: 2
 						format: undefined
 						leadingComments: undefined
-						raw: "2"
 						loc: Object {
 							filename: "comments/basic/switch-fallthrough-comment/input.js"
 							end: Object {

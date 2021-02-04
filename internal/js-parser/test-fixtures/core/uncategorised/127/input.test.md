@@ -58,7 +58,6 @@ JSRoot {
 					JSNumericLiteral {
 						value: 2_014
 						format: undefined
-						raw: "2014"
 						loc: Object {
 							filename: "core/uncategorised/127/input.js"
 							end: Object {

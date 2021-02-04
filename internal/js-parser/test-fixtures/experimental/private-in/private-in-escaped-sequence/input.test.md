@@ -133,7 +133,6 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							raw: "1"
 							loc: Object {
 								filename: "experimental/private-in/private-in-escaped-sequence/input.js"
 								end: Object {

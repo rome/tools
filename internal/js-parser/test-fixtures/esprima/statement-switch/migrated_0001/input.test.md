@@ -73,7 +73,6 @@ JSRoot {
 					test: JSNumericLiteral {
 						value: 42
 						format: undefined
-						raw: "42"
 						loc: Object {
 							filename: "esprima/statement-switch/migrated_0001/input.js"
 							end: Object {

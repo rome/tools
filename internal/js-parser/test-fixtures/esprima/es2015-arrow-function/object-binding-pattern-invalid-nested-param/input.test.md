@@ -81,7 +81,6 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 						end: Object {

@@ -44,8 +44,7 @@ JSRoot {
 			}
 			expression: JSNumericLiteral {
 				value: 0
-				format: undefined
-				raw: "0e+100"
+				format: "scientific"
 				loc: Object {
 					filename: "esprima/expression-primary-literal-numeric/migrated_0010/input.js"
 					end: Object {
