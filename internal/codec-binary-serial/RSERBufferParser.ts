@@ -126,9 +126,7 @@ export default class RSERBufferParser {
 	}
 
 	private unexpected(message: string, offset: number = this.readOffset) {
-		throw new RSERParserError(
-			`${message} at offset ${offset}`,
-		);
+		throw new RSERParserError(`${message} at offset ${offset}`);
 	}
 
 	private expectCode(expected: number): void {
@@ -683,9 +681,7 @@ export default class RSERBufferParser {
 				);
 
 			default:
-				throw this.unexpected(
-					`${formatCode(code)} is not a valid number code`,
-				);
+				throw this.unexpected(`${formatCode(code)} is not a valid number code`);
 		}
 	}
 
