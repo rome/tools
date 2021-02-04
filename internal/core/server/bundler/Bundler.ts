@@ -82,6 +82,7 @@ export default class Bundler {
 
 		const res = await this.server.resolver.resolveEntryAssert({
 			...this.config.resolver,
+			allowPartial: false,
 			origin: cwd,
 			source: createUnknownPath(unresolvedEntry),
 		});

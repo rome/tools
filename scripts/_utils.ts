@@ -11,13 +11,12 @@ import {
 } from "@internal/fs";
 import {Reporter} from "@internal/cli-reporter";
 import {createMockWorker} from "@internal/test-helpers";
-
-import crypto = require("crypto");
-import child = require("child_process");
-import {markup} from "@internal/markup";
-import {regex} from "@internal/string-escape";
 import {formatAST} from "@internal/formatter";
 import {valueToNode} from "@internal/js-ast-utils";
+import {markup} from "@internal/markup";
+import {regex} from "@internal/string-escape";
+import crypto = require("crypto");
+import child = require("child_process");
 
 export const reporter = Reporter.fromProcess();
 export const integrationWorker = createMockWorker();
@@ -225,8 +224,13 @@ export function waitChildProcess(
 	return new Promise((resolve) => {
 		proc.on(
 			"close",
-			() => {
-				resolve(proc);
+			(code) => {
+				if (code === 0) {
+					resolve(proc);
+				} else {
+					reporter.error(markup`Subprocess exit with code ${String(proc.exitCode)}`);
+					process.exit(proc.exitCode || 0);
+				}
 			},
 		);
 	});
@@ -239,7 +243,7 @@ export async function exec(
 ): Promise<void> {
 	reporter.command(`${cmd} ${args.join(" ")}`);
 
-	const proc = await waitChildProcess(
+	await waitChildProcess(
 		child.spawn(
 			cmd,
 			args,
@@ -249,11 +253,6 @@ export async function exec(
 			},
 		),
 	);
-
-	if (proc.exitCode !== 0) {
-		reporter.error(markup`Exit code ${String(proc.exitCode)}`);
-		process.exit(proc.exitCode || 0);
-	}
 }
 
 export async function execDev(args: string[]): Promise<void> {

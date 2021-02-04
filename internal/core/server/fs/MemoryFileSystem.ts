@@ -555,7 +555,11 @@ export default class MemoryFileSystem {
 		await this.waitIfInitializingWatch(projectDirectory);
 
 		// New watch target
-		this.logger.info(markup`Adding new project directory ${directoryLink}`);
+		if (partial) {
+			this.logger.info(markup`Adding new partial project directory ${directoryLink} with a target of ${target}`);
+		} else {
+			this.logger.info(markup`Adding new project directory ${directoryLink}`);
+		}
 
 		// Remove watchers that are descedents of this directory as this watcher will handle them
 		for (const [loc, {close, path}] of this.watchers) {

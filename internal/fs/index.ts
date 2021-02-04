@@ -253,6 +253,10 @@ export function removeFile(path: AbsoluteFilePath): Promise<void> {
 // NB: There are probably race conditions, we could switch to openFile and openDirectory if it's a problem
 // https://github.com/rome/tools/issues/1001
 export async function removeDirectory(path: AbsoluteFilePath): Promise<void> {
+	if (!(await exists(path))) {
+		return;
+	}
+
 	// Delete all inner files
 	for (const subpath of await readDirectory(path)) {
 		const stats = await lstat(subpath);

@@ -100,7 +100,7 @@ function request(
 
 const NODE_MODULES = "node_modules";
 
-export type ResolverRemoteQuery = Omit<ResolverOptions, "origin"> & {
+export interface ResolverRemoteQuery extends Omit<ResolverOptions, "origin"> {
 	origin: URLPath | AbsoluteFilePath;
 	source: AnyFilePath;
 	// Allows a resolution to stop at a directory or package boundary
@@ -109,11 +109,15 @@ export type ResolverRemoteQuery = Omit<ResolverOptions, "origin"> & {
 	entry?: boolean;
 	// Strict disables implicit extensions
 	strict?: boolean;
-};
+}
 
-export type ResolverLocalQuery = Omit<ResolverRemoteQuery, "origin"> & {
+export interface ResolverLocalQuery extends Omit<ResolverRemoteQuery, "origin"> {
 	origin: AbsoluteFilePath;
 };
+
+export interface ResolverEntryQuery extends ResolverRemoteQuery {
+	allowPartial?: boolean;
+}
 
 export type ResolverQuerySource =
 	| undefined
@@ -336,7 +340,7 @@ export default class Resolver {
 	}
 
 	public async resolveEntryAssert(
-		query: ResolverRemoteQuery,
+		query: ResolverEntryQuery,
 		querySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
 		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
@@ -350,7 +354,7 @@ export default class Resolver {
 
 	// I found myself wanting only `ref.path` a lot so this is just a helper method
 	public async resolveEntryAssertPath(
-		query: ResolverRemoteQuery,
+		query: ResolverEntryQuery,
 		querySource?: ResolverQuerySource,
 	): Promise<AbsoluteFilePath> {
 		const res = await this.resolveEntryAssert(query, querySource);
@@ -358,7 +362,7 @@ export default class Resolver {
 	}
 
 	public async resolveEntry(
-		query: ResolverRemoteQuery,
+		query: ResolverEntryQuery,
 	): Promise<ResolverQueryResponse> {
 		const attempt = await this.maybeResolveEntryWithoutFileSystem(query);
 		if (attempt !== undefined) {
@@ -370,8 +374,12 @@ export default class Resolver {
 	}
 
 	private async maybeResolveEntryWithoutFileSystem(
-		query: ResolverRemoteQuery,
+		query: ResolverEntryQuery,
 	): Promise<undefined | ResolverQueryResponseFound> {
+		if (query.allowPartial === false) {
+			return undefined;
+		}
+
 		const {projectManager} = this.server;
 		let absolute: AbsoluteFilePath;
 
