@@ -22,11 +22,10 @@ import {
 	DiagnosticsError,
 	DiagnosticsProcessor,
 	createSingleDiagnosticError,
-	deriveDiagnosticFromError,
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
-	getDiagnosticsFromError,
 	getOrDeriveDiagnosticsFromError,
+	provideDiagnosticAdviceForError,
 } from "@internal/diagnostics";
 import {
 	DiagnosticsFileHandler,
@@ -837,24 +836,12 @@ export default class ServerRequest {
 			this.endMarker(marker);
 			return res;
 		} catch (err) {
-			let diagnostics = getDiagnosticsFromError(err);
-
-			if (diagnostics === undefined) {
-				const diag = deriveDiagnosticFromError(
-					err,
-					{
-						description: {
-							category: "internalError/request",
-						},
-					},
-				);
-
-				throw createSingleDiagnosticError({
-					...diag,
+			throw provideDiagnosticAdviceForError(
+				err,
+				{
 					description: {
-						...diag.description,
+						category: "internalError/request",
 						advice: [
-							...diag.description.advice,
 							{
 								type: "log",
 								category: "info",
@@ -862,11 +849,8 @@ export default class ServerRequest {
 							},
 						],
 					},
-				});
-			} else {
-				// We don't want to tamper with these
-				throw err;
-			}
+				},
+			);
 		} finally {
 			lock.release();
 			clearInterval(interval);
@@ -1276,9 +1260,6 @@ export default class ServerRequest {
 				{
 					description: {
 						category: "internalError/request",
-					},
-					tags: {
-						internal: true,
 					},
 				},
 			);

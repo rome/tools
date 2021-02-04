@@ -2,15 +2,15 @@ import RSERBufferWriter from "./RSERBufferWriter";
 import {Event} from "@internal/events";
 import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
-import {encodeValueToRSERBufferMessage} from "@internal/codec-binary-serial/index";
+import {encodeValueToRSERMessage} from "@internal/codec-binary-serial/index";
 import RSERBufferAssembler from "./RSERBufferAssembler";
-import {VERSION} from "./constants";
 
 type State = {
 	// INIT: Waiting on stream header
 	// IDLE: Waiting on the next message and a full PDU length to decode
 	// READ: Know the length, need to read whole content
-	type: "INIT" | "IDLE" | "READ";
+	// INCOMPATIBLE: Read stream header and we have a version mismatch
+	type: "INIT" | "IDLE" | "READ" | "INCOMPATIBLE";
 	writer: RSERBufferWriter;
 	reader: RSERBufferParser;
 };
@@ -39,7 +39,10 @@ function createState(type: State["type"], size: number): State {
 export default class RSERStream {
 	constructor(type: RSERStreamType) {
 		this.type = type;
-		this.state = createState("INIT", MAX_STREAM_HEADER_SIZE);
+		this.state =
+			type === "file"
+				? createState("IDLE", MAX_MESSAGE_HEADER_SIZE)
+				: createState("INIT", MAX_STREAM_HEADER_SIZE);
 		this.overflow = [];
 
 		this.errorEvent = new Event({
@@ -53,8 +56,13 @@ export default class RSERStream {
 		this.sendEvent = new Event({
 			name: "RSERStream.sendEvent",
 		});
+
+		this.incompatibleEvent = new Event({
+			name: "RSERStream.incompatibleEvent",
+		});
 	}
 
+	public incompatibleEvent: Event<void, void>;
 	public errorEvent: Event<Error, void>;
 	public sendEvent: Event<ArrayBuffer, void>;
 	public valueEvent: Event<RSERValue, void>;
@@ -64,7 +72,7 @@ export default class RSERStream {
 	private state: State;
 
 	public sendValue(val: RSERValue) {
-		this.sendBuffer(encodeValueToRSERBufferMessage(val));
+		this.sendBuffer(encodeValueToRSERMessage(val));
 	}
 
 	public sendBuffer(buf: ArrayBuffer) {
@@ -167,13 +175,13 @@ export default class RSERStream {
 	// Send stream header
 	public sendStreamHeader() {
 		const assembler = new RSERBufferAssembler();
-		assembler.encodeStreamHeader(VERSION);
+		assembler.encodeStreamHeader();
 
 		const buf = new RSERBufferWriter(
 			new ArrayBuffer(assembler.totalSize),
 			assembler,
 		);
-		buf.encodeStreamHeader(VERSION);
+		buf.encodeStreamHeader();
 		this.sendBuffer(buf.buffer);
 	}
 
@@ -182,8 +190,16 @@ export default class RSERStream {
 
 		// Decode stream header
 		if (type === "INIT") {
-			const validHeader = reader.maybeDecodeStreamHeader();
-			if (validHeader) {
+			const headerType = reader.maybeDecodeStreamHeader();
+			if (headerType === "INCOMPATIBLE") {
+				if (this.type === "file") {
+					this.setState(createState("INCOMPATIBLE", 0));
+					this.incompatibleEvent.send();
+				} else {
+					throw new Error("Stream version mismatch");
+				}
+			}
+			if (headerType === "VALID") {
 				this.unshiftUnreadOverflow();
 				this.setState(createState("IDLE", MAX_MESSAGE_HEADER_SIZE));
 

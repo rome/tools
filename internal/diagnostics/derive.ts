@@ -24,6 +24,7 @@ import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {diagnosticLocationToMarkupFilelink, joinCategoryName} from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
+import {createSingleDiagnosticError, isUserDiagnosticError} from "./errors";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -73,15 +74,15 @@ export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
 
 export function deriveRootAdviceFromDiagnostic(
 	diag: Diagnostic,
-	opts: {
-		skipFrame: boolean;
-		includeHeaderInAdvice: boolean;
-		outdated: boolean;
-	} = {
-		skipFrame: false,
-		includeHeaderInAdvice: true,
-		outdated: false,
-	},
+	{
+		skipFrame = false,
+		includeHeaderInAdvice = true,
+		outdated = false,
+	}: {
+		skipFrame?: boolean;
+		includeHeaderInAdvice?: boolean;
+		outdated?: boolean;
+	} = {},
 ): {
 	advice: DiagnosticAdvice;
 	lastAdvice: DiagnosticAdvice;
@@ -106,7 +107,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`${header} <inverse> FIXABLE </inverse>`;
 	}
 
-	if (opts.outdated) {
+	if (outdated) {
 		header = markup`${header} <inverse><warn> OUTDATED </warn></inverse>`;
 	}
 
@@ -114,7 +115,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`${header} <inverse><error> FATAL </error></inverse>`;
 	}
 
-	if (opts.includeHeaderInAdvice) {
+	if (includeHeaderInAdvice) {
 		advice.push({
 			type: "log",
 			category: "none",
@@ -138,7 +139,7 @@ export function deriveRootAdviceFromDiagnostic(
 		});
 	}
 
-	if (!opts.skipFrame) {
+	if (!skipFrame) {
 		if (location.start !== undefined && location.end !== undefined) {
 			advice.push({
 				type: "frame",
@@ -176,11 +177,44 @@ export function deriveRootAdviceFromDiagnostic(
 export type DeriveErrorDiagnosticOptions = {
 	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: StaticMarkup;
-	tags?: DiagnosticTags;
+	// Passing in `internal: true` is redundant
+	tags?: Omit<DiagnosticTags, "internal"> & {
+		internal?: false;
+	};
 	filename?: string;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
+
+export function provideDiagnosticAdviceForError(
+	error: Error,
+	opts: DeriveErrorDiagnosticOptions,
+): Error {
+	if (isUserDiagnosticError(error)) {
+		return error;
+	} else {
+		let diag = deriveDiagnosticFromError(error, opts);
+
+		if (opts.description.message !== undefined) {
+			diag = {
+				...diag,
+				description: {
+					...diag.description,
+					advice: [
+						{
+							type: "log",
+							category: "none",
+							text: markup`${getErrorStructure(error).message}`,
+						},
+						...(diag.description.advice || []),
+					],
+				},
+			};
+		}
+
+		return createSingleDiagnosticError(diag);
+	}
+}
 
 export function deriveDiagnosticFromErrorStructure(
 	struct: Partial<StructuredError>,
@@ -229,7 +263,10 @@ export function deriveDiagnosticFromErrorStructure(
 			end: targetLoc === undefined ? undefined : targetLoc.end,
 		},
 		label: opts.label,
-		tags: opts.tags,
+		tags: {
+			internal: true,
+			...opts.tags,
+		},
 	};
 }
 

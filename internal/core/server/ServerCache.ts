@@ -8,7 +8,7 @@ export default class ServerCache extends Cache {
 			"server",
 			{
 				userConfig: server.userConfig,
-				logger: server.logger,
+				parentLogger: server.logger,
 				forceEnabled: server.options.forceCacheEnabled,
 				fatalErrorHandler: server.fatalErrorHandler,
 			},

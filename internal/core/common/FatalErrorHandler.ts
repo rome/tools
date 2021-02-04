@@ -101,7 +101,6 @@ export default class FatalErrorHandler {
 					},
 					label: source,
 					tags: {
-						internal: true,
 						fatal: true,
 					},
 				},
@@ -136,6 +135,8 @@ export default class FatalErrorHandler {
 						},
 						0,
 					);
+
+					await new Promise(() => {});
 				}
 			}
 		}

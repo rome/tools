@@ -105,7 +105,7 @@ export default class TestServer {
 		this.paths = opts.paths;
 		this.reporter = opts.request.reporter;
 		this.server = opts.request.server;
-		this.logger = this.server.logger.namespace(markup`[TestServerRunner]`);
+		this.logger = this.server.logger.namespace(markup`TestServerRunner`);
 		this.request = opts.request;
 		this.options = opts.options;
 
@@ -401,7 +401,7 @@ export default class TestServer {
 									category: "tests/failure",
 								},
 								tags: {
-									internal: true,
+									internal: false,
 								},
 							},
 						);

@@ -66,6 +66,7 @@ type WorkerOptions = {
 	dedicated: boolean;
 	bridge: BridgeClient<typeof WorkerBridge>;
 	id: number;
+	cacheDisabled: boolean;
 };
 
 export default class Worker {
@@ -94,7 +95,7 @@ export default class Worker {
 			this.logger.updateStream();
 		});
 
-		this.cache = new WorkerCache(this);
+		this.cache = new WorkerCache(this, opts.cacheDisabled);
 		this.api = new WorkerAPI(this, this.logger, this.cache);
 
 		this.fatalErrorHandler = new FatalErrorHandler({

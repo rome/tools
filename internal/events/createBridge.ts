@@ -1,8 +1,9 @@
 import {Bridge} from ".";
 import {
+	BridgeDefinition,
 	BridgeEventDeclaration,
 	BridgeEventsDeclaration,
-	BridgeOptions,
+	BridgeType,
 } from "./types";
 import {WebSocketInterface} from "@internal/codec-websocket";
 import {Socket} from "net";
@@ -22,7 +23,8 @@ export class BridgeFactory<
 	SharedEvents extends BridgeEventsDeclaration
 > {
 	constructor(
-		opts: BridgeOptions,
+		type: BridgeType,
+		def: BridgeDefinition<{}, {}, SharedEvents>,
 		listenEvents: ListenEvents,
 		callEvents: CallEvents,
 		SharedEvents: SharedEvents,
@@ -30,17 +32,21 @@ export class BridgeFactory<
 		this.listenEvents = listenEvents;
 		this.callEvents = callEvents;
 		this.SharedEvents = SharedEvents;
-		this.options = opts;
+		this.type = type;
+		this.def = def;
 	}
 
 	private listenEvents: ListenEvents;
 	private callEvents: CallEvents;
 	private SharedEvents: SharedEvents;
-	private options: BridgeOptions;
+
+	private type: BridgeType;
+	private def: BridgeDefinition<{}, {}, SharedEvents>;
 
 	create(): Bridge<ListenEvents, CallEvents, SharedEvents> {
 		return new Bridge(
-			this.options,
+			this.type,
+			this.def,
 			this.listenEvents,
 			this.callEvents,
 			this.SharedEvents,
@@ -252,18 +258,20 @@ export class BridgeFactories<
 	ServerEvents extends BridgeEventsDeclaration,
 	SharedEvents extends BridgeEventsDeclaration
 > {
-	constructor(shape: BridgeShape<ClientEvents, ServerEvents, SharedEvents>) {
+	constructor(def: BridgeDefinition<ClientEvents, ServerEvents, SharedEvents>) {
 		this.Server = new BridgeFactory(
-			{type: "server", debugName: shape.debugName},
-			shape.server,
-			shape.client,
-			shape.shared,
+			"server",
+			def,
+			def.server,
+			def.client,
+			def.shared,
 		);
 		this.Client = new BridgeFactory(
-			{type: "client", debugName: shape.debugName},
-			shape.client,
-			shape.server,
-			shape.shared,
+			"client",
+			def,
+			def.client,
+			def.server,
+			def.shared,
 		);
 	}
 
@@ -288,23 +296,12 @@ export class BridgeFactories<
 	}
 }
 
-type BridgeShape<
-	ClientEvents extends BridgeEventsDeclaration,
-	ServerEvents extends BridgeEventsDeclaration,
-	SharedEvents extends BridgeEventsDeclaration
-> = {
-	debugName: string;
-	client: ClientEvents;
-	server: ServerEvents;
-	shared: SharedEvents;
-};
-
 export default function createBridge<
 	ClientEvents extends BridgeEventsDeclaration,
 	ServerEvents extends BridgeEventsDeclaration,
 	SharedEvents extends BridgeEventsDeclaration
 >(
-	opts: BridgeShape<ClientEvents, ServerEvents, SharedEvents>,
+	opts: BridgeDefinition<ClientEvents, ServerEvents, SharedEvents>,
 ): BridgeFactories<ClientEvents, ServerEvents, SharedEvents> {
 	return new BridgeFactories(opts);
 }

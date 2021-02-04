@@ -125,7 +125,7 @@ export type ProjectConfigSource = {
 export default class ProjectManager {
 	constructor(server: Server) {
 		this.server = server;
-		this.logger = server.logger.namespace(markup`[ProjectManager]`);
+		this.logger = server.logger.namespace(markup`ProjectManager`);
 
 		this.projectIdCounter = 0;
 		this.projectConfigDependenciesToIds = new AbsoluteFilePathMap();

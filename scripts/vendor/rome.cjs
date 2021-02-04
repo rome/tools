@@ -52071,11 +52071,13 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_
 			this.totalSize += buf.byteLength;
 		}
 
-		encodeStreamHeader(version) {
+		encodeStreamHeader() {
 			this.writeByte(
 				___R$project$rome$$internal$codec$binary$serial$constants_ts$VALUE_CODES.STREAM_HEADER,
 			);
-			this.encodeInt(version);
+			this.encodeInt(
+				___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION,
+			);
 		}
 
 		encodeMessageHeader(size) {
@@ -52876,28 +52878,36 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 			const prevReadOffset = this.readOffset;
 
 			if (this.canRead(1)) {
-				this.expectCode(
-					___R$project$rome$$internal$codec$binary$serial$constants_ts$VALUE_CODES.STREAM_HEADER,
-				);
+				const got = this.peekCode();
+				if (
+					got ===
+					___R$project$rome$$internal$codec$binary$serial$constants_ts$VALUE_CODES.STREAM_HEADER
+				) {
+					this.expectCode(
+						___R$project$rome$$internal$codec$binary$serial$constants_ts$VALUE_CODES.STREAM_HEADER,
+					);
+				} else {
+					return "INCOMPATIBLE";
+				}
 			} else {
 				this.readOffset = prevReadOffset;
-				return false;
+				return "INCOMPLETE";
 			}
 
 			const version = this.maybeDecodeNumber();
 			if (version === undefined) {
 				this.readOffset = prevReadOffset;
-				return false;
+				return "INCOMPLETE";
 			}
 
 			if (
 				version !==
 				___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION
 			) {
-				throw new Error("Version mismatch");
+				return "INCOMPATIBLE";
 			}
 
-			return true;
+			return "VALID";
 		}
 
 		maybeDecodeMessageHeader() {
@@ -53570,10 +53580,16 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 	class ___R$project$rome$$internal$codec$binary$serial$RSERStream_ts$default {
 		constructor(type) {
 			this.type = type;
-			this.state = ___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$createState(
-				"INIT",
-				___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$MAX_STREAM_HEADER_SIZE,
-			);
+			this.state =
+				type === "file"
+					? ___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$createState(
+							"IDLE",
+							___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$MAX_MESSAGE_HEADER_SIZE,
+						)
+					: ___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$createState(
+							"INIT",
+							___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$MAX_STREAM_HEADER_SIZE,
+						);
 			this.overflow = [];
 
 			this.errorEvent = new ___R$project$rome$$internal$events$Event_ts$default({
@@ -53587,11 +53603,15 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 			this.sendEvent = new ___R$project$rome$$internal$events$Event_ts$default({
 				name: "RSERStream.sendEvent",
 			});
+
+			this.incompatibleEvent = new ___R$project$rome$$internal$events$Event_ts$default({
+				name: "RSERStream.incompatibleEvent",
+			});
 		}
 
 		sendValue(val) {
 			this.sendBuffer(
-				___R$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERBufferMessage(
+				___R$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERMessage(
 					val,
 				),
 			);
@@ -53700,17 +53720,13 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 		// Send stream header
 		sendStreamHeader() {
 			const assembler = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$default();
-			assembler.encodeStreamHeader(
-				___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION,
-			);
+			assembler.encodeStreamHeader();
 
 			const buf = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferWriter_ts$default(
 				new ArrayBuffer(assembler.totalSize),
 				assembler,
 			);
-			buf.encodeStreamHeader(
-				___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION,
-			);
+			buf.encodeStreamHeader();
 			this.sendBuffer(buf.buffer);
 		}
 
@@ -53719,8 +53735,21 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 
 			// Decode stream header
 			if (type === "INIT") {
-				const validHeader = reader.maybeDecodeStreamHeader();
-				if (validHeader) {
+				const headerType = reader.maybeDecodeStreamHeader();
+				if (headerType === "INCOMPATIBLE") {
+					if (this.type === "file") {
+						this.setState(
+							___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$createState(
+								"INCOMPATIBLE",
+								0,
+							),
+						);
+						this.incompatibleEvent.send();
+					} else {
+						throw new Error("Stream version mismatch");
+					}
+				}
+				if (headerType === "VALID") {
 					this.unshiftUnreadOverflow();
 					this.setState(
 						___R$$priv$project$rome$$internal$codec$binary$serial$RSERStream_ts$createState(
@@ -53778,10 +53807,32 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 const ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$fs = require(
 		"fs",
 	);
-	function ___R$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERBufferMessage(
+	function ___R$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERSingleMessageStream(
 		val,
 	) {
+		return ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERBuffer(
+			val,
+			true,
+		);
+	}
+
+	function ___R$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERMessage(
+		val,
+	) {
+		return ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERBuffer(
+			val,
+			false,
+		);
+	}
+
+	function ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERBuffer(
+		val,
+		isStream,
+	) {
 		const assembler = new ___R$project$rome$$internal$codec$binary$serial$RSERBufferAssembler_ts$default();
+		if (isStream) {
+			assembler.encodeStreamHeader();
+		}
 		assembler.encodeValue(val);
 		const payloadLength = assembler.totalSize;
 		assembler.encodeMessageHeader(payloadLength);
@@ -53791,6 +53842,9 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$fs = requir
 			new ArrayBuffer(messageLength),
 			assembler,
 		);
+		if (isStream) {
+			assembler.encodeStreamHeader();
+		}
 		buf.encodeMessageHeader(payloadLength);
 		buf.encodeValue(val);
 		return buf.buffer;
@@ -53805,19 +53859,43 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$fs = requir
 				"file",
 			);
 
+			function safeClose() {
+				foundValue = true;
+				readStream.close();
+			}
+
+			function handleError(err) {
+				reject(
+					___R$project$rome$$internal$diagnostics$derive_ts$provideDiagnosticAdviceForError(
+						err,
+						{
+							description: {
+								message: ___R$project$rome$$internal$markup$escape_ts$markup`An error occured while decoding binary file ${___R$project$rome$$internal$path$index_ts$createUnknownPath(
+									String(readStream.path),
+								)}`,
+								category: "parse",
+								categoryValue: "binary",
+							},
+						},
+					),
+				);
+				safeClose();
+			}
+
 			readStream.on(
 				"data",
 				(chunk) => {
-					decodeStream.append(
-						typeof chunk === "string" ? Buffer.from(chunk) : chunk,
-					);
+					const nodeBuffer =
+						typeof chunk === "string" ? Buffer.from(chunk) : chunk;
+					const arrBuffer = nodeBuffer.buffer;
+					decodeStream.append(arrBuffer);
 				},
 			);
 
 			readStream.on(
 				"error",
 				(err) => {
-					reject(err);
+					handleError(err);
 				},
 			);
 
@@ -53825,13 +53903,18 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$fs = requir
 				"close",
 				() => {
 					if (!foundValue) {
-						reject(new Error("Stream ended and never received a value"));
+						handleError(new Error("Stream ended and never received a value"));
 					}
 				},
 			);
 
+			decodeStream.incompatibleEvent.subscribe(() => {
+				resolve({type: "INCOMPATIBLE"});
+				safeClose();
+			});
+
 			decodeStream.errorEvent.subscribe((err) => {
-				reject(err);
+				handleError(err);
 			});
 
 			decodeStream.valueEvent.subscribe((value) => {
@@ -53840,7 +53923,10 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$fs = requir
 				}
 
 				foundValue = true;
-				resolve(value);
+				resolve({
+					type: "VALUE",
+					value,
+				});
 			});
 		});
 	}
@@ -53848,14 +53934,14 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$index_ts$fs = requir
 
   // project-rome/@internal/events/Bridge.ts
 class ___R$project$rome$$internal$events$Bridge_ts$default {
-		constructor(opts, listenEvents, callEvents, SharedEvents) {
+		constructor(type, def, listenEvents, callEvents, SharedEvents) {
 			this.errorTransports = new Map();
 
 			this.alive = true;
 			this.hasHandshook = false;
 			this.endError = undefined;
-			this.debugName = opts.debugName;
-			this.type = opts.type;
+			this.debugName = def.debugName;
+			this.type = type;
 
 			this.messageIdCounter = 0;
 			this.eventsMap = new ___R$project$rome$$internal$collections$index_ts$ExtendedMap(
@@ -53936,7 +54022,9 @@ class ___R$project$rome$$internal$events$Bridge_ts$default {
 				this.registerEvent(event);
 			}
 
-			this.init();
+			if (def.init !== undefined) {
+				def.init(this);
+			}
 		}
 
 		getDisplayName() {
@@ -54142,10 +54230,6 @@ class ___R$project$rome$$internal$events$Bridge_ts$default {
 			return buf;
 		}
 
-		init() {
-			// This method can be overridden by subclasses, it allows you to add logic such as error serializers
-		}
-
 		clear() {
 			for (const [, event] of this.eventsMap) {
 				event.clear();
@@ -54241,8 +54325,8 @@ class ___R$project$rome$$internal$events$Bridge_ts$default {
 			const err = errRaw instanceof Error ? errRaw : new Error(String(errRaw));
 
 			// Fetch some metadata for hydration
-			const tranport = this.errorTransports.get(err.name);
-			const metadata = tranport === undefined ? {} : tranport.serialize(err);
+			const transport = this.errorTransports.get(err.name);
+			const metadata = transport === undefined ? {} : transport.serialize(err);
 
 			return {
 				value: ___R$project$rome$$internal$v8$errors_ts$getErrorStructure(err),
@@ -54374,16 +54458,18 @@ const ___R$$priv$project$rome$$internal$events$createBridge_ts$workerThreads = r
 	}
 
 	class ___R$project$rome$$internal$events$createBridge_ts$BridgeFactory {
-		constructor(opts, listenEvents, callEvents, SharedEvents) {
+		constructor(type, def, listenEvents, callEvents, SharedEvents) {
 			this.listenEvents = listenEvents;
 			this.callEvents = callEvents;
 			this.SharedEvents = SharedEvents;
-			this.options = opts;
+			this.type = type;
+			this.def = def;
 		}
 
 		create() {
 			return new ___R$project$rome$$internal$events$Bridge_ts$default(
-				this.options,
+				this.type,
+				this.def,
 				this.listenEvents,
 				this.callEvents,
 				this.SharedEvents,
@@ -54579,18 +54665,20 @@ const ___R$$priv$project$rome$$internal$events$createBridge_ts$workerThreads = r
 	}
 
 	class ___R$project$rome$$internal$events$createBridge_ts$BridgeFactories {
-		constructor(shape) {
+		constructor(def) {
 			this.Server = new ___R$project$rome$$internal$events$createBridge_ts$BridgeFactory(
-				{type: "server", debugName: shape.debugName},
-				shape.server,
-				shape.client,
-				shape.shared,
+				"server",
+				def,
+				def.server,
+				def.client,
+				def.shared,
 			);
 			this.Client = new ___R$project$rome$$internal$events$createBridge_ts$BridgeFactory(
-				{type: "client", debugName: shape.debugName},
-				shape.client,
-				shape.server,
-				shape.shared,
+				"client",
+				def,
+				def.client,
+				def.server,
+				def.shared,
 			);
 		}
 
@@ -92115,8 +92203,21 @@ const ___R$$priv$project$rome$$internal$cli$reporter$Reporter_ts$stream = requir
 			this.log(highlighted);
 		}
 
-		namespace(prefix) {
+		namespace(...prefixes) {
+			const prefix = ___R$project$rome$$internal$markup$escape_ts$concatMarkup(
+				prefixes.map((prefix) =>
+					___R$project$rome$$internal$markup$escape_ts$markup`[${prefix}]`
+				),
+			);
+
 			return {
+				namespace: (...addPrefixes) => {
+					var ___R$;
+					return (
+						___R$ = this,
+						___R$.namespace.apply(___R$, [...prefixes, ...addPrefixes])
+					);
+				},
 				success: (suffix) =>
 					this.success(
 						___R$project$rome$$internal$markup$escape_ts$markup`${prefix} ${suffix}`,
@@ -112422,6 +112523,7 @@ const ___R$project$rome$$internal$diagnostics$derive_ts = {
 		mergeDiagnostics: ___R$project$rome$$internal$diagnostics$derive_ts$mergeDiagnostics,
 		derivePositionlessKeyFromDiagnostic: ___R$project$rome$$internal$diagnostics$derive_ts$derivePositionlessKeyFromDiagnostic,
 		deriveRootAdviceFromDiagnostic: ___R$project$rome$$internal$diagnostics$derive_ts$deriveRootAdviceFromDiagnostic,
+		provideDiagnosticAdviceForError: ___R$project$rome$$internal$diagnostics$derive_ts$provideDiagnosticAdviceForError,
 		deriveDiagnosticFromErrorStructure: ___R$project$rome$$internal$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure,
 		deriveDiagnosticFromError: ___R$project$rome$$internal$diagnostics$derive_ts$deriveDiagnosticFromError,
 		getErrorStackAdvice: ___R$project$rome$$internal$diagnostics$derive_ts$getErrorStackAdvice,
@@ -112490,11 +112592,11 @@ const ___R$project$rome$$internal$diagnostics$derive_ts = {
 
 	function ___R$project$rome$$internal$diagnostics$derive_ts$deriveRootAdviceFromDiagnostic(
 		diag,
-		opts = {
-			skipFrame: false,
-			includeHeaderInAdvice: true,
-			outdated: false,
-		},
+		{
+			skipFrame = false,
+			includeHeaderInAdvice = true,
+			outdated = false,
+		} = {},
 	) {
 		const advice = [];
 		const {description, tags = {}, location} = diag;
@@ -112519,7 +112621,7 @@ const ___R$project$rome$$internal$diagnostics$derive_ts = {
 			header = ___R$project$rome$$internal$markup$escape_ts$markup`${header} <inverse> FIXABLE </inverse>`;
 		}
 
-		if (opts.outdated) {
+		if (outdated) {
 			header = ___R$project$rome$$internal$markup$escape_ts$markup`${header} <inverse><warn> OUTDATED </warn></inverse>`;
 		}
 
@@ -112527,7 +112629,7 @@ const ___R$project$rome$$internal$diagnostics$derive_ts = {
 			header = ___R$project$rome$$internal$markup$escape_ts$markup`${header} <inverse><error> FATAL </error></inverse>`;
 		}
 
-		if (opts.includeHeaderInAdvice) {
+		if (includeHeaderInAdvice) {
 			advice.push({
 				type: "log",
 				category: "none",
@@ -112551,7 +112653,7 @@ const ___R$project$rome$$internal$diagnostics$derive_ts = {
 			});
 		}
 
-		if (!opts.skipFrame) {
+		if (!skipFrame) {
 			if (location.start !== undefined && location.end !== undefined) {
 				advice.push({
 					type: "frame",
@@ -112584,6 +112686,53 @@ const ___R$project$rome$$internal$diagnostics$derive_ts = {
 		}
 
 		return {header, advice, lastAdvice};
+	}
+
+	function ___R$project$rome$$internal$diagnostics$derive_ts$provideDiagnosticAdviceForError(
+		error,
+		opts,
+	) {
+		if (
+			___R$project$rome$$internal$diagnostics$errors_ts$isUserDiagnosticError(
+				error,
+			)
+		) {
+			return error;
+		} else {
+			let diag = ___R$project$rome$$internal$diagnostics$derive_ts$deriveDiagnosticFromError(
+				error,
+				opts,
+			);
+
+			if (opts.description.message !== undefined) {
+				diag = Object.assign(
+					{},
+					diag,
+					{
+						description: Object.assign(
+							{},
+							diag.description,
+							{
+								advice: [
+									{
+										type: "log",
+										category: "none",
+										text: ___R$project$rome$$internal$markup$escape_ts$markup`${___R$project$rome$$internal$v8$errors_ts$getErrorStructure(
+											error,
+										).message}`,
+									},
+									...(diag.description.advice || []),
+								],
+							},
+						),
+					},
+				);
+			}
+
+			return ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError(
+				diag,
+			);
+		}
 	}
 
 	function ___R$project$rome$$internal$diagnostics$derive_ts$deriveDiagnosticFromErrorStructure(
@@ -112639,7 +112788,7 @@ const ___R$project$rome$$internal$diagnostics$derive_ts = {
 				end: targetLoc === undefined ? undefined : targetLoc.end,
 			},
 			label: opts.label,
-			tags: opts.tags,
+			tags: Object.assign({internal: true}, opts.tags),
 		};
 	}
 
@@ -112799,6 +112948,7 @@ const ___R$project$rome$$internal$diagnostics$errors_ts = {
 		createSingleDiagnosticError: ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError,
 		getDiagnosticsFromError: ___R$project$rome$$internal$diagnostics$errors_ts$getDiagnosticsFromError,
 		getOrDeriveDiagnosticsFromError: ___R$project$rome$$internal$diagnostics$errors_ts$getOrDeriveDiagnosticsFromError,
+		isUserDiagnosticError: ___R$project$rome$$internal$diagnostics$errors_ts$isUserDiagnosticError,
 	};
 	// If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 	// since we'll continuously be trying to serialize diagnostics
@@ -112912,6 +113062,25 @@ const ___R$project$rome$$internal$diagnostics$errors_ts = {
 			];
 		} else {
 			return diagnostics;
+		}
+	}
+
+	function ___R$project$rome$$internal$diagnostics$errors_ts$isUserDiagnosticError(
+		err,
+	) {
+		const diagnostics = ___R$project$rome$$internal$diagnostics$errors_ts$getDiagnosticsFromError(
+			err,
+		);
+		if (diagnostics === undefined) {
+			return false;
+		} else {
+			for (const diag of diagnostics) {
+				if (diag.tags == void 0 ? void 0 : diag.tags.internal) {
+					return false;
+				}
+			}
+
+			return true;
 		}
 	}
 
@@ -119756,7 +119925,9 @@ const ___R$project$rome$$internal$markup$normalize_ts = {
 		maxLength = Infinity,
 	) {
 		const {textLength, text} = ___R$$priv$project$rome$$internal$markup$normalize_ts$normalizeMarkupChildren(
-			___R$project$rome$$internal$markup$parse_ts$parseMarkup(input),
+			___R$project$rome$$internal$markup$parse_ts$parseMarkup(
+				___R$project$rome$$internal$markup$escape_ts$readMarkup(input),
+			),
 			opts,
 			maxLength,
 		);
@@ -122880,46 +123051,21 @@ let ___R$$priv$project$rome$$internal$core$server$ServerRequest_ts$requestIdCoun
 				this.endMarker(marker);
 				return res;
 			} catch (err) {
-				let diagnostics = ___R$project$rome$$internal$diagnostics$errors_ts$getDiagnosticsFromError(
+				throw ___R$project$rome$$internal$diagnostics$derive_ts$provideDiagnosticAdviceForError(
 					err,
-				);
-
-				if (diagnostics === undefined) {
-					const diag = ___R$project$rome$$internal$diagnostics$derive_ts$deriveDiagnosticFromError(
-						err,
-						{
-							description: {
-								category: "internalError/request",
-							},
+					{
+						description: {
+							category: "internalError/request",
+							advice: [
+								{
+									type: "log",
+									category: "info",
+									text: ___R$project$rome$$internal$markup$escape_ts$markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
+								},
+							],
 						},
-					);
-
-					throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError(
-						Object.assign(
-							{},
-							diag,
-							{
-								description: Object.assign(
-									{},
-									diag.description,
-									{
-										advice: [
-											...diag.description.advice,
-											{
-												type: "log",
-												category: "info",
-												text: ___R$project$rome$$internal$markup$escape_ts$markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
-											},
-										],
-									},
-								),
-							},
-						),
-					);
-				} else {
-					// We don't want to tamper with these
-					throw err;
-				}
+					},
+				);
 			} finally {
 				lock.release();
 				clearInterval(interval);
@@ -123319,9 +123465,6 @@ let ___R$$priv$project$rome$$internal$core$server$ServerRequest_ts$requestIdCoun
 					{
 						description: {
 							category: "internalError/request",
-						},
-						tags: {
-							internal: true,
 						},
 					},
 				);
@@ -137038,7 +137181,7 @@ const ___R$$priv$project$rome$$internal$core$server$testing$TestServer_ts$net = 
 			this.reporter = opts.request.reporter;
 			this.server = opts.request.server;
 			this.logger = this.server.logger.namespace(
-				___R$project$rome$$internal$markup$escape_ts$markup`[TestServerRunner]`,
+				___R$project$rome$$internal$markup$escape_ts$markup`TestServerRunner`,
 			);
 			this.request = opts.request;
 			this.options = opts.options;
@@ -137320,7 +137463,7 @@ const ___R$$priv$project$rome$$internal$core$server$testing$TestServer_ts$net = 
 										category: "tests/failure",
 									},
 									tags: {
-										internal: true,
+										internal: false,
 									},
 								},
 							);
@@ -139172,7 +139315,7 @@ function ___R$$priv$project$rome$$internal$core$server$project$ProjectManager_ts
 		constructor(server) {
 			this.server = server;
 			this.logger = server.logger.namespace(
-				___R$project$rome$$internal$markup$escape_ts$markup`[ProjectManager]`,
+				___R$project$rome$$internal$markup$escape_ts$markup`ProjectManager`,
 			);
 
 			this.projectIdCounter = 0;
@@ -140068,7 +140211,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 			this.idCounter = 0;
 
 			this.logger = server.logger.namespace(
-				___R$project$rome$$internal$markup$escape_ts$markup`[WorkerManager]`,
+				___R$project$rome$$internal$markup$escape_ts$markup`WorkerManager`,
 			);
 		}
 
@@ -140154,6 +140297,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				userConfig: this.server.userConfig,
 				bridge: bridges.client,
 				dedicated: false,
+				cacheDisabled: this.server.cache.disabled,
 			});
 
 			// We make an assumption elsewhere in the code that this is always the first worker
@@ -140263,6 +140407,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				{
 					workerData: {
 						id: workerId,
+						cacheDisabled: this.server.cache.disabled,
 					},
 				},
 			);
@@ -141692,7 +141837,7 @@ class ___R$project$rome$$internal$core$server$fs$FileAllocator_ts$default {
 			this.fileToWorker = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
 			this.locker = new ___R$project$rome$$internal$async$lockers_ts$FilePathLocker();
 			this.logger = server.logger.namespace(
-				___R$project$rome$$internal$markup$escape_ts$markup`[FileAllocator]`,
+				___R$project$rome$$internal$markup$escape_ts$markup`FileAllocator`,
 			);
 		}
 
@@ -142034,7 +142179,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 			this.manifests = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
 
 			this.logger = server.logger.namespace(
-				___R$project$rome$$internal$markup$escape_ts$markup`[MemoryFileSystem]`,
+				___R$project$rome$$internal$markup$escape_ts$markup`MemoryFileSystem`,
 			);
 
 			this.watcherCounter = 0;
@@ -142993,7 +143138,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 	class ___R$project$rome$$internal$core$common$Cache_ts$default {
 		constructor(
 			namespace,
-			{fatalErrorHandler, userConfig, logger, forceEnabled},
+			{fatalErrorHandler, userConfig, parentLogger, forceEnabled},
 		) {
 			let disabled = false;
 			if (
@@ -143018,7 +143163,9 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 			this.disabled = disabled;
 
 			this.cachePath = userConfig.cachePath.append(namespace);
-			this.logger = logger;
+			this.logger = parentLogger.namespace(
+				___R$project$rome$$internal$markup$escape_ts$markup`Cache`,
+			);
 			this.fatalErrorHandler = fatalErrorHandler;
 			this.runningWritePromise = undefined;
 			this.pendingWriteTimer = undefined;
@@ -143085,7 +143232,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 							await ___R$project$rome$$internal$fs$index_ts$writeFile(
 								path,
 								new DataView(
-									___R$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERBufferMessage(
+									___R$project$rome$$internal$codec$binary$serial$index_ts$encodeValueToRSERSingleMessageStream(
 										op.value,
 									),
 								),
@@ -143100,7 +143247,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 			const {logger} = this;
 			if (filelinks.length > 0) {
 				logger.info(
-					___R$project$rome$$internal$markup$escape_ts$markup`[Cache] Wrote entries due to ${reason}`,
+					___R$project$rome$$internal$markup$escape_ts$markup`Wrote entries due to ${reason}`,
 				);
 				logger.list(filelinks);
 			}
@@ -143148,7 +143295,7 @@ class ___R$project$rome$$internal$core$server$ServerCache_ts$default
 				"server",
 				{
 					userConfig: server.userConfig,
-					logger: server.logger,
+					parentLogger: server.logger,
 					forceEnabled: server.options.forceCacheEnabled,
 					fatalErrorHandler: server.fatalErrorHandler,
 				},
@@ -143380,7 +143527,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$RecoveryStore_ts$DEFAULT_
 			this.evictableStoreIds = [];
 			this.blockSave = undefined;
 			this.logger = server.logger.namespace(
-				___R$project$rome$$internal$markup$escape_ts$markup`[RecoveryStore]`,
+				___R$project$rome$$internal$markup$escape_ts$markup`RecoveryStore`,
 			);
 			this.shouldTruncate = true;
 			this.recoveryDirectoryPath = server.userConfig.recoveryPath;
@@ -143975,7 +144122,6 @@ const ___R$$priv$project$rome$$internal$core$common$FatalErrorHandler_ts$workerT
 						},
 						label: source,
 						tags: {
-							internal: true,
 							fatal: true,
 						},
 					},
@@ -144012,6 +144158,8 @@ const ___R$$priv$project$rome$$internal$core$common$FatalErrorHandler_ts$workerT
 							},
 							0,
 						);
+
+						await new Promise(() => {});
 					}
 				}
 			}
@@ -144687,7 +144835,7 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 
 				return res;
 			} catch (err) {
-				await this.fatalErrorHandler.handle(err);
+				await this.fatalErrorHandler.handleAsync(err);
 				throw new Error("Should never meet this condition");
 			} finally {
 				// We no longer care if the client dies
@@ -145948,47 +146096,58 @@ const ___R$project$rome$$internal$core$common$bridges$WorkerBridge_ts$default = 
 			clearBuffer: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
 		},
 
-		/*init(bridge) {
-		bridge.addErrorTransport(
-			"FileNotFound",
-			{
-				serialize(err: Error) {
-					if (!(err instanceof FileNotFound)) {
-						throw new Error("Expected FileNotFound");
-					}
+		init(bridge) {
+			bridge.addErrorTransport(
+				"FileNotFound",
+				{
+					serialize(err) {
+						if (
+							!(err instanceof
+							___R$project$rome$$internal$fs$FileNotFound_ts$FileNotFound)
+						) {
+							throw new Error("Expected FileNotFound");
+						}
 
-					return {
-						suffixMessage: err.suffixMessage,
-						path: err._path.join(),
-					};
+						return {
+							suffixMessage: err.suffixMessage,
+							path: err._path.join(),
+						};
+					},
+					hydrate(err, data) {
+						return new ___R$project$rome$$internal$fs$FileNotFound_ts$FileNotFound(
+							___R$project$rome$$internal$path$index_ts$createAbsoluteFilePath(
+								data.path,
+							),
+							data.suffixMessage,
+						);
+					},
 				},
-				hydrate(err, data) {
-					return new FileNotFound(
-						createAbsoluteFilePath(data.path),
-						data.suffixMessage,
-					);
-				},
-			},
-		);
+			);
 
-		bridge.addErrorTransport(
-			"DiagnosticsError",
-			{
-				serialize(err: Error) {
-					if (!(err instanceof DiagnosticsError)) {
-						throw new Error("Expected DiagnosticsError");
-					}
+			bridge.addErrorTransport(
+				"DiagnosticsError",
+				{
+					serialize(err) {
+						if (
+							!(err instanceof
+							___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError)
+						) {
+							throw new Error("Expected DiagnosticsError");
+						}
 
-					return {
-						diagnostics: err.diagnostics,
-					};
+						return {
+							diagnostics: err.diagnostics,
+						};
+					},
+					hydrate(err, data) {
+						return new ___R$project$rome$$internal$diagnostics$errors_ts$DiagnosticsError(
+							err.message,
+							data.diagnostics,
+						);
+					},
 				},
-				hydrate(err, data) {
-					return new DiagnosticsError(err.message, data.diagnostics);
-				},
-			},
-		);
-	}*/
+			);
+		},
 	});
 
 
@@ -146121,7 +146280,7 @@ function ___R$project$rome$$internal$core$worker$WorkerCache_ts$createCacheEntry
 	}
 
 	class ___R$project$rome$$internal$core$worker$WorkerCache_ts$CacheEntry {
-		constructor(cache, file, name, loader) {
+		constructor(file, cache, name, loader) {
 			this.value = undefined;
 			this.cache = cache;
 			this.file = file;
@@ -146138,6 +146297,10 @@ function ___R$project$rome$$internal$core$worker$WorkerCache_ts$createCacheEntry
 				return undefined;
 			}
 
+			if (this.cache.disabled) {
+				return undefined;
+			}
+
 			const {path} = this;
 			if (!(await ___R$project$rome$$internal$fs$index_ts$exists(path))) {
 				return undefined;
@@ -146146,15 +146309,22 @@ function ___R$project$rome$$internal$core$worker$WorkerCache_ts$createCacheEntry
 			const stream = ___R$project$rome$$internal$fs$index_ts$createReadStream(
 				path,
 			);
-			const data = await ___R$project$rome$$internal$codec$binary$serial$index_ts$decodeSingleMessageRSERStream(
+			const decoded = await ___R$project$rome$$internal$codec$binary$serial$index_ts$decodeSingleMessageRSERStream(
 				stream,
 			);
+
+			if (decoded.type === "INCOMPATIBLE") {
+				this.cache.logger.warn(
+					___R$project$rome$$internal$markup$escape_ts$markup`Incompatible cache file ${path} ignored`,
+				);
+				return undefined;
+			}
+
 			const consumer = ___R$project$rome$$internal$consume$index_ts$consumeUnknown(
-				data,
+				decoded.value,
 				"parse",
 				"rser",
 			);
-
 			const value = this.loader.validate(consumer);
 			this.value = value;
 			return value;
@@ -146361,8 +146531,8 @@ function ___R$project$rome$$internal$core$worker$WorkerCache_ts$createCacheEntry
 			}
 
 			const entry = new ___R$project$rome$$internal$core$worker$WorkerCache_ts$CacheEntry(
-				this.cache,
 				this,
+				this.cache,
 				key,
 				loader,
 			);
@@ -146373,15 +146543,16 @@ function ___R$project$rome$$internal$core$worker$WorkerCache_ts$createCacheEntry
 
 	class ___R$project$rome$$internal$core$worker$WorkerCache_ts$default
 		extends ___R$project$rome$$internal$core$common$Cache_ts$default {
-		constructor(worker) {
+		constructor(worker, disabled) {
 			super(
 				"worker",
 				{
 					userConfig: worker.userConfig,
-					logger: worker.logger,
+					parentLogger: worker.logger,
 					fatalErrorHandler: worker.fatalErrorHandler,
 				},
 			);
+			this.disabled = disabled;
 			this.worker = worker;
 			this.loadedFiles = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
 		}
@@ -147195,6 +147366,7 @@ class ___R$project$rome$$internal$core$worker$Worker_ts$default {
 
 			this.cache = new ___R$project$rome$$internal$core$worker$WorkerCache_ts$default(
 				this,
+				opts.cacheDisabled,
 			);
 			this.api = new ___R$project$rome$$internal$core$worker$WorkerAPI_ts$default(
 				this,
@@ -149967,9 +150139,14 @@ const ___R$$priv$project$rome$$internal$cli$worker_ts$workerThreads = require(
 		___R$project$rome$$internal$cli$utils$setProcessTitle_ts$default("worker");
 		const bridge = ___R$project$rome$$internal$core$common$bridges$WorkerBridge_ts$default.Client.createFromWorkerThreadParentPort();
 
-		const {id} = ___R$$priv$project$rome$$internal$cli$worker_ts$workerThreads.workerData;
+		const {id, cacheDisabled} = ___R$$priv$project$rome$$internal$cli$worker_ts$workerThreads.workerData;
 		if (typeof id !== "number") {
 			throw new Error("Expected id to be a number but got " + id);
+		}
+		if (typeof cacheDisabled !== "boolean") {
+			throw new Error(
+				"Expected cacheDisabled to be a boolean but got " + cacheDisabled,
+			);
 		}
 
 		const userConfig = await ___R$project$rome$$internal$core$common$userConfig_ts$loadUserConfig();
@@ -149978,6 +150155,7 @@ const ___R$$priv$project$rome$$internal$cli$worker_ts$workerThreads = require(
 			userConfig,
 			bridge,
 			dedicated: true,
+			cacheDisabled,
 		});
 		await worker.init();
 		await bridge.handshake();

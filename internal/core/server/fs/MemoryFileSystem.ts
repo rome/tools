@@ -159,7 +159,7 @@ export default class MemoryFileSystem {
 		this.manifestCounter = 0;
 		this.manifests = new AbsoluteFilePathMap();
 
-		this.logger = server.logger.namespace(markup`[MemoryFileSystem]`);
+		this.logger = server.logger.namespace(markup`MemoryFileSystem`);
 
 		this.watcherCounter = 0;
 		this.watchPromises = new AbsoluteFilePathMap();
@@ -556,7 +556,9 @@ export default class MemoryFileSystem {
 
 		// New watch target
 		if (partial) {
-			this.logger.info(markup`Adding new partial project directory ${directoryLink} with a target of ${target}`);
+			this.logger.info(
+				markup`Adding new partial project directory ${directoryLink} with a target of ${target}`,
+			);
 		} else {
 			this.logger.info(markup`Adding new project directory ${directoryLink}`);
 		}

@@ -115,7 +115,7 @@ export default class RecoveryStore {
 		this.requestIdToStore = new Map();
 		this.evictableStoreIds = [];
 		this.blockSave = undefined;
-		this.logger = server.logger.namespace(markup`[RecoveryStore]`);
+		this.logger = server.logger.namespace(markup`RecoveryStore`);
 		this.shouldTruncate = true;
 		this.recoveryDirectoryPath = server.userConfig.recoveryPath;
 	}

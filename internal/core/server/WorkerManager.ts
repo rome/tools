@@ -47,7 +47,7 @@ export default class WorkerManager {
 		this.workers = new ExtendedMap("workers");
 		this.idCounter = 0;
 
-		this.logger = server.logger.namespace(markup`[WorkerManager]`);
+		this.logger = server.logger.namespace(markup`WorkerManager`);
 	}
 
 	public workerStartEvent: Event<BridgeServer<typeof WorkerBridge>, void>;
@@ -143,6 +143,7 @@ export default class WorkerManager {
 			userConfig: this.server.userConfig,
 			bridge: bridges.client,
 			dedicated: false,
+			cacheDisabled: this.server.cache.disabled,
 		});
 
 		// We make an assumption elsewhere in the code that this is always the first worker
@@ -258,6 +259,7 @@ export default class WorkerManager {
 			{
 				workerData: {
 					id: workerId,
+					cacheDisabled: this.server.cache.disabled,
 				},
 			},
 		);

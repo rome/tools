@@ -139,27 +139,32 @@ export default class RSERBufferParser {
 		return this.bytes.slice(this.readOffset);
 	}
 
-	public maybeDecodeStreamHeader(): boolean {
+	public maybeDecodeStreamHeader(): "INCOMPLETE" | "INCOMPATIBLE" | "VALID" {
 		const prevReadOffset = this.readOffset;
 
 		if (this.canRead(1)) {
-			this.expectCode(VALUE_CODES.STREAM_HEADER);
+			const got = this.peekCode();
+			if (got === VALUE_CODES.STREAM_HEADER) {
+				this.expectCode(VALUE_CODES.STREAM_HEADER);
+			} else {
+				return "INCOMPATIBLE";
+			}
 		} else {
 			this.readOffset = prevReadOffset;
-			return false;
+			return "INCOMPLETE";
 		}
 
 		const version = this.maybeDecodeNumber();
 		if (version === undefined) {
 			this.readOffset = prevReadOffset;
-			return false;
+			return "INCOMPLETE";
 		}
 
 		if (version !== VERSION) {
-			throw new Error("Version mismatch");
+			return "INCOMPATIBLE";
 		}
 
-		return true;
+		return "VALID";
 	}
 
 	public maybeDecodeMessageHeader(): false | number {

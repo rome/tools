@@ -228,7 +228,9 @@ export function waitChildProcess(
 				if (code === 0) {
 					resolve(proc);
 				} else {
-					reporter.error(markup`Subprocess exit with code ${String(proc.exitCode)}`);
+					reporter.error(
+						markup`Subprocess exit with code ${String(proc.exitCode)}`,
+					);
 					process.exit(proc.exitCode || 0);
 				}
 			},

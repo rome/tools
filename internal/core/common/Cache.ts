@@ -1,7 +1,8 @@
 import {getEnvVar} from "@internal/cli-environment";
+import {ReporterNamespace} from "@internal/cli-reporter";
 import {
 	RSERValue,
-	encodeValueToRSERBufferMessage,
+	encodeValueToRSERSingleMessageStream,
 } from "@internal/codec-binary-serial";
 import {
 	createDirectory,
@@ -14,7 +15,6 @@ import {AnyMarkups, markup} from "@internal/markup";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import FatalErrorHandler from "./FatalErrorHandler";
 import {UserConfig} from "./userConfig";
-import Logger from "./utils/Logger";
 
 // Write cache entries every 5 seconds after the first modification
 const BATCH_WRITES_MS = 5_000;
@@ -31,10 +31,10 @@ type WriteOperation =
 export default class Cache {
 	constructor(
 		namespace: string,
-		{fatalErrorHandler, userConfig, logger, forceEnabled}: {
+		{fatalErrorHandler, userConfig, parentLogger, forceEnabled}: {
 			fatalErrorHandler: FatalErrorHandler;
 			userConfig: UserConfig;
-			logger: Logger;
+			parentLogger: ReporterNamespace;
 			forceEnabled?: boolean;
 		},
 	) {
@@ -51,7 +51,7 @@ export default class Cache {
 		this.disabled = disabled;
 
 		this.cachePath = userConfig.cachePath.append(namespace);
-		this.logger = logger;
+		this.logger = parentLogger.namespace(markup`Cache`);
 		this.fatalErrorHandler = fatalErrorHandler;
 		this.runningWritePromise = undefined;
 		this.pendingWriteTimer = undefined;
@@ -61,7 +61,7 @@ export default class Cache {
 	private fatalErrorHandler: FatalErrorHandler;
 
 	public disabled: boolean;
-	protected logger: Logger;
+	public logger: ReporterNamespace;
 	protected cachePath: AbsoluteFilePath;
 	protected runningWritePromise: undefined | Promise<void>;
 	protected pendingWrites: AbsoluteFilePathMap<AbsoluteFilePathMap<WriteOperation>>;
@@ -124,7 +124,7 @@ export default class Cache {
 					case "update": {
 						await writeFile(
 							path,
-							new DataView(encodeValueToRSERBufferMessage(op.value)),
+							new DataView(encodeValueToRSERSingleMessageStream(op.value)),
 						);
 						break;
 					}
@@ -135,7 +135,7 @@ export default class Cache {
 		// Log
 		const {logger} = this;
 		if (filelinks.length > 0) {
-			logger.info(markup`[Cache] Wrote entries due to ${reason}`);
+			logger.info(markup`Wrote entries due to ${reason}`);
 			logger.list(filelinks);
 		}
 	}

@@ -113,8 +113,7 @@ export interface ResolverRemoteQuery extends Omit<ResolverOptions, "origin"> {
 
 export interface ResolverLocalQuery extends Omit<ResolverRemoteQuery, "origin"> {
 	origin: AbsoluteFilePath;
-};
-
+}
 export interface ResolverEntryQuery extends ResolverRemoteQuery {
 	allowPartial?: boolean;
 }

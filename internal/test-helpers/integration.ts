@@ -153,6 +153,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		id: 0,
 		dedicated: false,
 		userConfig: DEFAULT_USER_CONFIG,
+		cacheDisabled: true,
 
 		// This wont actually be used, it's just for setting up subscriptions
 		bridge: WorkerBridge.createFromLocal().client,

@@ -20,18 +20,20 @@ import {
 	DiagnosticIntegrity,
 	DiagnosticSuppressions,
 	Diagnostics,
+	DiagnosticsError,
 } from "@internal/diagnostics";
 import {BridgeErrorResponseDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {AnalyzeDependencyResult} from "@internal/core";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {Number0} from "@internal/ob1";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 import {ProjectConfig} from "@internal/project";
 import {WorkerBuffer} from "@internal/core/worker/Worker";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
+import {FileNotFound} from "@internal/fs";
 
 export type WorkerProjects = {
 	id: number;
@@ -287,7 +289,7 @@ export default createBridge({
 		>(),
 	},
 
-	/*init(bridge) {
+	init(bridge) {
 		bridge.addErrorTransport(
 			"FileNotFound",
 			{
@@ -327,5 +329,5 @@ export default createBridge({
 				},
 			},
 		);
-	}*/
+	},
 });

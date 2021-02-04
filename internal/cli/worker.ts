@@ -14,9 +14,14 @@ export default async function worker() {
 	setProcessTitle("worker");
 	const bridge = WorkerBridge.Client.createFromWorkerThreadParentPort();
 
-	const {id} = workerThreads.workerData;
+	const {id, cacheDisabled} = workerThreads.workerData;
 	if (typeof id !== "number") {
 		throw new Error(`Expected id to be a number but got ${id}`);
+	}
+	if (typeof cacheDisabled !== "boolean") {
+		throw new Error(
+			`Expected cacheDisabled to be a boolean but got ${cacheDisabled}`,
+		);
 	}
 
 	const userConfig = await loadUserConfig();
@@ -25,6 +30,7 @@ export default async function worker() {
 		userConfig,
 		bridge,
 		dedicated: true,
+		cacheDisabled,
 	});
 	await worker.init();
 	await bridge.handshake();

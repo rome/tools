@@ -771,7 +771,7 @@ export default class Server {
 
 			return res;
 		} catch (err) {
-			await this.fatalErrorHandler.handle(err);
+			await this.fatalErrorHandler.handleAsync(err);
 			throw new Error("Should never meet this condition");
 		} finally {
 			// We no longer care if the client dies
