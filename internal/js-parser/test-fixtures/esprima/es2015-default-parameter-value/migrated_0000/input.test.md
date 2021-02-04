@@ -133,7 +133,6 @@ JSRoot {
 								right: JSNumericLiteral {
 									value: 1
 									format: undefined
-									raw: "1"
 									loc: Object {
 										filename: "esprima/es2015-default-parameter-value/migrated_0000/input.js"
 										end: Object {

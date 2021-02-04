@@ -45,7 +45,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 1
 				format: "binary"
-				raw: "0B1"
 				loc: Object {
 					filename: "esprima/es2015-binary-integer-literal/migrated_0004/input.js"
 					end: Object {

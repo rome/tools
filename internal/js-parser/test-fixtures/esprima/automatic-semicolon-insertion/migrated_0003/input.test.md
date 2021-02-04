@@ -100,7 +100,6 @@ JSRoot {
 								init: JSNumericLiteral {
 									value: 14
 									format: undefined
-									raw: "14"
 									loc: Object {
 										filename: "esprima/automatic-semicolon-insertion/migrated_0003/input.js"
 										end: Object {
@@ -144,7 +143,6 @@ JSRoot {
 								init: JSNumericLiteral {
 									value: 3
 									format: undefined
-									raw: "3"
 									loc: Object {
 										filename: "esprima/automatic-semicolon-insertion/migrated_0003/input.js"
 										end: Object {

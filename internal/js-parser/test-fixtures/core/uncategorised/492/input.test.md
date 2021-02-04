@@ -191,7 +191,6 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 10
 										format: undefined
-										raw: "10"
 										loc: Object {
 											filename: "core/uncategorised/492/input.js"
 											end: Object {

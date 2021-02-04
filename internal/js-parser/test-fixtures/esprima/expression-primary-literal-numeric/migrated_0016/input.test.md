@@ -45,7 +45,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 256
 				format: "hex"
-				raw: "0x100"
 				loc: Object {
 					filename: "esprima/expression-primary-literal-numeric/migrated_0016/input.js"
 					end: Object {

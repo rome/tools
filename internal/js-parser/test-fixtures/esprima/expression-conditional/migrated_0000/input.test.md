@@ -54,25 +54,9 @@ JSRoot {
 						line: 1
 					}
 				}
-				test: JSReferenceIdentifier {
-					name: "y"
-					loc: Object {
-						filename: "esprima/expression-conditional/migrated_0000/input.js"
-						identifierName: "y"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
 				alternate: JSNumericLiteral {
 					value: 2
 					format: undefined
-					raw: "2"
 					loc: Object {
 						filename: "esprima/expression-conditional/migrated_0000/input.js"
 						end: Object {
@@ -88,7 +72,6 @@ JSRoot {
 				consequent: JSNumericLiteral {
 					value: 1
 					format: undefined
-					raw: "1"
 					loc: Object {
 						filename: "esprima/expression-conditional/migrated_0000/input.js"
 						end: Object {
@@ -97,6 +80,21 @@ JSRoot {
 						}
 						start: Object {
 							column: 4
+							line: 1
+						}
+					}
+				}
+				test: JSReferenceIdentifier {
+					name: "y"
+					loc: Object {
+						filename: "esprima/expression-conditional/migrated_0000/input.js"
+						identifierName: "y"
+						end: Object {
+							column: 1
+							line: 1
+						}
+						start: Object {
+							column: 0
 							line: 1
 						}
 					}

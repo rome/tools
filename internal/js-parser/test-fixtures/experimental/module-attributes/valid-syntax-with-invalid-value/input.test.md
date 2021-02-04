@@ -364,7 +364,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 1
 				format: undefined
-				raw: "1"
 				loc: Object {
 					filename: "experimental/module-attributes/valid-syntax-with-invalid-value/input.js"
 					end: Object {

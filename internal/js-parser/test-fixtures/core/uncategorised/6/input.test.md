@@ -58,7 +58,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 3
 					format: undefined
-					raw: "3"
 					loc: Object {
 						filename: "core/uncategorised/6/input.js"
 						end: Object {
@@ -87,7 +86,6 @@ JSRoot {
 					left: JSNumericLiteral {
 						value: 1
 						format: undefined
-						raw: "1"
 						loc: Object {
 							filename: "core/uncategorised/6/input.js"
 							end: Object {
@@ -103,7 +101,6 @@ JSRoot {
 					right: JSNumericLiteral {
 						value: 2
 						format: undefined
-						raw: "2"
 						loc: Object {
 							filename: "core/uncategorised/6/input.js"
 							end: Object {

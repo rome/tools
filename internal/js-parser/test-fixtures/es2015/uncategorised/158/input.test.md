@@ -100,6 +100,77 @@ JSRoot {
 									line: 1
 								}
 							}
+							right: JSObjectExpression {
+								loc: Object {
+									filename: "es2015/uncategorised/158/input.js"
+									end: Object {
+										column: 15
+										line: 1
+									}
+									start: Object {
+										column: 8
+										line: 1
+									}
+								}
+								properties: Array [
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "x"
+												loc: Object {
+													filename: "es2015/uncategorised/158/input.js"
+													identifierName: "x"
+													end: Object {
+														column: 10
+														line: 1
+													}
+													start: Object {
+														column: 9
+														line: 1
+													}
+												}
+											}
+											loc: Object {
+												filename: "es2015/uncategorised/158/input.js"
+												end: Object {
+													column: 10
+													line: 1
+												}
+												start: Object {
+													column: 9
+													line: 1
+												}
+											}
+										}
+										value: JSNumericLiteral {
+											value: 10
+											format: undefined
+											loc: Object {
+												filename: "es2015/uncategorised/158/input.js"
+												end: Object {
+													column: 14
+													line: 1
+												}
+												start: Object {
+													column: 12
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "es2015/uncategorised/158/input.js"
+											end: Object {
+												column: 14
+												line: 1
+											}
+											start: Object {
+												column: 9
+												line: 1
+											}
+										}
+									}
+								]
+							}
 							left: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
@@ -166,78 +237,6 @@ JSRoot {
 											}
 											start: Object {
 												column: 3
-												line: 1
-											}
-										}
-									}
-								]
-							}
-							right: JSObjectExpression {
-								loc: Object {
-									filename: "es2015/uncategorised/158/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
-								properties: Array [
-									JSObjectProperty {
-										key: JSStaticPropertyKey {
-											value: JSIdentifier {
-												name: "x"
-												loc: Object {
-													filename: "es2015/uncategorised/158/input.js"
-													identifierName: "x"
-													end: Object {
-														column: 10
-														line: 1
-													}
-													start: Object {
-														column: 9
-														line: 1
-													}
-												}
-											}
-											loc: Object {
-												filename: "es2015/uncategorised/158/input.js"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
-										}
-										value: JSNumericLiteral {
-											value: 10
-											format: undefined
-											raw: "10"
-											loc: Object {
-												filename: "es2015/uncategorised/158/input.js"
-												end: Object {
-													column: 14
-													line: 1
-												}
-												start: Object {
-													column: 12
-													line: 1
-												}
-											}
-										}
-										loc: Object {
-											filename: "es2015/uncategorised/158/input.js"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 9
 												line: 1
 											}
 										}

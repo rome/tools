@@ -86,7 +86,6 @@ JSRoot {
 					value: JSNumericLiteral {
 						value: 0
 						format: undefined
-						raw: "0"
 						loc: Object {
 							filename: "esprima/statement-iteration/migrated_0025/input.js"
 							end: Object {

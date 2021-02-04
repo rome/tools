@@ -149,7 +149,6 @@ JSRoot {
 							value: JSNumericLiteral {
 								value: 42
 								format: undefined
-								raw: "42"
 								loc: Object {
 									filename: "comments/regression/10230/input.js"
 									end: Object {

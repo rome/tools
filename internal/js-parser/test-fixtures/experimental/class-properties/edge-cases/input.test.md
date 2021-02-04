@@ -1722,7 +1722,6 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "experimental/class-properties/edge-cases/input.js"
 								end: Object {

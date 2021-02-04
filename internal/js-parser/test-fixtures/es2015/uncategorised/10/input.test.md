@@ -45,7 +45,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 2
 				format: "octal"
-				raw: "0O2"
 				loc: Object {
 					filename: "es2015/uncategorised/10/input.js"
 					end: Object {

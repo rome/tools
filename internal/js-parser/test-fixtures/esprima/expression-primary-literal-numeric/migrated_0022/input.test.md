@@ -45,7 +45,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 8
 				format: undefined
-				raw: "0008"
 				loc: Object {
 					filename: "esprima/expression-primary-literal-numeric/migrated_0022/input.js"
 					end: Object {

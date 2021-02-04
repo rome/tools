@@ -45,7 +45,6 @@ JSRoot {
 			test: JSNumericLiteral {
 				value: 0
 				format: undefined
-				raw: "0"
 				loc: Object {
 					filename: "es2015/let/let-as-identifier-6/input.js"
 					end: Object {

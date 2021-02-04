@@ -99,7 +99,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					raw: "1"
 					loc: Object {
 						filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
 						end: Object {

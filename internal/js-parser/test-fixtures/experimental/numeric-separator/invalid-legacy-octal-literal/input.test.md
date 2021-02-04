@@ -45,7 +45,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: "octal"
-				raw: "00_0"
 				loc: Object {
 					filename: "experimental/numeric-separator/invalid-legacy-octal-literal/input.js"
 					end: Object {

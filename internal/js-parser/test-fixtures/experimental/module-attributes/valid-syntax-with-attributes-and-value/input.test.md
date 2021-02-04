@@ -182,7 +182,6 @@ JSRoot {
 					value: JSNumericLiteral {
 						value: 0
 						format: undefined
-						raw: "0"
 						loc: Object {
 							filename: "experimental/module-attributes/valid-syntax-with-attributes-and-value/input.js"
 							end: Object {

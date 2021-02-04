@@ -161,7 +161,6 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 42
 										format: undefined
-										raw: "42"
 										loc: Object {
 											filename: "experimental/class-private-properties/invalid-object-method/input.js"
 											end: Object {

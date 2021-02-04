@@ -193,7 +193,6 @@ JSRoot {
 												argument: JSNumericLiteral {
 													value: 42
 													format: undefined
-													raw: "42"
 													loc: Object {
 														filename: "experimental/class-properties/yield-in-generator-in-class-property/input.js"
 														end: Object {

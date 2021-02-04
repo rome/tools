@@ -159,7 +159,6 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 1
 							format: undefined
-							raw: "1"
 							loc: Object {
 								filename: "es2017/async-functions/allow-await-outside-function-throw/input.js"
 								end: Object {

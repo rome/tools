@@ -106,7 +106,6 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "experimental/class-private-names-duplicated/instance-field-instance-set/input.js"
 								end: Object {

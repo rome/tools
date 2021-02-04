@@ -52,6 +52,91 @@ JSRoot {
 			}
 		}
 	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
+				end: Object {
+					column: 3
+					line: 11
+				}
+				start: Object {
+					column: 0
+					line: 11
+				}
+			}
+			expression: JSNumericLiteral {
+				value: 4
+				format: "octal"
+				loc: Object {
+					filename: "core/regression/invalid-octal-strict-directive/input.js"
+					end: Object {
+						column: 2
+						line: 11
+					}
+					start: Object {
+						column: 0
+						line: 11
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
+				end: Object {
+					column: 3
+					line: 12
+				}
+				start: Object {
+					column: 0
+					line: 12
+				}
+			}
+			expression: JSNumericLiteral {
+				value: 5
+				format: "octal"
+				loc: Object {
+					filename: "core/regression/invalid-octal-strict-directive/input.js"
+					end: Object {
+						column: 2
+						line: 12
+					}
+					start: Object {
+						column: 0
+						line: 12
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "core/regression/invalid-octal-strict-directive/input.js"
+				end: Object {
+					column: 22
+					line: 14
+				}
+				start: Object {
+					column: 0
+					line: 14
+				}
+			}
+			expression: JSStringLiteral {
+				value: "\x04 foo \x05 bar \x06"
+				loc: Object {
+					filename: "core/regression/invalid-octal-strict-directive/input.js"
+					end: Object {
+						column: 21
+						line: 14
+					}
+					start: Object {
+						column: 0
+						line: 14
+					}
+				}
+			}
+		}
+	]
 	directives: Array [
 		JSDirective {
 			value: "\\01 foo \\02 bar \\03"
@@ -134,93 +219,6 @@ JSRoot {
 				start: Object {
 					column: 0
 					line: 9
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/regression/invalid-octal-strict-directive/input.js"
-				end: Object {
-					column: 3
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 11
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 4
-				format: "octal"
-				raw: "04"
-				loc: Object {
-					filename: "core/regression/invalid-octal-strict-directive/input.js"
-					end: Object {
-						column: 2
-						line: 11
-					}
-					start: Object {
-						column: 0
-						line: 11
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/regression/invalid-octal-strict-directive/input.js"
-				end: Object {
-					column: 3
-					line: 12
-				}
-				start: Object {
-					column: 0
-					line: 12
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 5
-				format: "octal"
-				raw: "05"
-				loc: Object {
-					filename: "core/regression/invalid-octal-strict-directive/input.js"
-					end: Object {
-						column: 2
-						line: 12
-					}
-					start: Object {
-						column: 0
-						line: 12
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/regression/invalid-octal-strict-directive/input.js"
-				end: Object {
-					column: 22
-					line: 14
-				}
-				start: Object {
-					column: 0
-					line: 14
-				}
-			}
-			expression: JSStringLiteral {
-				value: "\x04 foo \x05 bar \x06"
-				loc: Object {
-					filename: "core/regression/invalid-octal-strict-directive/input.js"
-					end: Object {
-						column: 21
-						line: 14
-					}
-					start: Object {
-						column: 0
-						line: 14
-					}
 				}
 			}
 		}

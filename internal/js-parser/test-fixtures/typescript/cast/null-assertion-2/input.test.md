@@ -58,7 +58,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					raw: "2"
 					loc: Object {
 						filename: "typescript/cast/null-assertion-2/input.ts"
 						end: Object {

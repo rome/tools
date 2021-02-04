@@ -58,7 +58,6 @@ JSRoot {
 				left: JSNumericLiteral {
 					value: 3
 					format: undefined
-					raw: "3"
 					loc: Object {
 						filename: "es2016/exponentiation-operator/1/input.js"
 						end: Object {
@@ -74,7 +73,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					raw: "2"
 					loc: Object {
 						filename: "es2016/exponentiation-operator/1/input.js"
 						end: Object {

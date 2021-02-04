@@ -99,7 +99,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
-				raw: "42"
 				loc: Object {
 					filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 					end: Object {

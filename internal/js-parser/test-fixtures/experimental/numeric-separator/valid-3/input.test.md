@@ -44,8 +44,7 @@ JSRoot {
 			}
 			expression: JSNumericLiteral {
 				value: 11.01
-				format: undefined
-				raw: "1.1_0_1E1"
+				format: "scientific"
 				loc: Object {
 					filename: "experimental/numeric-separator/valid-3/input.js"
 					end: Object {

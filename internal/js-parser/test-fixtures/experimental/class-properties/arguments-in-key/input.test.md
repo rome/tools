@@ -168,7 +168,6 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 2
 										format: undefined
-										raw: "2"
 										loc: Object {
 											filename: "experimental/class-properties/arguments-in-key/input.js"
 											end: Object {

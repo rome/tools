@@ -146,7 +146,6 @@ JSRoot {
 						expression: JSNumericLiteral {
 							value: 17
 							format: "octal"
-							raw: "021"
 							loc: Object {
 								filename: "core/uncategorised/500/input.js"
 								end: Object {

@@ -383,7 +383,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
-				raw: "0"
 				loc: Object {
 					filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 					end: Object {

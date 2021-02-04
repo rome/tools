@@ -125,7 +125,6 @@ JSRoot {
 						init: JSNumericLiteral {
 							value: 7
 							format: "octal"
-							raw: "07"
 							loc: Object {
 								filename: "core/uncategorised/550/input.js"
 								end: Object {

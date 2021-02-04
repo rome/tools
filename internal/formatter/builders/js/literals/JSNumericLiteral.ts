@@ -10,29 +10,31 @@ import {Builder, Token} from "@internal/formatter";
 import {JSNumericLiteral} from "@internal/ast";
 import {humanizeNumber} from "@internal/string-utils";
 
-const SCIENTIFIC_NOTATION = /e/i;
-
 export default function JSNumericLiteral(
 	builder: Builder,
 	node: JSNumericLiteral,
 ): Token {
-	if (builder.options.format === "pretty") {
-		if (node.format === undefined) {
-			if (SCIENTIFIC_NOTATION.test(node.raw)) {
-				return node.raw;
-			}
-			return humanizeNumber(node.value);
-		} else {
-			switch (node.format) {
-				case "binary":
-					return `0b${node.value.toString(2)}`;
-				case "octal":
-					return `0o${node.value.toString(8)}`;
-				case "hex":
-					return `0x${node.value.toString(16)}`;
-			}
+	const {format, value} = node;
+
+	switch (format) {
+		case "binary":
+			return `0b${value.toString(2)}`;
+
+		case "octal":
+			return `0o${value.toString(8)}`;
+
+		case "hex":
+			return `0x${value.toString(16)}`;
+
+		case "scientific": {
+			let str = value.toExponential();
+
+			// The plus in the form of 5e+0 is redundant
+			str = str.replace(/e\+/g, "e");
+
+			return str;
 		}
-	} else {
-		return node.raw;
 	}
+
+	return humanizeNumber(value);
 }

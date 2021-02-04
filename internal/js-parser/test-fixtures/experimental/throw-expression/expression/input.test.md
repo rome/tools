@@ -121,7 +121,6 @@ JSRoot {
 							argument: JSNumericLiteral {
 								value: 1
 								format: undefined
-								raw: "1"
 								loc: Object {
 									filename: "experimental/throw-expression/expression/input.js"
 									end: Object {

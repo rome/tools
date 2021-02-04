@@ -121,7 +121,6 @@ JSRoot {
 										argument: JSNumericLiteral {
 											value: 42
 											format: undefined
-											raw: "42"
 											loc: Object {
 												filename: "es2017/async-functions/await-inside-computed-class-property/input.js"
 												end: Object {

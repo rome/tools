@@ -86,7 +86,6 @@ JSRoot {
 					right: JSNumericLiteral {
 						value: 42
 						format: undefined
-						raw: "42"
 						loc: Object {
 							filename: "core/categorized/02-regex/input.js"
 							end: Object {

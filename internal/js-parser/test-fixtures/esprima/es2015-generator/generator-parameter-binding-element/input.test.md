@@ -250,7 +250,6 @@ JSRoot {
 										expression: JSNumericLiteral {
 											value: 3
 											format: undefined
-											raw: "3"
 											loc: Object {
 												filename: "esprima/es2015-generator/generator-parameter-binding-element/input.js"
 												end: Object {

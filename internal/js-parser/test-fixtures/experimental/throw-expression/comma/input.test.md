@@ -134,7 +134,6 @@ JSRoot {
 									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
-										raw: "1"
 										loc: Object {
 											filename: "experimental/throw-expression/comma/input.js"
 											end: Object {
@@ -151,7 +150,6 @@ JSRoot {
 								JSNumericLiteral {
 									value: 2
 									format: undefined
-									raw: "2"
 									loc: Object {
 										filename: "experimental/throw-expression/comma/input.js"
 										end: Object {

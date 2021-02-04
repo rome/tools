@@ -166,7 +166,6 @@ JSRoot {
 								right: JSNumericLiteral {
 									value: 1
 									format: undefined
-									raw: "1"
 									loc: Object {
 										filename: "es2015/yield/input-not-followed-by-regex/input.js"
 										end: Object {

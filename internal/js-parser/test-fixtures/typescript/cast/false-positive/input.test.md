@@ -101,7 +101,6 @@ JSRoot {
 						right: JSNumericLiteral {
 							value: 0
 							format: undefined
-							raw: "0"
 							loc: Object {
 								filename: "typescript/cast/false-positive/input.ts"
 								end: Object {

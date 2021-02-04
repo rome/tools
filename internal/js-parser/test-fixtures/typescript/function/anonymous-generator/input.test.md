@@ -138,7 +138,6 @@ JSRoot {
 											argument: JSNumericLiteral {
 												value: 2
 												format: undefined
-												raw: "2"
 												loc: Object {
 													filename: "typescript/function/anonymous-generator/input.ts"
 													end: Object {

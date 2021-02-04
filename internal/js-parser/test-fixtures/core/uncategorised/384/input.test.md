@@ -99,7 +99,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					raw: "42"
 					loc: Object {
 						filename: "core/uncategorised/384/input.js"
 						end: Object {

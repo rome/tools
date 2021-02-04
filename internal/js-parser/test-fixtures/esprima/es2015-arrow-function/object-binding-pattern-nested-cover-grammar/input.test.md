@@ -84,7 +84,6 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-arrow-function/object-binding-pattern-nested-cover-grammar/input.js"
 						end: Object {

@@ -168,7 +168,6 @@ JSRoot {
 										right: JSNumericLiteral {
 											value: 5
 											format: undefined
-											raw: "5"
 											loc: Object {
 												filename: "es2018/object-rest-spread/17/input.js"
 												end: Object {
@@ -296,7 +295,6 @@ JSRoot {
 							value: JSNumericLiteral {
 								value: 1
 								format: undefined
-								raw: "1"
 								loc: Object {
 									filename: "es2018/object-rest-spread/17/input.js"
 									end: Object {

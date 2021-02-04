@@ -63,7 +63,6 @@ JSRoot {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				raw: "42"
 				loc: Object {
 					filename: "unknown"
 					end: Object {
@@ -157,7 +156,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
-				raw: "42"
 				trailingComments: undefined
 				loc: Object {
 					filename: "unknown"
@@ -708,7 +706,6 @@ JSRoot {
 												init: JSNumericLiteral {
 													value: 1
 													format: undefined
-													raw: "1"
 													loc: Object {
 														filename: "unknown"
 														end: Object {
@@ -924,7 +921,6 @@ JSRoot {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				raw: "42"
 				loc: Object {
 					filename: "unknown"
 					end: Object {

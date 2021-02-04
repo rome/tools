@@ -141,7 +141,6 @@ JSRoot {
 							value: 55
 							format: undefined
 							leadingComments: undefined
-							raw: "55"
 							loc: Object {
 								filename: "comments/basic/surrounding-throw-comments/input.js"
 								end: Object {

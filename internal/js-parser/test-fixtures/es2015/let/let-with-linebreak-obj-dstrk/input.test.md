@@ -185,7 +185,6 @@ JSRoot {
 									value: JSNumericLiteral {
 										value: 1
 										format: undefined
-										raw: "1"
 										loc: Object {
 											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 											end: Object {

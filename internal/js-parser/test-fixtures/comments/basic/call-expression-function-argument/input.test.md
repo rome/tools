@@ -209,7 +209,6 @@ JSRoot {
 												init: JSNumericLiteral {
 													value: 1
 													format: undefined
-													raw: "1"
 													loc: Object {
 														filename: "comments/basic/call-expression-function-argument/input.js"
 														end: Object {

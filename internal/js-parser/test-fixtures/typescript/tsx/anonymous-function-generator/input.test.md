@@ -357,7 +357,6 @@ JSRoot {
 														argument: JSNumericLiteral {
 															value: 2
 															format: undefined
-															raw: "2"
 															loc: Object {
 																filename: "typescript/tsx/anonymous-function-generator/input.tsx"
 																end: Object {

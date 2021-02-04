@@ -96,7 +96,6 @@ JSRoot {
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					raw: "1"
 					loc: Object {
 						filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
 						end: Object {

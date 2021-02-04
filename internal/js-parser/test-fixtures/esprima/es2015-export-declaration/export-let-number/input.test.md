@@ -100,7 +100,6 @@ JSRoot {
 							init: JSNumericLiteral {
 								value: 1
 								format: undefined
-								raw: "1"
 								loc: Object {
 									filename: "esprima/es2015-export-declaration/export-let-number/input.js"
 									end: Object {

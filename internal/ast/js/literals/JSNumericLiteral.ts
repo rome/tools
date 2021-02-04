@@ -11,8 +11,7 @@ import {createQuickBuilder} from "../../utils";
 export interface JSNumericLiteral extends NodeBaseWithComments {
 	readonly type: "JSNumericLiteral";
 	readonly value: number;
-	readonly format?: "octal" | "binary" | "hex";
-	readonly raw: string;
+	readonly format?: "octal" | "binary" | "hex" | "scientific";
 }
 
 export const jsNumericLiteral = createQuickBuilder<JSNumericLiteral, "value">(

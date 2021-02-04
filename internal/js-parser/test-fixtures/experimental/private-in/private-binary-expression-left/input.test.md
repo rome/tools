@@ -133,7 +133,6 @@ JSRoot {
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							raw: "1"
 							loc: Object {
 								filename: "experimental/private-in/private-binary-expression-left/input.js"
 								end: Object {
@@ -351,7 +350,6 @@ JSRoot {
 										right: JSNumericLiteral {
 											value: 1
 											format: undefined
-											raw: "1"
 											loc: Object {
 												filename: "experimental/private-in/private-binary-expression-left/input.js"
 												end: Object {

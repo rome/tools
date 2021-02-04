@@ -129,7 +129,6 @@ JSRoot {
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
-				raw: "0"
 				loc: Object {
 					filename: "experimental/top-level-await/inside-arrow/input.js"
 					end: Object {

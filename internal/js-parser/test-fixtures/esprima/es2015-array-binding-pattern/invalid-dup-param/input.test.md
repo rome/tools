@@ -104,7 +104,6 @@ JSRoot {
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					raw: "0"
 					loc: Object {
 						filename: "esprima/es2015-array-binding-pattern/invalid-dup-param/input.js"
 						end: Object {

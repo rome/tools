@@ -72,7 +72,6 @@ JSRoot {
 				expression: JSNumericLiteral {
 					value: 10
 					format: undefined
-					raw: "10"
 					loc: Object {
 						filename: "core/uncategorised/323/input.js"
 						end: Object {
@@ -129,7 +128,6 @@ JSRoot {
 				expression: JSNumericLiteral {
 					value: 20
 					format: undefined
-					raw: "20"
 					loc: Object {
 						filename: "core/uncategorised/323/input.js"
 						end: Object {
