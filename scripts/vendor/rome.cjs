@@ -51374,6 +51374,11 @@ class ___R$project$rome$$internal$events$BridgeEvent_ts$BridgeEvent {
 
 
 
+  // project-rome/@internal/codec-binary-serial/RSERParserError.ts
+class ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default
+		extends Error {}
+
+
   // project-rome/@internal/codec-binary-serial/constants.ts
 const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 
@@ -51470,7 +51475,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 				return code;
 
 			default:
-				throw new Error("Invalid value code " + code);
+				throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+					"Invalid value code " + code,
+				);
 		}
 	}
 	const ___R$project$rome$$internal$codec$binary$serial$constants_ts$ARRAY_BUFFER_VIEW_CODES = function() {
@@ -51508,7 +51515,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 				return code;
 
 			default:
-				throw new Error("Invalid typed array code " + code);
+				throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+					"Invalid typed array code " + code,
+				);
 		}
 	}
 
@@ -51540,7 +51549,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 		} else if (val instanceof DataView) {
 			return ___R$project$rome$$internal$codec$binary$serial$constants_ts$ARRAY_BUFFER_VIEW_CODES.DATA_VIEW;
 		} else {
-			throw new Error("Unknown typed array instance");
+			throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+				"Unknown typed array instance",
+			);
 		}
 	}
 	function ___R$project$rome$$internal$codec$binary$serial$constants_ts$arrayBufferViewCodeToInstance(
@@ -51612,7 +51623,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 				return code;
 
 			default:
-				throw new Error("Invalid error code " + code);
+				throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+					"Invalid error code " + code,
+				);
 		}
 	}
 
@@ -51662,7 +51675,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 				return new Error();
 
 			default:
-				throw new Error("Invalid error code " + code);
+				throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+					"Invalid error code " + code,
+				);
 		}
 	}
 	const ___R$project$rome$$internal$codec$binary$serial$constants_ts$FILE_CODES = function() {
@@ -51684,7 +51699,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 				return code;
 
 			default:
-				throw new Error("Unknown file code " + code);
+				throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+					"Unknown file code " + code,
+				);
 		}
 	}
 
@@ -51707,7 +51724,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 		) {
 			return ___R$project$rome$$internal$codec$binary$serial$constants_ts$FILE_CODES.UNKNOWN;
 		} else {
-			throw new Error("Unknown FilePath type");
+			throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+				"Unknown FilePath type",
+			);
 		}
 	}
 
@@ -51730,7 +51749,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 		) {
 			return ___R$project$rome$$internal$codec$binary$serial$constants_ts$FILE_CODES.UNKNOWN;
 		} else {
-			throw new Error("Unknown FilePath type");
+			throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+				"Unknown FilePath type",
+			);
 		}
 	}
 
@@ -51755,7 +51776,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 		} else if (path instanceof ___R$project$rome$$internal$path$index_ts$URLPath) {
 			return ___R$project$rome$$internal$codec$binary$serial$constants_ts$FILE_CODES.URL;
 		} else {
-			throw new Error("Unknown FilePath type");
+			throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+				"Unknown FilePath type",
+			);
 		}
 	}
 
@@ -51798,7 +51821,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 				return new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
 
 			default:
-				throw new Error("File path code " + code + " cannot be a map");
+				throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+					"File path code " + code + " cannot be a map",
+				);
 		}
 	}
 
@@ -51816,7 +51841,9 @@ const ___R$project$rome$$internal$codec$binary$serial$constants_ts$VERSION = 1;
 				return new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathSet();
 
 			default:
-				throw new Error("File path code " + code + " cannot be a map");
+				throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+					"File path code " + code + " cannot be a map",
+				);
 		}
 	}
 
@@ -52790,7 +52817,7 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 		assertReadableSize(size) {
 			let remaining = this.getReadableSize();
 			if (remaining < size) {
-				throw new Error(
+				throw this.unexpected(
 					"Expected at least " +
 					size +
 					" bytes to read but only have " +
@@ -52836,7 +52863,7 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 					return this.view.getBigInt64(this.readOffset + offset);
 
 				default:
-					throw new Error("Invalid integer size " + size);
+					throw this.unexpected("Invalid integer size " + size);
 			}
 		}
 
@@ -52852,12 +52879,18 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 			return ival;
 		}
 
+		unexpected(message, offset = this.readOffset) {
+			throw new ___R$project$rome$$internal$codec$binary$serial$RSERParserError_ts$default(
+				message + " at offset " + offset,
+			);
+		}
+
 		expectCode(expected) {
 			const got = this.peekCode();
 			if (got === expected) {
 				this.readOffset++;
 			} else {
-				throw new Error(
+				this.unexpected(
 					"Expected code " +
 					___R$project$rome$$internal$codec$binary$serial$constants_ts$formatCode(
 						expected,
@@ -53027,7 +53060,7 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 			) {
 				val = this.decodeArrayBuffer();
 			} else {
-				throw new Error(
+				throw this.unexpected(
 					"Don't know how to decode reference " +
 					___R$project$rome$$internal$codec$binary$serial$constants_ts$formatCode(
 						code,
@@ -53135,7 +53168,7 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 					return this.decodeArrayBuffer();
 
 				default:
-					throw new Error(
+					throw this.unexpected(
 						"Unhandled " +
 						___R$project$rome$$internal$codec$binary$serial$constants_ts$formatCode(
 							code,
@@ -53449,7 +53482,7 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 			) {
 				return this.decodeString();
 			} else {
-				throw new Error(
+				throw this.unexpected(
 					"Expected string or undefined but got " +
 					___R$project$rome$$internal$codec$binary$serial$constants_ts$formatCode(
 						code,
@@ -53500,7 +53533,7 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 				case ___R$project$rome$$internal$codec$binary$serial$constants_ts$VALUE_CODES.INT32: {
 					const num = this.decodeInt();
 					if (typeof num === "bigint") {
-						throw new Error("Did not expect a bigint");
+						throw this.unexpected("Did not expect a bigint");
 					} else {
 						return num;
 					}
@@ -53510,10 +53543,12 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 					return this.decodeFloat();
 
 				case ___R$project$rome$$internal$codec$binary$serial$constants_ts$VALUE_CODES.INT64:
-					throw new Error("Unexpected bigint, only regular numbers accepted");
+					throw this.unexpected(
+						"Unexpected bigint, only regular numbers accepted",
+					);
 
 				default:
-					throw new Error(
+					throw this.unexpected(
 						___R$project$rome$$internal$codec$binary$serial$constants_ts$formatCode(
 							code,
 						) + " is not a valid number code",
@@ -53537,7 +53572,7 @@ const ___R$$priv$project$rome$$internal$codec$binary$serial$RSERBufferParser_ts$
 					return 8;
 
 				default:
-					throw new Error(
+					throw this.unexpected(
 						"No int encoding for " +
 						___R$project$rome$$internal$codec$binary$serial$constants_ts$formatCode(
 							code,
@@ -132768,7 +132803,7 @@ const ___R$project$rome$$internal$core$server$commands$stop_ts$default = ___R$pr
   // project-rome/@internal/core/common/userConfig.ts
 const ___R$project$rome$$internal$core$common$userConfig_ts$DEFAULT_USER_CONFIG = {
 		configPath: undefined,
-		cachePath: ___R$project$rome$$internal$core$common$constants_ts$DEFAULT_CACHE_PATH,
+		cacheDirectory: ___R$project$rome$$internal$core$common$constants_ts$DEFAULT_CACHE_PATH,
 		recoveryPath: ___R$project$rome$$internal$core$common$constants_ts$DEFAULT_USER_CONFIG_RECOVERY_DIRECTORY,
 		syntaxTheme: undefined,
 	};
@@ -132783,7 +132818,7 @@ const ___R$project$rome$$internal$core$common$userConfig_ts$DEFAULT_USER_CONFIG 
 		);
 
 		if (consumer.has("cachePath")) {
-			userConfig.cachePath = consumer.get("cachePath").asAbsoluteFilePath(
+			userConfig.cacheDirectory = consumer.get("cachePath").asAbsoluteFilePath(
 				undefined,
 				configPath.getParent(),
 			);
@@ -135384,10 +135419,12 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 	);
 	function ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$createEnv(
 		processType,
+		env,
 	) {
 		return Object.assign(
 			{},
 			process.env,
+			env,
 			{
 				ROME_PROCESS_VERSION: ___R$project$rome$$internal$core$common$constants_ts$VERSION,
 				ROME_PROCESS_TYPE: processType,
@@ -135412,6 +135449,7 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 				{
 					env: ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$createEnv(
 						processType,
+						opts.env,
 					),
 				},
 			),
@@ -135436,6 +135474,7 @@ const ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$workerThreads 
 					eval: true,
 					env: ___R$$priv$project$rome$$internal$core$common$utils$fork_ts$createEnv(
 						processType,
+						opts.env,
 					),
 				},
 			),
@@ -135946,6 +135985,9 @@ const ___R$$priv$project$rome$$internal$core$server$testing$TestServerWorker_ts$
 					stdin: true,
 					stdout: true,
 					stderr: true,
+					env: {
+						NODE_ENV: "test",
+					},
 				},
 			);
 
@@ -140292,13 +140334,16 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				);
 			});
 
-			const worker = new ___R$project$rome$$internal$core$worker$Worker_ts$default({
-				id: 0,
-				userConfig: this.server.userConfig,
-				bridge: bridges.client,
-				dedicated: false,
-				cacheDisabled: this.server.cache.disabled,
-			});
+			const worker = new ___R$project$rome$$internal$core$worker$Worker_ts$default(
+				Object.assign(
+					{
+						userConfig: this.server.userConfig,
+						bridge: bridges.client,
+						dedicated: false,
+					},
+					this.buildPartialWorkerOptions(0),
+				),
+			);
 
 			// We make an assumption elsewhere in the code that this is always the first worker
 			// Let's use an invariant here for completeness
@@ -140398,6 +140443,14 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 			}
 		}
 
+		buildPartialWorkerOptions(workerId) {
+			return {
+				id: workerId,
+				cacheReadDisabled: this.server.cache.readDisabled,
+				cacheWriteDisabled: this.server.cache.writeDisabled,
+			};
+		}
+
 		async _spawnWorker(workerId, isGhost) {
 			const fatalErrorSource = ___R$project$rome$$internal$markup$escape_ts$markup`worker ${workerId}`;
 			const start = Date.now();
@@ -140405,10 +140458,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 			const thread = ___R$project$rome$$internal$core$common$utils$fork_ts$forkThread(
 				"worker",
 				{
-					workerData: {
-						id: workerId,
-						cacheDisabled: this.server.cache.disabled,
-					},
+					workerData: this.buildPartialWorkerOptions(workerId),
 				},
 			);
 
@@ -143138,31 +143188,13 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 	class ___R$project$rome$$internal$core$common$Cache_ts$default {
 		constructor(
 			namespace,
-			{fatalErrorHandler, userConfig, parentLogger, forceEnabled},
+			{fatalErrorHandler, userConfig, parentLogger, writeDisabled, readDisabled},
 		) {
-			let disabled = false;
-			if (
-				___R$project$rome$$internal$cli$environment$index_ts$getEnvVar(
-					"ROME_DEV",
-				).type ===
-				"ENABLED"
-			) {
-				disabled = true;
-			}
-			if (
-				___R$project$rome$$internal$cli$environment$index_ts$getEnvVar(
-					"ROME_CACHE",
-				).type ===
-				"DISABLED"
-			) {
-				disabled = true;
-			}
-			if (forceEnabled) {
-				disabled = false;
-			}
-			this.disabled = disabled;
+			this.writeDisabled = writeDisabled;
+			this.readDisabled = readDisabled;
 
-			this.cachePath = userConfig.cachePath.append(namespace);
+			this.directoryPath = userConfig.cacheDirectory.append(namespace);
+
 			this.logger = parentLogger.namespace(
 				___R$project$rome$$internal$markup$escape_ts$markup`Cache`,
 			);
@@ -143173,7 +143205,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 		}
 
 		getDirectory() {
-			return this.cachePath;
+			return this.directoryPath;
 		}
 
 		async remove(uid, path) {
@@ -143188,7 +143220,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 		}
 
 		getCacheDirectory(uid) {
-			return this.cachePath.append(uid);
+			return this.directoryPath.append(uid);
 		}
 
 		getCacheFilename(uid, name) {
@@ -143215,10 +143247,10 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 
 			// Write pending files
 			const filelinks = [];
-			for (const [directory, files] of pendingWrites) {
+			for (const [directory, ops] of pendingWrites) {
 				await ___R$project$rome$$internal$fs$index_ts$createDirectory(directory);
 
-				for (const [path, op] of files) {
+				for (const [path, op] of ops) {
 					filelinks.push(
 						___R$project$rome$$internal$markup$escape_ts$markup`${path}`,
 					);
@@ -143254,7 +143286,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 		}
 
 		addPendingWrite(path, op) {
-			if (this.disabled) {
+			if (this.writeDisabled) {
 				return;
 			}
 
@@ -143288,38 +143320,113 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 
 
   // project-rome/@internal/core/server/ServerCache.ts
-class ___R$project$rome$$internal$core$server$ServerCache_ts$default
+// We populate a file containing a single string that we can use to avoid loading in the cache directory
+	const ___R$$priv$project$rome$$internal$core$server$ServerCache_ts$BREAKER_BASENAME = "breaker";
+
+	// This is defined in core/constants.ts and will include a dev suffix if necessary
+	const ___R$$priv$project$rome$$internal$core$server$ServerCache_ts$EXPECTED_BREAKER_VALUE = ___R$project$rome$$internal$core$common$constants_ts$VERSION;
+
+	class ___R$project$rome$$internal$core$server$ServerCache_ts$default
 		extends ___R$project$rome$$internal$core$common$Cache_ts$default {
 		constructor(server) {
+			let disabled = false;
+			if (
+				___R$project$rome$$internal$cli$environment$index_ts$getEnvVar(
+					"ROME_DEV",
+				).type ===
+				"ENABLED"
+			) {
+				disabled = true;
+			}
+			if (
+				___R$project$rome$$internal$cli$environment$index_ts$getEnvVar(
+					"ROME_CACHE",
+				).type ===
+				"DISABLED"
+			) {
+				disabled = true;
+			}
+			if (server.options.forceCacheEnabled) {
+				disabled = false;
+			}
+
 			super(
 				"server",
 				{
 					userConfig: server.userConfig,
 					parentLogger: server.logger,
-					forceEnabled: server.options.forceCacheEnabled,
+					readDisabled: disabled,
+					writeDisabled: disabled,
 					fatalErrorHandler: server.fatalErrorHandler,
 				},
 			);
 			this.server = server;
+			this.breakerPath = this.directoryPath.append(
+				___R$$priv$project$rome$$internal$core$server$ServerCache_ts$BREAKER_BASENAME,
+			);
 		}
 
 		async init() {
 			const {memoryFs} = this.server;
 			await ___R$project$rome$$internal$fs$index_ts$createDirectory(
-				this.cachePath,
+				this.directoryPath,
 			);
-			await memoryFs.watch(this.cachePath);
+			await memoryFs.watch(this.directoryPath);
+
+			await this.initBreaker();
 
 			this.server.endEvent.subscribe(async () => {
 				await this.teardown();
 			});
 		}
 
+		async initBreaker() {
+			const {breakerPath, logger} = this;
+
+			if (this.readDisabled) {
+				logger.warn(
+					___R$project$rome$$internal$markup$escape_ts$markup`Read disabled, skipping breaker verification`,
+				);
+			}
+
+			if (await ___R$project$rome$$internal$fs$index_ts$exists(breakerPath)) {
+				const content = await ___R$project$rome$$internal$fs$index_ts$readFileText(
+					breakerPath,
+				);
+				if (
+					content ===
+					___R$$priv$project$rome$$internal$core$server$ServerCache_ts$EXPECTED_BREAKER_VALUE
+				) {
+					logger.success(
+						___R$project$rome$$internal$markup$escape_ts$markup`Breaker is correct`,
+					);
+					return;
+				} else {
+					logger.warn(
+						___R$project$rome$$internal$markup$escape_ts$markup`Breaker does not match. Expected ${___R$$priv$project$rome$$internal$core$server$ServerCache_ts$EXPECTED_BREAKER_VALUE} but got ${content}`,
+					);
+				}
+			} else {
+				logger.warn(
+					___R$project$rome$$internal$markup$escape_ts$markup`Breaker does not exist`,
+				);
+			}
+
+			this.readDisabled = true;
+			this.addPendingWrite(
+				this.breakerPath,
+				{
+					type: "update",
+					value: ___R$$priv$project$rome$$internal$core$server$ServerCache_ts$EXPECTED_BREAKER_VALUE,
+				},
+			);
+		}
+
 		async clear() {
 			this.pendingWrites.clear();
 			await this.server.fileAllocator.evictAll();
 			await ___R$project$rome$$internal$fs$index_ts$removeDirectory(
-				this.cachePath,
+				this.directoryPath,
 			);
 		}
 	}
@@ -144706,7 +144813,7 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 
 			// Warn about disabled disk caching. Don't bother if it's only been set due to ROME_DEV. We don't care to see it in development.
 			if (
-				this.cache.disabled &&
+				this.cache.writeDisabled &&
 				___R$project$rome$$internal$cli$environment$index_ts$getEnvVar(
 					"ROME_DEV",
 				).type !== "ENABLED"
@@ -146297,7 +146404,7 @@ function ___R$project$rome$$internal$core$worker$WorkerCache_ts$createCacheEntry
 				return undefined;
 			}
 
-			if (this.cache.disabled) {
+			if (this.cache.readDisabled) {
 				return undefined;
 			}
 
@@ -146543,16 +146650,17 @@ function ___R$project$rome$$internal$core$worker$WorkerCache_ts$createCacheEntry
 
 	class ___R$project$rome$$internal$core$worker$WorkerCache_ts$default
 		extends ___R$project$rome$$internal$core$common$Cache_ts$default {
-		constructor(worker, disabled) {
+		constructor(worker) {
 			super(
 				"worker",
 				{
 					userConfig: worker.userConfig,
 					parentLogger: worker.logger,
 					fatalErrorHandler: worker.fatalErrorHandler,
+					writeDisabled: worker.options.cacheWriteDisabled,
+					readDisabled: worker.options.cacheReadDisabled,
 				},
 			);
-			this.disabled = disabled;
 			this.worker = worker;
 			this.loadedFiles = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
 		}
@@ -147339,6 +147447,7 @@ function ___R$project$rome$$internal$core$worker$utils$applyWorkerBufferPatch_ts
 class ___R$project$rome$$internal$core$worker$Worker_ts$default {
 		constructor(opts) {
 			this.bridge = opts.bridge;
+			this.options = opts;
 
 			this.userConfig = opts.userConfig;
 			this.partialManifests = new ___R$project$rome$$internal$collections$index_ts$ExtendedMap(
@@ -147366,7 +147475,6 @@ class ___R$project$rome$$internal$core$worker$Worker_ts$default {
 
 			this.cache = new ___R$project$rome$$internal$core$worker$WorkerCache_ts$default(
 				this,
-				opts.cacheDisabled,
 			);
 			this.api = new ___R$project$rome$$internal$core$worker$WorkerAPI_ts$default(
 				this,
@@ -150138,24 +150246,19 @@ const ___R$$priv$project$rome$$internal$cli$worker_ts$workerThreads = require(
 	async function ___R$project$rome$$internal$cli$worker_ts$default() {
 		___R$project$rome$$internal$cli$utils$setProcessTitle_ts$default("worker");
 		const bridge = ___R$project$rome$$internal$core$common$bridges$WorkerBridge_ts$default.Client.createFromWorkerThreadParentPort();
-
-		const {id, cacheDisabled} = ___R$$priv$project$rome$$internal$cli$worker_ts$workerThreads.workerData;
-		if (typeof id !== "number") {
-			throw new Error("Expected id to be a number but got " + id);
-		}
-		if (typeof cacheDisabled !== "boolean") {
-			throw new Error(
-				"Expected cacheDisabled to be a boolean but got " + cacheDisabled,
-			);
-		}
+		const workerData = ___R$project$rome$$internal$consume$index_ts$consumeUnknown(
+			___R$$priv$project$rome$$internal$cli$worker_ts$workerThreads.workerData,
+			"parse",
+		);
 
 		const userConfig = await ___R$project$rome$$internal$core$common$userConfig_ts$loadUserConfig();
 		const worker = new ___R$project$rome$$internal$core$worker$Worker_ts$default({
-			id,
 			userConfig,
 			bridge,
 			dedicated: true,
-			cacheDisabled,
+			id: workerData.get("id").asNumber(),
+			cacheWriteDisabled: workerData.get("cacheWriteDisabled").asBoolean(),
+			cacheReadDisabled: workerData.get("cacheReadDisabled").asBoolean(),
 		});
 		await worker.init();
 		await bridge.handshake();
