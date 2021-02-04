@@ -63,6 +63,9 @@ export default class TestServerWorker {
 				stdin: true,
 				stdout: true,
 				stderr: true,
+				env: {
+					NODE_ENV: "test",
+				}
 			},
 		);
 

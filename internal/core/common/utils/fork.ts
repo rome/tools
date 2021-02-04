@@ -10,9 +10,10 @@ import workerThreads = require("worker_threads");
 import child = require("child_process");
 import {Dict} from "@internal/typescript-helpers";
 
-function createEnv(processType: string): Dict<string> {
+function createEnv(processType: string, env?: NodeJS.ProcessEnv): NodeJS.ProcessEnv {
 	return {
 		...process.env,
+		...env,
 		ROME_PROCESS_VERSION: VERSION,
 		ROME_PROCESS_TYPE: processType,
 	};
@@ -30,14 +31,14 @@ export function forkProcess(
 			stdio: "inherit",
 			execArgv: CHILD_ARGS,
 			...opts,
-			env: createEnv(processType),
+			env: createEnv(processType, opts.env),
 		},
 	);
 }
 
 export function forkThread(
 	processType: string,
-	opts: workerThreads.WorkerOptions = {},
+	opts: Omit<workerThreads.WorkerOptions, "env"> & {env?: NodeJS.ProcessEnv} = {},
 ): workerThreads.Worker {
 	return new workerThreads.Worker(
 		`require(${JSON.stringify(getBinPath().join())});`,
@@ -45,7 +46,7 @@ export function forkThread(
 			...opts,
 			execArgv: CHILD_ARGS,
 			eval: true,
-			env: createEnv(processType),
+			env: createEnv(processType, opts.env),
 		},
 	);
 }
