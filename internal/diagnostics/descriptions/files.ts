@@ -12,8 +12,8 @@ export const files = createDiagnosticsCategory({
 				type: "action",
 				instruction: markup`You can treat this file extension as a binary asset by running`,
 				noun: markup`Treat this file extension as a binary asset`,
-				command: "config",
-				args: ["push", "files.assetExtensions", path.getDotlessExtensions()],
+				command: "config push",
+				args: ["files.assetExtensions", path.getDotlessExtensions()],
 			});
 		}
 
@@ -48,15 +48,15 @@ export const files = createDiagnosticsCategory({
 					type: "action",
 					instruction: markup`You can ignore this file from linting by running`,
 					noun: markup`Ignore this file from linting`,
-					command: "config",
-					args: ["push", "lint.ignore", relative],
+					command: "config push",
+					args: ["lint.ignore", relative],
 				},
 				{
 					type: "action",
 					instruction: markup`Or can allow this specific file to exceed the size limit with`,
 					noun: markup`Allow only this specific file to exceed the limit`,
-					command: "config",
-					args: ["push", "files.maxSizeIgnore", relative],
+					command: "config push",
+					args: ["files.maxSizeIgnore", relative],
 				},
 				{
 					type: "action",
@@ -64,8 +64,8 @@ export const files = createDiagnosticsCategory({
 						size,
 					)}</filesize>`,
 					noun: markup`Increase project max file size limit`,
-					command: "config",
-					args: ["set", "files.maxSize", String(size)],
+					command: "config set",
+					args: ["files.maxSize", String(size)],
 				},
 			],
 		};

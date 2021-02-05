@@ -12,7 +12,7 @@ import {Number0, Number1} from "@internal/ob1";
 import {JSONPropertyValue} from "@internal/codec-config";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
-import {ClientRequestFlags} from "@internal/core";
+import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
 
 export type DiagnosticFilter = {
@@ -172,7 +172,7 @@ export type DiagnosticAdviceAction = {
 	shortcut?: string;
 	instruction: StaticMarkup;
 	noun: StaticMarkup;
-	command: string;
+	command: CommandName;
 	commandFlags?: Dict<boolean | string | (string[])>;
 	requestFlags?: ClientRequestFlags;
 	args?: string[];

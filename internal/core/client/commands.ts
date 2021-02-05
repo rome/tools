@@ -16,7 +16,7 @@ import lsp from "./commands/lsp";
 //
 import {UnknownObject} from "@internal/typescript-helpers";
 import ClientRequest from "./ClientRequest";
-import {SharedCommand} from "../common/commands";
+import {CommandName, SharedCommand} from "../common/commands";
 import {ServerQueryResponse} from "@internal/core";
 
 export type LocalCommand<Flags extends UnknownObject> = SharedCommand<
@@ -32,7 +32,7 @@ export function createLocalCommand<Flags extends UnknownObject>(
 }
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-export const localCommands: Map<string, LocalCommand<any>> = new Map();
+export const localCommands: Map<CommandName, LocalCommand<any>> = new Map();
 localCommands.set("start", start);
 localCommands.set("develop", develop);
 localCommands.set("stop", stop);
