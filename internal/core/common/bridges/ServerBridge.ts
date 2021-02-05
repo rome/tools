@@ -19,12 +19,13 @@ import {Dict} from "@internal/typescript-helpers";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 import {RSERObject, RSERValue} from "@internal/codec-binary-serial";
 import createBridge, {createBridgeEventDeclaration} from "@internal/events/createBridge";
+import {CommandName} from "../commands";
 
 export type ServerQueryRequest = {
 	requestFlags: ClientRequestFlags;
 	commandFlags: RSERObject;
 	args: string[];
-	commandName: string;
+	commandName: CommandName;
 	silent: boolean;
 	noData: boolean;
 	noFileWrites: boolean;
@@ -37,7 +38,7 @@ export type PartialServerQueryRequest = Partial<Omit<
 	"requestFlags" | "commandName"
 >> & {
 	requestFlags?: Partial<ClientRequestFlags>;
-	commandName: string;
+	commandName: CommandName;
 };
 
 type ServerQueryResponseBase = {

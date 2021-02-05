@@ -33,7 +33,7 @@ import _projectDump from "./commands/_projectDump";
 //
 import {UnknownObject} from "@internal/typescript-helpers";
 import ServerRequest from "./ServerRequest";
-import {SharedCommand} from "../common/commands";
+import {CommandName, SharedCommand} from "../common/commands";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import {StaticMarkup} from "@internal/markup";
 import init from "@internal/core/server/commands/init";
@@ -92,7 +92,7 @@ export async function chainCommands(
 }
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
-export const serverCommands: Map<string, ServerCommand<any>> = new Map();
+export const serverCommands: Map<CommandName, ServerCommand<any>> = new Map();
 serverCommands.set("_evict", _evict);
 serverCommands.set("_moduleSignature", _moduleSignature);
 serverCommands.set("_projectDump", _projectDump);

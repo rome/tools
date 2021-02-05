@@ -10,6 +10,46 @@ import {UnknownObject} from "@internal/typescript-helpers";
 import {StaticMarkup} from "@internal/markup";
 import {Examples} from "@internal/cli-flags";
 
+// List of valid command names, includes both server and client commands
+export type CommandName =
+	| "_evict"
+	| "_moduleSignature"
+	| "_projectDump"
+	| "analyzeDependencies"
+	| "bundle"
+	| "cache dir"
+	| "cache clear"
+	| "check"
+	| "ci"
+	| "compile"
+	| "config location"
+	| "config disable"
+	| "config enable"
+	| "config push"
+	| "config set"
+	| "config set-directory"
+	| "develop"
+	| "format"
+	| "init"
+	| "lsp"
+	| "json"
+	| "noop"
+	| "parse"
+	| "publish"
+	| "resolve"
+	| "restart"
+	| "start"
+	| "run"
+	| "stop"
+	| "status"
+	| "test"
+	| "recover apply"
+	| "recover clear"
+	| "recover diff"
+	| "recover dir"
+	| "recover list"
+	| "recover pop";
+
 export interface SharedCommand<Req, Flags extends UnknownObject, Ret> {
 	category: string;
 	description: StaticMarkup;

@@ -478,7 +478,7 @@ export function createIntegrationTest(
 						);
 					},
 					async createRequest(
-						query: PartialServerQueryRequest = {commandName: "unknown"},
+						query: PartialServerQueryRequest = {commandName: "noop"},
 					) {
 						return new ServerRequest({
 							client: serverClient,

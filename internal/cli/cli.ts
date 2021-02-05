@@ -28,7 +28,7 @@ import {
 	ClientProfileOptions,
 	getFilenameTimestamp,
 } from "@internal/core/client/Client";
-import {commandCategories} from "@internal/core/common/commands";
+import {CommandName, commandCategories} from "@internal/core/common/commands";
 import {FSWriteStream, createWriteStream, writeFile} from "@internal/fs";
 import {markupToPlainText} from "@internal/cli-layout";
 import {
@@ -340,7 +340,7 @@ export default async function cli() {
 		},
 	});
 
-	let command = "";
+	let command: CommandName = "noop";
 	let overrideCLIFlags: Partial<CLIFlags> = {};
 	let commandFlags: RSERObject = {};
 	let args: string[] = [];
