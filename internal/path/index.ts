@@ -314,7 +314,11 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 		}
 	}
 
-	public hasExtensions() {
+	public getDotlessExtensions(): string {
+		return this.getExtensions().slice(1);
+	}
+
+	public hasAnyExtensions() {
 		return this.getExtensions() !== "";
 	}
 

@@ -12,6 +12,8 @@ import {FilePathLocker} from "../../../async/lockers";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {AnyMarkup, concatMarkup, markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
+import {createSingleDiagnosticError, descriptions} from "@internal/diagnostics";
+import {matchPathPatterns} from "@internal/path-match";
 
 export default class FileAllocator {
 	constructor(server: Server) {
@@ -55,10 +57,25 @@ export default class FileAllocator {
 		}
 
 		const maxSize = project.config.files.maxSize;
-		if (stats.size > maxSize) {
-			throw new Error(
-				`The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
-			);
+		if (
+			stats.size > maxSize &&
+			matchPathPatterns(
+				path,
+				project.config.files.maxSizeIgnore,
+				project.directory,
+			) === "NO_MATCH"
+		) {
+			throw createSingleDiagnosticError({
+				description: descriptions.FILES.TOO_BIG(
+					path,
+					project.directory,
+					stats.size,
+					maxSize,
+				),
+				location: {
+					filename: path.join(),
+				},
+			});
 		}
 	}
 

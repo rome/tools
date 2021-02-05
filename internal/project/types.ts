@@ -80,6 +80,7 @@ export type ProjectConfigObjects = {
 	};
 	files: {
 		assetExtensions: string[];
+		maxSizeIgnore: PathPatterns;
 		maxSize: number;
 		vendorPath: AbsoluteFilePath;
 	};
@@ -191,6 +192,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		files: {
 			vendorPath: TEMP_PATH.append("rome-remote"),
 			assetExtensions: [],
+			maxSizeIgnore: [],
 			maxSize: 40_000_000, // 40 megabytes
 		},
 		targets: new Map(),
