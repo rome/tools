@@ -168,7 +168,7 @@ export default function resolverSuggest(
 						let relativePath = originDirectory.relative(absolute);
 
 						// If the user didn't use extensions, then neither should we
-						if (!query.source.hasExtensions()) {
+						if (!query.source.hasAnyExtensions()) {
 							// TODO only do this if it's an implicit extension
 							relativePath = relativePath.changeBasename(
 								relativePath.getExtensionlessBasename(),

@@ -22,6 +22,8 @@ export type DiagnosticCategory =
 	| "compile/const-enums"
 	| "compile/jsx"
 	| "compile/nonnumeric-enum-values"
+	| "files/missingHandler"
+	| "files/tooBig"
 	| "flags/invalid"
 	| "format/disabled"
 	| "internalError/fatal"
@@ -346,6 +348,8 @@ const categoryNameMap: {[name in DiagnosticCategory]: true} = {
 	"compile/const-enums": true,
 	"compile/jsx": true,
 	"compile/nonnumeric-enum-values": true,
+	"files/missingHandler": true,
+	"files/tooBig": true,
 	"flags/invalid": true,
 	"format/disabled": true,
 	"internalError/fatal": true,

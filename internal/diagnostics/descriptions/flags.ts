@@ -38,8 +38,8 @@ export const flags = createDiagnosticsCategory({
 	}),
 	NO_FILES_FOUND: (noun: undefined | string) => ({
 		message: noun === undefined
-			? markup`No files found`
-			: markup`No files to ${noun} found`,
+			? markup`No matching files found`
+			: markup`No matching ${noun} files found`,
 	}),
 	UNKNOWN_COMMAND: (
 		{

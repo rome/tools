@@ -349,6 +349,10 @@ export async function normalizeProjectConfig(
 			config.files.maxSize = files.get("maxSize").asNumber();
 		}
 
+		if (files.has("maxSizeIgnore")) {
+			config.files.maxSizeIgnore = arrayOfPatterns(files.get("maxSizeIgnore"));
+		}
+
 		if (files.has("assetExtensions")) {
 			config.files.assetExtensions = files.get("assetExtensions").asMappedArray((
 				item,
@@ -505,6 +509,14 @@ async function extendProjectConfig(
 	);
 	if (bundlerExternals !== undefined) {
 		merged.bundler.externals = bundlerExternals;
+	}
+
+	const filesMaxSizeIgnore = mergeArrays(
+		extendsObj.files.maxSizeIgnore,
+		config.files.maxSizeIgnore,
+	);
+	if (filesMaxSizeIgnore !== undefined) {
+		merged.files.maxSizeIgnore = filesMaxSizeIgnore;
 	}
 
 	return {

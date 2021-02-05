@@ -107,8 +107,10 @@ export class Globber {
 					continue;
 				}
 
-				// Check extensions
-				if (extensions !== undefined) {
+				// Check extensions against input list only when it is a child of the input search path
+				// Explicitly specifying the exact filename is enough signal that they really wanted to
+				// target this file
+				if (!this.args.has(path) && extensions !== undefined) {
 					let matchedExt = false;
 					for (const ext of extensions) {
 						matchedExt = path.hasEndExtension(ext);

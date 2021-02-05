@@ -39,7 +39,6 @@ import {
 	readFileText,
 	watch,
 } from "@internal/fs";
-import {getFileHandlerFromPath} from "@internal/core";
 import crypto = require("crypto");
 import {FileNotFound} from "@internal/fs/FileNotFound";
 import {markup} from "@internal/markup";
@@ -646,17 +645,11 @@ export default class MemoryFileSystem {
 	}
 
 	private isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
+		type;
+
 		const project = this.server.projectManager.findLoadedProject(path);
 		if (project === undefined) {
 			return false;
-		}
-
-		// If we're a file and don't have an extension handler so there's no reason for us to care about it
-		if (
-			type === "file" &&
-			getFileHandlerFromPath(path, project.config) === undefined
-		) {
-			return true;
 		}
 
 		// Ensure we aren't in any of the default denylists

@@ -143,6 +143,7 @@ async function globUnmatched(
 	if (configCategory !== undefined && !ignoreProjectIgnore) {
 		const globber = await req.glob({
 			...opts,
+			configCategory: undefined,
 			ignoreProjectIgnore: true,
 		});
 		const withoutIgnore = await globber.get(false);

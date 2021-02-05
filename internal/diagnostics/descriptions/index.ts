@@ -14,6 +14,7 @@ import {semver} from "./semver";
 import {v8} from "./v8";
 import {lintCommand} from "./commands/lintCommand";
 import {projectManager} from "./projectManager";
+import {files} from "./files";
 import {compiler} from "./compiler";
 import {stringEscape} from "./stringEscape";
 import {analyzeDependencies} from "./analyzeDependencies";
@@ -170,6 +171,7 @@ export const descriptions = {
 	CONSUME: consume,
 	MANIFEST: manifest,
 	PROJECT_CONFIG: projectConfig,
+	FILES: files,
 	USER_CONFIG: userConfig,
 	HTML_PARSER: htmlParser,
 	MARKDOWN_PARSER: markdownParser,

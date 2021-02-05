@@ -17,7 +17,11 @@ import {
 	tsxHandler,
 } from "./javascript";
 import {htmlHandler} from "./html";
-import {DiagnosticLanguage} from "@internal/diagnostics";
+import {
+	DiagnosticLanguage,
+	createSingleDiagnosticError,
+	descriptions,
+} from "@internal/diagnostics";
 import {markdownHandler} from "@internal/core/common/file-handlers/markdown";
 import {
 	assetHandler,
@@ -96,7 +100,12 @@ export function getFileHandlerFromPathAssert(
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);
 
 	if (handler === undefined) {
-		throw new Error(`No file handler found for '${path.join()}'`);
+		throw createSingleDiagnosticError({
+			description: descriptions.FILES.NO_FILE_HANDLER(path),
+			location: {
+				filename: path.join(),
+			},
+		});
 	} else {
 		return {handler, ext};
 	}
@@ -163,8 +172,8 @@ setHandler("html", htmlHandler);
 setHandler("htm", htmlHandler);
 setHandler("md", markdownHandler);
 setHandler("css", cssHandler);
-// Config
 
+// Config
 for (const handler of CONFIG_HANDLERS) {
 	for (const ext of handler.extensions) {
 		if (ext === "yaml" || ext === "yml" || ext === "toml" || ext === "ini") {
