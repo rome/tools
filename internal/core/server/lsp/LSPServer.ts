@@ -41,6 +41,7 @@ import {
 import {markup, readMarkup} from "@internal/markup";
 import {LSPCodeAction} from "./types";
 import {Event} from "@internal/events";
+import { CommandName } from "@internal/core/common/commands";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {
@@ -119,7 +120,7 @@ export default class LSPServer {
 	}
 
 	private createFakeServerRequest(
-		commandName: string,
+		commandName: CommandName,
 		args: string[] = [],
 	): ServerRequest {
 		return new ServerRequest({
@@ -168,7 +169,7 @@ export default class LSPServer {
 			return;
 		}
 
-		const req = this.createFakeServerRequest("lsp_project", [path.join()]);
+		const req = this.createFakeServerRequest("noop", [path.join()]);
 		await req.init();
 
 		// This is not awaited so it doesn't delay the initialize response
