@@ -646,7 +646,7 @@ export default class MemoryFileSystem {
 
 	private isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
 		type;
-		
+
 		const project = this.server.projectManager.findLoadedProject(path);
 		if (project === undefined) {
 			return false;
