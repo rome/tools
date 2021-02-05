@@ -330,7 +330,11 @@ export default class Client {
 			});
 
 			return bridge.events.log.subscribe((
-				{origin, chunk, isError}: ServerBridgeLog,
+				{
+					origin,
+					chunk,
+					isError,
+				}: ServerBridgeLog,
 			) => {
 				// We allow multiple calls to bridge.subscribeLogs
 				// Filter the event if necessary if it wasn't requested by this log subscription
