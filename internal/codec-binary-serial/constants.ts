@@ -66,6 +66,8 @@ export enum VALUE_CODES {
 	DECLARE_REFERENCE,
 	ARRAY_BUFFER,
 	ARRAY_BUFFER_VIEW,
+	POSITION,
+	SOURCE_LOCATION,
 }
 
 export function validateValueCode(code: number): VALUE_CODES {
@@ -103,6 +105,8 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.ARRAY_BUFFER_VIEW:
 		case VALUE_CODES.ARRAY_BUFFER:
 		case VALUE_CODES.STREAM_HEADER:
+		case VALUE_CODES.POSITION:
+		case VALUE_CODES.SOURCE_LOCATION:
 			return code;
 
 		default:

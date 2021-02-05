@@ -58,6 +58,7 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 	}
 
 	public parsed: ParsedPath;
+	protected static displayName = "BasePath";
 	protected segments: PathSegments;
 	protected memo: FilePathMemo<Super>;
 
@@ -66,7 +67,8 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 
 	// Actually meant to be CUSTOM_PRETTY_FORMAT from "@internal/pretty-format" but it causes a module cycle
 	public [Symbol.for("custom-pretty-format")](): string {
-		return `${this.constructor.name}: ${this.join()}`;
+		// @ts-ignore
+		return `${this.constructor.displayName}: ${this.join()}`;
 	}
 
 	protected abstract _assert(): Super
@@ -518,6 +520,8 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 }
 
 export class UnknownPath extends BasePath<UnknownPath> {
+	protected static displayName = "UnknownPath";
+
 	protected _fork(
 		parsed: ParsedPath,
 		opts: FilePathMemo<UnknownPath>,
@@ -531,6 +535,8 @@ export class UnknownPath extends BasePath<UnknownPath> {
 }
 
 export class RelativeFilePath extends BasePath<RelativeFilePath> {
+	protected static displayName = "RelativeFilePath";
+
 	// TypeScript is structurally typed whereas here we would prefer nominal typing
 	// We use this as a hack.
 	protected type: "relative" = "relative";
@@ -552,6 +558,7 @@ export class RelativeFilePath extends BasePath<RelativeFilePath> {
 }
 
 export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
+	protected static displayName = "AbsoluteFilePath";
 	protected type: "absolute" = "absolute";
 
 	private chain: undefined | (AbsoluteFilePath[]);
@@ -655,6 +662,7 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 }
 
 export class URLPath extends BasePath<URLPath> {
+	protected static displayName = "URLPath";
 	protected type: "url" = "url";
 
 	protected _assert(): URLPath {
