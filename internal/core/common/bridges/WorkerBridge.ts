@@ -15,7 +15,7 @@ import {
 	TransformStageName,
 } from "@internal/compiler";
 import {Profile} from "@internal/v8";
-import {ProfilingStartData} from "./ServerBridge";
+import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
 import {
 	DiagnosticIntegrity,
 	DiagnosticSuppressions,
@@ -158,11 +158,13 @@ export default createBridge({
 	shared: {},
 
 	server: {
-		log: createBridgeEventDeclaration<string, void>(),
+		log: createBridgeEventDeclaration<Omit<ServerBridgeLog, "origin">, void>(),
 		fatalError: createBridgeEventDeclaration<BridgeErrorResponseDetails, void>(),
 	},
 
 	client: {
+		setLogs: createBridgeEventDeclaration<boolean, void>(),
+
 		updateProjects: createBridgeEventDeclaration<
 			{
 				projects: WorkerProjects;

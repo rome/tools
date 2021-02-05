@@ -418,6 +418,7 @@ export function createIntegrationTest(
 			// Capture client logs
 			let logs = "";
 			await client.subscribeLogs(
+				"all",
 				true,
 				(chunk) => {
 					const textChunk = joinMarkupLines(

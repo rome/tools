@@ -10,6 +10,10 @@ import {EventSubscription, EventSubscriptions} from "./types";
 export function mergeEventSubscriptions(
 	subs: EventSubscriptions,
 ): EventSubscription {
+	if (subs.length === 1) {
+		return subs[0];
+	}
+
 	return {
 		async unsubscribe() {
 			for (const sub of subs) {

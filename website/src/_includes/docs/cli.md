@@ -54,9 +54,13 @@ This is useful as it will benchmark the command after server initialization and 
 
 The amount of iterations to perform when using the `--benchmark` flag. Defaults to `10`.
 
-##### `--logs`
+##### `--logs all`
 
 Enables server logs and outputs them to the console.
+
+##### `--logs error`
+
+Exclude info logs and only include warnings and errors.
 
 ##### `--log-workers`
 

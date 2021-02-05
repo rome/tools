@@ -225,24 +225,30 @@ export default class Reporter implements ReporterNamespace {
 
 	public attachConditionalStream(
 		stream: ReporterStream,
-		check: () => boolean,
+		check?: () => boolean,
 	): ReporterConditionalStream {
 		let handle: undefined | ReporterStreamHandle;
 
 		const cond: ReporterConditionalStream = {
-			update: () => {
-				if (check()) {
-					if (handle === undefined) {
-						handle = this.addStream(stream);
-					}
-					return true;
-				} else {
-					if (handle !== undefined) {
-						handle.remove();
-						handle = undefined;
-					}
-					return false;
+			enable: () => {
+				if (handle === undefined) {
+					handle = this.addStream(stream);
 				}
+			},
+			disable: () => {
+				if (handle !== undefined) {
+					handle.remove();
+					handle = undefined;
+				}
+			},
+			update: () => {
+				if (check !== undefined && check()) {
+					cond.enable();
+				} else {
+					cond.disable();
+				}
+
+				return handle !== undefined;
 			},
 		};
 

@@ -56,7 +56,7 @@ export default class WorkerManager {
 		this.logger = server.logger.namespace(markup`WorkerManager`);
 	}
 
-	public workerStartEvent: Event<BridgeServer<typeof WorkerBridge>, void>;
+	public workerStartEvent: Event<WorkerContainer, void>;
 	public locker: Locker<number>;
 
 	private server: Server;
@@ -175,7 +175,7 @@ export default class WorkerManager {
 			bridges.client.handshake(),
 		]);
 
-		this.workerStartEvent.send(bridges.server);
+		this.workerStartEvent.send(container);
 	}
 
 	private async replaceOwnWorker() {
@@ -293,6 +293,10 @@ export default class WorkerManager {
 			);
 		});
 
+		bridge.events.log.subscribe(({chunk, isError}) => {
+			this.server.emitLog(chunk, "worker", isError);
+		});
+
 		bridge.monitorHeartbeat(
 			LAG_INTERVAL,
 			({summary, totalTime, iterations}) => {
@@ -318,7 +322,7 @@ export default class WorkerManager {
 			},
 		);
 
-		const worker: WorkerContainer = {
+		const container: WorkerContainer = {
 			id: workerId,
 			fileCount: 0,
 			byteCount: 0n,
@@ -327,7 +331,7 @@ export default class WorkerManager {
 			ghost: isGhost,
 			ready: false,
 		};
-		this.workers.set(workerId, worker);
+		this.workers.set(workerId, container);
 
 		thread.once(
 			"error",
@@ -340,7 +344,7 @@ export default class WorkerManager {
 			},
 		);
 
-		await this.workerHandshake(worker);
+		await this.workerHandshake(container);
 
 		// If a worker is spawned while we're profiling then make sure it's profiling too
 		const profileData = this.server.getRunningProfilingData();
@@ -348,7 +352,11 @@ export default class WorkerManager {
 			await bridge.events.profilingStart.call(profileData);
 		}
 
-		this.workerStartEvent.send(bridge);
+		if (this.server.hasWorkerLogsSubscriptions()) {
+			await bridge.events.setLogs.call(true);
+		}
+
+		this.workerStartEvent.send(container);
 
 		this.logger.info(
 			markup`Worker ${String(workerId)} started after <duration>${String(
@@ -356,7 +364,7 @@ export default class WorkerManager {
 			)}</duration>`,
 		);
 
-		return worker;
+		return container;
 	}
 
 	public own(workerId: number, stats: SimpleStats) {

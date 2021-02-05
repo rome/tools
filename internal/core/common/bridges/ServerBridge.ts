@@ -7,7 +7,11 @@
 
 import {Profile} from "@internal/v8";
 import {Diagnostics} from "@internal/diagnostics";
-import {ClientFlags, ClientRequestFlags} from "../types/client";
+import {
+	ClientFlags,
+	ClientLogsLevel,
+	ClientRequestFlags,
+} from "../types/client";
 import {ReporterStream, ReporterStreamState} from "@internal/cli-reporter";
 import {ServerMarker} from "../../server/Server";
 import {TerminalFeatures} from "@internal/cli-environment";
@@ -91,6 +95,12 @@ export type ServerBridgeInfo = {
 	flags: ClientFlags;
 };
 
+export type ServerBridgeLog = {
+	isError: boolean;
+	origin: "server" | "worker";
+	chunk: string;
+};
+
 export default createBridge({
 	debugName: "server",
 
@@ -100,18 +110,18 @@ export default createBridge({
 		getClientInfo: createBridgeEventDeclaration<void, ServerBridgeInfo>(),
 		serverReady: createBridgeEventDeclaration<void, void>(),
 		write: createBridgeEventDeclaration<[string, boolean], void>(),
-		log: createBridgeEventDeclaration<
-			{
-				origin: "server" | "worker";
-				chunk: string;
-			},
-			void
-		>(),
+		log: createBridgeEventDeclaration<ServerBridgeLog, void>(),
 		lspFromServerBuffer: createBridgeEventDeclaration<string, void>(),
 	},
 
 	server: {
-		enableWorkerLogs: createBridgeEventDeclaration<void, void>(),
+		setLogLevel: createBridgeEventDeclaration<
+			{
+				level: undefined | ClientLogsLevel;
+				includeWorker: boolean;
+			},
+			void
+		>(),
 		endServer: createBridgeEventDeclaration<void, void>(),
 		updateFeatures: createBridgeEventDeclaration<TerminalFeatures, void>(),
 		query: createBridgeEventDeclaration<

@@ -64,3 +64,5 @@ export type ClientFlags = {
 	realCwd: AbsoluteFilePath;
 	silent: boolean;
 };
+
+export type ClientLogsLevel = "all" | "error";
