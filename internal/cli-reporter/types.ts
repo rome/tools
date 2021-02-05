@@ -79,6 +79,8 @@ export interface ReporterNamespace {
 }
 
 export type ReporterConditionalStream = {
+	enable: () => void;
+	disable: () => void;
 	update: () => boolean;
 };
 

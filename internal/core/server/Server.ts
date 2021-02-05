@@ -40,6 +40,7 @@ import MemoryFileSystem from "./fs/MemoryFileSystem";
 import ServerCache from "./ServerCache";
 import {
 	Reporter,
+	ReporterConditionalStream,
 	ReporterProgress,
 	ReporterProgressOptions,
 	mergeProgresses,
@@ -48,9 +49,11 @@ import {Profiler} from "@internal/v8";
 import {
 	PartialServerQueryRequest,
 	ProfilingStartData,
+	ServerBridgeLog,
 } from "../common/bridges/ServerBridge";
 import {
 	ClientFlags,
+	ClientLogsLevel,
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
@@ -62,7 +65,7 @@ import VirtualModules from "../common/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@internal/string-utils";
 import {FilePathLocker} from "../../async/lockers";
-import {getEnvVar} from "@internal/cli-environment";
+import {DEFAULT_TERMINAL_FEATURES, getEnvVar} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
 import prettyFormat from "@internal/pretty-format";
 import RecoveryStore from "./fs/RecoveryStore";
@@ -167,6 +170,21 @@ function validateAllowedRequestFlag(
 	}
 }
 
+function sendLog(
+	bridge: BridgeServer<typeof ServerBridge>,
+	level: ClientLogsLevel,
+	log: ServerBridgeLog,
+) {
+	// Sometimes the bridge hasn't completely been teardown and we still consider it connected
+	if (!bridge.alive) {
+		return;
+	}
+
+	if (log.isError || level === "all") {
+		bridge.events.log.send(log);
+	}
+}
+
 export default class Server {
 	constructor(opts: ServerOptions) {
 		this.profiling = undefined;
@@ -191,13 +209,14 @@ export default class Server {
 
 		this.connectedReporters = new ServerReporter(this);
 
-		this.connectedClientsListeningForLogs = new Set();
+		this.connectedClientsListeningForWorkerLogs = new Set();
+		this.connectedClientsListeningForLogs = new Map();
 		this.connectedLSPServers = new Set();
 		this.connectedClients = new Set();
 
 		this.clientIdCounter = 0;
 
-		this.logInitBuffer = "";
+		this.logInitBuffer = [];
 		this.requestRunningCounter = 0;
 		this.terminateWhenIdle = false;
 
@@ -242,20 +261,27 @@ export default class Server {
 					},
 				},
 			},
+			"server",
+		);
+
+		this.loggerStream = this.logger.attachConditionalStream(
 			{
-				loggerType: "server",
-				write: (chunk) => {
-					this.emitServerLog(chunk);
+				format: "markup",
+				features: {
+					...DEFAULT_TERMINAL_FEATURES,
+					columns: undefined,
 				},
-				check: () => {
-					return (
-						this.clientIdCounter === 0 ||
-						this.connectedClientsListeningForLogs.size > 0
-					);
+				write: (chunk, isError) => {
+					this.emitLog(chunk, "server", isError);
 				},
 			},
+			() => {
+				return (
+					this.clientIdCounter === 0 ||
+					this.connectedClientsListeningForLogs.size > 0
+				);
+			},
 		);
-		this.logger.updateStream();
 
 		this.virtualModules = new VirtualModules();
 		this.recoveryStore = new RecoveryStore(this);
@@ -300,9 +326,11 @@ export default class Server {
 	public logger: Logger;
 	public requestFileLocker: FilePathLocker;
 
+	private loggerStream: ReporterConditionalStream;
+
 	// Before we receive our first connected client we will buffer our server init logs
-	// These should be relatively cheap to process since we don't do a lot
-	private logInitBuffer: string;
+	// These __should__ be relatively cheap to retain since we don't do a lot
+	private logInitBuffer: [string, boolean][];
 
 	private requestRunningCounter: number;
 	private terminateWhenIdle: boolean;
@@ -311,12 +339,29 @@ export default class Server {
 
 	private connectedClients: Set<ServerClient>;
 	private connectedLSPServers: Set<LSPServer>;
-	private connectedClientsListeningForLogs: Set<ServerClient>;
+
+	private connectedClientsListeningForLogs: Map<ServerClient, ClientLogsLevel>;
+	private connectedClientsListeningForWorkerLogs: Set<ServerClient>;
 
 	// Used when starting up child processes and indicates whether they should start profiling
 	// on init
 	public getRunningProfilingData(): undefined | ProfilingStartData {
 		return this.profiling;
+	}
+
+	// Used when starting up workers and indicates whether they should start sending logs
+	public hasWorkerLogsSubscriptions(): boolean {
+		return this.connectedClientsListeningForWorkerLogs.size > 0;
+	}
+
+	public async updateWorkerLogsSubscriptions() {
+		const enabled = this.hasWorkerLogsSubscriptions();
+
+		await Promise.all(
+			this.workerManager.getWorkers().map((worker) => {
+				return worker.bridge.events.setLogs.call(enabled);
+			}),
+		);
 	}
 
 	// Derive a concatenated reporter from the logger and all connected clients
@@ -332,16 +377,26 @@ export default class Server {
 		return new WorkerQueue<M>(this, opts);
 	}
 
-	private emitServerLog(chunk: string) {
+	public emitLog(
+		chunk: string,
+		origin: ServerBridgeLog["origin"],
+		isError: boolean,
+	) {
 		if (this.clientIdCounter === 0) {
-			this.logInitBuffer += chunk;
+			this.logInitBuffer.push([chunk, isError]);
 		}
 
-		for (const {bridge} of this.connectedClientsListeningForLogs) {
-			// Sometimes the bridge hasn't completely been teardown and we still consider it connected
-			if (bridge.alive) {
-				bridge.events.log.send({chunk, origin: "server"});
+		const log: ServerBridgeLog = {chunk, origin, isError};
+
+		for (const [client, level] of this.connectedClientsListeningForLogs) {
+			if (
+				origin === "worker" &&
+				!this.connectedClientsListeningForWorkerLogs.has(client)
+			) {
+				continue;
 			}
+
+			sendLog(client.bridge, level, log);
 		}
 	}
 
@@ -536,34 +591,6 @@ export default class Server {
 			return await worker.bridge.events.profilingStop.call();
 		});
 
-		// When enableWorkerLogs is called we setup subscriptions to the worker logs
-		// Logs are never transported from workers to the server unless there is a subscription
-		let subscribedWorkers = false;
-		bridge.events.enableWorkerLogs.subscribe(() => {
-			// enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
-			if (subscribedWorkers) {
-				return;
-			} else {
-				subscribedWorkers = true;
-			}
-
-			function onLog(chunk: string) {
-				bridge.events.log.call({origin: "worker", chunk});
-			}
-
-			// Add on existing workers if there are any
-			for (const worker of this.workerManager.getWorkers()) {
-				bridge.attachEndSubscriptionRemoval(
-					worker.bridge.events.log.subscribe(onLog),
-				);
-			}
-
-			// Listen for logs for any workers that start later
-			this.workerManager.workerStartEvent.subscribe((worker) => {
-				bridge.attachEndSubscriptionRemoval(worker.events.log.subscribe(onLog));
-			});
-		});
-
 		await bridge.handshake();
 
 		const client = await this.createClient(bridge);
@@ -662,31 +689,50 @@ export default class Server {
 
 		this.connectedClients.add(client);
 
-		bridge.updatedListenersEvent.subscribe((listeners) => {
-			if (listeners.has("log")) {
-				if (!this.connectedClientsListeningForLogs.has(client)) {
-					this.connectedClientsListeningForLogs.add(client);
-					let buffer = this.logInitBuffer;
-					buffer += ".".repeat(20);
-					buffer += "\n";
-					bridge.events.log.send({
-						chunk: buffer,
-						origin: "server",
-					});
-				}
-			} else {
-				this.connectedClientsListeningForLogs.delete(client);
+		bridge.events.setLogLevel.subscribe(async ({level, includeWorker}) => {
+			let startWorkerLogsEnabled = this.hasWorkerLogsSubscriptions();
+
+			if (includeWorker) {
+				this.connectedClientsListeningForWorkerLogs.add(client);
 			}
-			this.logger.updateStream();
+
+			if (level === undefined) {
+				this.connectedClientsListeningForLogs.delete(client);
+				this.connectedClientsListeningForWorkerLogs.delete(client);
+			} else {
+				if (!this.connectedClientsListeningForLogs.has(client)) {
+					// Send init logs
+					for (const [chunk, isError] of this.logInitBuffer) {
+						sendLog(bridge, level, {chunk, origin: "server", isError});
+					}
+
+					// Send separator
+					sendLog(
+						bridge,
+						level,
+						{chunk: ".".repeat(20) + "\n", origin: "server", isError: false},
+					);
+				}
+
+				this.connectedClientsListeningForLogs.set(client, level);
+			}
+
+			this.loggerStream.update();
+
+			const currWorkerLogsEnabled = this.hasWorkerLogsSubscriptions();
+			if (currWorkerLogsEnabled !== startWorkerLogsEnabled) {
+				await this.updateWorkerLogsSubscriptions();
+			}
 		});
 
 		bridge.endEvent.subscribe(() => {
 			this.connectedClients.delete(client);
 			this.connectedClientsListeningForLogs.delete(client);
+			this.connectedClientsListeningForWorkerLogs.delete(client);
 			for (const handle of streamHandles) {
 				handle.remove();
 			}
-			this.logger.updateStream();
+			this.loggerStream.update();
 
 			// Cancel any requests still in flight
 			for (const req of client.requestsInFlight) {

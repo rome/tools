@@ -239,7 +239,8 @@ export default class ServerRequest {
 		this.files = new AbsoluteFilePathMap();
 
 		this.logger = server.logger.namespace(
-			markup`[ServerRequest] Request #${this.id}:`,
+			markup`ServerRequest`,
+			markup`Request #${this.id}`,
 		);
 
 		this.markerEvent = new Event({

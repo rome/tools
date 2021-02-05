@@ -65,6 +65,7 @@ export default class ServerCache extends Cache {
 
 		if (this.readDisabled) {
 			logger.warn(markup`Read disabled, skipping breaker verification`);
+			return;
 		}
 
 		if (await exists(breakerPath)) {

@@ -44,6 +44,8 @@ import {ExtendedMap} from "@internal/collections";
 import WorkerCache from "./WorkerCache";
 import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/codec-binary-serial";
+import {ReporterConditionalStream} from "@internal/cli-reporter";
+import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 
 export type ParseResult = {
 	ast: AnyRoot;
@@ -83,18 +85,17 @@ export default class Worker {
 		this.buffers = new AbsoluteFilePathMap();
 		this.virtualModules = new VirtualModules();
 
-		this.logger = new Logger(
-			{},
-			{
-				loggerType: "worker",
-				check: () => opts.bridge.events.log.hasSubscribers(),
-				write(chunk) {
-					opts.bridge.events.log.send(chunk.toString());
-				},
+		this.logger = new Logger({}, "worker");
+
+		this.loggerStream = this.logger.attachConditionalStream({
+			format: "markup",
+			features: {
+				...DEFAULT_TERMINAL_FEATURES,
+				columns: undefined,
 			},
-		);
-		opts.bridge.updatedListenersEvent.subscribe(() => {
-			this.logger.updateStream();
+			write(chunk, isError) {
+				opts.bridge.events.log.send({chunk: chunk.toString(), isError});
+			},
 		});
 
 		this.cache = new WorkerCache(this);
@@ -143,6 +144,7 @@ export default class Worker {
 	public fatalErrorHandler: FatalErrorHandler;
 	public virtualModules: VirtualModules;
 
+	private loggerStream: ReporterConditionalStream;
 	private cache: WorkerCache;
 	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
@@ -234,6 +236,14 @@ export default class Worker {
 
 		bridge.events.updateProjects.subscribe((payload) => {
 			return this.updateProjects(payload.projects);
+		});
+
+		bridge.events.setLogs.subscribe((enabled) => {
+			if (enabled) {
+				this.loggerStream.enable();
+			} else {
+				this.loggerStream.disable();
+			}
 		});
 
 		bridge.events.updateManifests.subscribe((payload) => {

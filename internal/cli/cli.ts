@@ -8,6 +8,7 @@
 import {
 	Client,
 	ClientFlags,
+	ClientLogsLevel,
 	ClientRequestFlags,
 	ClientTerminalFeatures,
 	DEFAULT_CLIENT_FLAGS,
@@ -43,7 +44,7 @@ import {loadUserConfig} from "@internal/core/common/userConfig";
 import {RSERObject} from "@internal/codec-binary-serial";
 
 type CLIFlags = {
-	logs: boolean;
+	logs: undefined | ClientLogsLevel;
 	logWorkers: undefined | boolean;
 	logPath: undefined | AbsoluteFilePath;
 	markersPath: undefined | AbsoluteFilePath;
@@ -212,7 +213,7 @@ export default async function cli() {
 					{
 						description: markup`Output server logs`,
 					},
-				).asBoolean(false),
+				).asStringSetOrVoid(["all", "error"]),
 				logWorkers: c.get(
 					"logWorkers",
 					{
@@ -420,7 +421,7 @@ export default async function cli() {
 		description: markup`view the logs stream`,
 		callback() {
 			overrideCLIFlags = {
-				logs: true,
+				logs: "all",
 			};
 
 			commandFlags = {
@@ -456,8 +457,11 @@ export default async function cli() {
 	}
 
 	// Force logs when logPath or logWorkers is set
-	if (cliFlags.logPath !== undefined || cliFlags.logWorkers === true) {
-		cliFlags.logs = true;
+	if (
+		cliFlags.logs === undefined &&
+		(cliFlags.logPath !== undefined || cliFlags.logWorkers === true)
+	) {
+		cliFlags.logs = "error";
 	}
 
 	const userConfig = await loadUserConfig();
@@ -531,6 +535,7 @@ export default async function cli() {
 			}
 
 			await client.subscribeLogs(
+				cliFlags.logs,
 				cliFlags.logWorkers === true,
 				(chunk) => {
 					if (fileout === undefined) {
