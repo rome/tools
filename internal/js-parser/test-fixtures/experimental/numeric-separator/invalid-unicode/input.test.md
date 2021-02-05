@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-unicode/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/numeric-separator/invalid-unicode/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "\\u{1F_639}"
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-unicode/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/numeric-separator/invalid-unicode/input.js 1:0-1:12
 		}
 	]
 }

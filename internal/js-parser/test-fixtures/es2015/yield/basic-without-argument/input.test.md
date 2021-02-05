@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/basic-without-argument/input.js"
-		end: Object {
-			column: 39
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:0-1:39
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/yield/basic-without-argument/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:10-1:13 (foo)
 			}
-			loc: Object {
-				filename: "es2015/yield/basic-without-argument/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:0-1:39
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,128 +35,35 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/basic-without-argument/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/basic-without-argument/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:16-1:39
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/basic-without-argument/input.js"
-							end: Object {
-								column: 37
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:37
 						expression: JSCallExpression {
-							loc: Object {
-								filename: "es2015/yield/basic-without-argument/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:36
 							arguments: Array [
 								JSYieldExpression {
 									argument: undefined
 									delegate: false
-									loc: Object {
-										filename: "es2015/yield/basic-without-argument/input.js"
-										end: Object {
-											column: 35
-											line: 1
-										}
-										start: Object {
-											column: 30
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:30-1:35
 								}
 							]
 							callee: JSMemberExpression {
-								loc: Object {
-									filename: "es2015/yield/basic-without-argument/input.js"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:29
 								object: JSReferenceIdentifier {
 									name: "console"
-									loc: Object {
-										filename: "es2015/yield/basic-without-argument/input.js"
-										identifierName: "console"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:18-1:25 (console)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "log"
-										loc: Object {
-											filename: "es2015/yield/basic-without-argument/input.js"
-											identifierName: "log"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 26
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:26-1:29 (log)
 									}
-									loc: Object {
-										filename: "es2015/yield/basic-without-argument/input.js"
-										identifierName: "log"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 26
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/basic-without-argument/input.js 1:26-1:29 (log)
 								}
 							}
 						}

@@ -17,112 +17,31 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/literal-string-2/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/literal-string-2/input.ts"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/literal-string-2/input.ts"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/literal-string-2/input.ts 1:0-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/literal-string-2/input.ts"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/literal-string-2/input.ts"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 								typeAnnotation: TSTemplateLiteralTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/literal-string-2/input.ts"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/literal-string-2/input.ts 1:7-1:19
 									expressions: Array [
 										TSTypeReference {
 											typeParameters: undefined
-											loc: Object {
-												filename: "typescript/types/literal-string-2/input.ts"
-												end: Object {
-													column: 17
-													line: 1
-												}
-												start: Object {
-													column: 14
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:14-1:17
 											typeName: JSReferenceIdentifier {
 												name: "bar"
-												loc: Object {
-													filename: "typescript/types/literal-string-2/input.ts"
-													identifierName: "bar"
-													end: Object {
-														column: 17
-														line: 1
-													}
-													start: Object {
-														column: 14
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/literal-string-2/input.ts 1:14-1:17 (bar)
 											}
 										}
 									]
@@ -131,50 +50,20 @@ JSRoot {
 											cooked: "foo-"
 											raw: "foo-"
 											tail: false
-											loc: Object {
-												filename: "typescript/types/literal-string-2/input.ts"
-												end: Object {
-													column: 12
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:8-1:12
 										}
 										TSTemplateElement {
 											cooked: ""
 											raw: ""
 											tail: true
-											loc: Object {
-												filename: "typescript/types/literal-string-2/input.ts"
-												end: Object {
-													column: 18
-													line: 1
-												}
-												start: Object {
-													column: 18
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/literal-string-2/input.ts 1:18-1:18
 										}
 									]
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/literal-string-2/input.ts"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/literal-string-2/input.ts 1:4-1:19
 					}
 				]
 			}

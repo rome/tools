@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:34
+				start: Position 1:34
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,90 +38,25 @@ JSRoot {
 					"import"
 				]
 			}
-			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 34
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-				end: Object {
-					column: 47
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-1:47
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-					end: Object {
-						column: 47
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:0-1:47
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "import"
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-								identifierName: "import"
-								end: Object {
-									column: 40
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:4-1:40 (import)
 						}
-						loc: Object {
-							filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-							end: Object {
-								column: 46
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:4-1:46
 						init: JSNumericLiteral {
 							value: 123
 							format: undefined
-							loc: Object {
-								filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 43
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 1:43-1:46
 						}
 					}
 				]
@@ -134,30 +67,10 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-				end: Object {
-					column: 41
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 3:0-3:41
 			source: JSStringLiteral {
 				value: "x"
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-import/input.js"
-					end: Object {
-						column: 40
-						line: 3
-					}
-					start: Object {
-						column: 37
-						line: 3
-					}
-				}
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-import/input.js 3:37-3:40
 			}
 		}
 	]

@@ -17,17 +17,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/348/input.js"
-		end: Object {
-			column: 6
-			line: 1
+	loc: SourceLocation core/uncategorised/348/input.js 1:0-1:6
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/348/input.js 1:0-1:6
+			expression: JSBinaryExpression {
+				operator: "in"
+				loc: SourceLocation core/uncategorised/348/input.js 1:0-1:6
+				right: JSArrayExpression {
+					elements: Array []
+					loc: SourceLocation core/uncategorised/348/input.js 1:4-1:6
+				}
+				left: JSNumericLiteral {
+					value: 3
+					format: undefined
+					loc: SourceLocation core/uncategorised/348/input.js 1:0-1:1
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +50,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/348/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBinaryExpression {
-				operator: "in"
-				loc: Object {
-					filename: "core/uncategorised/348/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				right: JSArrayExpression {
-					elements: Array []
-					loc: Object {
-						filename: "core/uncategorised/348/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
-				}
-				left: JSNumericLiteral {
-					value: 3
-					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/348/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
+				end: Position 1:1
+				start: Position 1:1
 			}
 		}
 	]

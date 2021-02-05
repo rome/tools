@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-arguments/new-false-positive-2/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,99 +32,31 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/new-false-positive-2/input.ts"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-1:9
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
-				loc: Object {
-					filename: "typescript/type-arguments/new-false-positive-2/input.ts"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-1:8
 				callee: JSReferenceIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "typescript/type-arguments/new-false-positive-2/input.ts"
-						identifierName: "A"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:4-1:5 (A)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/type-arguments/new-false-positive-2/input.ts"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:5-1:8
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/type-arguments/new-false-positive-2/input.ts"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:6-1:7
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/type-arguments/new-false-positive-2/input.ts"
-									identifierName: "T"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:6-1:7 (T)
 							}
 						}
 					]

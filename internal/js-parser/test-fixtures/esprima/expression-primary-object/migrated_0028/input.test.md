@@ -18,112 +18,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-object/migrated_0028/input.js"
-		end: Object {
-			column: 77
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-object/migrated_0028/input.js"
-				end: Object {
-					column: 77
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/expression-primary-object/migrated_0028/input.js"
-					end: Object {
-						column: 77
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:77
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/expression-primary-object/migrated_0028/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/expression-primary-object/migrated_0028/input.js"
-						end: Object {
-							column: 77
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:4-1:77
 					properties: Array [
 						JSObjectMethod {
 							kind: "get"
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "width"
-									loc: Object {
-										filename: "esprima/expression-primary-object/migrated_0028/input.js"
-										identifierName: "width"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:10-1:15 (width)
 								}
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0028/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:10-1:15
 							}
-							loc: Object {
-								filename: "esprima/expression-primary-object/migrated_0028/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:6-1:36
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -133,58 +51,17 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0028/input.js"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:15-1:17
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0028/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:18-1:36
 								body: Array [
 									JSReturnStatement {
-										loc: Object {
-											filename: "esprima/expression-primary-object/migrated_0028/input.js"
-											end: Object {
-												column: 34
-												line: 1
-											}
-											start: Object {
-												column: 20
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:20-1:34
 										argument: JSReferenceIdentifier {
 											name: "m_width"
-											loc: Object {
-												filename: "esprima/expression-primary-object/migrated_0028/input.js"
-												identifierName: "m_width"
-												end: Object {
-													column: 34
-													line: 1
-												}
-												start: Object {
-													column: 27
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:27-1:34 (m_width)
 										}
 									}
 								]
@@ -195,41 +72,31 @@ JSRoot {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "width"
-									loc: Object {
-										filename: "esprima/expression-primary-object/migrated_0028/input.js"
-										identifierName: "width"
-										end: Object {
-											column: 47
-											line: 1
-										}
-										start: Object {
-											column: 42
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:42-1:47 (width)
 								}
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0028/input.js"
-									end: Object {
-										column: 47
-										line: 1
-									}
-									start: Object {
-										column: 42
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:42-1:47
 							}
-							loc: Object {
-								filename: "esprima/expression-primary-object/migrated_0028/input.js"
-								end: Object {
-									column: 75
-									line: 1
-								}
-								start: Object {
-									column: 38
-									line: 1
-								}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:38-1:75
+							body: JSBlockStatement {
+								directives: Array []
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:55-1:75
+								body: Array [
+									JSExpressionStatement {
+										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:73
+										expression: JSAssignmentExpression {
+											operator: "="
+											loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:72
+											left: JSAssignmentIdentifier {
+												name: "m_width"
+												loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:57-1:64 (m_width)
+											}
+											right: JSReferenceIdentifier {
+												name: "width"
+												loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:67-1:72 (width)
+											}
+										}
+									}
+								]
 							}
 							head: JSFunctionHead {
 								async: false
@@ -239,119 +106,15 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0028/input.js"
-									end: Object {
-										column: 54
-										line: 1
-									}
-									start: Object {
-										column: 47
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:47-1:54
 								params: Array [
 									JSBindingIdentifier {
 										name: "width"
-										loc: Object {
-											filename: "esprima/expression-primary-object/migrated_0028/input.js"
-											identifierName: "width"
-											end: Object {
-												column: 53
-												line: 1
-											}
-											start: Object {
-												column: 48
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:48-1:53 (width)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "esprima/expression-primary-object/migrated_0028/input.js"
-												end: Object {
-													column: 53
-													line: 1
-												}
-												start: Object {
-													column: 48
-													line: 1
-												}
-											}
-										}
-									}
-								]
-							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0028/input.js"
-									end: Object {
-										column: 75
-										line: 1
-									}
-									start: Object {
-										column: 55
-										line: 1
-									}
-								}
-								body: Array [
-									JSExpressionStatement {
-										loc: Object {
-											filename: "esprima/expression-primary-object/migrated_0028/input.js"
-											end: Object {
-												column: 73
-												line: 1
-											}
-											start: Object {
-												column: 57
-												line: 1
-											}
-										}
-										expression: JSAssignmentExpression {
-											operator: "="
-											loc: Object {
-												filename: "esprima/expression-primary-object/migrated_0028/input.js"
-												end: Object {
-													column: 72
-													line: 1
-												}
-												start: Object {
-													column: 57
-													line: 1
-												}
-											}
-											left: JSAssignmentIdentifier {
-												name: "m_width"
-												loc: Object {
-													filename: "esprima/expression-primary-object/migrated_0028/input.js"
-													identifierName: "m_width"
-													end: Object {
-														column: 64
-														line: 1
-													}
-													start: Object {
-														column: 57
-														line: 1
-													}
-												}
-											}
-											right: JSReferenceIdentifier {
-												name: "width"
-												loc: Object {
-													filename: "esprima/expression-primary-object/migrated_0028/input.js"
-													identifierName: "width"
-													end: Object {
-														column: 72
-														line: 1
-													}
-													start: Object {
-														column: 67
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation esprima/expression-primary-object/migrated_0028/input.js 1:48-1:53
 										}
 									}
 								]

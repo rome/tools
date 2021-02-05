@@ -18,103 +18,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/async-generators/class-method/input.js"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-8:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Query"
-				loc: Object {
-					filename: "es2018/async-generators/class-method/input.js"
-					identifierName: "Query"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/class-method/input.js 1:6-1:11 (Query)
 			}
-			loc: Object {
-				filename: "es2018/async-generators/class-method/input.js"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-7:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2018/async-generators/class-method/input.js"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/async-generators/class-method/input.js 1:0-7:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "queryAll"
-								loc: Object {
-									filename: "es2018/async-generators/class-method/input.js"
-									identifierName: "queryAll"
-									end: Object {
-										column: 19
-										line: 2
-									}
-									start: Object {
-										column: 11
-										line: 2
-									}
-								}
+								loc: SourceLocation es2018/async-generators/class-method/input.js 2:11-2:19 (queryAll)
 							}
-							loc: Object {
-								filename: "es2018/async-generators/class-method/input.js"
-								end: Object {
-									column: 19
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/class-method/input.js 2:11-2:19
 						}
-						loc: Object {
-							filename: "es2018/async-generators/class-method/input.js"
-							end: Object {
-								column: 5
-								line: 6
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-6:5
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -122,21 +50,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "es2018/async-generators/class-method/input.js"
-								end: Object {
-									column: 19
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/class-method/input.js 2:4-2:19
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: true
@@ -146,270 +61,72 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2018/async-generators/class-method/input.js"
-								end: Object {
-									column: 24
-									line: 2
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/class-method/input.js 2:19-2:24
 							params: Array [
 								JSBindingIdentifier {
 									name: "ids"
-									loc: Object {
-										filename: "es2018/async-generators/class-method/input.js"
-										identifierName: "ids"
-										end: Object {
-											column: 23
-											line: 2
-										}
-										start: Object {
-											column: 20
-											line: 2
-										}
-									}
+									loc: SourceLocation es2018/async-generators/class-method/input.js 2:20-2:23 (ids)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2018/async-generators/class-method/input.js"
-											end: Object {
-												column: 23
-												line: 2
-											}
-											start: Object {
-												column: 20
-												line: 2
-											}
-										}
+										loc: SourceLocation es2018/async-generators/class-method/input.js 2:20-2:23
 									}
 								}
 							]
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "es2018/async-generators/class-method/input.js"
-								end: Object {
-									column: 5
-									line: 6
-								}
-								start: Object {
-									column: 25
-									line: 2
-								}
-							}
+							loc: SourceLocation es2018/async-generators/class-method/input.js 2:25-6:5
 							body: Array [
 								JSForOfStatement {
 									await: false
-									loc: Object {
-										filename: "es2018/async-generators/class-method/input.js"
-										end: Object {
-											column: 9
-											line: 5
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation es2018/async-generators/class-method/input.js 3:8-5:9
 									right: JSReferenceIdentifier {
 										name: "ids"
-										loc: Object {
-											filename: "es2018/async-generators/class-method/input.js"
-											identifierName: "ids"
-											end: Object {
-												column: 28
-												line: 3
-											}
-											start: Object {
-												column: 25
-												line: 3
-											}
-										}
+										loc: SourceLocation es2018/async-generators/class-method/input.js 3:25-3:28 (ids)
 									}
 									left: JSVariableDeclaration {
 										kind: "const"
-										loc: Object {
-											filename: "es2018/async-generators/class-method/input.js"
-											end: Object {
-												column: 21
-												line: 3
-											}
-											start: Object {
-												column: 13
-												line: 3
-											}
-										}
+										loc: SourceLocation es2018/async-generators/class-method/input.js 3:13-3:21
 										declarations: Array [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "id"
-													loc: Object {
-														filename: "es2018/async-generators/class-method/input.js"
-														identifierName: "id"
-														end: Object {
-															column: 21
-															line: 3
-														}
-														start: Object {
-															column: 19
-															line: 3
-														}
-													}
+													loc: SourceLocation es2018/async-generators/class-method/input.js 3:19-3:21 (id)
 												}
 												init: undefined
-												loc: Object {
-													filename: "es2018/async-generators/class-method/input.js"
-													end: Object {
-														column: 21
-														line: 3
-													}
-													start: Object {
-														column: 19
-														line: 3
-													}
-												}
+												loc: SourceLocation es2018/async-generators/class-method/input.js 3:19-3:21
 											}
 										]
 									}
 									body: JSBlockStatement {
 										directives: Array []
-										loc: Object {
-											filename: "es2018/async-generators/class-method/input.js"
-											end: Object {
-												column: 9
-												line: 5
-											}
-											start: Object {
-												column: 30
-												line: 3
-											}
-										}
+										loc: SourceLocation es2018/async-generators/class-method/input.js 3:30-5:9
 										body: Array [
 											JSExpressionStatement {
-												loc: Object {
-													filename: "es2018/async-generators/class-method/input.js"
-													end: Object {
-														column: 39
-														line: 4
-													}
-													start: Object {
-														column: 12
-														line: 4
-													}
-												}
+												loc: SourceLocation es2018/async-generators/class-method/input.js 4:12-4:39
 												expression: JSYieldExpression {
 													delegate: false
-													loc: Object {
-														filename: "es2018/async-generators/class-method/input.js"
-														end: Object {
-															column: 38
-															line: 4
-														}
-														start: Object {
-															column: 12
-															line: 4
-														}
-													}
+													loc: SourceLocation es2018/async-generators/class-method/input.js 4:12-4:38
 													argument: JSAwaitExpression {
-														loc: Object {
-															filename: "es2018/async-generators/class-method/input.js"
-															end: Object {
-																column: 38
-																line: 4
-															}
-															start: Object {
-																column: 18
-																line: 4
-															}
-														}
+														loc: SourceLocation es2018/async-generators/class-method/input.js 4:18-4:38
 														argument: JSCallExpression {
-															loc: Object {
-																filename: "es2018/async-generators/class-method/input.js"
-																end: Object {
-																	column: 38
-																	line: 4
-																}
-																start: Object {
-																	column: 24
-																	line: 4
-																}
-															}
+															loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:38
 															arguments: Array [
 																JSReferenceIdentifier {
 																	name: "id"
-																	loc: Object {
-																		filename: "es2018/async-generators/class-method/input.js"
-																		identifierName: "id"
-																		end: Object {
-																			column: 37
-																			line: 4
-																		}
-																		start: Object {
-																			column: 35
-																			line: 4
-																		}
-																	}
+																	loc: SourceLocation es2018/async-generators/class-method/input.js 4:35-4:37 (id)
 																}
 															]
 															callee: JSMemberExpression {
-																loc: Object {
-																	filename: "es2018/async-generators/class-method/input.js"
-																	end: Object {
-																		column: 34
-																		line: 4
-																	}
-																	start: Object {
-																		column: 24
-																		line: 4
-																	}
-																}
-																object: JSThisExpression {
-																	loc: Object {
-																		filename: "es2018/async-generators/class-method/input.js"
-																		end: Object {
-																			column: 28
-																			line: 4
-																		}
-																		start: Object {
-																			column: 24
-																			line: 4
-																		}
-																	}
-																}
+																loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:34
+																object: JSThisExpression {loc: SourceLocation es2018/async-generators/class-method/input.js 4:24-4:28}
 																property: JSStaticMemberProperty {
 																	value: JSIdentifier {
 																		name: "query"
-																		loc: Object {
-																			filename: "es2018/async-generators/class-method/input.js"
-																			identifierName: "query"
-																			end: Object {
-																				column: 34
-																				line: 4
-																			}
-																			start: Object {
-																				column: 29
-																				line: 4
-																			}
-																		}
+																		loc: SourceLocation es2018/async-generators/class-method/input.js 4:29-4:34 (query)
 																	}
-																	loc: Object {
-																		filename: "es2018/async-generators/class-method/input.js"
-																		identifierName: "query"
-																		end: Object {
-																			column: 34
-																			line: 4
-																		}
-																		start: Object {
-																			column: 29
-																			line: 4
-																		}
-																	}
+																	loc: SourceLocation es2018/async-generators/class-method/input.js 4:29-4:34 (query)
 																}
 															}
 														}

@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/context-regex-after-statement/input.js"
-		end: Object {
-			column: 6
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:0-2:6
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2017/async-functions/context-regex-after-statement/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:15-1:17 (fn)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/context-regex-after-statement/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:0-1:22
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/context-regex-after-statement/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:20-1:22
 			}
 			head: JSFunctionHead {
 				async: true
@@ -81,31 +40,11 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/context-regex-after-statement/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 1:17-1:19
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/context-regex-after-statement/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:0-2:6
 			expression: JSRegExpLiteral {
 				global: true
 				insensitive: false
@@ -113,71 +52,21 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "es2017/async-functions/context-regex-after-statement/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:0-2:6
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2017/async-functions/context-regex-after-statement/input.js"
-						end: Object {
-							column: 4
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:1-2:4
 					body: Array [
 						JSRegExpCharacter {
 							value: "f"
-							loc: Object {
-								filename: "es2017/async-functions/context-regex-after-statement/input.js"
-								end: Object {
-									column: 2
-									line: 2
-								}
-								start: Object {
-									column: 1
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:1-2:2
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "es2017/async-functions/context-regex-after-statement/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:2-2:3
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "es2017/async-functions/context-regex-after-statement/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/context-regex-after-statement/input.js 2:3-2:4
 						}
 					]
 				}

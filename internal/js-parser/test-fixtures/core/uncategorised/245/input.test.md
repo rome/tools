@@ -18,202 +18,57 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/245/input.js"
-		end: Object {
-			column: 35
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/245/input.js 1:0-1:35
 	body: Array [
 		JSForStatement {
-			loc: Object {
-				filename: "core/uncategorised/245/input.js"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/245/input.js 1:0-1:35
 			update: JSUpdateExpression {
 				operator: "++"
 				prefix: false
-				loc: Object {
-					filename: "core/uncategorised/245/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/245/input.js 1:19-1:22
 				argument: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/245/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/245/input.js 1:19-1:20 (x)
 				}
 			}
 			init: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/245/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/245/input.js 1:4-1:9
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/245/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/245/input.js 1:4-1:5 (x)
 				}
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/245/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/245/input.js 1:8-1:9
 				}
 			}
 			test: JSBinaryExpression {
 				operator: "<"
-				loc: Object {
-					filename: "core/uncategorised/245/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/245/input.js 1:11-1:17
 				left: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/245/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/245/input.js 1:11-1:12 (x)
 				}
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/245/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/245/input.js 1:15-1:17
 				}
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/245/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/245/input.js 1:24-1:35
 				expression: JSCallExpression {
-					loc: Object {
-						filename: "core/uncategorised/245/input.js"
-						end: Object {
-							column: 34
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/245/input.js 1:24-1:34
 					callee: JSReferenceIdentifier {
 						name: "process"
-						loc: Object {
-							filename: "core/uncategorised/245/input.js"
-							identifierName: "process"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 24
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/245/input.js 1:24-1:31 (process)
 					}
 					arguments: Array [
 						JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/245/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/245/input.js 1:32-1:33 (x)
 						}
 					]
 				}

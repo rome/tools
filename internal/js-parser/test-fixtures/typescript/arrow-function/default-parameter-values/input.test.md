@@ -17,57 +17,17 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/default-parameter-values/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/default-parameter-values/input.ts"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:21
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/default-parameter-values/input.ts"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:20
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/default-parameter-values/input.ts"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:19-1:20
 				}
 				head: JSFunctionHead {
 					async: false
@@ -75,85 +35,23 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/default-parameter-values/input.ts"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:0-1:18
 					params: Array [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: Object {
-								filename: "typescript/arrow-function/default-parameter-values/input.ts"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:1-1:14
 							right: JSNumericLiteral {
 								value: 0
 								format: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/default-parameter-values/input.ts"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:13-1:14
 							}
 							left: JSBindingIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/arrow-function/default-parameter-values/input.ts"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:11-1:10
 								meta: JSPatternMeta {
 									optional: undefined
-									loc: Object {
-										filename: "typescript/arrow-function/default-parameter-values/input.ts"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/arrow-function/default-parameter-values/input.ts"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 4
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:11-1:10
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/default-parameter-values/input.ts 1:4-1:10}
 								}
 							}
 						}

@@ -18,103 +18,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/121/input.js"
-		end: Object {
-			column: 30
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/121/input.js 1:0-1:30
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/uncategorised/121/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/121/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/121/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/121/input.js 1:0-1:30
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/121/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/121/input.js 1:0-1:30
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "gen"
-								loc: Object {
-									filename: "es2015/uncategorised/121/input.js"
-									identifierName: "gen"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/121/input.js 1:10-1:13 (gen)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/121/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/121/input.js 1:10-1:13
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/121/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/121/input.js 1:9-1:29
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -122,21 +50,25 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 9
-								line: 1
-							}
-							loc: Object {
-								filename: "es2015/uncategorised/121/input.js"
-								end: Object {
-									column: 13
-									line: 1
+							loc: SourceLocation es2015/uncategorised/121/input.js 1:9-1:13
+							start: Position 1:9
+						}
+						body: JSBlockStatement {
+							directives: Array []
+							loc: SourceLocation es2015/uncategorised/121/input.js 1:17-1:29
+							body: Array [
+								JSExpressionStatement {
+									loc: SourceLocation es2015/uncategorised/121/input.js 1:19-1:27
+									expression: JSYieldExpression {
+										delegate: false
+										loc: SourceLocation es2015/uncategorised/121/input.js 1:19-1:26
+										argument: JSReferenceIdentifier {
+											name: "v"
+											loc: SourceLocation es2015/uncategorised/121/input.js 1:25-1:26 (v)
+										}
+									}
 								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							]
 						}
 						head: JSFunctionHead {
 							async: false
@@ -146,104 +78,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/121/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/121/input.js 1:13-1:16
 							params: Array [
 								JSBindingIdentifier {
 									name: "v"
-									loc: Object {
-										filename: "es2015/uncategorised/121/input.js"
-										identifierName: "v"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 14
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/121/input.js 1:14-1:15 (v)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/uncategorised/121/input.js"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 14
-												line: 1
-											}
-										}
-									}
-								}
-							]
-						}
-						body: JSBlockStatement {
-							directives: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/121/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
-							body: Array [
-								JSExpressionStatement {
-									loc: Object {
-										filename: "es2015/uncategorised/121/input.js"
-										end: Object {
-											column: 27
-											line: 1
-										}
-										start: Object {
-											column: 19
-											line: 1
-										}
-									}
-									expression: JSYieldExpression {
-										delegate: false
-										loc: Object {
-											filename: "es2015/uncategorised/121/input.js"
-											end: Object {
-												column: 26
-												line: 1
-											}
-											start: Object {
-												column: 19
-												line: 1
-											}
-										}
-										argument: JSReferenceIdentifier {
-											name: "v"
-											loc: Object {
-												filename: "es2015/uncategorised/121/input.js"
-												identifierName: "v"
-												end: Object {
-													column: 26
-													line: 1
-												}
-												start: Object {
-													column: 25
-													line: 1
-												}
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/121/input.js 1:14-1:15
 									}
 								}
 							]

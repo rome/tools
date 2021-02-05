@@ -16,31 +16,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0249/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0249/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -51,14 +31,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 45
-					line: 1
-				}
-				start: Object {
-					column: 36
-					line: 1
-				}
+				end: Position 1:45
+				start: Position 1:36
 			}
 			description: Object {
 				category: "parse"
@@ -73,20 +47,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "esprima/invalid-syntax/migrated_0249/input.js"
-							identifierName: "__proto__"
-							end: Object {
-								column: 45
-								line: 1
-							}
-							start: Object {
-								column: 36
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)}
 				]
 			}
 		}
@@ -95,44 +56,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "t"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0249/input.js"
-					identifierName: "t"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:23-1:24 (t)
 			}
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0249/input.js"
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:14-1:50
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0249/input.js"
-					end: Object {
-						column: 50
-						line: 1
-					}
-					start: Object {
-						column: 47
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:47-1:50
 			}
 			head: JSFunctionHead {
 				async: false
@@ -142,76 +72,24 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0249/input.js"
-					end: Object {
-						column: 46
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:24-1:46
 				params: Array [
 					JSBindingIdentifier {
 						name: "__proto__"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0249/input.js"
-							identifierName: "__proto__"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:25-1:34 (__proto__)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0249/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:25-1:34
 						}
 					}
 					JSBindingIdentifier {
 						name: "__proto__"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0249/input.js"
-							identifierName: "__proto__"
-							end: Object {
-								column: 45
-								line: 1
-							}
-							start: Object {
-								column: 36
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0249/input.js"
-								end: Object {
-									column: 45
-									line: 1
-								}
-								start: Object {
-									column: 36
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45
 						}
 					}
 				]

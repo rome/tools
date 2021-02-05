@@ -17,121 +17,38 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/function-trailing-comma/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-2:0
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " comment 1 "
-			loc: Object {
-				filename: "comments/basic/function-trailing-comma/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:9-1:24
 		}
 		CommentBlock {
 			id: "1"
 			value: " comment 2"
-			loc: Object {
-				filename: "comments/basic/function-trailing-comma/input.js"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:26-1:40
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "comments/basic/function-trailing-comma/input.js"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:41
 			expression: JSCallExpression {
+				loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:25
 				trailingComments: Array ["1"]
-				loc: Object {
-					filename: "comments/basic/function-trailing-comma/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
 				callee: JSReferenceIdentifier {
 					name: "fn"
-					loc: Object {
-						filename: "comments/basic/function-trailing-comma/input.js"
-						identifierName: "fn"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:0-1:2 (fn)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "comments/basic/function-trailing-comma/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:3-1:4 (a)
 					}
 					JSReferenceIdentifier {
 						name: "b"
 						trailingComments: Array []
-						loc: Object {
-							filename: "comments/basic/function-trailing-comma/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/function-trailing-comma/input.js 1:6-1:7 (b)
 					}
 				]
 			}

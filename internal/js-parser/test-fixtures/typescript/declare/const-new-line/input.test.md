@@ -17,182 +17,47 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/const-new-line/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/declare/const-new-line/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
-				loc: Object {
-					filename: "typescript/declare/const-new-line/input.ts"
-					identifierName: "declare"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/const-new-line/input.ts 1:0-1:7 (declare)
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/declare/const-new-line/input.ts"
-				end: Object {
-					column: 27
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/declare/const-new-line/input.ts 2:0-2:27
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/declare/const-new-line/input.ts"
-					end: Object {
-						column: 27
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/declare/const-new-line/input.ts 2:0-2:27
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/declare/const-new-line/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/declare/const-new-line/input.ts 2:6-2:15
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/declare/const-new-line/input.ts"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
-								typeAnnotation: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/declare/const-new-line/input.ts"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 9
-											line: 2
-										}
-									}
-								}
+								loc: SourceLocation typescript/declare/const-new-line/input.ts 2:6-2:15
+								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const-new-line/input.ts 2:9-2:15}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/const-new-line/input.ts"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/declare/const-new-line/input.ts 2:6-2:15
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "typescript/declare/const-new-line/input.ts"
-								end: Object {
-									column: 26
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/declare/const-new-line/input.ts 2:17-2:26
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/declare/const-new-line/input.ts"
-									end: Object {
-										column: 26
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
-								typeAnnotation: TSStringKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/declare/const-new-line/input.ts"
-										end: Object {
-											column: 26
-											line: 2
-										}
-										start: Object {
-											column: 20
-											line: 2
-										}
-									}
-								}
+								loc: SourceLocation typescript/declare/const-new-line/input.ts 2:17-2:26
+								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/declare/const-new-line/input.ts 2:20-2:26}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/const-new-line/input.ts"
-							end: Object {
-								column: 26
-								line: 2
-							}
-							start: Object {
-								column: 17
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/declare/const-new-line/input.ts 2:17-2:26
 					}
 				]
 			}

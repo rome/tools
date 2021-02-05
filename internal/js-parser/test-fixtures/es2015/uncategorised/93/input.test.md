@@ -18,160 +18,46 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/93/input.js"
-		end: Object {
-			column: 41
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/93/input.js 1:0-1:41
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/93/input.js"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/93/input.js 1:0-1:41
 			source: JSStringLiteral {
 				value: "crypto"
-				loc: Object {
-					filename: "es2015/uncategorised/93/input.js"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 33
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/93/input.js 1:33-1:41
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/93/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16
 					imported: JSIdentifier {
 						name: "encrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/93/input.js"
-							identifierName: "encrypt"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16 (encrypt)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "encrypt"
-							loc: Object {
-								filename: "es2015/uncategorised/93/input.js"
-								identifierName: "encrypt"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16 (encrypt)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/93/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/93/input.js 1:9-1:16
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/93/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25
 					imported: JSIdentifier {
 						name: "decrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/93/input.js"
-							identifierName: "decrypt"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25 (decrypt)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "decrypt"
-							loc: Object {
-								filename: "es2015/uncategorised/93/input.js"
-								identifierName: "decrypt"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25 (decrypt)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/93/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/93/input.js 1:18-1:25
 					}
 				}
 			]

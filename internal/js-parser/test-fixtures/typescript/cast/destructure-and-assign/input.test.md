@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/destructure-and-assign/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,126 +32,37 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:12
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/destructure-and-assign/input.ts"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:21
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "typescript/cast/destructure-and-assign/input.ts"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:20
 				right: JSArrayExpression {
-					loc: Object {
-						filename: "typescript/cast/destructure-and-assign/input.ts"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:16-1:20
 					elements: Array [
 						JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "typescript/cast/destructure-and-assign/input.ts"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:17-1:19
 						}
 					]
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "typescript/cast/destructure-and-assign/input.ts"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-1:13
 					elements: Array [
 						TSAssignmentAsExpression {
-							loc: Object {
-								filename: "typescript/cast/destructure-and-assign/input.ts"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
-							typeAnnotation: TSNumberKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/cast/destructure-and-assign/input.ts"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
-							}
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:1-1:12
+							typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:6-1:12}
 							expression: JSAssignmentIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "typescript/cast/destructure-and-assign/input.ts"
-									identifierName: "a"
-									end: Object {
-										column: 2
-										line: 1
-									}
-									start: Object {
-										column: 1
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:1-1:2 (a)
 							}
 						}
 					]
@@ -169,113 +70,30 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/destructure-and-assign/input.ts"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:19
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "typescript/cast/destructure-and-assign/input.ts"
-					end: Object {
-						column: 18
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:18
 				right: JSArrayExpression {
-					loc: Object {
-						filename: "typescript/cast/destructure-and-assign/input.ts"
-						end: Object {
-							column: 18
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:14-2:18
 					elements: Array [
 						JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "typescript/cast/destructure-and-assign/input.ts"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:15-2:17
 						}
 					]
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "typescript/cast/destructure-and-assign/input.ts"
-						end: Object {
-							column: 11
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:0-2:11
 					elements: Array [
 						TSAssignmentTypeAssertion {
-							loc: Object {
-								filename: "typescript/cast/destructure-and-assign/input.ts"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 1
-									line: 2
-								}
-							}
-							typeAnnotation: TSNumberKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/cast/destructure-and-assign/input.ts"
-									end: Object {
-										column: 8
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:1-2:10
+							typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:2-2:8}
 							expression: JSAssignmentIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "typescript/cast/destructure-and-assign/input.ts"
-									identifierName: "a"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 2:9-2:10 (a)
 							}
 						}
 					]

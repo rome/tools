@@ -17,20 +17,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-1:8
+			expression: JSImportCall {
+				loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:7-1:8
+				argument: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:7-1:7
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "experimental/dynamic-import/invalid-lone-import/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:8
+				start: Position 1:7
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,62 +49,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unexpected token, expected "}
 					"("
 				]
-			}
-			location: Object {
-				filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSImportCall {
-				loc: Object {
-					filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				argument: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "experimental/dynamic-import/invalid-lone-import/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

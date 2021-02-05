@@ -18,85 +18,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/function-name-function-expression/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:0-1:20
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/function-name-function-expression/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:0-1:20
 			expression: JSUnaryExpression {
 				operator: "+"
 				prefix: true
-				loc: Object {
-					filename: "es2015/yield/function-name-function-expression/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:0-1:20
 				argument: JSFunctionExpression {
 					id: JSBindingIdentifier {
 						name: "yield"
-						loc: Object {
-							filename: "es2015/yield/function-name-function-expression/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:10-1:15 (yield)
 					}
-					loc: Object {
-						filename: "es2015/yield/function-name-function-expression/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:1-1:20
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "es2015/yield/function-name-function-expression/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:18-1:20
 					}
 					head: JSFunctionHead {
 						async: false
@@ -107,17 +46,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "es2015/yield/function-name-function-expression/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:15-1:17
 					}
 				}
 			}

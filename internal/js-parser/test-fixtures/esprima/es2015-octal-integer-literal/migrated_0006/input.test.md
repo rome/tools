@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
-				loc: Object {
-					filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-					identifierName: "test"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:9-1:13 (test)
 			}
-			loc: Object {
-				filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:0-1:37
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,73 +35,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
-				loc: Object {
-					filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:16-1:37
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:17-1:30
 					}
 				]
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 31
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:31-1:35
 						expression: JSNumericLiteral {
 							value: 0
 							format: "octal"
-							loc: Object {
-								filename: "esprima/es2015-octal-integer-literal/migrated_0006/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 31
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-octal-integer-literal/migrated_0006/input.js 1:31-1:34
 						}
 					}
 				]

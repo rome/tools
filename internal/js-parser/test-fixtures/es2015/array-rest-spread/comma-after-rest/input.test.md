@@ -18,84 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/array-rest-spread/comma-after-rest/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:13
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/array-rest-spread/comma-after-rest/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:13
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/array-rest-spread/comma-after-rest/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:12
 				right: JSArrayExpression {
 					elements: Array []
-					loc: Object {
-						filename: "es2015/array-rest-spread/comma-after-rest/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:10-1:12
 				}
 				left: JSAssignmentArrayPattern {
 					elements: Array []
-					loc: Object {
-						filename: "es2015/array-rest-spread/comma-after-rest/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:0-1:7
 					rest: JSAssignmentIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2015/array-rest-spread/comma-after-rest/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/array-rest-spread/comma-after-rest/input.js 1:4-1:5 (a)
 					}
 				}
 			}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,83 +32,26 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:12
+				start: Position 2:2
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-3:1
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-3:1
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "A"
-							loc: Object {
-								filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-								identifierName: "A"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:6-1:7 (A)
 						}
-						loc: Object {
-							filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:6-3:1
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:10-3:1
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
@@ -126,85 +59,23 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:10-1:15
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-									end: Object {
-										column: 1
-										line: 3
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:16-3:1
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-											end: Object {
-												column: 13
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:13
 										expression: JSMetaProperty {
-											loc: Object {
-												filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-												end: Object {
-													column: 12
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:12
 											meta: JSIdentifier {
 												name: "new"
-												loc: Object {
-													filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-													identifierName: "new"
-													end: Object {
-														column: 5
-														line: 2
-													}
-													start: Object {
-														column: 2
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:2-2:5 (new)
 											}
 											property: JSIdentifier {
 												name: "target"
-												loc: Object {
-													filename: "es2015/meta-properties/invalid-arrow-function/input.js"
-													identifierName: "target"
-													end: Object {
-														column: 12
-														line: 2
-													}
-													start: Object {
-														column: 6
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 2:6-2:12 (target)
 											}
 										}
 									}

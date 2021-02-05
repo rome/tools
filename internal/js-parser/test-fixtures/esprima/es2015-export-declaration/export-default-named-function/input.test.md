@@ -18,71 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:0-2:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:0-1:32
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:24-1:27 (foo)
 				}
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:15-1:32
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 30
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:30-1:32
 				}
 				head: JSFunctionHead {
 					async: false
@@ -93,17 +42,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-default-named-function/input.js"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 27
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-default-named-function/input.js 1:27-1:29
 				}
 			}
 		}

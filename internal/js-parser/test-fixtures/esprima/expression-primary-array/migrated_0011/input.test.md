@@ -18,71 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-array/migrated_0011/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-array/migrated_0011/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-array/migrated_0011/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-array/migrated_0011/input.js 1:0-1:17
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/expression-primary-array/migrated_0011/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
+				loc: SourceLocation esprima/expression-primary-array/migrated_0011/input.js 1:0-1:17
+				left: JSAssignmentIdentifier {
+					name: "\u2163\u2161"
+					loc: SourceLocation esprima/expression-primary-array/migrated_0011/input.js 1:0-1:12 (ⅣⅡ)
 				}
 				right: JSArrayExpression {
 					elements: Array []
-					loc: Object {
-						filename: "esprima/expression-primary-array/migrated_0011/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "\u2163\u2161"
-					loc: Object {
-						filename: "esprima/expression-primary-array/migrated_0011/input.js"
-						identifierName: "\u2163\u2161"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-array/migrated_0011/input.js 1:15-1:17
 				}
 			}
 		}

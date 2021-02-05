@@ -17,74 +17,24 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/nonentity/input.jsx 1:0-1:16
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/nonentity/input.jsx"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/nonentity/input.jsx"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/nonentity/input.jsx 1:0-1:16
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "jsx/basic/nonentity/input.jsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/nonentity/input.jsx 1:1-1:2
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/nonentity/input.jsx"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/nonentity/input.jsx 1:0-1:16
 				children: Array [
 					JSXText {
 						value: "&#x1g4q9;"
-						loc: Object {
-							filename: "jsx/basic/nonentity/input.jsx"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/nonentity/input.jsx 1:3-1:12
 					}
 				]
 			}

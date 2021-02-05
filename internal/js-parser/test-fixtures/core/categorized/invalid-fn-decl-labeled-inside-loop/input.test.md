@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-		end: Object {
-			column: 36
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:0-1:36
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,140 +32,41 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
+				end: Position 1:19
+				start: Position 1:20
 			}
 		}
 	]
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:0-1:36
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:7-1:8
 			}
 			body: JSLabeledStatement {
-				loc: Object {
-					filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:10-1:36
 				label: JSIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:10-1:13 (foo)
 				}
 				body: JSLabeledStatement {
-					loc: Object {
-						filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-						end: Object {
-							column: 36
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:15-1:36
 					label: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:15-1:18 (bar)
 					}
 					body: JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 32
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:29-1:32 (foo)
 						}
-						loc: Object {
-							filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:20-1:36
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 34
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:34-1:36
 						}
 						head: JSFunctionHead {
 							async: false
@@ -186,17 +77,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "core/categorized/invalid-fn-decl-labeled-inside-loop/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/invalid-fn-decl-labeled-inside-loop/input.js 1:32-1:34
 						}
 					}
 				}

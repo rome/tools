@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,164 +32,47 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
+				end: Position 1:18
+				start: Position 1:17
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-1:18
 			expression: JSImportCall {
-				loc: Object {
-					filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:6-1:18
 				argument: JSStringLiteral {
 					value: "foo.json"
-					loc: Object {
-						filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:7-1:17
 				}
 			}
 		}
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-				end: Object {
-					column: 45
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:19-1:45
 			body: Array [
 				JSWithStatement {
-					loc: Object {
-						filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-						end: Object {
-							column: 43
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:21-1:43
 					object: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:25-1:26
 					}
 					body: JSBlockStatement {
 						directives: Array []
-						loc: Object {
-							filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-							end: Object {
-								column: 43
-								line: 1
-							}
-							start: Object {
-								column: 27
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:27-1:43
 						body: Array [
 							JSLabeledStatement {
-								loc: Object {
-									filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-									end: Object {
-										column: 41
-										line: 1
-									}
-									start: Object {
-										column: 29
-										line: 1
-									}
-								}
+								loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:29-1:41
 								label: JSIdentifier {
 									name: "type"
-									loc: Object {
-										filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-										identifierName: "type"
-										end: Object {
-											column: 33
-											line: 1
-										}
-										start: Object {
-											column: 29
-											line: 1
-										}
-									}
+									loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:29-1:33 (type)
 								}
 								body: JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-										end: Object {
-											column: 41
-											line: 1
-										}
-										start: Object {
-											column: 35
-											line: 1
-										}
-									}
+									loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:35-1:41
 									expression: JSStringLiteral {
 										value: "json"
-										loc: Object {
-											filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-											end: Object {
-												column: 41
-												line: 1
-											}
-											start: Object {
-												column: 35
-												line: 1
-											}
-										}
+										loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:35-1:41
 									}
 								}
 							}
@@ -209,30 +82,10 @@ JSRoot {
 			]
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-				end: Object {
-					column: 46
-					line: 1
-				}
-				start: Object {
-					column: 45
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:45-1:46
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
-					end: Object {
-						column: 46
-						line: 1
-					}
-					start: Object {
-						column: 45
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:45-1:46
 			}
 		}
 	]

@@ -17,115 +17,32 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/264/input.js"
-		end: Object {
-			column: 36
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/264/input.js 1:0-1:36
 	directives: Array [
 		JSDirective {
 			value: "use\\x20strict"
-			loc: Object {
-				filename: "core/uncategorised/264/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/264/input.js 1:0-1:16
 		}
 	]
 	body: Array [
 		JSWithStatement {
-			loc: Object {
-				filename: "core/uncategorised/264/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/264/input.js 1:17-1:36
 			object: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "core/uncategorised/264/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/264/input.js 1:23-1:24 (x)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/264/input.js"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 26
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/264/input.js 1:26-1:36
 				expression: JSAssignmentExpression {
 					operator: "="
-					loc: Object {
-						filename: "core/uncategorised/264/input.js"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/264/input.js 1:26-1:35
 					left: JSAssignmentIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/uncategorised/264/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 26
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/264/input.js 1:26-1:29 (foo)
 					}
 					right: JSReferenceIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "core/uncategorised/264/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 32
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/264/input.js 1:32-1:35 (bar)
 					}
 				}
 			}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,148 +32,38 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
+				end: Position 1:33
+				start: Position 1:22
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-				end: Object {
-					column: 42
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:0-1:42
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:1-1:41
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:3-1:14
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:3-1:14
 						}
-						value: JSNullLiteral {
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:16-1:20}
+						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:3-1:20
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:22-1:33
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:22-1:33
 						}
-						value: JSNullLiteral {
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 35
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/invalid-proto-literals/input.js"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:35-1:39}
+						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-literals/input.js 1:22-1:39
 					}
 				]
 			}

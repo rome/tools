@@ -17,46 +17,15 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/asi/input.jsx 1:0-5:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/asi/input.jsx"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "jsx/basic/asi/input.jsx"
-					identifierName: "x"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/asi/input.jsx 1:9-1:10 (x)
 			}
-			loc: Object {
-				filename: "jsx/basic/asi/input.jsx"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/asi/input.jsx 1:0-4:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,132 +35,41 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "jsx/basic/asi/input.jsx"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/asi/input.jsx 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "jsx/basic/asi/input.jsx"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/asi/input.jsx 1:13-4:1
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "jsx/basic/asi/input.jsx"
-							end: Object {
-								column: 7
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation jsx/basic/asi/input.jsx 2:2-2:7
 						declaration: JSVariableDeclaration {
 							kind: "let"
-							loc: Object {
-								filename: "jsx/basic/asi/input.jsx"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation jsx/basic/asi/input.jsx 2:2-2:7
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "jsx/basic/asi/input.jsx"
-											identifierName: "x"
-											end: Object {
-												column: 7
-												line: 2
-											}
-											start: Object {
-												column: 6
-												line: 2
-											}
-										}
+										loc: SourceLocation jsx/basic/asi/input.jsx 2:6-2:7 (x)
 									}
 									init: undefined
-									loc: Object {
-										filename: "jsx/basic/asi/input.jsx"
-										end: Object {
-											column: 7
-											line: 2
-										}
-										start: Object {
-											column: 6
-											line: 2
-										}
-									}
+									loc: SourceLocation jsx/basic/asi/input.jsx 2:6-2:7
 								}
 							]
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "jsx/basic/asi/input.jsx"
-							end: Object {
-								column: 9
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation jsx/basic/asi/input.jsx 3:2-3:9
 						expression: JSXElement {
 							name: JSXIdentifier {
 								name: "div"
-								loc: Object {
-									filename: "jsx/basic/asi/input.jsx"
-									end: Object {
-										column: 6
-										line: 3
-									}
-									start: Object {
-										column: 3
-										line: 3
-									}
-								}
+								loc: SourceLocation jsx/basic/asi/input.jsx 3:3-3:6
 							}
 							attributes: Array []
 							children: Array []
 							selfClosing: true
 							typeArguments: undefined
-							loc: Object {
-								filename: "jsx/basic/asi/input.jsx"
-								end: Object {
-									column: 9
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation jsx/basic/asi/input.jsx 3:2-3:9
 						}
 					}
 				]

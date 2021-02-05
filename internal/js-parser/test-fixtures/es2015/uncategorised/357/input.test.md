@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/357/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/357/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/357/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:5
+				start: Position 1:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,102 +38,27 @@ JSRoot {
 					"await argument"
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/357/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/357/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/357/input.js 1:0-1:7
 			expression: JSAwaitExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/357/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/357/input.js 1:0-1:7
 				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2015/uncategorised/357/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/357/input.js 1:6-1:7
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/357/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:14
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/357/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:13
 				callee: JSReferenceIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/uncategorised/357/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/357/input.js 1:8-1:11 (foo)
 				}
 			}
 		}

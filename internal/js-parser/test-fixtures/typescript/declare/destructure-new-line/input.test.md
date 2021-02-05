@@ -17,355 +17,94 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/destructure-new-line/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/declare/destructure-new-line/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
-				loc: Object {
-					filename: "typescript/declare/destructure-new-line/input.ts"
-					identifierName: "declare"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/destructure-new-line/input.ts 1:0-1:7 (declare)
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/declare/destructure-new-line/input.ts"
-				end: Object {
-					column: 41
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:0-2:41
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/declare/destructure-new-line/input.ts"
-					end: Object {
-						column: 41
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:0-2:41
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "typescript/declare/destructure-new-line/input.ts"
-								end: Object {
-									column: 40
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "typescript/declare/destructure-new-line/input.ts"
-												identifierName: "x"
-												end: Object {
-													column: 9
-													line: 2
-												}
-												start: Object {
-													column: 8
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:8-2:9 (x)
 										}
-										loc: Object {
-											filename: "typescript/declare/destructure-new-line/input.ts"
-											end: Object {
-												column: 9
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:8-2:9
 									}
 									value: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "typescript/declare/destructure-new-line/input.ts"
-											identifierName: "x"
-											end: Object {
-												column: 9
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:8-2:9 (x)
 									}
-									loc: Object {
-										filename: "typescript/declare/destructure-new-line/input.ts"
-										end: Object {
-											column: 9
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:8-2:9
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "y"
-											loc: Object {
-												filename: "typescript/declare/destructure-new-line/input.ts"
-												identifierName: "y"
-												end: Object {
-													column: 12
-													line: 2
-												}
-												start: Object {
-													column: 11
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:11-2:12 (y)
 										}
-										loc: Object {
-											filename: "typescript/declare/destructure-new-line/input.ts"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 11
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:11-2:12
 									}
 									value: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "typescript/declare/destructure-new-line/input.ts"
-											identifierName: "y"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 11
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:11-2:12 (y)
 									}
-									loc: Object {
-										filename: "typescript/declare/destructure-new-line/input.ts"
-										end: Object {
-											column: 12
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:11-2:12
 								}
 							]
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/declare/destructure-new-line/input.ts"
-									end: Object {
-										column: 40
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
 								typeAnnotation: TSObjectTypeAnnotation {
-									loc: Object {
-										filename: "typescript/declare/destructure-new-line/input.ts"
-										end: Object {
-											column: 40
-											line: 2
-										}
-										start: Object {
-											column: 16
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:16-2:40
 									members: Array [
 										TSPropertySignature {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "x"
-													loc: Object {
-														filename: "typescript/declare/destructure-new-line/input.ts"
-														identifierName: "x"
-														end: Object {
-															column: 19
-															line: 2
-														}
-														start: Object {
-															column: 18
-															line: 2
-														}
-													}
+													loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:18-2:19 (x)
 												}
-												loc: Object {
-													filename: "typescript/declare/destructure-new-line/input.ts"
-													end: Object {
-														column: 19
-														line: 2
-													}
-													start: Object {
-														column: 18
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:18-2:19
 											}
 											optional: false
 											readonly: false
-											loc: Object {
-												filename: "typescript/declare/destructure-new-line/input.ts"
-												end: Object {
-													column: 28
-													line: 2
-												}
-												start: Object {
-													column: 18
-													line: 2
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/declare/destructure-new-line/input.ts"
-													end: Object {
-														column: 27
-														line: 2
-													}
-													start: Object {
-														column: 21
-														line: 2
-													}
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:18-2:28
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:21-2:27}
 										}
 										TSPropertySignature {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "y"
-													loc: Object {
-														filename: "typescript/declare/destructure-new-line/input.ts"
-														identifierName: "y"
-														end: Object {
-															column: 30
-															line: 2
-														}
-														start: Object {
-															column: 29
-															line: 2
-														}
-													}
+													loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:29-2:30 (y)
 												}
-												loc: Object {
-													filename: "typescript/declare/destructure-new-line/input.ts"
-													end: Object {
-														column: 30
-														line: 2
-													}
-													start: Object {
-														column: 29
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:29-2:30
 											}
 											optional: false
 											readonly: false
-											loc: Object {
-												filename: "typescript/declare/destructure-new-line/input.ts"
-												end: Object {
-													column: 38
-													line: 2
-												}
-												start: Object {
-													column: 29
-													line: 2
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/declare/destructure-new-line/input.ts"
-													end: Object {
-														column: 38
-														line: 2
-													}
-													start: Object {
-														column: 32
-														line: 2
-													}
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:29-2:38
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:32-2:38}
 										}
 									]
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/destructure-new-line/input.ts"
-							end: Object {
-								column: 40
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/declare/destructure-new-line/input.ts 2:6-2:40
 					}
 				]
 			}

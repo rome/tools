@@ -18,43 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
-		end: Object {
-			column: 5
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
 			expression: JSBigIntLiteral {
 				value: "080"
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
 			}
 		}
 	]

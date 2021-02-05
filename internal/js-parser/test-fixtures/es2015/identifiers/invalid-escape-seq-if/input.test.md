@@ -17,20 +17,33 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:0-2:0
+	body: Array [
+		JSIfStatement {
+			alternate: undefined
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:0-1:22
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:14-1:18
+			}
+			consequent: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-if/input.js 1:20-1:22
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:6
+				start: Position 1:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,65 +52,6 @@ JSRoot {
 					RAW_MARKUP {value: "Escape sequence in keyword "}
 					"if"
 				]
-			}
-			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSIfStatement {
-			alternate: undefined
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSBooleanLiteral {
-				value: true
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
-			}
-			consequent: JSBlockStatement {
-				body: Array []
-				directives: Array []
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-if/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
 			}
 		}
 	]

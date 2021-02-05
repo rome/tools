@@ -16,93 +16,30 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-alias/export/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-alias/export/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " `export default type` is not valid."
-			loc: Object {
-				filename: "typescript/type-alias/export/input.ts"
-				end: Object {
-					column: 38
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/type-alias/export/input.ts 2:0-2:38
 		}
 	]
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
+			loc: SourceLocation typescript/type-alias/export/input.ts 1:0-1:23
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/type-alias/export/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			declaration: TSTypeAlias {
 				id: JSBindingIdentifier {
 					name: "T"
-					loc: Object {
-						filename: "typescript/type-alias/export/input.ts"
-						identifierName: "T"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-alias/export/input.ts 1:12-1:13 (T)
 				}
 				trailingComments: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/type-alias/export/input.ts"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				right: TSNumberKeywordTypeAnnotation {
-					loc: Object {
-						filename: "typescript/type-alias/export/input.ts"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
-				}
+				loc: SourceLocation typescript/type-alias/export/input.ts 1:7-1:23
+				right: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/export/input.ts 1:16-1:22}
 			}
 		}
 	]

@@ -17,20 +17,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/426/input.js"
-		end: Object {
-			column: 6
-			line: 1
+	loc: SourceLocation core/uncategorised/426/input.js 1:0-1:6
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/426/input.js 1:2-1:3
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/426/input.js 1:2-1:3
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/426/input.js 1:4-1:6
+			expression: JSNumericLiteral {
+				value: 10
+				format: undefined
+				loc: SourceLocation core/uncategorised/426/input.js 1:4-1:6
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/426/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:0
+				start: Position 1:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,77 +55,6 @@ JSRoot {
 					"\u203f"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "core/uncategorised/426/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/426/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/426/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/426/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 10
-				format: undefined
-				loc: Object {
-					filename: "core/uncategorised/426/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
 			}
 		}
 	]

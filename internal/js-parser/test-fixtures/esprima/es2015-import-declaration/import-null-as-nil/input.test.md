@@ -18,103 +18,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/import-null-as-nil/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/import-null-as-nil/input.js 1:0-2:0
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/import-null-as-nil/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-null-as-nil/input.js 1:0-1:33
 			source: JSStringLiteral {
 				value: "bar"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-null-as-nil/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 28
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-null-as-nil/input.js 1:28-1:33
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-null-as-nil/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-null-as-nil/input.js 1:9-1:20
 					imported: JSIdentifier {
 						name: "null"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-null-as-nil/input.js"
-							identifierName: "null"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-null-as-nil/input.js 1:9-1:13 (null)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "nil"
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/import-null-as-nil/input.js"
-								identifierName: "nil"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/import-null-as-nil/input.js 1:17-1:20 (nil)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-null-as-nil/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-null-as-nil/input.js 1:9-1:20
 					}
 				}
 			]

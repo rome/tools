@@ -17,127 +17,32 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/annotated/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/annotated/input.ts"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:25
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/annotated/input.ts"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:24
 				body: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "typescript/arrow-function/annotated/input.ts"
-						identifierName: "x"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:23-1:24 (x)
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/annotated/input.ts"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-					returnType: TSNumberKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/arrow-function/annotated/input.ts"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:0-1:22
+					returnType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:13-1:19}
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/arrow-function/annotated/input.ts"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:23-1:22
 							meta: JSPatternMeta {
 								optional: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/annotated/input.ts"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
-								typeAnnotation: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/arrow-function/annotated/input.ts"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 4
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:23-1:22
+								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/annotated/input.ts 1:4-1:10}
 							}
 						}
 					]

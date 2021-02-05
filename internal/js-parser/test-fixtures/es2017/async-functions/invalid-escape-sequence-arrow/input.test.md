@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,172 +32,52 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:0-1:10
 			expression: JSReferenceIdentifier {
 				name: "async"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:0-1:10 (async)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:11-1:27
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:11-1:27
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:11-1:15
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:11-1:12 (x)
 						}
 					]
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:16-1:27
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:18-1:23
 							expression: JSReferenceIdentifier {
 								name: "await"
-								loc: Object {
-									filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-									identifierName: "await"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:18-1:23 (await)
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:24-1:25
 							expression: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2017/async-functions/invalid-escape-sequence-arrow/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/invalid-escape-sequence-arrow/input.js 1:24-1:25 (x)
 							}
 						}
 					]

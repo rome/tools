@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/throw-expression/comma/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/throw-expression/comma/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
-				loc: Object {
-					filename: "experimental/throw-expression/comma/input.js"
-					identifierName: "test"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/throw-expression/comma/input.js 1:9-1:13 (test)
 			}
-			loc: Object {
-				filename: "experimental/throw-expression/comma/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/throw-expression/comma/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,101 +35,31 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/throw-expression/comma/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/throw-expression/comma/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/throw-expression/comma/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/throw-expression/comma/input.js 1:16-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "experimental/throw-expression/comma/input.js"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/throw-expression/comma/input.js 2:2-2:15
 						expression: JSSequenceExpression {
-							loc: Object {
-								filename: "experimental/throw-expression/comma/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/throw-expression/comma/input.js 2:3-2:13
 							expressions: Array [
 								JSUnaryExpression {
 									operator: "throw"
 									prefix: true
-									loc: Object {
-										filename: "experimental/throw-expression/comma/input.js"
-										end: Object {
-											column: 10
-											line: 2
-										}
-										start: Object {
-											column: 3
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/throw-expression/comma/input.js 2:3-2:10
 									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
-										loc: Object {
-											filename: "experimental/throw-expression/comma/input.js"
-											end: Object {
-												column: 10
-												line: 2
-											}
-											start: Object {
-												column: 9
-												line: 2
-											}
-										}
+										loc: SourceLocation experimental/throw-expression/comma/input.js 2:9-2:10
 									}
 								}
 								JSNumericLiteral {
 									value: 2
 									format: undefined
-									loc: Object {
-										filename: "experimental/throw-expression/comma/input.js"
-										end: Object {
-											column: 13
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/throw-expression/comma/input.js 2:12-2:13
 								}
 							]
 						}

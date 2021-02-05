@@ -18,72 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "typescript/expect-plugin/export-type-named/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-3:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/expect-plugin/export-type-named/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-1:8
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "typescript/expect-plugin/export-type-named/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-1:8
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "Foo"
-							loc: Object {
-								filename: "typescript/expect-plugin/export-type-named/input.js"
-								identifierName: "Foo"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:4-1:7 (Foo)
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/expect-plugin/export-type-named/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:4-1:7
 					}
 				]
 			}
@@ -91,59 +40,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "type"
-			loc: Object {
-				filename: "typescript/expect-plugin/export-type-named/input.js"
-				end: Object {
-					column: 20
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:0-2:20
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "typescript/expect-plugin/export-type-named/input.js"
-						end: Object {
-							column: 17
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:14-2:17
 					exported: JSIdentifier {
 						name: "Foo"
-						loc: Object {
-							filename: "typescript/expect-plugin/export-type-named/input.js"
-							identifierName: "Foo"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 14
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:14-2:17 (Foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "Foo"
-						loc: Object {
-							filename: "typescript/expect-plugin/export-type-named/input.js"
-							identifierName: "Foo"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 14
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 2:14-2:17 (Foo)
 					}
 				}
 			]

@@ -17,20 +17,37 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/229/input.js"
-		end: Object {
-			column: 9
-			line: 1
+	loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: SourceLocation es2015/uncategorised/229/input.js 1:0-1:9
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "super"
+							loc: SourceLocation es2015/uncategorised/229/input.js 1:4-1:9 (super)
+						}
+						init: undefined
+						loc: SourceLocation es2015/uncategorised/229/input.js 1:4-1:9
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/229/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:9
+				start: Position 1:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -38,80 +55,6 @@ JSRoot {
 				message: Array [
 					RAW_MARKUP {value: "Unexpected keyword "}
 					"super"
-				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/229/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/229/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: Object {
-					filename: "es2015/uncategorised/229/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "super"
-							loc: Object {
-								filename: "es2015/uncategorised/229/input.js"
-								identifierName: "super"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
-						}
-						init: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/229/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
-					}
 				]
 			}
 		}

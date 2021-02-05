@@ -18,87 +18,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-try/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-try/migrated_0001/input.js 1:0-2:0
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "esprima/statement-try/migrated_0001/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-try/migrated_0001/input.js 1:0-1:24
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/statement-try/migrated_0001/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-try/migrated_0001/input.js 1:4-1:7
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "esprima/statement-try/migrated_0001/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
+				loc: SourceLocation esprima/statement-try/migrated_0001/input.js 1:8-1:24
+				param: JSBindingIdentifier {
+					name: "eval"
+					loc: SourceLocation esprima/statement-try/migrated_0001/input.js 1:15-1:19 (eval)
 				}
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/statement-try/migrated_0001/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
-				}
-				param: JSBindingIdentifier {
-					name: "eval"
-					loc: Object {
-						filename: "esprima/statement-try/migrated_0001/input.js"
-						identifierName: "eval"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-try/migrated_0001/input.js 1:21-1:24
 				}
 			}
 		}

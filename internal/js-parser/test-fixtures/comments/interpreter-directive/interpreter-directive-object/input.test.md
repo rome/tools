@@ -17,156 +17,43 @@ JSRoot {
 	integrity: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:0-4:0
 	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
-		loc: Object {
-			filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-			end: Object {
-				column: 25
-				line: 1
-			}
-			start: Object {
-				column: 1
-				line: 1
-			}
-		}
+		loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:1-1:25
 	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-				end: Object {
-					column: 18
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:0-3:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-					end: Object {
-						column: 18
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:0-3:18
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:4-3:13
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "spawn"
-											loc: Object {
-												filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-												identifierName: "spawn"
-												end: Object {
-													column: 11
-													line: 3
-												}
-												start: Object {
-													column: 6
-													line: 3
-												}
-											}
+											loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:6-3:11 (spawn)
 										}
-										loc: Object {
-											filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-											end: Object {
-												column: 11
-												line: 3
-											}
-											start: Object {
-												column: 6
-												line: 3
-											}
-										}
+										loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:6-3:11
 									}
 									value: JSBindingIdentifier {
 										name: "spawn"
-										loc: Object {
-											filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-											identifierName: "spawn"
-											end: Object {
-												column: 11
-												line: 3
-											}
-											start: Object {
-												column: 6
-												line: 3
-											}
-										}
+										loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:6-3:11 (spawn)
 									}
-									loc: Object {
-										filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-										end: Object {
-											column: 11
-											line: 3
-										}
-										start: Object {
-											column: 6
-											line: 3
-										}
-									}
+									loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:6-3:11
 								}
 							]
 						}
-						loc: Object {
-							filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-							end: Object {
-								column: 17
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:4-3:17
 						init: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 17
-									line: 3
-								}
-								start: Object {
-									column: 16
-									line: 3
-								}
-							}
+							loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 3:16-3:17 (x)
 						}
 					}
 				]

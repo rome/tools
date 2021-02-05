@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:0-1:25
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,102 +39,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:11-1:23
 				params: Array [
 					JSBindingObjectPattern {
 						rest: undefined
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:12-1:22
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:12-1:22
 						}
 						properties: Array [
 							JSBindingObjectPatternProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "yield"
-										loc: Object {
-											filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-											identifierName: "yield"
-											end: Object {
-												column: 18
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:13-1:18 (yield)
 									}
-									loc: Object {
-										filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-										end: Object {
-											column: 18
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:13-1:18
 								}
 								value: JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-										identifierName: "y"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 20
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:20-1:21 (y)
 								}
-								loc: Object {
-									filename: "esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/yield-generator-parameter-object-pattern/input.js 1:13-1:21
 							}
 						]
 					}

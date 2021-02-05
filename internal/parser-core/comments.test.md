@@ -17,63 +17,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-1:22
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " block comment "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-1:19
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:20-1:22
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:20-1:22
 			}
 		}
 	]
@@ -93,81 +53,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 46
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-1:46
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " block comment 1 "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:3-1:24
 		}
 		CommentBlock {
 			id: "1"
 			value: " block comment 2 "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 46
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:25-1:46
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation unknown 1:0-1:2
 			trailingComments: Array [
 				"0"
 				"1"
 			]
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				trailingComments: undefined
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:0-1:2
 			}
 		}
 	]
@@ -187,109 +97,38 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 50
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-1:50
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " block comment 1 "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:7-1:28
 		}
 		CommentBlock {
 			id: "1"
 			value: " block comment 2 "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 29
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:29-1:50
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
+			loc: SourceLocation unknown 1:0-1:7
 			trailingComments: Array [
 				"0"
 				"1"
 			]
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				trailingComments: undefined
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:0-1:7
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "p1"
-							loc: Object {
-								filename: "unknown"
-								identifierName: "p1"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:4-1:6 (p1)
 						}
 						init: undefined
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:4-1:6
 					}
 				]
 			}
@@ -314,32 +153,12 @@ JSRoot {
 	syntax: Array []
 	trailingComments: Array []
 	innerComments: Array ["0"]
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-1:6
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: "42"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-1:6
 		}
 	]
 }
@@ -358,118 +177,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 28
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-1:28
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " assignment "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:5-1:21
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-1:28
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:0-1:28
 				right: JSReferenceIdentifier {
 					name: "c"
-					loc: Object {
-						filename: "unknown"
-						identifierName: "c"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 27
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:27-1:28 (c)
 				}
 				left: JSBinaryExpression {
 					operator: "+"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:1-1:22
 					left: JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "unknown"
-							identifierName: "a"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:1-1:2 (a)
 					}
 					right: JSReferenceIdentifier {
 						name: "b"
 						leadingComments: Array ["0"]
-						loc: Object {
-							filename: "unknown"
-							identifierName: "b"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:21-1:22 (b)
 					}
 				}
 			}
@@ -491,128 +227,32 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 54
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-1:54
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " sync "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 30
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:30-1:40
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 54
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-1:54
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 54
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				arguments: Array [
-					JSThisExpression {
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 53
-								line: 1
-							}
-							start: Object {
-								column: 49
-								line: 1
-							}
-						}
-					}
-				]
+				arguments: Array [JSThisExpression {loc: SourceLocation unknown 1:49-1:53}]
+				loc: SourceLocation unknown 1:0-1:54
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 48
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:0-1:48
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "call"
-							loc: Object {
-								filename: "unknown"
-								identifierName: "call"
-								end: Object {
-									column: 48
-									line: 1
-								}
-								start: Object {
-									column: 44
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:44-1:48 (call)
 						}
-						loc: Object {
-							filename: "unknown"
-							identifierName: "call"
-							end: Object {
-								column: 48
-								line: 1
-							}
-							start: Object {
-								column: 44
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:44-1:48 (call)
 					}
 					object: JSFunctionExpression {
 						id: undefined
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 42
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:1-1:42
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -622,101 +262,30 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "unknown"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:9-1:11
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "unknown"
-								end: Object {
-									column: 42
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:11-1:42
 							body: Array [
 								JSVariableDeclarationStatement {
+									loc: SourceLocation unknown 1:13-1:29
 									trailingComments: Array ["0"]
-									loc: Object {
-										filename: "unknown"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
 									declaration: JSVariableDeclaration {
 										kind: "var"
 										trailingComments: undefined
-										loc: Object {
-											filename: "unknown"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation unknown 1:13-1:29
 										declarations: Array [
 											JSVariableDeclarator {
 												id: JSBindingIdentifier {
 													name: "version"
-													loc: Object {
-														filename: "unknown"
-														identifierName: "version"
-														end: Object {
-															column: 24
-															line: 1
-														}
-														start: Object {
-															column: 17
-															line: 1
-														}
-													}
+													loc: SourceLocation unknown 1:17-1:24 (version)
 												}
-												loc: Object {
-													filename: "unknown"
-													end: Object {
-														column: 28
-														line: 1
-													}
-													start: Object {
-														column: 17
-														line: 1
-													}
-												}
+												loc: SourceLocation unknown 1:17-1:28
 												init: JSNumericLiteral {
 													value: 1
 													format: undefined
-													loc: Object {
-														filename: "unknown"
-														end: Object {
-															column: 28
-															line: 1
-														}
-														start: Object {
-															column: 27
-															line: 1
-														}
-													}
+													loc: SourceLocation unknown 1:27-1:28
 												}
 											}
 										]
@@ -745,32 +314,12 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-1:20
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: ""
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-1:4
 		}
 	]
 	body: Array [
@@ -778,45 +327,14 @@ JSRoot {
 			id: JSBindingIdentifier {
 				name: "a"
 				leadingComments: undefined
-				loc: Object {
-					filename: "unknown"
-					identifierName: "a"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:14-1:15 (a)
 			}
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:5-1:20
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:18-1:20
 			}
 			head: JSFunctionHead {
 				async: false
@@ -827,17 +345,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:15-1:17
 			}
 		}
 	]
@@ -857,81 +365,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 2
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-4:2
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Hello, world!"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-1:16
 		}
 		CommentLine {
 			id: "1"
 			value: "   Another hello"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 18
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation unknown 3:0-3:18
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation unknown 4:0-4:2
 			leadingComments: Array [
 				"0"
 				"1"
 			]
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 2
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 2
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation unknown 4:0-4:2
 			}
 		}
 	]
@@ -951,77 +409,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "unknown"
-		end: Object {
-			column: 1
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation unknown 1:0-5:1
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: "*\n\t * comments in empty block\n\t "
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 4
-					line: 4
-				}
-				start: Object {
-					column: 1
-					line: 2
-				}
-			}
+			loc: SourceLocation unknown 2:1-4:4
 		}
 	]
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-5:1
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:7-1:11
 			}
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				trailingComments: Array []
 				innerComments: Array ["0"]
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:13-5:1
 			}
 		}
 	]

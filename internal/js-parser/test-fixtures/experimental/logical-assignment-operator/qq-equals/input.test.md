@@ -18,170 +18,44 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 1:0-3:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "??="
-				loc: Object {
-					filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 1:0-1:7
 				left: JSAssignmentIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 1:0-1:1 (a)
 				}
 				right: JSReferenceIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 1:6-1:7 (b)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 2:0-2:12
 			expression: JSAssignmentExpression {
 				operator: "??="
-				loc: Object {
-					filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-					end: Object {
-						column: 11
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 2:0-2:11
 				right: JSReferenceIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 11
-							line: 2
-						}
-						start: Object {
-							column: 10
-							line: 2
-						}
-					}
+					loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 2:10-2:11 (b)
 				}
 				left: JSMemberExpression {
-					loc: Object {
-						filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 2:0-2:5
 					object: JSReferenceIdentifier {
 						name: "obj"
-						loc: Object {
-							filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-							identifierName: "obj"
-							end: Object {
-								column: 3
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 2:0-2:3 (obj)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 2:4-2:5 (a)
 						}
-						loc: Object {
-							filename: "experimental/logical-assignment-operator/qq-equals/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 2:4-2:5 (a)
 					}
 				}
 			}

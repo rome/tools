@@ -18,17 +18,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/429/input.js"
-		end: Object {
-			column: 2
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/429/input.js 1:0-1:2
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -43,14 +33,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]

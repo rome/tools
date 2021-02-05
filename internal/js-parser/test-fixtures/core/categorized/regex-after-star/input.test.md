@@ -18,57 +18,16 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/regex-after-star/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/regex-after-star/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: Object {
-					filename: "core/categorized/regex-after-star/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7
 				left: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "core/categorized/regex-after-star/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:1 (a)
 				}
 				right: JSRegExpLiteral {
 					global: false
@@ -77,43 +36,13 @@ JSRoot {
 					noDotNewline: false
 					sticky: false
 					unicode: false
-					loc: Object {
-						filename: "core/categorized/regex-after-star/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/regex-after-star/input.js 1:4-1:7
 					expression: JSRegExpSubExpression {
-						loc: Object {
-							filename: "core/categorized/regex-after-star/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
 						body: Array [
 							JSRegExpCharacter {
 								value: "b"
-								loc: Object {
-									filename: "core/categorized/regex-after-star/input.js"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation core/categorized/regex-after-star/input.js 1:5-1:6
 							}
 						]
 					}

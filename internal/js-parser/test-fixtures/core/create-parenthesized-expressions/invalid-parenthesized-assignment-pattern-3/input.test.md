@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:0-1:21
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,186 +32,57 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
+				end: Position 1:15
+				start: Position 1:2
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:0-1:21
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:0-1:21
 				right: JSReferenceIdentifier {
 					name: "t"
-					loc: Object {
-						filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-						identifierName: "t"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:20-1:21 (t)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:0-1:17
 					elements: Array [
 						JSAssignmentObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:2-1:15
 							properties: Array [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 5
-													line: 1
-												}
-												start: Object {
-													column: 4
-													line: 1
-												}
-											}
+											loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:4-1:5 (a)
 										}
-										loc: Object {
-											filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-											end: Object {
-												column: 5
-												line: 1
-											}
-											start: Object {
-												column: 4
-												line: 1
-											}
-										}
+										loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:4-1:5
 									}
 									value: JSAssignmentArrayPattern {
 										rest: undefined
-										loc: Object {
-											filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:7-1:14
 										elements: Array [
 											JSAssignmentAssignmentPattern {
 												operator: "="
-												loc: Object {
-													filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-													end: Object {
-														column: 13
-														line: 1
-													}
-													start: Object {
-														column: 8
-														line: 1
-													}
-												}
+												loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:8-1:13
 												left: JSAssignmentIdentifier {
 													name: "b"
-													loc: Object {
-														filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-														identifierName: "b"
-														end: Object {
-															column: 9
-															line: 1
-														}
-														start: Object {
-															column: 8
-															line: 1
-														}
-													}
+													loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:8-1:9 (b)
 												}
 												right: JSNumericLiteral {
 													value: 2
 													format: undefined
-													loc: Object {
-														filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-														end: Object {
-															column: 13
-															line: 1
-														}
-														start: Object {
-															column: 12
-															line: 1
-														}
-													}
+													loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:12-1:13
 												}
 											}
 										]
 									}
-									loc: Object {
-										filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 4
-											line: 1
-										}
-									}
+									loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-3/input.js 1:4-1:14
 								}
 							]
 						}

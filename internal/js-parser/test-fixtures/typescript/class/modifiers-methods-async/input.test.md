@@ -16,124 +16,52 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 1:0-12:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/modifiers-methods-async/input.ts"
-		end: Object {
-			column: 0
-			line: 12
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Copy of modifiers-methods with 'async'"
-			loc: Object {
-				filename: "typescript/class/modifiers-methods-async/input.ts"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 1:0-1:41
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/modifiers-methods-async/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 2:15-2:16 (C)
 			}
 			abstract: true
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/class/modifiers-methods-async/input.ts"
-				end: Object {
-					column: 1
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 2:0-11:1
 			meta: JSClassHead {
 				implements: undefined
 				leadingComments: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/modifiers-methods-async/input.ts"
-					end: Object {
-						column: 1
-						line: 11
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 2:0-11:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "typescript/class/modifiers-methods-async/input.ts"
-									identifierName: "a"
-									end: Object {
-										column: 20
-										line: 3
-									}
-									start: Object {
-										column: 19
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 3:19-3:20 (a)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 20
-									line: 3
-								}
-								start: Object {
-									column: 19
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 3:19-3:20
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-methods-async/input.ts"
-							end: Object {
-								column: 23
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
+						loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 3:4-3:23
+						meta: JSClassPropertyMeta {
+							abstract: true
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 3:4-3:20
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: true
@@ -144,40 +72,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 22
-									line: 3
-								}
-								start: Object {
-									column: 20
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: true
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 20
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 3:20-3:22
 						}
 					}
 					JSClassMethod {
@@ -185,77 +80,15 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "s"
-								loc: Object {
-									filename: "typescript/class/modifiers-methods-async/input.ts"
-									identifierName: "s"
-									end: Object {
-										column: 18
-										line: 4
-									}
-									start: Object {
-										column: 17
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 4:17-4:18 (s)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 18
-									line: 4
-								}
-								start: Object {
-									column: 17
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 4:17-4:18
 						}
-						loc: Object {
-							filename: "typescript/class/modifiers-methods-async/input.ts"
-							end: Object {
-								column: 23
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 4:4-4:23
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 23
-									line: 4
-								}
-								start: Object {
-									column: 21
-									line: 4
-								}
-							}
-						}
-						head: JSFunctionHead {
-							async: true
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 20
-									line: 4
-								}
-								start: Object {
-									column: 18
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 4:21-4:23
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -264,21 +97,19 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 4
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 18
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 4:4-4:18
+							start: Position 4:4
+						}
+						head: JSFunctionHead {
+							async: true
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 4:18-4:20
 						}
 					}
 					TSDeclareMethod {
@@ -286,64 +117,12 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pua"
-								loc: Object {
-									filename: "typescript/class/modifiers-methods-async/input.ts"
-									identifierName: "pua"
-									end: Object {
-										column: 29
-										line: 5
-									}
-									start: Object {
-										column: 26
-										line: 5
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 5:26-5:29 (pua)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 29
-									line: 5
-								}
-								start: Object {
-									column: 26
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 5:26-5:29
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-methods-async/input.ts"
-							end: Object {
-								column: 32
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
-						}
-						head: JSFunctionHead {
-							async: true
-							generator: false
-							hasHoistedVars: false
-							params: Array []
-							rest: undefined
-							returnType: undefined
-							thisType: undefined
-							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 31
-									line: 5
-								}
-								start: Object {
-									column: 29
-									line: 5
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 5:4-5:32
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
@@ -351,78 +130,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 5
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 29
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "pus"
-								loc: Object {
-									filename: "typescript/class/modifiers-methods-async/input.ts"
-									identifierName: "pus"
-									end: Object {
-										column: 27
-										line: 6
-									}
-									start: Object {
-										column: 24
-										line: 6
-									}
-								}
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 27
-									line: 6
-								}
-								start: Object {
-									column: 24
-									line: 6
-								}
-							}
-						}
-						loc: Object {
-							filename: "typescript/class/modifiers-methods-async/input.ts"
-							end: Object {
-								column: 32
-								line: 6
-							}
-							start: Object {
-								column: 4
-								line: 6
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 32
-									line: 6
-								}
-								start: Object {
-									column: 30
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 5:4-5:29
+							start: Position 5:4
 						}
 						head: JSFunctionHead {
 							async: true
@@ -433,17 +142,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 29
-									line: 6
-								}
-								start: Object {
-									column: 27
-									line: 6
-								}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 5:29-5:31
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "pus"
+								loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 6:24-6:27 (pus)
 							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 6:24-6:27
+						}
+						loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 6:4-6:32
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 6:30-6:32
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -452,78 +167,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 6
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 27
-									line: 6
-								}
-								start: Object {
-									column: 4
-									line: 6
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "pu"
-								loc: Object {
-									filename: "typescript/class/modifiers-methods-async/input.ts"
-									identifierName: "pu"
-									end: Object {
-										column: 19
-										line: 8
-									}
-									start: Object {
-										column: 17
-										line: 8
-									}
-								}
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 19
-									line: 8
-								}
-								start: Object {
-									column: 17
-									line: 8
-								}
-							}
-						}
-						loc: Object {
-							filename: "typescript/class/modifiers-methods-async/input.ts"
-							end: Object {
-								column: 24
-								line: 8
-							}
-							start: Object {
-								column: 4
-								line: 8
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 24
-									line: 8
-								}
-								start: Object {
-									column: 22
-									line: 8
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 6:4-6:27
+							start: Position 6:4
 						}
 						head: JSFunctionHead {
 							async: true
@@ -534,17 +179,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 21
-									line: 8
-								}
-								start: Object {
-									column: 19
-									line: 8
-								}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 6:27-6:29
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "pu"
+								loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 8:17-8:19 (pu)
 							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 8:17-8:19
+						}
+						loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 8:4-8:24
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 8:22-8:24
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -553,78 +204,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 8
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 19
-									line: 8
-								}
-								start: Object {
-									column: 4
-									line: 8
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "po"
-								loc: Object {
-									filename: "typescript/class/modifiers-methods-async/input.ts"
-									identifierName: "po"
-									end: Object {
-										column: 22
-										line: 9
-									}
-									start: Object {
-										column: 20
-										line: 9
-									}
-								}
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 22
-									line: 9
-								}
-								start: Object {
-									column: 20
-									line: 9
-								}
-							}
-						}
-						loc: Object {
-							filename: "typescript/class/modifiers-methods-async/input.ts"
-							end: Object {
-								column: 27
-								line: 9
-							}
-							start: Object {
-								column: 4
-								line: 9
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 27
-									line: 9
-								}
-								start: Object {
-									column: 25
-									line: 9
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 8:4-8:19
+							start: Position 8:4
 						}
 						head: JSFunctionHead {
 							async: true
@@ -635,17 +216,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 24
-									line: 9
-								}
-								start: Object {
-									column: 22
-									line: 9
-								}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 8:19-8:21
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "po"
+								loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 9:20-9:22 (po)
 							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 9:20-9:22
+						}
+						loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 9:4-9:27
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 9:25-9:27
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -654,78 +241,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 9
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 22
-									line: 9
-								}
-								start: Object {
-									column: 4
-									line: 9
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "pi"
-								loc: Object {
-									filename: "typescript/class/modifiers-methods-async/input.ts"
-									identifierName: "pi"
-									end: Object {
-										column: 20
-										line: 10
-									}
-									start: Object {
-										column: 18
-										line: 10
-									}
-								}
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 20
-									line: 10
-								}
-								start: Object {
-									column: 18
-									line: 10
-								}
-							}
-						}
-						loc: Object {
-							filename: "typescript/class/modifiers-methods-async/input.ts"
-							end: Object {
-								column: 25
-								line: 10
-							}
-							start: Object {
-								column: 4
-								line: 10
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 25
-									line: 10
-								}
-								start: Object {
-									column: 23
-									line: 10
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 9:4-9:22
+							start: Position 9:4
 						}
 						head: JSFunctionHead {
 							async: true
@@ -736,17 +253,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 22
-									line: 10
-								}
-								start: Object {
-									column: 20
-									line: 10
-								}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 9:22-9:24
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "pi"
+								loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 10:18-10:20 (pi)
 							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 10:18-10:20
+						}
+						loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 10:4-10:25
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 10:23-10:25
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -755,21 +278,19 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 10
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-methods-async/input.ts"
-								end: Object {
-									column: 20
-									line: 10
-								}
-								start: Object {
-									column: 4
-									line: 10
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 10:4-10:20
+							start: Position 10:4
+						}
+						head: JSFunctionHead {
+							async: true
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 10:20-10:22
 						}
 					}
 				]

@@ -17,17 +17,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/es2015-arrow-function/rest-without-arrow/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/es2015-arrow-function/rest-without-arrow/input.js 1:0-1:10
+			expression: JSBinaryExpression {
+				operator: "+"
+				loc: SourceLocation esprima/es2015-arrow-function/rest-without-arrow/input.js 1:0-1:10
+				left: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation esprima/es2015-arrow-function/rest-without-arrow/input.js 1:7-1:6
+				}
+				right: JSNumericLiteral {
+					value: 1
+					format: undefined
+					loc: SourceLocation esprima/es2015-arrow-function/rest-without-arrow/input.js 1:9-1:10
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +50,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBinaryExpression {
-				operator: "+"
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-				}
-				right: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/rest-without-arrow/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
-				}
+				end: Position 1:1
+				start: Position 1:1
 			}
 		}
 	]

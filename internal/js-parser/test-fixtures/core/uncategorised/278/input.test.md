@@ -18,87 +18,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/278/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/278/input.js 1:0-1:29
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "core/uncategorised/278/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/278/input.js 1:0-1:29
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/278/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/278/input.js 1:4-1:7
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "core/uncategorised/278/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
+				loc: SourceLocation core/uncategorised/278/input.js 1:8-1:29
+				param: JSBindingIdentifier {
+					name: "arguments"
+					loc: SourceLocation core/uncategorised/278/input.js 1:15-1:24 (arguments)
 				}
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "core/uncategorised/278/input.js"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
-				}
-				param: JSBindingIdentifier {
-					name: "arguments"
-					loc: Object {
-						filename: "core/uncategorised/278/input.js"
-						identifierName: "arguments"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/278/input.js 1:26-1:29
 				}
 			}
 		}

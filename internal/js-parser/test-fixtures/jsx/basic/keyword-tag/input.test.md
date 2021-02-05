@@ -17,61 +17,21 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-2:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/keyword-tag/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/keyword-tag/input.jsx"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-1:12
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
 					name: "var"
-					loc: Object {
-						filename: "jsx/basic/keyword-tag/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/keyword-tag/input.jsx"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/keyword-tag/input.jsx 1:0-1:11
 			}
 		}
 	]

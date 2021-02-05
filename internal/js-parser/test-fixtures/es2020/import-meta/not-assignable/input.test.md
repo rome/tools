@@ -17,20 +17,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/import-meta/not-assignable/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-1:19
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-1:18
+				left: JSAssignmentIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:12-1:11
+				}
+				right: JSBooleanLiteral {
+					value: true
+					loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:14-1:18
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2020/import-meta/not-assignable/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:11
+				start: Position 1:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,77 +54,6 @@ JSRoot {
 					RAW_MARKUP {value: "Invalid left-hand side in "}
 					"assignment expression"
 				]
-			}
-			location: Object {
-				filename: "es2020/import-meta/not-assignable/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/import-meta/not-assignable/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "es2020/import-meta/not-assignable/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2020/import-meta/not-assignable/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
-				}
-				right: JSBooleanLiteral {
-					value: true
-					loc: Object {
-						filename: "es2020/import-meta/not-assignable/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

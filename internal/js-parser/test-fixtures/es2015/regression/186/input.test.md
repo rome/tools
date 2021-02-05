@@ -18,196 +18,50 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/regression/186/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/regression/186/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/regression/186/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/regression/186/input.js 1:0-1:23
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2015/regression/186/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/regression/186/input.js 1:0-1:23
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/regression/186/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/regression/186/input.js 1:6-1:7 (x)
 						}
-						loc: Object {
-							filename: "es2015/regression/186/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/regression/186/input.js 1:6-1:22
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "es2015/regression/186/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/regression/186/input.js 1:10-1:22
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "async"
-											loc: Object {
-												filename: "es2015/regression/186/input.js"
-												identifierName: "async"
-												end: Object {
-													column: 16
-													line: 1
-												}
-												start: Object {
-													column: 11
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/regression/186/input.js 1:11-1:16 (async)
 										}
-										loc: Object {
-											filename: "es2015/regression/186/input.js"
-											identifierName: "async"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/regression/186/input.js 1:11-1:16 (async)
 									}
 									value: JSReferenceIdentifier {
 										name: "async"
-										loc: Object {
-											filename: "es2015/regression/186/input.js"
-											identifierName: "async"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/regression/186/input.js 1:11-1:16 (async)
 									}
-									loc: Object {
-										filename: "es2015/regression/186/input.js"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/regression/186/input.js 1:11-1:16
 								}
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "bar"
-											loc: Object {
-												filename: "es2015/regression/186/input.js"
-												identifierName: "bar"
-												end: Object {
-													column: 21
-													line: 1
-												}
-												start: Object {
-													column: 18
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/regression/186/input.js 1:18-1:21 (bar)
 										}
-										loc: Object {
-											filename: "es2015/regression/186/input.js"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 18
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/regression/186/input.js 1:18-1:21
 									}
 									value: JSReferenceIdentifier {
 										name: "bar"
-										loc: Object {
-											filename: "es2015/regression/186/input.js"
-											identifierName: "bar"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 18
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/regression/186/input.js 1:18-1:21 (bar)
 									}
-									loc: Object {
-										filename: "es2015/regression/186/input.js"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/regression/186/input.js 1:18-1:21
 								}
 							]
 						}

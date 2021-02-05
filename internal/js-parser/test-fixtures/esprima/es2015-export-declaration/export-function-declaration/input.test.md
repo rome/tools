@@ -18,73 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:0-2:0
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:0-1:25
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:16-1:19 (foo)
 				}
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:7-1:25
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:23-1:25
 				}
 				head: JSFunctionHead {
 					async: false
@@ -95,45 +44,15 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:20-1:22
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:26-1:31
 			expression: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-function-declaration/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 26
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-function-declaration/input.js 1:26-1:31
 			}
 		}
 	]

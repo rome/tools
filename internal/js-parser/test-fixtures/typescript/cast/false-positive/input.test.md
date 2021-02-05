@@ -17,101 +17,29 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/false-positive/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/false-positive/input.ts"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:14
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "typescript/cast/false-positive/input.ts"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:13
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "typescript/cast/false-positive/input.ts"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/false-positive/input.ts 1:0-1:1 (f)
 				}
 				arguments: Array [
 					JSBinaryExpression {
 						operator: "<"
-						loc: Object {
-							filename: "typescript/cast/false-positive/input.ts"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/false-positive/input.ts 1:2-1:7
 						left: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/cast/false-positive/input.ts"
-								identifierName: "x"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/false-positive/input.ts 1:2-1:3 (x)
 						}
 						right: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "typescript/cast/false-positive/input.ts"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/false-positive/input.ts 1:6-1:7
 						}
 					}
 					JSRegExpLiteral {
@@ -121,43 +49,13 @@ JSRoot {
 						noDotNewline: false
 						sticky: false
 						unicode: false
-						loc: Object {
-							filename: "typescript/cast/false-positive/input.ts"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/false-positive/input.ts 1:9-1:12
 						expression: JSRegExpSubExpression {
-							loc: Object {
-								filename: "typescript/cast/false-positive/input.ts"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/false-positive/input.ts 1:10-1:11
 							body: Array [
 								JSRegExpCharacter {
 									value: "a"
-									loc: Object {
-										filename: "typescript/cast/false-positive/input.ts"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/cast/false-positive/input.ts 1:10-1:11
 								}
 							]
 						}

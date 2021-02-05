@@ -18,145 +18,92 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/super/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/super/input.js 1:0-4:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Fails"
-				loc: Object {
-					filename: "experimental/class-properties/super/input.js"
-					identifierName: "Fails"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/super/input.js 1:6-1:11 (Fails)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/super/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/super/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/super/input.js"
-					end: Object {
-						column: 1
-						line: 3
+				loc: SourceLocation experimental/class-properties/super/input.js 1:0-3:1
+				body: Array [
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "c"
+								loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:3 (c)
+							}
+							loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:3
+						}
+						value: JSCallExpression {
+							arguments: Array []
+							loc: SourceLocation experimental/class-properties/super/input.js 2:6-2:15
+							callee: JSMemberExpression {
+								loc: SourceLocation experimental/class-properties/super/input.js 2:6-2:13
+								object: JSSuper {loc: SourceLocation experimental/class-properties/super/input.js 2:6-2:11}
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
+										name: "c"
+										loc: SourceLocation experimental/class-properties/super/input.js 2:12-2:13 (c)
+									}
+									loc: SourceLocation experimental/class-properties/super/input.js 2:12-2:13 (c)
+								}
+							}
+						}
+						definite: undefined
+						typeAnnotation: undefined
+						loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:16
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-properties/super/input.js 2:2-2:3
+							start: Position 2:2
+						}
 					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				]
 				superClass: JSClassExpression {
 					id: undefined
-					loc: Object {
-						filename: "experimental/class-properties/super/input.js"
-						end: Object {
-							column: 35
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/class-properties/super/input.js 1:20-1:35
 					meta: JSClassHead {
 						implements: undefined
 						superClass: undefined
 						superTypeParameters: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "experimental/class-properties/super/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/class-properties/super/input.js 1:20-1:35
 						body: Array [
 							JSClassMethod {
 								kind: "method"
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "c"
-										loc: Object {
-											filename: "experimental/class-properties/super/input.js"
-											identifierName: "c"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 28
-												line: 1
-											}
-										}
+										loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:29 (c)
 									}
-									loc: Object {
-										filename: "experimental/class-properties/super/input.js"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:29
 								}
-								loc: Object {
-									filename: "experimental/class-properties/super/input.js"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 28
-										line: 1
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:33
 								body: JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "experimental/class-properties/super/input.js"
-										end: Object {
-											column: 33
-											line: 1
-										}
-										start: Object {
-											column: 31
-											line: 1
-										}
-									}
+									loc: SourceLocation experimental/class-properties/super/input.js 1:31-1:33
+								}
+								meta: JSClassPropertyMeta {
+									abstract: false
+									accessibility: undefined
+									optional: false
+									readonly: false
+									static: false
+									typeAnnotation: undefined
+									loc: SourceLocation experimental/class-properties/super/input.js 1:28-1:29
+									start: Position 1:28
 								}
 								head: JSFunctionHead {
 									async: false
@@ -167,182 +114,12 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "experimental/class-properties/super/input.js"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 29
-											line: 1
-										}
-									}
-								}
-								meta: JSClassPropertyMeta {
-									abstract: false
-									accessibility: undefined
-									optional: false
-									readonly: false
-									static: false
-									typeAnnotation: undefined
-									start: Object {
-										column: 28
-										line: 1
-									}
-									loc: Object {
-										filename: "experimental/class-properties/super/input.js"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation experimental/class-properties/super/input.js 1:29-1:31
 								}
 							}
 						]
 					}
 				}
-				body: Array [
-					JSClassProperty {
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "c"
-								loc: Object {
-									filename: "experimental/class-properties/super/input.js"
-									identifierName: "c"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
-							}
-							loc: Object {
-								filename: "experimental/class-properties/super/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
-						}
-						value: JSCallExpression {
-							arguments: Array []
-							loc: Object {
-								filename: "experimental/class-properties/super/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
-							callee: JSMemberExpression {
-								loc: Object {
-									filename: "experimental/class-properties/super/input.js"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
-								object: JSSuper {
-									loc: Object {
-										filename: "experimental/class-properties/super/input.js"
-										end: Object {
-											column: 11
-											line: 2
-										}
-										start: Object {
-											column: 6
-											line: 2
-										}
-									}
-								}
-								property: JSStaticMemberProperty {
-									value: JSIdentifier {
-										name: "c"
-										loc: Object {
-											filename: "experimental/class-properties/super/input.js"
-											identifierName: "c"
-											end: Object {
-												column: 13
-												line: 2
-											}
-											start: Object {
-												column: 12
-												line: 2
-											}
-										}
-									}
-									loc: Object {
-										filename: "experimental/class-properties/super/input.js"
-										identifierName: "c"
-										end: Object {
-											column: 13
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
-								}
-							}
-						}
-						definite: undefined
-						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/super/input.js"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/super/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
-						}
-					}
-				]
 			}
 		}
 	]

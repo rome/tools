@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:4
+				start: Position 1:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,74 +38,20 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:23
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:22
 				body: JSBlockStatement {
 					body: Array []
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:8-1:22
 					directives: Array [
 						JSDirective {
 							value: "use strict"
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:9-1:21
 						}
 					]
 				}
@@ -116,32 +60,11 @@ JSRoot {
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:7
 					params: Array [
 						JSBindingIdentifier {
 							name: "eval"
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/invalid-param-strict-mode/input.js"
-								identifierName: "eval"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/invalid-param-strict-mode/input.js 1:0-1:4 (eval)
 						}
 					]
 				}

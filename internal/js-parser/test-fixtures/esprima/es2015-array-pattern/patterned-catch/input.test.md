@@ -18,483 +18,132 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:0-2:0
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-				end: Object {
-					column: 49
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:0-1:49
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-					end: Object {
-						column: 49
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:7-1:49
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-						end: Object {
-							column: 49
-							line: 1
-						}
-						start: Object {
-							column: 47
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:47-1:49
 				}
 				param: JSBindingArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-						end: Object {
-							column: 45
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:14-1:45
 					elements: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:15-1:16 (a)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:15-1:16
 							}
 						}
 						JSBindingIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:17-1:18 (b)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:17-1:18
 							}
 						}
 						JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-								end: Object {
-									column: 44
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:20-1:44
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:20-1:44
 							}
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "c"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "c"
-												end: Object {
-													column: 22
-													line: 1
-												}
-												start: Object {
-													column: 21
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:21-1:22 (c)
 										}
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											end: Object {
-												column: 22
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:21-1:22
 									}
 									value: JSBindingIdentifier {
 										name: "c"
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											identifierName: "c"
-											end: Object {
-												column: 22
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:21-1:22 (c)
 									}
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-										end: Object {
-											column: 22
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:21-1:22
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "d"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "d"
-												end: Object {
-													column: 25
-													line: 1
-												}
-												start: Object {
-													column: 24
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:24-1:25 (d)
 										}
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											end: Object {
-												column: 25
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:24-1:25
 									}
 									value: JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 26
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:26-1:29
 										left: JSBindingIdentifier {
 											name: "e"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "e"
-												end: Object {
-													column: 27
-													line: 1
-												}
-												start: Object {
-													column: 26
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:26-1:27 (e)
 										}
 										right: JSNumericLiteral {
 											value: 0
 											format: undefined
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												end: Object {
-													column: 29
-													line: 1
-												}
-												start: Object {
-													column: 28
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:28-1:29
 										}
 									}
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:24-1:29
 								}
 								JSBindingObjectPatternProperty {
 									key: JSComputedPropertyKey {
 										value: JSReferenceIdentifier {
 											name: "f"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "f"
-												end: Object {
-													column: 33
-													line: 1
-												}
-												start: Object {
-													column: 32
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:32-1:33 (f)
 										}
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											end: Object {
-												column: 34
-												line: 1
-											}
-											start: Object {
-												column: 31
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:31-1:34
 									}
 									value: JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											end: Object {
-												column: 38
-												line: 1
-											}
-											start: Object {
-												column: 35
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:35-1:38
 										left: JSBindingIdentifier {
 											name: "g"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "g"
-												end: Object {
-													column: 36
-													line: 1
-												}
-												start: Object {
-													column: 35
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:35-1:36 (g)
 										}
 										right: JSNumericLiteral {
 											value: 0
 											format: undefined
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												end: Object {
-													column: 38
-													line: 1
-												}
-												start: Object {
-													column: 37
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:37-1:38
 										}
 									}
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-										end: Object {
-											column: 38
-											line: 1
-										}
-										start: Object {
-											column: 31
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:31-1:38
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "h"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "h"
-												end: Object {
-													column: 41
-													line: 1
-												}
-												start: Object {
-													column: 40
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:40-1:41 (h)
 										}
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											end: Object {
-												column: 41
-												line: 1
-											}
-											start: Object {
-												column: 40
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:40-1:41
 									}
 									value: JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-											end: Object {
-												column: 43
-												line: 1
-											}
-											start: Object {
-												column: 40
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:40-1:43
 										left: JSBindingIdentifier {
 											name: "h"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "h"
-												end: Object {
-													column: 41
-													line: 1
-												}
-												start: Object {
-													column: 40
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:40-1:41 (h)
 										}
 										right: JSReferenceIdentifier {
 											name: "i"
-											loc: Object {
-												filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-												identifierName: "i"
-												end: Object {
-													column: 43
-													line: 1
-												}
-												start: Object {
-													column: 42
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:42-1:43 (i)
 										}
 									}
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/patterned-catch/input.js"
-										end: Object {
-											column: 43
-											line: 1
-										}
-										start: Object {
-											column: 40
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/patterned-catch/input.js 1:40-1:43
 								}
 							]
 						}

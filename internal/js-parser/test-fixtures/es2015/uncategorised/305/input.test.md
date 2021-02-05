@@ -18,170 +18,46 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/305/input.js"
-		end: Object {
-			column: 35
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/305/input.js 1:0-1:35
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/305/input.js"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/305/input.js 1:0-1:35
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/uncategorised/305/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/305/input.js 1:0-1:35
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/305/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/305/input.js 1:4-1:29
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "propName"
-											loc: Object {
-												filename: "es2015/uncategorised/305/input.js"
-												identifierName: "propName"
-												end: Object {
-													column: 13
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/305/input.js 1:5-1:13 (propName)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/305/input.js"
-											end: Object {
-												column: 13
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/305/input.js 1:5-1:13
 									}
 									value: JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "es2015/uncategorised/305/input.js"
-											end: Object {
-												column: 28
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/305/input.js 1:5-1:28
 										left: JSBindingIdentifier {
 											name: "propName"
-											loc: Object {
-												filename: "es2015/uncategorised/305/input.js"
-												identifierName: "propName"
-												end: Object {
-													column: 13
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/305/input.js 1:5-1:13 (propName)
 										}
 										right: JSReferenceIdentifier {
 											name: "defaultValue"
-											loc: Object {
-												filename: "es2015/uncategorised/305/input.js"
-												identifierName: "defaultValue"
-												end: Object {
-													column: 28
-													line: 1
-												}
-												start: Object {
-													column: 16
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/305/input.js 1:16-1:28 (defaultValue)
 										}
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/305/input.js"
-										end: Object {
-											column: 28
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/305/input.js 1:5-1:28
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/305/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/305/input.js 1:4-1:35
 						init: JSReferenceIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "es2015/uncategorised/305/input.js"
-								identifierName: "obj"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/305/input.js 1:32-1:35 (obj)
 						}
 					}
 				]

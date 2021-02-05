@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithLeading"
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-					identifierName: "singleElementWithLeading"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:9-1:33 (singleElementWithLeading)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-				end: Object {
-					column: 47
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:0-1:47
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-					end: Object {
-						column: 47
-						line: 1
-					}
-					start: Object {
-						column: 45
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:45-1:47
 			}
 			head: JSFunctionHead {
 				async: false
@@ -79,106 +38,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 33
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:33-1:44
 				params: Array [
 					JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 34
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:34-1:35 (x)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 34
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:34-1:35
 						}
 					}
 				]
 				rest: JSBindingArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-						end: Object {
-							column: 43
-							line: 1
-						}
-						start: Object {
-							column: 40
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:40-1:43
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-							end: Object {
-								column: 43
-								line: 1
-							}
-							start: Object {
-								column: 40
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:40-1:43
 					}
 					elements: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 42
-									line: 1
-								}
-								start: Object {
-									column: 41
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:41-1:42 (a)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/array-pattern-single-element-with-leading/input.js"
-									end: Object {
-										column: 42
-										line: 1
-									}
-									start: Object {
-										column: 41
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/array-pattern-single-element-with-leading/input.js 1:41-1:42
 							}
 						}
 					]

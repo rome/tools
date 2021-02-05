@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/388/input.js"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/388/input.js 1:0-1:9
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,86 +32,29 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:5
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/388/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/388/input.js 1:0-1:9
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/388/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/388/input.js 1:2-1:5
 					expression: JSReferenceIdentifier {
 						name: "set"
-						loc: Object {
-							filename: "core/uncategorised/388/input.js"
-							identifierName: "set"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/388/input.js 1:2-1:5 (set)
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/388/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/388/input.js 1:6-1:7
 					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/388/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/388/input.js 1:6-1:7
 					}
 				}
 			]

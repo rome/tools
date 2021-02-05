@@ -18,151 +18,38 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-				end: Object {
-					column: 43
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:0-1:43
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-					end: Object {
-						column: 42
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:1-1:42
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:3-1:14
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:3-1:14
 						}
-						value: JSNullLiteral {
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:16-1:20}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:3-1:20
 					}
 					JSObjectMethod {
 						kind: "set"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 35
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:26-1:35 (__proto__)
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:26-1:35
 						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-							end: Object {
-								column: 40
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:22-1:40
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-								end: Object {
-									column: 40
-									line: 1
-								}
-								start: Object {
-									column: 38
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:38-1:40
 						}
 						head: JSFunctionHead {
 							async: false
@@ -172,46 +59,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 35
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:35-1:38
 							params: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 37
-											line: 1
-										}
-										start: Object {
-											column: 36
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:36-1:37 (x)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
-											end: Object {
-												column: 37
-												line: 1
-											}
-											start: Object {
-												column: 36
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:36-1:37
 									}
 								}
 							]

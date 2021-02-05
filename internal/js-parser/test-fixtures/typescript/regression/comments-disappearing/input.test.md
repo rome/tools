@@ -16,131 +16,40 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-7:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/regression/comments-disappearing/input.ts"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " one"
-			loc: Object {
-				filename: "typescript/regression/comments-disappearing/input.ts"
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/regression/comments-disappearing/input.ts 2:4-2:10
 		}
 		CommentLine {
 			id: "1"
 			value: " two"
-			loc: Object {
-				filename: "typescript/regression/comments-disappearing/input.ts"
-				end: Object {
-					column: 10
-					line: 3
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/regression/comments-disappearing/input.ts 3:4-3:10
 		}
 		CommentLine {
 			id: "2"
 			value: " three"
-			loc: Object {
-				filename: "typescript/regression/comments-disappearing/input.ts"
-				end: Object {
-					column: 12
-					line: 4
-				}
-				start: Object {
-					column: 4
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/regression/comments-disappearing/input.ts 4:4-4:12
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/regression/comments-disappearing/input.ts"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-6:1
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/regression/comments-disappearing/input.ts"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-6:1
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "fun"
-							loc: Object {
-								filename: "typescript/regression/comments-disappearing/input.ts"
-								identifierName: "fun"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:4-1:7 (fun)
 						}
-						loc: Object {
-							filename: "typescript/regression/comments-disappearing/input.ts"
-							end: Object {
-								column: 1
-								line: 6
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:4-6:1
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "typescript/regression/comments-disappearing/input.ts"
-								end: Object {
-									column: 1
-									line: 6
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:10-6:1
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
@@ -148,64 +57,24 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/regression/comments-disappearing/input.ts"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:10-1:15
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "typescript/regression/comments-disappearing/input.ts"
-									end: Object {
-										column: 1
-										line: 6
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:16-6:1
 								body: Array [
 									JSReturnStatement {
+										loc: SourceLocation typescript/regression/comments-disappearing/input.ts 5:4-5:15
 										leadingComments: Array [
 											"0"
 											"1"
 											"2"
 										]
-										loc: Object {
-											filename: "typescript/regression/comments-disappearing/input.ts"
-											end: Object {
-												column: 15
-												line: 5
-											}
-											start: Object {
-												column: 4
-												line: 5
-											}
-										}
 										argument: JSNumericLiteral {
 											value: 1
 											format: undefined
 											leadingComments: undefined
-											loc: Object {
-												filename: "typescript/regression/comments-disappearing/input.ts"
-												end: Object {
-													column: 13
-													line: 5
-												}
-												start: Object {
-													column: 12
-													line: 5
-												}
-											}
+											loc: SourceLocation typescript/regression/comments-disappearing/input.ts 5:12-5:13
 										}
 									}
 								]

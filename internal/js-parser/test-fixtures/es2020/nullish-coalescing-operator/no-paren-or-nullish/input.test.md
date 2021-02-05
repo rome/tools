@@ -18,100 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js 1:0-1:12
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: Object {
-					filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js 1:0-1:11
 				right: JSReferenceIdentifier {
 					name: "j"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
-						identifierName: "j"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js 1:10-1:11 (j)
 				}
 				left: JSLogicalExpression {
 					operator: "||"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js 1:0-1:6
 					left: JSReferenceIdentifier {
 						name: "h"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
-							identifierName: "h"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js 1:0-1:1 (h)
 					}
 					right: JSReferenceIdentifier {
 						name: "i"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js"
-							identifierName: "i"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/no-paren-or-nullish/input.js 1:5-1:6 (i)
 					}
 				}
 			}

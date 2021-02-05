@@ -16,21 +16,19 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-5:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 2:26
+				start: Position 2:24
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,108 +38,32 @@ JSRoot {
 					"{"
 				]
 			}
-			location: Object {
-				filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 26
-					line: 2
-				}
-				start: Object {
-					column: 24
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-4:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "isBar"
-								loc: Object {
-									filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-									identifierName: "isBar"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7 (isBar)
 							}
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7
 						}
-						loc: Object {
-							filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-							end: Object {
-								column: 1
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-4:1
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -149,21 +71,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:2-2:7
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -173,368 +82,99 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-								end: Object {
-									column: 23
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:7-2:23
 							returnType: TSTypePredicate {
 								asserts: true
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-									end: Object {
-										column: 23
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:9-2:23
 								parameterName: JSIdentifier {
 									name: "this"
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										identifierName: "this"
-										end: Object {
-											column: 23
-											line: 2
-										}
-										start: Object {
-											column: 19
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:19-2:23 (this)
 								}
 							}
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-								end: Object {
-									column: 1
-									line: 4
-								}
-								start: Object {
-									column: 24
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-4:1
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 26
-											line: 2
-										}
-										start: Object {
-											column: 24
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-2:26
 									expression: JSReferenceIdentifier {
 										name: "is"
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											identifierName: "is"
-											end: Object {
-												column: 26
-												line: 2
-											}
-											start: Object {
-												column: 24
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:24-2:26 (is)
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 30
-											line: 2
-										}
-										start: Object {
-											column: 27
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:27-2:30
 									expression: JSReferenceIdentifier {
 										name: "Foo"
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											identifierName: "Foo"
-											end: Object {
-												column: 30
-												line: 2
-											}
-											start: Object {
-												column: 27
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:27-2:30 (Foo)
 									}
 								}
 								JSBlockStatement {
 									body: Array []
 									directives: Array []
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 33
-											line: 2
-										}
-										start: Object {
-											column: 31
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 2:31-2:33
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 12
-											line: 3
-										}
-										start: Object {
-											column: 2
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:12
 									expression: JSAssignmentExpression {
 										operator: "="
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											end: Object {
-												column: 12
-												line: 3
-											}
-											start: Object {
-												column: 2
-												line: 3
-											}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:12
+										left: JSAssignmentIdentifier {
+											name: "isBaz"
+											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:2-3:7 (isBaz)
 										}
 										right: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
-											loc: Object {
-												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-												end: Object {
-													column: 11
-													line: 3
-												}
-												start: Object {
-													column: 11
-													line: 3
-												}
-											}
-										}
-										left: JSAssignmentIdentifier {
-											name: "isBaz"
-											loc: Object {
-												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-												identifierName: "isBaz"
-												end: Object {
-													column: 7
-													line: 3
-												}
-												start: Object {
-													column: 2
-													line: 3
-												}
-											}
+											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:11-3:11
 										}
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 13
-											line: 3
-										}
-										start: Object {
-											column: 12
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:12-3:13
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											end: Object {
-												column: 13
-												line: 3
-											}
-											start: Object {
-												column: 12
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:12-3:13
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 21
-											line: 3
-										}
-										start: Object {
-											column: 14
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:14-3:21
 									expression: JSReferenceIdentifier {
 										name: "asserts"
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											identifierName: "asserts"
-											end: Object {
-												column: 21
-												line: 3
-											}
-											start: Object {
-												column: 14
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:14-3:21 (asserts)
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 26
-											line: 3
-										}
-										start: Object {
-											column: 22
-											line: 3
-										}
-									}
-									expression: JSThisExpression {
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											end: Object {
-												column: 26
-												line: 3
-											}
-											start: Object {
-												column: 22
-												line: 3
-											}
-										}
-									}
+									expression: JSThisExpression {loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:22-3:26}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:22-3:26
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 29
-											line: 3
-										}
-										start: Object {
-											column: 27
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:27-3:29
 									expression: JSReferenceIdentifier {
 										name: "is"
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											identifierName: "is"
-											end: Object {
-												column: 29
-												line: 3
-											}
-											start: Object {
-												column: 27
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:27-3:29 (is)
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-										end: Object {
-											column: 39
-											line: 3
-										}
-										start: Object {
-											column: 30
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:39
 									expression: JSArrowFunctionExpression {
-										loc: Object {
-											filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-											end: Object {
-												column: 39
-												line: 3
-											}
-											start: Object {
-												column: 30
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:39
 										body: JSBlockStatement {
 											body: Array []
 											directives: Array []
-											loc: Object {
-												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-												end: Object {
-													column: 39
-													line: 3
-												}
-												start: Object {
-													column: 37
-													line: 3
-												}
-											}
+											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:37-3:39
 										}
 										head: JSFunctionHead {
 											async: false
 											hasHoistedVars: false
 											rest: undefined
 											thisType: undefined
-											loc: Object {
-												filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-												end: Object {
-													column: 36
-													line: 3
-												}
-												start: Object {
-													column: 30
-													line: 3
-												}
-											}
+											loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:36
 											params: Array [
 												JSBindingIdentifier {
 													name: "Foo"
-													loc: Object {
-														filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
-														identifierName: "Foo"
-														end: Object {
-															column: 33
-															line: 3
-														}
-														start: Object {
-															column: 30
-															line: 3
-														}
-													}
+													loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 3:30-3:33 (Foo)
 												}
 											]
 										}

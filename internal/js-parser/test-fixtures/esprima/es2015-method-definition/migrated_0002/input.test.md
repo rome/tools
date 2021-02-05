@@ -18,125 +18,34 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:0-1:22
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:0-1:22
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:4-1:22
 					properties: Array [
 						JSObjectMethod {
 							kind: "method"
 							key: JSStaticPropertyKey {
 								value: JSStringLiteral {
 									value: "method"
-									loc: Object {
-										filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:6-1:14
 								}
-								loc: Object {
-									filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:6-1:14
 							}
-							loc: Object {
-								filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:6-1:20
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:17-1:20
 							}
 							head: JSFunctionHead {
 								async: false
@@ -147,17 +56,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-method-definition/migrated_0002/input.js"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-method-definition/migrated_0002/input.js 1:14-1:16
 							}
 						}
 					]

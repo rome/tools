@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				start: Position 1:7
 			}
 			description: Object {
 				category: "parse"
@@ -61,140 +45,48 @@ JSRoot {
 							RAW_MARKUP {value: "</emphasis> here"}
 						]
 					}
-					frame {
-						location: Object {
-							filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-							end: Object {
-								column: 0
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 2:0-2:0}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:0-2:0
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "hello "
 						raw: "hello "
 						tail: false
-						loc: Object {
-							filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:1-1:7
 					}
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false
-						loc: Object {
-							filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-							end: Object {
-								column: 0
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 2:0-2:0
 					}
 				]
 				expressions: Array [
 					JSTaggedTemplateExpression {
 						typeArguments: undefined
-						loc: Object {
-							filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:9-1:18
 						tag: JSNumericLiteral {
 							value: 10
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:9-1:11
 						}
 						quasi: JSTemplateLiteral {
 							expressions: Array []
-							loc: Object {
-								filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:12-1:18
 							quasis: Array [
 								JSTemplateElement {
 									cooked: "test"
 									raw: "test"
 									tail: true
-									loc: Object {
-										filename: "esprima/es2015-template-literals/unclosed-nested/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 1:13-1:17
 								}
 							]
 						}

@@ -18,85 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/228/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/228/input.js 1:0-1:26
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "core/uncategorised/228/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/228/input.js 1:0-1:26
 			test: JSReferenceIdentifier {
 				name: "morning"
-				loc: Object {
-					filename: "core/uncategorised/228/input.js"
-					identifierName: "morning"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/228/input.js 1:4-1:11 (morning)
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/228/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/228/input.js 1:13-1:26
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "core/uncategorised/228/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/228/input.js 1:13-1:26
 					callee: JSReferenceIdentifier {
 						name: "goodMorning"
-						loc: Object {
-							filename: "core/uncategorised/228/input.js"
-							identifierName: "goodMorning"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/228/input.js 1:13-1:24 (goodMorning)
 					}
 				}
 			}

@@ -16,17 +16,7 @@ Object {
 			kind: "value"
 			name: "foo"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:14-1:19
 		}
 	]
 	diagnostics: Array [
@@ -39,14 +29,8 @@ Object {
 				language: "js"
 				marker: undefined
 				sourceTypeJS: "module"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:19
+				start: Position 1:0
 			}
 			description: Object {
 				category: "analyzeDependencies/cjsExportInES"
@@ -88,37 +72,13 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	topLevelLocalBindings: Object {
-		foo: Object {
-			filename: "unknown"
-			identifierName: "foo"
-			end: Object {
-				column: 16
-				line: 1
-			}
-			start: Object {
-				column: 13
-				line: 1
-			}
-		}
-	}
+	topLevelLocalBindings: Object {foo: SourceLocation unknown 1:13-1:16 (foo)}
 	exports: Array [
 		local {
 			kind: "value"
 			name: "foo"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "foo"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:13-1:16 (foo)
 		}
 	]
 }
@@ -144,17 +104,7 @@ Object {
 			names: Array []
 			optional: false
 			source: "bar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:7-1:12
 		}
 	]
 }
@@ -184,30 +134,8 @@ Object {
 	importFirstUsage: Array []
 	moduleType: "es"
 	topLevelLocalBindings: Object {
-		bar: Object {
-			filename: "unknown"
-			identifierName: "bar"
-			end: Object {
-				column: 11
-				line: 1
-			}
-			start: Object {
-				column: 8
-				line: 1
-			}
-		}
-		foo: Object {
-			filename: "unknown"
-			identifierName: "foo"
-			end: Object {
-				column: 9
-				line: 2
-			}
-			start: Object {
-				column: 6
-				line: 2
-			}
-		}
+		bar: SourceLocation unknown 1:8-1:11 (bar)
+		foo: SourceLocation unknown 2:6-2:9 (foo)
 	}
 	dependencies: Array [
 		es {
@@ -218,31 +146,11 @@ Object {
 			imported: true
 			optional: false
 			source: "foo"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:18-1:23
 			names: Array [
 				value {
 					name: "bar"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:8-1:11
 				}
 			]
 		}
@@ -258,20 +166,27 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "cjs"
-	topLevelLocalBindings: Object {
-		foo: Object {
-			filename: "unknown"
-			identifierName: "foo"
-			end: Object {
-				column: 16
-				line: 1
-			}
-			start: Object {
-				column: 13
-				line: 1
-			}
+	topLevelLocalBindings: Object {foo: SourceLocation unknown 1:13-1:16 (foo)}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: SourceLocation unknown 1:13-1:16 (foo)
 		}
-	}
+		local {
+			kind: "value"
+			name: "bar"
+			valueType: "other"
+			loc: SourceLocation unknown 2:14-2:19
+		}
+		local {
+			kind: "value"
+			name: "default"
+			loc: undefined
+			valueType: "other"
+		}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -280,14 +195,8 @@ Object {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:25
+				start: Position 1:0
 			}
 			description: Object {
 				category: "parse"
@@ -310,47 +219,6 @@ Object {
 			}
 		}
 	]
-	exports: Array [
-		local {
-			kind: "value"
-			name: "foo"
-			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "foo"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
-		}
-		local {
-			kind: "value"
-			name: "bar"
-			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 14
-					line: 2
-				}
-			}
-		}
-		local {
-			kind: "value"
-			name: "default"
-			loc: undefined
-			valueType: "other"
-		}
-	]
 }
 ```
 
@@ -363,20 +231,7 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	topLevelLocalBindings: Object {
-		yes: Object {
-			filename: "unknown"
-			identifierName: "yes"
-			end: Object {
-				column: 12
-				line: 3
-			}
-			start: Object {
-				column: 9
-				line: 3
-			}
-		}
-	}
+	topLevelLocalBindings: Object {yes: SourceLocation unknown 3:9-3:12 (yes)}
 	dependencies: Array [
 		es {
 			kind: "value"
@@ -387,17 +242,7 @@ Object {
 			names: Array []
 			optional: false
 			source: "./foo"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:7-1:14
 		}
 		es {
 			kind: "value"
@@ -408,17 +253,7 @@ Object {
 			names: Array []
 			optional: false
 			source: "./bar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 16
-					line: 4
-				}
-				start: Object {
-					column: 9
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:9-4:16
 		}
 	]
 }
@@ -439,17 +274,7 @@ Object {
 			kind: "value"
 			name: "yes"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:14-1:27
 		}
 		local {
 			kind: "value"
@@ -476,17 +301,7 @@ Object {
 			kind: "value"
 			name: "default"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:17-1:30
 		}
 		local {
 			kind: "value"
@@ -508,94 +323,28 @@ Object {
 	importFirstUsage: Array []
 	moduleType: "es"
 	topLevelLocalBindings: Object {
-		Bar: Object {
-			filename: "unknown"
-			identifierName: "Bar"
-			end: Object {
-				column: 16
-				line: 3
-			}
-			start: Object {
-				column: 13
-				line: 3
-			}
-		}
-		foo: Object {
-			filename: "unknown"
-			identifierName: "foo"
-			end: Object {
-				column: 19
-				line: 2
-			}
-			start: Object {
-				column: 16
-				line: 2
-			}
-		}
-		yes: Object {
-			filename: "unknown"
-			identifierName: "yes"
-			end: Object {
-				column: 16
-				line: 1
-			}
-			start: Object {
-				column: 13
-				line: 1
-			}
-		}
+		Bar: SourceLocation unknown 3:13-3:16 (Bar)
+		foo: SourceLocation unknown 2:16-2:19 (foo)
+		yes: SourceLocation unknown 1:13-1:16 (yes)
 	}
 	exports: Array [
 		local {
 			kind: "value"
 			name: "yes"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "yes"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:13-1:16 (yes)
 		}
 		local {
 			kind: "value"
 			name: "foo"
 			valueType: "function"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "foo"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 16
-					line: 2
-				}
-			}
+			loc: SourceLocation unknown 2:16-2:19 (foo)
 		}
 		local {
 			kind: "value"
 			name: "Bar"
 			valueType: "class"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "Bar"
-				end: Object {
-					column: 16
-					line: 3
-				}
-				start: Object {
-					column: 13
-					line: 3
-				}
-			}
+			loc: SourceLocation unknown 3:13-3:16 (Bar)
 		}
 	]
 }
@@ -616,17 +365,7 @@ Object {
 			kind: "value"
 			name: "default"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:20
 		}
 	]
 }
@@ -641,76 +380,6 @@ Object {
 	importFirstUsage: Array []
 	moduleType: "es"
 	topLevelLocalBindings: Object {}
-	exports: Array [
-		external {
-			kind: "value"
-			exported: "foo"
-			imported: "foo"
-			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
-		}
-		external {
-			kind: "value"
-			exported: "bar"
-			imported: "bar"
-			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
-		}
-		external {
-			kind: "value"
-			exported: "no"
-			imported: "default"
-			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
-		}
-		external {
-			kind: "value"
-			exported: "noo"
-			imported: "boo"
-			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 43
-					line: 1
-				}
-				start: Object {
-					column: 33
-					line: 1
-				}
-			}
-		}
-	]
 	dependencies: Array [
 		es {
 			kind: "value"
@@ -720,75 +389,55 @@ Object {
 			imported: false
 			optional: false
 			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 58
-					line: 1
-				}
-				start: Object {
-					column: 50
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:50-1:58
 			names: Array [
 				value {
 					name: "foo"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:8-1:11
 				}
 				value {
 					name: "bar"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:13-1:16
 				}
 				value {
 					name: "default"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:18-1:31
 				}
 				value {
 					name: "boo"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 43
-							line: 1
-						}
-						start: Object {
-							column: 33
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:33-1:43
 				}
 			]
+		}
+	]
+	exports: Array [
+		external {
+			kind: "value"
+			exported: "foo"
+			imported: "foo"
+			source: "foobar"
+			loc: SourceLocation unknown 1:8-1:11
+		}
+		external {
+			kind: "value"
+			exported: "bar"
+			imported: "bar"
+			source: "foobar"
+			loc: SourceLocation unknown 1:13-1:16
+		}
+		external {
+			kind: "value"
+			exported: "no"
+			imported: "default"
+			source: "foobar"
+			loc: SourceLocation unknown 1:18-1:31
+		}
+		external {
+			kind: "value"
+			exported: "noo"
+			imported: "boo"
+			source: "foobar"
+			loc: SourceLocation unknown 1:33-1:43
 		}
 	]
 }
@@ -807,17 +456,7 @@ Object {
 		externalAll {
 			kind: "value"
 			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:0-1:23
 		}
 	]
 	dependencies: Array [
@@ -830,17 +469,7 @@ Object {
 			names: Array []
 			optional: false
 			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:14-1:22
 		}
 	]
 }
@@ -855,20 +484,7 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	topLevelLocalBindings: Object {
-		bar: Object {
-			filename: "unknown"
-			identifierName: "bar"
-			end: Object {
-				column: 10
-				line: 1
-			}
-			start: Object {
-				column: 7
-				line: 1
-			}
-		}
-	}
+	topLevelLocalBindings: Object {bar: SourceLocation unknown 1:7-1:10 (bar)}
 	dependencies: Array [
 		es {
 			kind: "value"
@@ -878,31 +494,11 @@ Object {
 			imported: true
 			optional: false
 			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:16-1:24
 			names: Array [
 				value {
 					name: "default"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:0-1:10
 				}
 			]
 		}
@@ -920,54 +516,10 @@ Object {
 	importFirstUsage: Array []
 	moduleType: "es"
 	topLevelLocalBindings: Object {
-		bar: Object {
-			filename: "unknown"
-			identifierName: "bar"
-			end: Object {
-				column: 11
-				line: 1
-			}
-			start: Object {
-				column: 8
-				line: 1
-			}
-		}
-		foo: Object {
-			filename: "unknown"
-			identifierName: "foo"
-			end: Object {
-				column: 16
-				line: 1
-			}
-			start: Object {
-				column: 13
-				line: 1
-			}
-		}
-		lol: Object {
-			filename: "unknown"
-			identifierName: "lol"
-			end: Object {
-				column: 32
-				line: 1
-			}
-			start: Object {
-				column: 29
-				line: 1
-			}
-		}
-		to: Object {
-			filename: "unknown"
-			identifierName: "to"
-			end: Object {
-				column: 42
-				line: 1
-			}
-			start: Object {
-				column: 40
-				line: 1
-			}
-		}
+		bar: SourceLocation unknown 1:8-1:11 (bar)
+		foo: SourceLocation unknown 1:13-1:16 (foo)
+		lol: SourceLocation unknown 1:29-1:32 (lol)
+		to: SourceLocation unknown 1:40-1:42 (to)
 	}
 	dependencies: Array [
 		es {
@@ -978,73 +530,23 @@ Object {
 			imported: true
 			optional: false
 			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 57
-					line: 1
-				}
-				start: Object {
-					column: 49
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:49-1:57
 			names: Array [
 				value {
 					name: "bar"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:8-1:11
 				}
 				value {
 					name: "foo"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:13-1:16
 				}
 				value {
 					name: "default"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:18-1:32
 				}
 				value {
 					name: "ya"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 42
-							line: 1
-						}
-						start: Object {
-							column: 34
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:34-1:42
 				}
 			]
 		}
@@ -1072,17 +574,7 @@ Object {
 			names: Array []
 			optional: false
 			source: "foobar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:21-1:29
 		}
 	]
 }
@@ -1103,52 +595,19 @@ Object {
 			kind: "value"
 			name: "foo"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "foo"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:8-1:11 (foo)
 		}
 		local {
 			kind: "value"
 			name: "bar"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "bar"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:13-1:16 (bar)
 		}
 		local {
 			kind: "value"
 			name: "no"
 			valueType: "other"
-			loc: Object {
-				filename: "unknown"
-				identifierName: "yes"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:18-1:21 (yes)
 		}
 	]
 }
@@ -1163,20 +622,7 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "es"
-	topLevelLocalBindings: Object {
-		yeah: Object {
-			filename: "unknown"
-			identifierName: "yeah"
-			end: Object {
-				column: 13
-				line: 3
-			}
-			start: Object {
-				column: 9
-				line: 3
-			}
-		}
-	}
+	topLevelLocalBindings: Object {yeah: SourceLocation unknown 3:9-3:13 (yeah)}
 	dependencies: Array [
 		es {
 			kind: "value"
@@ -1187,17 +633,7 @@ Object {
 			names: Array []
 			optional: false
 			source: "foo"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:21-1:26
 		}
 		cjs {
 			kind: "value"
@@ -1208,17 +644,7 @@ Object {
 			names: Array []
 			optional: false
 			source: "bar"
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 16
-					line: 4
-				}
-				start: Object {
-					column: 2
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:2-4:16
 		}
 	]
 }
@@ -1234,17 +660,7 @@ Object {
 	importFirstUsage: Array []
 	moduleType: "es"
 	topLevelLocalBindings: Object {}
-	firstTopAwaitLocation: Object {
-		filename: "unknown"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	firstTopAwaitLocation: SourceLocation unknown 1:0-1:14
 }
 ```
 
@@ -1257,6 +673,7 @@ Object {
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
 	moduleType: "cjs"
+	topLevelLocalBindings: Object {yes: SourceLocation unknown 6:9-6:12 (yes)}
 	exports: Array [
 		local {
 			kind: "value"
@@ -1265,20 +682,6 @@ Object {
 			valueType: "other"
 		}
 	]
-	topLevelLocalBindings: Object {
-		yes: Object {
-			filename: "unknown"
-			identifierName: "yes"
-			end: Object {
-				column: 12
-				line: 6
-			}
-			start: Object {
-				column: 9
-				line: 6
-			}
-		}
-	}
 }
 ```
 

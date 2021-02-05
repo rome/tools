@@ -18,168 +18,47 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/335/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/335/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "core/uncategorised/335/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/335/input.js 1:0-1:17
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/335/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/335/input.js 1:16-1:17
 				}
 				left: JSBinaryExpression {
 					operator: "+"
-					loc: Object {
-						filename: "core/uncategorised/335/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/335/input.js 1:1-1:12
 					right: JSArrayExpression {
 						elements: Array []
-						loc: Object {
-							filename: "core/uncategorised/335/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/335/input.js 1:10-1:12
 					}
 					left: JSObjectExpression {
-						loc: Object {
-							filename: "core/uncategorised/335/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/335/input.js 1:1-1:9
 						properties: Array [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "core/uncategorised/335/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 3
-												line: 1
-											}
-											start: Object {
-												column: 2
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/335/input.js 1:2-1:3 (a)
 									}
-									loc: Object {
-										filename: "core/uncategorised/335/input.js"
-										end: Object {
-											column: 3
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/335/input.js 1:2-1:3
 								}
 								value: JSArrayExpression {
-									loc: Object {
-										filename: "core/uncategorised/335/input.js"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/335/input.js 1:5-1:8
 									elements: Array [
 										JSNumericLiteral {
 											value: 1
 											format: undefined
-											loc: Object {
-												filename: "core/uncategorised/335/input.js"
-												end: Object {
-													column: 7
-													line: 1
-												}
-												start: Object {
-													column: 6
-													line: 1
-												}
-											}
+											loc: SourceLocation core/uncategorised/335/input.js 1:6-1:7
 										}
 									]
 								}
-								loc: Object {
-									filename: "core/uncategorised/335/input.js"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/335/input.js 1:2-1:8
 							}
 						]
 					}

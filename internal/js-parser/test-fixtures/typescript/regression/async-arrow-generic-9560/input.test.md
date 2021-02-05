@@ -17,103 +17,48 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-		end: Object {
-			column: 1
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Cl"
-				loc: Object {
-					filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-					identifierName: "Cl"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:6-1:8 (Cl)
 			}
-			loc: Object {
-				filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-				end: Object {
-					column: 1
-					line: 8
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-					end: Object {
-						column: 1
-						line: 8
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3 (a)
 							}
-							loc: Object {
-								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:6-4:3
+							body: JSBlockStatement {
+								directives: Array []
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:20-4:3
+								body: Array [
+									JSExpressionStatement {
+										loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:4-3:12
+										expression: JSAwaitExpression {
+											loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:4-3:11
+											argument: JSNumericLiteral {
+												value: 0
+												format: undefined
+												loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 3:10-3:11
+											}
+										}
+									}
+								]
 							}
 							head: JSFunctionHead {
 								async: true
@@ -122,120 +67,23 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-									end: Object {
-										column: 19
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:6-2:19
 								typeParameters: TSTypeParameterDeclaration {
-									loc: Object {
-										filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-										end: Object {
-											column: 14
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:11-2:14
 									params: Array [
 										TSTypeParameter {
 											name: "T"
 											constraint: undefined
 											default: undefined
-											loc: Object {
-												filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-												end: Object {
-													column: 13
-													line: 2
-												}
-												start: Object {
-													column: 12
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:12-2:13
 										}
 									]
 								}
 							}
-							body: JSBlockStatement {
-								directives: Array []
-								loc: Object {
-									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-									end: Object {
-										column: 3
-										line: 4
-									}
-									start: Object {
-										column: 20
-										line: 2
-									}
-								}
-								body: Array [
-									JSExpressionStatement {
-										loc: Object {
-											filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-											end: Object {
-												column: 12
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
-										expression: JSAwaitExpression {
-											loc: Object {
-												filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-												end: Object {
-													column: 11
-													line: 3
-												}
-												start: Object {
-													column: 4
-													line: 3
-												}
-											}
-											argument: JSNumericLiteral {
-												value: 0
-												format: undefined
-												loc: Object {
-													filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-													end: Object {
-														column: 11
-														line: 3
-													}
-													start: Object {
-														column: 10
-														line: 3
-													}
-												}
-											}
-										}
-									}
-								]
-							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-							end: Object {
-								column: 4
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-4:4
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -243,78 +91,24 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 2:2-2:3
+							start: Position 2:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-									identifierName: "b"
-									end: Object {
-										column: 3
-										line: 6
-									}
-									start: Object {
-										column: 2
-										line: 6
-									}
-								}
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3 (b)
 							}
-							loc: Object {
-								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 2
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-								end: Object {
-									column: 3
-									line: 7
-								}
-								start: Object {
-									column: 6
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-7:3
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-									end: Object {
-										column: 3
-										line: 7
-									}
-									start: Object {
-										column: 20
-										line: 6
-									}
-								}
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:20-7:3
 							}
 							head: JSFunctionHead {
 								async: true
@@ -323,45 +117,15 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-									end: Object {
-										column: 19
-										line: 6
-									}
-									start: Object {
-										column: 6
-										line: 6
-									}
-								}
+								loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:6-6:19
 								typeParameters: TSTypeParameterDeclaration {
-									loc: Object {
-										filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-										end: Object {
-											column: 14
-											line: 6
-										}
-										start: Object {
-											column: 11
-											line: 6
-										}
-									}
+									loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:11-6:14
 									params: Array [
 										TSTypeParameter {
 											name: "T"
 											constraint: undefined
 											default: undefined
-											loc: Object {
-												filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-												end: Object {
-													column: 13
-													line: 6
-												}
-												start: Object {
-													column: 12
-													line: 6
-												}
-											}
+											loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:12-6:13
 										}
 									]
 								}
@@ -369,17 +133,7 @@ JSRoot {
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-							end: Object {
-								column: 4
-								line: 7
-							}
-							start: Object {
-								column: 2
-								line: 6
-							}
-						}
+						loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-7:4
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -387,21 +141,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 6
-							}
-							loc: Object {
-								filename: "typescript/regression/async-arrow-generic-9560/input.ts"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 2
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 6:2-6:3
+							start: Position 6:2
 						}
 					}
 				]

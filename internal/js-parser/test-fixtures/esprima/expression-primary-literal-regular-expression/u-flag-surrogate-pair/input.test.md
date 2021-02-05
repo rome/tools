@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [
@@ -45,71 +35,24 @@ JSRoot {
 				integrity: undefined
 				language: "regex"
 				sourceText: undefined
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+				end: Position 1:29
+				start: Position 1:16
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:0-1:41
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:0-1:41
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-							end: Object {
-								column: 41
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:4-1:41
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -117,152 +60,42 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: true
-							loc: Object {
-								filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-								end: Object {
-									column: 41
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:8-1:41
 							expression: JSRegExpSubExpression {
-								loc: Object {
-									filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-									end: Object {
-										column: 38
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:9-1:38
 								body: Array [
 									JSRegExpCharSet {
 										invert: false
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-											end: Object {
-												column: 38
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:9-1:38
 										body: Array [
 											JSRegExpCharacter {
 												value: "\ud834"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-													end: Object {
-														column: 16
-														line: 1
-													}
-													start: Object {
-														column: 10
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:10-1:16
 											}
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-													end: Object {
-														column: 29
-														line: 1
-													}
-													start: Object {
-														column: 16
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:16-1:29
 												end: JSRegExpCharacter {
 													value: "\udf06"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-														end: Object {
-															column: 22
-															line: 1
-														}
-														start: Object {
-															column: 16
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:16-1:22
 												}
 												start: JSRegExpCharacter {
 													value: "\ud834"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-														end: Object {
-															column: 29
-															line: 1
-														}
-														start: Object {
-															column: 23
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:23-1:29
 												}
 											}
 											JSRegExpCharacter {
 												value: "\udf08"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-													end: Object {
-														column: 35
-														line: 1
-													}
-													start: Object {
-														column: 29
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:29-1:35
 											}
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-													end: Object {
-														column: 38
-														line: 1
-													}
-													start: Object {
-														column: 35
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:35-1:38
 												end: JSRegExpCharacter {
 													value: "z"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-														end: Object {
-															column: 38
-															line: 1
-														}
-														start: Object {
-															column: 37
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:37-1:38
 												}
 												start: JSRegExpCharacter {
 													value: "a"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
-														end: Object {
-															column: 36
-															line: 1
-														}
-														start: Object {
-															column: 35
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:35-1:36
 												}
 											}
 										]

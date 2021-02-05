@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/96/input.js"
-		end: Object {
-			column: 25
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/96/input.js 1:0-1:25
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/96/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:14
+				start: Position 1:7
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,20 +38,6 @@ JSRoot {
 					"{"
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/96/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
@@ -61,201 +45,55 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/96/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/96/input.js 1:0-1:25
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "es2015/uncategorised/96/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/96/input.js 1:0-1:25
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/96/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/96/input.js 1:7-1:14
 					imported: JSIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "es2015/uncategorised/96/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/96/input.js 1:7-1:14 (default)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "default"
-							loc: Object {
-								filename: "es2015/uncategorised/96/input.js"
-								identifierName: "default"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/96/input.js 1:7-1:14 (default)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/96/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/96/input.js 1:7-1:14
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/96/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/96/input.js 1:15-1:19
 					imported: JSIdentifier {
 						name: "from"
-						loc: Object {
-							filename: "es2015/uncategorised/96/input.js"
-							identifierName: "from"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/96/input.js 1:15-1:19 (from)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "from"
-							loc: Object {
-								filename: "es2015/uncategorised/96/input.js"
-								identifierName: "from"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/96/input.js 1:15-1:19 (from)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/96/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/96/input.js 1:15-1:19
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/96/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/96/input.js 1:20-1:25
 					imported: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/96/input.js"
-							identifierName: ""
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/96/input.js 1:20-1:25 ()
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: ""
-							loc: Object {
-								filename: "es2015/uncategorised/96/input.js"
-								identifierName: ""
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/96/input.js 1:20-1:25 ()
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/96/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/96/input.js 1:20-1:25
 					}
 				}
 			]

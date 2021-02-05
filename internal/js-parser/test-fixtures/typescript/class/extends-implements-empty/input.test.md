@@ -16,21 +16,39 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/extends-implements-empty/input.ts"
-		end: Object {
-			column: 0
-			line: 3
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Foo"
+				loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:6-1:9 (Foo)
+			}
+			loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-2:1
+			meta: JSClassHead {
+				body: Array []
+				implements: Array []
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-2:1
+				superClass: JSReferenceIdentifier {
+					name: "Bar"
+					loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:18-1:21 (Bar)
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "typescript/class/extends-implements-empty/input.ts"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:33
+				start: Position 1:33
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,82 +57,6 @@ JSRoot {
 					"implements"
 					RAW_MARKUP {value: " list cannot be empty"}
 				]
-			}
-			location: Object {
-				filename: "typescript/class/extends-implements-empty/input.ts"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 33
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "Foo"
-				loc: Object {
-					filename: "typescript/class/extends-implements-empty/input.ts"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-			}
-			loc: Object {
-				filename: "typescript/class/extends-implements-empty/input.ts"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			meta: JSClassHead {
-				body: Array []
-				implements: Array []
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/extends-implements-empty/input.ts"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				superClass: JSReferenceIdentifier {
-					name: "Bar"
-					loc: Object {
-						filename: "typescript/class/extends-implements-empty/input.ts"
-						identifierName: "Bar"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

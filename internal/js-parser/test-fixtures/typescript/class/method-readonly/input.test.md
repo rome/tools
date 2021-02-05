@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/method-readonly/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 14
-					line: 2
-				}
+				end: Position 2:14
+				start: Position 2:14
 			}
 		}
 	]
@@ -57,90 +41,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/method-readonly/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-readonly/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/method-readonly/input.ts"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-2:19
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/method-readonly/input.ts"
-					end: Object {
-						column: 19
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-2:19
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "typescript/class/method-readonly/input.ts"
-									identifierName: "m"
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-readonly/input.ts 2:13-2:14 (m)
 							}
-							loc: Object {
-								filename: "typescript/class/method-readonly/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-readonly/input.ts 2:13-2:14
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/method-readonly/input.ts"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/method-readonly/input.ts 2:4-2:14
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -148,66 +70,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/method-readonly/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-readonly/input.ts 2:4-2:14
+							start: Position 2:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "typescript/class/method-readonly/input.ts"
-									identifierName: ""
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18 ()
 							}
-							loc: Object {
-								filename: "typescript/class/method-readonly/input.ts"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/method-readonly/input.ts"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 17
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -215,51 +93,18 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 17
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/method-readonly/input.ts"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-readonly/input.ts 2:17-2:18
+							start: Position 2:17
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/class/method-readonly/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/class/method-readonly/input.ts 3:0-3:1
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "typescript/class/method-readonly/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/class/method-readonly/input.ts 3:0-3:1
 			}
 		}
 	]

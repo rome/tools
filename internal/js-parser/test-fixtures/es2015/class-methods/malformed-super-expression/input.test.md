@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class-methods/malformed-super-expression/input.js"
-		end: Object {
-			column: 1
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 3
-				}
-				start: Object {
-					column: 10
-					line: 3
-				}
+				end: Position 3:9
+				start: Position 3:10
 			}
 		}
 	]
@@ -57,87 +41,35 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/class-methods/malformed-super-expression/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/class-methods/malformed-super-expression/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class-methods/malformed-super-expression/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2015/class-methods/malformed-super-expression/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3 (x)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/malformed-super-expression/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3
 						}
-						loc: Object {
-							filename: "es2015/class-methods/malformed-super-expression/input.js"
-							end: Object {
-								column: 3
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+						loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-4:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:2-2:3
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -148,107 +80,22 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/malformed-super-expression/input.js"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2015/class-methods/malformed-super-expression/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:4-2:6
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/malformed-super-expression/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 2:7-4:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "es2015/class-methods/malformed-super-expression/input.js"
-										end: Object {
-											column: 14
-											line: 3
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:14
 									expression: JSBinaryExpression {
 										operator: "-"
-										loc: Object {
-											filename: "es2015/class-methods/malformed-super-expression/input.js"
-											end: Object {
-												column: 13
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
-										left: JSSuper {
-											loc: Object {
-												filename: "es2015/class-methods/malformed-super-expression/input.js"
-												end: Object {
-													column: 9
-													line: 3
-												}
-												start: Object {
-													column: 4
-													line: 3
-												}
-											}
-										}
+										left: JSSuper {loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:9}
+										loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:4-3:13
 										right: JSNumericLiteral {
 											value: 1
 											format: undefined
-											loc: Object {
-												filename: "es2015/class-methods/malformed-super-expression/input.js"
-												end: Object {
-													column: 13
-													line: 3
-												}
-												start: Object {
-													column: 12
-													line: 3
-												}
-											}
+											loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 3:12-3:13
 										}
 									}
 								}

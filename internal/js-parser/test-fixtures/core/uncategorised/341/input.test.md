@@ -18,45 +18,15 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/341/input.js"
-		end: Object {
-			column: 5
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/341/input.js 1:0-1:5
 	body: Array [
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/341/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/341/input.js 1:0-1:2
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/341/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/341/input.js 1:2-1:5
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -64,43 +34,13 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "core/uncategorised/341/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/341/input.js 1:2-1:5
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "core/uncategorised/341/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/341/input.js 1:3-1:4
 					body: Array [
 						JSRegExpCharacter {
 							value: "="
-							loc: Object {
-								filename: "core/uncategorised/341/input.js"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/341/input.js 1:3-1:4
 						}
 					]
 				}

@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "typescript/class/optional-async-error/input.js"
-		end: Object {
-			column: 1
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-4:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "typescript/class/optional-async-error/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 3:9
+				start: Position 3:9
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -41,125 +39,38 @@ JSRoot {
 					RAW_MARKUP {value: " syntax to be enabled"}
 				]
 			}
-			location: Object {
-				filename: "typescript/class/optional-async-error/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 3
-				}
-				start: Object {
-					column: 9
-					line: 3
-				}
-			}
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
-				loc: Object {
-					filename: "typescript/class/optional-async-error/input.js"
-					identifierName: "B"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/optional-async-error/input.js 1:6-1:7 (B)
 			}
-			loc: Object {
-				filename: "typescript/class/optional-async-error/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-1:11
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/optional-async-error/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-1:11
 			}
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/optional-async-error/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/optional-async-error/input.js 2:6-2:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/optional-async-error/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/class/optional-async-error/input.js 2:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/optional-async-error/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/optional-async-error/input.js 2:0-4:1
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "typescript/class/optional-async-error/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 2
-						}
-						start: Object {
-							column: 16
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/class/optional-async-error/input.js 2:16-2:17 (B)
 				}
 				body: Array [
 					TSDeclareMethod {
@@ -167,43 +78,12 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "method"
-								loc: Object {
-									filename: "typescript/class/optional-async-error/input.js"
-									identifierName: "method"
-									end: Object {
-										column: 17
-										line: 3
-									}
-									start: Object {
-										column: 11
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/optional-async-error/input.js 3:11-3:17 (method)
 							}
-							loc: Object {
-								filename: "typescript/class/optional-async-error/input.js"
-								end: Object {
-									column: 17
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/optional-async-error/input.js 3:11-3:17
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/optional-async-error/input.js"
-							end: Object {
-								column: 46
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/class/optional-async-error/input.js 3:4-3:46
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -211,21 +91,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/optional-async-error/input.js"
-								end: Object {
-									column: 17
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/optional-async-error/input.js 3:4-3:17
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: true
@@ -234,115 +101,27 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/optional-async-error/input.js"
-								end: Object {
-									column: 45
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/optional-async-error/input.js 3:17-3:45
 							params: Array [
 								JSBindingIdentifier {
 									name: "val"
-									loc: Object {
-										filename: "typescript/class/optional-async-error/input.js"
-										identifierName: "val"
-										end: Object {
-											column: 21
-											line: 3
-										}
-										start: Object {
-											column: 18
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/optional-async-error/input.js 3:18-3:21 (val)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/optional-async-error/input.js"
-											end: Object {
-												column: 29
-												line: 3
-											}
-											start: Object {
-												column: 18
-												line: 3
-											}
-										}
-										typeAnnotation: TSStringKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/optional-async-error/input.js"
-												end: Object {
-													column: 29
-													line: 3
-												}
-												start: Object {
-													column: 23
-													line: 3
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/optional-async-error/input.js 3:18-3:29
+										typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/optional-async-error/input.js 3:23-3:29}
 									}
 								}
 							]
 							returnType: TSTypeReference {
-								loc: Object {
-									filename: "typescript/class/optional-async-error/input.js"
-									end: Object {
-										column: 45
-										line: 3
-									}
-									start: Object {
-										column: 32
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/optional-async-error/input.js 3:32-3:45
 								typeName: JSReferenceIdentifier {
 									name: "Promise"
-									loc: Object {
-										filename: "typescript/class/optional-async-error/input.js"
-										identifierName: "Promise"
-										end: Object {
-											column: 39
-											line: 3
-										}
-										start: Object {
-											column: 32
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/optional-async-error/input.js 3:32-3:39 (Promise)
 								}
 								typeParameters: TSTypeParameterInstantiation {
-									loc: Object {
-										filename: "typescript/class/optional-async-error/input.js"
-										end: Object {
-											column: 45
-											line: 3
-										}
-										start: Object {
-											column: 39
-											line: 3
-										}
-									}
-									params: Array [
-										TSVoidKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/optional-async-error/input.js"
-												end: Object {
-													column: 44
-													line: 3
-												}
-												start: Object {
-													column: 40
-													line: 3
-												}
-											}
-										}
-									]
+									loc: SourceLocation typescript/class/optional-async-error/input.js 3:39-3:45
+									params: Array [TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/optional-async-error/input.js 3:40-3:44}]
 								}
 							}
 						}

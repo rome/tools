@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-string/migrated_0008/input.js"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-string/migrated_0008/input.js 1:0-1:15
 	directives: Array [
 		JSDirective {
 			value: "Hello\\02World"
-			loc: Object {
-				filename: "esprima/expression-primary-literal-string/migrated_0008/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-string/migrated_0008/input.js 1:0-1:15
 		}
 	]
 }

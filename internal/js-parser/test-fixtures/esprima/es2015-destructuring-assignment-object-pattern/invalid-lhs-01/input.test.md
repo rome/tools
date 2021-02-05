@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:8
+				start: Position 1:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,131 +38,36 @@ JSRoot {
 					"assignment object property value"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:0-1:12
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:1-1:11
 				right: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:10-1:11
 				}
 				left: JSAssignmentObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:1-1:9
 					properties: Array [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 3
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:2-1:3 (a)
 								}
-								loc: Object {
-									filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:2-1:3
 							}
 							value: JSAssignmentIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:9-1:9
 							}
-							loc: Object {
-								filename: "esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-01/input.js 1:2-1:8
 						}
 					]
 				}

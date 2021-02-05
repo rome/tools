@@ -16,18 +16,33 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-2:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
+			expression: JSXElement {
+				name: JSXIdentifier {
+					name: "div"
+					loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4
+				}
+				attributes: Array []
+				selfClosing: false
+				typeArguments: undefined
+				loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:0-1:13
+				children: Array [
+					JSXText {
+						value: "() => "
+						loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:5-1:11
+					}
+					JSXExpressionContainer {
+						expression: JSXEmptyExpression {loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:12-1:12}
+						loc: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:11-1:13
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +51,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
+				end: Position 1:13
+				start: Position 1:13
 			}
 			description: Object {
 				category: "parse"
@@ -58,106 +67,7 @@ JSRoot {
 							RAW_MARKUP {value: "</emphasis>"}
 						]
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
-				]
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSXElement {
-				name: JSXIdentifier {
-					name: "div"
-					loc: Object {
-						filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-				}
-				attributes: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				children: Array [
-					JSXText {
-						value: "() => "
-						loc: Object {
-							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
-					}
-					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
-						expression: JSXEmptyExpression {
-							loc: Object {
-								filename: "jsx/errors/unclosed-jsx-element/input.jsx"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4}
 				]
 			}
 		}

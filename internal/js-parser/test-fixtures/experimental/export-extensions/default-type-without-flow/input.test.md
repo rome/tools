@@ -18,73 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/default-type-without-flow/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/export-extensions/default-type-without-flow/input.js 1:0-2:0
 	body: Array [
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/default-type-without-flow/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/default-type-without-flow/input.js 1:0-1:24
 			source: JSStringLiteral {
 				value: "test"
-				loc: Object {
-					filename: "experimental/export-extensions/default-type-without-flow/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-type-without-flow/input.js 1:17-1:23
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/default-type-without-flow/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-type-without-flow/input.js 1:7-1:11
 				exported: JSIdentifier {
 					name: "type"
-					loc: Object {
-						filename: "experimental/export-extensions/default-type-without-flow/input.js"
-						identifierName: "type"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/default-type-without-flow/input.js 1:7-1:11 (type)
 				}
 			}
 		}

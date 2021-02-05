@@ -17,20 +17,39 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/369/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2015/uncategorised/369/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/369/input.js 1:0-1:13
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation es2015/uncategorised/369/input.js 1:0-1:12
+				left: JSAssignmentIdentifier {
+					name: "enum"
+					loc: SourceLocation es2015/uncategorised/369/input.js 1:0-1:4 (enum)
+				}
+				right: JSCallExpression {
+					arguments: Array []
+					loc: SourceLocation es2015/uncategorised/369/input.js 1:7-1:12
+					callee: JSReferenceIdentifier {
+						name: "foo"
+						loc: SourceLocation es2015/uncategorised/369/input.js 1:7-1:10 (foo)
+					}
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/369/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:4
+				start: Position 1:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,93 +58,6 @@ JSRoot {
 					"enum"
 					RAW_MARKUP {value: " is a reserved word"}
 				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/369/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/369/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/369/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "enum"
-					loc: Object {
-						filename: "es2015/uncategorised/369/input.js"
-						identifierName: "enum"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
-				right: JSCallExpression {
-					arguments: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/369/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-					callee: JSReferenceIdentifier {
-						name: "foo"
-						loc: Object {
-							filename: "es2015/uncategorised/369/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
-					}
-				}
 			}
 		}
 	]

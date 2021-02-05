@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/392/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/392/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
+				end: Position 1:18
+				start: Position 1:19
 			}
 		}
 	]
@@ -57,327 +41,89 @@ JSRoot {
 		JSImportDeclaration {
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/392/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:24
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "es2015/uncategorised/392/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:24
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "es2015/uncategorised/392/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/392/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/uncategorised/392/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:7-1:10 (foo)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/392/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:7-1:10
 				}
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/392/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17
 					imported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "es2015/uncategorised/392/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17 (bar)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "es2015/uncategorised/392/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17 (bar)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/392/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:14-1:17
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/392/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20
 					imported: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/392/input.js"
-							identifierName: ""
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20 ()
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: ""
-							loc: Object {
-								filename: "es2015/uncategorised/392/input.js"
-								identifierName: ""
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20 ()
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/392/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:19-1:20
 					}
 				}
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/392/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22
 					imported: JSIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2015/uncategorised/392/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22 (a)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/uncategorised/392/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22 (a)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/392/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/392/input.js 1:21-1:22
 					}
 				}
 			]
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/392/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:25-1:26
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/uncategorised/392/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/392/input.js 1:25-1:26
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/392/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 27
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:27-1:31
 			expression: JSReferenceIdentifier {
 				name: "from"
-				loc: Object {
-					filename: "es2015/uncategorised/392/input.js"
-					identifierName: "from"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 27
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/392/input.js 1:27-1:31 (from)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/392/input.js"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 32
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/392/input.js 1:32-1:44
 			expression: JSStringLiteral {
 				value: "my-module"
-				loc: Object {
-					filename: "es2015/uncategorised/392/input.js"
-					end: Object {
-						column: 43
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/392/input.js 1:32-1:43
 			}
 		}
 	]

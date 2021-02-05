@@ -17,88 +17,25 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/export-import/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/export-import/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSImportEqualsDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/import/export-import/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/export-import/input.ts 1:14-1:15 (A)
 			}
 			isExport: true
-			loc: Object {
-				filename: "typescript/import/export-import/input.ts"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/export-import/input.ts 1:0-1:22
 			moduleReference: TSQualifiedName {
-				loc: Object {
-					filename: "typescript/import/export-import/input.ts"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/export-import/input.ts 1:18-1:21
 				left: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "typescript/import/export-import/input.ts"
-						identifierName: "B"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/export-import/input.ts 1:18-1:19 (B)
 				}
 				right: JSIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "typescript/import/export-import/input.ts"
-						identifierName: "C"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/export-import/input.ts 1:20-1:21 (C)
 				}
 			}
 		}

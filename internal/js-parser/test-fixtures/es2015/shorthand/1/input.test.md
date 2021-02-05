@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/shorthand/1/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/shorthand/1/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/shorthand/1/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:16
+				start: Position 1:11
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,144 +38,37 @@ JSRoot {
 					"const"
 				]
 			}
-			location: Object {
-				filename: "es2015/shorthand/1/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/shorthand/1/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/shorthand/1/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/shorthand/1/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/shorthand/1/input.js 1:0-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/shorthand/1/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/1/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "es2015/shorthand/1/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/shorthand/1/input.js 1:4-1:19
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "es2015/shorthand/1/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/shorthand/1/input.js 1:9-1:18
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "const"
-											loc: Object {
-												filename: "es2015/shorthand/1/input.js"
-												identifierName: "const"
-												end: Object {
-													column: 16
-													line: 1
-												}
-												start: Object {
-													column: 11
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/shorthand/1/input.js 1:11-1:16 (const)
 										}
-										loc: Object {
-											filename: "es2015/shorthand/1/input.js"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/shorthand/1/input.js 1:11-1:16
 									}
 									value: JSReferenceIdentifier {
 										name: "const"
-										loc: Object {
-											filename: "es2015/shorthand/1/input.js"
-											identifierName: "const"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/shorthand/1/input.js 1:11-1:16 (const)
 									}
-									loc: Object {
-										filename: "es2015/shorthand/1/input.js"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/shorthand/1/input.js 1:11-1:16
 								}
 							]
 						}

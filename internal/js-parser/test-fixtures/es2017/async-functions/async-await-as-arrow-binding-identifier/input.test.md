@@ -18,88 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:17
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:15-1:17
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:0-1:14
 					params: Array [
 						JSBindingIdentifier {
 							name: "await"
-							loc: Object {
-								filename: "es2017/async-functions/async-await-as-arrow-binding-identifier/input.js"
-								identifierName: "await"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/async-await-as-arrow-binding-identifier/input.js 1:6-1:11 (await)
 						}
 					]
 				}

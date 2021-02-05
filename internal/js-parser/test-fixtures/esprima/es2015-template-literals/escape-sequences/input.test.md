@@ -18,59 +18,19 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-template-literals/escape-sequences/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-template-literals/escape-sequences/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-template-literals/escape-sequences/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-template-literals/escape-sequences/input.js 1:0-1:30
 			expression: JSTemplateLiteral {
 				expressions: Array []
-				loc: Object {
-					filename: "esprima/es2015-template-literals/escape-sequences/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-template-literals/escape-sequences/input.js 1:0-1:30
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "\\n\\r\\b\\v\\t\\f\\\n\\\r\n"
 						raw: "\\\\n\\\\r\\\\b\\\\v\\\\t\\\\f\\\\\\n\\\\\\r\\n"
 						tail: true
-						loc: Object {
-							filename: "esprima/es2015-template-literals/escape-sequences/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-template-literals/escape-sequences/input.js 1:1-1:29
 					}
 				]
 			}

@@ -18,97 +18,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/arrow-functions/object-rest-spread/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-4:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/object-rest-spread/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/arrow-functions/object-rest-spread/input.js"
-					end: Object {
-						column: 2
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:0-3:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2015/arrow-functions/object-rest-spread/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:4-1:7 (foo)
 						}
-						loc: Object {
-							filename: "es2015/arrow-functions/object-rest-spread/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:4-3:1
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2015/arrow-functions/object-rest-spread/input.js"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:10-3:1
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2015/arrow-functions/object-rest-spread/input.js"
-									end: Object {
-										column: 1
-										line: 3
-									}
-									start: Object {
-										column: 37
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:37-3:1
 							}
 							head: JSFunctionHead {
 								async: false
@@ -116,101 +45,28 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2015/arrow-functions/object-rest-spread/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:10-1:36
 								params: Array [
 									JSBindingObjectPattern {
-										loc: Object {
-											filename: "es2015/arrow-functions/object-rest-spread/input.js"
-											end: Object {
-												column: 31
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:12-1:31
 										rest: JSBindingIdentifier {
 											name: "other"
-											loc: Object {
-												filename: "es2015/arrow-functions/object-rest-spread/input.js"
-												identifierName: "other"
-												end: Object {
-													column: 29
-													line: 1
-												}
-												start: Object {
-													column: 24
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:24-1:29 (other)
 										}
 										properties: Array [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "title"
-														loc: Object {
-															filename: "es2015/arrow-functions/object-rest-spread/input.js"
-															identifierName: "title"
-															end: Object {
-																column: 19
-																line: 1
-															}
-															start: Object {
-																column: 14
-																line: 1
-															}
-														}
+														loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:14-1:19 (title)
 													}
-													loc: Object {
-														filename: "es2015/arrow-functions/object-rest-spread/input.js"
-														end: Object {
-															column: 19
-															line: 1
-														}
-														start: Object {
-															column: 14
-															line: 1
-														}
-													}
+													loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:14-1:19
 												}
 												value: JSBindingIdentifier {
 													name: "title"
-													loc: Object {
-														filename: "es2015/arrow-functions/object-rest-spread/input.js"
-														identifierName: "title"
-														end: Object {
-															column: 19
-															line: 1
-														}
-														start: Object {
-															column: 14
-															line: 1
-														}
-													}
+													loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:14-1:19 (title)
 												}
-												loc: Object {
-													filename: "es2015/arrow-functions/object-rest-spread/input.js"
-													end: Object {
-														column: 19
-														line: 1
-													}
-													start: Object {
-														column: 14
-														line: 1
-													}
-												}
+												loc: SourceLocation es2015/arrow-functions/object-rest-spread/input.js 1:14-1:19
 											}
 										]
 									}

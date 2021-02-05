@@ -17,107 +17,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/314/input.js"
-		end: Object {
-			column: 8
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/314/input.js 1:0-2:8
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Comment"
-			loc: Object {
-				filename: "core/uncategorised/314/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/314/input.js 1:13-1:23
 		}
 	]
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/314/input.js"
-				end: Object {
-					column: 8
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/314/input.js 1:0-2:8
 			body: Array [
 				JSThrowStatement {
+					loc: SourceLocation core/uncategorised/314/input.js 1:2-1:13
 					trailingComments: Array ["0"]
-					loc: Object {
-						filename: "core/uncategorised/314/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
 					argument: JSReferenceIdentifier {
 						name: "error"
 						trailingComments: undefined
-						loc: Object {
-							filename: "core/uncategorised/314/input.js"
-							identifierName: "error"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/314/input.js 1:8-1:13 (error)
 					}
 				}
 				JSExpressionStatement {
 					leadingComments: Array ["0"]
-					loc: Object {
-						filename: "core/uncategorised/314/input.js"
-						end: Object {
-							column: 6
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation core/uncategorised/314/input.js 2:0-2:6
 					expression: JSReferenceIdentifier {
 						name: "error"
 						leadingComments: undefined
-						loc: Object {
-							filename: "core/uncategorised/314/input.js"
-							identifierName: "error"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/314/input.js 2:0-2:5 (error)
 					}
 				}
 			]

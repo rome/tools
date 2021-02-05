@@ -17,17 +17,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/allow-await-outside-function/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-1:5
+			expression: JSReferenceIdentifier {
+				name: "await"
+				loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:0-1:5 (await)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:6-1:7
+			expression: JSNumericLiteral {
+				value: 1
+				format: undefined
+				loc: SourceLocation es2017/async-functions/allow-await-outside-function/input.js 1:6-1:7
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +49,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/allow-await-outside-function/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "await"
-				loc: Object {
-					filename: "es2017/async-functions/allow-await-outside-function/input.js"
-					identifierName: "await"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/allow-await-outside-function/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: Object {
-					filename: "es2017/async-functions/allow-await-outside-function/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				end: Position 1:5
+				start: Position 1:6
 			}
 		}
 	]

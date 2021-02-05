@@ -17,159 +17,49 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-3:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/namespace-tag/input.jsx"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/namespace-tag/input.jsx"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-1:12
 			expression: JSXElement {
 				name: JSXNamespacedName {
 					name: JSXIdentifier {
 						name: "Bar"
-						loc: Object {
-							filename: "jsx/basic/namespace-tag/input.jsx"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:5-1:8
 					}
-					loc: Object {
-						filename: "jsx/basic/namespace-tag/input.jsx"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:1-1:8
 					namespace: JSXIdentifier {
 						name: "Foo"
-						loc: Object {
-							filename: "jsx/basic/namespace-tag/input.jsx"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:1-1:4
 					}
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/namespace-tag/input.jsx"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/namespace-tag/input.jsx 1:0-1:11
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/namespace-tag/input.jsx"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:0-2:19
 			expression: JSXElement {
 				name: JSXNamespacedName {
 					name: JSXIdentifier {
 						name: "Bar"
-						loc: Object {
-							filename: "jsx/basic/namespace-tag/input.jsx"
-							end: Object {
-								column: 8
-								line: 2
-							}
-							start: Object {
-								column: 5
-								line: 2
-							}
-						}
+						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:5-2:8
 					}
-					loc: Object {
-						filename: "jsx/basic/namespace-tag/input.jsx"
-						end: Object {
-							column: 8
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:1-2:8
 					namespace: JSXIdentifier {
 						name: "Foo"
-						loc: Object {
-							filename: "jsx/basic/namespace-tag/input.jsx"
-							end: Object {
-								column: 4
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
+						loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:1-2:4
 					}
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/namespace-tag/input.jsx"
-					end: Object {
-						column: 19
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation jsx/basic/namespace-tag/input.jsx 2:0-2:19
 			}
 		}
 	]

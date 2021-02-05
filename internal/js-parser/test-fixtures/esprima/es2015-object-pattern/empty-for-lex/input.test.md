@@ -18,100 +18,28 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:0-2:0
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:17-1:18}
+			loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:0-1:18
 			right: JSNumericLiteral {
 				value: 0
 				format: undefined
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:15-1:16
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:5-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							properties: Array []
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:9-1:11
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:9-1:11
 					}
 				]
 			}

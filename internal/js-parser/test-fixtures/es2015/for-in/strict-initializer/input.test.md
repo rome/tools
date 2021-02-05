@@ -16,31 +16,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-in/strict-initializer/input.js"
-		end: Object {
-			column: 22
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/for-in/strict-initializer/input.js 1:0-2:22
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/for-in/strict-initializer/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-in/strict-initializer/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -57,112 +37,33 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 5
-					line: 2
-				}
+				end: Position 2:14
+				start: Position 2:5
 			}
 		}
 	]
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "es2015/for-in/strict-initializer/input.js"
-				end: Object {
-					column: 22
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "es2015/for-in/strict-initializer/input.js"
-					end: Object {
-						column: 22
-						line: 2
-					}
-					start: Object {
-						column: 21
-						line: 2
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:21-2:22}
+			loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:0-2:22
 			right: JSObjectExpression {
 				properties: Array []
-				loc: Object {
-					filename: "es2015/for-in/strict-initializer/input.js"
-					end: Object {
-						column: 20
-						line: 2
-					}
-					start: Object {
-						column: 18
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:18-2:20
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/for-in/strict-initializer/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 5
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:5-2:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/for-in/strict-initializer/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:9-2:10 (a)
 						}
-						loc: Object {
-							filename: "es2015/for-in/strict-initializer/input.js"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 9
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:9-2:14
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "es2015/for-in/strict-initializer/input.js"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/for-in/strict-initializer/input.js 2:13-2:14
 						}
 					}
 				]

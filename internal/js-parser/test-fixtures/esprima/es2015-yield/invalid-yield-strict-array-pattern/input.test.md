@@ -16,36 +16,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:21
+				start: Position 1:16
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -55,91 +43,25 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js 1:14-1:27
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js 1:15-1:26
 				right: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js 1:25-1:26 (x)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js 1:15-1:22
 					elements: Array [
 						JSAssignmentIdentifier {
 							name: "yield"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js"
-								identifierName: "yield"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-array-pattern/input.js 1:16-1:21 (yield)
 						}
 					]
 				}

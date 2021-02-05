@@ -17,77 +17,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/surrounding-while-loop-comments/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-2:0
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " infinite "
-			loc: Object {
-				filename: "comments/basic/surrounding-while-loop-comments/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:15-1:29
 		}
 		CommentBlock {
 			id: "1"
 			value: " bar "
-			loc: Object {
-				filename: "comments/basic/surrounding-while-loop-comments/input.js"
-				end: Object {
-					column: 56
-					line: 1
-				}
-				start: Object {
-					column: 47
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:47-1:56
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "comments/basic/surrounding-while-loop-comments/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "comments/basic/surrounding-while-loop-comments/input.js"
-				end: Object {
-					column: 68
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-1:68
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -97,136 +46,45 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "comments/basic/surrounding-while-loop-comments/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "comments/basic/surrounding-while-loop-comments/input.js"
-					end: Object {
-						column: 68
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:13-1:68
 				body: Array [
 					JSWhileStatement {
 						leadingComments: Array ["0"]
+						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:30-1:46
 						trailingComments: Array ["1"]
-						loc: Object {
-							filename: "comments/basic/surrounding-while-loop-comments/input.js"
-							end: Object {
-								column: 46
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
 						test: JSBooleanLiteral {
 							value: true
 							leadingComments: undefined
-							loc: Object {
-								filename: "comments/basic/surrounding-while-loop-comments/input.js"
-								end: Object {
-									column: 41
-									line: 1
-								}
-								start: Object {
-									column: 37
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:37-1:41
 						}
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							trailingComments: undefined
-							loc: Object {
-								filename: "comments/basic/surrounding-while-loop-comments/input.js"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 43
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:43-1:46
 						}
 					}
 					JSVariableDeclarationStatement {
 						leadingComments: Array ["1"]
-						loc: Object {
-							filename: "comments/basic/surrounding-while-loop-comments/input.js"
-							end: Object {
-								column: 66
-								line: 1
-							}
-							start: Object {
-								column: 57
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
 						declaration: JSVariableDeclaration {
 							kind: "var"
 							leadingComments: undefined
-							loc: Object {
-								filename: "comments/basic/surrounding-while-loop-comments/input.js"
-								end: Object {
-									column: 66
-									line: 1
-								}
-								start: Object {
-									column: 57
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:57-1:66
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "each"
 										leadingComments: undefined
-										loc: Object {
-											filename: "comments/basic/surrounding-while-loop-comments/input.js"
-											identifierName: "each"
-											end: Object {
-												column: 65
-												line: 1
-											}
-											start: Object {
-												column: 61
-												line: 1
-											}
-										}
+										loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65 (each)
 									}
 									init: undefined
 									leadingComments: undefined
-									loc: Object {
-										filename: "comments/basic/surrounding-while-loop-comments/input.js"
-										end: Object {
-											column: 65
-											line: 1
-										}
-										start: Object {
-											column: 61
-											line: 1
-										}
-									}
+									loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:61-1:65
 								}
 							]
 						}

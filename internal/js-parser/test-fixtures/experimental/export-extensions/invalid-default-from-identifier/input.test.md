@@ -18,44 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/invalid-default-from-identifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/export-extensions/invalid-default-from-identifier/input.js 1:0-2:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "experimental/export-extensions/invalid-default-from-identifier/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/invalid-default-from-identifier/input.js 1:0-1:20
 			declaration: JSReferenceIdentifier {
 				name: "from"
-				loc: Object {
-					filename: "experimental/export-extensions/invalid-default-from-identifier/input.js"
-					identifierName: "from"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/invalid-default-from-identifier/input.js 1:15-1:19 (from)
 			}
 		}
 	]

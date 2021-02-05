@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/simple-parameter-list/async-function/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:15
+				start: Position 2:2
 			}
 		}
 	]
@@ -57,57 +41,16 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "es2016/simple-parameter-list/async-function/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:15-1:16 (a)
 			}
-			loc: Object {
-				filename: "es2016/simple-parameter-list/async-function/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:0-3:1
 			body: JSBlockStatement {
 				body: Array []
-				loc: Object {
-					filename: "es2016/simple-parameter-list/async-function/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:31-3:1
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "es2016/simple-parameter-list/async-function/input.js"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 2:2-2:15
 					}
 				]
 			}
@@ -119,72 +62,21 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2016/simple-parameter-list/async-function/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:16-1:30
 				params: Array [
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "es2016/simple-parameter-list/async-function/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:17-1:29
 						right: JSObjectExpression {
 							properties: Array []
-							loc: Object {
-								filename: "es2016/simple-parameter-list/async-function/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:27-1:29
 						}
 						left: JSBindingIdentifier {
 							name: "options"
-							loc: Object {
-								filename: "es2016/simple-parameter-list/async-function/input.js"
-								identifierName: "options"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:17-1:24 (options)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "es2016/simple-parameter-list/async-function/input.js"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/simple-parameter-list/async-function/input.js 1:17-1:24
 							}
 						}
 					}

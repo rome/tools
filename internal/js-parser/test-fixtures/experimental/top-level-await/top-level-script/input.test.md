@@ -17,17 +17,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/top-level-script/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation experimental/top-level-await/top-level-script/input.js 1:0-1:8
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/top-level-await/top-level-script/input.js 1:0-1:5
+			expression: JSReferenceIdentifier {
+				name: "await"
+				loc: SourceLocation experimental/top-level-await/top-level-script/input.js 1:0-1:5 (await)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation experimental/top-level-await/top-level-script/input.js 1:6-1:8
+			expression: JSNumericLiteral {
+				value: 0
+				format: undefined
+				loc: SourceLocation experimental/top-level-await/top-level-script/input.js 1:6-1:7
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +49,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/top-level-await/top-level-script/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "await"
-				loc: Object {
-					filename: "experimental/top-level-await/top-level-script/input.js"
-					identifierName: "await"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/top-level-await/top-level-script/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 0
-				format: undefined
-				loc: Object {
-					filename: "experimental/top-level-await/top-level-script/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				end: Position 1:5
+				start: Position 1:6
 			}
 		}
 	]

@@ -17,17 +17,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0140/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0140/input.js 1:0-2:0
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0140/input.js 1:0-1:8
+			declaration: JSVariableDeclaration {
+				kind: "const"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0140/input.js 1:0-1:8
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: SourceLocation esprima/invalid-syntax/migrated_0140/input.js 1:6-1:7 (x)
+						}
+						init: undefined
+						loc: SourceLocation esprima/invalid-syntax/migrated_0140/input.js 1:6-1:7
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,74 +51,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0140/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "const"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0140/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "x"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0140/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
-						}
-						init: undefined
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0140/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:7
+				start: Position 1:6
 			}
 		}
 	]

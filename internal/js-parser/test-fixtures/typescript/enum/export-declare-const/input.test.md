@@ -17,63 +17,22 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/enum/export-declare-const/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/enum/export-declare-const/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/enum/export-declare-const/input.ts"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/enum/export-declare-const/input.ts 1:0-1:30
 			declaration: TSEnumDeclaration {
 				id: JSBindingIdentifier {
 					name: "E"
-					loc: Object {
-						filename: "typescript/enum/export-declare-const/input.ts"
-						identifierName: "E"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/enum/export-declare-const/input.ts 1:26-1:27 (E)
 				}
 				const: true
 				declare: true
 				members: Array []
-				loc: Object {
-					filename: "typescript/enum/export-declare-const/input.ts"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/enum/export-declare-const/input.ts 1:7-1:30
 			}
 		}
 	]

@@ -17,158 +17,44 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/implements/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/implements/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/implements/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/implements/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/implements/input.ts"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/implements/input.ts 1:0-1:28
 			meta: JSClassHead {
 				body: Array []
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/implements/input.ts"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/implements/input.ts 1:0-1:28
 				implements: Array [
 					TSExpressionWithTypeArguments {
-						loc: Object {
-							filename: "typescript/class/implements/input.ts"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/class/implements/input.ts 1:19-1:25
 						expression: TSQualifiedName {
-							loc: Object {
-								filename: "typescript/class/implements/input.ts"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/class/implements/input.ts 1:19-1:22
 							left: JSReferenceIdentifier {
 								name: "X"
-								loc: Object {
-									filename: "typescript/class/implements/input.ts"
-									identifierName: "X"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/class/implements/input.ts 1:19-1:20 (X)
 							}
 							right: JSIdentifier {
 								name: "Y"
-								loc: Object {
-									filename: "typescript/class/implements/input.ts"
-									identifierName: "Y"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/class/implements/input.ts 1:21-1:22 (Y)
 							}
 						}
 						typeParameters: TSTypeParameterInstantiation {
-							loc: Object {
-								filename: "typescript/class/implements/input.ts"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/class/implements/input.ts 1:22-1:25
 							params: Array [
 								TSTypeReference {
 									typeParameters: undefined
-									loc: Object {
-										filename: "typescript/class/implements/input.ts"
-										end: Object {
-											column: 24
-											line: 1
-										}
-										start: Object {
-											column: 23
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/class/implements/input.ts 1:23-1:24
 									typeName: JSReferenceIdentifier {
 										name: "T"
-										loc: Object {
-											filename: "typescript/class/implements/input.ts"
-											identifierName: "T"
-											end: Object {
-												column: 24
-												line: 1
-											}
-											start: Object {
-												column: 23
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/class/implements/input.ts 1:23-1:24 (T)
 									}
 								}
 							]

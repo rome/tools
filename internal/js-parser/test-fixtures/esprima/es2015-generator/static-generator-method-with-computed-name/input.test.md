@@ -18,117 +18,45 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:0-2:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:0-1:32
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:0-1:32
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSComputedPropertyKey {
 							value: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:21-1:24 (foo)
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:20-1:25
 						}
-						loc: Object {
-							filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:12-1:30
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 28
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:28-1:30
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:12-1:25
+							start: Position 1:12
 						}
 						head: JSFunctionHead {
 							async: false
@@ -139,40 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 12
-								line: 1
-							}
-							loc: Object {
-								filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:25-1:27
 						}
 					}
 				]

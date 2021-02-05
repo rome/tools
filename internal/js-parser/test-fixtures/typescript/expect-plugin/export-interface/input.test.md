@@ -17,17 +17,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "typescript/expect-plugin/export-interface/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:0-2:0
+	body: Array [
+		JSExportLocalDeclaration {
+			exportKind: "type"
+			specifiers: undefined
+			loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:0-1:23
+			declaration: TSInterfaceDeclaration {
+				id: JSBindingIdentifier {
+					name: "Foo"
+					loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:17-1:20 (Foo)
+				}
+				extends: undefined
+				typeParameters: undefined
+				loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:7-1:23
+				body: TSInterfaceBody {
+					body: Array []
+					loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:21-1:23
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +46,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				start: Position 1:7
 			}
 			description: Object {
 				category: "parse"
@@ -59,67 +63,6 @@ JSRoot {
 						text: RAW_MARKUP {value: "To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>"}
 					}
 				]
-			}
-		}
-	]
-	body: Array [
-		JSExportLocalDeclaration {
-			exportKind: "type"
-			specifiers: undefined
-			loc: Object {
-				filename: "typescript/expect-plugin/export-interface/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: TSInterfaceDeclaration {
-				id: JSBindingIdentifier {
-					name: "Foo"
-					loc: Object {
-						filename: "typescript/expect-plugin/export-interface/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
-				}
-				extends: undefined
-				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/expect-plugin/export-interface/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				body: TSInterfaceBody {
-					body: Array []
-					loc: Object {
-						filename: "typescript/expect-plugin/export-interface/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

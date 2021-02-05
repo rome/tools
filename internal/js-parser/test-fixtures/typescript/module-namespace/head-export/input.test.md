@@ -17,100 +17,28 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/head-export/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/module-namespace/head-export/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:0-1:23
 			declaration: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "X"
-					loc: Object {
-						filename: "typescript/module-namespace/head-export/input.ts"
-						identifierName: "X"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:17-1:18 (X)
 				}
-				loc: Object {
-					filename: "typescript/module-namespace/head-export/input.ts"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:7-1:23
 				body: TSModuleDeclaration {
 					id: JSBindingIdentifier {
 						name: "Y"
-						loc: Object {
-							filename: "typescript/module-namespace/head-export/input.ts"
-							identifierName: "Y"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:19-1:20 (Y)
 					}
-					loc: Object {
-						filename: "typescript/module-namespace/head-export/input.ts"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:19-1:23
 					body: TSModuleBlock {
 						body: Array []
-						loc: Object {
-							filename: "typescript/module-namespace/head-export/input.ts"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/module-namespace/head-export/input.ts 1:21-1:23
 					}
 				}
 			}
@@ -118,57 +46,16 @@ JSRoot {
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/module-namespace/head-export/input.ts"
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:0-2:18
 			declaration: TSModuleDeclaration {
 				id: JSBindingIdentifier {
 					name: "X"
-					loc: Object {
-						filename: "typescript/module-namespace/head-export/input.ts"
-						identifierName: "X"
-						end: Object {
-							column: 15
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:14-2:15 (X)
 				}
-				loc: Object {
-					filename: "typescript/module-namespace/head-export/input.ts"
-					end: Object {
-						column: 18
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:7-2:18
 				body: TSModuleBlock {
 					body: Array []
-					loc: Object {
-						filename: "typescript/module-namespace/head-export/input.ts"
-						end: Object {
-							column: 18
-							line: 2
-						}
-						start: Object {
-							column: 16
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/module-namespace/head-export/input.ts 2:16-2:18
 				}
 			}
 		}

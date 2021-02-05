@@ -18,118 +18,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-		end: Object {
-			column: 1
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 1:0-4:1
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 1:0-4:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:2-2:4
 						}
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:7-2:8
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassPrivateMethod {
@@ -159,56 +64,15 @@ JSRoot {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 15
-										line: 3
-									}
-									start: Object {
-										column: 14
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:14-3:15 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 13
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:13-3:15
 						}
-						loc: Object {
-							filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-							end: Object {
-								column: 21
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:2-3:21
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 19
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:19-3:21
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -217,21 +81,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:2-3:15
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -241,46 +92,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-								end: Object {
-									column: 18
-									line: 3
-								}
-								start: Object {
-									column: 15
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:15-3:18
 							params: Array [
 								JSBindingIdentifier {
 									name: "_"
-									loc: Object {
-										filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-										identifierName: "_"
-										end: Object {
-											column: 17
-											line: 3
-										}
-										start: Object {
-											column: 16
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:16-3:17 (_)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "experimental/class-private-names-duplicated/instance-field-static-set/input.js"
-											end: Object {
-												column: 17
-												line: 3
-											}
-											start: Object {
-												column: 16
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-set/input.js 3:16-3:17
 									}
 								}
 							]

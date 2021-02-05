@@ -17,157 +17,45 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/indexed/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/indexed/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/indexed/input.ts"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/indexed/input.ts 1:0-1:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/indexed/input.ts"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/indexed/input.ts 1:0-1:12
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/indexed/input.ts"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/indexed/input.ts"
-									end: Object {
-										column: 11
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 								typeAnnotation: TSIndexedAccessType {
-									loc: Object {
-										filename: "typescript/types/indexed/input.ts"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:11
 									indexType: TSTypeReference {
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/types/indexed/input.ts"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/indexed/input.ts 1:9-1:10
 										typeName: JSReferenceIdentifier {
 											name: "K"
-											loc: Object {
-												filename: "typescript/types/indexed/input.ts"
-												identifierName: "K"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/indexed/input.ts 1:9-1:10 (K)
 										}
 									}
 									objectType: TSTypeReference {
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/types/indexed/input.ts"
-											end: Object {
-												column: 8
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:8
 										typeName: JSReferenceIdentifier {
 											name: "T"
-											loc: Object {
-												filename: "typescript/types/indexed/input.ts"
-												identifierName: "T"
-												end: Object {
-													column: 8
-													line: 1
-												}
-												start: Object {
-													column: 7
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/indexed/input.ts 1:7-1:8 (T)
 										}
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/indexed/input.ts"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/indexed/input.ts 1:4-1:11
 					}
 				]
 			}

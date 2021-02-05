@@ -18,102 +18,40 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-		end: Object {
-			column: 1
-			line: 9
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 1:0-9:1
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
-				loc: Object {
-					filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-					identifierName: "B"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 1:6-1:7 (B)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-				end: Object {
-					column: 1
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 1:0-9:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-					end: Object {
-						column: 1
-						line: 9
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 1:0-9:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "meth"
-								loc: Object {
-									filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-									identifierName: "meth"
-									end: Object {
-										column: 6
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-2:6 (meth)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-2:6
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-							end: Object {
-								column: 3
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+						loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-6:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:2-2:6
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -124,207 +62,49 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:6-2:8
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 2:9-6:3
 							body: Array [
 								JSClassDeclaration {
 									id: JSBindingIdentifier {
 										name: "A"
-										loc: Object {
-											filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-											identifierName: "A"
-											end: Object {
-												column: 11
-												line: 3
-											}
-											start: Object {
-												column: 10
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 3:10-3:11 (A)
 									}
-									loc: Object {
-										filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-										end: Object {
-											column: 5
-											line: 5
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 3:4-5:5
 									meta: JSClassHead {
 										implements: undefined
 										superClass: undefined
 										superTypeParameters: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-											end: Object {
-												column: 5
-												line: 5
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 3:4-5:5
 										body: Array [
 											JSClassPrivateProperty {
 												key: JSPrivateName {
 													id: JSIdentifier {
 														name: "x"
-														loc: Object {
-															filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-															identifierName: "x"
-															end: Object {
-																column: 8
-																line: 4
-															}
-															start: Object {
-																column: 7
-																line: 4
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:7-4:8 (x)
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-														end: Object {
-															column: 8
-															line: 4
-														}
-														start: Object {
-															column: 6
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:6-4:8
 												}
 												value: JSMemberExpression {
-													loc: Object {
-														filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-														end: Object {
-															column: 18
-															line: 4
-														}
-														start: Object {
-															column: 11
-															line: 4
-														}
-													}
-													object: JSThisExpression {
-														loc: Object {
-															filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-															end: Object {
-																column: 15
-																line: 4
-															}
-															start: Object {
-																column: 11
-																line: 4
-															}
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:11-4:18
+													object: JSThisExpression {loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:11-4:15}
 													property: JSStaticMemberProperty {
 														value: JSPrivateName {
 															id: JSIdentifier {
 																name: "y"
-																loc: Object {
-																	filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-																	identifierName: "y"
-																	end: Object {
-																		column: 18
-																		line: 4
-																	}
-																	start: Object {
-																		column: 17
-																		line: 4
-																	}
-																}
+																loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:17-4:18 (y)
 															}
-															loc: Object {
-																filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-																end: Object {
-																	column: 18
-																	line: 4
-																}
-																start: Object {
-																	column: 16
-																	line: 4
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:16-4:18
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-															end: Object {
-																column: 18
-																line: 4
-															}
-															start: Object {
-																column: 16
-																line: 4
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:16-4:18
 													}
 												}
 												typeAnnotation: undefined
-												loc: Object {
-													filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-													end: Object {
-														column: 19
-														line: 4
-													}
-													start: Object {
-														column: 6
-														line: 4
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:6-4:19
 												meta: JSClassPropertyMeta {
 													abstract: false
 													accessibility: undefined
@@ -332,21 +112,8 @@ JSRoot {
 													readonly: false
 													static: false
 													typeAnnotation: undefined
-													start: Object {
-														column: 6
-														line: 4
-													}
-													loc: Object {
-														filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-														end: Object {
-															column: 8
-															line: 4
-														}
-														start: Object {
-															column: 6
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 4:6-4:8
+													start: Position 4:6
 												}
 											}
 										]
@@ -359,44 +126,13 @@ JSRoot {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 4
-										line: 8
-									}
-									start: Object {
-										column: 3
-										line: 8
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 8:3-8:4 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-								end: Object {
-									column: 4
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 8:2-8:4
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-							end: Object {
-								column: 5
-								line: 8
-							}
-							start: Object {
-								column: 2
-								line: 8
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 8:2-8:5
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -404,21 +140,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 8
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/declared-later-outer-class/input.js"
-								end: Object {
-									column: 4
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/declared-later-outer-class/input.js 8:2-8:4
+							start: Position 8:2
 						}
 					}
 				]

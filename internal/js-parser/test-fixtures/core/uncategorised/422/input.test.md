@@ -17,20 +17,34 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/422/input.js"
-		end: Object {
-			column: 12
-			line: 1
+	loc: SourceLocation core/uncategorised/422/input.js 1:0-1:12
+	body: Array [
+		JSWhileStatement {
+			loc: SourceLocation core/uncategorised/422/input.js 1:0-1:12
+			test: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation core/uncategorised/422/input.js 1:6-1:11
+			}
+			body: JSExpressionStatement {
+				loc: SourceLocation core/uncategorised/422/input.js 1:12-1:12
+				expression: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation core/uncategorised/422/input.js 1:12-1:12
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/422/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:12
+				start: Position 1:12
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,76 +53,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unknown start to an "}
 					"statement expression"
 				]
-			}
-			location: Object {
-				filename: "core/uncategorised/422/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSWhileStatement {
-			loc: Object {
-				filename: "core/uncategorised/422/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSBooleanLiteral {
-				value: false
-				loc: Object {
-					filename: "core/uncategorised/422/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-			}
-			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/422/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
-				expression: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/uncategorised/422/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

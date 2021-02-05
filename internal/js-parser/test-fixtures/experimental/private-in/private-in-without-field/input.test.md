@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/private-in/private-in-without-field/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/private-in/private-in-without-field/input.js 1:0-6:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "experimental/private-in/private-in-without-field/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 2:10
+				start: Position 3:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,107 +38,41 @@ JSRoot {
 					"statement expression"
 				]
 			}
-			location: Object {
-				filename: "experimental/private-in/private-in-without-field/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
-			}
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/private-in/private-in-without-field/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/private-in/private-in-without-field/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/private-in/private-in-without-field/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/private-in/private-in-without-field/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/private-in/private-in-without-field/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/private-in/private-in-without-field/input.js 1:0-5:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "test"
-								loc: Object {
-									filename: "experimental/private-in/private-in-without-field/input.js"
-									identifierName: "test"
-									end: Object {
-										column: 6
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/private-in/private-in-without-field/input.js 2:2-2:6 (test)
 							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-without-field/input.js"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-without-field/input.js 2:2-2:6
 						}
-						loc: Object {
-							filename: "experimental/private-in/private-in-without-field/input.js"
-							end: Object {
-								column: 3
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+						loc: SourceLocation experimental/private-in/private-in-without-field/input.js 2:2-4:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/private-in/private-in-without-field/input.js 2:2-2:6
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -151,135 +83,31 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/private-in/private-in-without-field/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/private-in/private-in-without-field/input.js"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-without-field/input.js 2:6-2:8
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/private-in/private-in-without-field/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/private-in/private-in-without-field/input.js 2:9-4:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/private-in/private-in-without-field/input.js"
-										end: Object {
-											column: 5
-											line: 3
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/private-in/private-in-without-field/input.js 3:4-3:5
 									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "experimental/private-in/private-in-without-field/input.js"
-											end: Object {
-												column: 5
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/private-in/private-in-without-field/input.js 3:4-3:5
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/private-in/private-in-without-field/input.js"
-										end: Object {
-											column: 13
-											line: 3
-										}
-										start: Object {
-											column: 5
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/private-in/private-in-without-field/input.js 3:5-3:13
 									expression: JSBinaryExpression {
 										operator: "in"
-										loc: Object {
-											filename: "experimental/private-in/private-in-without-field/input.js"
-											end: Object {
-												column: 12
-												line: 3
-											}
-											start: Object {
-												column: 5
-												line: 3
-											}
+										loc: SourceLocation experimental/private-in/private-in-without-field/input.js 3:5-3:12
+										left: JSReferenceIdentifier {
+											name: "x"
+											loc: SourceLocation experimental/private-in/private-in-without-field/input.js 3:5-3:6 (x)
 										}
 										right: JSObjectExpression {
 											properties: Array []
-											loc: Object {
-												filename: "experimental/private-in/private-in-without-field/input.js"
-												end: Object {
-													column: 12
-													line: 3
-												}
-												start: Object {
-													column: 10
-													line: 3
-												}
-											}
-										}
-										left: JSReferenceIdentifier {
-											name: "x"
-											loc: Object {
-												filename: "experimental/private-in/private-in-without-field/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 6
-													line: 3
-												}
-												start: Object {
-													column: 5
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/private-in/private-in-without-field/input.js 3:10-3:12
 										}
 									}
 								}

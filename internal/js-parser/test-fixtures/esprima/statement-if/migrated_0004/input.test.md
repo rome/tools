@@ -18,126 +18,33 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-if/migrated_0004/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:0-2:0
 	body: Array [
 		JSIfStatement {
-			loc: Object {
-				filename: "esprima/statement-if/migrated_0004/input.js"
-				end: Object {
-					column: 42
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:0-1:42
 			test: JSReferenceIdentifier {
 				name: "morning"
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0004/input.js"
-					identifierName: "morning"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:4-1:11 (morning)
 			}
 			alternate: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0004/input.js"
-					end: Object {
-						column: 42
-						line: 1
-					}
-					start: Object {
-						column: 33
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:33-1:42
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "esprima/statement-if/migrated_0004/input.js"
-						end: Object {
-							column: 42
-							line: 1
-						}
-						start: Object {
-							column: 33
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:33-1:42
 					callee: JSReferenceIdentifier {
 						name: "goodDay"
-						loc: Object {
-							filename: "esprima/statement-if/migrated_0004/input.js"
-							identifierName: "goodDay"
-							end: Object {
-								column: 40
-								line: 1
-							}
-							start: Object {
-								column: 33
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:33-1:40 (goodDay)
 					}
 				}
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0004/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:13-1:27
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "esprima/statement-if/migrated_0004/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:13-1:26
 					callee: JSReferenceIdentifier {
 						name: "goodMorning"
-						loc: Object {
-							filename: "esprima/statement-if/migrated_0004/input.js"
-							identifierName: "goodMorning"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-if/migrated_0004/input.js 1:13-1:24 (goodMorning)
 					}
 				}
 			}

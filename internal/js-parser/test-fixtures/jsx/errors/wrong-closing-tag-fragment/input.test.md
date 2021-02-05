@@ -16,44 +16,14 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-2:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:14
 			expression: JSXFragment {
 				children: Array []
-				loc: Object {
-					filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:14
 			}
 		}
 	]
@@ -65,14 +35,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:2
+				start: Position 1:0
 			}
 			description: Object {
 				category: "parse"
@@ -83,19 +47,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from this opening tag"}
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/wrong-closing-tag-fragment/input.jsx"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/wrong-closing-tag-fragment/input.jsx 1:0-1:2}
 				]
 			}
 		}

@@ -17,105 +17,33 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 1:0-5:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 1:0-4:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-									identifierName: "a"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 2:12-2:13 (a)
 							}
-							loc: Object {
-								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 2:11-2:13
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 2:2-2:14
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -123,77 +51,21 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 2:2-2:13
+							start: Position 2:2
 						}
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-									identifierName: "b"
-									end: Object {
-										column: 13
-										line: 3
-									}
-									start: Object {
-										column: 12
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 3:12-3:13 (b)
 							}
-							loc: Object {
-								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 3:11-3:13
 						}
 						value: undefined
-						loc: Object {
-							filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-							end: Object {
-								column: 22
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
-						typeAnnotation: TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 15
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 3:2-3:22
+						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 3:15-3:21}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -201,21 +73,8 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/private-fields-modifier-readonly/input.ts"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/private-fields-modifier-readonly/input.ts 3:2-3:13
+							start: Position 3:2
 						}
 					}
 				]

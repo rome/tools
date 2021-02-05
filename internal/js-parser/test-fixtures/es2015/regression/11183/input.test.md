@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/regression/11183/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/regression/11183/input.js 1:0-6:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:2
+				start: Position 2:2
 			}
 		}
 	]
@@ -57,103 +41,41 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
-				loc: Object {
-					filename: "es2015/regression/11183/input.js"
-					identifierName: "X"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/regression/11183/input.js 1:6-1:7 (X)
 			}
-			loc: Object {
-				filename: "es2015/regression/11183/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/regression/11183/input.js 1:0-1:10
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/regression/11183/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/regression/11183/input.js 1:0-1:10
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/regression/11183/input.js"
-				end: Object {
-					column: 2
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/regression/11183/input.js 2:0-2:2
 			expression: JSNumericLiteral {
 				value: 5
 				format: "octal"
-				loc: Object {
-					filename: "es2015/regression/11183/input.js"
-					end: Object {
-						column: 2
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/regression/11183/input.js 2:0-2:2
 			}
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "es2015/regression/11183/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 10
-						line: 4
-					}
-					start: Object {
-						column: 9
-						line: 4
-					}
-				}
+				loc: SourceLocation es2015/regression/11183/input.js 4:9-4:10 (x)
 			}
-			loc: Object {
-				filename: "es2015/regression/11183/input.js"
-				end: Object {
-					column: 29
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
+			loc: SourceLocation es2015/regression/11183/input.js 4:0-4:29
+			body: JSBlockStatement {
+				body: Array []
+				loc: SourceLocation es2015/regression/11183/input.js 4:13-4:29
+				directives: Array [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation es2015/regression/11183/input.js 4:15-4:27
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -164,75 +86,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/regression/11183/input.js"
-					end: Object {
-						column: 12
-						line: 4
-					}
-					start: Object {
-						column: 10
-						line: 4
-					}
-				}
-			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: Object {
-					filename: "es2015/regression/11183/input.js"
-					end: Object {
-						column: 29
-						line: 4
-					}
-					start: Object {
-						column: 13
-						line: 4
-					}
-				}
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: Object {
-							filename: "es2015/regression/11183/input.js"
-							end: Object {
-								column: 27
-								line: 4
-							}
-							start: Object {
-								column: 15
-								line: 4
-							}
-						}
-					}
-				]
+				loc: SourceLocation es2015/regression/11183/input.js 4:10-4:12
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/regression/11183/input.js"
-				end: Object {
-					column: 2
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation es2015/regression/11183/input.js 5:0-5:2
 			expression: JSNumericLiteral {
 				value: 5
 				format: "octal"
-				loc: Object {
-					filename: "es2015/regression/11183/input.js"
-					end: Object {
-						column: 2
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 5
-					}
-				}
+				loc: SourceLocation es2015/regression/11183/input.js 5:0-5:2
 			}
 		}
 	]

@@ -16,31 +16,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/522/input.js"
-		end: Object {
-			column: 69
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/522/input.js 1:0-1:69
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "core/uncategorised/522/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/522/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -57,14 +37,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 68
-					line: 1
-				}
-				start: Object {
-					column: 68
-					line: 1
-				}
+				end: Position 1:68
+				start: Position 1:68
 			}
 		}
 	]
@@ -72,29 +46,18 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "core/uncategorised/522/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/522/input.js 1:22-1:25 (foo)
 			}
-			loc: Object {
-				filename: "core/uncategorised/522/input.js"
-				end: Object {
-					column: 42
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
+			loc: SourceLocation core/uncategorised/522/input.js 1:13-1:42
+			body: JSBlockStatement {
+				body: Array []
+				loc: SourceLocation core/uncategorised/522/input.js 1:27-1:42
+				directives: Array [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation core/uncategorised/522/input.js 1:28-1:41
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -105,76 +68,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/522/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: Object {
-					filename: "core/uncategorised/522/input.js"
-					end: Object {
-						column: 42
-						line: 1
-					}
-					start: Object {
-						column: 27
-						line: 1
-					}
-				}
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: Object {
-							filename: "core/uncategorised/522/input.js"
-							end: Object {
-								column: 41
-								line: 1
-							}
-							start: Object {
-								column: 28
-								line: 1
-							}
-						}
-					}
-				]
+				loc: SourceLocation core/uncategorised/522/input.js 1:25-1:27
 			}
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "bar"
-				loc: Object {
-					filename: "core/uncategorised/522/input.js"
-					identifierName: "bar"
-					end: Object {
-						column: 54
-						line: 1
-					}
-					start: Object {
-						column: 51
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/522/input.js 1:51-1:54 (bar)
 			}
-			loc: Object {
-				filename: "core/uncategorised/522/input.js"
-				end: Object {
-					column: 69
-					line: 1
-				}
-				start: Object {
-					column: 42
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/522/input.js 1:42-1:69
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -184,99 +86,28 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/522/input.js"
-					end: Object {
-						column: 56
-						line: 1
-					}
-					start: Object {
-						column: 54
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/522/input.js 1:54-1:56
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/522/input.js"
-					end: Object {
-						column: 69
-						line: 1
-					}
-					start: Object {
-						column: 56
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/522/input.js 1:56-1:69
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "core/uncategorised/522/input.js"
-							end: Object {
-								column: 68
-								line: 1
-							}
-							start: Object {
-								column: 57
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/522/input.js 1:57-1:68
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: Object {
-								filename: "core/uncategorised/522/input.js"
-								end: Object {
-									column: 68
-									line: 1
-								}
-								start: Object {
-									column: 57
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/522/input.js 1:57-1:68
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "v"
-										loc: Object {
-											filename: "core/uncategorised/522/input.js"
-											identifierName: "v"
-											end: Object {
-												column: 62
-												line: 1
-											}
-											start: Object {
-												column: 61
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/522/input.js 1:61-1:62 (v)
 									}
-									loc: Object {
-										filename: "core/uncategorised/522/input.js"
-										end: Object {
-											column: 68
-											line: 1
-										}
-										start: Object {
-											column: 61
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/522/input.js 1:61-1:68
 									init: JSNumericLiteral {
 										value: 13
 										format: "octal"
-										loc: Object {
-											filename: "core/uncategorised/522/input.js"
-											end: Object {
-												column: 68
-												line: 1
-											}
-											start: Object {
-												column: 65
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/522/input.js 1:65-1:68
 									}
 								}
 							]

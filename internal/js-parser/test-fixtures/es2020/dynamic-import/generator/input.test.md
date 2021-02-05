@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/generator/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/dynamic-import/generator/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "es2020/dynamic-import/generator/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/generator/input.js 1:10-1:11 (a)
 			}
-			loc: Object {
-				filename: "es2020/dynamic-import/generator/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/generator/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,82 +35,22 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2020/dynamic-import/generator/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/generator/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2020/dynamic-import/generator/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/generator/input.js 1:14-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2020/dynamic-import/generator/input.js"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/generator/input.js 2:2-2:23
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "es2020/dynamic-import/generator/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/generator/input.js 2:2-2:22
 							argument: JSImportCall {
-								loc: Object {
-									filename: "es2020/dynamic-import/generator/input.js"
-									end: Object {
-										column: 22
-										line: 2
-									}
-									start: Object {
-										column: 14
-										line: 2
-									}
-								}
+								loc: SourceLocation es2020/dynamic-import/generator/input.js 2:14-2:22
 								argument: JSStringLiteral {
 									value: "http"
-									loc: Object {
-										filename: "es2020/dynamic-import/generator/input.js"
-										end: Object {
-											column: 21
-											line: 2
-										}
-										start: Object {
-											column: 15
-											line: 2
-										}
-									}
+									loc: SourceLocation es2020/dynamic-import/generator/input.js 2:15-2:21
 								}
 							}
 						}

@@ -18,42 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-return/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-return/migrated_0000/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/statement-return/migrated_0000/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-return/migrated_0000/input.js 1:0-1:22
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/statement-return/migrated_0000/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
+				loc: SourceLocation esprima/statement-return/migrated_0000/input.js 1:1-1:21
+				body: JSBlockStatement {
+					directives: Array []
+					loc: SourceLocation esprima/statement-return/migrated_0000/input.js 1:11-1:21
+					body: Array [
+						JSReturnStatement {
+							argument: undefined
+							loc: SourceLocation esprima/statement-return/migrated_0000/input.js 1:13-1:19
+						}
+					]
 				}
 				head: JSFunctionHead {
 					async: false
@@ -64,47 +44,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/statement-return/migrated_0000/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
-				}
-				body: JSBlockStatement {
-					directives: Array []
-					loc: Object {
-						filename: "esprima/statement-return/migrated_0000/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
-					body: Array [
-						JSReturnStatement {
-							argument: undefined
-							loc: Object {
-								filename: "esprima/statement-return/migrated_0000/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
-						}
-					]
+					loc: SourceLocation esprima/statement-return/migrated_0000/input.js 1:9-1:11
 				}
 			}
 		}

@@ -18,70 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:0-3:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:0-1:29
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
-					loc: Object {
-						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:15-1:29
 				}
-				loc: Object {
-					filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:15-1:29
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 27
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:27-1:29
 				}
 				head: JSFunctionHead {
 					async: false
@@ -92,46 +42,15 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:24-1:26
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 2:0-2:6
 			expression: JSReferenceIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 4
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 2:1-2:4 (foo)
 			}
 		}
 	]

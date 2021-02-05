@@ -18,126 +18,34 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:0-1:24
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:0-1:24
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:4-1:24
 					properties: Array [
 						JSObjectMethod {
 							kind: "method"
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "method"
-									loc: Object {
-										filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-										identifierName: "method"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:6-1:12 (method)
 								}
-								loc: Object {
-									filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:6-1:12
 							}
-							loc: Object {
-								filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:6-1:22
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:19-1:22
 							}
 							head: JSFunctionHead {
 								async: false
@@ -147,46 +55,15 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:12-1:18
 								params: Array [
 									JSBindingIdentifier {
 										name: "test"
-										loc: Object {
-											filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-											identifierName: "test"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:13-1:17 (test)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "esprima/es2015-method-definition/migrated_0001/input.js"
-												end: Object {
-													column: 17
-													line: 1
-												}
-												start: Object {
-													column: 13
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-method-definition/migrated_0001/input.js 1:13-1:17
 										}
 									}
 								]

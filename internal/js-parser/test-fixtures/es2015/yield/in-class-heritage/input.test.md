@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/in-class-heritage/input.js"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/yield/in-class-heritage/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:21
+				start: Position 1:16
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,124 +38,37 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "es2015/yield/in-class-heritage/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/yield/in-class-heritage/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/yield/in-class-heritage/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/in-class-heritage/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
 				superClass: JSReferenceIdentifier {
 					name: "yield"
-					loc: Object {
-						filename: "es2015/yield/in-class-heritage/input.js"
-						identifierName: "yield"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:16-1:21 (yield)
 				}
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "es2015/yield/in-class-heritage/input.js"
-									identifierName: ""
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25 ()
 							}
-							loc: Object {
-								filename: "es2015/yield/in-class-heritage/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "es2015/yield/in-class-heritage/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 24
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -165,21 +76,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 24
-								line: 1
-							}
-							loc: Object {
-								filename: "es2015/yield/in-class-heritage/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:24-1:25
+							start: Position 1:24
 						}
 					}
 				]

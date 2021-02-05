@@ -13,17 +13,7 @@ Object {
 			endLine: 2
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:23
 		}
 		Object {
 			category: "parse"
@@ -31,17 +21,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:15-1:23
 		}
 		Object {
 			category: "parse"
@@ -49,17 +29,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:26-1:34
 		}
 		Object {
 			category: "parse"
@@ -67,22 +37,20 @@ Object {
 			endLine: 8
 			filename: "unknown"
 			startLine: 8
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 7
-				}
-			}
+			loc: SourceLocation unknown 7:15-1:18
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "unknown"
+				integrity: undefined
+				language: "text"
+				sourceText: undefined
+				end: Position 1:31
+				start: Position 1:26
+			}
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
@@ -93,23 +61,17 @@ Object {
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
+				end: Position 4:42
+				start: Position 4:37
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
@@ -120,23 +82,17 @@ Object {
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 42
-					line: 4
-				}
-				start: Object {
-					column: 37
-					line: 4
-				}
+				end: Position 7:26
+				start: Position 7:21
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				category: "suppressions/duplicate"
@@ -146,20 +102,6 @@ Object {
 					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "unknown"
-				integrity: undefined
-				language: "text"
-				sourceText: undefined
-				end: Object {
-					column: 26
-					line: 7
-				}
-				start: Object {
-					column: 21
-					line: 7
-				}
 			}
 		}
 	]
@@ -185,14 +127,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:15
+				start: Position 1:3
 			}
 		}
 		Object {
@@ -208,14 +144,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 4
-				}
-				start: Object {
-					column: 3
-					line: 4
-				}
+				end: Position 4:15
+				start: Position 4:3
 			}
 		}
 		Object {
@@ -231,14 +161,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 7
-				}
-				start: Object {
-					column: 3
-					line: 7
-				}
+				end: Position 7:16
+				start: Position 7:3
 			}
 		}
 		Object {
@@ -254,14 +178,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 10
-				}
-				start: Object {
-					column: 3
-					line: 10
-				}
+				end: Position 10:20
+				start: Position 10:3
 			}
 		}
 		Object {
@@ -277,14 +195,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 13
-				}
-				start: Object {
-					column: 3
-					line: 13
-				}
+				end: Position 13:22
+				start: Position 13:3
 			}
 		}
 		Object {
@@ -300,14 +212,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 16
-				}
-				start: Object {
-					column: 3
-					line: 16
-				}
+				end: Position 16:21
+				start: Position 16:3
 			}
 		}
 		Object {
@@ -323,14 +229,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 23
-					line: 19
-				}
-				start: Object {
-					column: 3
-					line: 19
-				}
+				end: Position 19:23
+				start: Position 19:3
 			}
 		}
 	]
@@ -348,17 +248,7 @@ Object {
 			endLine: 2
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:20
 		}
 		Object {
 			category: "parse"
@@ -366,17 +256,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:15-1:18
 		}
 	]
 	diagnostics: Array [
@@ -393,14 +273,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				start: Position 1:3
 			}
 		}
 		Object {
@@ -416,14 +290,8 @@ Object {
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 4
-				}
-				start: Object {
-					column: 3
-					line: 4
-				}
+				end: Position 4:3
+				start: Position 4:3
 			}
 		}
 	]
@@ -442,17 +310,7 @@ Object {
 			endLine: 2
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:23
 		}
 		Object {
 			category: "parse"
@@ -460,17 +318,7 @@ Object {
 			endLine: 2
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:26-1:36
 		}
 		Object {
 			category: "parse"
@@ -478,17 +326,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:16-1:24
 		}
 		Object {
 			category: "parse"
@@ -496,17 +334,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 37
-					line: 4
-				}
-				start: Object {
-					column: 27
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:27-4:37
 		}
 		Object {
 			category: "parse"
@@ -514,17 +342,7 @@ Object {
 			endLine: 10
 			filename: "unknown"
 			startLine: 10
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 25
-					line: 2
-				}
-				start: Object {
-					column: 15
-					line: 8
-				}
-			}
+			loc: SourceLocation unknown 8:15-2:25
 		}
 		Object {
 			category: "parse"
@@ -532,17 +350,7 @@ Object {
 			endLine: 10
 			filename: "unknown"
 			startLine: 10
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 37
-					line: 8
-				}
-				start: Object {
-					column: 26
-					line: 8
-				}
-			}
+			loc: SourceLocation unknown 8:26-8:37
 		}
 		Object {
 			category: "parse"
@@ -550,17 +358,7 @@ Object {
 			endLine: 16
 			filename: "unknown"
 			startLine: 16
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 25
-					line: 3
-				}
-				start: Object {
-					column: 15
-					line: 14
-				}
-			}
+			loc: SourceLocation unknown 14:15-3:25
 		}
 		Object {
 			category: "parse"
@@ -568,17 +366,7 @@ Object {
 			endLine: 16
 			filename: "unknown"
 			startLine: 16
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 37
-					line: 14
-				}
-				start: Object {
-					column: 26
-					line: 14
-				}
-			}
+			loc: SourceLocation unknown 14:26-14:37
 		}
 	]
 }
@@ -591,6 +379,7 @@ Object {
 	diagnostics: Array [
 		Object {
 			origins: Array []
+			location: SourceLocation unknown 3:17-3:22
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -599,21 +388,11 @@ Object {
 					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
 			}
 		}
 		Object {
 			origins: Array []
+			location: SourceLocation unknown 4:17-4:22
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -622,17 +401,6 @@ Object {
 					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 4
-				}
-				start: Object {
-					column: 17
-					line: 4
-				}
 			}
 		}
 	]
@@ -643,17 +411,7 @@ Object {
 			endLine: 6
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:20
 		}
 		Object {
 			category: "parse"
@@ -661,17 +419,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
-			}
+			loc: SourceLocation unknown 3:17-3:22
 		}
 		Object {
 			category: "parse"
@@ -679,17 +427,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 4
-				}
-				start: Object {
-					column: 17
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:17-4:22
 		}
 		Object {
 			category: "parse"
@@ -697,17 +435,7 @@ Object {
 			endLine: 9
 			filename: "unknown"
 			startLine: 9
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 8
-				}
-				start: Object {
-					column: 15
-					line: 8
-				}
-			}
+			loc: SourceLocation unknown 8:15-8:20
 		}
 	]
 }
@@ -720,6 +448,7 @@ Object {
 	diagnostics: Array [
 		Object {
 			origins: Array []
+			location: SourceLocation unknown 3:17-3:22
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -728,17 +457,6 @@ Object {
 					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
 			}
 		}
 	]
@@ -749,17 +467,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:20
 		}
 		Object {
 			category: "parse"
@@ -767,17 +475,7 @@ Object {
 			endLine: 4
 			filename: "unknown"
 			startLine: 4
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
-			}
+			loc: SourceLocation unknown 3:17-3:22
 		}
 		Object {
 			category: "parse"
@@ -785,17 +483,7 @@ Object {
 			endLine: 8
 			filename: "unknown"
 			startLine: 8
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 7
-				}
-				start: Object {
-					column: 15
-					line: 7
-				}
-			}
+			loc: SourceLocation unknown 7:15-7:20
 		}
 	]
 }
@@ -808,6 +496,7 @@ Object {
 	diagnostics: Array [
 		Object {
 			origins: Array []
+			location: SourceLocation unknown 3:17-3:22
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -816,17 +505,6 @@ Object {
 					"parse"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
 			}
 		}
 	]
@@ -837,17 +515,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:20
 		}
 		Object {
 			category: "parse"
@@ -855,17 +523,7 @@ Object {
 			endLine: 4
 			filename: "unknown"
 			startLine: 4
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
-			}
+			loc: SourceLocation unknown 3:17-3:22
 		}
 	]
 }
@@ -878,6 +536,7 @@ Object {
 	diagnostics: Array [
 		Object {
 			origins: Array []
+			location: SourceLocation unknown 5:17-5:27
 			description: Object {
 				advice: Array []
 				category: "suppressions/overlap"
@@ -886,17 +545,6 @@ Object {
 					"parse(foo)"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "unknown"
-				end: Object {
-					column: 27
-					line: 5
-				}
-				start: Object {
-					column: 17
-					line: 5
-				}
 			}
 		}
 	]
@@ -907,17 +555,7 @@ Object {
 			endLine: 7
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:25
 		}
 		Object {
 			category: "parse"
@@ -925,17 +563,7 @@ Object {
 			endLine: 6
 			filename: "unknown"
 			startLine: 6
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 27
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
-			}
+			loc: SourceLocation unknown 3:17-3:27
 		}
 		Object {
 			category: "parse"
@@ -943,17 +571,7 @@ Object {
 			endLine: 6
 			filename: "unknown"
 			startLine: 6
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 27
-					line: 4
-				}
-				start: Object {
-					column: 17
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:17-4:27
 		}
 		Object {
 			category: "parse"
@@ -961,17 +579,7 @@ Object {
 			endLine: 6
 			filename: "unknown"
 			startLine: 6
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 27
-					line: 5
-				}
-				start: Object {
-					column: 17
-					line: 5
-				}
-			}
+			loc: SourceLocation unknown 5:17-5:27
 		}
 	]
 }
@@ -989,17 +597,7 @@ Object {
 			endLine: 2
 			filename: "unknown"
 			startLine: 2
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:20
 		}
 		Object {
 			category: "parse"
@@ -1007,17 +605,7 @@ Object {
 			endLine: 5
 			filename: "unknown"
 			startLine: 5
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 21
-					line: 4
-				}
-				start: Object {
-					column: 16
-					line: 4
-				}
-			}
+			loc: SourceLocation unknown 4:16-4:21
 		}
 		Object {
 			category: "parse"
@@ -1025,17 +613,7 @@ Object {
 			endLine: 10
 			filename: "unknown"
 			startLine: 10
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 8
-				}
-				start: Object {
-					column: 15
-					line: 8
-				}
-			}
+			loc: SourceLocation unknown 8:15-8:20
 		}
 		Object {
 			category: "parse"
@@ -1043,17 +621,7 @@ Object {
 			endLine: 16
 			filename: "unknown"
 			startLine: 16
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 20
-					line: 14
-				}
-				start: Object {
-					column: 15
-					line: 14
-				}
-			}
+			loc: SourceLocation unknown 14:15-14:20
 		}
 	]
 }

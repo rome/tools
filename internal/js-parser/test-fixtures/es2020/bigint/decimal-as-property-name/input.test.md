@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/decimal-as-property-name/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,154 +32,46 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:2
+				start: Position 1:3
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:0-1:22
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:1-1:22
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "es2020/bigint/decimal-as-property-name/input.js"
-									identifierName: ""
-									end: Object {
-										column: 5
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:3-1:5 ()
 							}
-							loc: Object {
-								filename: "es2020/bigint/decimal-as-property-name/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:3-1:5
 						}
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "es2020/bigint/decimal-as-property-name/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:7-1:8
 						}
-						loc: Object {
-							filename: "es2020/bigint/decimal-as-property-name/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:3-1:8
 					}
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "es2020/bigint/decimal-as-property-name/input.js"
-									identifierName: ""
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:10-1:12 ()
 							}
-							loc: Object {
-								filename: "es2020/bigint/decimal-as-property-name/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:10-1:12
 						}
-						loc: Object {
-							filename: "es2020/bigint/decimal-as-property-name/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:10-1:17
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2020/bigint/decimal-as-property-name/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:15-1:17
 						}
 						head: JSFunctionHead {
 							async: false
@@ -200,242 +82,68 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2020/bigint/decimal-as-property-name/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:12-1:14
 						}
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "es2020/bigint/decimal-as-property-name/input.js"
-									identifierName: "get"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:19-1:22 (get)
 							}
-							loc: Object {
-								filename: "es2020/bigint/decimal-as-property-name/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:19-1:22
 						}
 						value: JSReferenceIdentifier {
 							name: "get"
-							loc: Object {
-								filename: "es2020/bigint/decimal-as-property-name/input.js"
-								identifierName: "get"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:19-1:22 (get)
 						}
-						loc: Object {
-							filename: "es2020/bigint/decimal-as-property-name/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:19-1:22
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:23-1:27
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:23-1:27
 				callee: JSBigIntLiteral {
 					value: "2"
-					loc: Object {
-						filename: "es2020/bigint/decimal-as-property-name/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:23-1:25
 				}
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 27
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:27-1:29
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 29
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:29-1:30
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 29
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:29-1:30
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 31
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:31-1:34
 			expression: JSReferenceIdentifier {
 				name: "set"
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					identifierName: "set"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:31-1:34 (set)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 35
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:35-1:40
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 40
-						line: 1
-					}
-					start: Object {
-						column: 35
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:35-1:40
 				callee: JSBigIntLiteral {
 					value: "3"
-					loc: Object {
-						filename: "es2020/bigint/decimal-as-property-name/input.js"
-						end: Object {
-							column: 37
-							line: 1
-						}
-						start: Object {
-							column: 35
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:35-1:37
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "_"
-						loc: Object {
-							filename: "es2020/bigint/decimal-as-property-name/input.js"
-							identifierName: "_"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 38
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:38-1:39 (_)
 					}
 				]
 			}
@@ -443,194 +151,53 @@ JSRoot {
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 42
-					line: 1
-				}
-				start: Object {
-					column: 40
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:40-1:42
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 43
-					line: 1
-				}
-				start: Object {
-					column: 42
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:42-1:43
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 43
-						line: 1
-					}
-					start: Object {
-						column: 42
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:42-1:43
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 49
-					line: 1
-				}
-				start: Object {
-					column: 44
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:44-1:49
 			expression: JSReferenceIdentifier {
 				name: "async"
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 49
-						line: 1
-					}
-					start: Object {
-						column: 44
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:44-1:49 (async)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 54
-					line: 1
-				}
-				start: Object {
-					column: 50
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:50-1:54
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 54
-						line: 1
-					}
-					start: Object {
-						column: 50
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:50-1:54
 				callee: JSBigIntLiteral {
 					value: "4"
-					loc: Object {
-						filename: "es2020/bigint/decimal-as-property-name/input.js"
-						end: Object {
-							column: 52
-							line: 1
-						}
-						start: Object {
-							column: 50
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:50-1:52
 				}
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 57
-					line: 1
-				}
-				start: Object {
-					column: 55
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:55-1:57
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 64
-					line: 1
-				}
-				start: Object {
-					column: 57
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:57-1:64
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 64
-						line: 1
-					}
-					start: Object {
-						column: 57
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:57-1:64
 				left: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2020/bigint/decimal-as-property-name/input.js"
-						end: Object {
-							column: 58
-							line: 1
-						}
-						start: Object {
-							column: 57
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:57-1:58
 				}
 				right: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "es2020/bigint/decimal-as-property-name/input.js"
-						end: Object {
-							column: 64
-							line: 1
-						}
-						start: Object {
-							column: 60
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:60-1:64
 					callee: JSBigIntLiteral {
 						value: "5"
-						loc: Object {
-							filename: "es2020/bigint/decimal-as-property-name/input.js"
-							end: Object {
-								column: 62
-								line: 1
-							}
-							start: Object {
-								column: 60
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:60-1:62
 					}
 				}
 			}
@@ -638,70 +205,20 @@ JSRoot {
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 67
-					line: 1
-				}
-				start: Object {
-					column: 65
-					line: 1
-				}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:65-1:67
+		}
+		JSExpressionStatement {
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:68-1:69
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:68-1:69
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 69
-					line: 1
-				}
-				start: Object {
-					column: 68
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:69-1:71
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 69
-						line: 1
-					}
-					start: Object {
-						column: 68
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/decimal-as-property-name/input.js"
-				end: Object {
-					column: 71
-					line: 1
-				}
-				start: Object {
-					column: 69
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2020/bigint/decimal-as-property-name/input.js"
-					end: Object {
-						column: 70
-						line: 1
-					}
-					start: Object {
-						column: 69
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/decimal-as-property-name/input.js 1:69-1:70
 			}
 		}
 	]

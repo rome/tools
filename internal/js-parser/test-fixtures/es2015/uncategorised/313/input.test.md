@@ -18,142 +18,40 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/313/input.js"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/313/input.js 1:0-1:27
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/313/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/313/input.js 1:0-1:27
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/313/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/313/input.js 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "es2015/uncategorised/313/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/313/input.js 1:7-1:27
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/313/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/313/input.js 1:25-1:27
 				}
 				param: JSBindingObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/313/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/313/input.js 1:14-1:23
 					properties: Array [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "message"
-									loc: Object {
-										filename: "es2015/uncategorised/313/input.js"
-										identifierName: "message"
-										end: Object {
-											column: 22
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/313/input.js 1:15-1:22 (message)
 								}
-								loc: Object {
-									filename: "es2015/uncategorised/313/input.js"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/313/input.js 1:15-1:22
 							}
 							value: JSBindingIdentifier {
 								name: "message"
-								loc: Object {
-									filename: "es2015/uncategorised/313/input.js"
-									identifierName: "message"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/313/input.js 1:15-1:22 (message)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/313/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/313/input.js 1:15-1:22
 						}
 					]
 				}

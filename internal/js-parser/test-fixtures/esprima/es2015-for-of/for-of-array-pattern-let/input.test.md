@@ -18,162 +18,47 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:0-2:0
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:21-1:22}
+			loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:0-1:22
 			right: JSReferenceIdentifier {
 				name: "r"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-					identifierName: "r"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:19-1:20 (r)
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:5-1:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:9-1:15
 							elements: Array [
 								JSBindingIdentifier {
 									name: "p"
-									loc: Object {
-										filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-										identifierName: "p"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:10-1:11 (p)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-											end: Object {
-												column: 11
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:10-1:11
 									}
 								}
 								JSBindingIdentifier {
 									name: "q"
-									loc: Object {
-										filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-										identifierName: "q"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:13-1:14 (q)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:13-1:14
 									}
 								}
 							]
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-for-of/for-of-array-pattern-let/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/for-of-array-pattern-let/input.js 1:9-1:15
 					}
 				]
 			}

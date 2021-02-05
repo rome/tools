@@ -17,1023 +17,269 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/keywords/input.ts 1:0-13:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/keywords/input.ts"
-		end: Object {
-			column: 0
-			line: 13
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 1:0-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 1:4-1:10
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
-								typeAnnotation: TSAnyKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 1:4-1:10
+								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 1:7-1:10}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 1:4-1:10
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 16
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 2:0-2:16
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 2:0-2:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "un"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 2:4-2:15
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
-								typeAnnotation: TSUnknownKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 2:4-2:15
+								typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 2:8-2:15}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 2:4-2:15
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 15
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 3:0-3:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 15
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 3:0-3:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 14
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 3:4-3:14
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 14
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
-								typeAnnotation: TSBooleanKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 14
-											line: 3
-										}
-										start: Object {
-											column: 7
-											line: 3
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 3:4-3:14
+								typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 3:7-3:14}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 14
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 3:4-3:14
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 14
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 4:0-4:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 14
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 4:0-4:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "ne"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 13
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 4:4-4:13
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 13
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
-								typeAnnotation: TSNeverKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 13
-											line: 4
-										}
-										start: Object {
-											column: 8
-											line: 4
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 4:4-4:13
+								typeAnnotation: TSNeverKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 4:8-4:13}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 13
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 4:4-4:13
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 14
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 5:0-5:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 14
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 5
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 5:0-5:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "nul"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 13
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 5:4-5:13
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 13
-										line: 5
-									}
-									start: Object {
-										column: 4
-										line: 5
-									}
-								}
-								typeAnnotation: TSNullKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 13
-											line: 5
-										}
-										start: Object {
-											column: 9
-											line: 5
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 5:4-5:13
+								typeAnnotation: TSNullKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 5:9-5:13}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 13
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 5:4-5:13
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 16
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 6:0-6:16
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 16
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 6
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 6:0-6:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "num"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 15
-									line: 6
-								}
-								start: Object {
-									column: 4
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 6:4-6:15
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 15
-										line: 6
-									}
-									start: Object {
-										column: 4
-										line: 6
-									}
-								}
-								typeAnnotation: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 15
-											line: 6
-										}
-										start: Object {
-											column: 9
-											line: 6
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 6:4-6:15
+								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 6:9-6:15}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 15
-								line: 6
-							}
-							start: Object {
-								column: 4
-								line: 6
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 6:4-6:15
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 14
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 7:0-7:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 14
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 7
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 7:0-7:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "o"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 13
-									line: 7
-								}
-								start: Object {
-									column: 4
-									line: 7
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 7:4-7:13
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 13
-										line: 7
-									}
-									start: Object {
-										column: 4
-										line: 7
-									}
-								}
-								typeAnnotation: TSObjectKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 13
-											line: 7
-										}
-										start: Object {
-											column: 7
-											line: 7
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 7:4-7:13
+								typeAnnotation: TSObjectKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 7:7-7:13}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 13
-								line: 7
-							}
-							start: Object {
-								column: 4
-								line: 7
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 7:4-7:13
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 15
-					line: 8
-				}
-				start: Object {
-					column: 0
-					line: 8
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 8:0-8:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 15
-						line: 8
-					}
-					start: Object {
-						column: 0
-						line: 8
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 8:0-8:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "st"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 14
-									line: 8
-								}
-								start: Object {
-									column: 4
-									line: 8
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 8:4-8:14
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 14
-										line: 8
-									}
-									start: Object {
-										column: 4
-										line: 8
-									}
-								}
-								typeAnnotation: TSStringKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 14
-											line: 8
-										}
-										start: Object {
-											column: 8
-											line: 8
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 8:4-8:14
+								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 8:8-8:14}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 14
-								line: 8
-							}
-							start: Object {
-								column: 4
-								line: 8
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 8:4-8:14
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 15
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 9
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 9:0-9:15
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 15
-						line: 9
-					}
-					start: Object {
-						column: 0
-						line: 9
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 9:0-9:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "sy"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 14
-									line: 9
-								}
-								start: Object {
-									column: 4
-									line: 9
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 9:4-9:14
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 14
-										line: 9
-									}
-									start: Object {
-										column: 4
-										line: 9
-									}
-								}
-								typeAnnotation: TSSymbolKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 14
-											line: 9
-										}
-										start: Object {
-											column: 8
-											line: 9
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 9:4-9:14
+								typeAnnotation: TSSymbolKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 9:8-9:14}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 14
-								line: 9
-							}
-							start: Object {
-								column: 4
-								line: 9
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 9:4-9:14
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 17
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 10
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 10:0-10:17
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 17
-						line: 10
-					}
-					start: Object {
-						column: 0
-						line: 10
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 10:0-10:17
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "u"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 16
-									line: 10
-								}
-								start: Object {
-									column: 4
-									line: 10
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 10:4-10:16
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 16
-										line: 10
-									}
-									start: Object {
-										column: 4
-										line: 10
-									}
-								}
-								typeAnnotation: TSUndefinedKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 16
-											line: 10
-										}
-										start: Object {
-											column: 7
-											line: 10
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 10:4-10:16
+								typeAnnotation: TSUndefinedKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 10:7-10:16}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 16
-								line: 10
-							}
-							start: Object {
-								column: 4
-								line: 10
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 10:4-10:16
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 12
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 11
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 11:0-11:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 12
-						line: 11
-					}
-					start: Object {
-						column: 0
-						line: 11
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 11:0-11:12
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "v"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 11
-									line: 11
-								}
-								start: Object {
-									column: 4
-									line: 11
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 11:4-11:11
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 11
-										line: 11
-									}
-									start: Object {
-										column: 4
-										line: 11
-									}
-								}
-								typeAnnotation: TSVoidKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 11
-											line: 11
-										}
-										start: Object {
-											column: 7
-											line: 11
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 11:4-11:11
+								typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 11:7-11:11}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 11
-								line: 11
-							}
-							start: Object {
-								column: 4
-								line: 11
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 11:4-11:11
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/keywords/input.ts"
-				end: Object {
-					column: 14
-					line: 12
-				}
-				start: Object {
-					column: 0
-					line: 12
-				}
-			}
+			loc: SourceLocation typescript/types/keywords/input.ts 12:0-12:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/keywords/input.ts"
-					end: Object {
-						column: 14
-						line: 12
-					}
-					start: Object {
-						column: 0
-						line: 12
-					}
-				}
+				loc: SourceLocation typescript/types/keywords/input.ts 12:0-12:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "n"
-							loc: Object {
-								filename: "typescript/types/keywords/input.ts"
-								end: Object {
-									column: 13
-									line: 12
-								}
-								start: Object {
-									column: 4
-									line: 12
-								}
-							}
+							loc: SourceLocation typescript/types/keywords/input.ts 12:4-12:13
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/keywords/input.ts"
-									end: Object {
-										column: 13
-										line: 12
-									}
-									start: Object {
-										column: 4
-										line: 12
-									}
-								}
-								typeAnnotation: TSBigIntKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/types/keywords/input.ts"
-										end: Object {
-											column: 13
-											line: 12
-										}
-										start: Object {
-											column: 7
-											line: 12
-										}
-									}
-								}
+								loc: SourceLocation typescript/types/keywords/input.ts 12:4-12:13
+								typeAnnotation: TSBigIntKeywordTypeAnnotation {loc: SourceLocation typescript/types/keywords/input.ts 12:7-12:13}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/keywords/input.ts"
-							end: Object {
-								column: 13
-								line: 12
-							}
-							start: Object {
-								column: 4
-								line: 12
-							}
-						}
+						loc: SourceLocation typescript/types/keywords/input.ts 12:4-12:13
 					}
 				]
 			}

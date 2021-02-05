@@ -17,118 +17,36 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/method-return-type/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/method-return-type/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-return-type/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/method-return-type/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/method-return-type/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-return-type/input.ts 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "f"
-								loc: Object {
-									filename: "typescript/class/method-return-type/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5 (f)
 							}
-							loc: Object {
-								filename: "typescript/class/method-return-type/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5
 						}
-						loc: Object {
-							filename: "typescript/class/method-return-type/input.ts"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:16
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/method-return-type/input.ts"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 14
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-return-type/input.ts 2:14-2:16
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/method-return-type/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-return-type/input.ts 2:4-2:5
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -161,30 +66,8 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/method-return-type/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/method-return-type/input.ts"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/method-return-type/input.ts 2:5-2:13
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/method-return-type/input.ts 2:9-2:13}
 						}
 					}
 				]

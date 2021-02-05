@@ -17,17 +17,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-98/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation experimental/numeric-separator/invalid-98/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/numeric-separator/invalid-98/input.js 1:0-1:8
+			expression: JSArrayExpression {
+				loc: SourceLocation experimental/numeric-separator/invalid-98/input.js 1:0-1:8
+				elements: Array [
+					JSNumericLiteral {
+						value: 9
+						format: "octal"
+						loc: SourceLocation experimental/numeric-separator/invalid-98/input.js 1:1-1:7
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,59 +47,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-98/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSArrayExpression {
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-98/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				elements: Array [
-					JSNumericLiteral {
-						value: 9
-						format: "octal"
-						loc: Object {
-							filename: "experimental/numeric-separator/invalid-98/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:1
+				start: Position 1:1
 			}
 		}
 	]

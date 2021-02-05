@@ -18,286 +18,82 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-in/nonstrict-initializer/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:0-7:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/for-in/nonstrict-initializer/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:2-1:18
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/for-in/nonstrict-initializer/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:2-1:18
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "effects"
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								identifierName: "effects"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:6-1:13 (effects)
 						}
-						loc: Object {
-							filename: "es2015/for-in/nonstrict-initializer/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:6-1:17
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:16-1:17
 						}
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/for-in/nonstrict-initializer/input.js"
-				end: Object {
-					column: 21
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:2-2:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/for-in/nonstrict-initializer/input.js"
-					end: Object {
-						column: 21
-						line: 2
-					}
-					start: Object {
-						column: 2
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:2-2:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "iterations"
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								identifierName: "iterations"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:6-2:16 (iterations)
 						}
-						loc: Object {
-							filename: "es2015/for-in/nonstrict-initializer/input.js"
-							end: Object {
-								column: 20
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:6-2:20
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 2:19-2:20
 						}
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/for-in/nonstrict-initializer/input.js"
-				end: Object {
-					column: 13
-					line: 3
-				}
-				start: Object {
-					column: 2
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:2-3:13
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/for-in/nonstrict-initializer/input.js"
-					end: Object {
-						column: 13
-						line: 3
-					}
-					start: Object {
-						column: 2
-						line: 3
-					}
-				}
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:2-3:13
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "stored"
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								identifierName: "stored"
-								end: Object {
-									column: 12
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:6-3:12 (stored)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/for-in/nonstrict-initializer/input.js"
-							end: Object {
-								column: 12
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 3:6-3:12
 					}
 				]
 			}
 		}
 		JSForInStatement {
-			loc: Object {
-				filename: "es2015/for-in/nonstrict-initializer/input.js"
-				end: Object {
-					column: 3
-					line: 6
-				}
-				start: Object {
-					column: 2
-					line: 4
-				}
-			}
+			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:2-6:3
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/for-in/nonstrict-initializer/input.js"
-					end: Object {
-						column: 3
-						line: 6
-					}
-					start: Object {
-						column: 66
-						line: 4
-					}
-				}
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:66-6:3
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/for-in/nonstrict-initializer/input.js"
-							end: Object {
-								column: 17
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
-						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:4-5:17
 						expression: JSUpdateExpression {
 							operator: "++"
 							prefix: true
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								end: Object {
-									column: 16
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:4-5:16
 							argument: JSReferenceIdentifier {
 								name: "iterations"
-								loc: Object {
-									filename: "es2015/for-in/nonstrict-initializer/input.js"
-									identifierName: "iterations"
-									end: Object {
-										column: 16
-										line: 5
-									}
-									start: Object {
-										column: 6
-										line: 5
-									}
-								}
+								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 5:6-5:16 (iterations)
 							}
 						}
 					}
@@ -305,116 +101,34 @@ JSRoot {
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/for-in/nonstrict-initializer/input.js"
-					end: Object {
-						column: 30
-						line: 4
-					}
-					start: Object {
-						column: 7
-						line: 4
-					}
-				}
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:7-4:30
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 12
-									line: 4
-								}
-								start: Object {
-									column: 11
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:11-4:12 (a)
 						}
-						loc: Object {
-							filename: "es2015/for-in/nonstrict-initializer/input.js"
-							end: Object {
-								column: 30
-								line: 4
-							}
-							start: Object {
-								column: 11
-								line: 4
-							}
-						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:11-4:30
 						init: JSSequenceExpression {
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								end: Object {
-									column: 29
-									line: 4
-								}
-								start: Object {
-									column: 16
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:16-4:29
 							expressions: Array [
 								JSUpdateExpression {
 									operator: "++"
 									prefix: true
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 25
-											line: 4
-										}
-										start: Object {
-											column: 16
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:16-4:25
 									argument: JSReferenceIdentifier {
 										name: "effects"
-										loc: Object {
-											filename: "es2015/for-in/nonstrict-initializer/input.js"
-											identifierName: "effects"
-											end: Object {
-												column: 25
-												line: 4
-											}
-											start: Object {
-												column: 18
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:18-4:25 (effects)
 									}
 								}
 								JSUnaryExpression {
 									operator: "-"
 									prefix: true
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 29
-											line: 4
-										}
-										start: Object {
-											column: 27
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:27-4:29
 									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
-										loc: Object {
-											filename: "es2015/for-in/nonstrict-initializer/input.js"
-											end: Object {
-												column: 29
-												line: 4
-											}
-											start: Object {
-												column: 28
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:28-4:29
 									}
 								}
 							]
@@ -423,242 +137,67 @@ JSRoot {
 				]
 			}
 			right: JSSequenceExpression {
-				loc: Object {
-					filename: "es2015/for-in/nonstrict-initializer/input.js"
-					end: Object {
-						column: 64
-						line: 4
-					}
-					start: Object {
-						column: 34
-						line: 4
-					}
-				}
+				loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:64
 				expressions: Array [
 					JSAssignmentExpression {
 						operator: "="
-						loc: Object {
-							filename: "es2015/for-in/nonstrict-initializer/input.js"
-							end: Object {
-								column: 44
-								line: 4
-							}
-							start: Object {
-								column: 34
-								line: 4
-							}
-						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:44
 						left: JSAssignmentIdentifier {
 							name: "stored"
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								identifierName: "stored"
-								end: Object {
-									column: 40
-									line: 4
-								}
-								start: Object {
-									column: 34
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:34-4:40 (stored)
 						}
 						right: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/for-in/nonstrict-initializer/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 44
-									line: 4
-								}
-								start: Object {
-									column: 43
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:43-4:44 (a)
 						}
 					}
 					JSObjectExpression {
-						loc: Object {
-							filename: "es2015/for-in/nonstrict-initializer/input.js"
-							end: Object {
-								column: 64
-								line: 4
-							}
-							start: Object {
-								column: 46
-								line: 4
-							}
-						}
+						loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:46-4:64
 						properties: Array [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "es2015/for-in/nonstrict-initializer/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 48
-												line: 4
-											}
-											start: Object {
-												column: 47
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:47-4:48 (a)
 									}
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 48
-											line: 4
-										}
-										start: Object {
-											column: 47
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:47-4:48
 								}
 								value: JSNumericLiteral {
 									value: 0
 									format: undefined
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 51
-											line: 4
-										}
-										start: Object {
-											column: 50
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:50-4:51
 								}
-								loc: Object {
-									filename: "es2015/for-in/nonstrict-initializer/input.js"
-									end: Object {
-										column: 51
-										line: 4
-									}
-									start: Object {
-										column: 47
-										line: 4
-									}
-								}
+								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:47-4:51
 							}
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "b"
-										loc: Object {
-											filename: "es2015/for-in/nonstrict-initializer/input.js"
-											identifierName: "b"
-											end: Object {
-												column: 54
-												line: 4
-											}
-											start: Object {
-												column: 53
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:53-4:54 (b)
 									}
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 54
-											line: 4
-										}
-										start: Object {
-											column: 53
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:53-4:54
 								}
 								value: JSNumericLiteral {
 									value: 1
 									format: undefined
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 57
-											line: 4
-										}
-										start: Object {
-											column: 56
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:56-4:57
 								}
-								loc: Object {
-									filename: "es2015/for-in/nonstrict-initializer/input.js"
-									end: Object {
-										column: 57
-										line: 4
-									}
-									start: Object {
-										column: 53
-										line: 4
-									}
-								}
+								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:53-4:57
 							}
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "c"
-										loc: Object {
-											filename: "es2015/for-in/nonstrict-initializer/input.js"
-											identifierName: "c"
-											end: Object {
-												column: 60
-												line: 4
-											}
-											start: Object {
-												column: 59
-												line: 4
-											}
-										}
+										loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:59-4:60 (c)
 									}
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 60
-											line: 4
-										}
-										start: Object {
-											column: 59
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:59-4:60
 								}
 								value: JSNumericLiteral {
 									value: 2
 									format: undefined
-									loc: Object {
-										filename: "es2015/for-in/nonstrict-initializer/input.js"
-										end: Object {
-											column: 63
-											line: 4
-										}
-										start: Object {
-											column: 62
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:62-4:63
 								}
-								loc: Object {
-									filename: "es2015/for-in/nonstrict-initializer/input.js"
-									end: Object {
-										column: 63
-										line: 4
-									}
-									start: Object {
-										column: 59
-										line: 4
-									}
-								}
+								loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 4:59-4:63
 							}
 						]
 					}

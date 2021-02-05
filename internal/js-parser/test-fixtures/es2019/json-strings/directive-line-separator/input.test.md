@@ -17,49 +17,19 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2019/json-strings/directive-line-separator/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2019/json-strings/directive-line-separator/input.js 1:0-4:0
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "     ^ That's a U+2028 LINE SEPARATOR UTF-16 char (between 'before' and 'after')"
-			loc: Object {
-				filename: "es2019/json-strings/directive-line-separator/input.js"
-				end: Object {
-					column: 82
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2019/json-strings/directive-line-separator/input.js 3:0-3:82
 		}
 	]
 	directives: Array [
 		JSDirective {
 			value: "before\u2028after"
+			loc: SourceLocation es2019/json-strings/directive-line-separator/input.js 1:0-2:15
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "es2019/json-strings/directive-line-separator/input.js"
-				end: Object {
-					column: 15
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 		}
 	]
 }

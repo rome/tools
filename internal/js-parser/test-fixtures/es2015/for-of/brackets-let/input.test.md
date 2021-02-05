@@ -18,45 +18,15 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/for-of/brackets-let/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/for-of/brackets-let/input.js 1:0-2:0
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "es2015/for-of/brackets-let/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/for-of/brackets-let/input.js 1:0-1:23
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/for-of/brackets-let/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:21-1:23
 			}
 			right: JSRegExpLiteral {
 				global: false
@@ -65,146 +35,44 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "es2015/for-of/brackets-let/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:16-1:19
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2015/for-of/brackets-let/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/for-of/brackets-let/input.js 1:17-1:18
 					body: Array [
 						JSRegExpCharacter {
 							value: "b"
-							loc: Object {
-								filename: "es2015/for-of/brackets-let/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-of/brackets-let/input.js 1:17-1:18
 						}
 					]
 				}
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/for-of/brackets-let/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/for-of/brackets-let/input.js 1:5-1:12
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/for-of/brackets-let/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/for-of/brackets-let/input.js 1:9-1:12
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/for-of/brackets-let/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 11
-													line: 1
-												}
-												start: Object {
-													column: 10
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/for-of/brackets-let/input.js 1:10-1:11 (a)
 										}
-										loc: Object {
-											filename: "es2015/for-of/brackets-let/input.js"
-											end: Object {
-												column: 11
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/for-of/brackets-let/input.js 1:10-1:11
 									}
 									value: JSBindingIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "es2015/for-of/brackets-let/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 11
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/for-of/brackets-let/input.js 1:10-1:11 (a)
 									}
-									loc: Object {
-										filename: "es2015/for-of/brackets-let/input.js"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/for-of/brackets-let/input.js 1:10-1:11
 								}
 							]
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/for-of/brackets-let/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/for-of/brackets-let/input.js 1:9-1:12
 					}
 				]
 			}

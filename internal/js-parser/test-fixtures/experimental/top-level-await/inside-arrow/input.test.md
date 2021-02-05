@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/inside-arrow/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,56 +32,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
+				end: Position 1:11
+				start: Position 1:6
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/top-level-await/inside-arrow/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:11
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "experimental/top-level-await/inside-arrow/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:11
 				body: JSReferenceIdentifier {
 					name: "await"
-					loc: Object {
-						filename: "experimental/top-level-await/inside-arrow/input.js"
-						identifierName: "await"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:6-1:11 (await)
 				}
 				head: JSFunctionHead {
 					async: false
@@ -100,46 +53,16 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "experimental/top-level-await/inside-arrow/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:0-1:5
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/top-level-await/inside-arrow/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:12-1:14
 			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
-				loc: Object {
-					filename: "experimental/top-level-await/inside-arrow/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-arrow/input.js 1:12-1:13
 			}
 		}
 	]

@@ -17,91 +17,29 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/abstract-new-line/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/abstract-new-line/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/class/abstract-new-line/input.ts"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/abstract-new-line/input.ts 1:0-1:8
 			expression: JSReferenceIdentifier {
 				name: "abstract"
-				loc: Object {
-					filename: "typescript/class/abstract-new-line/input.ts"
-					identifierName: "abstract"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/abstract-new-line/input.ts 1:0-1:8 (abstract)
 			}
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "B"
-				loc: Object {
-					filename: "typescript/class/abstract-new-line/input.ts"
-					identifierName: "B"
-					end: Object {
-						column: 7
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/abstract-new-line/input.ts 2:6-2:7 (B)
 			}
-			loc: Object {
-				filename: "typescript/class/abstract-new-line/input.ts"
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/class/abstract-new-line/input.ts 2:0-2:10
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/abstract-new-line/input.ts"
-					end: Object {
-						column: 10
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/abstract-new-line/input.ts 2:0-2:10
 			}
 		}
 	]

@@ -17,17 +17,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0059/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0059/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0059/input.js 1:0-1:5
+			expression: JSBinaryExpression {
+				operator: "+"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0059/input.js 1:0-1:5
+				right: JSObjectExpression {
+					properties: Array []
+					loc: SourceLocation esprima/invalid-syntax/migrated_0059/input.js 1:4-1:5
+				}
+				left: JSNumericLiteral {
+					value: 1
+					format: undefined
+					loc: SourceLocation esprima/invalid-syntax/migrated_0059/input.js 1:0-1:1
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +44,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:4
+				start: Position 1:4
 			}
 			description: Object {
 				category: "parse"
@@ -61,78 +63,8 @@ JSRoot {
 							RAW_MARKUP {value: "</emphasis> here"}
 						]
 					}
-					frame {
-						location: Object {
-							filename: "esprima/invalid-syntax/migrated_0059/input.js"
-							end: Object {
-								column: 0
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0059/input.js 2:0-2:0}
 				]
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0059/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBinaryExpression {
-				operator: "+"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0059/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				right: JSObjectExpression {
-					properties: Array []
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0059/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
-				}
-				left: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0059/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

@@ -18,96 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-if/migrated_0005/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-if/migrated_0005/input.js 1:0-3:0
 	body: Array [
 		JSIfStatement {
-			loc: Object {
-				filename: "esprima/statement-if/migrated_0005/input.js"
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			alternate: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0005/input.js"
-					end: Object {
-						column: 7
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
-			}
+			alternate: JSEmptyStatement {loc: SourceLocation esprima/statement-if/migrated_0005/input.js 2:6-2:7}
+			loc: SourceLocation esprima/statement-if/migrated_0005/input.js 1:0-2:7
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0005/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0005/input.js 1:4-1:8
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/statement-if/migrated_0005/input.js"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-if/migrated_0005/input.js 1:10-2:1
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "esprima/statement-if/migrated_0005/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-if/migrated_0005/input.js 1:10-1:16
 					callee: JSReferenceIdentifier {
 						name: "that"
-						loc: Object {
-							filename: "esprima/statement-if/migrated_0005/input.js"
-							identifierName: "that"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-if/migrated_0005/input.js 1:10-1:14 (that)
 					}
 				}
 			}

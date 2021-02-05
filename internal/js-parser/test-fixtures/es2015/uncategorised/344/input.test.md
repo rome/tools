@@ -17,17 +17,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/344/input.js"
-		end: Object {
-			column: 5
-			line: 1
+	loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
+	body: Array [
+		JSExpressionStatement {
+			expression: JSSuper {loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5}
+			loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,42 +38,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/344/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSSuper {
-				loc: Object {
-					filename: "es2015/uncategorised/344/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]

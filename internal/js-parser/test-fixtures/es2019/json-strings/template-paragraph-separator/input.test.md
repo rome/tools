@@ -17,77 +17,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2019/json-strings/template-paragraph-separator/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2019/json-strings/template-paragraph-separator/input.js 1:0-4:0
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "      ^ That's a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between 'before' and 'after')"
-			loc: Object {
-				filename: "es2019/json-strings/template-paragraph-separator/input.js"
-				end: Object {
-					column: 88
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2019/json-strings/template-paragraph-separator/input.js 3:0-3:88
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation es2019/json-strings/template-paragraph-separator/input.js 1:0-2:8
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "es2019/json-strings/template-paragraph-separator/input.js"
-				end: Object {
-					column: 8
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			expression: JSTemplateLiteral {
 				expressions: Array []
-				loc: Object {
-					filename: "es2019/json-strings/template-paragraph-separator/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2019/json-strings/template-paragraph-separator/input.js 1:1-2:6
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "before\u2029after"
 						raw: "before\u2029after"
 						tail: true
-						loc: Object {
-							filename: "es2019/json-strings/template-paragraph-separator/input.js"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2019/json-strings/template-paragraph-separator/input.js 1:2-2:5
 					}
 				]
 			}

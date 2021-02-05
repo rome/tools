@@ -18,125 +18,33 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-		end: Object {
-			column: 34
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:0-1:34
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:4-1:33
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:8-1:33
 							properties: Array [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "test"
-											loc: Object {
-												filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-												identifierName: "test"
-												end: Object {
-													column: 15
-													line: 1
-												}
-												start: Object {
-													column: 11
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:11-1:15 (test)
 										}
-										loc: Object {
-											filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:11-1:15
 									}
-									loc: Object {
-										filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:10-1:31
 									head: JSFunctionHead {
 										async: false
 										generator: true
@@ -146,71 +54,20 @@ JSRoot {
 										returnType: undefined
 										thisType: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-											end: Object {
-												column: 18
-												line: 1
-											}
-											start: Object {
-												column: 16
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:16-1:18
 									}
 									body: JSBlockStatement {
 										directives: Array []
-										loc: Object {
-											filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-											end: Object {
-												column: 31
-												line: 1
-											}
-											start: Object {
-												column: 19
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:19-1:31
 										body: Array [
 											JSExpressionStatement {
-												loc: Object {
-													filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-													end: Object {
-														column: 29
-														line: 1
-													}
-													start: Object {
-														column: 21
-														line: 1
-													}
-												}
+												loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:21-1:29
 												expression: JSYieldExpression {
 													delegate: true
-													loc: Object {
-														filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-														end: Object {
-															column: 29
-															line: 1
-														}
-														start: Object {
-															column: 21
-															line: 1
-														}
-													}
+													loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:21-1:29
 													argument: JSReferenceIdentifier {
 														name: "v"
-														loc: Object {
-															filename: "es2015/yield/yield-star-inside-generator-method/input.js"
-															identifierName: "v"
-															end: Object {
-																column: 29
-																line: 1
-															}
-															start: Object {
-																column: 28
-																line: 1
-															}
-														}
+														loc: SourceLocation es2015/yield/yield-star-inside-generator-method/input.js 1:28-1:29 (v)
 													}
 												}
 											}

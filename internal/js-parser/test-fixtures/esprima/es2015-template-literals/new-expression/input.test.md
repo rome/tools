@@ -18,102 +18,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-template-literals/new-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-template-literals/new-expression/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-template-literals/new-expression/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-template-literals/new-expression/input.js 1:0-1:11
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-template-literals/new-expression/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-template-literals/new-expression/input.js 1:0-1:11
 				callee: JSTaggedTemplateExpression {
 					typeArguments: undefined
-					loc: Object {
-						filename: "esprima/es2015-template-literals/new-expression/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-template-literals/new-expression/input.js 1:4-1:11
 					tag: JSReferenceIdentifier {
 						name: "raw"
-						loc: Object {
-							filename: "esprima/es2015-template-literals/new-expression/input.js"
-							identifierName: "raw"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-template-literals/new-expression/input.js 1:4-1:7 (raw)
 					}
 					quasi: JSTemplateLiteral {
 						expressions: Array []
-						loc: Object {
-							filename: "esprima/es2015-template-literals/new-expression/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-template-literals/new-expression/input.js 1:7-1:11
 						quasis: Array [
 							JSTemplateElement {
 								cooked: "42"
 								raw: "42"
 								tail: true
-								loc: Object {
-									filename: "esprima/es2015-template-literals/new-expression/input.js"
-									end: Object {
-										column: 10
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-template-literals/new-expression/input.js 1:8-1:10
 							}
 						]
 					}

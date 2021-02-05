@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,110 +32,33 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:15
+				start: Position 2:2
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-					end: Object {
-						column: 2
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:0-3:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:4-1:5 (a)
 						}
-						loc: Object {
-							filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:4-3:1
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:8-3:1
 							body: JSBlockStatement {
 								body: Array []
-								loc: Object {
-									filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-									end: Object {
-										column: 1
-										line: 3
-									}
-									start: Object {
-										column: 32
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:32-3:1
 								directives: Array [
 									JSDirective {
 										value: "use strict"
-										loc: Object {
-											filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-											end: Object {
-												column: 15
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 2:2-2:15
 									}
 								]
 							}
@@ -155,59 +68,18 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:8-1:31
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-											end: Object {
-												column: 27
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
+										loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:15-1:27
+										left: JSBindingIdentifier {
+											name: "options"
+											loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:15-1:22 (options)
 										}
 										right: JSObjectExpression {
 											properties: Array []
-											loc: Object {
-												filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-												end: Object {
-													column: 27
-													line: 1
-												}
-												start: Object {
-													column: 25
-													line: 1
-												}
-											}
-										}
-										left: JSBindingIdentifier {
-											name: "options"
-											loc: Object {
-												filename: "es2016/simple-parameter-list/async-arrow-function/input.js"
-												identifierName: "options"
-												end: Object {
-													column: 22
-													line: 1
-												}
-												start: Object {
-													column: 15
-													line: 1
-												}
-											}
+											loc: SourceLocation es2016/simple-parameter-list/async-arrow-function/input.js 1:25-1:27
 										}
 									}
 								]

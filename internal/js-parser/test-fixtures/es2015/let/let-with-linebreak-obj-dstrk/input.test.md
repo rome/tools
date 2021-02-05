@@ -18,196 +18,53 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 1:0-3:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-				end: Object {
-					column: 21
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 1:0-2:21
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-					end: Object {
-						column: 21
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 1:0-2:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:4-2:9
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 7
-													line: 2
-												}
-												start: Object {
-													column: 6
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:6-2:7 (a)
 										}
-										loc: Object {
-											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-											end: Object {
-												column: 7
-												line: 2
-											}
-											start: Object {
-												column: 6
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:6-2:7
 									}
 									value: JSBindingIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 7
-												line: 2
-											}
-											start: Object {
-												column: 6
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:6-2:7 (a)
 									}
-									loc: Object {
-										filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-										end: Object {
-											column: 7
-											line: 2
-										}
-										start: Object {
-											column: 6
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:6-2:7
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-							end: Object {
-								column: 20
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:4-2:20
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:12-2:20
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 15
-													line: 2
-												}
-												start: Object {
-													column: 14
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:14-2:15 (a)
 										}
-										loc: Object {
-											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-											end: Object {
-												column: 15
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:14-2:15
 									}
 									value: JSNumericLiteral {
 										value: 1
 										format: undefined
-										loc: Object {
-											filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-											end: Object {
-												column: 18
-												line: 2
-											}
-											start: Object {
-												column: 17
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:17-2:18
 									}
-									loc: Object {
-										filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
-										end: Object {
-											column: 18
-											line: 2
-										}
-										start: Object {
-											column: 14
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 2:14-2:18
 								}
 							]
 						}

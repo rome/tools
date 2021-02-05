@@ -17,20 +17,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/265/input.js"
-		end: Object {
-			column: 13
-			line: 1
+	loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
+	body: Array [
+		JSSwitchStatement {
+			cases: Array []
+			loc: SourceLocation es2015/uncategorised/265/input.js 1:0-1:13
+			discriminant: JSTemplateLiteral {
+				expressions: Array []
+				loc: SourceLocation es2015/uncategorised/265/input.js 1:7-1:13
+				quasis: Array [
+					JSTemplateElement {
+						cooked: "test"
+						raw: "test"
+						tail: true
+						loc: SourceLocation es2015/uncategorised/265/input.js 1:8-1:12
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/265/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:8
+				start: Position 1:7
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -38,68 +54,6 @@ JSRoot {
 				message: Array [
 					RAW_MARKUP {value: "Unexpected token, expected "}
 					"("
-				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/265/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSSwitchStatement {
-			cases: Array []
-			loc: Object {
-				filename: "es2015/uncategorised/265/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			discriminant: JSTemplateLiteral {
-				expressions: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/265/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				quasis: Array [
-					JSTemplateElement {
-						cooked: "test"
-						raw: "test"
-						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/265/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
-					}
 				]
 			}
 		}

@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:9
+				start: Position 1:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,179 +38,51 @@ JSRoot {
 					"("
 				]
 			}
-			location: Object {
-				filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSForStatement {
-			loc: Object {
-				filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:0-1:29
 			test: JSReferenceIdentifier {
 				name: "i"
-				loc: Object {
-					filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-					identifierName: "i"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:17-1:18 (i)
 			}
 			update: JSReferenceIdentifier {
 				name: "of"
-				loc: Object {
-					filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-					identifierName: "of"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:19-1:21 (of)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:22-1:29
 				expression: JSReferenceIdentifier {
 					name: "imports"
-					loc: Object {
-						filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-						identifierName: "imports"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:22-1:29 (imports)
 				}
 			}
 			init: JSCallExpression {
-				loc: Object {
-					filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:4-1:16
 				callee: JSReferenceIdentifier {
 					name: "await"
-					loc: Object {
-						filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-						identifierName: "await"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:4-1:9 (await)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:11-1:16
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 29
-					line: 1
-				}
-			}
+			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:29-1:30
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 29
-						line: 1
-					}
-				}
+				loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:29-1:30
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "core/opts/allowAwaitOutsideFunction-true/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 31
-					line: 1
-				}
-			}
+			loc: SourceLocation core/opts/allowAwaitOutsideFunction-true/input.js 1:31-1:33
 		}
 	]
 }

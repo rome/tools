@@ -10,104 +10,34 @@ CSSRoot {
 	diagnostics: Array []
 	filename: "comment/input.css"
 	integrity: undefined
-	loc: Object {
-		filename: "comment/input.css"
-		end: Object {
-			column: 1
-			line: 11
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comment/input.css 1:0-11:1
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " comment "
-			loc: Object {
-				filename: "comment/input.css"
-				end: Object {
-					column: 28
-					line: 2
-				}
-				start: Object {
-					column: 15
-					line: 2
-				}
-			}
+			loc: SourceLocation comment/input.css 2:15-2:28
 		}
 		CommentBlock {
 			id: "1"
 			value: " comment "
-			loc: Object {
-				filename: "comment/input.css"
-				end: Object {
-					column: 21
-					line: 6
-				}
-				start: Object {
-					column: 8
-					line: 6
-				}
-			}
+			loc: SourceLocation comment/input.css 6:8-6:21
 		}
 		CommentBlock {
 			id: "2"
 			value: " comment "
-			loc: Object {
-				filename: "comment/input.css"
-				end: Object {
-					column: 15
-					line: 9
-				}
-				start: Object {
-					column: 2
-					line: 9
-				}
-			}
+			loc: SourceLocation comment/input.css 9:2-9:15
 		}
 	]
 	body: Array [
 		CSSRule {
-			loc: Object {
-				filename: "comment/input.css"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comment/input.css 1:0-3:1
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "comment/input.css"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation comment/input.css 1:0-1:2
 					patterns: Array [
 						CSSTypeSelector {
 							value: "a"
-							loc: Object {
-								filename: "comment/input.css"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation comment/input.css 1:0-1:1
 						}
 					]
 				}
@@ -119,86 +49,26 @@ CSSRoot {
 						value: Array [
 							CSSIdentifier {
 								value: "white"
-								loc: Object {
-									filename: "comment/input.css"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation comment/input.css 2:8-2:13
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "comment/input.css"
-							end: Object {
-								column: 13
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
+						loc: SourceLocation comment/input.css 2:1-2:13
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "comment/input.css"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
+				loc: SourceLocation comment/input.css 1:2-3:1
 			}
 		}
 		CSSRule {
-			loc: Object {
-				filename: "comment/input.css"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation comment/input.css 5:0-7:1
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "comment/input.css"
-						end: Object {
-							column: 2
-							line: 5
-						}
-						start: Object {
-							column: 0
-							line: 5
-						}
-					}
+					loc: SourceLocation comment/input.css 5:0-5:2
 					patterns: Array [
 						CSSTypeSelector {
 							value: "a"
-							loc: Object {
-								filename: "comment/input.css"
-								end: Object {
-									column: 1
-									line: 5
-								}
-								start: Object {
-									column: 0
-									line: 5
-								}
-							}
+							loc: SourceLocation comment/input.css 5:0-5:1
 						}
 					]
 				}
@@ -211,86 +81,26 @@ CSSRoot {
 							CSSIdentifier {
 								value: "white"
 								leadingComments: Array ["1"]
-								loc: Object {
-									filename: "comment/input.css"
-									end: Object {
-										column: 27
-										line: 6
-									}
-									start: Object {
-										column: 22
-										line: 6
-									}
-								}
+								loc: SourceLocation comment/input.css 6:22-6:27
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "comment/input.css"
-							end: Object {
-								column: 27
-								line: 6
-							}
-							start: Object {
-								column: 1
-								line: 6
-							}
-						}
+						loc: SourceLocation comment/input.css 6:1-6:27
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "comment/input.css"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 2
-						line: 5
-					}
-				}
+				loc: SourceLocation comment/input.css 5:2-7:1
 			}
 		}
 		CSSRule {
-			loc: Object {
-				filename: "comment/input.css"
-				end: Object {
-					column: 1
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 9
-				}
-			}
+			loc: SourceLocation comment/input.css 9:0-11:1
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "comment/input.css"
-						end: Object {
-							column: 16
-							line: 9
-						}
-						start: Object {
-							column: 0
-							line: 9
-						}
-					}
+					loc: SourceLocation comment/input.css 9:0-9:16
 					patterns: Array [
 						CSSTypeSelector {
 							value: "a"
-							loc: Object {
-								filename: "comment/input.css"
-								end: Object {
-									column: 1
-									line: 9
-								}
-								start: Object {
-									column: 0
-									line: 9
-								}
-							}
+							loc: SourceLocation comment/input.css 9:0-9:1
 						}
 					]
 				}
@@ -302,45 +112,15 @@ CSSRoot {
 						value: Array [
 							CSSIdentifier {
 								value: "white"
-								loc: Object {
-									filename: "comment/input.css"
-									end: Object {
-										column: 13
-										line: 10
-									}
-									start: Object {
-										column: 8
-										line: 10
-									}
-								}
+								loc: SourceLocation comment/input.css 10:8-10:13
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "comment/input.css"
-							end: Object {
-								column: 13
-								line: 10
-							}
-							start: Object {
-								column: 1
-								line: 10
-							}
-						}
+						loc: SourceLocation comment/input.css 10:1-10:13
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "comment/input.css"
-					end: Object {
-						column: 1
-						line: 11
-					}
-					start: Object {
-						column: 16
-						line: 9
-					}
-				}
+				loc: SourceLocation comment/input.css 9:16-11:1
 			}
 		}
 	]

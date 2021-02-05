@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/in-plain-function/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/in-plain-function/input.js 1:0-1:26
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,43 +32,17 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
+				end: Position 1:20
+				start: Position 1:21
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/in-plain-function/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/in-plain-function/input.js 1:0-1:26
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "es2015/yield/in-plain-function/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/in-plain-function/input.js 1:1-1:25
 				head: JSFunctionHead {
 					async: false
 					generator: false
@@ -88,86 +52,25 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/yield/in-plain-function/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/in-plain-function/input.js 1:10-1:12
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2015/yield/in-plain-function/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/in-plain-function/input.js 1:13-1:25
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/yield/in-plain-function/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/in-plain-function/input.js 1:15-1:20
 							expression: JSReferenceIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "es2015/yield/in-plain-function/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/in-plain-function/input.js 1:15-1:20 (yield)
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/yield/in-plain-function/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/in-plain-function/input.js 1:21-1:23
 							expression: JSNumericLiteral {
 								value: 10
 								format: undefined
-								loc: Object {
-									filename: "es2015/yield/in-plain-function/input.js"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/in-plain-function/input.js 1:21-1:23
 							}
 						}
 					]

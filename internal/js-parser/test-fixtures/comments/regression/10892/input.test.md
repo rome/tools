@@ -17,32 +17,12 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/regression/10892/input.js"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/regression/10892/input.js 1:0-8:0
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: "*\n * lost comment\n "
-			loc: Object {
-				filename: "comments/regression/10892/input.js"
-				end: Object {
-					column: 3
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/regression/10892/input.js 3:0-5:3
 		}
 	]
 	body: Array [
@@ -50,120 +30,38 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
+			loc: SourceLocation comments/regression/10892/input.js 1:0-1:25
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "comments/regression/10892/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			source: JSStringLiteral {
 				value: "bar"
 				trailingComments: undefined
-				loc: Object {
-					filename: "comments/regression/10892/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/regression/10892/input.js 1:20-1:25
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "comments/regression/10892/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation comments/regression/10892/input.js 1:9-1:12
 					imported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "comments/regression/10892/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "comments/regression/10892/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/regression/10892/input.js 1:9-1:12 (foo)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "comments/regression/10892/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/regression/10892/input.js 1:9-1:12
 					}
 				}
 			]
 		}
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "comments/regression/10892/input.js"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation comments/regression/10892/input.js 6:0-7:1
 			declaration: JSObjectExpression {
 				leadingComments: undefined
 				properties: Array []
-				loc: Object {
-					filename: "comments/regression/10892/input.js"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 15
-						line: 6
-					}
-				}
+				loc: SourceLocation comments/regression/10892/input.js 6:15-7:1
 			}
 		}
 	]

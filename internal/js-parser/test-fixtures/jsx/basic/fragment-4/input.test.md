@@ -17,143 +17,43 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-8:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/fragment-4/input.jsx"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/fragment-4/input.jsx"
-				end: Object {
-					column: 3
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-7:3
 			expression: JSXFragment {
-				loc: Object {
-					filename: "jsx/basic/fragment-4/input.jsx"
-					end: Object {
-						column: 3
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:0-7:3
 				children: Array [
 					JSXText {
 						value: "\n  "
-						loc: Object {
-							filename: "jsx/basic/fragment-4/input.jsx"
-							end: Object {
-								column: 2
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-4/input.jsx 1:2-2:2
 					}
 					JSXFragment {
-						loc: Object {
-							filename: "jsx/basic/fragment-4/input.jsx"
-							end: Object {
-								column: 5
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-4/input.jsx 2:2-6:5
 						children: Array [
 							JSXText {
 								value: "\n    "
-								loc: Object {
-									filename: "jsx/basic/fragment-4/input.jsx"
-									end: Object {
-										column: 4
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation jsx/basic/fragment-4/input.jsx 2:4-3:4
 							}
 							JSXFragment {
-								loc: Object {
-									filename: "jsx/basic/fragment-4/input.jsx"
-									end: Object {
-										column: 7
-										line: 5
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation jsx/basic/fragment-4/input.jsx 3:4-5:7
 								children: Array [
 									JSXText {
 										value: "\n      super deep\n    "
-										loc: Object {
-											filename: "jsx/basic/fragment-4/input.jsx"
-											end: Object {
-												column: 4
-												line: 5
-											}
-											start: Object {
-												column: 6
-												line: 3
-											}
-										}
+										loc: SourceLocation jsx/basic/fragment-4/input.jsx 3:6-5:4
 									}
 								]
 							}
 							JSXText {
 								value: "\n  "
-								loc: Object {
-									filename: "jsx/basic/fragment-4/input.jsx"
-									end: Object {
-										column: 2
-										line: 6
-									}
-									start: Object {
-										column: 7
-										line: 5
-									}
-								}
+								loc: SourceLocation jsx/basic/fragment-4/input.jsx 5:7-6:2
 							}
 						]
 					}
 					JSXText {
 						value: "\n"
-						loc: Object {
-							filename: "jsx/basic/fragment-4/input.jsx"
-							end: Object {
-								column: 0
-								line: 7
-							}
-							start: Object {
-								column: 5
-								line: 6
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-4/input.jsx 6:5-7:0
 					}
 				]
 			}

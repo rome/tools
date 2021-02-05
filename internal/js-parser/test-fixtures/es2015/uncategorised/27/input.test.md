@@ -18,141 +18,39 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/27/input.js"
-		end: Object {
-			column: 47
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/27/input.js 1:0-1:47
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/27/input.js"
-				end: Object {
-					column: 47
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/27/input.js 1:0-1:47
 			discriminant: JSReferenceIdentifier {
 				name: "answer"
-				loc: Object {
-					filename: "es2015/uncategorised/27/input.js"
-					identifierName: "answer"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/27/input.js 1:8-1:14 (answer)
 			}
 			cases: Array [
 				JSSwitchCase {
-					loc: Object {
-						filename: "es2015/uncategorised/27/input.js"
-						end: Object {
-							column: 45
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/27/input.js 1:18-1:45
 					test: JSNumericLiteral {
 						value: 42
 						format: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/27/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/27/input.js 1:23-1:25
 					}
 					consequent: Array [
 						JSVariableDeclarationStatement {
-							loc: Object {
-								filename: "es2015/uncategorised/27/input.js"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/27/input.js 1:27-1:38
 							declaration: JSVariableDeclaration {
 								kind: "let"
-								loc: Object {
-									filename: "es2015/uncategorised/27/input.js"
-									end: Object {
-										column: 38
-										line: 1
-									}
-									start: Object {
-										column: 27
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/27/input.js 1:27-1:38
 								declarations: Array [
 									JSVariableDeclarator {
 										id: JSBindingIdentifier {
 											name: "t"
-											loc: Object {
-												filename: "es2015/uncategorised/27/input.js"
-												identifierName: "t"
-												end: Object {
-													column: 32
-													line: 1
-												}
-												start: Object {
-													column: 31
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/27/input.js 1:31-1:32 (t)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/27/input.js"
-											end: Object {
-												column: 37
-												line: 1
-											}
-											start: Object {
-												column: 31
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/27/input.js 1:31-1:37
 										init: JSNumericLiteral {
 											value: 42
 											format: undefined
-											loc: Object {
-												filename: "es2015/uncategorised/27/input.js"
-												end: Object {
-													column: 37
-													line: 1
-												}
-												start: Object {
-													column: 35
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/27/input.js 1:35-1:37
 										}
 									}
 								]
@@ -160,17 +58,7 @@ JSRoot {
 						}
 						JSBreakStatement {
 							label: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/27/input.js"
-								end: Object {
-									column: 45
-									line: 1
-								}
-								start: Object {
-									column: 39
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/27/input.js 1:39-1:45
 						}
 					]
 				}

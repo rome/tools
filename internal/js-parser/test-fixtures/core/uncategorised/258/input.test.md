@@ -18,165 +18,41 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/258/input.js"
-		end: Object {
-			column: 61
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/258/input.js 1:0-1:61
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "core/uncategorised/258/input.js"
-				end: Object {
-					column: 61
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/258/input.js 1:0-1:61
 			label: JSIdentifier {
 				name: "target1"
-				loc: Object {
-					filename: "core/uncategorised/258/input.js"
-					identifierName: "target1"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/258/input.js 1:0-1:7 (target1)
 			}
 			body: JSLabeledStatement {
-				loc: Object {
-					filename: "core/uncategorised/258/input.js"
-					end: Object {
-						column: 61
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/258/input.js 1:9-1:61
 				label: JSIdentifier {
 					name: "target2"
-					loc: Object {
-						filename: "core/uncategorised/258/input.js"
-						identifierName: "target2"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/258/input.js 1:9-1:16 (target2)
 				}
 				body: JSLabeledStatement {
-					loc: Object {
-						filename: "core/uncategorised/258/input.js"
-						end: Object {
-							column: 61
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/258/input.js 1:18-1:61
 					label: JSIdentifier {
 						name: "target3"
-						loc: Object {
-							filename: "core/uncategorised/258/input.js"
-							identifierName: "target3"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/258/input.js 1:18-1:25 (target3)
 					}
 					body: JSWhileStatement {
-						loc: Object {
-							filename: "core/uncategorised/258/input.js"
-							end: Object {
-								column: 61
-								line: 1
-							}
-							start: Object {
-								column: 27
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/258/input.js 1:27-1:61
 						test: JSBooleanLiteral {
 							value: true
-							loc: Object {
-								filename: "core/uncategorised/258/input.js"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 34
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/258/input.js 1:34-1:38
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "core/uncategorised/258/input.js"
-								end: Object {
-									column: 61
-									line: 1
-								}
-								start: Object {
-									column: 40
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/258/input.js 1:40-1:61
 							body: Array [
 								JSContinueStatement {
-									loc: Object {
-										filename: "core/uncategorised/258/input.js"
-										end: Object {
-											column: 59
-											line: 1
-										}
-										start: Object {
-											column: 42
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/258/input.js 1:42-1:59
 									label: JSIdentifier {
 										name: "target1"
-										loc: Object {
-											filename: "core/uncategorised/258/input.js"
-											identifierName: "target1"
-											end: Object {
-												column: 58
-												line: 1
-											}
-											start: Object {
-												column: 51
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/258/input.js 1:51-1:58 (target1)
 									}
 								}
 							]

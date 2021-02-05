@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/488/input.js"
-		end: Object {
-			column: 36
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/488/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:14
+				start: Position 1:10
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,74 +38,29 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/488/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/488/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "core/uncategorised/488/input.js"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/488/input.js 1:0-1:36
 				callee: JSFunctionExpression {
 					id: JSBindingIdentifier {
 						name: "eval"
-						loc: Object {
-							filename: "core/uncategorised/488/input.js"
-							identifierName: "eval"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/488/input.js 1:10-1:14 (eval)
 					}
-					loc: Object {
-						filename: "core/uncategorised/488/input.js"
-						end: Object {
-							column: 33
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
+					loc: SourceLocation core/uncategorised/488/input.js 1:1-1:33
+					body: JSBlockStatement {
+						body: Array []
+						loc: SourceLocation core/uncategorised/488/input.js 1:17-1:33
+						directives: Array [
+							JSDirective {
+								value: "use strict"
+								loc: SourceLocation core/uncategorised/488/input.js 1:18-1:31
+							}
+						]
 					}
 					head: JSFunctionHead {
 						async: false
@@ -118,47 +71,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "core/uncategorised/488/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
-					}
-					body: JSBlockStatement {
-						body: Array []
-						loc: Object {
-							filename: "core/uncategorised/488/input.js"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
-						directives: Array [
-							JSDirective {
-								value: "use strict"
-								loc: Object {
-									filename: "core/uncategorised/488/input.js"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
-							}
-						]
+						loc: SourceLocation core/uncategorised/488/input.js 1:14-1:16
 					}
 				}
 			}

@@ -17,111 +17,29 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/null-assertion-3/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/cast/null-assertion-3/input.ts"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/cast/null-assertion-3/input.ts"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:0-1:17
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/cast/null-assertion-3/input.ts"
-								identifierName: "x"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:6-1:7 (x)
 						}
-						loc: Object {
-							filename: "typescript/cast/null-assertion-3/input.ts"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:6-1:16
 						init: TSNonNullExpression {
-							loc: Object {
-								filename: "typescript/cast/null-assertion-3/input.ts"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:16
 							expression: JSCallExpression {
 								arguments: Array []
-								loc: Object {
-									filename: "typescript/cast/null-assertion-3/input.ts"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:15
 								callee: JSReferenceIdentifier {
 									name: "foo"
-									loc: Object {
-										filename: "typescript/cast/null-assertion-3/input.ts"
-										identifierName: "foo"
-										end: Object {
-											column: 13
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/cast/null-assertion-3/input.ts 1:10-1:13 (foo)
 								}
 							}
 						}

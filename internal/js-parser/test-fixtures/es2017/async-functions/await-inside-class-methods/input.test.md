@@ -18,42 +18,12 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-inside-class-methods/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-4:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-class-methods/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-3:1
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-class-methods/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-3:1
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
@@ -61,88 +31,37 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/await-inside-class-methods/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:0-1:5
 				}
 				body: JSClassExpression {
 					id: undefined
-					loc: Object {
-						filename: "es2017/async-functions/await-inside-class-methods/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:6-3:1
 					meta: JSClassHead {
 						implements: undefined
 						superClass: undefined
 						superTypeParameters: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "es2017/async-functions/await-inside-class-methods/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 1:6-3:1
 						body: Array [
 							JSClassMethod {
 								kind: "method"
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "m"
-										loc: Object {
-											filename: "es2017/async-functions/await-inside-class-methods/input.js"
-											identifierName: "m"
-											end: Object {
-												column: 9
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:8-2:9 (m)
 									}
-									loc: Object {
-										filename: "es2017/async-functions/await-inside-class-methods/input.js"
-										end: Object {
-											column: 9
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:8-2:9
 								}
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-class-methods/input.js"
-									end: Object {
-										column: 24
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
+								loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:24
+								meta: JSClassPropertyMeta {
+									abstract: false
+									accessibility: undefined
+									optional: false
+									readonly: false
+									static: false
+									typeAnnotation: undefined
+									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:2-2:9
+									start: Position 2:2
 								}
 								head: JSFunctionHead {
 									async: true
@@ -153,93 +72,20 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "es2017/async-functions/await-inside-class-methods/input.js"
-										end: Object {
-											column: 11
-											line: 2
-										}
-										start: Object {
-											column: 9
-											line: 2
-										}
-									}
-								}
-								meta: JSClassPropertyMeta {
-									abstract: false
-									accessibility: undefined
-									optional: false
-									readonly: false
-									static: false
-									typeAnnotation: undefined
-									start: Object {
-										column: 2
-										line: 2
-									}
-									loc: Object {
-										filename: "es2017/async-functions/await-inside-class-methods/input.js"
-										end: Object {
-											column: 9
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:9-2:11
 								}
 								body: JSBlockStatement {
 									directives: Array []
-									loc: Object {
-										filename: "es2017/async-functions/await-inside-class-methods/input.js"
-										end: Object {
-											column: 24
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:12-2:24
 									body: Array [
 										JSExpressionStatement {
-											loc: Object {
-												filename: "es2017/async-functions/await-inside-class-methods/input.js"
-												end: Object {
-													column: 22
-													line: 2
-												}
-												start: Object {
-													column: 14
-													line: 2
-												}
-											}
+											loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:14-2:22
 											expression: JSAwaitExpression {
-												loc: Object {
-													filename: "es2017/async-functions/await-inside-class-methods/input.js"
-													end: Object {
-														column: 22
-														line: 2
-													}
-													start: Object {
-														column: 14
-														line: 2
-													}
-												}
+												loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:14-2:22
 												argument: JSNumericLiteral {
 													value: 42
 													format: undefined
-													loc: Object {
-														filename: "es2017/async-functions/await-inside-class-methods/input.js"
-														end: Object {
-															column: 22
-															line: 2
-														}
-														start: Object {
-															column: 20
-															line: 2
-														}
-													}
+													loc: SourceLocation es2017/async-functions/await-inside-class-methods/input.js 2:20-2:22
 												}
 											}
 										}

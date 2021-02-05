@@ -17,105 +17,33 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/async-named-properties/input.ts"
-		end: Object {
-			column: 1
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/async-named-properties/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/async-named-properties/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/async-named-properties/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/async-named-properties/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "typescript/class/async-named-properties/input.ts"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:7 (async)
 							}
-							loc: Object {
-								filename: "typescript/class/async-named-properties/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:7
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/async-named-properties/input.ts"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:16
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -123,21 +51,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/async-named-properties/input.ts"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:2-2:8
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -147,87 +62,22 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/async-named-properties/input.ts"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/async-named-properties/input.ts"
-									end: Object {
-										column: 16
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 2:8-2:16
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-named-properties/input.ts 2:12-2:16}
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "typescript/class/async-named-properties/input.ts"
-									identifierName: "async"
-									end: Object {
-										column: 7
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:7 (async)
 							}
-							loc: Object {
-								filename: "typescript/class/async-named-properties/input.ts"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:7
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/async-named-properties/input.ts"
-							end: Object {
-								column: 17
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
-						typeAnnotation: TSBooleanKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/async-named-properties/input.ts"
-								end: Object {
-									column: 17
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:17
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/class/async-named-properties/input.ts 3:10-3:17}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -235,21 +85,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/async-named-properties/input.ts"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/async-named-properties/input.ts 3:2-3:8
+							start: Position 3:2
 						}
 					}
 				]

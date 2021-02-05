@@ -17,72 +17,21 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/equals-require/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/equals-require/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSImportEqualsDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "typescript/import/equals-require/input.ts"
-					identifierName: "a"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/equals-require/input.ts 1:7-1:8 (a)
 			}
 			isExport: false
-			loc: Object {
-				filename: "typescript/import/equals-require/input.ts"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/equals-require/input.ts 1:0-1:24
 			moduleReference: TSExternalModuleReference {
-				loc: Object {
-					filename: "typescript/import/equals-require/input.ts"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/equals-require/input.ts 1:11-1:23
 				expression: JSStringLiteral {
 					value: "a"
-					loc: Object {
-						filename: "typescript/import/equals-require/input.ts"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/equals-require/input.ts 1:19-1:22
 				}
 			}
 		}

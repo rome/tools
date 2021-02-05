@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 2
-				}
-				start: Object {
-					column: 5
-					line: 2
-				}
+				end: Position 2:4
+				start: Position 2:5
 			}
 		}
 	]
@@ -57,89 +41,27 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-3:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:6-2:7 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:5-2:7
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-							end: Object {
-								column: 7
-								line: 2
-							}
-							start: Object {
-								column: 5
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:5-2:7
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -147,21 +69,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 5
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-failure-inline/input.js"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 2:5-2:7
+							start: Position 2:5
 						}
 					}
 				]

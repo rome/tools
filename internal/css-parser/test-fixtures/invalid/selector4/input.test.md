@@ -10,17 +10,7 @@ CSSRoot {
 	corrupt: false
 	filename: "invalid/selector4/input.css"
 	integrity: undefined
-	loc: Object {
-		filename: "invalid/selector4/input.css"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation invalid/selector4/input.css 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -35,72 +25,26 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
+				end: Position 1:13
+				start: Position 1:13
 			}
 		}
 	]
 	body: Array [
 		CSSRule {
-			loc: Object {
-				filename: "invalid/selector4/input.css"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation invalid/selector4/input.css 1:0-3:1
 			block: CSSBlock {
 				value: Array []
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "invalid/selector4/input.css"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation invalid/selector4/input.css 1:13-3:1
 			}
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "invalid/selector4/input.css"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector4/input.css 1:0-1:13
 					patterns: Array [
 						CSSClassSelector {
 							value: "class"
-							loc: Object {
-								filename: "invalid/selector4/input.css"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation invalid/selector4/input.css 1:0-1:6
 						}
 					]
 				}

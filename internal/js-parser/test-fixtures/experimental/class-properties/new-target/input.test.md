@@ -18,147 +18,43 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/new-target/input.js"
-		end: Object {
-			column: 0
-			line: 11
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-11:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "X"
-				loc: Object {
-					filename: "experimental/class-properties/new-target/input.js"
-					identifierName: "X"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/new-target/input.js 1:6-1:7 (X)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/new-target/input.js"
-				end: Object {
-					column: 1
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-10:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/new-target/input.js"
-					end: Object {
-						column: 1
-						line: 10
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/new-target/input.js 1:0-10:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 2:9-2:10 (a)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 2:9-2:10
 						}
 						value: JSMetaProperty {
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 23
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 2:13-2:23
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 16
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 2:13-2:16 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 23
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 2:17-2:23 (target)
 							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 24
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:24
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -166,177 +62,49 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 2:2-2:10
+							start: Position 2:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 10
-										line: 3
-									}
-									start: Object {
-										column: 9
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 3:9-3:10 (b)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 3:9-3:10
 						}
 						value: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 39
-									line: 3
-								}
-								start: Object {
-									column: 14
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 3:14-3:39
 							left: JSAssignmentIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 17
-										line: 3
-									}
-									start: Object {
-										column: 14
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 3:14-3:17 (foo)
 							}
 							right: JSBinaryExpression {
 								operator: "+"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 39
-										line: 3
-									}
-									start: Object {
-										column: 20
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 3:20-3:39
 								left: JSNumericLiteral {
 									value: 1
 									format: undefined
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										end: Object {
-											column: 21
-											line: 3
-										}
-										start: Object {
-											column: 20
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 3:20-3:21
 								}
 								right: JSCallExpression {
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										end: Object {
-											column: 39
-											line: 3
-										}
-										start: Object {
-											column: 24
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 3:24-3:39
 									callee: JSReferenceIdentifier {
 										name: "bar"
-										loc: Object {
-											filename: "experimental/class-properties/new-target/input.js"
-											identifierName: "bar"
-											end: Object {
-												column: 27
-												line: 3
-											}
-											start: Object {
-												column: 24
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/new-target/input.js 3:24-3:27 (bar)
 									}
 									arguments: Array [
 										JSMetaProperty {
-											loc: Object {
-												filename: "experimental/class-properties/new-target/input.js"
-												end: Object {
-													column: 38
-													line: 3
-												}
-												start: Object {
-													column: 28
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 3:28-3:38
 											meta: JSIdentifier {
 												name: "new"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "new"
-													end: Object {
-														column: 31
-														line: 3
-													}
-													start: Object {
-														column: 28
-														line: 3
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 3:28-3:31 (new)
 											}
 											property: JSIdentifier {
 												name: "target"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "target"
-													end: Object {
-														column: 38
-														line: 3
-													}
-													start: Object {
-														column: 32
-														line: 3
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 3:32-3:38 (target)
 											}
 										}
 									]
@@ -345,17 +113,7 @@ JSRoot {
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 41
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:41
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -363,64 +121,20 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 3:2-3:10
+							start: Position 3:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "c"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "c"
-									end: Object {
-										column: 10
-										line: 4
-									}
-									start: Object {
-										column: 9
-										line: 4
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 4:9-4:10 (c)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 4
-								}
-								start: Object {
-									column: 9
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 4:9-4:10
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 29
-									line: 4
-								}
-								start: Object {
-									column: 13
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 4:13-4:29
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
@@ -428,75 +142,23 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 18
-										line: 4
-									}
-									start: Object {
-										column: 13
-										line: 4
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 4:13-4:18
 							}
 							body: JSMetaProperty {
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 29
-										line: 4
-									}
-									start: Object {
-										column: 19
-										line: 4
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 4:19-4:29
 								meta: JSIdentifier {
 									name: "new"
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										identifierName: "new"
-										end: Object {
-											column: 22
-											line: 4
-										}
-										start: Object {
-											column: 19
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 4:19-4:22 (new)
 								}
 								property: JSIdentifier {
 									name: "target"
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										identifierName: "target"
-										end: Object {
-											column: 29
-											line: 4
-										}
-										start: Object {
-											column: 23
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 4:23-4:29 (target)
 								}
 							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 30
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 4
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:30
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -504,78 +166,24 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 4
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 4:2-4:10
+							start: Position 4:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "d"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "d"
-									end: Object {
-										column: 10
-										line: 5
-									}
-									start: Object {
-										column: 9
-										line: 5
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 5:9-5:10 (d)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 5
-								}
-								start: Object {
-									column: 9
-									line: 5
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 5:9-5:10
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 37
-									line: 5
-								}
-								start: Object {
-									column: 13
-									line: 5
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 5:13-5:37
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 37
-										line: 5
-									}
-									start: Object {
-										column: 35
-										line: 5
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 5:35-5:37
 							}
 							head: JSFunctionHead {
 								async: false
@@ -583,87 +191,24 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 34
-										line: 5
-									}
-									start: Object {
-										column: 13
-										line: 5
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 5:13-5:34
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "experimental/class-properties/new-target/input.js"
-											end: Object {
-												column: 30
-												line: 5
-											}
-											start: Object {
-												column: 14
-												line: 5
-											}
-										}
+										loc: SourceLocation experimental/class-properties/new-target/input.js 5:14-5:30
 										left: JSBindingIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "experimental/class-properties/new-target/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 17
-													line: 5
-												}
-												start: Object {
-													column: 14
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 5:14-5:17 (foo)
 										}
 										right: JSMetaProperty {
-											loc: Object {
-												filename: "experimental/class-properties/new-target/input.js"
-												end: Object {
-													column: 30
-													line: 5
-												}
-												start: Object {
-													column: 20
-													line: 5
-												}
-											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 5:20-5:30
 											meta: JSIdentifier {
 												name: "new"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "new"
-													end: Object {
-														column: 23
-														line: 5
-													}
-													start: Object {
-														column: 20
-														line: 5
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 5:20-5:23 (new)
 											}
 											property: JSIdentifier {
 												name: "target"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "target"
-													end: Object {
-														column: 30
-														line: 5
-													}
-													start: Object {
-														column: 24
-														line: 5
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 5:24-5:30 (target)
 											}
 										}
 									}
@@ -672,17 +217,7 @@ JSRoot {
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 38
-								line: 5
-							}
-							start: Object {
-								column: 2
-								line: 5
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:38
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -690,108 +225,32 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 5
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 10
-									line: 5
-								}
-								start: Object {
-									column: 2
-									line: 5
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 5:2-5:10
+							start: Position 5:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "e"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "e"
-									end: Object {
-										column: 3
-										line: 6
-									}
-									start: Object {
-										column: 2
-										line: 6
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3 (e)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 2
-									line: 6
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3
 						}
 						value: JSMetaProperty {
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 16
-									line: 6
-								}
-								start: Object {
-									column: 6
-									line: 6
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 6:6-6:16
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 9
-										line: 6
-									}
-									start: Object {
-										column: 6
-										line: 6
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 6:6-6:9 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 16
-										line: 6
-									}
-									start: Object {
-										column: 10
-										line: 6
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 6:10-6:16 (target)
 							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 17
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 6
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:17
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -799,177 +258,49 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 6
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 2
-									line: 6
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 6:2-6:3
+							start: Position 6:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "f"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "f"
-									end: Object {
-										column: 3
-										line: 7
-									}
-									start: Object {
-										column: 2
-										line: 7
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3 (f)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 7
-								}
-								start: Object {
-									column: 2
-									line: 7
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3
 						}
 						value: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 32
-									line: 7
-								}
-								start: Object {
-									column: 7
-									line: 7
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 7:7-7:32
 							left: JSAssignmentIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 10
-										line: 7
-									}
-									start: Object {
-										column: 7
-										line: 7
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 7:7-7:10 (foo)
 							}
 							right: JSBinaryExpression {
 								operator: "+"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 32
-										line: 7
-									}
-									start: Object {
-										column: 13
-										line: 7
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 7:13-7:32
 								left: JSNumericLiteral {
 									value: 1
 									format: undefined
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										end: Object {
-											column: 14
-											line: 7
-										}
-										start: Object {
-											column: 13
-											line: 7
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 7:13-7:14
 								}
 								right: JSCallExpression {
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										end: Object {
-											column: 32
-											line: 7
-										}
-										start: Object {
-											column: 17
-											line: 7
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 7:17-7:32
 									callee: JSReferenceIdentifier {
 										name: "bar"
-										loc: Object {
-											filename: "experimental/class-properties/new-target/input.js"
-											identifierName: "bar"
-											end: Object {
-												column: 20
-												line: 7
-											}
-											start: Object {
-												column: 17
-												line: 7
-											}
-										}
+										loc: SourceLocation experimental/class-properties/new-target/input.js 7:17-7:20 (bar)
 									}
 									arguments: Array [
 										JSMetaProperty {
-											loc: Object {
-												filename: "experimental/class-properties/new-target/input.js"
-												end: Object {
-													column: 31
-													line: 7
-												}
-												start: Object {
-													column: 21
-													line: 7
-												}
-											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 7:21-7:31
 											meta: JSIdentifier {
 												name: "new"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "new"
-													end: Object {
-														column: 24
-														line: 7
-													}
-													start: Object {
-														column: 21
-														line: 7
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 7:21-7:24 (new)
 											}
 											property: JSIdentifier {
 												name: "target"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "target"
-													end: Object {
-														column: 31
-														line: 7
-													}
-													start: Object {
-														column: 25
-														line: 7
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 7:25-7:31 (target)
 											}
 										}
 									]
@@ -978,17 +309,7 @@ JSRoot {
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 34
-								line: 7
-							}
-							start: Object {
-								column: 2
-								line: 7
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:34
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -996,64 +317,20 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 7
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 7
-								}
-								start: Object {
-									column: 2
-									line: 7
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 7:2-7:3
+							start: Position 7:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "g"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "g"
-									end: Object {
-										column: 3
-										line: 8
-									}
-									start: Object {
-										column: 2
-										line: 8
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3 (g)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 22
-									line: 8
-								}
-								start: Object {
-									column: 6
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 8:6-8:22
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
@@ -1061,75 +338,23 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 11
-										line: 8
-									}
-									start: Object {
-										column: 6
-										line: 8
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 8:6-8:11
 							}
 							body: JSMetaProperty {
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 22
-										line: 8
-									}
-									start: Object {
-										column: 12
-										line: 8
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 8:12-8:22
 								meta: JSIdentifier {
 									name: "new"
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										identifierName: "new"
-										end: Object {
-											column: 15
-											line: 8
-										}
-										start: Object {
-											column: 12
-											line: 8
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 8:12-8:15 (new)
 								}
 								property: JSIdentifier {
 									name: "target"
-									loc: Object {
-										filename: "experimental/class-properties/new-target/input.js"
-										identifierName: "target"
-										end: Object {
-											column: 22
-											line: 8
-										}
-										start: Object {
-											column: 16
-											line: 8
-										}
-									}
+									loc: SourceLocation experimental/class-properties/new-target/input.js 8:16-8:22 (target)
 								}
 							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 23
-								line: 8
-							}
-							start: Object {
-								column: 2
-								line: 8
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:23
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1137,78 +362,24 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 8
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 8:2-8:3
+							start: Position 8:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "h"
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									identifierName: "h"
-									end: Object {
-										column: 3
-										line: 9
-									}
-									start: Object {
-										column: 2
-										line: 9
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3 (h)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 9
-								}
-								start: Object {
-									column: 2
-									line: 9
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 30
-									line: 9
-								}
-								start: Object {
-									column: 6
-									line: 9
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:30
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 30
-										line: 9
-									}
-									start: Object {
-										column: 28
-										line: 9
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 9:28-9:30
 							}
 							head: JSFunctionHead {
 								async: false
@@ -1216,87 +387,24 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "experimental/class-properties/new-target/input.js"
-									end: Object {
-										column: 27
-										line: 9
-									}
-									start: Object {
-										column: 6
-										line: 9
-									}
-								}
+								loc: SourceLocation experimental/class-properties/new-target/input.js 9:6-9:27
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "experimental/class-properties/new-target/input.js"
-											end: Object {
-												column: 23
-												line: 9
-											}
-											start: Object {
-												column: 7
-												line: 9
-											}
-										}
+										loc: SourceLocation experimental/class-properties/new-target/input.js 9:7-9:23
 										left: JSBindingIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "experimental/class-properties/new-target/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 10
-													line: 9
-												}
-												start: Object {
-													column: 7
-													line: 9
-												}
-											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 9:7-9:10 (foo)
 										}
 										right: JSMetaProperty {
-											loc: Object {
-												filename: "experimental/class-properties/new-target/input.js"
-												end: Object {
-													column: 23
-													line: 9
-												}
-												start: Object {
-													column: 13
-													line: 9
-												}
-											}
+											loc: SourceLocation experimental/class-properties/new-target/input.js 9:13-9:23
 											meta: JSIdentifier {
 												name: "new"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "new"
-													end: Object {
-														column: 16
-														line: 9
-													}
-													start: Object {
-														column: 13
-														line: 9
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 9:13-9:16 (new)
 											}
 											property: JSIdentifier {
 												name: "target"
-												loc: Object {
-													filename: "experimental/class-properties/new-target/input.js"
-													identifierName: "target"
-													end: Object {
-														column: 23
-														line: 9
-													}
-													start: Object {
-														column: 17
-														line: 9
-													}
-												}
+												loc: SourceLocation experimental/class-properties/new-target/input.js 9:17-9:23 (target)
 											}
 										}
 									}
@@ -1305,17 +413,7 @@ JSRoot {
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/new-target/input.js"
-							end: Object {
-								column: 31
-								line: 9
-							}
-							start: Object {
-								column: 2
-								line: 9
-							}
-						}
+						loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:31
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -1323,21 +421,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 9
-							}
-							loc: Object {
-								filename: "experimental/class-properties/new-target/input.js"
-								end: Object {
-									column: 3
-									line: 9
-								}
-								start: Object {
-									column: 2
-									line: 9
-								}
-							}
+							loc: SourceLocation experimental/class-properties/new-target/input.js 9:2-9:3
+							start: Position 9:2
 						}
 					}
 				]

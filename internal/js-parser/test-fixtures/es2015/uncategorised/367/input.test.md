@@ -17,17 +17,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/367/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2015/uncategorised/367/input.js 1:0-2:0
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "await"
+				loc: SourceLocation es2015/uncategorised/367/input.js 1:6-1:11 (await)
+			}
+			loc: SourceLocation es2015/uncategorised/367/input.js 1:0-1:14
+			meta: JSClassHead {
+				body: Array []
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: SourceLocation es2015/uncategorised/367/input.js 1:0-1:14
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,62 +49,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "await"
-				loc: Object {
-					filename: "es2015/uncategorised/367/input.js"
-					identifierName: "await"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-			}
-			loc: Object {
-				filename: "es2015/uncategorised/367/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/367/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:11
+				start: Position 1:6
 			}
 		}
 	]

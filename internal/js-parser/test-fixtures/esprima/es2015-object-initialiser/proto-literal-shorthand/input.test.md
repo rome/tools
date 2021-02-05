@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,151 +32,41 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
+				end: Position 1:31
+				start: Position 1:22
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:0-1:34
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:1-1:33
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSStringLiteral {
 								value: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:3-1:14
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:3-1:14
 						}
-						value: JSNullLiteral {
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:16-1:20}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:3-1:20
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:22-1:31 (__proto__)
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:22-1:31
 						}
 						value: JSReferenceIdentifier {
 							name: "__proto__"
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-								identifierName: "__proto__"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:22-1:31 (__proto__)
 						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/proto-literal-shorthand/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-shorthand/input.js 1:22-1:31
 					}
 				]
 			}

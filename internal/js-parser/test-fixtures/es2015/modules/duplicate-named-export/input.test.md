@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-named-export/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:0-3:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 9
-					line: 2
-				}
+				end: Position 2:19
+				start: Position 2:9
 			}
 			description: Object {
 				category: "parse"
@@ -58,19 +42,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/modules/duplicate-named-export/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12}
 				]
 			}
 		}
@@ -79,59 +51,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:0-1:15
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12 (foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 1:9-1:12 (foo)
 					}
 				}
 			]
@@ -139,59 +69,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export/input.js"
-				end: Object {
-					column: 22
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:0-2:22
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export/input.js"
-						end: Object {
-							column: 19
-							line: 2
-						}
-						start: Object {
-							column: 9
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:9-2:19
 					exported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 19
-								line: 2
-							}
-							start: Object {
-								column: 16
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:16-2:19 (foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 12
-								line: 2
-							}
-							start: Object {
-								column: 9
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export/input.js 2:9-2:12 (bar)
 					}
 				}
 			]

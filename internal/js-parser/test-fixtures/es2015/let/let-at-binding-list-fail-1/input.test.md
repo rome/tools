@@ -18,141 +18,39 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-1:17
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:0-1:17
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:4-1:11
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "let"
-											loc: Object {
-												filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-												identifierName: "let"
-												end: Object {
-													column: 9
-													line: 1
-												}
-												start: Object {
-													column: 6
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:6-1:9 (let)
 										}
-										loc: Object {
-											filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:6-1:9
 									}
 									value: JSBindingIdentifier {
 										name: "let"
-										loc: Object {
-											filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-											identifierName: "let"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:6-1:9 (let)
 									}
-									loc: Object {
-										filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:6-1:9
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:4-1:16
 						init: JSObjectExpression {
 							properties: Array []
-							loc: Object {
-								filename: "es2015/let/let-at-binding-list-fail-1/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-1/input.js 1:14-1:16
 						}
 					}
 				]

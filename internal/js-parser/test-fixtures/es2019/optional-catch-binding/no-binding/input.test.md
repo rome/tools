@@ -18,73 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2019/optional-catch-binding/no-binding/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:0-7:0
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "es2019/optional-catch-binding/no-binding/input.js"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:0-6:1
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2019/optional-catch-binding/no-binding/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 1:4-3:1
 			}
 			handler: JSCatchClause {
 				param: undefined
-				loc: Object {
-					filename: "es2019/optional-catch-binding/no-binding/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 4:0-6:1
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2019/optional-catch-binding/no-binding/input.js"
-						end: Object {
-							column: 1
-							line: 6
-						}
-						start: Object {
-							column: 6
-							line: 4
-						}
-					}
+					loc: SourceLocation es2019/optional-catch-binding/no-binding/input.js 4:6-6:1
 				}
 			}
 		}

@@ -17,49 +17,18 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/enum/declare/input.ts 1:0-1:17
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/enum/declare/input.ts"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSEnumDeclaration {
 			id: JSBindingIdentifier {
 				name: "E"
-				loc: Object {
-					filename: "typescript/enum/declare/input.ts"
-					identifierName: "E"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/enum/declare/input.ts 1:13-1:14 (E)
 			}
 			const: false
 			declare: true
 			members: Array []
-			loc: Object {
-				filename: "typescript/enum/declare/input.ts"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/enum/declare/input.ts 1:0-1:17
 		}
 	]
 }

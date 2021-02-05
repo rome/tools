@@ -107,7 +107,7 @@ test(
 					).argument,
 				),
 			]),
-			'Object {\n\tfilename: "unknown"\n\tend: Object {\n\t\tcolumn: 9\n\t\tline: 6\n\t}\n\tstart: Object {\n\t\tcolumn: 0\n\t\tline: 1\n\t}\n}',
+			"SourceLocation unknown 1:0-6:9",
 		);
 	},
 );

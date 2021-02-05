@@ -17,88 +17,27 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/import-star-as/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namedSpecifiers: Array []
-			loc: Object {
-				filename: "typescript/import/import-star-as/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-1:23
 			source: JSStringLiteral {
 				value: "a"
-				loc: Object {
-					filename: "typescript/import/import-star-as/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/import-star-as/input.ts 1:19-1:22
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: Object {
-					filename: "typescript/import/import-star-as/input.ts"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-1:13
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "typescript/import/import-star-as/input.ts"
-							identifierName: "a"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/import/import-star-as/input.ts 1:12-1:13 (a)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "typescript/import/import-star-as/input.ts"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/import-star-as/input.ts 1:12-1:13
 				}
 			}
 		}

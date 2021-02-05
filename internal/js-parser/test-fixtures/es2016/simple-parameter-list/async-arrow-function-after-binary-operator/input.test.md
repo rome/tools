@@ -18,84 +18,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:0-1:16
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:0-1:16
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:0-1:16
 				left: JSNumericLiteral {
 					value: 3
 					format: undefined
-					loc: Object {
-						filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:0-1:1
 				}
 				right: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:4-1:16
 					body: JSNumericLiteral {
 						value: 2
 						format: undefined
-						loc: Object {
-							filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:15-1:16
 					}
 					head: JSFunctionHead {
 						async: true
@@ -104,17 +44,7 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:4-1:14
 					}
 				}
 			}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/267/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/267/input.js 1:0-1:17
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				start: Position 1:7
 			}
 			description: Object {
 				category: "parse"
@@ -61,171 +45,58 @@ JSRoot {
 							RAW_MARKUP {value: "</emphasis> here"}
 						]
 					}
-					frame {
-						location: Object {
-							filename: "es2015/uncategorised/267/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/uncategorised/267/input.js 1:11-1:11}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/267/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/267/input.js 1:0-1:17
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "es2015/uncategorised/267/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/267/input.js 1:0-1:17
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "hello "
 						raw: "hello "
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/267/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/267/input.js 1:1-1:7
 					}
 					JSTemplateElement {
 						cooked: ";"
 						raw: ";"
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/267/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/267/input.js 1:11-1:12
 					}
 					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false
-						loc: Object {
-							filename: "es2015/uncategorised/267/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/267/input.js 1:17-1:17
 					}
 				]
 				expressions: Array [
 					JSNumericLiteral {
 						value: 10
 						format: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/267/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/267/input.js 1:9-1:11
 					}
 					JSTaggedTemplateExpression {
 						typeArguments: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/267/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/267/input.js 1:12-1:17
 						tag: JSReferenceIdentifier {
 							name: "test"
-							loc: Object {
-								filename: "es2015/uncategorised/267/input.js"
-								identifierName: "test"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/267/input.js 1:12-1:16 (test)
 						}
 						quasi: JSTemplateLiteral {
 							expressions: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/267/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/267/input.js 1:16-1:17
 							quasis: Array [
 								JSTemplateElement {
 									cooked: ""
 									raw: ""
 									tail: false
-									loc: Object {
-										filename: "es2015/uncategorised/267/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 17
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/267/input.js 1:17-1:17
 								}
 							]
 						}

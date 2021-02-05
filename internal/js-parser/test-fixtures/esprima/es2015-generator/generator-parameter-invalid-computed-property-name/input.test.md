@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,43 +32,17 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 13
-					line: 2
-				}
+				end: Position 2:13
+				start: Position 2:13
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 1:0-3:2
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 1:1-3:1
 				head: JSFunctionHead {
 					async: false
 					generator: true
@@ -88,73 +52,22 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 1:10-1:12
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 1:13-3:1
 					body: Array [
 						JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: ""
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-									identifierName: ""
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:13-2:14 ()
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-								end: Object {
-									column: 32
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:4-2:32
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-									end: Object {
-										column: 32
-										line: 2
-									}
-									start: Object {
-										column: 30
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:30-2:32
 							}
 							head: JSFunctionHead {
 								async: false
@@ -164,116 +77,35 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-									end: Object {
-										column: 29
-										line: 2
-									}
-									start: Object {
-										column: 14
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:14-2:29
 								params: Array [
 									JSBindingObjectPattern {
 										rest: undefined
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-											end: Object {
-												column: 28
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:14-2:28
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-												end: Object {
-													column: 28
-													line: 2
-												}
-												start: Object {
-													column: 14
-													line: 2
-												}
-											}
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:14-2:28
 										}
 										properties: Array [
 											JSBindingObjectPatternProperty {
 												key: JSComputedPropertyKey {
 													value: JSYieldExpression {
 														delegate: false
-														loc: Object {
-															filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-															end: Object {
-																column: 23
-																line: 2
-															}
-															start: Object {
-																column: 16
-																line: 2
-															}
-														}
+														loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:16-2:23
 														argument: JSNumericLiteral {
 															value: 3
 															format: undefined
-															loc: Object {
-																filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-																end: Object {
-																	column: 23
-																	line: 2
-																}
-																start: Object {
-																	column: 22
-																	line: 2
-																}
-															}
+															loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:22-2:23
 														}
 													}
-													loc: Object {
-														filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-														end: Object {
-															column: 24
-															line: 2
-														}
-														start: Object {
-															column: 15
-															line: 2
-														}
-													}
+													loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:15-2:24
 												}
 												value: JSBindingIdentifier {
 													name: "y"
-													loc: Object {
-														filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-														identifierName: "y"
-														end: Object {
-															column: 27
-															line: 2
-														}
-														start: Object {
-															column: 26
-															line: 2
-														}
-													}
+													loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:26-2:27 (y)
 												}
-												loc: Object {
-													filename: "esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js"
-													end: Object {
-														column: 27
-														line: 2
-													}
-													start: Object {
-														column: 15
-														line: 2
-													}
-												}
+												loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js 2:15-2:27
 											}
 										]
 									}

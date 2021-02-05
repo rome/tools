@@ -17,20 +17,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/378/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2015/uncategorised/378/input.js 1:0-2:0
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "enum"
+				loc: SourceLocation es2015/uncategorised/378/input.js 1:6-1:10 (enum)
+			}
+			loc: SourceLocation es2015/uncategorised/378/input.js 1:0-1:13
+			meta: JSClassHead {
+				body: Array []
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: SourceLocation es2015/uncategorised/378/input.js 1:0-1:13
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/378/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:10
+				start: Position 1:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,68 +54,6 @@ JSRoot {
 					"enum"
 					RAW_MARKUP {value: " is a reserved word"}
 				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/378/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSClassDeclaration {
-			id: JSBindingIdentifier {
-				name: "enum"
-				loc: Object {
-					filename: "es2015/uncategorised/378/input.js"
-					identifierName: "enum"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-			}
-			loc: Object {
-				filename: "es2015/uncategorised/378/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			meta: JSClassHead {
-				body: Array []
-				implements: undefined
-				superClass: undefined
-				superTypeParameters: undefined
-				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/378/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
 			}
 		}
 	]

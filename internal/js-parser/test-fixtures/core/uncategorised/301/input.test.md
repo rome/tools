@@ -18,100 +18,28 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/301/input.js"
-		end: Object {
-			column: 5
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/301/input.js 1:0-2:5
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/301/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/301/input.js 1:0-2:5
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/301/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/301/input.js 1:2-1:3
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "core/uncategorised/301/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/301/input.js 1:2-1:3 (x)
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/301/input.js"
-						end: Object {
-							column: 3
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation core/uncategorised/301/input.js 2:0-2:3
 					expression: JSUpdateExpression {
 						operator: "--"
 						prefix: true
-						loc: Object {
-							filename: "core/uncategorised/301/input.js"
-							end: Object {
-								column: 3
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/301/input.js 2:0-2:3
 						argument: JSReferenceIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "core/uncategorised/301/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/301/input.js 2:2-2:3 (y)
 						}
 					}
 				}

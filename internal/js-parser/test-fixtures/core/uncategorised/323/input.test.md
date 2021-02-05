@@ -18,127 +18,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/323/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/323/input.js 1:0-1:17
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "core/uncategorised/323/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/323/input.js 1:0-1:8
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "core/uncategorised/323/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/323/input.js 1:0-1:3 (foo)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/323/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/323/input.js 1:5-1:8
 				expression: JSNumericLiteral {
 					value: 10
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/323/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/323/input.js 1:5-1:7
 				}
 			}
 		}
 		JSLabeledStatement {
-			loc: Object {
-				filename: "core/uncategorised/323/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/323/input.js 1:9-1:17
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "core/uncategorised/323/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/323/input.js 1:9-1:12 (foo)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/323/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/323/input.js 1:14-1:17
 				expression: JSNumericLiteral {
 					value: 20
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/323/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/323/input.js 1:14-1:16
 				}
 			}
 		}

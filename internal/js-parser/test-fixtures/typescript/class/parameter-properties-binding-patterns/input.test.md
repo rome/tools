@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 16
-					line: 2
-				}
-				start: Object {
-					column: 16
-					line: 2
-				}
+				end: Position 2:16
+				start: Position 2:16
 			}
 		}
 	]
@@ -57,102 +41,30 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "constructor"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-									identifierName: "constructor"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15 (constructor)
 							}
-							loc: Object {
-								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15
 						}
-						loc: Object {
-							filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-							end: Object {
-								column: 29
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:29
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-								end: Object {
-									column: 29
-									line: 2
-								}
-								start: Object {
-									column: 27
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:27-2:29
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -161,21 +73,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:4-2:15
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -185,47 +84,17 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-								end: Object {
-									column: 26
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:15-2:26
 							params: Array [
 								JSBindingArrayPattern {
 									elements: Array []
 									rest: undefined
-									loc: Object {
-										filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-										end: Object {
-											column: 25
-											line: 2
-										}
-										start: Object {
-											column: 16
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:16-2:25
 									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
-											end: Object {
-												column: 25
-												line: 2
-											}
-											start: Object {
-												column: 16
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 2:16-2:25
 									}
 								}
 							]

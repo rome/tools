@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/365/input.js"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/365/input.js 1:0-1:6
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,30 +32,14 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:5
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/365/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/365/input.js 1:0-1:6
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -73,85 +47,25 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "core/uncategorised/365/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/365/input.js 1:0-1:6
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "core/uncategorised/365/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/365/input.js 1:1-1:5
 					body: Array [
 						JSRegExpCharacter {
 							value: "t"
-							loc: Object {
-								filename: "core/uncategorised/365/input.js"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/365/input.js 1:1-1:2
 						}
 						JSRegExpCharacter {
 							value: "e"
-							loc: Object {
-								filename: "core/uncategorised/365/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/365/input.js 1:2-1:3
 						}
 						JSRegExpCharacter {
 							value: "s"
-							loc: Object {
-								filename: "core/uncategorised/365/input.js"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/365/input.js 1:3-1:4
 						}
 						JSRegExpCharacter {
 							value: "t"
-							loc: Object {
-								filename: "core/uncategorised/365/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/365/input.js 1:4-1:5
 						}
 					]
 				}

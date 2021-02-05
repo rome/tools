@@ -11,71 +11,21 @@ CSSRoot {
 	diagnostics: Array []
 	filename: "values/input.css"
 	integrity: undefined
-	loc: Object {
-		filename: "values/input.css"
-		end: Object {
-			column: 1
-			line: 19
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation values/input.css 1:0-19:1
 	body: Array [
 		CSSRule {
-			loc: Object {
-				filename: "values/input.css"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation values/input.css 1:0-3:1
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "values/input.css"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation values/input.css 1:0-1:10
 					patterns: Array [
 						CSSTypeSelector {
 							value: "p"
-							loc: Object {
-								filename: "values/input.css"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation values/input.css 1:0-1:1
 						}
 						CSSPseudoElementSelector {
 							value: "before"
-							loc: Object {
-								filename: "values/input.css"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation values/input.css 1:1-1:9
 						}
 					]
 				}
@@ -87,86 +37,26 @@ CSSRoot {
 						value: Array [
 							CSSString {
 								value: " content "
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 21
-										line: 2
-									}
-									start: Object {
-										column: 10
-										line: 2
-									}
-								}
+								loc: SourceLocation values/input.css 2:10-2:21
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 21
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
+						loc: SourceLocation values/input.css 2:1-2:21
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "values/input.css"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation values/input.css 1:10-3:1
 			}
 		}
 		CSSRule {
-			loc: Object {
-				filename: "values/input.css"
-				end: Object {
-					column: 1
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation values/input.css 5:0-10:1
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "values/input.css"
-						end: Object {
-							column: 8
-							line: 5
-						}
-						start: Object {
-							column: 0
-							line: 5
-						}
-					}
+					loc: SourceLocation values/input.css 5:0-5:8
 					patterns: Array [
 						CSSClassSelector {
 							value: "number"
-							loc: Object {
-								filename: "values/input.css"
-								end: Object {
-									column: 7
-									line: 5
-								}
-								start: Object {
-									column: 0
-									line: 5
-								}
-							}
+							loc: SourceLocation values/input.css 5:0-5:7
 						}
 					]
 				}
@@ -179,31 +69,11 @@ CSSRoot {
 							CSSNumber {
 								value: 0.001
 								raw: "1e-3"
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 14
-										line: 6
-									}
-									start: Object {
-										column: 10
-										line: 6
-									}
-								}
+								loc: SourceLocation values/input.css 6:10-6:14
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 14
-								line: 6
-							}
-							start: Object {
-								column: 1
-								line: 6
-							}
-						}
+						loc: SourceLocation values/input.css 6:1-6:14
 					}
 					CSSDeclaration {
 						name: "line-height"
@@ -211,148 +81,48 @@ CSSRoot {
 							CSSNumber {
 								value: 0.2
 								raw: "0.2"
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 17
-										line: 7
-									}
-									start: Object {
-										column: 14
-										line: 7
-									}
-								}
+								loc: SourceLocation values/input.css 7:14-7:17
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 17
-								line: 7
-							}
-							start: Object {
-								column: 1
-								line: 7
-							}
-						}
+						loc: SourceLocation values/input.css 7:1-7:17
 					}
 					CSSDeclaration {
 						name: "width"
 						value: Array [
 							CSSPercentage {
 								value: 20
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 11
-										line: 8
-									}
-									start: Object {
-										column: 8
-										line: 8
-									}
-								}
+								loc: SourceLocation values/input.css 8:8-8:11
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 11
-								line: 8
-							}
-							start: Object {
-								column: 1
-								line: 8
-							}
-						}
+						loc: SourceLocation values/input.css 8:1-8:11
 					}
 					CSSDeclaration {
 						name: "margin-top"
 						value: Array [
 							CSSPercentage {
 								value: -5
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 16
-										line: 9
-									}
-									start: Object {
-										column: 13
-										line: 9
-									}
-								}
+								loc: SourceLocation values/input.css 9:13-9:16
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 16
-								line: 9
-							}
-							start: Object {
-								column: 1
-								line: 9
-							}
-						}
+						loc: SourceLocation values/input.css 9:1-9:16
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "values/input.css"
-					end: Object {
-						column: 1
-						line: 10
-					}
-					start: Object {
-						column: 8
-						line: 5
-					}
-				}
+				loc: SourceLocation values/input.css 5:8-10:1
 			}
 		}
 		CSSRule {
-			loc: Object {
-				filename: "values/input.css"
-				end: Object {
-					column: 1
-					line: 14
-				}
-				start: Object {
-					column: 0
-					line: 12
-				}
-			}
+			loc: SourceLocation values/input.css 12:0-14:1
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "values/input.css"
-						end: Object {
-							column: 4
-							line: 12
-						}
-						start: Object {
-							column: 0
-							line: 12
-						}
-					}
+					loc: SourceLocation values/input.css 12:0-12:4
 					patterns: Array [
 						CSSTypeSelector {
 							value: "foo"
-							loc: Object {
-								filename: "values/input.css"
-								end: Object {
-									column: 3
-									line: 12
-								}
-								start: Object {
-									column: 0
-									line: 12
-								}
-							}
+							loc: SourceLocation values/input.css 12:0-12:3
 						}
 					]
 				}
@@ -364,86 +134,26 @@ CSSRoot {
 						value: Array [
 							CSSIdentifier {
 								value: "yellow"
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 14
-										line: 13
-									}
-									start: Object {
-										column: 8
-										line: 13
-									}
-								}
+								loc: SourceLocation values/input.css 13:8-13:14
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 0
-								line: 14
-							}
-							start: Object {
-								column: 1
-								line: 13
-							}
-						}
+						loc: SourceLocation values/input.css 13:1-14:0
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "values/input.css"
-					end: Object {
-						column: 1
-						line: 14
-					}
-					start: Object {
-						column: 4
-						line: 12
-					}
-				}
+				loc: SourceLocation values/input.css 12:4-14:1
 			}
 		}
 		CSSRule {
-			loc: Object {
-				filename: "values/input.css"
-				end: Object {
-					column: 1
-					line: 19
-				}
-				start: Object {
-					column: 0
-					line: 16
-				}
-			}
+			loc: SourceLocation values/input.css 16:0-19:1
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "values/input.css"
-						end: Object {
-							column: 4
-							line: 16
-						}
-						start: Object {
-							column: 0
-							line: 16
-						}
-					}
+					loc: SourceLocation values/input.css 16:0-16:4
 					patterns: Array [
 						CSSTypeSelector {
 							value: "bar"
-							loc: Object {
-								filename: "values/input.css"
-								end: Object {
-									column: 3
-									line: 16
-								}
-								start: Object {
-									column: 0
-									line: 16
-								}
-							}
+							loc: SourceLocation values/input.css 16:0-16:3
 						}
 					]
 				}
@@ -455,76 +165,26 @@ CSSRoot {
 						value: Array [
 							CSSIdentifier {
 								value: "yellow"
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 14
-										line: 17
-									}
-									start: Object {
-										column: 8
-										line: 17
-									}
-								}
+								loc: SourceLocation values/input.css 17:8-17:14
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 14
-								line: 17
-							}
-							start: Object {
-								column: 1
-								line: 17
-							}
-						}
+						loc: SourceLocation values/input.css 17:1-17:14
 					}
 					CSSDeclaration {
 						name: "background"
 						value: Array [
 							CSSIdentifier {
 								value: "none"
-								loc: Object {
-									filename: "values/input.css"
-									end: Object {
-										column: 17
-										line: 18
-									}
-									start: Object {
-										column: 13
-										line: 18
-									}
-								}
+								loc: SourceLocation values/input.css 18:13-18:17
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "values/input.css"
-							end: Object {
-								column: 0
-								line: 19
-							}
-							start: Object {
-								column: 1
-								line: 18
-							}
-						}
+						loc: SourceLocation values/input.css 18:1-19:0
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "values/input.css"
-					end: Object {
-						column: 1
-						line: 19
-					}
-					start: Object {
-						column: 4
-						line: 16
-					}
-				}
+				loc: SourceLocation values/input.css 16:4-19:1
 			}
 		}
 	]

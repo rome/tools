@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/export-invalid/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2017/async-functions/export-invalid/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:32
+				start: Position 1:31
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,92 +38,27 @@ JSRoot {
 					"=>"
 				]
 			}
-			location: Object {
-				filename: "es2017/async-functions/export-invalid/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 31
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2017/async-functions/export-invalid/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:0-1:33
 			declaration: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/export-invalid/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:33
 				body: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2017/async-functions/export-invalid/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 32
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:32-1:32
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/export-invalid/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:15-1:30
 					params: Array [
 						JSBindingIdentifier {
 							name: "functionX"
-							loc: Object {
-								filename: "es2017/async-functions/export-invalid/input.js"
-								identifierName: "functionX"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:21-1:30 (functionX)
 						}
 					]
 				}
@@ -134,17 +67,7 @@ JSRoot {
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2017/async-functions/export-invalid/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 34
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-invalid/input.js 1:34-1:36
 		}
 	]
 }

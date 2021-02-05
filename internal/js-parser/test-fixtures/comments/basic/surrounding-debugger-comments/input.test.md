@@ -17,76 +17,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/surrounding-debugger-comments/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 1:0-6:0
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " before "
-			loc: Object {
-				filename: "comments/basic/surrounding-debugger-comments/input.js"
-				end: Object {
-					column: 16
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
-			}
+			loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 2:4-2:16
 		}
 		CommentBlock {
 			id: "1"
 			value: " after "
-			loc: Object {
-				filename: "comments/basic/surrounding-debugger-comments/input.js"
-				end: Object {
-					column: 15
-					line: 4
-				}
-				start: Object {
-					column: 4
-					line: 4
-				}
-			}
+			loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 4:4-4:15
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "comments/basic/surrounding-debugger-comments/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "comments/basic/surrounding-debugger-comments/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 1:0-5:1
+			body: JSBlockStatement {
+				directives: Array []
+				loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 1:13-5:1
+				body: Array [
+					JSDebuggerStatement {
+						leadingComments: Array ["0"]
+						loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 3:4-3:13
+						trailingComments: Array ["1"]
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -97,48 +57,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "comments/basic/surrounding-debugger-comments/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: Object {
-					filename: "comments/basic/surrounding-debugger-comments/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
-				body: Array [
-					JSDebuggerStatement {
-						leadingComments: Array ["0"]
-						trailingComments: Array ["1"]
-						loc: Object {
-							filename: "comments/basic/surrounding-debugger-comments/input.js"
-							end: Object {
-								column: 13
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
-					}
-				]
+				loc: SourceLocation comments/basic/surrounding-debugger-comments/input.js 1:10-1:12
 			}
 		}
 	]

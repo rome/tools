@@ -16,29 +16,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/332/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/332/input.js 1:0-1:29
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/332/input.js"
-				end: Object {
-					column: 13
-					line: 1
+			loc: SourceLocation es2015/uncategorised/332/input.js 1:0-1:13
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:29
+				right: JSReferenceIdentifier {
+					name: "arr"
+					loc: SourceLocation es2015/uncategorised/332/input.js 1:26-1:29 (arr)
 				}
-				start: Object {
-					column: 0
-					line: 1
+				left: JSAssignmentArrayPattern {
+					elements: Array []
+					loc: SourceLocation es2015/uncategorised/332/input.js 1:14-1:23
+					rest: JSAssignmentIdentifier {
+						name: "eval"
+						loc: SourceLocation es2015/uncategorised/332/input.js 1:18-1:22 (eval)
+					}
 				}
 			}
 		}
@@ -46,6 +47,14 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/332/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:22
+				start: Position 1:18
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -54,93 +63,6 @@ JSRoot {
 					"eval"
 					RAW_MARKUP {value: " is a reserved word"}
 				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/332/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/332/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/332/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
-				right: JSReferenceIdentifier {
-					name: "arr"
-					loc: Object {
-						filename: "es2015/uncategorised/332/input.js"
-						identifierName: "arr"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
-				}
-				left: JSAssignmentArrayPattern {
-					elements: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/332/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
-					rest: JSAssignmentIdentifier {
-						name: "eval"
-						loc: Object {
-							filename: "es2015/uncategorised/332/input.js"
-							identifierName: "eval"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
-					}
-				}
 			}
 		}
 	]

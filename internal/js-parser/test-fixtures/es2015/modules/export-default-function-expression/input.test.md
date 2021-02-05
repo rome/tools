@@ -18,71 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-default-function-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:0-2:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/export-default-function-expression/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:0-1:33
 			declaration: JSFunctionExpression {
 				id: JSBindingIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "es2015/modules/export-default-function-expression/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:25-1:26 (a)
 				}
-				loc: Object {
-					filename: "es2015/modules/export-default-function-expression/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:16-1:31
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/modules/export-default-function-expression/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 29
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:29-1:31
 				}
 				head: JSFunctionHead {
 					async: false
@@ -93,17 +42,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/export-default-function-expression/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-function-expression/input.js 1:26-1:28
 				}
 			}
 		}

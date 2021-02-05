@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:21
+				start: Position 1:21
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,50 +38,15 @@ JSRoot {
 					RAW_MARKUP {value: " can't contain a unicode escape"}
 				]
 			}
-			location: Object {
-				filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:0-1:33
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -93,85 +56,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:13-1:33
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:31
 						expression: JSMetaProperty {
-							loc: Object {
-								filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:30
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:15-1:18 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "es2015/meta-properties/new-target-invalid-escaped-target/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 30
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-target-invalid-escaped-target/input.js 1:19-1:30 (target)
 							}
 						}
 					}

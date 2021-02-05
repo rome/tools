@@ -18,155 +18,45 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/optional-chaining/conditional-decimal/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-4:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/conditional-decimal/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:9
 			expression: JSConditionalExpression {
-				loc: Object {
-					filename: "es2020/optional-chaining/conditional-decimal/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:9
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "es2020/optional-chaining/conditional-decimal/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:0-1:4
 				}
 				alternate: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "es2020/optional-chaining/conditional-decimal/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:8-1:9
 				}
 				consequent: JSNumericLiteral {
 					value: 0.3
 					format: undefined
-					loc: Object {
-						filename: "es2020/optional-chaining/conditional-decimal/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 1:5-1:7
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/conditional-decimal/input.js"
-				end: Object {
-					column: 13
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:13
 			expression: JSConditionalExpression {
-				loc: Object {
-					filename: "es2020/optional-chaining/conditional-decimal/input.js"
-					end: Object {
-						column: 13
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:13
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "es2020/optional-chaining/conditional-decimal/input.js"
-						end: Object {
-							column: 4
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:0-3:4
 				}
 				alternate: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "es2020/optional-chaining/conditional-decimal/input.js"
-						end: Object {
-							column: 13
-							line: 3
-						}
-						start: Object {
-							column: 12
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:12-3:13
 				}
 				consequent: JSNumericLiteral {
 					value: 0.3
 					format: undefined
-					loc: Object {
-						filename: "es2020/optional-chaining/conditional-decimal/input.js"
-						end: Object {
-							column: 9
-							line: 3
-						}
-						start: Object {
-							column: 7
-							line: 3
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/conditional-decimal/input.js 3:7-3:9
 				}
 			}
 		}

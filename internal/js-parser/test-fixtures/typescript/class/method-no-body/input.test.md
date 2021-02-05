@@ -17,104 +17,42 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-5:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/method-no-body/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/method-no-body/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-no-body/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/method-no-body/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/method-no-body/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-no-body/input.ts 1:0-4:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "f"
-								loc: Object {
-									filename: "typescript/class/method-no-body/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:5 (f)
 							}
-							loc: Object {
-								filename: "typescript/class/method-no-body/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:5
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/method-no-body/input.ts"
-							end: Object {
-								column: 8
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
+						loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:8
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation typescript/class/method-no-body/input.ts 2:4-2:5
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -125,40 +63,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/method-no-body/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/method-no-body/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-no-body/input.ts 2:5-2:7
 						}
 					}
 					TSDeclareMethod {
@@ -166,43 +71,12 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "f"
-								loc: Object {
-									filename: "typescript/class/method-no-body/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5 (f)
 							}
-							loc: Object {
-								filename: "typescript/class/method-no-body/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/method-no-body/input.ts"
-							end: Object {
-								column: 14
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:14
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -210,21 +84,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/method-no-body/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-no-body/input.ts 3:4-3:5
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -234,30 +95,8 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/method-no-body/input.ts"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 5
-									line: 3
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/method-no-body/input.ts"
-									end: Object {
-										column: 13
-										line: 3
-									}
-									start: Object {
-										column: 9
-										line: 3
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/method-no-body/input.ts 3:5-3:13
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/method-no-body/input.ts 3:9-3:13}
 						}
 					}
 				]

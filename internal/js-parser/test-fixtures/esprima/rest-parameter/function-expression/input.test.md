@@ -18,85 +18,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/rest-parameter/function-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/rest-parameter/function-expression/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:24
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/rest-parameter/function-expression/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:24
 				left: JSAssignmentIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "esprima/rest-parameter/function-expression/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:0-1:1 (f)
 				}
 				right: JSFunctionExpression {
 					id: undefined
-					loc: Object {
-						filename: "esprima/rest-parameter/function-expression/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:4-1:24
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "esprima/rest-parameter/function-expression/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:22-1:24
 					}
 					head: JSFunctionHead {
 						async: false
@@ -105,76 +44,24 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "esprima/rest-parameter/function-expression/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:12-1:21
 						rest: JSBindingIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "esprima/rest-parameter/function-expression/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:19-1:20 (b)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "esprima/rest-parameter/function-expression/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:19-1:20
 							}
 						}
 						params: Array [
 							JSBindingIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "esprima/rest-parameter/function-expression/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:13-1:14 (a)
 								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "esprima/rest-parameter/function-expression/input.js"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/rest-parameter/function-expression/input.js 1:13-1:14
 								}
 							}
 						]

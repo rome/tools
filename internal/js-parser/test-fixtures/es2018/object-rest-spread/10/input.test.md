@@ -18,198 +18,53 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/10/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/10/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-1:20
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2018/object-rest-spread/10/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/10/input.js 1:0-1:20
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2018/object-rest-spread/10/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/10/input.js 1:4-1:13
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "es2018/object-rest-spread/10/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 7
-													line: 1
-												}
-												start: Object {
-													column: 6
-													line: 1
-												}
-											}
+											loc: SourceLocation es2018/object-rest-spread/10/input.js 1:6-1:7 (x)
 										}
-										loc: Object {
-											filename: "es2018/object-rest-spread/10/input.js"
-											end: Object {
-												column: 7
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/10/input.js 1:6-1:7
 									}
 									value: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2018/object-rest-spread/10/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 7
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/10/input.js 1:6-1:7 (x)
 									}
-									loc: Object {
-										filename: "es2018/object-rest-spread/10/input.js"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation es2018/object-rest-spread/10/input.js 1:6-1:7
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "y"
-											loc: Object {
-												filename: "es2018/object-rest-spread/10/input.js"
-												identifierName: "y"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation es2018/object-rest-spread/10/input.js 1:9-1:10 (y)
 										}
-										loc: Object {
-											filename: "es2018/object-rest-spread/10/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/10/input.js 1:9-1:10
 									}
 									value: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "es2018/object-rest-spread/10/input.js"
-											identifierName: "y"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/10/input.js 1:9-1:10 (y)
 									}
-									loc: Object {
-										filename: "es2018/object-rest-spread/10/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation es2018/object-rest-spread/10/input.js 1:9-1:10
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2018/object-rest-spread/10/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/10/input.js 1:4-1:19
 						init: JSReferenceIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "es2018/object-rest-spread/10/input.js"
-								identifierName: "obj"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/10/input.js 1:16-1:19 (obj)
 						}
 					}
 				]

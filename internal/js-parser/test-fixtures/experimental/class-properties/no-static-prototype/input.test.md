@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/no-static-prototype/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 9
-					line: 2
-				}
+				end: Position 2:18
+				start: Position 2:9
 			}
 		}
 	]
@@ -57,90 +41,28 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-properties/no-static-prototype/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/no-static-prototype/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/no-static-prototype/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 1:0-3:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "prototype"
-								loc: Object {
-									filename: "experimental/class-properties/no-static-prototype/input.js"
-									identifierName: "prototype"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 2:9-2:18 (prototype)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/no-static-prototype/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 2:9-2:18
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/no-static-prototype/input.js"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 2:2-2:18
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -148,21 +70,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/no-static-prototype/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/no-static-prototype/input.js 2:2-2:18
+							start: Position 2:2
 						}
 					}
 				]

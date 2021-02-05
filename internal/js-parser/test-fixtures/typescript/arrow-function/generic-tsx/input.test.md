@@ -16,211 +16,68 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 1:0-3:0
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/arrow-function/generic-tsx/input.tsx"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Same as `generic`. Verify that JSX doesn't change things."
-			loc: Object {
-				filename: "typescript/arrow-function/generic-tsx/input.tsx"
-				end: Object {
-					column: 60
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 1:0-1:60
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/arrow-function/generic-tsx/input.tsx"
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:18
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/generic-tsx/input.tsx"
-					end: Object {
-						column: 17
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:17
 				body: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "typescript/arrow-function/generic-tsx/input.tsx"
-						identifierName: "a"
-						end: Object {
-							column: 17
-							line: 2
-						}
-						start: Object {
-							column: 16
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:17 (a)
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/generic-tsx/input.tsx"
-						end: Object {
-							column: 15
-							line: 2
-						}
-						start: Object {
-							column: 3
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:3-2:15
 					returnType: TSTypeReference {
 						typeParameters: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/generic-tsx/input.tsx"
-							end: Object {
-								column: 12
-								line: 2
-							}
-							start: Object {
-								column: 11
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:11-2:12
 						typeName: JSReferenceIdentifier {
 							name: "T"
-							loc: Object {
-								filename: "typescript/arrow-function/generic-tsx/input.tsx"
-								identifierName: "T"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:11-2:12 (T)
 						}
 					}
 					typeParameters: TSTypeParameterDeclaration {
 						leadingComments: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/generic-tsx/input.tsx"
-							end: Object {
-								column: 3
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:0-2:3
 						params: Array [
 							TSTypeParameter {
 								name: "T"
 								constraint: undefined
 								default: undefined
 								leadingComments: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/generic-tsx/input.tsx"
-									end: Object {
-										column: 2
-										line: 2
-									}
-									start: Object {
-										column: 1
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:1-2:2
 							}
 						]
 					}
 					params: Array [
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "typescript/arrow-function/generic-tsx/input.tsx"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:15
 							meta: JSPatternMeta {
 								optional: undefined
-								loc: Object {
-									filename: "typescript/arrow-function/generic-tsx/input.tsx"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 16
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:16-2:15
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
-									loc: Object {
-										filename: "typescript/arrow-function/generic-tsx/input.tsx"
-										end: Object {
-											column: 8
-											line: 2
-										}
-										start: Object {
-											column: 7
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:7-2:8
 									typeName: JSReferenceIdentifier {
 										name: "T"
-										loc: Object {
-											filename: "typescript/arrow-function/generic-tsx/input.tsx"
-											identifierName: "T"
-											end: Object {
-												column: 8
-												line: 2
-											}
-											start: Object {
-												column: 7
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 2:7-2:8 (T)
 									}
 								}
 							}

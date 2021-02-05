@@ -17,179 +17,57 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/switch-fallthrough-comment/input.js"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:0-8:0
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " foo"
-			loc: Object {
-				filename: "comments/basic/switch-fallthrough-comment/input.js"
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
-			}
+			loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 2:4-2:10
 		}
 		CommentLine {
 			id: "1"
 			value: " falls through"
-			loc: Object {
-				filename: "comments/basic/switch-fallthrough-comment/input.js"
-				end: Object {
-					column: 24
-					line: 4
-				}
-				start: Object {
-					column: 8
-					line: 4
-				}
-			}
+			loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 4:8-4:24
 		}
 	]
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "comments/basic/switch-fallthrough-comment/input.js"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:0-7:1
 			discriminant: JSReferenceIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "comments/basic/switch-fallthrough-comment/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:7-1:10 (foo)
 			}
 			cases: Array [
 				JSSwitchCase {
 					consequent: Array []
 					leadingComments: Array ["0"]
+					loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 3:4-3:11
 					trailingComments: Array ["1"]
-					loc: Object {
-						filename: "comments/basic/switch-fallthrough-comment/input.js"
-						end: Object {
-							column: 11
-							line: 3
-						}
-						start: Object {
-							column: 4
-							line: 3
-						}
-					}
 					test: JSNumericLiteral {
 						value: 1
 						format: undefined
 						leadingComments: undefined
-						loc: Object {
-							filename: "comments/basic/switch-fallthrough-comment/input.js"
-							end: Object {
-								column: 10
-								line: 3
-							}
-							start: Object {
-								column: 9
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 3:9-3:10
 					}
 				}
 				JSSwitchCase {
 					leadingComments: Array ["1"]
-					loc: Object {
-						filename: "comments/basic/switch-fallthrough-comment/input.js"
-						end: Object {
-							column: 15
-							line: 6
-						}
-						start: Object {
-							column: 4
-							line: 5
-						}
-					}
+					loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 5:4-6:15
 					test: JSNumericLiteral {
 						value: 2
 						format: undefined
 						leadingComments: undefined
-						loc: Object {
-							filename: "comments/basic/switch-fallthrough-comment/input.js"
-							end: Object {
-								column: 10
-								line: 5
-							}
-							start: Object {
-								column: 9
-								line: 5
-							}
-						}
+						loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 5:9-5:10
 					}
 					consequent: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "comments/basic/switch-fallthrough-comment/input.js"
-								end: Object {
-									column: 15
-									line: 6
-								}
-								start: Object {
-									column: 8
-									line: 6
-								}
-							}
+							loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 6:8-6:15
 							expression: JSCallExpression {
 								arguments: Array []
-								loc: Object {
-									filename: "comments/basic/switch-fallthrough-comment/input.js"
-									end: Object {
-										column: 14
-										line: 6
-									}
-									start: Object {
-										column: 8
-										line: 6
-									}
-								}
+								loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 6:8-6:14
 								callee: JSReferenceIdentifier {
 									name: "doIt"
-									loc: Object {
-										filename: "comments/basic/switch-fallthrough-comment/input.js"
-										identifierName: "doIt"
-										end: Object {
-											column: 12
-											line: 6
-										}
-										start: Object {
-											column: 8
-											line: 6
-										}
-									}
+									loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 6:8-6:12 (doIt)
 								}
 							}
 						}

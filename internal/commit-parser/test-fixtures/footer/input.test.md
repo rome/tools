@@ -16,16 +16,6 @@ CommitRoot {
 	integrity: undefined
 	rawBody: "commit with a breaking change footer\n\nMore description\n\nBREAKING CHANGE: breaking change footer"
 	scope: ""
-	loc: Object {
-		filename: "footer/input.txt"
-		end: Object {
-			column: 38
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation footer/input.txt 1:0-5:38
 }
 ```

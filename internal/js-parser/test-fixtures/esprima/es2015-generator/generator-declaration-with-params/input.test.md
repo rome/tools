@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:10-1:13 (foo)
 			}
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:0-1:25
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,106 +39,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:13-1:22
 				params: Array [
 					JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:14-1:15 (x)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:14-1:15
 						}
 					}
 					JSBindingIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:17-1:18 (y)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:17-1:18
 						}
 					}
 					JSBindingIdentifier {
 						name: "z"
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-							identifierName: "z"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:20-1:21 (z)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-declaration-with-params/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-declaration-with-params/input.js 1:20-1:21
 						}
 					}
 				]

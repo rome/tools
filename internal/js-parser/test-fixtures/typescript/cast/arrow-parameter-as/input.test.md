@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:15
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/arrow-parameter-as/input.ts"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,56 +32,20 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:7
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/arrow-parameter-as/input.ts"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:15
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/cast/arrow-parameter-as/input.ts"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:14
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "typescript/cast/arrow-parameter-as/input.ts"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:12-1:14
 				}
 				head: JSFunctionHead {
 					async: false
@@ -99,31 +53,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/cast/arrow-parameter-as/input.ts"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:0-1:11
 					params: Array [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "typescript/cast/arrow-parameter-as/input.ts"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/arrow-parameter-as/input.ts 1:12-1:11
 						}
 					]
 				}

@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/in-iterator-stmt/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/yield/in-iterator-stmt/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 2:15
+				start: Position 2:7
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,50 +38,15 @@ JSRoot {
 					"for-in statement"
 				]
 			}
-			location: Object {
-				filename: "es2015/yield/in-iterator-stmt/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 2
-				}
-				start: Object {
-					column: 7
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "es2015/yield/in-iterator-stmt/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "es2015/yield/in-iterator-stmt/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -93,124 +56,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/in-iterator-stmt/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/in-iterator-stmt/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:14-3:1
 				body: Array [
 					JSForInStatement {
-						loc: Object {
-							filename: "es2015/yield/in-iterator-stmt/input.js"
-							end: Object {
-								column: 22
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
-						body: JSEmptyStatement {
-							loc: Object {
-								filename: "es2015/yield/in-iterator-stmt/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 21
-									line: 2
-								}
-							}
-						}
+						body: JSEmptyStatement {loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:21-2:22}
+						loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:2-2:22
 						left: JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/yield/in-iterator-stmt/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:16-2:15
 						}
 						right: JSObjectExpression {
 							properties: Array []
-							loc: Object {
-								filename: "es2015/yield/in-iterator-stmt/input.js"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:19-2:21
 						}
 					}
-					JSEmptyStatement {
-						loc: Object {
-							filename: "es2015/yield/in-iterator-stmt/input.js"
-							end: Object {
-								column: 24
-								line: 2
-							}
-							start: Object {
-								column: 23
-								line: 2
-							}
-						}
-					}
+					JSEmptyStatement {loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:23-2:24}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/in-iterator-stmt/input.js"
-							end: Object {
-								column: 28
-								line: 2
-							}
-							start: Object {
-								column: 25
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:25-2:28
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/yield/in-iterator-stmt/input.js"
-								end: Object {
-									column: 26
-									line: 2
-								}
-								start: Object {
-									column: 25
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 2:25-2:26
 						}
 					}
 				]

@@ -17,411 +17,114 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/import-type-dynamic/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/import-type-dynamic/input.ts"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-1:28
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/import-type-dynamic/input.ts"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-1:28
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/import-type-dynamic/input.ts"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/import-type-dynamic/input.ts"
-									end: Object {
-										column: 27
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 								typeAnnotation: TSTypeQuery {
-									loc: Object {
-										filename: "typescript/types/import-type-dynamic/input.ts"
-										end: Object {
-											column: 27
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:7-1:27
 									exprName: TSImportType {
 										qualifier: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/types/import-type-dynamic/input.ts"
-											end: Object {
-												column: 27
-												line: 1
-											}
-											start: Object {
-												column: 14
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:14-1:27
 										argument: JSStringLiteral {
 											value: "./x"
-											loc: Object {
-												filename: "typescript/types/import-type-dynamic/input.ts"
-												end: Object {
-													column: 26
-													line: 1
-												}
-												start: Object {
-													column: 21
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:21-1:26
 										}
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/import-type-dynamic/input.ts"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:4-1:27
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/import-type-dynamic/input.ts"
-				end: Object {
-					column: 23
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:0-2:23
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/import-type-dynamic/input.ts"
-					end: Object {
-						column: 23
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:0-2:23
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "Y"
-							loc: Object {
-								filename: "typescript/types/import-type-dynamic/input.ts"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/import-type-dynamic/input.ts"
-									end: Object {
-										column: 22
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 								typeAnnotation: TSImportType {
 									typeParameters: undefined
-									loc: Object {
-										filename: "typescript/types/import-type-dynamic/input.ts"
-										end: Object {
-											column: 22
-											line: 2
-										}
-										start: Object {
-											column: 7
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:7-2:22
 									argument: JSStringLiteral {
 										value: "./y"
-										loc: Object {
-											filename: "typescript/types/import-type-dynamic/input.ts"
-											end: Object {
-												column: 19
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:14-2:19
 									}
 									qualifier: JSReferenceIdentifier {
 										name: "Y"
-										loc: Object {
-											filename: "typescript/types/import-type-dynamic/input.ts"
-											identifierName: "Y"
-											end: Object {
-												column: 22
-												line: 2
-											}
-											start: Object {
-												column: 21
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:21-2:22 (Y)
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/import-type-dynamic/input.ts"
-							end: Object {
-								column: 22
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-dynamic/input.ts 2:4-2:22
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/import-type-dynamic/input.ts"
-				end: Object {
-					column: 36
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:0-3:36
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/import-type-dynamic/input.ts"
-					end: Object {
-						column: 36
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:0-3:36
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "z"
-							loc: Object {
-								filename: "typescript/types/import-type-dynamic/input.ts"
-								end: Object {
-									column: 35
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/import-type-dynamic/input.ts"
-									end: Object {
-										column: 35
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 								typeAnnotation: TSImportType {
-									loc: Object {
-										filename: "typescript/types/import-type-dynamic/input.ts"
-										end: Object {
-											column: 35
-											line: 3
-										}
-										start: Object {
-											column: 7
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:7-3:35
 									argument: JSStringLiteral {
 										value: "/z"
-										loc: Object {
-											filename: "typescript/types/import-type-dynamic/input.ts"
-											end: Object {
-												column: 18
-												line: 3
-											}
-											start: Object {
-												column: 14
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:14-3:18
 									}
 									typeParameters: TSTypeParameterInstantiation {
-										loc: Object {
-											filename: "typescript/types/import-type-dynamic/input.ts"
-											end: Object {
-												column: 35
-												line: 3
-											}
-											start: Object {
-												column: 27
-												line: 3
-											}
-										}
-										params: Array [
-											TSStringKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/import-type-dynamic/input.ts"
-													end: Object {
-														column: 34
-														line: 3
-													}
-													start: Object {
-														column: 28
-														line: 3
-													}
-												}
-											}
-										]
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:27-3:35
+										params: Array [TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:28-3:34}]
 									}
 									qualifier: TSQualifiedName {
-										loc: Object {
-											filename: "typescript/types/import-type-dynamic/input.ts"
-											end: Object {
-												column: 27
-												line: 3
-											}
-											start: Object {
-												column: 20
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:20-3:27
 										left: JSReferenceIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "typescript/types/import-type-dynamic/input.ts"
-												identifierName: "foo"
-												end: Object {
-													column: 23
-													line: 3
-												}
-												start: Object {
-													column: 20
-													line: 3
-												}
-											}
+											loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:20-3:23 (foo)
 										}
 										right: JSIdentifier {
 											name: "bar"
-											loc: Object {
-												filename: "typescript/types/import-type-dynamic/input.ts"
-												identifierName: "bar"
-												end: Object {
-													column: 27
-													line: 3
-												}
-												start: Object {
-													column: 24
-													line: 3
-												}
-											}
+											loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:24-3:27 (bar)
 										}
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/import-type-dynamic/input.ts"
-							end: Object {
-								column: 35
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/types/import-type-dynamic/input.ts 3:4-3:35
 					}
 				]
 			}

@@ -17,130 +17,36 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/method-optional/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/method-optional/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/method-optional/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/method-optional/input.ts 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/method-optional/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/method-optional/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/method-optional/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/method-optional/input.ts 1:12-3:1
 				body: Array [
 					TSMethodSignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "typescript/interface/method-optional/input.ts"
-									identifierName: "m"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/method-optional/input.ts 2:4-2:5 (m)
 							}
-							loc: Object {
-								filename: "typescript/interface/method-optional/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/method-optional/input.ts 2:4-2:5
 						}
 						optional: true
-						loc: Object {
-							filename: "typescript/interface/method-optional/input.ts"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						returnType: TSVoidKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/method-optional/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/method-optional/input.ts 2:4-2:15
+						returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-optional/input.ts 2:10-2:14}
 						meta: TSSignatureDeclarationMeta {
 							parameters: Array []
 							rest: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/interface/method-optional/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/method-optional/input.ts 2:6-2:14
 						}
 					}
 				]

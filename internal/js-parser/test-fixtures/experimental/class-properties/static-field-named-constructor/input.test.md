@@ -18,105 +18,33 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/static-field-named-constructor/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 1:0-4:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-properties/static-field-named-constructor/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/static-field-named-constructor/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/static-field-named-constructor/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 1:0-3:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "experimental/class-properties/static-field-named-constructor/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 22
-										line: 2
-									}
-									start: Object {
-										column: 11
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 2:11-2:22 (constructor)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/static-field-named-constructor/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 2:11-2:22
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/static-field-named-constructor/input.js"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 2:4-2:23
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -124,21 +52,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/static-field-named-constructor/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/static-field-named-constructor/input.js 2:4-2:22
+							start: Position 2:4
 						}
 					}
 				]

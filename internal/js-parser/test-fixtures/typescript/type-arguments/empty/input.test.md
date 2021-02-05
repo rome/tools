@@ -17,72 +17,21 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-arguments/empty/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/type-arguments/empty/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:7
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "typescript/type-arguments/empty/input.ts"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
+				loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:7
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: SourceLocation typescript/type-arguments/empty/input.ts 1:0-1:3 (foo)
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					params: Array []
-					loc: Object {
-						filename: "typescript/type-arguments/empty/input.ts"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
-				}
-				callee: JSReferenceIdentifier {
-					name: "foo"
-					loc: Object {
-						filename: "typescript/type-arguments/empty/input.ts"
-						identifierName: "foo"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-arguments/empty/input.ts 1:3-1:5
 				}
 			}
 		}

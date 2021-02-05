@@ -18,117 +18,33 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-1:18
 			expression: JSNewExpression {
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:0-1:17
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:4-1:5 (f)
 				}
 				arguments: Array [
 					JSSpreadElement {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:6-1:10
 						argument: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:9-1:10 (x)
 						}
 					}
 					JSReferenceIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:12-1:13 (y)
 					}
 					JSReferenceIdentifier {
 						name: "z"
-						loc: Object {
-							filename: "esprima/es2015-spread-element/new-spread-first/input.js"
-							identifierName: "z"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/new-spread-first/input.js 1:15-1:16 (z)
 					}
 				]
 			}

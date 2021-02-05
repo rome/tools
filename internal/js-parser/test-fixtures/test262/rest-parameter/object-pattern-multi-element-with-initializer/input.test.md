@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElementWithInitializer"
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-					identifierName: "multiElementWithInitializer"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:9-1:36 (multiElementWithInitializer)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-				end: Object {
-					column: 70
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:0-1:70
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-					end: Object {
-						column: 70
-						line: 1
-					}
-					start: Object {
-						column: 68
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:68-1:70
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,269 +39,73 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-					end: Object {
-						column: 67
-						line: 1
-					}
-					start: Object {
-						column: 36
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:36-1:67
 				rest: JSBindingObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-						end: Object {
-							column: 66
-							line: 1
-						}
-						start: Object {
-							column: 40
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:40-1:66
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-							end: Object {
-								column: 66
-								line: 1
-							}
-							start: Object {
-								column: 40
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:40-1:66
 					}
 					properties: Array [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 42
-											line: 1
-										}
-										start: Object {
-											column: 41
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:41-1:42 (a)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-									end: Object {
-										column: 42
-										line: 1
-									}
-									start: Object {
-										column: 41
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:41-1:42
 							}
 							value: JSBindingAssignmentPattern {
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-									end: Object {
-										column: 49
-										line: 1
-									}
-									start: Object {
-										column: 44
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:44-1:49
 								left: JSBindingIdentifier {
 									name: "r"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-										identifierName: "r"
-										end: Object {
-											column: 45
-											line: 1
-										}
-										start: Object {
-											column: 44
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:44-1:45 (r)
 								}
 								right: JSNumericLiteral {
 									value: 0
 									format: undefined
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-										end: Object {
-											column: 49
-											line: 1
-										}
-										start: Object {
-											column: 48
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:48-1:49
 								}
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-								end: Object {
-									column: 49
-									line: 1
-								}
-								start: Object {
-									column: 41
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:41-1:49
 						}
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 52
-											line: 1
-										}
-										start: Object {
-											column: 51
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:51-1:52 (b)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-									end: Object {
-										column: 52
-										line: 1
-									}
-									start: Object {
-										column: 51
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:51-1:52
 							}
 							value: JSBindingIdentifier {
 								name: "s"
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-									identifierName: "s"
-									end: Object {
-										column: 55
-										line: 1
-									}
-									start: Object {
-										column: 54
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:54-1:55 (s)
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-								end: Object {
-									column: 55
-									line: 1
-								}
-								start: Object {
-									column: 51
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:51-1:55
 						}
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "c"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-										identifierName: "c"
-										end: Object {
-											column: 58
-											line: 1
-										}
-										start: Object {
-											column: 57
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:57-1:58 (c)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-									end: Object {
-										column: 58
-										line: 1
-									}
-									start: Object {
-										column: 57
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:57-1:58
 							}
 							value: JSBindingAssignmentPattern {
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-									end: Object {
-										column: 65
-										line: 1
-									}
-									start: Object {
-										column: 60
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:60-1:65
 								left: JSBindingIdentifier {
 									name: "t"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-										identifierName: "t"
-										end: Object {
-											column: 61
-											line: 1
-										}
-										start: Object {
-											column: 60
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:60-1:61 (t)
 								}
 								right: JSNumericLiteral {
 									value: 1
 									format: undefined
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-										end: Object {
-											column: 65
-											line: 1
-										}
-										start: Object {
-											column: 64
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:64-1:65
 								}
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js"
-								end: Object {
-									column: 65
-									line: 1
-								}
-								start: Object {
-									column: 57
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-initializer/input.js 1:57-1:65
 						}
 					]
 				}

@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/unterminated-string/input.jsx"
-		end: Object {
-			column: 1
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,100 +32,34 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
+				end: Position 2:0
+				start: Position 2:0
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unterminated-string/input.jsx"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "jsx/errors/unterminated-string/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:1-1:4
 				}
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unterminated-string/input.jsx"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "jsx/errors/unterminated-string/input.jsx"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:5-1:8
 						}
 						value: JSStringLiteral {
 							value: "\n"
-							loc: Object {
-								filename: "jsx/errors/unterminated-string/input.jsx"
-								end: Object {
-									column: 1
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:9-2:1
 						}
-						loc: Object {
-							filename: "jsx/errors/unterminated-string/input.jsx"
-							end: Object {
-								column: 1
-								line: 2
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:5-2:1
 					}
 				]
 			}

@@ -17,60 +17,19 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple-rest-after-optional/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "typescript/types/tuple-rest-after-optional/input.ts"
-					identifierName: "foo"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:9-1:12 (foo)
 			}
-			loc: Object {
-				filename: "typescript/types/tuple-rest-after-optional/input.ts"
-				end: Object {
-					column: 56
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:0-1:56
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/types/tuple-rest-after-optional/input.ts"
-					end: Object {
-						column: 56
-						line: 1
-					}
-					start: Object {
-						column: 54
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:54-1:56
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,164 +39,37 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/types/tuple-rest-after-optional/input.ts"
-					end: Object {
-						column: 53
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:12-1:53
 				rest: JSBindingIdentifier {
 					name: "args"
-					loc: Object {
-						filename: "typescript/types/tuple-rest-after-optional/input.ts"
-						identifierName: "args"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:16-1:20 (args)
 					meta: JSPatternMeta {
 						optional: undefined
-						loc: Object {
-							filename: "typescript/types/tuple-rest-after-optional/input.ts"
-							end: Object {
-								column: 52
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:16-1:52
 						typeAnnotation: TSTupleType {
-							loc: Object {
-								filename: "typescript/types/tuple-rest-after-optional/input.ts"
-								end: Object {
-									column: 52
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:22-1:52
 							elementTypes: Array [
 								TSTupleElement {
 									name: undefined
 									optional: false
-									loc: Object {
-										filename: "typescript/types/tuple-rest-after-optional/input.ts"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 23
-											line: 1
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/tuple-rest-after-optional/input.ts"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 23
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:23-1:29
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:23-1:29}
 								}
 								TSTupleElement {
 									name: undefined
 									optional: true
-									loc: Object {
-										filename: "typescript/types/tuple-rest-after-optional/input.ts"
-										end: Object {
-											column: 38
-											line: 1
-										}
-										start: Object {
-											column: 31
-											line: 1
-										}
-									}
-									typeAnnotation: TSStringKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/types/tuple-rest-after-optional/input.ts"
-											end: Object {
-												column: 37
-												line: 1
-											}
-											start: Object {
-												column: 31
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:31-1:38
+									typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:31-1:37}
 								}
 								TSTupleElement {
 									name: undefined
 									optional: false
-									loc: Object {
-										filename: "typescript/types/tuple-rest-after-optional/input.ts"
-										end: Object {
-											column: 51
-											line: 1
-										}
-										start: Object {
-											column: 40
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:40-1:51
 									typeAnnotation: TSRestType {
-										loc: Object {
-											filename: "typescript/types/tuple-rest-after-optional/input.ts"
-											end: Object {
-												column: 51
-												line: 1
-											}
-											start: Object {
-												column: 40
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:40-1:51
 										argument: TSArrayType {
-											loc: Object {
-												filename: "typescript/types/tuple-rest-after-optional/input.ts"
-												end: Object {
-													column: 51
-													line: 1
-												}
-												start: Object {
-													column: 43
-													line: 1
-												}
-											}
-											elementType: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/tuple-rest-after-optional/input.ts"
-													end: Object {
-														column: 49
-														line: 1
-													}
-													start: Object {
-														column: 43
-														line: 1
-													}
-												}
-											}
+											elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:43-1:49}
+											loc: SourceLocation typescript/types/tuple-rest-after-optional/input.ts 1:43-1:51
 										}
 									}
 								}

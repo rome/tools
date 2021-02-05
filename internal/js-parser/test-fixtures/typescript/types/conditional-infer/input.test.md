@@ -17,225 +17,61 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/conditional-infer/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/conditional-infer/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "Element"
-				loc: Object {
-					filename: "typescript/types/conditional-infer/input.ts"
-					identifierName: "Element"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:5-1:12 (Element)
 			}
-			loc: Object {
-				filename: "typescript/types/conditional-infer/input.ts"
-				end: Object {
-					column: 48
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/conditional-infer/input.ts 1:0-1:48
 			typeParameters: TSTypeParameterDeclaration {
-				loc: Object {
-					filename: "typescript/types/conditional-infer/input.ts"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:12-1:15
 				params: Array [
 					TSTypeParameter {
 						name: "T"
 						constraint: undefined
 						default: undefined
-						loc: Object {
-							filename: "typescript/types/conditional-infer/input.ts"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:13-1:14
 					}
 				]
 			}
 			right: TSConditionalType {
-				loc: Object {
-					filename: "typescript/types/conditional-infer/input.ts"
-					end: Object {
-						column: 47
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:47
 				checkType: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/types/conditional-infer/input.ts"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:19
 					typeName: JSReferenceIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/types/conditional-infer/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:18-1:19 (T)
 					}
 				}
 				falseType: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/types/conditional-infer/input.ts"
-						end: Object {
-							column: 47
-							line: 1
-						}
-						start: Object {
-							column: 46
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:46-1:47
 					typeName: JSReferenceIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/types/conditional-infer/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 47
-								line: 1
-							}
-							start: Object {
-								column: 46
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:46-1:47 (T)
 					}
 				}
 				trueType: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/types/conditional-infer/input.ts"
-						end: Object {
-							column: 43
-							line: 1
-						}
-						start: Object {
-							column: 42
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:42-1:43
 					typeName: JSReferenceIdentifier {
 						name: "U"
-						loc: Object {
-							filename: "typescript/types/conditional-infer/input.ts"
-							identifierName: "U"
-							end: Object {
-								column: 43
-								line: 1
-							}
-							start: Object {
-								column: 42
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:42-1:43 (U)
 					}
 				}
 				extendsType: TSArrayType {
-					loc: Object {
-						filename: "typescript/types/conditional-infer/input.ts"
-						end: Object {
-							column: 39
-							line: 1
-						}
-						start: Object {
-							column: 28
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/conditional-infer/input.ts 1:28-1:39
 					elementType: TSParenthesizedType {
-						loc: Object {
-							filename: "typescript/types/conditional-infer/input.ts"
-							end: Object {
-								column: 37
-								line: 1
-							}
-							start: Object {
-								column: 28
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/conditional-infer/input.ts 1:28-1:37
 						typeAnnotation: TSInferType {
-							loc: Object {
-								filename: "typescript/types/conditional-infer/input.ts"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/conditional-infer/input.ts 1:29-1:36
 							typeParameter: TSTypeParameter {
 								name: "U"
-								loc: Object {
-									filename: "typescript/types/conditional-infer/input.ts"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 35
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/conditional-infer/input.ts 1:35-1:36
 							}
 						}
 					}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/super-inside-function/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/super-inside-function/input.js 1:0-6:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 23
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
+				end: Position 2:23
+				start: Position 3:4
 			}
 		}
 	]
@@ -57,103 +41,30 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-properties/super-inside-function/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/super-inside-function/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/super-inside-function/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/super-inside-function/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/super-inside-function/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/super-inside-function/input.js 1:0-5:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "experimental/class-properties/super-inside-function/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-2:5 (foo)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/super-inside-function/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-2:5
 						}
 						value: JSFunctionExpression {
 							id: JSBindingIdentifier {
 								name: "fn"
-								loc: Object {
-									filename: "experimental/class-properties/super-inside-function/input.js"
-									identifierName: "fn"
-									end: Object {
-										column: 19
-										line: 2
-									}
-									start: Object {
-										column: 17
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:17-2:19 (fn)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/super-inside-function/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:8-4:3
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -163,110 +74,26 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "experimental/class-properties/super-inside-function/input.js"
-									end: Object {
-										column: 21
-										line: 2
-									}
-									start: Object {
-										column: 19
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:19-2:21
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "experimental/class-properties/super-inside-function/input.js"
-									end: Object {
-										column: 3
-										line: 4
-									}
-									start: Object {
-										column: 22
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:22-4:3
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "experimental/class-properties/super-inside-function/input.js"
-											end: Object {
-												column: 14
-												line: 3
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/super-inside-function/input.js 3:4-3:14
 										expression: JSCallExpression {
 											arguments: Array []
-											loc: Object {
-												filename: "experimental/class-properties/super-inside-function/input.js"
-												end: Object {
-													column: 13
-													line: 3
-												}
-												start: Object {
-													column: 4
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-properties/super-inside-function/input.js 3:4-3:13
 											callee: JSMemberExpression {
-												loc: Object {
-													filename: "experimental/class-properties/super-inside-function/input.js"
-													end: Object {
-														column: 11
-														line: 3
-													}
-													start: Object {
-														column: 4
-														line: 3
-													}
-												}
-												object: JSSuper {
-													loc: Object {
-														filename: "experimental/class-properties/super-inside-function/input.js"
-														end: Object {
-															column: 9
-															line: 3
-														}
-														start: Object {
-															column: 4
-															line: 3
-														}
-													}
-												}
+												loc: SourceLocation experimental/class-properties/super-inside-function/input.js 3:4-3:11
+												object: JSSuper {loc: SourceLocation experimental/class-properties/super-inside-function/input.js 3:4-3:9}
 												property: JSStaticMemberProperty {
 													value: JSIdentifier {
 														name: "x"
-														loc: Object {
-															filename: "experimental/class-properties/super-inside-function/input.js"
-															identifierName: "x"
-															end: Object {
-																column: 11
-																line: 3
-															}
-															start: Object {
-																column: 10
-																line: 3
-															}
-														}
+														loc: SourceLocation experimental/class-properties/super-inside-function/input.js 3:10-3:11 (x)
 													}
-													loc: Object {
-														filename: "experimental/class-properties/super-inside-function/input.js"
-														identifierName: "x"
-														end: Object {
-															column: 11
-															line: 3
-														}
-														start: Object {
-															column: 10
-															line: 3
-														}
-													}
+													loc: SourceLocation experimental/class-properties/super-inside-function/input.js 3:10-3:11 (x)
 												}
 											}
 										}
@@ -276,17 +103,7 @@ JSRoot {
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/super-inside-function/input.js"
-							end: Object {
-								column: 3
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-4:3
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -294,21 +111,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/super-inside-function/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-inside-function/input.js 2:2-2:5
+							start: Position 2:2
 						}
 					}
 				]

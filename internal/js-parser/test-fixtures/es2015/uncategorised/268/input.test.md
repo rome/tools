@@ -16,37 +16,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/268/input.js"
-		end: Object {
-			column: 53
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:53
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " expression closure is not supported"
-			loc: Object {
-				filename: "es2015/uncategorised/268/input.js"
-				end: Object {
-					column: 53
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/268/input.js 1:15-1:53
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/268/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:14
+				start: Position 1:13
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -56,51 +44,16 @@ JSRoot {
 					"{"
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/268/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 13
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "es2015/uncategorised/268/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:9-1:10 (a)
 			}
+			loc: SourceLocation es2015/uncategorised/268/input.js 1:0-1:14
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "es2015/uncategorised/268/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -110,61 +63,21 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/268/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
 				trailingComments: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/268/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
 				body: Array [
 					JSExpressionStatement {
 						trailingComments: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/268/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
 						expression: JSNumericLiteral {
 							value: 1
 							format: undefined
 							trailingComments: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/268/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/268/input.js 1:13-1:14
 						}
 					}
 				]

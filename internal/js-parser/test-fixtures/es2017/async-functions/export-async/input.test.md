@@ -17,17 +17,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/export-async/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2017/async-functions/export-async/input.js 1:0-2:0
+	body: Array [
+		JSExportLocalDeclaration {
+			declaration: undefined
+			exportKind: "value"
+			specifiers: Array []
+			loc: SourceLocation es2017/async-functions/export-async/input.js 1:0-1:6
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation es2017/async-functions/export-async/input.js 1:7-1:13
+			expression: JSReferenceIdentifier {
+				name: "async"
+				loc: SourceLocation es2017/async-functions/export-async/input.js 1:7-1:12 (async)
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,60 +47,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExportLocalDeclaration {
-			declaration: undefined
-			exportKind: "value"
-			specifiers: Array []
-			loc: Object {
-				filename: "es2017/async-functions/export-async/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/export-async/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "async"
-				loc: Object {
-					filename: "es2017/async-functions/export-async/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				end: Position 1:13
+				start: Position 1:12
 			}
 		}
 	]

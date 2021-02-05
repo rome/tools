@@ -17,118 +17,36 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/method-generic/input.ts 1:0-5:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/method-generic/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/method-generic/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-generic/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/method-generic/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/method-generic/input.ts 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/method-generic/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-generic/input.ts 1:0-4:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "f"
-								loc: Object {
-									filename: "typescript/class/method-generic/input.ts"
-									identifierName: "f"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:5 (f)
 							}
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:5
 						}
-						loc: Object {
-							filename: "typescript/class/method-generic/input.ts"
-							end: Object {
-								column: 38
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:38
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 38
-									line: 2
-								}
-								start: Object {
-									column: 36
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 2:36-2:38
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,164 +55,48 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 2:4-2:5
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
 							thisType: undefined
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 35
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 2:8-2:35
 							returnType: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/class/method-generic/input.ts"
-									end: Object {
-										column: 35
-										line: 2
-									}
-									start: Object {
-										column: 34
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-generic/input.ts 2:34-2:35
 								typeName: JSReferenceIdentifier {
 									name: "T"
-									loc: Object {
-										filename: "typescript/class/method-generic/input.ts"
-										identifierName: "T"
-										end: Object {
-											column: 35
-											line: 2
-										}
-										start: Object {
-											column: 34
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/method-generic/input.ts 2:34-2:35 (T)
 								}
 							}
 							typeParameters: TSTypeParameterDeclaration {
-								loc: Object {
-									filename: "typescript/class/method-generic/input.ts"
-									end: Object {
-										column: 8
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-generic/input.ts 2:5-2:8
 								params: Array [
 									TSTypeParameter {
 										name: "T"
 										constraint: undefined
 										default: undefined
-										loc: Object {
-											filename: "typescript/class/method-generic/input.ts"
-											end: Object {
-												column: 7
-												line: 2
-											}
-											start: Object {
-												column: 6
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/method-generic/input.ts 2:6-2:7
 									}
 								]
 							}
 							rest: JSBindingIdentifier {
 								name: "c"
-								loc: Object {
-									filename: "typescript/class/method-generic/input.ts"
-									identifierName: "c"
-									end: Object {
-										column: 26
-										line: 2
-									}
-									start: Object {
-										column: 25
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/method-generic/input.ts 2:25-2:26 (c)
 								meta: JSPatternMeta {
 									optional: undefined
-									loc: Object {
-										filename: "typescript/class/method-generic/input.ts"
-										end: Object {
-											column: 31
-											line: 2
-										}
-										start: Object {
-											column: 25
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/method-generic/input.ts 2:25-2:31
 									typeAnnotation: TSArrayType {
-										loc: Object {
-											filename: "typescript/class/method-generic/input.ts"
-											end: Object {
-												column: 31
-												line: 2
-											}
-											start: Object {
-												column: 28
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/method-generic/input.ts 2:28-2:31
 										elementType: TSTypeReference {
 											typeParameters: undefined
-											loc: Object {
-												filename: "typescript/class/method-generic/input.ts"
-												end: Object {
-													column: 29
-													line: 2
-												}
-												start: Object {
-													column: 28
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/class/method-generic/input.ts 2:28-2:29
 											typeName: JSReferenceIdentifier {
 												name: "T"
-												loc: Object {
-													filename: "typescript/class/method-generic/input.ts"
-													identifierName: "T"
-													end: Object {
-														column: 29
-														line: 2
-													}
-													start: Object {
-														column: 28
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/class/method-generic/input.ts 2:28-2:29 (T)
 											}
 										}
 									}
@@ -303,116 +105,32 @@ JSRoot {
 							params: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "typescript/class/method-generic/input.ts"
-										identifierName: "a"
-										end: Object {
-											column: 10
-											line: 2
-										}
-										start: Object {
-											column: 9
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/method-generic/input.ts 2:9-2:10 (a)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/class/method-generic/input.ts"
-											end: Object {
-												column: 13
-												line: 2
-											}
-											start: Object {
-												column: 9
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/method-generic/input.ts 2:9-2:13
 										typeAnnotation: TSTypeReference {
 											typeParameters: undefined
-											loc: Object {
-												filename: "typescript/class/method-generic/input.ts"
-												end: Object {
-													column: 13
-													line: 2
-												}
-												start: Object {
-													column: 12
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/class/method-generic/input.ts 2:12-2:13
 											typeName: JSReferenceIdentifier {
 												name: "T"
-												loc: Object {
-													filename: "typescript/class/method-generic/input.ts"
-													identifierName: "T"
-													end: Object {
-														column: 13
-														line: 2
-													}
-													start: Object {
-														column: 12
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/class/method-generic/input.ts 2:12-2:13 (T)
 											}
 										}
 									}
 								}
 								JSBindingIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "typescript/class/method-generic/input.ts"
-										identifierName: "b"
-										end: Object {
-											column: 16
-											line: 2
-										}
-										start: Object {
-											column: 15
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/class/method-generic/input.ts 2:15-2:16 (b)
 									meta: JSPatternMeta {
 										optional: true
-										loc: Object {
-											filename: "typescript/class/method-generic/input.ts"
-											end: Object {
-												column: 20
-												line: 2
-											}
-											start: Object {
-												column: 15
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/method-generic/input.ts 2:15-2:20
 										typeAnnotation: TSTypeReference {
 											typeParameters: undefined
-											loc: Object {
-												filename: "typescript/class/method-generic/input.ts"
-												end: Object {
-													column: 20
-													line: 2
-												}
-												start: Object {
-													column: 19
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/class/method-generic/input.ts 2:19-2:20
 											typeName: JSReferenceIdentifier {
 												name: "T"
-												loc: Object {
-													filename: "typescript/class/method-generic/input.ts"
-													identifierName: "T"
-													end: Object {
-														column: 20
-														line: 2
-													}
-													start: Object {
-														column: 19
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/class/method-generic/input.ts 2:19-2:20 (T)
 											}
 										}
 									}
@@ -424,99 +142,26 @@ JSRoot {
 						kind: "method"
 						key: JSComputedPropertyKey {
 							value: JSMemberExpression {
-								loc: Object {
-									filename: "typescript/class/method-generic/input.ts"
-									end: Object {
-										column: 20
-										line: 3
-									}
-									start: Object {
-										column: 5
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/method-generic/input.ts 3:5-3:20
 								object: JSReferenceIdentifier {
 									name: "Symbol"
-									loc: Object {
-										filename: "typescript/class/method-generic/input.ts"
-										identifierName: "Symbol"
-										end: Object {
-											column: 11
-											line: 3
-										}
-										start: Object {
-											column: 5
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/method-generic/input.ts 3:5-3:11 (Symbol)
 								}
 								property: JSStaticMemberProperty {
 									value: JSIdentifier {
 										name: "iterator"
-										loc: Object {
-											filename: "typescript/class/method-generic/input.ts"
-											identifierName: "iterator"
-											end: Object {
-												column: 20
-												line: 3
-											}
-											start: Object {
-												column: 12
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/class/method-generic/input.ts 3:12-3:20 (iterator)
 									}
-									loc: Object {
-										filename: "typescript/class/method-generic/input.ts"
-										identifierName: "iterator"
-										end: Object {
-											column: 20
-											line: 3
-										}
-										start: Object {
-											column: 12
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/method-generic/input.ts 3:12-3:20 (iterator)
 								}
 							}
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 3:4-3:21
 						}
-						loc: Object {
-							filename: "typescript/class/method-generic/input.ts"
-							end: Object {
-								column: 32
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/class/method-generic/input.ts 3:4-3:32
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 32
-									line: 3
-								}
-								start: Object {
-									column: 30
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 3:30-3:32
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -525,21 +170,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 3:4-3:21
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -548,74 +180,23 @@ JSRoot {
 							params: Array []
 							rest: undefined
 							thisType: undefined
-							loc: Object {
-								filename: "typescript/class/method-generic/input.ts"
-								end: Object {
-									column: 29
-									line: 3
-								}
-								start: Object {
-									column: 24
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-generic/input.ts 3:24-3:29
 							returnType: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/class/method-generic/input.ts"
-									end: Object {
-										column: 29
-										line: 3
-									}
-									start: Object {
-										column: 28
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/method-generic/input.ts 3:28-3:29
 								typeName: JSReferenceIdentifier {
 									name: "T"
-									loc: Object {
-										filename: "typescript/class/method-generic/input.ts"
-										identifierName: "T"
-										end: Object {
-											column: 29
-											line: 3
-										}
-										start: Object {
-											column: 28
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/class/method-generic/input.ts 3:28-3:29 (T)
 								}
 							}
 							typeParameters: TSTypeParameterDeclaration {
-								loc: Object {
-									filename: "typescript/class/method-generic/input.ts"
-									end: Object {
-										column: 24
-										line: 3
-									}
-									start: Object {
-										column: 21
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/method-generic/input.ts 3:21-3:24
 								params: Array [
 									TSTypeParameter {
 										name: "T"
 										constraint: undefined
 										default: undefined
-										loc: Object {
-											filename: "typescript/class/method-generic/input.ts"
-											end: Object {
-												column: 23
-												line: 3
-											}
-											start: Object {
-												column: 22
-												line: 3
-											}
-										}
+										loc: SourceLocation typescript/class/method-generic/input.ts 3:22-3:23
 									}
 								]
 							}

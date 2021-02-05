@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:0-1:44
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,126 +35,34 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:13-1:44
 				body: Array [
 					JSVariableDeclarationStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-							end: Object {
-								column: 42
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:15-1:42
 						declaration: JSVariableDeclaration {
 							kind: "var"
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-								end: Object {
-									column: 42
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:15-1:42
 							declarations: Array [
 								JSVariableDeclarator {
 									id: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-											identifierName: "y"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 19
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:19-1:20 (y)
 									}
-									loc: Object {
-										filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-										end: Object {
-											column: 41
-											line: 1
-										}
-										start: Object {
-											column: 19
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:19-1:41
 									init: JSFunctionExpression {
 										id: JSBindingIdentifier {
 											name: "yield"
-											loc: Object {
-												filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-												identifierName: "yield"
-												end: Object {
-													column: 37
-													line: 1
-												}
-												start: Object {
-													column: 32
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:32-1:37 (yield)
 										}
-										loc: Object {
-											filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-											end: Object {
-												column: 41
-												line: 1
-											}
-											start: Object {
-												column: 23
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:23-1:41
 										body: JSBlockStatement {
 											body: Array []
 											directives: Array []
-											loc: Object {
-												filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-												end: Object {
-													column: 41
-													line: 1
-												}
-												start: Object {
-													column: 39
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:39-1:41
 										}
 										head: JSFunctionHead {
 											async: false
@@ -196,17 +73,7 @@ JSRoot {
 											returnType: undefined
 											thisType: undefined
 											typeParameters: undefined
-											loc: Object {
-												filename: "esprima/es2015-yield/yield-generator-function-expression/input.js"
-												end: Object {
-													column: 39
-													line: 1
-												}
-												start: Object {
-													column: 37
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-yield/yield-generator-function-expression/input.js 1:37-1:39
 										}
 									}
 								}

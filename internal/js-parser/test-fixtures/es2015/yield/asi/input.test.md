@@ -18,43 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/asi/input.js"
-		end: Object {
-			column: 4
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/asi/input.js 1:0-2:4
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/asi/input.js"
-				end: Object {
-					column: 4
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/asi/input.js 1:0-2:4
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "es2015/yield/asi/input.js"
-					end: Object {
-						column: 3
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/asi/input.js 1:1-2:3
 				head: JSFunctionHead {
 					async: false
 					generator: true
@@ -64,86 +34,25 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/yield/asi/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/asi/input.js 1:11-1:13
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2015/yield/asi/input.js"
-						end: Object {
-							column: 3
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/asi/input.js 1:14-2:3
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/yield/asi/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/asi/input.js 1:16-1:21
 							expression: JSYieldExpression {
 								argument: undefined
 								delegate: false
-								loc: Object {
-									filename: "es2015/yield/asi/input.js"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/asi/input.js 1:16-1:21
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/yield/asi/input.js"
-								end: Object {
-									column: 1
-									line: 2
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/asi/input.js 2:0-2:1
 							expression: JSReferenceIdentifier {
 								name: "v"
-								loc: Object {
-									filename: "es2015/yield/asi/input.js"
-									identifierName: "v"
-									end: Object {
-										column: 1
-										line: 2
-									}
-									start: Object {
-										column: 0
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/yield/asi/input.js 2:0-2:1 (v)
 							}
 						}
 					]

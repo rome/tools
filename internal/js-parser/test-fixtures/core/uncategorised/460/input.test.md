@@ -17,20 +17,40 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/460/input.js"
-		end: Object {
-			column: 28
-			line: 1
+	loc: SourceLocation core/uncategorised/460/input.js 1:0-1:28
+	body: Array [
+		JSWhileStatement {
+			loc: SourceLocation core/uncategorised/460/input.js 1:0-1:28
+			test: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation core/uncategorised/460/input.js 1:7-1:11
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: SourceLocation core/uncategorised/460/input.js 1:13-1:28
+				body: Array [
+					JSContinueStatement {
+						loc: SourceLocation core/uncategorised/460/input.js 1:15-1:26
+						label: JSIdentifier {
+							name: "x"
+							loc: SourceLocation core/uncategorised/460/input.js 1:24-1:25 (x)
+						}
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/460/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:15
+				start: Position 1:15
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,93 +59,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unknown label <emphasis>"}
 					"x"
 					RAW_MARKUP {value: "</emphasis>"}
-				]
-			}
-			location: Object {
-				filename: "core/uncategorised/460/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSWhileStatement {
-			loc: Object {
-				filename: "core/uncategorised/460/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSBooleanLiteral {
-				value: true
-				loc: Object {
-					filename: "core/uncategorised/460/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/460/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
-				body: Array [
-					JSContinueStatement {
-						loc: Object {
-							filename: "core/uncategorised/460/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
-						label: JSIdentifier {
-							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/460/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
-						}
-					}
 				]
 			}
 		}

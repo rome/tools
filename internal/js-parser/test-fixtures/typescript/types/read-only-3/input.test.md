@@ -15,33 +15,13 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/read-only-3/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/read-only-3/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Error"
-			loc: Object {
-				filename: "typescript/types/read-only-3/input.ts"
-				end: Object {
-					column: 48
-					line: 1
-				}
-				start: Object {
-					column: 40
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/read-only-3/input.ts 1:40-1:48
 		}
 	]
 	diagnostics: Array [
@@ -58,14 +38,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
+				end: Position 1:37
+				start: Position 1:20
 			}
 		}
 	]
@@ -73,83 +47,20 @@ JSRoot {
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T32"
-				loc: Object {
-					filename: "typescript/types/read-only-3/input.ts"
-					identifierName: "T32"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/read-only-3/input.ts 1:5-1:8 (T32)
 			}
 			typeParameters: undefined
+			loc: SourceLocation typescript/types/read-only-3/input.ts 1:0-1:38
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/types/read-only-3/input.ts"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			right: TSTypeOperator {
 				operator: "readonly"
-				loc: Object {
-					filename: "typescript/types/read-only-3/input.ts"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/read-only-3/input.ts 1:11-1:37
 				typeAnnotation: TSTypeOperator {
 					operator: "readonly"
-					loc: Object {
-						filename: "typescript/types/read-only-3/input.ts"
-						end: Object {
-							column: 37
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/read-only-3/input.ts 1:20-1:37
 					typeAnnotation: TSArrayType {
-						loc: Object {
-							filename: "typescript/types/read-only-3/input.ts"
-							end: Object {
-								column: 37
-								line: 1
-							}
-							start: Object {
-								column: 29
-								line: 1
-							}
-						}
-						elementType: TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/types/read-only-3/input.ts"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
-						}
+						elementType: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/read-only-3/input.ts 1:29-1:35}
+						loc: SourceLocation typescript/types/read-only-3/input.ts 1:29-1:37
 					}
 				}
 			}

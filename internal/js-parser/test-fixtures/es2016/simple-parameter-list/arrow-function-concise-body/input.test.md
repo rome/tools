@@ -18,97 +18,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-1:34
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:0-1:34
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:4-1:5 (a)
 						}
-						loc: Object {
-							filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:4-1:33
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:8-1:33
 							body: JSReferenceIdentifier {
 								name: "options"
-								loc: Object {
-									filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-									identifierName: "options"
-									end: Object {
-										column: 33
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:26-1:33 (options)
 							}
 							head: JSFunctionHead {
 								async: false
@@ -116,59 +44,18 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:8-1:25
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
+										loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:9-1:21
+										left: JSBindingIdentifier {
+											name: "options"
+											loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:9-1:16 (options)
 										}
 										right: JSObjectExpression {
 											properties: Array []
-											loc: Object {
-												filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-												end: Object {
-													column: 21
-													line: 1
-												}
-												start: Object {
-													column: 19
-													line: 1
-												}
-											}
-										}
-										left: JSBindingIdentifier {
-											name: "options"
-											loc: Object {
-												filename: "es2016/simple-parameter-list/arrow-function-concise-body/input.js"
-												identifierName: "options"
-												end: Object {
-													column: 16
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation es2016/simple-parameter-list/arrow-function-concise-body/input.js 1:19-1:21
 										}
 									}
 								]

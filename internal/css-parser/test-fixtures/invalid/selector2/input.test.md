@@ -10,17 +10,7 @@ CSSRoot {
 	corrupt: false
 	filename: "invalid/selector2/input.css"
 	integrity: undefined
-	loc: Object {
-		filename: "invalid/selector2/input.css"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation invalid/selector2/input.css 1:0-1:11
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -35,88 +25,32 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				start: Position 1:7
 			}
 		}
 	]
 	body: Array [
 		CSSRule {
-			loc: Object {
-				filename: "invalid/selector2/input.css"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation invalid/selector2/input.css 1:0-1:11
 			block: CSSBlock {
 				value: Array []
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "invalid/selector2/input.css"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation invalid/selector2/input.css 1:9-1:11
 			}
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "invalid/selector2/input.css"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector2/input.css 1:0-1:7
 					patterns: Array [
 						CSSTypeSelector {
 							value: "span"
-							loc: Object {
-								filename: "invalid/selector2/input.css"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation invalid/selector2/input.css 1:0-1:4
 						}
 					]
 				}
 				CSSSelector {
 					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector2/input.css"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector2/input.css 1:7-1:9
 				}
 			]
 		}

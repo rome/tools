@@ -17,91 +17,29 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/342/input.js"
-		end: Object {
-			column: 4
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "bar"
-			loc: Object {
-				filename: "core/uncategorised/342/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/342/input.js 1:4-1:11
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/342/input.js"
-				end: Object {
-					column: 4
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "core/uncategorised/342/input.js"
-					end: Object {
-						column: 4
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/342/input.js 1:0-2:4
 				left: JSReferenceIdentifier {
 					name: "foo"
+					loc: SourceLocation core/uncategorised/342/input.js 1:0-1:3 (foo)
 					trailingComments: Array ["0"]
-					loc: Object {
-						filename: "core/uncategorised/342/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
 				}
 				right: JSReferenceIdentifier {
 					name: "baz"
 					leadingComments: Array ["0"]
-					loc: Object {
-						filename: "core/uncategorised/342/input.js"
-						identifierName: "baz"
-						end: Object {
-							column: 4
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation core/uncategorised/342/input.js 2:1-2:4 (baz)
 				}
 			}
 		}

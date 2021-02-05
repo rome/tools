@@ -18,86 +18,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-var/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:0-2:0
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-var/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:0-1:15
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-var/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:7-1:15
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-var/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:7-1:15
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "esprima/es2015-export-declaration/export-var/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:11-1:14 (bar)
 							}
 							init: undefined
-							loc: Object {
-								filename: "esprima/es2015-export-declaration/export-var/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-var/input.js 1:11-1:14
 						}
 					]
 				}

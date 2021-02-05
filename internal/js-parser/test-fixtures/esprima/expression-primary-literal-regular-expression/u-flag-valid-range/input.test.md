@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [
@@ -45,71 +35,24 @@ JSRoot {
 				integrity: undefined
 				language: "regex"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:18
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-				end: Object {
-					column: 61
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:0-1:61
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-					end: Object {
-						column: 61
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:0-1:61
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-							end: Object {
-								column: 60
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:4-1:60
 						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
@@ -117,481 +60,141 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: true
-							loc: Object {
-								filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-								end: Object {
-									column: 60
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:8-1:60
 							expression: JSRegExpSubExpression {
-								loc: Object {
-									filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-									end: Object {
-										column: 58
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:9-1:58
 								body: Array [
 									JSRegExpCharSet {
 										invert: false
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 19
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:9-1:19
 										body: Array [
 											JSRegExpCharacter {
 												value: "u"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 12
-														line: 1
-													}
-													start: Object {
-														column: 10
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:10-1:12
 											}
 											JSRegExpCharacter {
 												value: "{"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 13
-														line: 1
-													}
-													start: Object {
-														column: 12
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:12-1:13
 											}
 											JSRegExpCharacter {
 												value: "6"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 14
-														line: 1
-													}
-													start: Object {
-														column: 13
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:13-1:14
 											}
 											JSRegExpCharacter {
 												value: "1"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 15
-														line: 1
-													}
-													start: Object {
-														column: 14
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:14-1:15
 											}
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 18
-														line: 1
-													}
-													start: Object {
-														column: 15
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:15-1:18
 												end: JSRegExpCharacter {
 													value: "}"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 16
-															line: 1
-														}
-														start: Object {
-															column: 15
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:15-1:16
 												}
 												start: JSRegExpCharacter {
 													value: "b"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 18
-															line: 1
-														}
-														start: Object {
-															column: 17
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:17-1:18
 												}
 											}
 										]
 									}
 									JSRegExpCharSet {
 										invert: false
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 19
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:19-1:29
 										body: Array [
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 28
-														line: 1
-													}
-													start: Object {
-														column: 20
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:20-1:28
 												end: JSRegExpCharacter {
 													value: "b"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 28
-															line: 1
-														}
-														start: Object {
-															column: 27
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:27-1:28
 												}
 												start: JSRegExpCharacter {
 													value: "a"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 26
-															line: 1
-														}
-														start: Object {
-															column: 20
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:20-1:26
 												}
 											}
 										]
 									}
 									JSRegExpCharSet {
 										invert: false
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 39
-												line: 1
-											}
-											start: Object {
-												column: 29
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:29-1:39
 										body: Array [
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 34
-														line: 1
-													}
-													start: Object {
-														column: 30
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:30-1:34
 												end: JSRegExpCharacter {
 													value: "u"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 34
-															line: 1
-														}
-														start: Object {
-															column: 32
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:32-1:34
 												}
 												start: JSRegExpCharacter {
 													value: "a"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 31
-															line: 1
-														}
-														start: Object {
-															column: 30
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:30-1:31
 												}
 											}
 											JSRegExpCharacter {
 												value: "{"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 35
-														line: 1
-													}
-													start: Object {
-														column: 34
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:34-1:35
 											}
 											JSRegExpCharacter {
 												value: "6"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 36
-														line: 1
-													}
-													start: Object {
-														column: 35
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:35-1:36
 											}
 											JSRegExpCharacter {
 												value: "2"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 37
-														line: 1
-													}
-													start: Object {
-														column: 36
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:36-1:37
 											}
 											JSRegExpCharacter {
 												value: "}"
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 38
-														line: 1
-													}
-													start: Object {
-														column: 37
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:37-1:38
 											}
 										]
 									}
 									JSRegExpCharSet {
 										invert: false
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 49
-												line: 1
-											}
-											start: Object {
-												column: 39
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:39-1:49
 										body: Array [
 											JSRegExpCharSetRange {
-												loc: Object {
-													filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-													end: Object {
-														column: 48
-														line: 1
-													}
-													start: Object {
-														column: 40
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:40-1:48
 												end: JSRegExpCharacter {
 													value: "b"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 48
-															line: 1
-														}
-														start: Object {
-															column: 42
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:42-1:48
 												}
 												start: JSRegExpCharacter {
 													value: "a"
-													loc: Object {
-														filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-														end: Object {
-															column: 41
-															line: 1
-														}
-														start: Object {
-															column: 40
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:40-1:41
 												}
 											}
 										]
 									}
 									JSRegExpCharacter {
 										value: "u"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 51
-												line: 1
-											}
-											start: Object {
-												column: 49
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:49-1:51
 									}
 									JSRegExpCharacter {
 										value: "{"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 52
-												line: 1
-											}
-											start: Object {
-												column: 51
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:51-1:52
 									}
 									JSRegExpCharacter {
 										value: "1"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 53
-												line: 1
-											}
-											start: Object {
-												column: 52
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:52-1:53
 									}
 									JSRegExpCharacter {
 										value: "f"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 54
-												line: 1
-											}
-											start: Object {
-												column: 53
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:53-1:54
 									}
 									JSRegExpCharacter {
 										value: "f"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 55
-												line: 1
-											}
-											start: Object {
-												column: 54
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:54-1:55
 									}
 									JSRegExpCharacter {
 										value: "f"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 56
-												line: 1
-											}
-											start: Object {
-												column: 55
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:55-1:56
 									}
 									JSRegExpCharacter {
 										value: "f"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 57
-												line: 1
-											}
-											start: Object {
-												column: 56
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:56-1:57
 									}
 									JSRegExpCharacter {
 										value: "}"
-										loc: Object {
-											filename: "esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js"
-											end: Object {
-												column: 58
-												line: 1
-											}
-											start: Object {
-												column: 57
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js 1:57-1:58
 									}
 								]
 							}

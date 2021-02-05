@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,131 +32,42 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
+				end: Position 1:4
+				start: Position 1:4
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
 				quasi: JSTemplateLiteral {
 					expressions: Array []
-					loc: Object {
-						filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:4-1:9
 					quasis: Array [
 						JSTemplateElement {
 							cooked: "foo"
 							raw: "foo"
 							tail: true
-							loc: Object {
-								filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:5-1:8
 						}
 					]
 				}
 				tag: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:4
 					object: JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:1 (a)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:3-1:4 (b)
 						}
 						optional: true
-						loc: Object {
-							filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:3-1:4 (b)
 					}
 				}
 			}

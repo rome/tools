@@ -16,16 +16,6 @@ CommitRoot {
 	integrity: undefined
 	rawBody: "commit with a breaking change indicator"
 	scope: ""
-	loc: Object {
-		filename: "breaking/input.txt"
-		end: Object {
-			column: 47
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation breaking/input.txt 1:0-1:47
 }
 ```

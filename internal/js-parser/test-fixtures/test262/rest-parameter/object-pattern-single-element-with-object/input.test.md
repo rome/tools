@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "singleElementWithObject"
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-					identifierName: "singleElementWithObject"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:9-1:32 (singleElementWithObject)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-				end: Object {
-					column: 51
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:0-1:51
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-					end: Object {
-						column: 51
-						line: 1
-					}
-					start: Object {
-						column: 49
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:49-1:51
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,158 +39,45 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-					end: Object {
-						column: 48
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:32-1:48
 				rest: JSBindingObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-						end: Object {
-							column: 47
-							line: 1
-						}
-						start: Object {
-							column: 36
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:36-1:47
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-							end: Object {
-								column: 47
-								line: 1
-							}
-							start: Object {
-								column: 36
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:36-1:47
 					}
 					properties: Array [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "p"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-										identifierName: "p"
-										end: Object {
-											column: 38
-											line: 1
-										}
-										start: Object {
-											column: 37
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:37-1:38 (p)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-									end: Object {
-										column: 38
-										line: 1
-									}
-									start: Object {
-										column: 37
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:37-1:38
 							}
 							value: JSBindingObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-									end: Object {
-										column: 46
-										line: 1
-									}
-									start: Object {
-										column: 40
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:40-1:46
 								properties: Array [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "a"
-												loc: Object {
-													filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-													identifierName: "a"
-													end: Object {
-														column: 42
-														line: 1
-													}
-													start: Object {
-														column: 41
-														line: 1
-													}
-												}
+												loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:41-1:42 (a)
 											}
-											loc: Object {
-												filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-												end: Object {
-													column: 42
-													line: 1
-												}
-												start: Object {
-													column: 41
-													line: 1
-												}
-											}
+											loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:41-1:42
 										}
 										value: JSBindingIdentifier {
 											name: "b"
-											loc: Object {
-												filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 45
-													line: 1
-												}
-												start: Object {
-													column: 44
-													line: 1
-												}
-											}
+											loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:44-1:45 (b)
 										}
-										loc: Object {
-											filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-											end: Object {
-												column: 45
-												line: 1
-											}
-											start: Object {
-												column: 41
-												line: 1
-											}
-										}
+										loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:41-1:45
 									}
 								]
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-single-element-with-object/input.js"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 37
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-single-element-with-object/input.js 1:37-1:46
 						}
 					]
 				}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-methods/failure-spaces/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-6:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 2
-				}
-				start: Object {
-					column: 3
-					line: 2
-				}
+				end: Position 2:3
+				start: Position 2:3
 			}
 		}
 	]
@@ -57,87 +41,35 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Spaces"
-				loc: Object {
-					filename: "experimental/class-private-methods/failure-spaces/input.js"
-					identifierName: "Spaces"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:6-1:12 (Spaces)
 			}
-			loc: Object {
-				filename: "experimental/class-private-methods/failure-spaces/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-5:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-methods/failure-spaces/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 1:0-5:1
 				body: Array [
 					JSClassPrivateMethod {
 						kind: "method"
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "wrongSpaces"
-								loc: Object {
-									filename: "experimental/class-private-methods/failure-spaces/input.js"
-									identifierName: "wrongSpaces"
-									end: Object {
-										column: 16
-										line: 2
-									}
-									start: Object {
-										column: 5
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:5-2:16 (wrongSpaces)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-spaces/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-2:16
 						}
-						loc: Object {
-							filename: "experimental/class-private-methods/failure-spaces/input.js"
-							end: Object {
-								column: 3
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+						loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-4:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:2-2:16
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -148,94 +80,20 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-spaces/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-spaces/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:16-2:18
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-spaces/input.js"
-								end: Object {
-									column: 3
-									line: 4
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 2:19-4:3
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "experimental/class-private-methods/failure-spaces/input.js"
-										end: Object {
-											column: 18
-											line: 3
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:4-3:18
 									argument: JSCallExpression {
 										arguments: Array []
-										loc: Object {
-											filename: "experimental/class-private-methods/failure-spaces/input.js"
-											end: Object {
-												column: 17
-												line: 3
-											}
-											start: Object {
-												column: 11
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:11-3:17
 										callee: JSReferenceIdentifier {
 											name: "fail"
-											loc: Object {
-												filename: "experimental/class-private-methods/failure-spaces/input.js"
-												identifierName: "fail"
-												end: Object {
-													column: 15
-													line: 3
-												}
-												start: Object {
-													column: 11
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-private-methods/failure-spaces/input.js 3:11-3:15 (fail)
 										}
 									}
 								}

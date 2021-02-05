@@ -18,43 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-other/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-other/migrated_0001/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-other/migrated_0001/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNullLiteral {
-				loc: Object {
-					filename: "esprima/expression-primary-other/migrated_0001/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
+			expression: JSNullLiteral {loc: SourceLocation esprima/expression-primary-other/migrated_0001/input.js 1:0-1:4}
+			loc: SourceLocation esprima/expression-primary-other/migrated_0001/input.js 1:0-1:4
 		}
 	]
 }

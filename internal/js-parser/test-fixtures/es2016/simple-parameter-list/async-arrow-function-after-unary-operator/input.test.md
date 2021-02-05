@@ -18,70 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:21
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:21
 			expression: JSUnaryExpression {
 				operator: "delete"
 				prefix: true
-				loc: Object {
-					filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:0-1:20
 				argument: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:7-1:20
 					body: JSNumericLiteral {
 						value: 3
 						format: undefined
-						loc: Object {
-							filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:19-1:20
 					}
 					head: JSFunctionHead {
 						async: true
@@ -90,17 +40,7 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-unary-operator/input.js 1:7-1:18
 					}
 				}
 			}

@@ -17,163 +17,50 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/template-literal/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/template-literal/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/types/template-literal/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/template-literal/input.ts 1:5-1:6 (A)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/types/template-literal/input.ts"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/template-literal/input.ts 1:0-1:25
 			right: TSTemplateLiteralTypeAnnotation {
-				loc: Object {
-					filename: "typescript/types/template-literal/input.ts"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/template-literal/input.ts 1:9-1:24
 				quasis: Array [
 					TSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false
-						loc: Object {
-							filename: "typescript/types/template-literal/input.ts"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/template-literal/input.ts 1:10-1:10
 					}
 					TSTemplateElement {
 						cooked: "_"
 						raw: "_"
 						tail: true
-						loc: Object {
-							filename: "typescript/types/template-literal/input.ts"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/template-literal/input.ts 1:22-1:23
 					}
 				]
 				expressions: Array [
 					TSUnionTypeAnnotation {
-						loc: Object {
-							filename: "typescript/types/template-literal/input.ts"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/template-literal/input.ts 1:12-1:21
 						types: Array [
 							TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/types/template-literal/input.ts"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/template-literal/input.ts 1:12-1:15
 								typeName: JSReferenceIdentifier {
 									name: "Foo"
-									loc: Object {
-										filename: "typescript/types/template-literal/input.ts"
-										identifierName: "Foo"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 12
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/template-literal/input.ts 1:12-1:15 (Foo)
 								}
 							}
 							TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/types/template-literal/input.ts"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/template-literal/input.ts 1:18-1:21
 								typeName: JSReferenceIdentifier {
 									name: "Bar"
-									loc: Object {
-										filename: "typescript/types/template-literal/input.ts"
-										identifierName: "Bar"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/template-literal/input.ts 1:18-1:21 (Bar)
 								}
 							}
 						]

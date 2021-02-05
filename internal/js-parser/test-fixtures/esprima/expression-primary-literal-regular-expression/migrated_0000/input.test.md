@@ -18,30 +18,10 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-regular-expression/migrated_0000/input.js"
-		end: Object {
-			column: 4
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:4
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-literal-regular-expression/migrated_0000/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:4
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -49,43 +29,13 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "esprima/expression-primary-literal-regular-expression/migrated_0000/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:0-1:3
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "esprima/expression-primary-literal-regular-expression/migrated_0000/input.js"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:1-1:2
 					body: Array [
 						JSRegExpCharacter {
 							value: "p"
-							loc: Object {
-								filename: "esprima/expression-primary-literal-regular-expression/migrated_0000/input.js"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-literal-regular-expression/migrated_0000/input.js 1:1-1:2
 						}
 					]
 				}

@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 1:15-1:16 (f)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: true
 				generator: false
@@ -66,73 +35,22 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 1:16-1:18
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 1:19-3:1
 				body: Array [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "g"
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-								identifierName: "g"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:11-2:12 (g)
 						}
-						loc: Object {
-							filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-							end: Object {
-								column: 33
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:2-2:33
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-								end: Object {
-									column: 33
-									line: 2
-								}
-								start: Object {
-									column: 31
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:31-2:33
 						}
 						head: JSFunctionHead {
 							async: false
@@ -142,102 +60,29 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-								end: Object {
-									column: 30
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:12-2:30
 							params: Array [
 								JSBindingAssignmentPattern {
-									loc: Object {
-										filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-										end: Object {
-											column: 29
-											line: 2
-										}
-										start: Object {
-											column: 13
-											line: 2
-										}
-									}
+									loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:13-2:29
 									left: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 14
-												line: 2
-											}
-											start: Object {
-												column: 13
-												line: 2
-											}
-										}
+										loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:13-2:14 (x)
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-												end: Object {
-													column: 14
-													line: 2
-												}
-												start: Object {
-													column: 13
-													line: 2
-												}
-											}
+											loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:13-2:14
 										}
 									}
 									right: JSCallExpression {
-										loc: Object {
-											filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-											end: Object {
-												column: 29
-												line: 2
-											}
-											start: Object {
-												column: 17
-												line: 2
-											}
-										}
+										loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:17-2:29
 										callee: JSReferenceIdentifier {
 											name: "async"
-											loc: Object {
-												filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-												identifierName: "async"
-												end: Object {
-													column: 22
-													line: 2
-												}
-												start: Object {
-													column: 17
-													line: 2
-												}
-											}
+											loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:17-2:22 (async)
 										}
 										arguments: Array [
 											JSReferenceIdentifier {
 												name: "await"
-												loc: Object {
-													filename: "es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js"
-													identifierName: "await"
-													end: Object {
-														column: 28
-														line: 2
-													}
-													start: Object {
-														column: 23
-														line: 2
-													}
-												}
+												loc: SourceLocation es2017/async-functions/await-inside-async-call-inside-parameters-of-function-inside-async-function/input.js 2:23-2:28 (await)
 											}
 										]
 									}

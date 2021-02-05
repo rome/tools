@@ -39,9 +39,9 @@ Object {
 		exports: Object {node: Object {"./foo": "./bar"}}
 	}
 	exports: ___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap [
-		___R$project$rome$$internal$path$index_ts$RelativeFilePath: node => Map [
+		RelativeFilePath: node => Map [
 			"./foo" => relative {
-				relative: ___R$project$rome$$internal$path$index_ts$RelativeFilePath: ./bar
+				relative: RelativeFilePath: ./bar
 				consumer: ___R$project$rome$$internal$consume$Consumer_ts$default {
 					value: "./bar"
 					declared: false
@@ -485,11 +485,11 @@ Object {
 			}
 		]
 		type: "relative"
-		joinedToPath: Map [node => ___R$project$rome$$internal$path$index_ts$RelativeFilePath: node]
+		joinedToPath: Map [node => RelativeFilePath: node]
 		joinedToValue: Map [
 			node => Map [
 				"./foo" => relative {
-					relative: ___R$project$rome$$internal$path$index_ts$RelativeFilePath: ./bar
+					relative: RelativeFilePath: ./bar
 					consumer: ___R$project$rome$$internal$consume$Consumer_ts$default {
 						value: "./bar"
 						declared: false
@@ -975,9 +975,9 @@ Object {
 		exports: Object {"./foo": "./bar"}
 	}
 	exports: ___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap [
-		___R$project$rome$$internal$path$index_ts$RelativeFilePath: foo => Map [
+		RelativeFilePath: foo => Map [
 			default => relative {
-				relative: ___R$project$rome$$internal$path$index_ts$RelativeFilePath: ./bar
+				relative: RelativeFilePath: ./bar
 				consumer: ___R$project$rome$$internal$consume$Consumer_ts$default {
 					value: "./bar"
 					declared: false
@@ -1393,11 +1393,11 @@ Object {
 			}
 		]
 		type: "relative"
-		joinedToPath: Map [foo => ___R$project$rome$$internal$path$index_ts$RelativeFilePath: foo]
+		joinedToPath: Map [foo => RelativeFilePath: foo]
 		joinedToValue: Map [
 			foo => Map [
 				default => relative {
-					relative: ___R$project$rome$$internal$path$index_ts$RelativeFilePath: ./bar
+					relative: RelativeFilePath: ./bar
 					consumer: ___R$project$rome$$internal$consume$Consumer_ts$default {
 						value: "./bar"
 						declared: false
@@ -1855,9 +1855,9 @@ Object {
 		exports: Object {"./foo": Object {node: "./bar"}}
 	}
 	exports: ___R$project$rome$$internal$path$collections_ts$RelativeFilePathMap [
-		___R$project$rome$$internal$path$index_ts$RelativeFilePath: foo => Map [
+		RelativeFilePath: foo => Map [
 			node => relative {
-				relative: ___R$project$rome$$internal$path$index_ts$RelativeFilePath: ./bar
+				relative: RelativeFilePath: ./bar
 				consumer: ___R$project$rome$$internal$consume$Consumer_ts$default {
 					value: "./bar"
 					declared: false
@@ -2301,11 +2301,11 @@ Object {
 			}
 		]
 		type: "relative"
-		joinedToPath: Map [foo => ___R$project$rome$$internal$path$index_ts$RelativeFilePath: foo]
+		joinedToPath: Map [foo => RelativeFilePath: foo]
 		joinedToValue: Map [
 			foo => Map [
 				node => relative {
-					relative: ___R$project$rome$$internal$path$index_ts$RelativeFilePath: ./bar
+					relative: RelativeFilePath: ./bar
 					consumer: ___R$project$rome$$internal$consume$Consumer_ts$default {
 						value: "./bar"
 						declared: false

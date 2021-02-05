@@ -16,30 +16,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0257/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0257/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0257/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0257/input.js 1:0-1:13
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0257/input.js 1:14-1:15
+			expression: JSReferenceIdentifier {
+				name: "a"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0257/input.js 1:14-1:15 (a)
+			}
+		}
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0257/input.js 1:16-1:23
+			expression: JSReferenceIdentifier {
+				name: "package"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0257/input.js 1:16-1:23 (package)
 			}
 		}
 	]
@@ -57,72 +53,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0257/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "a"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0257/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0257/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "package"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0257/input.js"
-					identifierName: "package"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				end: Position 1:15
+				start: Position 1:16
 			}
 		}
 	]

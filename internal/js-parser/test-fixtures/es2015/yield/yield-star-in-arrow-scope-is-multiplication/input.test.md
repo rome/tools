@@ -18,40 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-					end: Object {
-						column: 14
-						line: 1
+				loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:14
+				body: JSBinaryExpression {
+					operator: "*"
+					loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:5-1:14
+					left: JSReferenceIdentifier {
+						name: "yield"
+						loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:5-1:10 (yield)
 					}
-					start: Object {
-						column: 0
-						line: 1
+					right: JSNumericLiteral {
+						value: 10
+						format: undefined
+						loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:12-1:14
 					}
 				}
 				head: JSFunctionHead {
@@ -59,78 +42,13 @@ JSRoot {
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:4
 					params: Array [
 						JSBindingIdentifier {
 							name: "e"
-							loc: Object {
-								filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-								identifierName: "e"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js 1:0-1:1 (e)
 						}
 					]
-				}
-				body: JSBinaryExpression {
-					operator: "*"
-					loc: Object {
-						filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
-					left: JSReferenceIdentifier {
-						name: "yield"
-						loc: Object {
-							filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
-					}
-					right: JSNumericLiteral {
-						value: 10
-						format: undefined
-						loc: Object {
-							filename: "es2015/yield/yield-star-in-arrow-scope-is-multiplication/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
-					}
 				}
 			}
 		}

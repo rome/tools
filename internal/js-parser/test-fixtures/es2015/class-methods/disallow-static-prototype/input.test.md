@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class-methods/disallow-static-prototype/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 9
-					line: 2
-				}
+				end: Position 2:18
+				start: Position 2:9
 			}
 		}
 	]
@@ -57,102 +41,40 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/class-methods/disallow-static-prototype/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/class-methods/disallow-static-prototype/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class-methods/disallow-static-prototype/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "prototype"
-								loc: Object {
-									filename: "es2015/class-methods/disallow-static-prototype/input.js"
-									identifierName: "prototype"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:9-2:18 (prototype)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/disallow-static-prototype/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:9-2:18
 						}
-						loc: Object {
-							filename: "es2015/class-methods/disallow-static-prototype/input.js"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:23
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/disallow-static-prototype/input.js"
-								end: Object {
-									column: 23
-									line: 2
-								}
-								start: Object {
-									column: 21
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:21-2:23
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:2-2:18
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -163,40 +85,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/disallow-static-prototype/input.js"
-								end: Object {
-									column: 20
-									line: 2
-								}
-								start: Object {
-									column: 18
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2015/class-methods/disallow-static-prototype/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/disallow-static-prototype/input.js 2:18-2:20
 						}
 					}
 				]

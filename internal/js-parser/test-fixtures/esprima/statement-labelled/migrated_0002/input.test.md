@@ -18,71 +18,19 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-labelled/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-2:0
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "esprima/statement-labelled/migrated_0002/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-1:15
 			label: JSIdentifier {
 				name: "__proto__"
-				loc: Object {
-					filename: "esprima/statement-labelled/migrated_0002/input.js"
-					identifierName: "__proto__"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:0-1:9 (__proto__)
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/statement-labelled/migrated_0002/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:11-1:15
 				expression: JSReferenceIdentifier {
 					name: "test"
-					loc: Object {
-						filename: "esprima/statement-labelled/migrated_0002/input.js"
-						identifierName: "test"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-labelled/migrated_0002/input.js 1:11-1:15 (test)
 				}
 			}
 		}

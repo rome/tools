@@ -18,112 +18,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/29/input.js"
-		end: Object {
-			column: 38
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/29/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/29/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/29/input.js 1:0-1:38
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/29/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/29/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "core/uncategorised/29/input.js"
-						end: Object {
-							column: 38
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/29/input.js 1:4-1:38
 					properties: Array [
 						JSObjectMethod {
 							kind: "get"
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "width"
-									loc: Object {
-										filename: "core/uncategorised/29/input.js"
-										identifierName: "width"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/29/input.js 1:10-1:15 (width)
 								}
-								loc: Object {
-									filename: "core/uncategorised/29/input.js"
-									end: Object {
-										column: 15
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/29/input.js 1:10-1:15
 							}
-							loc: Object {
-								filename: "core/uncategorised/29/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/29/input.js 1:6-1:36
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -133,58 +51,17 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "core/uncategorised/29/input.js"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/29/input.js 1:15-1:17
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "core/uncategorised/29/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/29/input.js 1:18-1:36
 								body: Array [
 									JSReturnStatement {
-										loc: Object {
-											filename: "core/uncategorised/29/input.js"
-											end: Object {
-												column: 34
-												line: 1
-											}
-											start: Object {
-												column: 20
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/29/input.js 1:20-1:34
 										argument: JSReferenceIdentifier {
 											name: "m_width"
-											loc: Object {
-												filename: "core/uncategorised/29/input.js"
-												identifierName: "m_width"
-												end: Object {
-													column: 34
-													line: 1
-												}
-												start: Object {
-													column: 27
-													line: 1
-												}
-											}
+											loc: SourceLocation core/uncategorised/29/input.js 1:27-1:34 (m_width)
 										}
 									}
 								]

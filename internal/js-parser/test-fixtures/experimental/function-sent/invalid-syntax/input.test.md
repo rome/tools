@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/function-sent/invalid-syntax/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 2
-				}
-				start: Object {
-					column: 21
-					line: 2
-				}
+				end: Position 2:22
+				start: Position 2:21
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "experimental/function-sent/invalid-syntax/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:10-1:13 (foo)
 			}
-			loc: Object {
-				filename: "experimental/function-sent/invalid-syntax/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,112 +53,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/function-sent/invalid-syntax/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/function-sent/invalid-syntax/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:16-3:1
 				body: Array [
 					JSIfStatement {
 						alternate: undefined
-						loc: Object {
-							filename: "experimental/function-sent/invalid-syntax/input.js"
-							end: Object {
-								column: 22
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:2-2:22
 						test: JSBooleanLiteral {
 							value: true
-							loc: Object {
-								filename: "experimental/function-sent/invalid-syntax/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:6-2:10
 						}
 						consequent: JSExpressionStatement {
-							loc: Object {
-								filename: "experimental/function-sent/invalid-syntax/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:22
 							expression: JSMetaProperty {
-								loc: Object {
-									filename: "experimental/function-sent/invalid-syntax/input.js"
-									end: Object {
-										column: 22
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:22
 								meta: JSIdentifier {
 									name: "function"
-									loc: Object {
-										filename: "experimental/function-sent/invalid-syntax/input.js"
-										identifierName: "function"
-										end: Object {
-											column: 20
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:12-2:20 (function)
 								}
 								property: JSIdentifier {
 									name: ""
-									loc: Object {
-										filename: "experimental/function-sent/invalid-syntax/input.js"
-										identifierName: ""
-										end: Object {
-											column: 22
-											line: 2
-										}
-										start: Object {
-											column: 21
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 2:21-2:22 ()
 								}
 							}
 						}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,115 +32,37 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:14
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:0-1:22
+			right: JSReferenceIdentifier {
+				name: "y"
+				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:18-1:19 (y)
 			}
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
-			}
-			right: JSReferenceIdentifier {
-				name: "y"
-				loc: Object {
-					filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-					identifierName: "y"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:20-1:22
 			}
 			left: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:5-1:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:9-1:10 (x)
 						}
-						loc: Object {
-							filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:9-1:14
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-lexical-declaration/invalid_let_forin/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-lexical-declaration/invalid_let_forin/input.js 1:13-1:14
 						}
 					}
 				]

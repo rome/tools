@@ -17,106 +17,34 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/properties/input.ts 1:0-9:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/properties/input.ts"
-		end: Object {
-			column: 0
-			line: 9
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/properties/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/properties/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/properties/input.ts"
-				end: Object {
-					column: 1
-					line: 8
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/properties/input.ts 1:0-8:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/properties/input.ts"
-					end: Object {
-						column: 1
-						line: 8
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/properties/input.ts 1:0-8:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/properties/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/properties/input.ts 2:4-2:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 2:4-2:5
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/properties/input.ts"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/properties/input.ts 2:4-2:6
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -124,66 +52,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 2:4-2:5
+							start: Position 2:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/properties/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/properties/input.ts 3:4-3:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 3:4-3:5
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/properties/input.ts"
-							end: Object {
-								column: 7
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/class/properties/input.ts 3:4-3:7
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -191,78 +75,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 6
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 3:4-3:6
+							start: Position 3:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/properties/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/properties/input.ts 4:4-4:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 4:4-4:5
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/properties/input.ts"
-							end: Object {
-								column: 14
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 13
-									line: 4
-								}
-								start: Object {
-									column: 7
-									line: 4
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/properties/input.ts 4:4-4:14
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/properties/input.ts 4:7-4:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -270,92 +98,26 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 4
-							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 4:4-4:5
+							start: Position 4:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/properties/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 5
-									}
-									start: Object {
-										column: 4
-										line: 5
-									}
-								}
+								loc: SourceLocation typescript/class/properties/input.ts 5:4-5:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 5:4-5:5
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 17
-									line: 5
-								}
-								start: Object {
-									column: 16
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 5:16-5:17
 						}
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/properties/input.ts"
-							end: Object {
-								column: 18
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 13
-									line: 5
-								}
-								start: Object {
-									column: 7
-									line: 5
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/properties/input.ts 5:4-5:18
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/properties/input.ts 5:7-5:13}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -363,66 +125,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 5
-							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 5:4-5:5
+							start: Position 5:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/properties/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 6
-									}
-									start: Object {
-										column: 4
-										line: 6
-									}
-								}
+								loc: SourceLocation typescript/class/properties/input.ts 6:4-6:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 6
-								}
-								start: Object {
-									column: 4
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 6:4-6:5
 						}
 						value: undefined
 						definite: true
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/properties/input.ts"
-							end: Object {
-								column: 7
-								line: 6
-							}
-							start: Object {
-								column: 4
-								line: 6
-							}
-						}
+						loc: SourceLocation typescript/class/properties/input.ts 6:4-6:7
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -430,78 +148,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 6
-							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 6
-								}
-								start: Object {
-									column: 4
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 6:4-6:5
+							start: Position 6:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/class/properties/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 7
-									}
-									start: Object {
-										column: 4
-										line: 7
-									}
-								}
+								loc: SourceLocation typescript/class/properties/input.ts 7:4-7:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 7
-								}
-								start: Object {
-									column: 4
-									line: 7
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 7:4-7:5
 						}
 						value: undefined
 						definite: true
-						loc: Object {
-							filename: "typescript/class/properties/input.ts"
-							end: Object {
-								column: 15
-								line: 7
-							}
-							start: Object {
-								column: 4
-								line: 7
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 14
-									line: 7
-								}
-								start: Object {
-									column: 8
-									line: 7
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/properties/input.ts 7:4-7:15
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/properties/input.ts 7:8-7:14}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -509,21 +171,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 7
-							}
-							loc: Object {
-								filename: "typescript/class/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 7
-								}
-								start: Object {
-									column: 4
-									line: 7
-								}
-							}
+							loc: SourceLocation typescript/class/properties/input.ts 7:4-7:5
+							start: Position 7:4
 						}
 					}
 				]

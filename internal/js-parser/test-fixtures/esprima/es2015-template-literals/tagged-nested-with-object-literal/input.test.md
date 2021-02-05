@@ -18,208 +18,67 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:44
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:44
 				tag: JSReferenceIdentifier {
 					name: "raw"
-					loc: Object {
-						filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-						identifierName: "raw"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:0-1:3 (raw)
 				}
 				quasi: JSTemplateLiteral {
-					loc: Object {
-						filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-						end: Object {
-							column: 44
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:3-1:44
 					quasis: Array [
 						JSTemplateElement {
 							cooked: "token "
 							raw: "token "
 							tail: false
-							loc: Object {
-								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:4-1:10
 						}
 						JSTemplateElement {
 							cooked: ""
 							raw: ""
 							tail: true
-							loc: Object {
-								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-								end: Object {
-									column: 43
-									line: 1
-								}
-								start: Object {
-									column: 43
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:43-1:43
 						}
 					]
 					expressions: Array [
 						JSTemplateLiteral {
-							loc: Object {
-								filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-								end: Object {
-									column: 42
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:12-1:42
 							quasis: Array [
 								JSTemplateElement {
 									cooked: "nested "
 									raw: "nested "
 									tail: false
-									loc: Object {
-										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:13-1:20
 								}
 								JSTemplateElement {
 									cooked: " blah"
 									raw: " blah"
 									tail: true
-									loc: Object {
-										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-										end: Object {
-											column: 41
-											line: 1
-										}
-										start: Object {
-											column: 36
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:36-1:41
 								}
 							]
 							expressions: Array [
 								JSBinaryExpression {
 									operator: "+"
-									loc: Object {
-										filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-										end: Object {
-											column: 35
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:22-1:35
 									right: JSObjectExpression {
 										properties: Array []
-										loc: Object {
-											filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-											end: Object {
-												column: 35
-												line: 1
-											}
-											start: Object {
-												column: 33
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:33-1:35
 									}
 									left: JSTemplateLiteral {
 										expressions: Array []
-										loc: Object {
-											filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-											end: Object {
-												column: 30
-												line: 1
-											}
-											start: Object {
-												column: 22
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:22-1:30
 										quasis: Array [
 											JSTemplateElement {
 												cooked: "deeply"
 												raw: "deeply"
 												tail: true
-												loc: Object {
-													filename: "esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js"
-													end: Object {
-														column: 29
-														line: 1
-													}
-													start: Object {
-														column: 23
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-template-literals/tagged-nested-with-object-literal/input.js 1:23-1:29
 											}
 										]
 									}

@@ -17,89 +17,27 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/namespace-new-line/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/namespace-new-line/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/module-namespace/namespace-new-line/input.ts"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/namespace-new-line/input.ts 1:0-1:9
 			expression: JSReferenceIdentifier {
 				name: "namespace"
-				loc: Object {
-					filename: "typescript/module-namespace/namespace-new-line/input.ts"
-					identifierName: "namespace"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/namespace-new-line/input.ts 1:0-1:9 (namespace)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/module-namespace/namespace-new-line/input.ts"
-				end: Object {
-					column: 3
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/namespace-new-line/input.ts 2:0-2:3
 			expression: JSReferenceIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "typescript/module-namespace/namespace-new-line/input.ts"
-					identifierName: "Foo"
-					end: Object {
-						column: 3
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/namespace-new-line/input.ts 2:0-2:3 (Foo)
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "typescript/module-namespace/namespace-new-line/input.ts"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/namespace-new-line/input.ts 3:0-3:2
 		}
 	]
 }

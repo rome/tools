@@ -18,159 +18,45 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-variable/migrated_0006/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/statement-variable/migrated_0006/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:0-1:38
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/statement-variable/migrated_0006/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:0-1:38
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "private"
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0006/input.js"
-								identifierName: "private"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:4-1:11 (private)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/statement-variable/migrated_0006/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:4-1:11
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "protected"
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0006/input.js"
-								identifierName: "protected"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:13-1:22 (protected)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/statement-variable/migrated_0006/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:13-1:22
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "public"
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0006/input.js"
-								identifierName: "public"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:24-1:30 (public)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/statement-variable/migrated_0006/input.js"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 24
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:24-1:30
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "static"
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0006/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:32-1:38 (static)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/statement-variable/migrated_0006/input.js"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 32
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-variable/migrated_0006/input.js 1:32-1:38
 					}
 				]
 			}

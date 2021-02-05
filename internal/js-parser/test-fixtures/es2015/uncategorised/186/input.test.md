@@ -18,211 +18,55 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/186/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/186/input.js 1:0-1:20
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/186/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/186/input.js 1:0-1:20
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/186/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/186/input.js 1:0-1:20
 				right: JSReferenceIdentifier {
 					name: "d"
-					loc: Object {
-						filename: "es2015/uncategorised/186/input.js"
-						identifierName: "d"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/186/input.js 1:19-1:20 (d)
 				}
 				left: JSAssignmentArrayPattern {
-					loc: Object {
-						filename: "es2015/uncategorised/186/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/186/input.js 1:0-1:16
 					rest: JSAssignmentIdentifier {
 						name: "c"
-						loc: Object {
-							filename: "es2015/uncategorised/186/input.js"
-							identifierName: "c"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/186/input.js 1:14-1:15 (c)
 					}
 					elements: Array [
 						JSAssignmentObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/186/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/186/input.js 1:1-1:9
 							properties: Array [
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/uncategorised/186/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 4
-													line: 1
-												}
-												start: Object {
-													column: 3
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/186/input.js 1:3-1:4 (a)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/186/input.js"
-											end: Object {
-												column: 4
-												line: 1
-											}
-											start: Object {
-												column: 3
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/186/input.js 1:3-1:4
 									}
 									value: JSAssignmentIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "es2015/uncategorised/186/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 4
-												line: 1
-											}
-											start: Object {
-												column: 3
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/186/input.js 1:3-1:4 (a)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/186/input.js"
-										end: Object {
-											column: 4
-											line: 1
-										}
-										start: Object {
-											column: 3
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/186/input.js 1:3-1:4
 								}
 								JSAssignmentObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "b"
-											loc: Object {
-												filename: "es2015/uncategorised/186/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 7
-													line: 1
-												}
-												start: Object {
-													column: 6
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/186/input.js 1:6-1:7 (b)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/186/input.js"
-											end: Object {
-												column: 7
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/186/input.js 1:6-1:7
 									}
 									value: JSAssignmentIdentifier {
 										name: "b"
-										loc: Object {
-											filename: "es2015/uncategorised/186/input.js"
-											identifierName: "b"
-											end: Object {
-												column: 7
-												line: 1
-											}
-											start: Object {
-												column: 6
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/186/input.js 1:6-1:7 (b)
 									}
-									loc: Object {
-										filename: "es2015/uncategorised/186/input.js"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/186/input.js 1:6-1:7
 								}
 							]
 						}

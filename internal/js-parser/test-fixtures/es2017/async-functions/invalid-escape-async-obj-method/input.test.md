@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:15
+				start: Position 1:14
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,273 +38,74 @@ JSRoot {
 					","
 				]
 			}
-			location: Object {
-				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:0-1:13
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:1-1:13
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-									identifierName: "async"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:3-1:13 (async)
 							}
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:3-1:13
 						}
 						value: JSReferenceIdentifier {
 							name: "async"
-							loc: Object {
-								filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-								identifierName: "async"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:3-1:13 (async)
 						}
-						loc: Object {
-							filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:3-1:13
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:17
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:17
 				callee: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:14-1:15 (x)
 				}
 			}
 		}
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:18-1:29
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:20-1:25
 					expression: JSReferenceIdentifier {
 						name: "await"
-						loc: Object {
-							filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-							identifierName: "await"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:20-1:25 (await)
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:26-1:27
 					expression: JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 26
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:26-1:27 (x)
 					}
 				}
 			]
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 30
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:30-1:31
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 30
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:30-1:31
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 31
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:31-1:32
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-escape-async-obj-method/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-escape-async-obj-method/input.js 1:31-1:32
 			}
 		}
 	]

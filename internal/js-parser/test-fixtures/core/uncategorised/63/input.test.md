@@ -17,81 +17,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/63/input.js"
-		end: Object {
-			column: 2
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/63/input.js 1:0-4:2
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Hello, world!"
-			loc: Object {
-				filename: "core/uncategorised/63/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/63/input.js 1:0-1:16
 		}
 		CommentLine {
 			id: "1"
 			value: "   Another hello"
-			loc: Object {
-				filename: "core/uncategorised/63/input.js"
-				end: Object {
-					column: 18
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation core/uncategorised/63/input.js 3:0-3:18
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/63/input.js 4:0-4:2
 			leadingComments: Array [
 				"0"
 				"1"
 			]
-			loc: Object {
-				filename: "core/uncategorised/63/input.js"
-				end: Object {
-					column: 2
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				loc: Object {
-					filename: "core/uncategorised/63/input.js"
-					end: Object {
-						column: 2
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation core/uncategorised/63/input.js 4:0-4:2
 			}
 		}
 	]

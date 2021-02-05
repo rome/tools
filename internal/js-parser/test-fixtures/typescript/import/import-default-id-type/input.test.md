@@ -17,88 +17,27 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/import-default-id-type/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/import-default-id-type/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSImportDeclaration {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "typescript/import/import-default-id-type/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/import-default-id-type/input.ts 1:0-1:23
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "typescript/import/import-default-id-type/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/import-default-id-type/input.ts 1:17-1:22
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "typescript/import/import-default-id-type/input.ts"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/import-default-id-type/input.ts 1:0-1:11
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "type"
-						loc: Object {
-							filename: "typescript/import/import-default-id-type/input.ts"
-							identifierName: "type"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/import/import-default-id-type/input.ts 1:7-1:11 (type)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "typescript/import/import-default-id-type/input.ts"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/import-default-id-type/input.ts 1:7-1:11
 				}
 			}
 		}

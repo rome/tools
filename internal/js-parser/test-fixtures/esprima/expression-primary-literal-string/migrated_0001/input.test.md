@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-string/migrated_0001/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-string/migrated_0001/input.js 1:0-1:22
 	directives: Array [
 		JSDirective {
 			value: "\\n\\r\\t\\v\\b\\f\\\\\\'\\\"\\0"
-			loc: Object {
-				filename: "esprima/expression-primary-literal-string/migrated_0001/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-string/migrated_0001/input.js 1:0-1:22
 		}
 	]
 }

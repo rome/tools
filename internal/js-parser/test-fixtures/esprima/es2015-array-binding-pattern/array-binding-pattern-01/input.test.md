@@ -18,69 +18,19 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:0-1:13
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:0-1:12
 				body: JSArrayExpression {
-					loc: Object {
-						filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:9-1:12
 					elements: Array [
 						JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:10-1:11
 						}
 					]
 				}
@@ -90,46 +40,15 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:0-1:8
 					params: Array [
 						JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:1-1:4
 							elements: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 3
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-binding-pattern/array-binding-pattern-01/input.js 1:2-1:3 (a)
 								}
 							]
 						}

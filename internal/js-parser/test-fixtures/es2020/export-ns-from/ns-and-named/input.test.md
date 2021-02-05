@@ -18,115 +18,32 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/export-ns-from/ns-and-named/input.js"
-		end: Object {
-			column: 36
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:0-1:36
 	body: Array [
 		JSExportExternalDeclaration {
 			exportKind: undefined
-			loc: Object {
-				filename: "es2020/export-ns-from/ns-and-named/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:0-1:36
 			source: JSStringLiteral {
 				value: "bar"
-				loc: Object {
-					filename: "es2020/export-ns-from/ns-and-named/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 30
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:30-1:35
 			}
 			namespaceSpecifier: JSExportNamespaceSpecifier {
-				loc: Object {
-					filename: "es2020/export-ns-from/ns-and-named/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:7-1:15
 				exported: JSIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2020/export-ns-from/ns-and-named/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:12-1:15 (foo)
 				}
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "es2020/export-ns-from/ns-and-named/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:19-1:22
 					exported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "es2020/export-ns-from/ns-and-named/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:19-1:22 (bar)
 					}
 					local: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "es2020/export-ns-from/ns-and-named/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/export-ns-from/ns-and-named/input.js 1:19-1:22 (bar)
 					}
 				}
 			]

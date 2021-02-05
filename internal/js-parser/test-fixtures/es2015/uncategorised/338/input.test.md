@@ -18,71 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/338/input.js"
-		end: Object {
-			column: 38
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/338/input.js 1:0-1:38
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/uncategorised/338/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/338/input.js 1:0-1:32
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/uncategorised/338/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/338/input.js 1:24-1:27 (foo)
 				}
-				loc: Object {
-					filename: "es2015/uncategorised/338/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/338/input.js 1:15-1:32
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/338/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 30
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/338/input.js 1:30-1:32
 				}
 				head: JSFunctionHead {
 					async: false
@@ -93,45 +42,15 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/338/input.js"
-						end: Object {
-							column: 29
-							line: 1
-						}
-						start: Object {
-							column: 27
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/338/input.js 1:27-1:29
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/338/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 33
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/338/input.js 1:33-1:38
 			expression: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "es2015/uncategorised/338/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 33
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/338/input.js 1:33-1:38
 			}
 		}
 	]

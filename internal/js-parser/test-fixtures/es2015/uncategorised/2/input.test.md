@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/2/input.js"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/2/input.js 1:0-1:27
 	directives: Array [
 		JSDirective {
 			value: "\\u{20BB7}\\u{91CE}\\u{5BB6}"
-			loc: Object {
-				filename: "es2015/uncategorised/2/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/2/input.js 1:0-1:27
 		}
 	]
 }

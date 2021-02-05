@@ -17,129 +17,39 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-2:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/fragment-6/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/fragment-6/input.jsx"
-				end: Object {
-					column: 59
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-1:59
 			expression: JSXFragment {
-				loc: Object {
-					filename: "jsx/basic/fragment-6/input.jsx"
-					end: Object {
-						column: 59
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:0-1:59
 				children: Array [
 					JSXElement {
 						name: JSXIdentifier {
 							name: "div"
-							loc: Object {
-								filename: "jsx/basic/fragment-6/input.jsx"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:3-1:6
 						}
 						attributes: Array []
 						selfClosing: false
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/basic/fragment-6/input.jsx"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:2-1:23
 						children: Array [
 							JSXText {
 								value: "JSXElement"
-								loc: Object {
-									filename: "jsx/basic/fragment-6/input.jsx"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:7-1:17
 							}
 						]
 					}
 					JSXText {
 						value: "JSXText"
-						loc: Object {
-							filename: "jsx/basic/fragment-6/input.jsx"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:23-1:30
 					}
 					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/basic/fragment-6/input.jsx"
-							end: Object {
-								column: 56
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:30-1:56
 						expression: JSStringLiteral {
 							value: "JSXExpressionContainer"
-							loc: Object {
-								filename: "jsx/basic/fragment-6/input.jsx"
-								end: Object {
-									column: 55
-									line: 1
-								}
-								start: Object {
-									column: 31
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/fragment-6/input.jsx 1:31-1:55
 						}
 					}
 				]

@@ -18,85 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-left-hand-side/migrated_0021/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0021/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-left-hand-side/migrated_0021/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0021/input.js 1:0-1:14
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "esprima/expression-left-hand-side/migrated_0021/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0021/input.js 1:0-1:14
 				object: JSReferenceIdentifier {
 					name: "universe"
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0021/input.js"
-						identifierName: "universe"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0021/input.js 1:0-1:8 (universe)
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "false"
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0021/input.js"
-							identifierName: "false"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0021/input.js 1:9-1:14 (false)
 					}
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0021/input.js"
-						identifierName: "false"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0021/input.js 1:9-1:14 (false)
 				}
 			}
 		}

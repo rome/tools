@@ -18,88 +18,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/newline-arrow/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-3:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/newline-arrow/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:6
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/newline-arrow/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:6
 				body: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "es2017/async-functions/newline-arrow/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 6
-							line: 2
-						}
-						start: Object {
-							column: 5
-							line: 2
-						}
-					}
+					loc: SourceLocation es2017/async-functions/newline-arrow/input.js 2:5-2:6 (x)
 				}
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/newline-arrow/input.js"
-						end: Object {
-							column: 4
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/newline-arrow/input.js 1:0-2:4
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2017/async-functions/newline-arrow/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 1
-									line: 2
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/newline-arrow/input.js 2:0-2:1 (x)
 						}
 					]
 				}

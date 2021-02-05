@@ -17,17 +17,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/275/input.js"
-		end: Object {
-			column: 20
-			line: 1
+	loc: SourceLocation es2015/uncategorised/275/input.js 1:0-1:20
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/275/input.js 1:0-1:20
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation es2015/uncategorised/275/input.js 1:0-1:20
+				right: JSReferenceIdentifier {
+					name: "obj"
+					loc: SourceLocation es2015/uncategorised/275/input.js 1:17-1:20 (obj)
+				}
+				left: JSAssignmentObjectPattern {
+					properties: Array []
+					rest: undefined
+					loc: SourceLocation es2015/uncategorised/275/input.js 1:1-1:13
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,73 +50,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/275/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/275/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentObjectPattern {
-					properties: Array []
-					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/275/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-				}
-				right: JSReferenceIdentifier {
-					name: "obj"
-					loc: Object {
-						filename: "es2015/uncategorised/275/input.js"
-						identifierName: "obj"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
-				}
+				end: Position 1:13
+				start: Position 1:12
 			}
 		}
 	]

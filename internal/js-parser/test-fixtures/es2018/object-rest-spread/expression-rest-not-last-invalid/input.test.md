@@ -18,140 +18,37 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-1:19
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:1-1:18
 				right: JSObjectExpression {
 					properties: Array []
-					loc: Object {
-						filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:16-1:18
 				}
 				left: JSAssignmentObjectPattern {
-					loc: Object {
-						filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:1-1:13
 					rest: JSAssignmentIdentifier {
 						name: "rest"
-						loc: Object {
-							filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-							identifierName: "rest"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:5-1:9 (rest)
 					}
 					properties: Array [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:11-1:12 (b)
 								}
-								loc: Object {
-									filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:11-1:12
 							}
 							value: JSAssignmentIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:11-1:12 (b)
 							}
-							loc: Object {
-								filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:11-1:12
 						}
 					]
 				}

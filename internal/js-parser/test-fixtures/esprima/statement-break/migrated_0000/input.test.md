@@ -18,71 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-break/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-break/migrated_0000/input.js 1:0-2:0
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "esprima/statement-break/migrated_0000/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-break/migrated_0000/input.js 1:0-1:22
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "esprima/statement-break/migrated_0000/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-break/migrated_0000/input.js 1:7-1:11
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/statement-break/migrated_0000/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-break/migrated_0000/input.js 1:13-1:22
 				body: Array [
 					JSBreakStatement {
 						label: undefined
-						loc: Object {
-							filename: "esprima/statement-break/migrated_0000/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-break/migrated_0000/input.js 1:15-1:20
 					}
 				]
 			}

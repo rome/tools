@@ -18,101 +18,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/337/input.js"
-		end: Object {
-			column: 7
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/337/input.js 1:0-2:7
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "core/uncategorised/337/input.js"
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/337/input.js 1:0-2:7
 			discriminant: JSReferenceIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "core/uncategorised/337/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/337/input.js 1:7-1:8 (a)
 			}
 			cases: Array [
 				JSSwitchCase {
-					loc: Object {
-						filename: "core/uncategorised/337/input.js"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/337/input.js 1:12-2:5
 					test: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/337/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/337/input.js 1:17-1:18
 					}
 					consequent: Array [
 						JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "core/uncategorised/337/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/337/input.js 1:20-1:22
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "core/uncategorised/337/input.js"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/337/input.js 2:0-2:5
 							expression: JSRegExpLiteral {
 								global: false
 								insensitive: false
@@ -120,71 +49,21 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: Object {
-									filename: "core/uncategorised/337/input.js"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 0
-										line: 2
-									}
-								}
+								loc: SourceLocation core/uncategorised/337/input.js 2:0-2:5
 								expression: JSRegExpSubExpression {
-									loc: Object {
-										filename: "core/uncategorised/337/input.js"
-										end: Object {
-											column: 4
-											line: 2
-										}
-										start: Object {
-											column: 1
-											line: 2
-										}
-									}
+									loc: SourceLocation core/uncategorised/337/input.js 2:1-2:4
 									body: Array [
 										JSRegExpCharacter {
 											value: "f"
-											loc: Object {
-												filename: "core/uncategorised/337/input.js"
-												end: Object {
-													column: 2
-													line: 2
-												}
-												start: Object {
-													column: 1
-													line: 2
-												}
-											}
+											loc: SourceLocation core/uncategorised/337/input.js 2:1-2:2
 										}
 										JSRegExpCharacter {
 											value: "o"
-											loc: Object {
-												filename: "core/uncategorised/337/input.js"
-												end: Object {
-													column: 3
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation core/uncategorised/337/input.js 2:2-2:3
 										}
 										JSRegExpCharacter {
 											value: "o"
-											loc: Object {
-												filename: "core/uncategorised/337/input.js"
-												end: Object {
-													column: 4
-													line: 2
-												}
-												start: Object {
-													column: 3
-													line: 2
-												}
-											}
+											loc: SourceLocation core/uncategorised/337/input.js 2:3-2:4
 										}
 									]
 								}

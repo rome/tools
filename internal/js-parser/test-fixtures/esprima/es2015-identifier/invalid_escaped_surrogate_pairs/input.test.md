@@ -17,17 +17,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:0-2:0
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:0-1:16
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:0-1:16
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "\u{1ee00}"
+							loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:4-1:16 (𞸀)
+						}
+						init: undefined
+						loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:4-1:16
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,74 +51,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "\u{1ee00}"
-							loc: Object {
-								filename: "esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js"
-								identifierName: "\u{1ee00}"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
-						}
-						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:10
+				start: Position 1:10
 			}
 		}
 	]

@@ -18,99 +18,28 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 1:0-4:0
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 1:0-1:21
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 1:7-1:21
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 1:7-1:21
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 1:13-1:16 (foo)
 							}
-							loc: Object {
-								filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 1:13-1:20
 							init: JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 1:19-1:20
 							}
 						}
 					]
@@ -120,201 +49,57 @@ JSRoot {
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-				end: Object {
-					column: 42
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:0-2:42
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-					end: Object {
-						column: 42
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:7-2:42
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-						end: Object {
-							column: 42
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:7-2:42
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-									end: Object {
-										column: 35
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:13-2:35
 								properties: Array [
 									JSBindingObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "bar"
-												loc: Object {
-													filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-													identifierName: "bar"
-													end: Object {
-														column: 18
-														line: 2
-													}
-													start: Object {
-														column: 15
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:15-2:18 (bar)
 											}
-											loc: Object {
-												filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-												end: Object {
-													column: 18
-													line: 2
-												}
-												start: Object {
-													column: 15
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:15-2:18
 										}
 										value: JSBindingArrayPattern {
-											loc: Object {
-												filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-												end: Object {
-													column: 33
-													line: 2
-												}
-												start: Object {
-													column: 20
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:20-2:33
 											rest: JSBindingIdentifier {
 												name: "foo"
-												loc: Object {
-													filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-													identifierName: "foo"
-													end: Object {
-														column: 32
-														line: 2
-													}
-													start: Object {
-														column: 29
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:29-2:32 (foo)
 												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
-													loc: Object {
-														filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-														end: Object {
-															column: 32
-															line: 2
-														}
-														start: Object {
-															column: 29
-															line: 2
-														}
-													}
+													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:29-2:32
 												}
 											}
 											elements: Array [
 												JSBindingIdentifier {
 													name: "baz"
-													loc: Object {
-														filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-														identifierName: "baz"
-														end: Object {
-															column: 24
-															line: 2
-														}
-														start: Object {
-															column: 21
-															line: 2
-														}
-													}
+													loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:21-2:24 (baz)
 													meta: JSPatternMeta {
 														optional: undefined
 														typeAnnotation: undefined
-														loc: Object {
-															filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-															end: Object {
-																column: 24
-																line: 2
-															}
-															start: Object {
-																column: 21
-																line: 2
-															}
-														}
+														loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:21-2:24
 													}
 												}
 											]
 										}
-										loc: Object {
-											filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-											end: Object {
-												column: 33
-												line: 2
-											}
-											start: Object {
-												column: 15
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:15-2:33
 									}
 								]
 							}
-							loc: Object {
-								filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-								end: Object {
-									column: 41
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:13-2:41
 							init: JSReferenceIdentifier {
 								name: "qux"
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-destructuring19/input.js"
-									identifierName: "qux"
-									end: Object {
-										column: 41
-										line: 2
-									}
-									start: Object {
-										column: 38
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-destructuring19/input.js 2:38-2:41 (qux)
 							}
 						}
 					]

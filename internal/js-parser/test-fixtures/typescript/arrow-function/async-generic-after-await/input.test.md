@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-5:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,42 +32,16 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 3
-				}
-				start: Object {
-					column: 14
-					line: 3
-				}
+				end: Position 3:13
+				start: Position 3:14
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-				end: Object {
-					column: 2
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-4:2
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-4:1
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
@@ -85,151 +49,37 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-1:11
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-						end: Object {
-							column: 1
-							line: 4
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:12-4:1
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:2-2:13
 							expression: JSAwaitExpression {
-								loc: Object {
-									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-									end: Object {
-										column: 12
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
-								argument: JSNullLiteral {
-									loc: Object {
-										filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-										end: Object {
-											column: 12
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
-								}
+								argument: JSNullLiteral {loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:8-2:12}
+								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 2:2-2:12
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:13
 							expression: JSCallExpression {
 								arguments: Array []
-								loc: Object {
-									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-									end: Object {
-										column: 13
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:13
 								callee: JSReferenceIdentifier {
 									name: "async"
-									loc: Object {
-										filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-										identifierName: "async"
-										end: Object {
-											column: 7
-											line: 3
-										}
-										start: Object {
-											column: 2
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:2-3:7 (async)
 								}
 								typeArguments: TSTypeParameterInstantiation {
-									loc: Object {
-										filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-										end: Object {
-											column: 11
-											line: 3
-										}
-										start: Object {
-											column: 8
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:8-3:11
 									params: Array [
 										TSTypeReference {
 											typeParameters: undefined
-											loc: Object {
-												filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-												end: Object {
-													column: 10
-													line: 3
-												}
-												start: Object {
-													column: 9
-													line: 3
-												}
-											}
+											loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:9-3:10
 											typeName: JSReferenceIdentifier {
 												name: "T"
-												loc: Object {
-													filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-													identifierName: "T"
-													end: Object {
-														column: 10
-														line: 3
-													}
-													start: Object {
-														column: 9
-														line: 3
-													}
-												}
+												loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:9-3:10 (T)
 											}
 										}
 									]
@@ -237,57 +87,15 @@ JSRoot {
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-								end: Object {
-									column: 16
-									line: 3
-								}
-								start: Object {
-									column: 14
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:14-3:16
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-									end: Object {
-										column: 16
-										line: 3
-									}
-									start: Object {
-										column: 14
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:14-3:16
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-								end: Object {
-									column: 22
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
-							expression: JSNullLiteral {
-								loc: Object {
-									filename: "typescript/arrow-function/async-generic-after-await/input.ts"
-									end: Object {
-										column: 21
-										line: 3
-									}
-									start: Object {
-										column: 17
-										line: 3
-									}
-								}
-							}
+							expression: JSNullLiteral {loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:17-3:21}
+							loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 3:17-3:22
 						}
 					]
 				}

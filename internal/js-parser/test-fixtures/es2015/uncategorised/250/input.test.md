@@ -17,17 +17,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/250/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation es2015/uncategorised/250/input.js 1:0-1:8
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/250/input.js 1:0-1:8
+			expression: JSBinaryExpression {
+				operator: "<="
+				loc: SourceLocation es2015/uncategorised/250/input.js 1:0-1:8
+				left: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation es2015/uncategorised/250/input.js 1:1-1:1
+				}
+				right: JSNumericLiteral {
+					value: 42
+					format: undefined
+					loc: SourceLocation es2015/uncategorised/250/input.js 1:6-1:8
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +50,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/250/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBinaryExpression {
-				operator: "<="
-				loc: Object {
-					filename: "es2015/uncategorised/250/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2015/uncategorised/250/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-				}
-				right: JSNumericLiteral {
-					value: 42
-					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/250/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
-				}
+				end: Position 1:1
+				start: Position 1:1
 			}
 		}
 	]

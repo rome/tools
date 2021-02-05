@@ -10,17 +10,7 @@ CSSRoot {
 	corrupt: false
 	filename: "invalid/selector6/input.css"
 	integrity: undefined
-	loc: Object {
-		filename: "invalid/selector6/input.css"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation invalid/selector6/input.css 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -35,30 +25,14 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:7
+				start: Position 1:7
 			}
 		}
 	]
 	body: Array [
 		CSSRule {
-			loc: Object {
-				filename: "invalid/selector6/input.css"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation invalid/selector6/input.css 1:0-3:1
 			block: CSSBlock {
 				value: Array [
 					CSSDeclaration {
@@ -66,131 +40,41 @@ CSSRoot {
 						value: Array [
 							CSSIdentifier {
 								value: "purple"
-								loc: Object {
-									filename: "invalid/selector6/input.css"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation invalid/selector6/input.css 2:9-2:15
 							}
 						]
 						important: false
-						loc: Object {
-							filename: "invalid/selector6/input.css"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation invalid/selector6/input.css 2:2-2:15
 					}
 				]
 				startingTokenValue: "{"
-				loc: Object {
-					filename: "invalid/selector6/input.css"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation invalid/selector6/input.css 1:18-3:1
 			}
 			prelude: Array [
 				CSSSelector {
-					loc: Object {
-						filename: "invalid/selector6/input.css"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector6/input.css 1:0-1:8
 					patterns: Array [
 						CSSTypeSelector {
 							value: "a"
-							loc: Object {
-								filename: "invalid/selector6/input.css"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation invalid/selector6/input.css 1:0-1:1
 						}
 					]
 				}
 				CSSSelector {
 					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector6/input.css"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector6/input.css 1:8-1:9
 				}
 				CSSSelector {
 					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector6/input.css"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector6/input.css 1:9-1:16
 				}
 				CSSSelector {
 					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector6/input.css"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector6/input.css 1:16-1:17
 				}
 				CSSSelector {
 					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector6/input.css"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation invalid/selector6/input.css 1:17-1:18
 				}
 			]
 		}

@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/declare-field-initializer/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 2
-				}
-				start: Object {
-					column: 10
-					line: 2
-				}
+				end: Position 2:9
+				start: Position 2:10
 			}
 		}
 	]
@@ -57,115 +41,31 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/class/declare-field-initializer/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "typescript/class/declare-field-initializer/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/declare-field-initializer/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-3:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "typescript/class/declare-field-initializer/input.ts"
-									identifierName: "bar"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 10
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13 (bar)
 							}
-							loc: Object {
-								filename: "typescript/class/declare-field-initializer/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13
 						}
 						value: JSStringLiteral {
 							value: "test"
-							loc: Object {
-								filename: "typescript/class/declare-field-initializer/input.ts"
-								end: Object {
-									column: 30
-									line: 2
-								}
-								start: Object {
-									column: 24
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:24-2:30
 						}
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/declare-field-initializer/input.ts"
-							end: Object {
-								column: 31
-								line: 2
-							}
-							start: Object {
-								column: 10
-								line: 2
-							}
-						}
-						typeAnnotation: TSStringKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/declare-field-initializer/input.ts"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 15
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:31
+						typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:15-2:21}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -173,21 +73,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 10
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/declare-field-initializer/input.ts"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/declare-field-initializer/input.ts 2:10-2:13
+							start: Position 2:10
 						}
 					}
 				]

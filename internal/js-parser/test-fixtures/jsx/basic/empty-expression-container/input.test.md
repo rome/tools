@@ -17,86 +17,24 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/empty-expression-container/input.jsx"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/empty-expression-container/input.jsx"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "jsx/basic/empty-expression-container/input.jsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:1-1:2
 				}
 				attributes: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/empty-expression-container/input.jsx"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:0-1:9
 				children: Array [
 					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/basic/empty-expression-container/input.jsx"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
-						expression: JSXEmptyExpression {
-							loc: Object {
-								filename: "jsx/basic/empty-expression-container/input.jsx"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
-						}
+						expression: JSXEmptyExpression {loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:4-1:4}
+						loc: SourceLocation jsx/basic/empty-expression-container/input.jsx 1:3-1:5
 					}
 				]
 			}

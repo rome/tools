@@ -17,17 +17,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-124/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation experimental/numeric-separator/invalid-124/input.js 1:0-2:0
+	body: Array [
+		JSBlockStatement {
+			directives: Array []
+			loc: SourceLocation experimental/numeric-separator/invalid-124/input.js 1:0-1:4
+			body: Array [
+				JSExpressionStatement {
+					loc: SourceLocation experimental/numeric-separator/invalid-124/input.js 1:1-1:3
+					expression: JSNumericLiteral {
+						value: 1
+						format: undefined
+						loc: SourceLocation experimental/numeric-separator/invalid-124/input.js 1:1-1:3
+					}
+				}
+			]
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,61 +48,9 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:1
+				start: Position 1:1
 			}
-		}
-	]
-	body: Array [
-		JSBlockStatement {
-			directives: Array []
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-124/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: Array [
-				JSExpressionStatement {
-					loc: Object {
-						filename: "experimental/numeric-separator/invalid-124/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-					expression: JSNumericLiteral {
-						value: 1
-						format: undefined
-						loc: Object {
-							filename: "experimental/numeric-separator/invalid-124/input.js"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
-				}
-			]
 		}
 	]
 }

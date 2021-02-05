@@ -18,73 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/export-extensions/default/input.js 1:0-2:0
 	body: Array [
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/default/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/default/input.js 1:0-1:21
 			source: JSStringLiteral {
 				value: "test"
-				loc: Object {
-					filename: "experimental/export-extensions/default/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default/input.js 1:14-1:20
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/default/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default/input.js 1:7-1:8
 				exported: JSIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "experimental/export-extensions/default/input.js"
-						identifierName: "A"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/default/input.js 1:7-1:8 (A)
 				}
 			}
 		}

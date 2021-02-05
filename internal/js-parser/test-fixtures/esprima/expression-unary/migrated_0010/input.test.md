@@ -18,58 +18,17 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-unary/migrated_0010/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-unary/migrated_0010/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-unary/migrated_0010/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-unary/migrated_0010/input.js 1:0-1:6
 			expression: JSUnaryExpression {
 				operator: "void"
 				prefix: true
-				loc: Object {
-					filename: "esprima/expression-unary/migrated_0010/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-unary/migrated_0010/input.js 1:0-1:6
 				argument: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/expression-unary/migrated_0010/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-unary/migrated_0010/input.js 1:5-1:6 (x)
 				}
 			}
 		}

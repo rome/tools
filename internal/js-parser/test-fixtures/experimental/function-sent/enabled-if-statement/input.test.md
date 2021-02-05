@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/function-sent/enabled-if-statement/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "experimental/function-sent/enabled-if-statement/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 1:10-1:13 (foo)
 			}
-			loc: Object {
-				filename: "experimental/function-sent/enabled-if-statement/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,112 +35,30 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/function-sent/enabled-if-statement/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/function-sent/enabled-if-statement/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 1:16-3:1
 				body: Array [
 					JSIfStatement {
 						alternate: undefined
-						loc: Object {
-							filename: "experimental/function-sent/enabled-if-statement/input.js"
-							end: Object {
-								column: 26
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 2:2-2:26
 						test: JSBooleanLiteral {
 							value: true
-							loc: Object {
-								filename: "experimental/function-sent/enabled-if-statement/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 2:6-2:10
 						}
 						consequent: JSExpressionStatement {
-							loc: Object {
-								filename: "experimental/function-sent/enabled-if-statement/input.js"
-								end: Object {
-									column: 26
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 2:12-2:26
 							expression: JSMetaProperty {
-								loc: Object {
-									filename: "experimental/function-sent/enabled-if-statement/input.js"
-									end: Object {
-										column: 25
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 2:12-2:25
 								meta: JSIdentifier {
 									name: "function"
-									loc: Object {
-										filename: "experimental/function-sent/enabled-if-statement/input.js"
-										identifierName: "function"
-										end: Object {
-											column: 20
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 2:12-2:20 (function)
 								}
 								property: JSIdentifier {
 									name: "sent"
-									loc: Object {
-										filename: "experimental/function-sent/enabled-if-statement/input.js"
-										identifierName: "sent"
-										end: Object {
-											column: 25
-											line: 2
-										}
-										start: Object {
-											column: 21
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/function-sent/enabled-if-statement/input.js 2:21-2:25 (sent)
 								}
 							}
 						}

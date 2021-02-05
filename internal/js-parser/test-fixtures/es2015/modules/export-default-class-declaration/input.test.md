@@ -18,74 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-default-class-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-default-class-declaration/input.js 1:0-2:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/export-default-class-declaration/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-class-declaration/input.js 1:0-1:27
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "es2015/modules/export-default-class-declaration/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-class-declaration/input.js 1:21-1:24 (Foo)
 				}
-				loc: Object {
-					filename: "es2015/modules/export-default-class-declaration/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-class-declaration/input.js 1:15-1:27
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/export-default-class-declaration/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-class-declaration/input.js 1:15-1:27
 				}
 			}
 		}

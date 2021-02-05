@@ -17,57 +17,16 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/null-assertion/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/null-assertion/input.ts"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:3
 			expression: TSNonNullExpression {
-				loc: Object {
-					filename: "typescript/cast/null-assertion/input.ts"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:2
 				expression: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "typescript/cast/null-assertion/input.ts"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/null-assertion/input.ts 1:0-1:1 (x)
 				}
 			}
 		}
