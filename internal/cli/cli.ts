@@ -28,7 +28,7 @@ import {
 	ClientProfileOptions,
 	getFilenameTimestamp,
 } from "@internal/core/client/Client";
-import {commandCategories, CommandName} from "@internal/core/common/commands";
+import {CommandName, commandCategories} from "@internal/core/common/commands";
 import {FSWriteStream, createWriteStream, writeFile} from "@internal/fs";
 import {markupToPlainText} from "@internal/cli-layout";
 import {

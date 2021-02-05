@@ -41,7 +41,7 @@ import {
 import {markup, readMarkup} from "@internal/markup";
 import {LSPCodeAction} from "./types";
 import {Event} from "@internal/events";
-import { CommandName } from "@internal/core/common/commands";
+import {CommandName} from "@internal/core/common/commands";
 
 export default class LSPServer {
 	constructor(request: ServerRequest) {
