@@ -18,104 +18,32 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/asi-success/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-5:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-private-properties/asi-success/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/asi-success/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/asi-success/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/asi-success/input.js 1:0-4:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/asi-success/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-success/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:2-2:4
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/asi-success/input.js"
-							end: Object {
-								column: 4
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:2-2:4
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -123,65 +51,21 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-success/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "experimental/class-private-properties/asi-success/input.js"
-									identifierName: "y"
-									end: Object {
-										column: 4
-										line: 3
-									}
-									start: Object {
-										column: 3
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:3-3:4 (y)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-success/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:2-3:4
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/asi-success/input.js"
-							end: Object {
-								column: 4
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:2-3:4
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -189,21 +73,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/asi-success/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/asi-success/input.js 3:2-3:4
+							start: Position 3:2
 						}
 					}
 				]

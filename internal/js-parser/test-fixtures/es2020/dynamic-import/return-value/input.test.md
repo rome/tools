@@ -18,96 +18,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/return-value/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2020/dynamic-import/return-value/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-1:39
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2020/dynamic-import/return-value/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:0-1:39
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "importResult"
-							loc: Object {
-								filename: "es2020/dynamic-import/return-value/input.js"
-								identifierName: "importResult"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:6-1:18 (importResult)
 						}
-						loc: Object {
-							filename: "es2020/dynamic-import/return-value/input.js"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:6-1:38
 						init: JSImportCall {
-							loc: Object {
-								filename: "es2020/dynamic-import/return-value/input.js"
-								end: Object {
-									column: 38
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:27-1:38
 							argument: JSStringLiteral {
 								value: "test.js"
-								loc: Object {
-									filename: "es2020/dynamic-import/return-value/input.js"
-									end: Object {
-										column: 37
-										line: 1
-									}
-									start: Object {
-										column: 28
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/dynamic-import/return-value/input.js 1:28-1:37
 							}
 						}
 					}

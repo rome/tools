@@ -17,246 +17,75 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/3/input.jsx 1:0-1:40
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/3/input.jsx"
-		end: Object {
-			column: 40
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/3/input.jsx"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/3/input.jsx 1:0-1:40
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "jsx/basic/3/input.jsx"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/3/input.jsx 1:1-1:2
 				}
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/3/input.jsx"
-					end: Object {
-						column: 40
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/3/input.jsx 1:0-1:40
 				attributes: Array [
 					JSXAttribute {
 						name: JSXNamespacedName {
 							name: JSXIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "jsx/basic/3/input.jsx"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/3/input.jsx 1:5-1:8
 							}
-							loc: Object {
-								filename: "jsx/basic/3/input.jsx"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/3/input.jsx 1:3-1:8
 							namespace: JSXIdentifier {
 								name: "n"
-								loc: Object {
-									filename: "jsx/basic/3/input.jsx"
-									end: Object {
-										column: 4
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/3/input.jsx 1:3-1:4
 							}
 						}
 						value: JSStringLiteral {
 							value: "bar"
-							loc: Object {
-								filename: "jsx/basic/3/input.jsx"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/3/input.jsx 1:9-1:14
 						}
-						loc: Object {
-							filename: "jsx/basic/3/input.jsx"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/3/input.jsx 1:3-1:14
 					}
 				]
 				children: Array [
 					JSXText {
 						value: " "
-						loc: Object {
-							filename: "jsx/basic/3/input.jsx"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/3/input.jsx 1:15-1:16
 					}
 					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/basic/3/input.jsx"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/3/input.jsx 1:16-1:23
 						expression: JSReferenceIdentifier {
 							name: "value"
-							loc: Object {
-								filename: "jsx/basic/3/input.jsx"
-								identifierName: "value"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/3/input.jsx 1:17-1:22 (value)
 						}
 					}
 					JSXText {
 						value: " "
-						loc: Object {
-							filename: "jsx/basic/3/input.jsx"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/3/input.jsx 1:23-1:24
 					}
 					JSXElement {
 						name: JSXIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "jsx/basic/3/input.jsx"
-								end: Object {
-									column: 26
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/3/input.jsx 1:25-1:26
 						}
 						attributes: Array []
 						selfClosing: false
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/basic/3/input.jsx"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 24
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/3/input.jsx 1:24-1:36
 						children: Array [
 							JSXElement {
 								name: JSXIdentifier {
 									name: "c"
-									loc: Object {
-										filename: "jsx/basic/3/input.jsx"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation jsx/basic/3/input.jsx 1:28-1:29
 								}
 								attributes: Array []
 								children: Array []
 								selfClosing: true
 								typeArguments: undefined
-								loc: Object {
-									filename: "jsx/basic/3/input.jsx"
-									end: Object {
-										column: 32
-										line: 1
-									}
-									start: Object {
-										column: 27
-										line: 1
-									}
-								}
+								loc: SourceLocation jsx/basic/3/input.jsx 1:27-1:32
 							}
 						]
 					}

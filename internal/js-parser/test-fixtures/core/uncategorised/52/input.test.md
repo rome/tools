@@ -17,63 +17,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/52/input.js"
-		end: Object {
-			column: 6
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/52/input.js 1:0-2:6
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: "a\nb"
-			loc: Object {
-				filename: "core/uncategorised/52/input.js"
-				end: Object {
-					column: 3
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/52/input.js 1:0-2:3
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "core/uncategorised/52/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/52/input.js 2:4-2:6
 			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				leadingComments: undefined
-				loc: Object {
-					filename: "core/uncategorised/52/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 4
-						line: 2
-					}
-				}
+				loc: SourceLocation core/uncategorised/52/input.js 2:4-2:6
 			}
 		}
 	]

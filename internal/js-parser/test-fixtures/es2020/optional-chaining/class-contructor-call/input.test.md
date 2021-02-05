@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/optional-chaining/class-contructor-call/input.js"
-		end: Object {
-			column: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:10
+				start: Position 1:10
 			}
 			description: Object {
 				category: "parse"
@@ -54,148 +38,41 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Optional chain member responsible"}
 					}
-					frame {
-						location: Object {
-							filename: "es2020/optional-chaining/class-contructor-call/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:8}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/class-contructor-call/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "es2020/optional-chaining/class-contructor-call/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/class-contructor-call/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:10
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "d"
-							loc: Object {
-								filename: "es2020/optional-chaining/class-contructor-call/input.js"
-								identifierName: "d"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:9-1:10 (d)
 						}
-						loc: Object {
-							filename: "es2020/optional-chaining/class-contructor-call/input.js"
-							identifierName: "d"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:9-1:10 (d)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "es2020/optional-chaining/class-contructor-call/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:8
 						object: JSReferenceIdentifier {
 							name: "C"
-							loc: Object {
-								filename: "es2020/optional-chaining/class-contructor-call/input.js"
-								identifierName: "C"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:5 (C)
 						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "es2020/optional-chaining/class-contructor-call/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:7-1:8 (b)
 							}
 							optional: true
-							loc: Object {
-								filename: "es2020/optional-chaining/class-contructor-call/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:7-1:8 (b)
 						}
 					}
 				}

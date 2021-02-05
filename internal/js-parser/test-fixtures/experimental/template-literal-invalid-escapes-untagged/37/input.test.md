@@ -17,17 +17,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/template-literal-invalid-escapes-untagged/37/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/37/input.js 1:0-1:8
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/37/input.js 1:0-1:8
+			expression: JSTemplateLiteral {
+				expressions: Array []
+				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/37/input.js 1:0-1:8
+				quasis: Array [
+					JSTemplateElement {
+						cooked: "\\u{-0}"
+						raw: "\\u{-0}"
+						tail: true
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/37/input.js 1:1-1:7
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,61 +49,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/template-literal-invalid-escapes-untagged/37/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: Object {
-					filename: "experimental/template-literal-invalid-escapes-untagged/37/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				quasis: Array [
-					JSTemplateElement {
-						cooked: "\\u{-0}"
-						raw: "\\u{-0}"
-						tail: true
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/37/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:2
+				start: Position 1:2
 			}
 		}
 	]

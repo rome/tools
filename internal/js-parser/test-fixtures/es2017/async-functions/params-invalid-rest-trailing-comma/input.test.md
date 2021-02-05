@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,56 +32,20 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
+				end: Position 1:12
+				start: Position 1:12
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:20
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:19
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:17-1:19
 				}
 				head: JSFunctionHead {
 					async: true
@@ -99,31 +53,10 @@ JSRoot {
 					params: Array []
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-1:16
 					rest: JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:10-1:11 (a)
 					}
 				}
 			}

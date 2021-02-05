@@ -17,107 +17,37 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/export-default-anonymous-class/input.js"
-		end: Object {
-			column: 0
-			line: 11
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 1:0-11:0
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: "*\n * this is anonymous class.\n "
-			loc: Object {
-				filename: "comments/basic/export-default-anonymous-class/input.js"
-				end: Object {
-					column: 3
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 1:0-3:3
 		}
 		CommentBlock {
 			id: "1"
 			value: "*\n     * this is method1.\n     "
-			loc: Object {
-				filename: "comments/basic/export-default-anonymous-class/input.js"
-				end: Object {
-					column: 7
-					line: 7
-				}
-				start: Object {
-					column: 4
-					line: 5
-				}
-			}
+			loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 5:4-7:7
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "comments/basic/export-default-anonymous-class/input.js"
-				end: Object {
-					column: 1
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:0-10:1
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
-					loc: Object {
-						filename: "comments/basic/export-default-anonymous-class/input.js"
-						end: Object {
-							column: 1
-							line: 10
-						}
-						start: Object {
-							column: 15
-							line: 4
-						}
-					}
+					loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
 				}
 				leadingComments: undefined
-				loc: Object {
-					filename: "comments/basic/export-default-anonymous-class/input.js"
-					end: Object {
-						column: 1
-						line: 10
-					}
-					start: Object {
-						column: 15
-						line: 4
-					}
-				}
+				loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
 				meta: JSClassHead {
 					implements: undefined
 					leadingComments: undefined
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "comments/basic/export-default-anonymous-class/input.js"
-						end: Object {
-							column: 1
-							line: 10
-						}
-						start: Object {
-							column: 15
-							line: 4
-						}
-					}
+					loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 4:15-10:1
 					body: Array [
 						JSClassMethod {
 							kind: "method"
@@ -125,58 +55,17 @@ JSRoot {
 								value: JSIdentifier {
 									name: "method1"
 									leadingComments: undefined
-									loc: Object {
-										filename: "comments/basic/export-default-anonymous-class/input.js"
-										identifierName: "method1"
-										end: Object {
-											column: 11
-											line: 8
-										}
-										start: Object {
-											column: 4
-											line: 8
-										}
-									}
+									loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11 (method1)
 								}
 								leadingComments: undefined
-								loc: Object {
-									filename: "comments/basic/export-default-anonymous-class/input.js"
-									end: Object {
-										column: 11
-										line: 8
-									}
-									start: Object {
-										column: 4
-										line: 8
-									}
-								}
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
 							}
 							leadingComments: Array ["1"]
-							loc: Object {
-								filename: "comments/basic/export-default-anonymous-class/input.js"
-								end: Object {
-									column: 5
-									line: 9
-								}
-								start: Object {
-									column: 4
-									line: 8
-								}
-							}
+							loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-9:5
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "comments/basic/export-default-anonymous-class/input.js"
-									end: Object {
-										column: 5
-										line: 9
-									}
-									start: Object {
-										column: 13
-										line: 8
-									}
-								}
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:13-9:5
 							}
 							head: JSFunctionHead {
 								async: false
@@ -187,17 +76,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "comments/basic/export-default-anonymous-class/input.js"
-									end: Object {
-										column: 13
-										line: 8
-									}
-									start: Object {
-										column: 11
-										line: 8
-									}
-								}
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:11-8:13
 							}
 							meta: JSClassPropertyMeta {
 								abstract: false
@@ -207,21 +86,8 @@ JSRoot {
 								readonly: false
 								static: false
 								typeAnnotation: undefined
-								start: Object {
-									column: 4
-									line: 8
-								}
-								loc: Object {
-									filename: "comments/basic/export-default-anonymous-class/input.js"
-									end: Object {
-										column: 11
-										line: 8
-									}
-									start: Object {
-										column: 4
-										line: 8
-									}
-								}
+								loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 8:4-8:11
+								start: Position 8:4
 							}
 						}
 					]

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 1:0-6:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,56 +32,20 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 3
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
+				end: Position 3:13
+				start: Position 3:4
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-				end: Object {
-					column: 8
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 1:0-5:8
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-					end: Object {
-						column: 7
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 1:0-5:7
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-						end: Object {
-							column: 7
-							line: 5
-						}
-						start: Object {
-							column: 5
-							line: 5
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 5:5-5:7
 				}
 				head: JSFunctionHead {
 					async: false
@@ -99,61 +53,19 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-						end: Object {
-							column: 4
-							line: 5
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 1:0-5:4
 					params: Array [
 						JSBindingIdentifier {
 							name: "first"
-							loc: Object {
-								filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-								identifierName: "first"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 2:4-2:9 (first)
 						}
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-								end: Object {
-									column: 4
-									line: 5
-								}
-								start: Object {
-									column: 5
-									line: 5
-								}
-							}
+							loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 5:5-5:4
 						}
 						JSBindingIdentifier {
 							name: "third"
-							loc: Object {
-								filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
-								identifierName: "third"
-								end: Object {
-									column: 9
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 4:4-4:9 (third)
 						}
 					]
 				}

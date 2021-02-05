@@ -18,100 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/196/input.js"
-		end: Object {
-			column: 10
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/196/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: Object {
-					filename: "core/uncategorised/196/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/196/input.js 1:0-1:10
 				left: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/196/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/196/input.js 1:0-1:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: "^"
-					loc: Object {
-						filename: "core/uncategorised/196/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/196/input.js 1:5-1:10
 					left: JSReferenceIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "core/uncategorised/196/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/196/input.js 1:5-1:6 (y)
 					}
 					right: JSReferenceIdentifier {
 						name: "z"
-						loc: Object {
-							filename: "core/uncategorised/196/input.js"
-							identifierName: "z"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/196/input.js 1:9-1:10 (z)
 					}
 				}
 			}

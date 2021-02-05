@@ -17,117 +17,35 @@ JSRoot {
 	integrity: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 1:0-4:0
 	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
-		loc: Object {
-			filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-			end: Object {
-				column: 25
-				line: 1
-			}
-			start: Object {
-				column: 1
-				line: 1
-			}
-		}
+		loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 1:1-1:25
 	}
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-				end: Object {
-					column: 29
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:0-3:29
 			source: JSStringLiteral {
 				value: "foobar"
-				loc: Object {
-					filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-					end: Object {
-						column: 28
-						line: 3
-					}
-					start: Object {
-						column: 20
-						line: 3
-					}
-				}
+				loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:20-3:28
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-						end: Object {
-							column: 13
-							line: 3
-						}
-						start: Object {
-							column: 8
-							line: 3
-						}
-					}
+					loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13
 					imported: JSIdentifier {
 						name: "spawn"
-						loc: Object {
-							filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-							identifierName: "spawn"
-							end: Object {
-								column: 13
-								line: 3
-							}
-							start: Object {
-								column: 8
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13 (spawn)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "spawn"
-							loc: Object {
-								filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-								identifierName: "spawn"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13 (spawn)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "comments/interpreter-directive/interpreter-directive-import/input.js"
-							end: Object {
-								column: 13
-								line: 3
-							}
-							start: Object {
-								column: 8
-								line: 3
-							}
-						}
+						loc: SourceLocation comments/interpreter-directive/interpreter-directive-import/input.js 3:8-3:13
 					}
 				}
 			]

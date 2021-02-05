@@ -17,20 +17,38 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:0-2:0
+	body: Array [
+		JSExportLocalDeclaration {
+			declaration: undefined
+			exportKind: "value"
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:0-1:16
+			specifiers: Array [
+				JSExportLocalSpecifier {
+					loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:8-1:15
+					exported: JSIdentifier {
+						name: "default"
+						loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:8-1:15 (default)
+					}
+					local: JSReferenceIdentifier {
+						name: "default"
+						loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:8-1:15 (default)
+					}
+				}
+			]
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:15
+				start: Position 1:8
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,82 +58,6 @@ JSRoot {
 					"default"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExportLocalDeclaration {
-			declaration: undefined
-			exportKind: "value"
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			specifiers: Array [
-				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
-					exported: JSIdentifier {
-						name: "default"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
-					}
-					local: JSReferenceIdentifier {
-						name: "default"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/invalid-export-named-default/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
-					}
-				}
-			]
 		}
 	]
 }

@@ -18,169 +18,46 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/8/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/8/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2017/async-functions/8/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/8/input.js 1:0-1:39
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2017/async-functions/8/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/8/input.js 1:0-1:39
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2017/async-functions/8/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/8/input.js 1:6-1:13
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "async"
-											loc: Object {
-												filename: "es2017/async-functions/8/input.js"
-												identifierName: "async"
-												end: Object {
-													column: 12
-													line: 1
-												}
-												start: Object {
-													column: 7
-													line: 1
-												}
-											}
+											loc: SourceLocation es2017/async-functions/8/input.js 1:7-1:12 (async)
 										}
-										loc: Object {
-											filename: "es2017/async-functions/8/input.js"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/8/input.js 1:7-1:12
 									}
 									value: JSBindingIdentifier {
 										name: "async"
-										loc: Object {
-											filename: "es2017/async-functions/8/input.js"
-											identifierName: "async"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/8/input.js 1:7-1:12 (async)
 									}
-									loc: Object {
-										filename: "es2017/async-functions/8/input.js"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation es2017/async-functions/8/input.js 1:7-1:12
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2017/async-functions/8/input.js"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/8/input.js 1:6-1:39
 						init: JSCallExpression {
-							loc: Object {
-								filename: "es2017/async-functions/8/input.js"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/8/input.js 1:16-1:39
 							callee: JSReferenceIdentifier {
 								name: "require"
-								loc: Object {
-									filename: "es2017/async-functions/8/input.js"
-									identifierName: "require"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/8/input.js 1:16-1:23 (require)
 							}
 							arguments: Array [
 								JSStringLiteral {
 									value: "../lang/task"
-									loc: Object {
-										filename: "es2017/async-functions/8/input.js"
-										end: Object {
-											column: 38
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation es2017/async-functions/8/input.js 1:24-1:38
 								}
 							]
 						}

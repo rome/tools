@@ -18,43 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/basic-with-argument/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:0-1:26
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/basic-with-argument/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:0-1:26
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "es2015/yield/basic-with-argument/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:1-1:25
 				head: JSFunctionHead {
 					async: false
 					generator: true
@@ -64,71 +34,20 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/yield/basic-with-argument/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:11-1:13
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2015/yield/basic-with-argument/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:14-1:25
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/yield/basic-with-argument/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:16-1:23
 							expression: JSYieldExpression {
 								delegate: false
-								loc: Object {
-									filename: "es2015/yield/basic-with-argument/input.js"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:16-1:23
 								argument: JSReferenceIdentifier {
 									name: "v"
-									loc: Object {
-										filename: "es2015/yield/basic-with-argument/input.js"
-										identifierName: "v"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/basic-with-argument/input.js 1:22-1:23 (v)
 								}
 							}
 						}

@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,163 +32,43 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 27
-					line: 1
-				}
+				end: Position 1:27
+				start: Position 1:27
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-1:29
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:0-1:29
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
 								typeAnnotation: TSTupleType {
-									loc: Object {
-										filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:7-1:29
 									elementTypes: Array [
 										TSTupleElement {
 											name: undefined
 											optional: false
-											loc: Object {
-												filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-												end: Object {
-													column: 14
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
-											typeAnnotation: TSStringKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-													end: Object {
-														column: 14
-														line: 1
-													}
-													start: Object {
-														column: 8
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:8-1:14
+											typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:8-1:14}
 										}
 										TSTupleElement {
 											name: undefined
 											optional: false
-											loc: Object {
-												filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-												end: Object {
-													column: 27
-													line: 1
-												}
-												start: Object {
-													column: 16
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:16-1:27
 											typeAnnotation: TSRestType {
-												loc: Object {
-													filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-													end: Object {
-														column: 27
-														line: 1
-													}
-													start: Object {
-														column: 16
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:16-1:27
 												argument: TSArrayType {
-													loc: Object {
-														filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-														end: Object {
-															column: 27
-															line: 1
-														}
-														start: Object {
-															column: 19
-															line: 1
-														}
-													}
-													elementType: TSStringKeywordTypeAnnotation {
-														loc: Object {
-															filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-															end: Object {
-																column: 25
-																line: 1
-															}
-															start: Object {
-																column: 19
-																line: 1
-															}
-														}
-													}
+													elementType: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:19-1:25}
+													loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:19-1:27
 												}
 											}
 										}
@@ -207,17 +77,7 @@ JSRoot {
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/tuple-rest-trailing-comma/input.ts"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-rest-trailing-comma/input.ts 1:4-1:29
 					}
 				]
 			}

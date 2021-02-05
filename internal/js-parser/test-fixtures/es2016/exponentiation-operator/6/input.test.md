@@ -18,100 +18,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/exponentiation-operator/6/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/exponentiation-operator/6/input.js 1:0-1:11
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/exponentiation-operator/6/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/exponentiation-operator/6/input.js 1:0-1:11
 			expression: JSBinaryExpression {
 				operator: "**"
-				loc: Object {
-					filename: "es2016/exponentiation-operator/6/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/exponentiation-operator/6/input.js 1:0-1:11
 				left: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "es2016/exponentiation-operator/6/input.js"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/6/input.js 1:0-1:1
 				}
 				right: JSBinaryExpression {
 					operator: "**"
-					loc: Object {
-						filename: "es2016/exponentiation-operator/6/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/6/input.js 1:5-1:11
 					left: JSNumericLiteral {
 						value: 3
 						format: undefined
-						loc: Object {
-							filename: "es2016/exponentiation-operator/6/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/exponentiation-operator/6/input.js 1:5-1:6
 					}
 					right: JSNumericLiteral {
 						value: 2
 						format: undefined
-						loc: Object {
-							filename: "es2016/exponentiation-operator/6/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/exponentiation-operator/6/input.js 1:10-1:11
 					}
 				}
 			}

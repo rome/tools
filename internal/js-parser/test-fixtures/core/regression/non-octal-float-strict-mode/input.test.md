@@ -17,17 +17,17 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "core/regression/non-octal-float-strict-mode/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4
+			expression: JSNumericLiteral {
+				value: 9.5
+				format: undefined
+				loc: SourceLocation core/regression/non-octal-float-strict-mode/input.js 1:0-1:4
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,44 +42,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/regression/non-octal-float-strict-mode/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 9.5
-				format: undefined
-				loc: Object {
-					filename: "core/regression/non-octal-float-strict-mode/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:2
+				start: Position 1:2
 			}
 		}
 	]

@@ -17,48 +17,18 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:0-1:32
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSStringLiteral {
 				value: "hot-new-module"
-				loc: Object {
-					filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:15-1:31
 			}
 			body: undefined
 			declare: true
 			global: undefined
-			loc: Object {
-				filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:0-1:32
 		}
 	]
 }

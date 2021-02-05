@@ -17,185 +17,49 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/tuple/input.ts"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple/input.ts 1:0-1:32
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/tuple/input.ts"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple/input.ts 1:0-1:32
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/tuple/input.ts"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/tuple/input.ts"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 								typeAnnotation: TSTupleType {
-									loc: Object {
-										filename: "typescript/types/tuple/input.ts"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple/input.ts 1:7-1:31
 									elementTypes: Array [
 										TSTupleElement {
 											name: undefined
 											optional: false
-											loc: Object {
-												filename: "typescript/types/tuple/input.ts"
-												end: Object {
-													column: 14
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/tuple/input.ts"
-													end: Object {
-														column: 14
-														line: 1
-													}
-													start: Object {
-														column: 8
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/types/tuple/input.ts 1:8-1:14
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple/input.ts 1:8-1:14}
 										}
 										TSTupleElement {
 											name: undefined
 											optional: false
-											loc: Object {
-												filename: "typescript/types/tuple/input.ts"
-												end: Object {
-													column: 22
-													line: 1
-												}
-												start: Object {
-													column: 16
-													line: 1
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/tuple/input.ts"
-													end: Object {
-														column: 22
-														line: 1
-													}
-													start: Object {
-														column: 16
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/types/tuple/input.ts 1:16-1:22
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple/input.ts 1:16-1:22}
 										}
 										TSTupleElement {
 											name: undefined
 											optional: false
-											loc: Object {
-												filename: "typescript/types/tuple/input.ts"
-												end: Object {
-													column: 30
-													line: 1
-												}
-												start: Object {
-													column: 24
-													line: 1
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/types/tuple/input.ts"
-													end: Object {
-														column: 30
-														line: 1
-													}
-													start: Object {
-														column: 24
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/types/tuple/input.ts 1:24-1:30
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple/input.ts 1:24-1:30}
 										}
 									]
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/tuple/input.ts"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple/input.ts 1:4-1:31
 					}
 				]
 			}

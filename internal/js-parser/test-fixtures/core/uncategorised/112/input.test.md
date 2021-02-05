@@ -18,74 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/112/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/112/input.js 1:0-1:13
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/112/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/112/input.js 1:0-1:13
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "core/uncategorised/112/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/112/input.js 1:0-1:13
 				callee: JSNewExpression {
 					arguments: Array []
 					optional: undefined
 					typeArguments: undefined
-					loc: Object {
-						filename: "core/uncategorised/112/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/112/input.js 1:4-1:13
 					callee: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/uncategorised/112/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/112/input.js 1:8-1:11 (foo)
 					}
 				}
 			}

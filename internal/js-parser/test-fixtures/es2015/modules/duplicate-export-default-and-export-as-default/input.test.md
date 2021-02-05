@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:0-3:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 23
-					line: 2
-				}
-				start: Object {
-					column: 9
-					line: 2
-				}
+				end: Position 2:23
+				start: Position 2:9
 			}
 			description: Object {
 				category: "parse"
@@ -54,76 +38,24 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:0-1:28
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
-					loc: Object {
-						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28
 				}
-				loc: Object {
-					filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:26-1:28
 				}
 				head: JSFunctionHead {
 					async: false
@@ -134,89 +66,25 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:23-1:25
 				}
 			}
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:28-1:29}
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-				end: Object {
-					column: 26
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:0-2:26
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-						end: Object {
-							column: 23
-							line: 2
-						}
-						start: Object {
-							column: 9
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:9-2:23
 					exported: JSIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 16
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:16-2:23 (default)
 					}
 					local: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-export-default-and-export-as-default/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 2
-							}
-							start: Object {
-								column: 9
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 2:9-2:12 (foo)
 					}
 				}
 			]

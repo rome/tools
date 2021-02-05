@@ -17,133 +17,41 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/65/input.js"
-		end: Object {
-			column: 50
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/65/input.js 1:0-1:50
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " perfect "
-			loc: Object {
-				filename: "core/uncategorised/65/input.js"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 27
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/65/input.js 1:27-1:40
 		}
 	]
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "core/uncategorised/65/input.js"
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/65/input.js 1:0-1:50
 			discriminant: JSReferenceIdentifier {
 				name: "answer"
-				loc: Object {
-					filename: "core/uncategorised/65/input.js"
-					identifierName: "answer"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/65/input.js 1:8-1:14 (answer)
 			}
 			cases: Array [
 				JSSwitchCase {
-					loc: Object {
-						filename: "core/uncategorised/65/input.js"
-						end: Object {
-							column: 48
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/65/input.js 1:18-1:48
 					test: JSNumericLiteral {
 						value: 42
 						format: undefined
-						loc: Object {
-							filename: "core/uncategorised/65/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/65/input.js 1:23-1:25
 					}
 					consequent: Array [
 						JSExpressionStatement {
 							leadingComments: Array ["0"]
-							loc: Object {
-								filename: "core/uncategorised/65/input.js"
-								end: Object {
-									column: 48
-									line: 1
-								}
-								start: Object {
-									column: 41
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/65/input.js 1:41-1:48
 							expression: JSCallExpression {
 								arguments: Array []
 								leadingComments: undefined
-								loc: Object {
-									filename: "core/uncategorised/65/input.js"
-									end: Object {
-										column: 48
-										line: 1
-									}
-									start: Object {
-										column: 41
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/65/input.js 1:41-1:48
 								callee: JSReferenceIdentifier {
 									name: "bingo"
 									leadingComments: undefined
-									loc: Object {
-										filename: "core/uncategorised/65/input.js"
-										identifierName: "bingo"
-										end: Object {
-											column: 46
-											line: 1
-										}
-										start: Object {
-											column: 41
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/65/input.js 1:41-1:46 (bingo)
 								}
 							}
 						}

@@ -18,44 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/75/input.js"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/75/input.js 1:0-1:6
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/75/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/75/input.js 1:0-1:6
 			expression: JSNumericLiteral {
 				value: 0
 				format: "scientific"
-				loc: Object {
-					filename: "core/uncategorised/75/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/75/input.js 1:0-1:6
 			}
 		}
 	]

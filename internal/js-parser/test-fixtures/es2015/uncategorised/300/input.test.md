@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/300/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/300/input.js 1:0-1:29
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "normal"
-				loc: Object {
-					filename: "es2015/uncategorised/300/input.js"
-					identifierName: "normal"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/300/input.js 1:9-1:15 (normal)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/300/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/300/input.js 1:0-1:29
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/300/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 27
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/300/input.js 1:27-1:29
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,103 +39,31 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/300/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/300/input.js 1:15-1:26
 				params: Array [
 					JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "es2015/uncategorised/300/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/300/input.js 1:16-1:17 (x)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/300/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/300/input.js 1:16-1:17
 						}
 					}
 					JSBindingAssignmentPattern {
-						loc: Object {
-							filename: "es2015/uncategorised/300/input.js"
-							end: Object {
-								column: 25
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:25
 						right: JSNumericLiteral {
 							value: 10
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/300/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/300/input.js 1:23-1:25
 						}
 						left: JSBindingIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "es2015/uncategorised/300/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:20 (y)
 							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/300/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/300/input.js 1:19-1:20
 							}
 						}
 					}

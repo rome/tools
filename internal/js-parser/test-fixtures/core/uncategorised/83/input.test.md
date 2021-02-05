@@ -18,44 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/83/input.js"
-		end: Object {
-			column: 3
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/83/input.js 1:0-1:3
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/83/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/83/input.js 1:0-1:3
 			expression: JSNumericLiteral {
 				value: 10
 				format: "octal"
-				loc: Object {
-					filename: "core/uncategorised/83/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/83/input.js 1:0-1:3
 			}
 		}
 	]

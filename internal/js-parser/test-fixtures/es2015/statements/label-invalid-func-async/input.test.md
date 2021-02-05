@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/statements/label-invalid-func-async/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,86 +32,28 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:4
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "es2015/statements/label-invalid-func-async/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-1:28
 			label: JSIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2015/statements/label-invalid-func-async/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:0-1:3 (foo)
 			}
 			body: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "bar"
-					loc: Object {
-						filename: "es2015/statements/label-invalid-func-async/input.js"
-						identifierName: "bar"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:20-1:23 (bar)
 				}
-				loc: Object {
-					filename: "es2015/statements/label-invalid-func-async/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:5-1:28
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/statements/label-invalid-func-async/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 26
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:26-1:28
 				}
 				head: JSFunctionHead {
 					async: true
@@ -132,17 +64,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/statements/label-invalid-func-async/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/statements/label-invalid-func-async/input.js 1:23-1:25
 				}
 			}
 		}

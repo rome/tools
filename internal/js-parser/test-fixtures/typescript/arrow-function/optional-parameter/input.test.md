@@ -17,127 +17,32 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/optional-parameter/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/optional-parameter/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:23
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/arrow-function/optional-parameter/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:22
 				body: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "typescript/arrow-function/optional-parameter/input.ts"
-						identifierName: "x"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:21-1:22 (x)
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/optional-parameter/input.ts"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-					returnType: TSAnyKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/arrow-function/optional-parameter/input.ts"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:0-1:20
+					returnType: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:14-1:17}
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/arrow-function/optional-parameter/input.ts"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 21
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:21-1:20
 							meta: JSPatternMeta {
 								optional: true
-								loc: Object {
-									filename: "typescript/arrow-function/optional-parameter/input.ts"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
-								typeAnnotation: TSNumberKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/arrow-function/optional-parameter/input.ts"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:21-1:20
+								typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 1:5-1:11}
 							}
 						}
 					]
@@ -145,84 +50,23 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/optional-parameter/input.ts"
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:0-2:18
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "typescript/arrow-function/optional-parameter/input.ts"
-					end: Object {
-						column: 17
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:0-2:17
 				callee: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "typescript/arrow-function/optional-parameter/input.ts"
-						end: Object {
-							column: 14
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:1-2:14
 					body: JSBinaryExpression {
 						operator: "+"
-						loc: Object {
-							filename: "typescript/arrow-function/optional-parameter/input.ts"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 9
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:14
 						left: JSReferenceIdentifier {
 							name: "k"
-							loc: Object {
-								filename: "typescript/arrow-function/optional-parameter/input.ts"
-								identifierName: "k"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:10 (k)
 						}
 						right: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "typescript/arrow-function/optional-parameter/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:13-2:14
 						}
 					}
 					head: JSFunctionHead {
@@ -231,45 +75,15 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/optional-parameter/input.ts"
-							end: Object {
-								column: 8
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:1-2:8
 						params: Array [
 							JSBindingIdentifier {
 								name: "k"
-								loc: Object {
-									filename: "typescript/arrow-function/optional-parameter/input.ts"
-									end: Object {
-										column: 8
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:8
 								meta: JSPatternMeta {
 									optional: true
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "typescript/arrow-function/optional-parameter/input.ts"
-										end: Object {
-											column: 8
-											line: 2
-										}
-										start: Object {
-											column: 9
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/optional-parameter/input.ts 2:9-2:8
 								}
 							}
 						]

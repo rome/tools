@@ -17,88 +17,25 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/equals/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/equals/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSImportEqualsDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/import/equals/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/equals/input.ts 1:7-1:8 (A)
 			}
 			isExport: false
-			loc: Object {
-				filename: "typescript/import/equals/input.ts"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/equals/input.ts 1:0-1:15
 			moduleReference: TSQualifiedName {
-				loc: Object {
-					filename: "typescript/import/equals/input.ts"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/equals/input.ts 1:11-1:14
 				left: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "typescript/import/equals/input.ts"
-						identifierName: "B"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/equals/input.ts 1:11-1:12 (B)
 				}
 				right: JSIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "typescript/import/equals/input.ts"
-						identifierName: "C"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/equals/input.ts 1:13-1:14 (C)
 				}
 			}
 		}

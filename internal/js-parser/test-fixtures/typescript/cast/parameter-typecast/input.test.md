@@ -16,18 +16,21 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/parameter-typecast/input.ts"
-		end: Object {
-			column: 0
-			line: 2
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:11
+			expression: JSCallExpression {
+				arguments: Array []
+				loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:10
+				callee: JSReferenceIdentifier {
+					name: "func"
+					loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-1:4 (func)
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,58 +45,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/parameter-typecast/input.ts"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSCallExpression {
-				arguments: Array []
-				loc: Object {
-					filename: "typescript/cast/parameter-typecast/input.ts"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				callee: JSReferenceIdentifier {
-					name: "func"
-					loc: Object {
-						filename: "typescript/cast/parameter-typecast/input.ts"
-						identifierName: "func"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
+				end: Position 1:9
+				start: Position 1:5
 			}
 		}
 	]

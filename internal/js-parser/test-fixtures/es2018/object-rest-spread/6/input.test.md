@@ -18,266 +18,68 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/6/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/6/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/6/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/6/input.js 1:0-1:25
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2018/object-rest-spread/6/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/6/input.js 1:1-1:24
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2018/object-rest-spread/6/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/6/input.js 1:2-1:3 (x)
 							}
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:2-1:3
 						}
 						value: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:2-1:3 (x)
 						}
-						loc: Object {
-							filename: "es2018/object-rest-spread/6/input.js"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:2-1:3
 					}
 					JSSpreadProperty {
-						loc: Object {
-							filename: "es2018/object-rest-spread/6/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:5-1:9
 						argument: JSReferenceIdentifier {
 							name: "y"
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								identifierName: "y"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:8-1:9 (y)
 						}
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2018/object-rest-spread/6/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/6/input.js 1:11-1:12 (a)
 							}
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:11-1:12
 						}
 						value: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:11-1:12 (a)
 						}
-						loc: Object {
-							filename: "es2018/object-rest-spread/6/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:11-1:12
 					}
 					JSSpreadProperty {
-						loc: Object {
-							filename: "es2018/object-rest-spread/6/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:14-1:18
 						argument: JSReferenceIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:17-1:18 (b)
 						}
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "c"
-								loc: Object {
-									filename: "es2018/object-rest-spread/6/input.js"
-									identifierName: "c"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/6/input.js 1:20-1:21 (c)
 							}
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:20-1:21
 						}
 						value: JSReferenceIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "es2018/object-rest-spread/6/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/6/input.js 1:20-1:21 (c)
 						}
-						loc: Object {
-							filename: "es2018/object-rest-spread/6/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/6/input.js 1:20-1:21
 					}
 				]
 			}

@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "multiElementWithLeading"
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-					identifierName: "multiElementWithLeading"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:9-1:32 (multiElementWithLeading)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-				end: Object {
-					column: 64
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:0-1:64
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-					end: Object {
-						column: 64
-						line: 1
-					}
-					start: Object {
-						column: 62
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:62-1:64
 			}
 			head: JSFunctionHead {
 				async: false
@@ -79,275 +38,77 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-					end: Object {
-						column: 61
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:32-1:61
 				params: Array [
 					JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 33
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:33-1:34 (x)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:33-1:34
 						}
 					}
 					JSBindingIdentifier {
 						name: "y"
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-							identifierName: "y"
-							end: Object {
-								column: 37
-								line: 1
-							}
-							start: Object {
-								column: 36
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:36-1:37 (y)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-								end: Object {
-									column: 37
-									line: 1
-								}
-								start: Object {
-									column: 36
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:36-1:37
 						}
 					}
 				]
 				rest: JSBindingObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-						end: Object {
-							column: 60
-							line: 1
-						}
-						start: Object {
-							column: 42
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:42-1:60
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-							end: Object {
-								column: 60
-								line: 1
-							}
-							start: Object {
-								column: 42
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:42-1:60
 					}
 					properties: Array [
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 44
-											line: 1
-										}
-										start: Object {
-											column: 43
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:43-1:44 (a)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-									end: Object {
-										column: 44
-										line: 1
-									}
-									start: Object {
-										column: 43
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:43-1:44
 							}
 							value: JSBindingIdentifier {
 								name: "r"
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-									identifierName: "r"
-									end: Object {
-										column: 47
-										line: 1
-									}
-									start: Object {
-										column: 46
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:46-1:47 (r)
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-								end: Object {
-									column: 47
-									line: 1
-								}
-								start: Object {
-									column: 43
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:43-1:47
 						}
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 50
-											line: 1
-										}
-										start: Object {
-											column: 49
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:49-1:50 (b)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-									end: Object {
-										column: 50
-										line: 1
-									}
-									start: Object {
-										column: 49
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:49-1:50
 							}
 							value: JSBindingIdentifier {
 								name: "s"
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-									identifierName: "s"
-									end: Object {
-										column: 53
-										line: 1
-									}
-									start: Object {
-										column: 52
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:52-1:53 (s)
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-								end: Object {
-									column: 53
-									line: 1
-								}
-								start: Object {
-									column: 49
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:49-1:53
 						}
 						JSBindingObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "c"
-									loc: Object {
-										filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-										identifierName: "c"
-										end: Object {
-											column: 56
-											line: 1
-										}
-										start: Object {
-											column: 55
-											line: 1
-										}
-									}
+									loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:55-1:56 (c)
 								}
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-									end: Object {
-										column: 56
-										line: 1
-									}
-									start: Object {
-										column: 55
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:55-1:56
 							}
 							value: JSBindingIdentifier {
 								name: "t"
-								loc: Object {
-									filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-									identifierName: "t"
-									end: Object {
-										column: 59
-										line: 1
-									}
-									start: Object {
-										column: 58
-										line: 1
-									}
-								}
+								loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:58-1:59 (t)
 							}
-							loc: Object {
-								filename: "test262/rest-parameter/object-pattern-multi-element-with-leading/input.js"
-								end: Object {
-									column: 59
-									line: 1
-								}
-								start: Object {
-									column: 55
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/object-pattern-multi-element-with-leading/input.js 1:55-1:59
 						}
 					]
 				}

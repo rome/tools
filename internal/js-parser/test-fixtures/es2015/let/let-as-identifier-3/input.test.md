@@ -18,72 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-as-identifier-3/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-as-identifier-3/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/let/let-as-identifier-3/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-as-identifier-3/input.js 1:0-1:18
 			expression: JSBinaryExpression {
 				operator: "instanceof"
-				loc: Object {
-					filename: "es2015/let/let-as-identifier-3/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-as-identifier-3/input.js 1:0-1:18
 				left: JSReferenceIdentifier {
 					name: "let"
-					loc: Object {
-						filename: "es2015/let/let-as-identifier-3/input.js"
-						identifierName: "let"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/let/let-as-identifier-3/input.js 1:0-1:3 (let)
 				}
 				right: JSReferenceIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "es2015/let/let-as-identifier-3/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/let/let-as-identifier-3/input.js 1:15-1:18 (Foo)
 				}
 			}
 		}

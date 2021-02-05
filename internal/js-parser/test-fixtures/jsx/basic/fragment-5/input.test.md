@@ -16,183 +16,63 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/fragment-5/input.jsx 1:0-8:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/fragment-5/input.jsx"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " comment1"
-			loc: Object {
-				filename: "jsx/basic/fragment-5/input.jsx"
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation jsx/basic/fragment-5/input.jsx 2:0-2:11
 		}
 		CommentBlock {
 			id: "1"
 			value: " comment2 "
-			loc: Object {
-				filename: "jsx/basic/fragment-5/input.jsx"
-				end: Object {
-					column: 14
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation jsx/basic/fragment-5/input.jsx 3:0-3:14
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/fragment-5/input.jsx"
-				end: Object {
-					column: 3
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/fragment-5/input.jsx 1:0-7:3
 			expression: JSXFragment {
-				loc: Object {
-					filename: "jsx/basic/fragment-5/input.jsx"
-					end: Object {
-						column: 3
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/fragment-5/input.jsx 1:0-7:3
 				children: Array [
 					JSXText {
 						value: "\n  "
+						loc: SourceLocation jsx/basic/fragment-5/input.jsx 4:1-5:2
 						leadingComments: Array [
 							"0"
 							"1"
 						]
-						loc: Object {
-							filename: "jsx/basic/fragment-5/input.jsx"
-							end: Object {
-								column: 2
-								line: 5
-							}
-							start: Object {
-								column: 1
-								line: 4
-							}
-						}
 					}
 					JSXElement {
 						name: JSXIdentifier {
 							name: "div"
-							loc: Object {
-								filename: "jsx/basic/fragment-5/input.jsx"
-								end: Object {
-									column: 6
-									line: 5
-								}
-								start: Object {
-									column: 3
-									line: 5
-								}
-							}
+							loc: SourceLocation jsx/basic/fragment-5/input.jsx 5:3-5:6
 						}
 						attributes: Array []
 						children: Array []
 						selfClosing: false
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/basic/fragment-5/input.jsx"
-							end: Object {
-								column: 13
-								line: 5
-							}
-							start: Object {
-								column: 2
-								line: 5
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-5/input.jsx 5:2-5:13
 					}
 					JSXText {
 						value: "\n  "
-						loc: Object {
-							filename: "jsx/basic/fragment-5/input.jsx"
-							end: Object {
-								column: 2
-								line: 6
-							}
-							start: Object {
-								column: 13
-								line: 5
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-5/input.jsx 5:13-6:2
 					}
 					JSXElement {
 						name: JSXIdentifier {
 							name: "div"
-							loc: Object {
-								filename: "jsx/basic/fragment-5/input.jsx"
-								end: Object {
-									column: 6
-									line: 6
-								}
-								start: Object {
-									column: 3
-									line: 6
-								}
-							}
+							loc: SourceLocation jsx/basic/fragment-5/input.jsx 6:3-6:6
 						}
 						attributes: Array []
 						children: Array []
 						selfClosing: false
 						typeArguments: undefined
-						loc: Object {
-							filename: "jsx/basic/fragment-5/input.jsx"
-							end: Object {
-								column: 13
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 6
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-5/input.jsx 6:2-6:13
 					}
 					JSXText {
 						value: "\n"
-						loc: Object {
-							filename: "jsx/basic/fragment-5/input.jsx"
-							end: Object {
-								column: 0
-								line: 7
-							}
-							start: Object {
-								column: 13
-								line: 6
-							}
-						}
+						loc: SourceLocation jsx/basic/fragment-5/input.jsx 6:13-7:0
 					}
 				]
 			}

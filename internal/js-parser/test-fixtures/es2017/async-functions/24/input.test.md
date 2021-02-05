@@ -18,140 +18,37 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/24/input.js"
-		end: Object {
-			column: 25
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/24/input.js 1:0-1:25
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2017/async-functions/24/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/24/input.js 1:0-1:25
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2017/async-functions/24/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/24/input.js 1:0-1:25
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "es2017/async-functions/24/input.js"
-								identifierName: "obj"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/24/input.js 1:4-1:7 (obj)
 						}
-						loc: Object {
-							filename: "es2017/async-functions/24/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/24/input.js 1:4-1:24
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "es2017/async-functions/24/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/24/input.js 1:10-1:24
 							properties: Array [
 								JSObjectMethod {
 									kind: "method"
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "async"
-											loc: Object {
-												filename: "es2017/async-functions/24/input.js"
-												identifierName: "async"
-												end: Object {
-													column: 17
-													line: 1
-												}
-												start: Object {
-													column: 12
-													line: 1
-												}
-											}
+											loc: SourceLocation es2017/async-functions/24/input.js 1:12-1:17 (async)
 										}
-										loc: Object {
-											filename: "es2017/async-functions/24/input.js"
-											identifierName: "async"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/24/input.js 1:12-1:17 (async)
 									}
-									loc: Object {
-										filename: "es2017/async-functions/24/input.js"
-										end: Object {
-											column: 22
-											line: 1
-										}
-										start: Object {
-											column: 12
-											line: 1
-										}
-									}
+									loc: SourceLocation es2017/async-functions/24/input.js 1:12-1:22
 									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
-										loc: Object {
-											filename: "es2017/async-functions/24/input.js"
-											end: Object {
-												column: 22
-												line: 1
-											}
-											start: Object {
-												column: 20
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/24/input.js 1:20-1:22
 									}
 									head: JSFunctionHead {
 										async: false
@@ -162,17 +59,7 @@ JSRoot {
 										returnType: undefined
 										thisType: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "es2017/async-functions/24/input.js"
-											end: Object {
-												column: 19
-												line: 1
-											}
-											start: Object {
-												column: 17
-												line: 1
-											}
-										}
+										loc: SourceLocation es2017/async-functions/24/input.js 1:17-1:19
 									}
 								}
 							]

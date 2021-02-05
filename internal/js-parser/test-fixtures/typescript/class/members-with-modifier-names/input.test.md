@@ -17,105 +17,33 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 1:0-8:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/members-with-modifier-names/input.ts"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/members-with-modifier-names/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/members-with-modifier-names/input.ts"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 1:0-7:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/members-with-modifier-names/input.ts"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 1:0-7:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "public"
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									identifierName: "public"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:10 (public)
 							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:10
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/members-with-modifier-names/input.ts"
-							end: Object {
-								column: 19
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:19
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -123,21 +51,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:4-2:10
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -147,30 +62,8 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 14
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:10-2:18
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 2:14-2:18}
 						}
 					}
 					TSDeclareMethod {
@@ -178,44 +71,12 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "static"
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									identifierName: "static"
-									end: Object {
-										column: 17
-										line: 3
-									}
-									start: Object {
-										column: 11
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:11-3:17 (static)
 							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								identifierName: "static"
-								end: Object {
-									column: 17
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:11-3:17 (static)
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/members-with-modifier-names/input.ts"
-							end: Object {
-								column: 26
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:4-3:26
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -223,17 +84,7 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 17
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:4-3:17
 						}
 						head: JSFunctionHead {
 							async: false
@@ -243,89 +94,26 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 25
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									end: Object {
-										column: 25
-										line: 3
-									}
-									start: Object {
-										column: 21
-										line: 3
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:17-3:25
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 3:21-3:25}
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "readonly"
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									identifierName: "readonly"
-									end: Object {
-										column: 12
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:4-4:12 (readonly)
 							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 12
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:4-4:12
 						}
 						value: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 16
-									line: 4
-								}
-								start: Object {
-									column: 15
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:15-4:16
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/members-with-modifier-names/input.ts"
-							end: Object {
-								column: 17
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:4-4:17
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -333,21 +121,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 4
-							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 12
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 4:4-4:12
+							start: Position 4:4
 						}
 					}
 					TSDeclareMethod {
@@ -355,43 +130,12 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "async"
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									identifierName: "async"
-									end: Object {
-										column: 9
-										line: 5
-									}
-									start: Object {
-										column: 4
-										line: 5
-									}
-								}
+								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:9 (async)
 							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 9
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:9
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/members-with-modifier-names/input.ts"
-							end: Object {
-								column: 21
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
-						}
+						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:21
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -399,21 +143,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 5
-							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 9
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:4-5:9
+							start: Position 5:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -422,58 +153,16 @@ JSRoot {
 							params: Array []
 							rest: undefined
 							thisType: undefined
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 20
-									line: 5
-								}
-								start: Object {
-									column: 12
-									line: 5
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									end: Object {
-										column: 20
-										line: 5
-									}
-									start: Object {
-										column: 16
-										line: 5
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:12-5:20
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:16-5:20}
 							typeParameters: TSTypeParameterDeclaration {
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									end: Object {
-										column: 12
-										line: 5
-									}
-									start: Object {
-										column: 9
-										line: 5
-									}
-								}
+								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:9-5:12
 								params: Array [
 									TSTypeParameter {
 										name: "T"
 										constraint: undefined
 										default: undefined
-										loc: Object {
-											filename: "typescript/class/members-with-modifier-names/input.ts"
-											end: Object {
-												column: 11
-												line: 5
-											}
-											start: Object {
-												column: 10
-												line: 5
-											}
-										}
+										loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 5:10-5:11
 									}
 								]
 							}
@@ -483,57 +172,14 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "abstract"
-								loc: Object {
-									filename: "typescript/class/members-with-modifier-names/input.ts"
-									identifierName: "abstract"
-									end: Object {
-										column: 12
-										line: 6
-									}
-									start: Object {
-										column: 4
-										line: 6
-									}
-								}
+								loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 6:4-6:12 (abstract)
 							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 12
-									line: 6
-								}
-								start: Object {
-									column: 4
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 6:4-6:12
 						}
 						value: undefined
 						definite: true
-						loc: Object {
-							filename: "typescript/class/members-with-modifier-names/input.ts"
-							end: Object {
-								column: 19
-								line: 6
-							}
-							start: Object {
-								column: 4
-								line: 6
-							}
-						}
-						typeAnnotation: TSVoidKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 18
-									line: 6
-								}
-								start: Object {
-									column: 14
-									line: 6
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 6:4-6:19
+						typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 6:14-6:18}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -541,21 +187,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 6
-							}
-							loc: Object {
-								filename: "typescript/class/members-with-modifier-names/input.ts"
-								end: Object {
-									column: 12
-									line: 6
-								}
-								start: Object {
-									column: 4
-									line: 6
-								}
-							}
+							loc: SourceLocation typescript/class/members-with-modifier-names/input.ts 6:4-6:12
+							start: Position 6:4
 						}
 					}
 				]

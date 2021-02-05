@@ -18,141 +18,39 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/06-regex/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/06-regex/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/06-regex/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:24
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "core/categorized/06-regex/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:23
 				right: JSReferenceIdentifier {
 					name: "i"
-					loc: Object {
-						filename: "core/categorized/06-regex/input.js"
-						identifierName: "i"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/06-regex/input.js 1:22-1:23 (i)
 				}
 				left: JSBinaryExpression {
 					operator: "/"
-					loc: Object {
-						filename: "core/categorized/06-regex/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:21
 					right: JSNumericLiteral {
 						value: 42
 						format: undefined
-						loc: Object {
-							filename: "core/categorized/06-regex/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/06-regex/input.js 1:19-1:21
 					}
 					left: JSUnaryExpression {
 						operator: "!"
 						prefix: true
-						loc: Object {
-							filename: "core/categorized/06-regex/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/06-regex/input.js 1:0-1:17
 						argument: JSFunctionExpression {
 							id: JSBindingIdentifier {
 								name: "fn"
-								loc: Object {
-									filename: "core/categorized/06-regex/input.js"
-									identifierName: "fn"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation core/categorized/06-regex/input.js 1:10-1:12 (fn)
 							}
-							loc: Object {
-								filename: "core/categorized/06-regex/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/06-regex/input.js 1:1-1:17
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "core/categorized/06-regex/input.js"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation core/categorized/06-regex/input.js 1:15-1:17
 							}
 							head: JSFunctionHead {
 								async: false
@@ -163,17 +61,7 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "core/categorized/06-regex/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation core/categorized/06-regex/input.js 1:12-1:14
 							}
 						}
 					}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/501/input.js"
-		end: Object {
-			column: 50
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/501/input.js 1:0-1:50
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 38
-					line: 1
-				}
+				end: Position 1:38
+				start: Position 1:38
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
-				loc: Object {
-					filename: "core/uncategorised/501/input.js"
-					identifierName: "hello"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/501/input.js 1:9-1:14 (hello)
 			}
-			loc: Object {
-				filename: "core/uncategorised/501/input.js"
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/501/input.js 1:0-1:50
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -90,126 +53,36 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/501/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/501/input.js 1:14-1:16
 			}
 			body: JSBlockStatement {
-				loc: Object {
-					filename: "core/uncategorised/501/input.js"
-					end: Object {
-						column: 50
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/501/input.js 1:17-1:50
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "core/uncategorised/501/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/501/input.js 1:19-1:32
 					}
 				]
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "core/uncategorised/501/input.js"
-							end: Object {
-								column: 48
-								line: 1
-							}
-							start: Object {
-								column: 33
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/501/input.js 1:33-1:48
 						expression: JSObjectExpression {
-							loc: Object {
-								filename: "core/uncategorised/501/input.js"
-								end: Object {
-									column: 46
-									line: 1
-								}
-								start: Object {
-									column: 34
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/501/input.js 1:34-1:46
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSStringLiteral {
 											value: "\x01"
-											loc: Object {
-												filename: "core/uncategorised/501/input.js"
-												end: Object {
-													column: 40
-													line: 1
-												}
-												start: Object {
-													column: 36
-													line: 1
-												}
-											}
+											loc: SourceLocation core/uncategorised/501/input.js 1:36-1:40
 										}
-										loc: Object {
-											filename: "core/uncategorised/501/input.js"
-											end: Object {
-												column: 40
-												line: 1
-											}
-											start: Object {
-												column: 36
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/501/input.js 1:36-1:40
 									}
 									value: JSNumericLiteral {
 										value: 42
 										format: undefined
-										loc: Object {
-											filename: "core/uncategorised/501/input.js"
-											end: Object {
-												column: 44
-												line: 1
-											}
-											start: Object {
-												column: 42
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/501/input.js 1:42-1:44
 									}
-									loc: Object {
-										filename: "core/uncategorised/501/input.js"
-										end: Object {
-											column: 44
-											line: 1
-										}
-										start: Object {
-											column: 36
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/501/input.js 1:36-1:44
 								}
 							]
 						}

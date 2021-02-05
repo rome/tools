@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0099/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0099/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/invalid-syntax/migrated_0099/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:3
+				start: Position 1:1
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,61 +38,17 @@ JSRoot {
 					"arrow function parameters"
 				]
 			}
-			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0099/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0099/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0099/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0099/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0099/input.js 1:0-1:14
 				body: JSNumericLiteral {
 					value: 0
 					format: "octal"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0099/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0099/input.js 1:12-1:14
 				}
 				head: JSFunctionHead {
 					async: false
@@ -102,45 +56,15 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0099/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0099/input.js 1:0-1:11
 					params: Array [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0099/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0099/input.js 1:12-1:11
 						}
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0099/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0099/input.js 1:12-1:11
 						}
 					]
 				}

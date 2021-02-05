@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/382/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/382/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:6
+				start: Position 1:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,90 +38,25 @@ JSRoot {
 					"if"
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/382/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/382/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/382/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/382/input.js 1:0-1:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "if"
-							loc: Object {
-								filename: "core/uncategorised/382/input.js"
-								identifierName: "if"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/382/input.js 1:4-1:6 (if)
 						}
-						loc: Object {
-							filename: "core/uncategorised/382/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/382/input.js 1:4-1:11
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "core/uncategorised/382/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/382/input.js 1:9-1:11
 						}
 					}
 				]

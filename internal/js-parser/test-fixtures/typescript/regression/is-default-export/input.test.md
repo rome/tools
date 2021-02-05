@@ -17,177 +17,52 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/regression/is-default-export/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/regression/is-default-export/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/regression/is-default-export/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/regression/is-default-export/input.ts 1:0-1:23
 			declaration: TSTypeAlias {
 				id: JSBindingIdentifier {
 					name: "T"
-					loc: Object {
-						filename: "typescript/regression/is-default-export/input.ts"
-						identifierName: "T"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/regression/is-default-export/input.ts 1:12-1:13 (T)
 				}
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/regression/is-default-export/input.ts"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
-				right: TSNumberKeywordTypeAnnotation {
-					loc: Object {
-						filename: "typescript/regression/is-default-export/input.ts"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
-				}
+				loc: SourceLocation typescript/regression/is-default-export/input.ts 1:7-1:23
+				right: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/regression/is-default-export/input.ts 1:16-1:22}
 			}
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/regression/is-default-export/input.ts"
-				end: Object {
-					column: 16
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/regression/is-default-export/input.ts 2:0-2:16
 			declaration: TSEnumDeclaration {
 				id: JSBindingIdentifier {
 					name: "E"
-					loc: Object {
-						filename: "typescript/regression/is-default-export/input.ts"
-						identifierName: "E"
-						end: Object {
-							column: 13
-							line: 2
-						}
-						start: Object {
-							column: 12
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/regression/is-default-export/input.ts 2:12-2:13 (E)
 				}
 				const: false
 				members: Array []
-				loc: Object {
-					filename: "typescript/regression/is-default-export/input.ts"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/regression/is-default-export/input.ts 2:7-2:16
 			}
 		}
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/regression/is-default-export/input.ts"
-				end: Object {
-					column: 21
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/regression/is-default-export/input.ts 3:0-3:21
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "I"
-					loc: Object {
-						filename: "typescript/regression/is-default-export/input.ts"
-						identifierName: "I"
-						end: Object {
-							column: 18
-							line: 3
-						}
-						start: Object {
-							column: 17
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/regression/is-default-export/input.ts 3:17-3:18 (I)
 				}
 				extends: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/regression/is-default-export/input.ts"
-					end: Object {
-						column: 21
-						line: 3
-					}
-					start: Object {
-						column: 7
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/regression/is-default-export/input.ts 3:7-3:21
 				body: TSInterfaceBody {
 					body: Array []
-					loc: Object {
-						filename: "typescript/regression/is-default-export/input.ts"
-						end: Object {
-							column: 21
-							line: 3
-						}
-						start: Object {
-							column: 19
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/regression/is-default-export/input.ts 3:19-3:21
 				}
 			}
 		}

@@ -18,98 +18,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/declaration-function/migrated_0007/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0007/input.js"
-					identifierName: "hello"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:9-1:14 (hello)
 			}
-			loc: Object {
-				filename: "esprima/declaration-function/migrated_0007/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:0-1:33
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0007/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:21-1:33
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/declaration-function/migrated_0007/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:23-1:31
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "esprima/declaration-function/migrated_0007/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:23-1:30
 							callee: JSReferenceIdentifier {
 								name: "sayHi"
-								loc: Object {
-									filename: "esprima/declaration-function/migrated_0007/input.js"
-									identifierName: "sayHi"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:23-1:28 (sayHi)
 							}
 						}
 					}
@@ -123,76 +51,24 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0007/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:14-1:20
 				params: Array [
 					JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "esprima/declaration-function/migrated_0007/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:15-1:16 (a)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/declaration-function/migrated_0007/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:15-1:16
 						}
 					}
 					JSBindingIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "esprima/declaration-function/migrated_0007/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:18-1:19 (b)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/declaration-function/migrated_0007/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/declaration-function/migrated_0007/input.js 1:18-1:19
 						}
 					}
 				]

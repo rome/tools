@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
+				end: Position 1:21
+				start: Position 1:18
 			}
 		}
 	]
@@ -58,74 +42,21 @@ JSRoot {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:0-1:21
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
-					identifierName: "bar"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:18-1:21 (bar)
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:8-1:11
 					exported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:8-1:11 (foo)
 					}
 					local: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:8-1:11 (foo)
 					}
 				}
 			]

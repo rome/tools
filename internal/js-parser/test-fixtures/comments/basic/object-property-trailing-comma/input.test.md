@@ -17,319 +17,95 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/object-property-trailing-comma/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 1:0-6:0
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " comment 1"
-			loc: Object {
-				filename: "comments/basic/object-property-trailing-comma/input.js"
-				end: Object {
-					column: 22
-					line: 2
-				}
-				start: Object {
-					column: 10
-					line: 2
-				}
-			}
+			loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 2:10-2:22
 		}
 		CommentLine {
 			id: "1"
 			value: " comment 2"
-			loc: Object {
-				filename: "comments/basic/object-property-trailing-comma/input.js"
-				end: Object {
-					column: 22
-					line: 3
-				}
-				start: Object {
-					column: 10
-					line: 3
-				}
-			}
+			loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 3:10-3:22
 		}
 		CommentLine {
 			id: "2"
 			value: " comment 3"
-			loc: Object {
-				filename: "comments/basic/object-property-trailing-comma/input.js"
-				end: Object {
-					column: 22
-					line: 4
-				}
-				start: Object {
-					column: 10
-					line: 4
-				}
-			}
+			loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 4:10-4:22
 		}
 		CommentLine {
 			id: "3"
 			value: " comment 4"
-			loc: Object {
-				filename: "comments/basic/object-property-trailing-comma/input.js"
-				end: Object {
-					column: 15
-					line: 5
-				}
-				start: Object {
-					column: 3
-					line: 5
-				}
-			}
+			loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 5:3-5:15
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
+			loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 1:0-5:2
 			trailingComments: Array ["3"]
-			loc: Object {
-				filename: "comments/basic/object-property-trailing-comma/input.js"
-				end: Object {
-					column: 2
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
 			declaration: JSVariableDeclaration {
 				kind: "var"
 				trailingComments: undefined
-				loc: Object {
-					filename: "comments/basic/object-property-trailing-comma/input.js"
-					end: Object {
-						column: 2
-						line: 5
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 1:0-5:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "comments/basic/object-property-trailing-comma/input.js"
-								identifierName: "obj"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 1:4-1:7 (obj)
 						}
-						loc: Object {
-							filename: "comments/basic/object-property-trailing-comma/input.js"
-							end: Object {
-								column: 1
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 1:4-5:1
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "comments/basic/object-property-trailing-comma/input.js"
-								end: Object {
-									column: 1
-									line: 5
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 1:10-5:1
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "comments/basic/object-property-trailing-comma/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 3
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 2:2-2:3 (a)
 										}
-										loc: Object {
-											filename: "comments/basic/object-property-trailing-comma/input.js"
-											end: Object {
-												column: 3
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 2:2-2:3
 									}
 									value: JSStringLiteral {
 										value: "1"
-										loc: Object {
-											filename: "comments/basic/object-property-trailing-comma/input.js"
-											end: Object {
-												column: 8
-												line: 2
-											}
-											start: Object {
-												column: 5
-												line: 2
-											}
-										}
+										loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 2:5-2:8
 									}
-									loc: Object {
-										filename: "comments/basic/object-property-trailing-comma/input.js"
-										end: Object {
-											column: 8
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 2:2-2:8
 								}
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "b"
 											leadingComments: undefined
-											loc: Object {
-												filename: "comments/basic/object-property-trailing-comma/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 3
-													line: 3
-												}
-												start: Object {
-													column: 2
-													line: 3
-												}
-											}
+											loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 3:2-3:3 (b)
 										}
 										leadingComments: undefined
-										loc: Object {
-											filename: "comments/basic/object-property-trailing-comma/input.js"
-											end: Object {
-												column: 3
-												line: 3
-											}
-											start: Object {
-												column: 2
-												line: 3
-											}
-										}
+										loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 3:2-3:3
 									}
 									value: JSStringLiteral {
 										value: "2"
-										loc: Object {
-											filename: "comments/basic/object-property-trailing-comma/input.js"
-											end: Object {
-												column: 8
-												line: 3
-											}
-											start: Object {
-												column: 5
-												line: 3
-											}
-										}
+										loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 3:5-3:8
 									}
 									leadingComments: Array ["0"]
-									loc: Object {
-										filename: "comments/basic/object-property-trailing-comma/input.js"
-										end: Object {
-											column: 8
-											line: 3
-										}
-										start: Object {
-											column: 2
-											line: 3
-										}
-									}
+									loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 3:2-3:8
 								}
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "c"
 											leadingComments: undefined
-											loc: Object {
-												filename: "comments/basic/object-property-trailing-comma/input.js"
-												identifierName: "c"
-												end: Object {
-													column: 3
-													line: 4
-												}
-												start: Object {
-													column: 2
-													line: 4
-												}
-											}
+											loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 4:2-4:3 (c)
 										}
 										leadingComments: undefined
-										loc: Object {
-											filename: "comments/basic/object-property-trailing-comma/input.js"
-											end: Object {
-												column: 3
-												line: 4
-											}
-											start: Object {
-												column: 2
-												line: 4
-											}
-										}
+										loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 4:2-4:3
 									}
 									value: JSStringLiteral {
 										value: "3"
-										loc: Object {
-											filename: "comments/basic/object-property-trailing-comma/input.js"
-											end: Object {
-												column: 8
-												line: 4
-											}
-											start: Object {
-												column: 5
-												line: 4
-											}
-										}
+										loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 4:5-4:8
 									}
 									leadingComments: Array ["1"]
+									loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 4:2-4:8
 									trailingComments: Array ["2"]
-									loc: Object {
-										filename: "comments/basic/object-property-trailing-comma/input.js"
-										end: Object {
-											column: 8
-											line: 4
-										}
-										start: Object {
-											column: 2
-											line: 4
-										}
-									}
 								}
 							]
 						}

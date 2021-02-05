@@ -18,85 +18,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/context-division-after-expression/input.js"
-		end: Object {
-			column: 6
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-2:6
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/context-division-after-expression/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-1:27
 			expression: JSUnaryExpression {
 				operator: "void"
 				prefix: true
-				loc: Object {
-					filename: "es2017/async-functions/context-division-after-expression/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:0-1:27
 				argument: JSFunctionExpression {
 					id: JSBindingIdentifier {
 						name: "fn"
-						loc: Object {
-							filename: "es2017/async-functions/context-division-after-expression/input.js"
-							identifierName: "fn"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:20-1:22 (fn)
 					}
-					loc: Object {
-						filename: "es2017/async-functions/context-division-after-expression/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:5-1:27
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "es2017/async-functions/context-division-after-expression/input.js"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:25-1:27
 					}
 					head: JSFunctionHead {
 						async: true
@@ -107,33 +46,13 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "es2017/async-functions/context-division-after-expression/input.js"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 1:22-1:24
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/context-division-after-expression/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:0-2:6
 			expression: JSRegExpLiteral {
 				global: true
 				insensitive: false
@@ -141,71 +60,21 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "es2017/async-functions/context-division-after-expression/input.js"
-					end: Object {
-						column: 6
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:0-2:6
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2017/async-functions/context-division-after-expression/input.js"
-						end: Object {
-							column: 4
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:1-2:4
 					body: Array [
 						JSRegExpCharacter {
 							value: "f"
-							loc: Object {
-								filename: "es2017/async-functions/context-division-after-expression/input.js"
-								end: Object {
-									column: 2
-									line: 2
-								}
-								start: Object {
-									column: 1
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:1-2:2
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "es2017/async-functions/context-division-after-expression/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:2-2:3
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "es2017/async-functions/context-division-after-expression/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/context-division-after-expression/input.js 2:3-2:4
 						}
 					]
 				}

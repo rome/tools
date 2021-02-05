@@ -35,6 +35,8 @@ import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";
 import RSERParserError from "./RSERParserError";
+import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
+import {Position, SourceLocation} from "@internal/parser-core";
 
 const sharedCachedKeyDecoder = new CachedKeyDecoder();
 
@@ -247,24 +249,56 @@ export default class RSERBufferParser {
 
 		// These can never refer to itself
 		let val: RSERValueObject;
-		if (code === VALUE_CODES.REGEXP) {
-			val = this.decodeRegExp();
-		} else if (code === VALUE_CODES.FILE_PATH) {
-			val = this.decodeFilePath();
-		} else if (code === VALUE_CODES.DATE) {
-			val = this.decodeDate();
-		} else if (code === VALUE_CODES.FILE_PATH_SET) {
-			val = this.decodeFilePathSet();
-		} else if (code === VALUE_CODES.ERROR) {
-			val = this.decodeError();
-		} else if (code === VALUE_CODES.ARRAY_BUFFER_VIEW) {
-			val = this.decodeArrayBufferView();
-		} else if (code === VALUE_CODES.ARRAY_BUFFER) {
-			val = this.decodeArrayBuffer();
-		} else {
-			throw this.unexpected(
-				`Don't know how to decode reference ${formatCode(code)}`,
-			);
+		switch (code) {
+			case VALUE_CODES.REGEXP: {
+				val = this.decodeRegExp();
+				break;
+			}
+
+			case VALUE_CODES.FILE_PATH: {
+				val = this.decodeFilePath();
+				break;
+			}
+
+			case VALUE_CODES.DATE: {
+				val = this.decodeDate();
+				break;
+			}
+
+			case VALUE_CODES.FILE_PATH_SET: {
+				val = this.decodeFilePathSet();
+				break;
+			}
+
+			case VALUE_CODES.ERROR: {
+				val = this.decodeError();
+				break;
+			}
+
+			case VALUE_CODES.ARRAY_BUFFER_VIEW: {
+				val = this.decodeArrayBufferView();
+				break;
+			}
+
+			case VALUE_CODES.ARRAY_BUFFER: {
+				val = this.decodeArrayBuffer();
+				break;
+			}
+
+			case VALUE_CODES.POSITION: {
+				val = this.decodePosition();
+				break;
+			}
+
+			case VALUE_CODES.SOURCE_LOCATION: {
+				val = this.decodeSourceLocation();
+				break;
+			}
+
+			default:
+				throw this.unexpected(
+					`Don't know how to decode reference ${formatCode(code)}`,
+				);
 		}
 		this.references.set(id, val);
 		return val;
@@ -364,9 +398,37 @@ export default class RSERBufferParser {
 			case VALUE_CODES.ARRAY_BUFFER:
 				return this.decodeArrayBuffer();
 
+			case VALUE_CODES.POSITION:
+				return this.decodePosition();
+
+			case VALUE_CODES.SOURCE_LOCATION:
+				return this.decodeSourceLocation();
+
 			default:
 				throw this.unexpected(`Unhandled ${formatCode(code)} code`);
 		}
+	}
+
+	private decodePosition(): Position {
+		this.expectCode(VALUE_CODES.POSITION);
+		return this.decodePositionValue();
+	}
+
+	private decodePositionValue(): Position {
+		return {
+			line: ob1Coerce1(this.decodeNumber()),
+			column: ob1Coerce0(this.decodeNumber()),
+		};
+	}
+
+	private decodeSourceLocation(): SourceLocation {
+		this.expectCode(VALUE_CODES.SOURCE_LOCATION);
+		return {
+			filename: this.decodeStringOrVoid(),
+			identifierName: this.decodeStringOrVoid(),
+			start: this.decodePositionValue(),
+			end: this.decodePositionValue(),
+		};
 	}
 
 	private decodeArrayBufferView(): RSERArrayBufferView {

@@ -18,98 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-method/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-method/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:0-1:16
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-method/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:1-1:15
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "esprima/es2015-yield/yield-method/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:3-1:8 (yield)
 							}
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-method/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:3-1:8
 						}
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-method/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:3-1:13
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-method/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:11-1:13
 						}
 						head: JSFunctionHead {
 							async: false
@@ -120,17 +49,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-method/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-method/input.js 1:8-1:10
 						}
 					}
 				]

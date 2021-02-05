@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/21/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/21/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,83 +32,27 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:10
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/21/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/21/input.js 1:0-1:17
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2018/object-rest-spread/21/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/21/input.js 1:1-1:16
 				right: JSObjectExpression {
 					properties: Array []
-					loc: Object {
-						filename: "es2018/object-rest-spread/21/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/21/input.js 1:14-1:16
 				}
 				left: JSAssignmentObjectPattern {
 					properties: Array []
-					loc: Object {
-						filename: "es2018/object-rest-spread/21/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2018/object-rest-spread/21/input.js 1:1-1:11
 					rest: JSAssignmentIdentifier {
 						name: "X"
-						loc: Object {
-							filename: "es2018/object-rest-spread/21/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/21/input.js 1:5-1:10
 					}
 				}
 			}

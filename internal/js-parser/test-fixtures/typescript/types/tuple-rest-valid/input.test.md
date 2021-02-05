@@ -17,113 +17,31 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple-rest-valid/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "Unbounded"
-				loc: Object {
-					filename: "typescript/types/tuple-rest-valid/input.ts"
-					identifierName: "Unbounded"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:5-1:14 (Unbounded)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/types/tuple-rest-valid/input.ts"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:0-1:39
 			right: TSTupleType {
-				loc: Object {
-					filename: "typescript/types/tuple-rest-valid/input.ts"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:17-1:38
 				elementTypes: Array [
 					TSTupleElement {
 						name: undefined
 						optional: false
-						loc: Object {
-							filename: "typescript/types/tuple-rest-valid/input.ts"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:18-1:22
 						typeAnnotation: TSRestType {
-							loc: Object {
-								filename: "typescript/types/tuple-rest-valid/input.ts"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:18-1:22
 							argument: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-rest-valid/input.ts"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:21-1:22
 								typeName: JSReferenceIdentifier {
 									name: "A"
-									loc: Object {
-										filename: "typescript/types/tuple-rest-valid/input.ts"
-										identifierName: "A"
-										end: Object {
-											column: 22
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:21-1:22 (A)
 								}
 							}
 						}
@@ -131,56 +49,15 @@ JSRoot {
 					TSTupleElement {
 						name: undefined
 						optional: false
-						loc: Object {
-							filename: "typescript/types/tuple-rest-valid/input.ts"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 24
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:24-1:28
 						typeAnnotation: TSRestType {
-							loc: Object {
-								filename: "typescript/types/tuple-rest-valid/input.ts"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:24-1:28
 							argument: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-rest-valid/input.ts"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 27
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:27-1:28
 								typeName: JSReferenceIdentifier {
 									name: "B"
-									loc: Object {
-										filename: "typescript/types/tuple-rest-valid/input.ts"
-										identifierName: "B"
-										end: Object {
-											column: 28
-											line: 1
-										}
-										start: Object {
-											column: 27
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:27-1:28 (B)
 								}
 							}
 						}
@@ -188,30 +65,8 @@ JSRoot {
 					TSTupleElement {
 						name: undefined
 						optional: false
-						loc: Object {
-							filename: "typescript/types/tuple-rest-valid/input.ts"
-							end: Object {
-								column: 37
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
-						typeAnnotation: TSBooleanKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/types/tuple-rest-valid/input.ts"
-								end: Object {
-									column: 37
-									line: 1
-								}
-								start: Object {
-									column: 30
-									line: 1
-								}
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:30-1:37
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {loc: SourceLocation typescript/types/tuple-rest-valid/input.ts 1:30-1:37}
 					}
 				]
 			}

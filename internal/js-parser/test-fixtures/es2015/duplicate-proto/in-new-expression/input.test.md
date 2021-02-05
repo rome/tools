@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/duplicate-proto/in-new-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,210 +32,58 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 24
-					line: 1
-				}
+				end: Position 1:33
+				start: Position 1:24
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/duplicate-proto/in-new-expression/input.js"
-				end: Object {
-					column: 53
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-1:53
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
-				loc: Object {
-					filename: "es2015/duplicate-proto/in-new-expression/input.js"
-					end: Object {
-						column: 52
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:0-1:52
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "es2015/duplicate-proto/in-new-expression/input.js"
-						end: Object {
-							column: 52
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:4-1:52
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "__proto__"
-							loc: Object {
-								filename: "es2015/duplicate-proto/in-new-expression/input.js"
-								identifierName: "__proto__"
-								end: Object {
-									column: 52
-									line: 1
-								}
-								start: Object {
-									column: 43
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:43-1:52 (__proto__)
 						}
-						loc: Object {
-							filename: "es2015/duplicate-proto/in-new-expression/input.js"
-							identifierName: "__proto__"
-							end: Object {
-								column: 52
-								line: 1
-							}
-							start: Object {
-								column: 43
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:43-1:52 (__proto__)
 					}
 					object: JSObjectExpression {
-						loc: Object {
-							filename: "es2015/duplicate-proto/in-new-expression/input.js"
-							end: Object {
-								column: 42
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:4-1:42
 						properties: Array [
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "__proto__"
-										loc: Object {
-											filename: "es2015/duplicate-proto/in-new-expression/input.js"
-											identifierName: "__proto__"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:5-1:14 (__proto__)
 									}
-									loc: Object {
-										filename: "es2015/duplicate-proto/in-new-expression/input.js"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:5-1:14
 								}
 								value: JSReferenceIdentifier {
 									name: "Number"
-									loc: Object {
-										filename: "es2015/duplicate-proto/in-new-expression/input.js"
-										identifierName: "Number"
-										end: Object {
-											column: 22
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:16-1:22 (Number)
 								}
-								loc: Object {
-									filename: "es2015/duplicate-proto/in-new-expression/input.js"
-									end: Object {
-										column: 22
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:5-1:22
 							}
 							JSObjectProperty {
 								key: JSStaticPropertyKey {
 									value: JSIdentifier {
 										name: "__proto__"
-										loc: Object {
-											filename: "es2015/duplicate-proto/in-new-expression/input.js"
-											identifierName: "__proto__"
-											end: Object {
-												column: 33
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:24-1:33 (__proto__)
 									}
-									loc: Object {
-										filename: "es2015/duplicate-proto/in-new-expression/input.js"
-										end: Object {
-											column: 33
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:24-1:33
 								}
 								value: JSReferenceIdentifier {
 									name: "Number"
-									loc: Object {
-										filename: "es2015/duplicate-proto/in-new-expression/input.js"
-										identifierName: "Number"
-										end: Object {
-											column: 41
-											line: 1
-										}
-										start: Object {
-											column: 35
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:35-1:41 (Number)
 								}
-								loc: Object {
-									filename: "es2015/duplicate-proto/in-new-expression/input.js"
-									end: Object {
-										column: 41
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/duplicate-proto/in-new-expression/input.js 1:24-1:41
 							}
 						]
 					}

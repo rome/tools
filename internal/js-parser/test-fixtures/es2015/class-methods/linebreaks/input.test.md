@@ -18,117 +18,45 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class-methods/linebreaks/input.js"
-		end: Object {
-			column: 1
-			line: 42
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/class-methods/linebreaks/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/class-methods/linebreaks/input.js"
-				end: Object {
-					column: 1
-					line: 42
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class-methods/linebreaks/input.js"
-					end: Object {
-						column: 1
-						line: 42
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
 				body: Array [
 					JSClassMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 3:2-3:3 (a)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 3:2-3:3
 						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-4:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 4
-								}
-								start: Object {
-									column: 5
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 4:5-4:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 2:2-3:3
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -139,40 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 4:2-4:4
 						}
 					}
 					JSClassMethod {
@@ -180,56 +75,15 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 7
-									}
-									start: Object {
-										column: 2
-										line: 7
-									}
-								}
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 7:2-7:3 (a)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 7
-								}
-								start: Object {
-									column: 2
-									line: 7
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 7:2-7:3
 						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 8
-								line: 8
-							}
-							start: Object {
-								column: 2
-								line: 6
-							}
-						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-8:8
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 8
-									line: 8
-								}
-								start: Object {
-									column: 6
-									line: 8
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:6-8:8
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -238,21 +92,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 6
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 7
-								}
-								start: Object {
-									column: 2
-									line: 6
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 6:2-7:3
+							start: Position 6:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -262,46 +103,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 5
-									line: 8
-								}
-								start: Object {
-									column: 2
-									line: 8
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:2-8:5
 							params: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/class-methods/linebreaks/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 4
-											line: 8
-										}
-										start: Object {
-											column: 3
-											line: 8
-										}
-									}
+									loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:3-8:4 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/class-methods/linebreaks/input.js"
-											end: Object {
-												column: 4
-												line: 8
-											}
-											start: Object {
-												column: 3
-												line: 8
-											}
-										}
+										loc: SourceLocation es2015/class-methods/linebreaks/input.js 8:3-8:4
 									}
 								}
 							]
@@ -312,56 +122,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 13
-										line: 10
-									}
-									start: Object {
-										column: 2
-										line: 10
-									}
-								}
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13 (constructor)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 13
-									line: 10
-								}
-								start: Object {
-									column: 2
-									line: 10
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
 						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 11
-							}
-							start: Object {
-								column: 2
-								line: 10
-							}
-						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-11:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 11
-								}
-								start: Object {
-									column: 5
-									line: 11
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 11:5-11:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 10:2-10:13
+							start: Position 10:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -372,17 +151,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 11
-								}
-								start: Object {
-									column: 2
-									line: 11
-								}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 11:2-11:4
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "a"
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3 (a)
 							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-14:7
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 14:5-14:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -391,78 +176,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 10
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 13
-									line: 10
-								}
-								start: Object {
-									column: 2
-									line: 10
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 13
-									}
-									start: Object {
-										column: 2
-										line: 13
-									}
-								}
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 13
-								}
-								start: Object {
-									column: 2
-									line: 13
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 14
-							}
-							start: Object {
-								column: 2
-								line: 13
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 14
-								}
-								start: Object {
-									column: 5
-									line: 14
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 13:2-13:3
+							start: Position 13:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -473,17 +188,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 14
-								}
-								start: Object {
-									column: 2
-									line: 14
-								}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 14:2-14:4
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "a"
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 17:2-17:3 (a)
 							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 17:2-17:3
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-18:7
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 18:5-18:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -492,78 +213,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 13
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 13
-								}
-								start: Object {
-									column: 2
-									line: 13
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 17
-									}
-									start: Object {
-										column: 2
-										line: 17
-									}
-								}
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 17
-								}
-								start: Object {
-									column: 2
-									line: 17
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 18
-							}
-							start: Object {
-								column: 2
-								line: 16
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 18
-								}
-								start: Object {
-									column: 5
-									line: 18
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 16:2-17:3
+							start: Position 16:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -574,40 +225,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 18
-								}
-								start: Object {
-									column: 2
-									line: 18
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 16
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 17
-								}
-								start: Object {
-									column: 2
-									line: 16
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 18:2-18:4
 						}
 					}
 					JSClassMethod {
@@ -615,56 +233,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 22
-									}
-									start: Object {
-										column: 2
-										line: 22
-									}
-								}
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 22:2-22:3 (a)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 22
-								}
-								start: Object {
-									column: 2
-									line: 22
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 22:2-22:3
 						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 23
-							}
-							start: Object {
-								column: 2
-								line: 20
-							}
-						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-23:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 23
-								}
-								start: Object {
-									column: 5
-									line: 23
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 23:5-23:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 20:2-22:3
+							start: Position 20:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -675,40 +262,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 23
-								}
-								start: Object {
-									column: 2
-									line: 23
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 20
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 22
-								}
-								start: Object {
-									column: 2
-									line: 20
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 23:2-23:4
 						}
 					}
 					JSClassMethod {
@@ -716,56 +270,15 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 27
-									}
-									start: Object {
-										column: 2
-										line: 27
-									}
-								}
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 27:2-27:3 (a)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 27
-								}
-								start: Object {
-									column: 2
-									line: 27
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 27:2-27:3
 						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 8
-								line: 28
-							}
-							start: Object {
-								column: 2
-								line: 25
-							}
-						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-28:8
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 8
-									line: 28
-								}
-								start: Object {
-									column: 6
-									line: 28
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:6-28:8
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -774,21 +287,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 25
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 27
-								}
-								start: Object {
-									column: 2
-									line: 25
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 25:2-27:3
+							start: Position 25:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -798,46 +298,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 5
-									line: 28
-								}
-								start: Object {
-									column: 2
-									line: 28
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:2-28:5
 							params: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/class-methods/linebreaks/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 4
-											line: 28
-										}
-										start: Object {
-											column: 3
-											line: 28
-										}
-									}
+									loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:3-28:4 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/class-methods/linebreaks/input.js"
-											end: Object {
-												column: 4
-												line: 28
-											}
-											start: Object {
-												column: 3
-												line: 28
-											}
-										}
+										loc: SourceLocation es2015/class-methods/linebreaks/input.js 28:3-28:4
 									}
 								}
 							]
@@ -848,56 +317,25 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 13
-										line: 31
-									}
-									start: Object {
-										column: 2
-										line: 31
-									}
-								}
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 31:2-31:13 (constructor)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 13
-									line: 31
-								}
-								start: Object {
-									column: 2
-									line: 31
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 31:2-31:13
 						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 32
-							}
-							start: Object {
-								column: 2
-								line: 30
-							}
-						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-32:7
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 32
-								}
-								start: Object {
-									column: 5
-									line: 32
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 32:5-32:7
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 30:2-31:13
+							start: Position 30:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -908,17 +346,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 32
-								}
-								start: Object {
-									column: 2
-									line: 32
-								}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 32:2-32:4
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "a"
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 35:2-35:3 (a)
 							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 35:2-35:3
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-36:7
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 36:5-36:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -927,78 +371,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 30
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 13
-									line: 31
-								}
-								start: Object {
-									column: 2
-									line: 30
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 35
-									}
-									start: Object {
-										column: 2
-										line: 35
-									}
-								}
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 35
-								}
-								start: Object {
-									column: 2
-									line: 35
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 36
-							}
-							start: Object {
-								column: 2
-								line: 34
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 36
-								}
-								start: Object {
-									column: 5
-									line: 36
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 34:2-35:3
+							start: Position 34:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1009,17 +383,23 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 36
-								}
-								start: Object {
-									column: 2
-									line: 36
-								}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 36:2-36:4
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "a"
+								loc: SourceLocation es2015/class-methods/linebreaks/input.js 40:2-40:3 (a)
 							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 40:2-40:3
+						}
+						loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-41:7
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 41:5-41:7
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -1028,78 +408,8 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 34
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 35
-								}
-								start: Object {
-									column: 2
-									line: 34
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "a"
-								loc: Object {
-									filename: "es2015/class-methods/linebreaks/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 3
-										line: 40
-									}
-									start: Object {
-										column: 2
-										line: 40
-									}
-								}
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 40
-								}
-								start: Object {
-									column: 2
-									line: 40
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2015/class-methods/linebreaks/input.js"
-							end: Object {
-								column: 7
-								line: 41
-							}
-							start: Object {
-								column: 2
-								line: 38
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 7
-									line: 41
-								}
-								start: Object {
-									column: 5
-									line: 41
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 38:2-40:3
+							start: Position 38:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -1110,40 +420,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 4
-									line: 41
-								}
-								start: Object {
-									column: 2
-									line: 41
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: true
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 38
-							}
-							loc: Object {
-								filename: "es2015/class-methods/linebreaks/input.js"
-								end: Object {
-									column: 3
-									line: 40
-								}
-								start: Object {
-									column: 2
-									line: 38
-								}
-							}
+							loc: SourceLocation es2015/class-methods/linebreaks/input.js 41:2-41:4
 						}
 					}
 				]

@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/293/input.js"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/293/input.js 1:0-1:14
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/293/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:6
+				start: Position 1:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,133 +38,37 @@ JSRoot {
 					"if test"
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/293/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/293/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/293/input.js 1:0-1:14
 			test: JSSequenceExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/293/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/293/input.js 1:4-1:9
 				expressions: Array [
 					JSReferenceIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "es2015/uncategorised/293/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/293/input.js 1:4-1:5 (b)
 					}
 					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "es2015/uncategorised/293/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/293/input.js 1:6-1:9
 					}
 				]
 			}
 			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "es2015/uncategorised/293/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:14
 				expression: JSSequenceExpression {
-					loc: Object {
-						filename: "es2015/uncategorised/293/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:13
 					expressions: Array [
 						JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/uncategorised/293/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/293/input.js 1:9-1:10 (a)
 						}
 						JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/uncategorised/293/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/293/input.js 1:12-1:13
 						}
 					]
 				}

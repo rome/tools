@@ -17,45 +17,14 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/export/equals/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/export/equals/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSExportAssignment {
-			loc: Object {
-				filename: "typescript/export/equals/input.ts"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/export/equals/input.ts 1:0-1:11
 			expression: JSReferenceIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "typescript/export/equals/input.ts"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/export/equals/input.ts 1:9-1:10 (f)
 			}
 		}
 	]

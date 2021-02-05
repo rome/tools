@@ -18,30 +18,10 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/354/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/354/input.js 1:0-1:20
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/uncategorised/354/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/354/input.js 1:0-1:20
 			declaration: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -49,71 +29,21 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "es2015/uncategorised/354/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/354/input.js 1:15-1:20
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2015/uncategorised/354/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/354/input.js 1:16-1:19
 					body: Array [
 						JSRegExpCharacter {
 							value: "f"
-							loc: Object {
-								filename: "es2015/uncategorised/354/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/354/input.js 1:16-1:17
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "es2015/uncategorised/354/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/354/input.js 1:17-1:18
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "es2015/uncategorised/354/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/354/input.js 1:18-1:19
 						}
 					]
 				}

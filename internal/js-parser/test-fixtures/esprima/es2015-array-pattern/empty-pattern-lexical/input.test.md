@@ -18,84 +18,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-pattern/empty-pattern-lexical/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-lexical/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-array-pattern/empty-pattern-lexical/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-lexical/input.js 1:0-1:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/empty-pattern-lexical/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-lexical/input.js 1:0-1:12
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							elements: Array []
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/empty-pattern-lexical/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-lexical/input.js 1:4-1:6
 						}
-						loc: Object {
-							filename: "esprima/es2015-array-pattern/empty-pattern-lexical/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-lexical/input.js 1:4-1:11
 						init: JSArrayExpression {
 							elements: Array []
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/empty-pattern-lexical/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/empty-pattern-lexical/input.js 1:9-1:11
 						}
 					}
 				]

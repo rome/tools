@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-meta-property/new-new-target/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "esprima/es2015-meta-property/new-new-target/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "esprima/es2015-meta-property/new-new-target/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,100 +35,28 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-meta-property/new-new-target/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-meta-property/new-new-target/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 1:13-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-meta-property/new-new-target/input.js"
-							end: Object {
-								column: 19
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 2:4-2:19
 						expression: JSNewExpression {
 							arguments: Array []
 							optional: undefined
 							typeArguments: undefined
-							loc: Object {
-								filename: "esprima/es2015-meta-property/new-new-target/input.js"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 2:4-2:18
 							callee: JSMetaProperty {
-								loc: Object {
-									filename: "esprima/es2015-meta-property/new-new-target/input.js"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 2:8-2:18
 								meta: JSIdentifier {
 									name: "new"
-									loc: Object {
-										filename: "esprima/es2015-meta-property/new-new-target/input.js"
-										identifierName: "new"
-										end: Object {
-											column: 11
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 2:8-2:11 (new)
 								}
 								property: JSIdentifier {
 									name: "target"
-									loc: Object {
-										filename: "esprima/es2015-meta-property/new-new-target/input.js"
-										identifierName: "target"
-										end: Object {
-											column: 18
-											line: 2
-										}
-										start: Object {
-											column: 12
-											line: 2
-										}
-									}
+									loc: SourceLocation esprima/es2015-meta-property/new-new-target/input.js 2:12-2:18 (target)
 								}
 							}
 						}

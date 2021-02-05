@@ -23,6 +23,8 @@ import {
 	serializeLazyMarkup,
 } from "@internal/markup";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
+import {Position, isPosition, isSourceLocation} from "@internal/parser-core";
+import {ob1Get} from "@internal/ob1";
 
 type RecursiveStack = unknown[];
 
@@ -292,6 +294,12 @@ function formatObjectLabel(label: StaticMarkup): StaticMarkup {
 	return markupTag("color", label, {fg: "cyan"});
 }
 
+function formatPositionValue(val: Position): StaticMarkup {
+	return markup`<token type="number">${String(ob1Get(val.line))}:${String(
+		ob1Get(val.column),
+	)}</token>`;
+}
+
 function formatObject(
 	label: StaticMarkup,
 	obj: Objectish,
@@ -308,6 +316,26 @@ function formatObject(
 	const customFormat = obj[CUSTOM_PRETTY_FORMAT];
 	if (opts.allowCustom && typeof customFormat === "function") {
 		return markupTag("dim", markup`${String(customFormat.call(obj))}`);
+	}
+
+	if (isPosition(obj)) {
+		const label = formatObjectLabel(markup`Position`);
+		return markup`${label} ${formatPositionValue(obj)}`;
+	}
+
+	if (isSourceLocation(obj)) {
+		let inner = markup`${formatPositionValue(obj.start)}<dim>-</dim>${formatPositionValue(
+			obj.end,
+		)}`;
+		if (obj.filename !== undefined) {
+			inner = markup`<token type="string">${obj.filename}</token> ${inner}`;
+		}
+		if (obj.identifierName !== undefined) {
+			inner = markup`${inner} (${escapeJSString(obj.identifierName)})`;
+		}
+
+		const label = formatObjectLabel(markup`SourceLocation`);
+		return markup`${label} ${inner}`;
 	}
 
 	//

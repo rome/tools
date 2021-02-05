@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/404/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/404/input.js 1:0-1:17
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/404/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:11
+				start: Position 1:9
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,64 +38,19 @@ JSRoot {
 					"if"
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/404/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "if"
-				loc: Object {
-					filename: "core/uncategorised/404/input.js"
-					identifierName: "if"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/404/input.js 1:9-1:11 (if)
 			}
-			loc: Object {
-				filename: "core/uncategorised/404/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/404/input.js 1:0-1:17
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/404/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/404/input.js 1:14-1:17
 			}
 			head: JSFunctionHead {
 				async: false
@@ -108,17 +61,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/404/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/404/input.js 1:11-1:13
 			}
 		}
 	]

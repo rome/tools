@@ -17,129 +17,38 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/not-top-level/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/not-top-level/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSStringLiteral {
 				value: "m"
-				loc: Object {
-					filename: "typescript/import/not-top-level/input.ts"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/not-top-level/input.ts 1:15-1:18
 			}
 			declare: true
 			global: undefined
-			loc: Object {
-				filename: "typescript/import/not-top-level/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/not-top-level/input.ts 1:0-3:1
 			body: TSModuleBlock {
-				loc: Object {
-					filename: "typescript/import/not-top-level/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/not-top-level/input.ts 1:19-3:1
 				body: Array [
 					JSImportDeclaration {
 						defaultSpecifier: undefined
 						importKind: undefined
 						namedSpecifiers: Array []
-						loc: Object {
-							filename: "typescript/import/not-top-level/input.ts"
-							end: Object {
-								column: 27
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/import/not-top-level/input.ts 2:4-2:27
 						source: JSStringLiteral {
 							value: "a"
-							loc: Object {
-								filename: "typescript/import/not-top-level/input.ts"
-								end: Object {
-									column: 26
-									line: 2
-								}
-								start: Object {
-									column: 23
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/import/not-top-level/input.ts 2:23-2:26
 						}
 						namespaceSpecifier: JSImportNamespaceSpecifier {
-							loc: Object {
-								filename: "typescript/import/not-top-level/input.ts"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/import/not-top-level/input.ts 2:4-2:17
 							local: JSImportSpecifierLocal {
 								name: JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "typescript/import/not-top-level/input.ts"
-										identifierName: "a"
-										end: Object {
-											column: 17
-											line: 2
-										}
-										start: Object {
-											column: 16
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/import/not-top-level/input.ts 2:16-2:17 (a)
 								}
 								importKind: undefined
-								loc: Object {
-									filename: "typescript/import/not-top-level/input.ts"
-									end: Object {
-										column: 17
-										line: 2
-									}
-									start: Object {
-										column: 16
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/import/not-top-level/input.ts 2:16-2:17
 							}
 						}
 					}

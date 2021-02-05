@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/387/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/387/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/387/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:10
+				start: Position 1:7
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,251 +38,67 @@ JSRoot {
 					"{"
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/387/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/uncategorised/387/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/387/input.js 1:0-1:17
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/387/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10
 					exported: JSIdentifier {
 						name: "new"
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: "new"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10 (new)
 					}
 					local: JSReferenceIdentifier {
 						name: "new"
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: "new"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:7-1:10 (new)
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/387/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14
 					exported: JSIdentifier {
 						name: "Foo"
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: "Foo"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14 (Foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "Foo"
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: "Foo"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:11-1:14 (Foo)
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/387/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15
 					exported: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: ""
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15 ()
 					}
 					local: JSReferenceIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: ""
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:14-1:15 ()
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/387/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16
 					exported: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: ""
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16 ()
 					}
 					local: JSReferenceIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: ""
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:15-1:16 ()
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/387/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/387/input.js 1:16-1:17
 					exported: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: ""
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:16-1:17 ()
 					}
 					local: JSReferenceIdentifier {
 						name: ""
-						loc: Object {
-							filename: "es2015/uncategorised/387/input.js"
-							identifierName: ""
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/387/input.js 1:16-1:17 ()
 					}
 				}
 			]

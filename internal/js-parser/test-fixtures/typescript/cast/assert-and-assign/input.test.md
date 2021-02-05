@@ -17,98 +17,25 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:0-1:19
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/assert-and-assign/input.ts"
-		end: Object {
-			column: 19
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/assert-and-assign/input.ts"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:0-1:19
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "typescript/cast/assert-and-assign/input.ts"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:0-1:18
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "typescript/cast/assert-and-assign/input.ts"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:16-1:18
 				}
 				left: TSAssignmentAsExpression {
-					loc: Object {
-						filename: "typescript/cast/assert-and-assign/input.ts"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-					typeAnnotation: TSNumberKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/cast/assert-and-assign/input.ts"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:1-1:12
+					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:6-1:12}
 					expression: JSAssignmentIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "typescript/cast/assert-and-assign/input.ts"
-							identifierName: "a"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:1-1:2 (a)
 					}
 				}
 			}

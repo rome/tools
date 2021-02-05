@@ -18,126 +18,34 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-object/migrated_0003/input.js"
-		end: Object {
-			column: 14
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:0-1:14
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-object/migrated_0003/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:0-1:14
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "esprima/expression-primary-object/migrated_0003/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:0-1:14
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/expression-primary-object/migrated_0003/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:0-1:1 (x)
 				}
 				right: JSObjectExpression {
-					loc: Object {
-						filename: "esprima/expression-primary-object/migrated_0003/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:4-1:14
 					properties: Array [
 						JSObjectProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "if"
-									loc: Object {
-										filename: "esprima/expression-primary-object/migrated_0003/input.js"
-										identifierName: "if"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:6-1:8 (if)
 								}
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0003/input.js"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:6-1:8
 							}
 							value: JSNumericLiteral {
 								value: 42
 								format: undefined
-								loc: Object {
-									filename: "esprima/expression-primary-object/migrated_0003/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:10-1:12
 							}
-							loc: Object {
-								filename: "esprima/expression-primary-object/migrated_0003/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-primary-object/migrated_0003/input.js 1:6-1:12
 						}
 					]
 				}

@@ -17,48 +17,18 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/module-namespace/declare-shorthand/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/module-namespace/declare-shorthand/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSModuleDeclaration {
 			id: JSStringLiteral {
 				value: "m"
-				loc: Object {
-					filename: "typescript/module-namespace/declare-shorthand/input.ts"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/module-namespace/declare-shorthand/input.ts 1:15-1:18
 			}
 			body: undefined
 			declare: true
 			global: undefined
-			loc: Object {
-				filename: "typescript/module-namespace/declare-shorthand/input.ts"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/module-namespace/declare-shorthand/input.ts 1:0-1:19
 		}
 	]
 }

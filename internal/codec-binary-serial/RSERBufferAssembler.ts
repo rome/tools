@@ -8,6 +8,12 @@ import {
 	instanceToErrorCode,
 } from "./constants";
 import {
+	Position,
+	SourceLocation,
+	isPosition,
+	isSourceLocation,
+} from "@internal/parser-core";
+import {
 	AnyRSERFilePathMap,
 	IntSize,
 	RSERArray,
@@ -35,6 +41,7 @@ import {
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
 import {utf8Count} from "./utf8";
+import {ob1Get} from "@internal/ob1";
 
 const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
@@ -339,10 +346,32 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	private encodePlainObject(val: RSERObject) {
-		this.writeCode(VALUE_CODES.OBJECT);
+	private encodePosition(pos: Position) {
+		this.writeCode(VALUE_CODES.POSITION);
+		this.encodeInt(ob1Get(pos.line));
+		this.encodeInt(ob1Get(pos.column));
+	}
 
+	private encodeSourceLocation(loc: SourceLocation) {
+		this.writeCode(VALUE_CODES.SOURCE_LOCATION);
+		this.encodeValue(loc.filename);
+		this.encodeValue(loc.identifierName);
+		this.encodeInt(ob1Get(loc.start.line));
+		this.encodeInt(ob1Get(loc.start.column));
+		this.encodeInt(ob1Get(loc.end.line));
+		this.encodeInt(ob1Get(loc.end.column));
+	}
+
+	private encodePlainObject(val: RSERObject) {
 		const keys = Object.keys(val);
+
+		// Dedicated types for common object shapes
+		if (keys.length === 2 && isPosition(val)) {
+			return this.encodePosition(val);
+		}
+		if (keys.length <= 4 && isSourceLocation(val)) {
+			return this.encodeSourceLocation(val);
+		}
 
 		// First pass to compute number of defined keys
 		let numKeys = keys.length;
@@ -354,6 +383,7 @@ export default class RSERBufferAssembler {
 			}
 		}
 
+		this.writeCode(VALUE_CODES.OBJECT);
 		this.encodeInt(numKeys);
 
 		for (let i = 0; i < keys.length; ++i) {

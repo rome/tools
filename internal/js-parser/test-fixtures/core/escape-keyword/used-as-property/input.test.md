@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/escape-keyword/used-as-property/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/escape-keyword/used-as-property/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 2:4
+				start: Position 2:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,144 +38,38 @@ JSRoot {
 					"break"
 				]
 			}
-			location: Object {
-				filename: "core/escape-keyword/used-as-property/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/escape-keyword/used-as-property/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/escape-keyword/used-as-property/input.js"
-					end: Object {
-						column: 2
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:0-3:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "core/escape-keyword/used-as-property/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:4-1:5 (a)
 						}
-						loc: Object {
-							filename: "core/escape-keyword/used-as-property/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:4-3:1
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "core/escape-keyword/used-as-property/input.js"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:8-3:1
 							properties: Array [
 								JSObjectProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "break"
-											loc: Object {
-												filename: "core/escape-keyword/used-as-property/input.js"
-												identifierName: "break"
-												end: Object {
-													column: 12
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:2-2:12 (break)
 										}
-										loc: Object {
-											filename: "core/escape-keyword/used-as-property/input.js"
-											end: Object {
-												column: 12
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:2-2:12
 									}
 									value: JSNumericLiteral {
 										value: 2
 										format: undefined
-										loc: Object {
-											filename: "core/escape-keyword/used-as-property/input.js"
-											end: Object {
-												column: 15
-												line: 2
-											}
-											start: Object {
-												column: 14
-												line: 2
-											}
-										}
+										loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:14-2:15
 									}
-									loc: Object {
-										filename: "core/escape-keyword/used-as-property/input.js"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation core/escape-keyword/used-as-property/input.js 2:2-2:15
 								}
 							]
 						}

@@ -17,106 +17,34 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/get-generic/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/get-generic/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/get-generic/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/get-generic/input.ts 1:14-1:15 (C)
 			}
 			declare: true
-			loc: Object {
-				filename: "typescript/class/get-generic/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/get-generic/input.ts 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/get-generic/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/get-generic/input.ts 1:0-3:1
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "get"
-								loc: Object {
-									filename: "typescript/class/get-generic/input.ts"
-									identifierName: "get"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7 (get)
 							}
-							loc: Object {
-								filename: "typescript/class/get-generic/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7
 						}
 						body: undefined
-						loc: Object {
-							filename: "typescript/class/get-generic/input.ts"
-							end: Object {
-								column: 19
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:19
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -124,21 +52,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/get-generic/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/get-generic/input.ts 2:4-2:7
+							start: Position 2:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -147,58 +62,16 @@ JSRoot {
 							params: Array []
 							rest: undefined
 							thisType: undefined
-							loc: Object {
-								filename: "typescript/class/get-generic/input.ts"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
-							returnType: TSVoidKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/get-generic/input.ts"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 14
-										line: 2
-									}
-								}
-							}
+							loc: SourceLocation typescript/class/get-generic/input.ts 2:10-2:18
+							returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/class/get-generic/input.ts 2:14-2:18}
 							typeParameters: TSTypeParameterDeclaration {
-								loc: Object {
-									filename: "typescript/class/get-generic/input.ts"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 7
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/get-generic/input.ts 2:7-2:10
 								params: Array [
 									TSTypeParameter {
 										name: "T"
 										constraint: undefined
 										default: undefined
-										loc: Object {
-											filename: "typescript/class/get-generic/input.ts"
-											end: Object {
-												column: 9
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/class/get-generic/input.ts 2:8-2:9
 									}
 								]
 							}

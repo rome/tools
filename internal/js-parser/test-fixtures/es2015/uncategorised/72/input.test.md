@@ -18,86 +18,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/72/input.js"
-		end: Object {
-			column: 19
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/72/input.js 1:0-1:19
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/72/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/72/input.js 1:0-1:19
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/uncategorised/72/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/72/input.js 1:7-1:19
 				declaration: JSVariableDeclaration {
 					kind: "var"
-					loc: Object {
-						filename: "es2015/uncategorised/72/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/72/input.js 1:7-1:19
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "document"
-								loc: Object {
-									filename: "es2015/uncategorised/72/input.js"
-									identifierName: "document"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/72/input.js 1:11-1:19 (document)
 							}
 							init: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/72/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/72/input.js 1:11-1:19
 						}
 					]
 				}

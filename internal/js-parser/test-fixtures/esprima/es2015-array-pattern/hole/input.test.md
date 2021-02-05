@@ -18,159 +18,45 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-pattern/hole/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-array-pattern/hole/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:0-1:12
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/hole/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:0-1:12
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/hole/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:4-1:10
 							elements: Array [
 								JSBindingIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/hole/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 6
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:5-1:6 (a)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/hole/input.js"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:5-1:6
 									}
 								}
-								JSArrayHole {
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/hole/input.js"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
-								}
+								JSArrayHole {loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:7-1:7}
 								JSBindingIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/hole/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:8-1:9 (b)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "esprima/es2015-array-pattern/hole/input.js"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:8-1:9
 									}
 								}
 							]
 						}
-						loc: Object {
-							filename: "esprima/es2015-array-pattern/hole/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:4-1:12
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/hole/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/hole/input.js 1:11-1:12
 						}
 					}
 				]

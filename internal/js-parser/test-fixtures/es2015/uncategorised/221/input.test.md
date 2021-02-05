@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/221/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/221/input.js 1:0-1:8
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/221/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:2
+				start: Position 1:1
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,90 +38,26 @@ JSRoot {
 					"assignment expression"
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/221/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/221/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/221/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/221/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/221/input.js 1:0-1:8
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/221/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/221/input.js 1:6-1:8
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/221/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/221/input.js 1:0-1:3
 					elements: Array [
 						JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "es2015/uncategorised/221/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/221/input.js 1:4-1:3
 						}
 					]
 				}

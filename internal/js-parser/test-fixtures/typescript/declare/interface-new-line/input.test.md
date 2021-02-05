@@ -17,89 +17,27 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/interface-new-line/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/declare/interface-new-line/input.ts"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "declare"
-				loc: Object {
-					filename: "typescript/declare/interface-new-line/input.ts"
-					identifierName: "declare"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/interface-new-line/input.ts 1:0-1:7 (declare)
 			}
 		}
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/declare/interface-new-line/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 2
-					}
-					start: Object {
-						column: 10
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/declare/interface-new-line/input.ts 2:10-2:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/declare/interface-new-line/input.ts"
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/declare/interface-new-line/input.ts 2:0-2:14
 			body: TSInterfaceBody {
 				body: Array []
-				loc: Object {
-					filename: "typescript/declare/interface-new-line/input.ts"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 12
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/declare/interface-new-line/input.ts 2:12-2:14
 			}
 		}
 	]

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0142/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,112 +32,35 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:8
+				start: Position 1:9
 			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0142/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:0-1:21
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0142/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:3-1:7
 			}
 			consequent: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0142/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:9-1:21
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0142/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:9-1:21
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "esprima/invalid-syntax/migrated_0142/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:15-1:16 (a)
 							}
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0142/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:15-1:20
 							init: JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "esprima/invalid-syntax/migrated_0142/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/invalid-syntax/migrated_0142/input.js 1:19-1:20
 							}
 						}
 					]

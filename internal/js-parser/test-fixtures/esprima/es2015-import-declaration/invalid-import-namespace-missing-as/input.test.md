@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:8
+				start: Position 1:9
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,20 +38,6 @@ JSRoot {
 					"as"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
@@ -61,99 +45,28 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namedSpecifiers: Array []
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:0-1:13
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "from"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-							identifierName: "from"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:9-1:13 (from)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:9-1:13
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:14-1:19
 			expression: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js 1:14-1:19
 			}
 		}
 	]

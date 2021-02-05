@@ -18,44 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/79/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/79/input.js 1:0-1:17
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/uncategorised/79/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/79/input.js 1:0-1:17
 			declaration: JSNumericLiteral {
 				value: 42
 				format: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/79/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/79/input.js 1:15-1:17
 			}
 		}
 	]

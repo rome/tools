@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/invalid-escape-import-from/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/modules/invalid-escape-import-from/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:8
+				start: Position 1:9
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,20 +38,6 @@ JSRoot {
 					"from"
 				]
 			}
-			location: Object {
-				filename: "es2015/modules/invalid-escape-import-from/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
@@ -61,127 +45,35 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/modules/invalid-escape-import-from/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "es2015/modules/invalid-escape-import-from/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "es2015/modules/invalid-escape-import-from/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:0-1:8
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "X"
-						loc: Object {
-							filename: "es2015/modules/invalid-escape-import-from/input.js"
-							identifierName: "X"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:7-1:8 (X)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "es2015/modules/invalid-escape-import-from/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:7-1:8
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/invalid-escape-import-from/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:9-1:18
 			expression: JSReferenceIdentifier {
 				name: "from"
-				loc: Object {
-					filename: "es2015/modules/invalid-escape-import-from/input.js"
-					identifierName: "from"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:9-1:18 (from)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/invalid-escape-import-from/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:19-1:22
 			expression: JSStringLiteral {
 				value: "x"
-				loc: Object {
-					filename: "es2015/modules/invalid-escape-import-from/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/invalid-escape-import-from/input.js 1:19-1:22
 			}
 		}
 	]

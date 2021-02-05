@@ -17,17 +17,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/18/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2018/object-rest-spread/18/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2018/object-rest-spread/18/input.js 1:0-1:14
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation es2018/object-rest-spread/18/input.js 1:1-1:13
+				right: JSObjectExpression {
+					properties: Array []
+					loc: SourceLocation es2018/object-rest-spread/18/input.js 1:11-1:13
+				}
+				left: JSAssignmentObjectPattern {
+					properties: Array []
+					rest: undefined
+					loc: SourceLocation es2018/object-rest-spread/18/input.js 1:1-1:8
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +50,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/18/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "es2018/object-rest-spread/18/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
-				right: JSObjectExpression {
-					properties: Array []
-					loc: Object {
-						filename: "es2018/object-rest-spread/18/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
-				}
-				left: JSAssignmentObjectPattern {
-					properties: Array []
-					rest: undefined
-					loc: Object {
-						filename: "es2018/object-rest-spread/18/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-				}
+				end: Position 1:7
+				start: Position 1:5
 			}
 		}
 	]

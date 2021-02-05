@@ -18,88 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/331/input.js"
-		end: Object {
-			column: 5
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/331/input.js 1:0-3:5
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/331/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/331/input.js 1:0-1:3
 			expression: JSUpdateExpression {
 				operator: "++"
 				prefix: false
-				loc: Object {
-					filename: "core/uncategorised/331/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/331/input.js 1:0-1:3
 				argument: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/331/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/331/input.js 1:0-1:1 (x)
 				}
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/331/input.js"
-				end: Object {
-					column: 2
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/331/input.js 2:0-2:2
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/331/input.js"
-				end: Object {
-					column: 5
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation core/uncategorised/331/input.js 3:0-3:5
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -107,71 +46,21 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: false
-				loc: Object {
-					filename: "core/uncategorised/331/input.js"
-					end: Object {
-						column: 5
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation core/uncategorised/331/input.js 3:0-3:5
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "core/uncategorised/331/input.js"
-						end: Object {
-							column: 4
-							line: 3
-						}
-						start: Object {
-							column: 1
-							line: 3
-						}
-					}
+					loc: SourceLocation core/uncategorised/331/input.js 3:1-3:4
 					body: Array [
 						JSRegExpCharacter {
 							value: "f"
-							loc: Object {
-								filename: "core/uncategorised/331/input.js"
-								end: Object {
-									column: 2
-									line: 3
-								}
-								start: Object {
-									column: 1
-									line: 3
-								}
-							}
+							loc: SourceLocation core/uncategorised/331/input.js 3:1-3:2
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "core/uncategorised/331/input.js"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation core/uncategorised/331/input.js 3:2-3:3
 						}
 						JSRegExpCharacter {
 							value: "o"
-							loc: Object {
-								filename: "core/uncategorised/331/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 3
-									line: 3
-								}
-							}
+							loc: SourceLocation core/uncategorised/331/input.js 3:3-3:4
 						}
 					]
 				}

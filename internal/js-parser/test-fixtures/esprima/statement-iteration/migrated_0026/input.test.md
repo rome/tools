@@ -18,113 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-iteration/migrated_0026/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:0-2:0
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "esprima/statement-iteration/migrated_0026/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0026/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:15-1:16}
+			loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:0-1:16
 			right: JSReferenceIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0026/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:13-1:14 (a)
 			}
 			left: JSMemberExpression {
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0026/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:5-1:9
 				object: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0026/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:5-1:6 (a)
 				}
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "in"
-						loc: Object {
-							filename: "esprima/statement-iteration/migrated_0026/input.js"
-							identifierName: "in"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:7-1:9 (in)
 					}
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0026/input.js"
-						identifierName: "in"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0026/input.js 1:7-1:9 (in)
 				}
 			}
 		}

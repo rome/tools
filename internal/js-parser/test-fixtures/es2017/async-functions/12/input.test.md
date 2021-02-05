@@ -18,44 +18,29 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/12/input.js"
-		end: Object {
-			column: 46
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/12/input.js 1:0-1:46
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "es2017/async-functions/12/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/12/input.js 1:15-1:18 (foo)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/12/input.js"
-				end: Object {
-					column: 46
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation es2017/async-functions/12/input.js 1:0-1:46
+			body: JSBlockStatement {
+				directives: Array []
+				loc: SourceLocation es2017/async-functions/12/input.js 1:28-1:46
+				body: Array [
+					JSExpressionStatement {
+						loc: SourceLocation es2017/async-functions/12/input.js 1:30-1:44
+						expression: JSAwaitExpression {
+							loc: SourceLocation es2017/async-functions/12/input.js 1:30-1:43
+							argument: JSReferenceIdentifier {
+								name: "promise"
+								loc: SourceLocation es2017/async-functions/12/input.js 1:36-1:43 (promise)
+							}
+						}
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: true
@@ -65,103 +50,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/12/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/12/input.js 1:18-1:27
 				params: Array [
 					JSBindingIdentifier {
 						name: "promise"
-						loc: Object {
-							filename: "es2017/async-functions/12/input.js"
-							identifierName: "promise"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/12/input.js 1:19-1:26 (promise)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2017/async-functions/12/input.js"
-								end: Object {
-									column: 26
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
-						}
-					}
-				]
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/12/input.js"
-					end: Object {
-						column: 46
-						line: 1
-					}
-					start: Object {
-						column: 28
-						line: 1
-					}
-				}
-				body: Array [
-					JSExpressionStatement {
-						loc: Object {
-							filename: "es2017/async-functions/12/input.js"
-							end: Object {
-								column: 44
-								line: 1
-							}
-							start: Object {
-								column: 30
-								line: 1
-							}
-						}
-						expression: JSAwaitExpression {
-							loc: Object {
-								filename: "es2017/async-functions/12/input.js"
-								end: Object {
-									column: 43
-									line: 1
-								}
-								start: Object {
-									column: 30
-									line: 1
-								}
-							}
-							argument: JSReferenceIdentifier {
-								name: "promise"
-								loc: Object {
-									filename: "es2017/async-functions/12/input.js"
-									identifierName: "promise"
-									end: Object {
-										column: 43
-										line: 1
-									}
-									start: Object {
-										column: 36
-										line: 1
-									}
-								}
-							}
+							loc: SourceLocation es2017/async-functions/12/input.js 1:19-1:26
 						}
 					}
 				]

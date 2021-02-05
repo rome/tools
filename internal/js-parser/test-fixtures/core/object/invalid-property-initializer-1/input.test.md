@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/object/invalid-property-initializer-1/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:0-5:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/object/invalid-property-initializer-1/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 3:7
+				start: Position 3:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,258 +38,69 @@ JSRoot {
 					","
 				]
 			}
-			location: Object {
-				filename: "core/object/invalid-property-initializer-1/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 3
-				}
-				start: Object {
-					column: 6
-					line: 3
-				}
-			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/object/invalid-property-initializer-1/input.js"
-				end: Object {
-					column: 11
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:0-3:11
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "core/object/invalid-property-initializer-1/input.js"
-					end: Object {
-						column: 11
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:0-3:11
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "obj"
-							loc: Object {
-								filename: "core/object/invalid-property-initializer-1/input.js"
-								identifierName: "obj"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:6-1:9 (obj)
 						}
-						loc: Object {
-							filename: "core/object/invalid-property-initializer-1/input.js"
-							end: Object {
-								column: 11
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:6-3:11
 						init: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "core/object/invalid-property-initializer-1/input.js"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:12-3:11
 							right: JSNumericLiteral {
 								value: 123
 								format: undefined
-								loc: Object {
-									filename: "core/object/invalid-property-initializer-1/input.js"
-									end: Object {
-										column: 11
-										line: 3
-									}
-									start: Object {
-										column: 8
-										line: 3
-									}
-								}
+								loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:8-3:11
 							}
 							left: JSAssignmentObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "core/object/invalid-property-initializer-1/input.js"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 12
-										line: 1
-									}
-								}
+								loc: SourceLocation core/object/invalid-property-initializer-1/input.js 1:12-3:5
 								properties: Array [
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "bar"
-												loc: Object {
-													filename: "core/object/invalid-property-initializer-1/input.js"
-													identifierName: "bar"
-													end: Object {
-														column: 5
-														line: 2
-													}
-													start: Object {
-														column: 2
-														line: 2
-													}
-												}
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:2-2:5 (bar)
 											}
-											loc: Object {
-												filename: "core/object/invalid-property-initializer-1/input.js"
-												end: Object {
-													column: 5
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:2-2:5
 										}
 										value: JSAssignmentAssignmentPattern {
 											operator: "="
-											loc: Object {
-												filename: "core/object/invalid-property-initializer-1/input.js"
-												end: Object {
-													column: 14
-													line: 2
-												}
-												start: Object {
-													column: 7
-													line: 2
-												}
-											}
+											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:7-2:14
 											left: JSAssignmentIdentifier {
 												name: "x"
-												loc: Object {
-													filename: "core/object/invalid-property-initializer-1/input.js"
-													identifierName: "x"
-													end: Object {
-														column: 8
-														line: 2
-													}
-													start: Object {
-														column: 7
-														line: 2
-													}
-												}
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:7-2:8 (x)
 											}
 											right: JSNumericLiteral {
 												value: 123
 												format: undefined
-												loc: Object {
-													filename: "core/object/invalid-property-initializer-1/input.js"
-													end: Object {
-														column: 14
-														line: 2
-													}
-													start: Object {
-														column: 11
-														line: 2
-													}
-												}
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:11-2:14
 											}
 										}
-										loc: Object {
-											filename: "core/object/invalid-property-initializer-1/input.js"
-											end: Object {
-												column: 14
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation core/object/invalid-property-initializer-1/input.js 2:2-2:14
 									}
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "foo"
-												loc: Object {
-													filename: "core/object/invalid-property-initializer-1/input.js"
-													identifierName: "foo"
-													end: Object {
-														column: 5
-														line: 3
-													}
-													start: Object {
-														column: 2
-														line: 3
-													}
-												}
+												loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5 (foo)
 											}
-											loc: Object {
-												filename: "core/object/invalid-property-initializer-1/input.js"
-												end: Object {
-													column: 5
-													line: 3
-												}
-												start: Object {
-													column: 2
-													line: 3
-												}
-											}
+											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5
 										}
 										value: JSAssignmentIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "core/object/invalid-property-initializer-1/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 5
-													line: 3
-												}
-												start: Object {
-													column: 2
-													line: 3
-												}
-											}
+											loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5 (foo)
 										}
-										loc: Object {
-											filename: "core/object/invalid-property-initializer-1/input.js"
-											end: Object {
-												column: 5
-												line: 3
-											}
-											start: Object {
-												column: 2
-												line: 3
-											}
-										}
+										loc: SourceLocation core/object/invalid-property-initializer-1/input.js 3:2-3:5
 									}
 								]
 							}
@@ -301,30 +110,10 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/object/invalid-property-initializer-1/input.js"
-				end: Object {
-					column: 2
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation core/object/invalid-property-initializer-1/input.js 4:0-4:2
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/object/invalid-property-initializer-1/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation core/object/invalid-property-initializer-1/input.js 4:0-4:1
 			}
 		}
 	]

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/asi-failure-computed/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 1:0-5:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 3
-				}
-				start: Object {
-					column: 9
-					line: 3
-				}
+				end: Position 3:8
+				start: Position 3:9
 			}
 		}
 	]
@@ -57,159 +41,45 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-properties/asi-failure-computed/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/asi-failure-computed/input.js"
-				end: Object {
-					column: 11
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 1:0-3:11
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/asi-failure-computed/input.js"
-					end: Object {
-						column: 11
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 1:0-3:11
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "p"
-								loc: Object {
-									filename: "experimental/class-properties/asi-failure-computed/input.js"
-									identifierName: "p"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 2:2-2:3 (p)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/asi-failure-computed/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 2:2-2:3
 						}
 						value: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "experimental/class-properties/asi-failure-computed/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 2:6-3:8
 							callee: JSMemberExpression {
-								loc: Object {
-									filename: "experimental/class-properties/asi-failure-computed/input.js"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 2:6-3:5
 								object: JSReferenceIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "experimental/class-properties/asi-failure-computed/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 7
-											line: 2
-										}
-										start: Object {
-											column: 6
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 2:6-2:7 (x)
 								}
 								property: JSComputedMemberProperty {
 									value: JSReferenceIdentifier {
 										name: "m"
-										loc: Object {
-											filename: "experimental/class-properties/asi-failure-computed/input.js"
-											identifierName: "m"
-											end: Object {
-												column: 4
-												line: 3
-											}
-											start: Object {
-												column: 3
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 3:3-3:4 (m)
 									}
-									loc: Object {
-										filename: "experimental/class-properties/asi-failure-computed/input.js"
-										end: Object {
-											column: 5
-											line: 3
-										}
-										start: Object {
-											column: 2
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 3:2-3:5
 								}
 							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/asi-failure-computed/input.js"
-							end: Object {
-								column: 8
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 2:2-3:8
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -217,66 +87,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/asi-failure-computed/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 2:2-2:3
+							start: Position 2:2
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: ""
-								loc: Object {
-									filename: "experimental/class-properties/asi-failure-computed/input.js"
-									identifierName: ""
-									end: Object {
-										column: 10
-										line: 3
-									}
-									start: Object {
-										column: 9
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 3:9-3:10 ()
 							}
-							loc: Object {
-								filename: "experimental/class-properties/asi-failure-computed/input.js"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 3:9-3:10
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/asi-failure-computed/input.js"
-							end: Object {
-								column: 10
-								line: 3
-							}
-							start: Object {
-								column: 9
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 3:9-3:10
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -284,51 +110,18 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 9
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-properties/asi-failure-computed/input.js"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 9
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 3:9-3:10
+							start: Position 3:9
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/class-properties/asi-failure-computed/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 4:0-4:1
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "experimental/class-properties/asi-failure-computed/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 4
-					}
-				}
+				loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 4:0-4:1
 			}
 		}
 	]

@@ -17,20 +17,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:0-1:9
+			expression: JSAssignmentExpression {
+				operator: "+="
+				loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:0-1:9
+				left: JSAssignmentIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:5-1:4
+				}
+				right: JSNumericLiteral {
+					value: 1
+					format: undefined
+					loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js 1:8-1:9
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:3
+				start: Position 1:1
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,78 +55,6 @@ JSRoot {
 					RAW_MARKUP {value: "Invalid left-hand side in "}
 					"assignment expression"
 				]
-			}
-			location: Object {
-				filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "+="
-				loc: Object {
-					filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
-				}
-				right: JSNumericLiteral {
-					value: 1
-					format: undefined
-					loc: Object {
-						filename: "core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

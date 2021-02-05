@@ -18,127 +18,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/02-regex/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/02-regex/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/02-regex/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/02-regex/input.js 1:0-1:25
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "core/categorized/02-regex/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/02-regex/input.js 1:1-1:24
 				right: JSReferenceIdentifier {
 					name: "i"
-					loc: Object {
-						filename: "core/categorized/02-regex/input.js"
-						identifierName: "i"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/02-regex/input.js 1:23-1:24 (i)
 				}
 				left: JSBinaryExpression {
 					operator: "/"
-					loc: Object {
-						filename: "core/categorized/02-regex/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/02-regex/input.js 1:1-1:22
 					right: JSNumericLiteral {
 						value: 42
 						format: undefined
-						loc: Object {
-							filename: "core/categorized/02-regex/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/02-regex/input.js 1:20-1:22
 					}
 					left: JSFunctionExpression {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "core/categorized/02-regex/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/02-regex/input.js 1:10-1:13 (foo)
 						}
-						loc: Object {
-							filename: "core/categorized/02-regex/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/02-regex/input.js 1:1-1:18
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "core/categorized/02-regex/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/02-regex/input.js 1:16-1:18
 						}
 						head: JSFunctionHead {
 							async: false
@@ -149,17 +57,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "core/categorized/02-regex/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation core/categorized/02-regex/input.js 1:13-1:15
 						}
 					}
 				}

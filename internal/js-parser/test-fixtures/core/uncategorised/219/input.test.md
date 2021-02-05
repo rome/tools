@@ -18,128 +18,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/219/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/219/input.js 1:0-1:29
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/219/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/219/input.js 1:0-1:29
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/uncategorised/219/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/219/input.js 1:0-1:29
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "eval"
-							loc: Object {
-								filename: "core/uncategorised/219/input.js"
-								identifierName: "eval"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/219/input.js 1:4-1:8 (eval)
 						}
-						loc: Object {
-							filename: "core/uncategorised/219/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/219/input.js 1:4-1:13
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "core/uncategorised/219/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/219/input.js 1:11-1:13
 						}
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "arguments"
-							loc: Object {
-								filename: "core/uncategorised/219/input.js"
-								identifierName: "arguments"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/219/input.js 1:15-1:24 (arguments)
 						}
-						loc: Object {
-							filename: "core/uncategorised/219/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/219/input.js 1:15-1:29
 						init: JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "core/uncategorised/219/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/219/input.js 1:27-1:29
 						}
 					}
 				]

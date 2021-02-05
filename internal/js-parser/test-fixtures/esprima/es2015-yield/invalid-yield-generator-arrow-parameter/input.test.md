@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
+				end: Position 1:21
+				start: Position 1:21
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:0-1:30
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,70 +53,20 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:13-1:30
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:15-1:28
 						expression: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:15-1:28
 							body: JSNumericLiteral {
 								value: 42
 								format: undefined
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-									end: Object {
-										column: 28
-										line: 1
-									}
-									start: Object {
-										column: 26
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:26-1:28
 							}
 							head: JSFunctionHead {
 								async: false
@@ -161,31 +74,11 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:15-1:25
 								params: Array [
 									JSBindingIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js"
-											end: Object {
-												column: 25
-												line: 1
-											}
-											start: Object {
-												column: 26
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-arrow-parameter/input.js 1:26-1:25
 									}
 								]
 							}

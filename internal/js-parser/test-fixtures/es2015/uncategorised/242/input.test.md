@@ -16,36 +16,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/242/input.js"
-		end: Object {
-			column: 31
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/242/input.js 1:0-1:31
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/242/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/242/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/242/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:19
+				start: Position 1:15
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -55,61 +43,17 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/242/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/242/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/242/input.js 1:14-1:31
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/242/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/242/input.js 1:14-1:31
 				body: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/242/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 29
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/242/input.js 1:29-1:31
 				}
 				head: JSFunctionHead {
 					async: false
@@ -117,60 +61,19 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/242/input.js"
-						end: Object {
-							column: 28
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/242/input.js 1:14-1:28
 					params: Array [
 						JSBindingAssignmentPattern {
 							operator: "="
-							loc: Object {
-								filename: "es2015/uncategorised/242/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/242/input.js 1:15-1:24
 							left: JSBindingIdentifier {
 								name: "eval"
-								loc: Object {
-									filename: "es2015/uncategorised/242/input.js"
-									identifierName: "eval"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/242/input.js 1:15-1:19 (eval)
 							}
 							right: JSNumericLiteral {
 								value: 10
 								format: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/242/input.js"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/242/input.js 1:22-1:24
 							}
 						}
 					]

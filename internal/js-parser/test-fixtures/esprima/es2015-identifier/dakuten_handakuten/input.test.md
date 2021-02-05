@@ -18,72 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-identifier/dakuten_handakuten/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-identifier/dakuten_handakuten/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:4
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "esprima/es2015-identifier/dakuten_handakuten/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:4
 				left: JSReferenceIdentifier {
 					name: "\u309b"
-					loc: Object {
-						filename: "esprima/es2015-identifier/dakuten_handakuten/input.js"
-						identifierName: "\u309b"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:1 (\u309b)
 				}
 				right: JSReferenceIdentifier {
 					name: "\u309c"
-					loc: Object {
-						filename: "esprima/es2015-identifier/dakuten_handakuten/input.js"
-						identifierName: "\u309c"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:3-1:4 (\u309c)
 				}
 			}
 		}

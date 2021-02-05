@@ -18,44 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-default-value/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-value/input.js 1:0-2:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-default-value/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-value/input.js 1:0-1:19
 			declaration: JSReferenceIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-default-value/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-value/input.js 1:15-1:18 (foo)
 			}
 		}
 	]

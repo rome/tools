@@ -17,102 +17,30 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-3:14
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/tsx/type-arguments/input.tsx"
-		end: Object {
-			column: 14
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/tsx/type-arguments/input.tsx"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:7
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "typescript/tsx/type-arguments/input.tsx"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:6
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "typescript/tsx/type-arguments/input.tsx"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:0-1:1 (f)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/tsx/type-arguments/input.tsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:1-1:4
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/tsx/type-arguments/input.tsx"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:2-1:3
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/tsx/type-arguments/input.tsx"
-									identifierName: "T"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/tsx/type-arguments/input.tsx 1:2-1:3 (T)
 							}
 						}
 					]
@@ -120,86 +48,24 @@ JSRoot {
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/tsx/type-arguments/input.tsx"
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:0-2:11
 			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
-				loc: Object {
-					filename: "typescript/tsx/type-arguments/input.tsx"
-					end: Object {
-						column: 10
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:0-2:10
 				callee: JSReferenceIdentifier {
 					name: "C"
-					loc: Object {
-						filename: "typescript/tsx/type-arguments/input.tsx"
-						identifierName: "C"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 4
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:4-2:5 (C)
 				}
 				typeArguments: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/tsx/type-arguments/input.tsx"
-						end: Object {
-							column: 8
-							line: 2
-						}
-						start: Object {
-							column: 5
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:5-2:8
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/tsx/type-arguments/input.tsx"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:6-2:7
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/tsx/type-arguments/input.tsx"
-									identifierName: "T"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/tsx/type-arguments/input.tsx 2:6-2:7 (T)
 							}
 						}
 					]
@@ -209,98 +75,25 @@ JSRoot {
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/tsx/type-arguments/input.tsx"
-					identifierName: "A"
-					end: Object {
-						column: 6
-						line: 3
-					}
-					start: Object {
-						column: 5
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:5-3:6 (A)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/tsx/type-arguments/input.tsx"
-				end: Object {
-					column: 14
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:0-3:14
 			right: TSTypeReference {
-				loc: Object {
-					filename: "typescript/tsx/type-arguments/input.tsx"
-					end: Object {
-						column: 13
-						line: 3
-					}
-					start: Object {
-						column: 9
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:9-3:13
 				typeName: JSReferenceIdentifier {
 					name: "T"
-					loc: Object {
-						filename: "typescript/tsx/type-arguments/input.tsx"
-						identifierName: "T"
-						end: Object {
-							column: 10
-							line: 3
-						}
-						start: Object {
-							column: 9
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:9-3:10 (T)
 				}
 				typeParameters: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/tsx/type-arguments/input.tsx"
-						end: Object {
-							column: 13
-							line: 3
-						}
-						start: Object {
-							column: 10
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:10-3:13
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/tsx/type-arguments/input.tsx"
-								end: Object {
-									column: 12
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:11-3:12
 							typeName: JSReferenceIdentifier {
 								name: "T"
-								loc: Object {
-									filename: "typescript/tsx/type-arguments/input.tsx"
-									identifierName: "T"
-									end: Object {
-										column: 12
-										line: 3
-									}
-									start: Object {
-										column: 11
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/tsx/type-arguments/input.tsx 3:11-3:12 (T)
 							}
 						}
 					]

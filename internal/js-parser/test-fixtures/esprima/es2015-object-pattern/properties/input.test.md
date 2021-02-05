@@ -18,453 +18,123 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-pattern/properties/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-pattern/properties/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-1:31
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "esprima/es2015-object-pattern/properties/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:0-1:31
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-pattern/properties/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:4-1:29
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 6
-													line: 1
-												}
-												start: Object {
-													column: 5
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:5-1:6 (a)
 										}
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:5-1:6
 									}
 									value: JSBindingIdentifier {
 										name: "a"
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											identifierName: "a"
-											end: Object {
-												column: 6
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:5-1:6 (a)
 									}
-									loc: Object {
-										filename: "esprima/es2015-object-pattern/properties/input.js"
-										end: Object {
-											column: 6
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:5-1:6
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "b"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 8
-													line: 1
-												}
-												start: Object {
-													column: 7
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:8 (b)
 										}
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 8
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:8
 									}
 									value: JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:10
 										left: JSBindingIdentifier {
 											name: "b"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												identifierName: "b"
-												end: Object {
-													column: 8
-													line: 1
-												}
-												start: Object {
-													column: 7
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:8 (b)
 										}
 										right: JSNumericLiteral {
 											value: 0
 											format: undefined
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:9-1:10
 										}
 									}
-									loc: Object {
-										filename: "esprima/es2015-object-pattern/properties/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:7-1:10
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "c"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												identifierName: "c"
-												end: Object {
-													column: 12
-													line: 1
-												}
-												start: Object {
-													column: 11
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:11-1:12 (c)
 										}
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 12
-												line: 1
-											}
-											start: Object {
-												column: 11
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:11-1:12
 									}
 									value: JSBindingIdentifier {
 										name: "d"
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											identifierName: "d"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 13
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:13-1:14 (d)
 									}
-									loc: Object {
-										filename: "esprima/es2015-object-pattern/properties/input.js"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 11
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:11-1:14
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "e"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												identifierName: "e"
-												end: Object {
-													column: 16
-													line: 1
-												}
-												start: Object {
-													column: 15
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:15-1:16 (e)
 										}
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 16
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:15-1:16
 									}
 									value: JSBindingAssignmentPattern {
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 17
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:17-1:20
 										left: JSBindingIdentifier {
 											name: "f"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												identifierName: "f"
-												end: Object {
-													column: 18
-													line: 1
-												}
-												start: Object {
-													column: 17
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:17-1:18 (f)
 										}
 										right: JSNumericLiteral {
 											value: 0
 											format: undefined
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												end: Object {
-													column: 20
-													line: 1
-												}
-												start: Object {
-													column: 19
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:19-1:20
 										}
 									}
-									loc: Object {
-										filename: "esprima/es2015-object-pattern/properties/input.js"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:15-1:20
 								}
 								JSBindingObjectPatternProperty {
 									key: JSComputedPropertyKey {
 										value: JSReferenceIdentifier {
 											name: "g"
-											loc: Object {
-												filename: "esprima/es2015-object-pattern/properties/input.js"
-												identifierName: "g"
-												end: Object {
-													column: 23
-													line: 1
-												}
-												start: Object {
-													column: 22
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:22-1:23 (g)
 										}
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 24
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:21-1:24
 									}
 									value: JSBindingArrayPattern {
 										rest: undefined
-										loc: Object {
-											filename: "esprima/es2015-object-pattern/properties/input.js"
-											end: Object {
-												column: 28
-												line: 1
-											}
-											start: Object {
-												column: 25
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:25-1:28
 										elements: Array [
 											JSBindingIdentifier {
 												name: "h"
-												loc: Object {
-													filename: "esprima/es2015-object-pattern/properties/input.js"
-													identifierName: "h"
-													end: Object {
-														column: 27
-														line: 1
-													}
-													start: Object {
-														column: 26
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:26-1:27 (h)
 												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
-													loc: Object {
-														filename: "esprima/es2015-object-pattern/properties/input.js"
-														end: Object {
-															column: 27
-															line: 1
-														}
-														start: Object {
-															column: 26
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:26-1:27
 												}
 											}
 										]
 									}
-									loc: Object {
-										filename: "esprima/es2015-object-pattern/properties/input.js"
-										end: Object {
-											column: 28
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:21-1:28
 								}
 							]
 						}
-						loc: Object {
-							filename: "esprima/es2015-object-pattern/properties/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:4-1:31
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-object-pattern/properties/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 30
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-pattern/properties/input.js 1:30-1:31
 						}
 					}
 				]

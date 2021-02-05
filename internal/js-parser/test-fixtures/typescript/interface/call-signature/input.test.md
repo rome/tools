@@ -17,141 +17,35 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/call-signature/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/call-signature/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/call-signature/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/call-signature/input.ts 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/call-signature/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/call-signature/input.ts 1:0-3:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/call-signature/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/call-signature/input.ts 1:12-3:1
 				body: Array [
 					TSCallSignatureDeclaration {
-						loc: Object {
-							filename: "typescript/interface/call-signature/input.ts"
-							end: Object {
-								column: 22
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
-						typeAnnotation: TSVoidKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/call-signature/input.ts"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 17
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/call-signature/input.ts 2:4-2:22
+						typeAnnotation: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/call-signature/input.ts 2:17-2:21}
 						meta: TSSignatureDeclarationMeta {
 							rest: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/interface/call-signature/input.ts"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/call-signature/input.ts 2:4-2:21
 							parameters: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "typescript/interface/call-signature/input.ts"
-										identifierName: "x"
-										end: Object {
-											column: 6
-											line: 2
-										}
-										start: Object {
-											column: 5
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/interface/call-signature/input.ts 2:5-2:6 (x)
 									meta: JSPatternMeta {
 										optional: undefined
-										loc: Object {
-											filename: "typescript/interface/call-signature/input.ts"
-											end: Object {
-												column: 14
-												line: 2
-											}
-											start: Object {
-												column: 5
-												line: 2
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/interface/call-signature/input.ts"
-												end: Object {
-													column: 14
-													line: 2
-												}
-												start: Object {
-													column: 8
-													line: 2
-												}
-											}
-										}
+										loc: SourceLocation typescript/interface/call-signature/input.ts 2:5-2:14
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/call-signature/input.ts 2:8-2:14}
 									}
 								}
 							]

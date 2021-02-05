@@ -17,20 +17,28 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/202/input.js"
-		end: Object {
-			column: 2
-			line: 1
+	loc: SourceLocation es2015/uncategorised/202/input.js 1:0-1:2
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/202/input.js 1:0-1:2
+			expression: JSNumericLiteral {
+				value: 0
+				format: "octal"
+				loc: SourceLocation es2015/uncategorised/202/input.js 1:0-1:2
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/202/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:2
+				start: Position 1:2
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,50 +47,6 @@ JSRoot {
 					RAW_MARKUP {value: "Expected number in radix "}
 					"8"
 				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/202/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/202/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 0
-				format: "octal"
-				loc: Object {
-					filename: "es2015/uncategorised/202/input.js"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
 			}
 		}
 	]

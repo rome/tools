@@ -17,225 +17,57 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
-				loc: Object {
-					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-					identifierName: "T"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:5-1:6 (T)
 			}
-			loc: Object {
-				filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-				end: Object {
-					column: 52
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:0-1:52
 			right: TSTypeReference {
-				loc: Object {
-					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-					end: Object {
-						column: 51
-						line: 1
-					}
-					start: Object {
-						column: 43
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:43-1:51
 				typeName: JSReferenceIdentifier {
 					name: "Array"
-					loc: Object {
-						filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-						identifierName: "Array"
-						end: Object {
-							column: 48
-							line: 1
-						}
-						start: Object {
-							column: 43
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:43-1:48 (Array)
 				}
 				typeParameters: TSTypeParameterInstantiation {
-					loc: Object {
-						filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-						end: Object {
-							column: 51
-							line: 1
-						}
-						start: Object {
-							column: 48
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:48-1:51
 					params: Array [
 						TSTypeReference {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-								end: Object {
-									column: 50
-									line: 1
-								}
-								start: Object {
-									column: 49
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:49-1:50
 							typeName: JSReferenceIdentifier {
 								name: "U"
-								loc: Object {
-									filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-									identifierName: "U"
-									end: Object {
-										column: 50
-										line: 1
-									}
-									start: Object {
-										column: 49
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:49-1:50 (U)
 							}
 						}
 					]
 				}
 			}
 			typeParameters: TSTypeParameterDeclaration {
-				loc: Object {
-					filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-					end: Object {
-						column: 40
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:6-1:40
 				params: Array [
 					TSTypeParameter {
 						name: "U"
-						loc: Object {
-							filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
-						constraint: TSObjectKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
-						}
+						constraint: TSObjectKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:17-1:23}
+						loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:7-1:39
 						default: TSObjectTypeAnnotation {
-							loc: Object {
-								filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:26-1:39
 							members: Array [
 								TSPropertySignature {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-												identifierName: "x"
-												end: Object {
-													column: 29
-													line: 1
-												}
-												start: Object {
-													column: 28
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:28-1:29 (x)
 										}
-										loc: Object {
-											filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 28
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:28-1:29
 									}
 									optional: false
 									readonly: false
-									loc: Object {
-										filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-										end: Object {
-											column: 37
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
-									typeAnnotation: TSNumberKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/type-alias/generic-complex-tokens-true/input.ts"
-											end: Object {
-												column: 37
-												line: 1
-											}
-											start: Object {
-												column: 31
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:28-1:37
+									typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/type-alias/generic-complex-tokens-true/input.ts 1:31-1:37}
 								}
 							]
 						}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,117 +32,39 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-1:10
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:0-1:10
 				callee: JSReferenceIdentifier {
 					name: "async"
-					loc: Object {
-						filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-						identifierName: "async"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:1-1:6 (async)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:8-1:9 (a)
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:11-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:11-1:13
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2017/async-functions/invalid-parens-async-arrow/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-parens-async-arrow/input.js 1:14-1:16
 		}
 	]
 }

@@ -17,114 +17,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/344/input.js"
-		end: Object {
-			column: 16
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/344/input.js 1:0-2:16
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "core/uncategorised/344/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/344/input.js 1:0-1:13
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/344/input.js"
-				end: Object {
-					column: 16
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/344/input.js 2:0-2:16
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "core/uncategorised/344/input.js"
-					end: Object {
-						column: 15
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation core/uncategorised/344/input.js 2:0-2:15
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "core/uncategorised/344/input.js"
-						end: Object {
-							column: 13
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation core/uncategorised/344/input.js 2:0-2:13
 					object: JSReferenceIdentifier {
 						name: "object"
-						loc: Object {
-							filename: "core/uncategorised/344/input.js"
-							identifierName: "object"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/344/input.js 2:0-2:6 (object)
 					}
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "static"
-							loc: Object {
-								filename: "core/uncategorised/344/input.js"
-								identifierName: "static"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/344/input.js 2:7-2:13 (static)
 						}
-						loc: Object {
-							filename: "core/uncategorised/344/input.js"
-							identifierName: "static"
-							end: Object {
-								column: 13
-								line: 2
-							}
-							start: Object {
-								column: 7
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/344/input.js 2:7-2:13 (static)
 					}
 				}
 			}

@@ -18,87 +18,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/19/input.js"
-		end: Object {
-			column: 7
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/19/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/19/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:7
 				tag: JSReferenceIdentifier {
 					name: "raw"
-					loc: Object {
-						filename: "es2015/uncategorised/19/input.js"
-						identifierName: "raw"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/19/input.js 1:0-1:3 (raw)
 				}
 				quasi: JSTemplateLiteral {
 					expressions: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/19/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/19/input.js 1:3-1:7
 					quasis: Array [
 						JSTemplateElement {
 							cooked: "42"
 							raw: "42"
 							tail: true
-							loc: Object {
-								filename: "es2015/uncategorised/19/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/19/input.js 1:4-1:6
 						}
 					]
 				}

@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/89/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/89/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "encrypt"
-				loc: Object {
-					filename: "es2015/uncategorised/89/input.js"
-					identifierName: "encrypt"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/89/input.js 1:9-1:16 (encrypt)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/89/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/89/input.js 1:0-1:21
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/89/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/89/input.js 1:19-1:21
 			}
 			head: JSFunctionHead {
 				async: false
@@ -81,164 +40,49 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/89/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/89/input.js 1:16-1:18
 			}
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "decrypt"
-				loc: Object {
-					filename: "es2015/uncategorised/89/input.js"
-					identifierName: "decrypt"
-					end: Object {
-						column: 13
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/89/input.js 2:6-2:13 (decrypt)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/89/input.js"
-				end: Object {
-					column: 16
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/89/input.js 2:0-2:16
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/89/input.js"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/89/input.js 2:0-2:16
 			}
 		}
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/uncategorised/89/input.js"
-				end: Object {
-					column: 34
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/89/input.js 3:0-3:34
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/89/input.js"
-						end: Object {
-							column: 16
-							line: 3
-						}
-						start: Object {
-							column: 9
-							line: 3
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/89/input.js 3:9-3:16
 					exported: JSIdentifier {
 						name: "encrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/89/input.js"
-							identifierName: "encrypt"
-							end: Object {
-								column: 16
-								line: 3
-							}
-							start: Object {
-								column: 9
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/89/input.js 3:9-3:16 (encrypt)
 					}
 					local: JSReferenceIdentifier {
 						name: "encrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/89/input.js"
-							identifierName: "encrypt"
-							end: Object {
-								column: 16
-								line: 3
-							}
-							start: Object {
-								column: 9
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/89/input.js 3:9-3:16 (encrypt)
 					}
 				}
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/89/input.js"
-						end: Object {
-							column: 32
-							line: 3
-						}
-						start: Object {
-							column: 18
-							line: 3
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/89/input.js 3:18-3:32
 					exported: JSIdentifier {
 						name: "dec"
-						loc: Object {
-							filename: "es2015/uncategorised/89/input.js"
-							identifierName: "dec"
-							end: Object {
-								column: 32
-								line: 3
-							}
-							start: Object {
-								column: 29
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/89/input.js 3:29-3:32 (dec)
 					}
 					local: JSReferenceIdentifier {
 						name: "decrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/89/input.js"
-							identifierName: "decrypt"
-							end: Object {
-								column: 25
-								line: 3
-							}
-							start: Object {
-								column: 18
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/89/input.js 3:18-3:25 (decrypt)
 					}
 				}
 			]

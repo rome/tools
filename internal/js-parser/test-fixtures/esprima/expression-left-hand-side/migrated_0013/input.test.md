@@ -18,114 +18,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:38
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:38
 				object: JSReferenceIdentifier {
 					name: "universe"
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-						identifierName: "universe"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:0-1:8 (universe)
 				}
 				property: JSComputedMemberProperty {
 					value: JSSequenceExpression {
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-							end: Object {
-								column: 37
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:9-1:37
 						expressions: Array [
 							JSReferenceIdentifier {
 								name: "galaxyName"
-								loc: Object {
-									filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-									identifierName: "galaxyName"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 9
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:9-1:19 (galaxyName)
 							}
 							JSReferenceIdentifier {
 								name: "otherUselessName"
-								loc: Object {
-									filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-									identifierName: "otherUselessName"
-									end: Object {
-										column: 37
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:21-1:37 (otherUselessName)
 							}
 						]
 					}
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0013/input.js"
-						end: Object {
-							column: 38
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0013/input.js 1:8-1:38
 				}
 			}
 		}

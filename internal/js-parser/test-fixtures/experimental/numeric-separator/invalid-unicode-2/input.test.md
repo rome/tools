@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-unicode-2/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/numeric-separator/invalid-unicode-2/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "\\u12_34"
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-unicode-2/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/numeric-separator/invalid-unicode-2/input.js 1:0-1:9
 		}
 	]
 }

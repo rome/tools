@@ -18,125 +18,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/142/input.js"
-		end: Object {
-			column: 19
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/142/input.js 1:0-1:19
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/142/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/142/input.js 1:0-1:19
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/142/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/142/input.js 1:1-1:18
 				properties: Array [
 					JSObjectProperty {
 						key: JSComputedPropertyKey {
 							value: JSBinaryExpression {
 								operator: "+"
-								loc: Object {
-									filename: "es2015/uncategorised/142/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/142/input.js 1:3-1:12
 								left: JSStringLiteral {
 									value: "x"
-									loc: Object {
-										filename: "es2015/uncategorised/142/input.js"
-										end: Object {
-											column: 6
-											line: 1
-										}
-										start: Object {
-											column: 3
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/142/input.js 1:3-1:6
 								}
 								right: JSStringLiteral {
 									value: "y"
-									loc: Object {
-										filename: "es2015/uncategorised/142/input.js"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/142/input.js 1:9-1:12
 								}
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/142/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/142/input.js 1:2-1:13
 						}
 						value: JSNumericLiteral {
 							value: 10
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/142/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/142/input.js 1:15-1:17
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/142/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/142/input.js 1:2-1:17
 					}
 				]
 			}

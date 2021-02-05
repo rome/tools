@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-		end: Object {
-			column: 21
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,126 +32,36 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:15
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "prop"
-							loc: Object {
-								filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-								identifierName: "prop"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:4-1:8 (prop)
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:4-1:20
 						init: JSMemberExpression {
-							loc: Object {
-								filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:11-1:20
 							object: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:11-1:14 (foo)
 							}
 							property: JSStaticMemberProperty {
 								value: JSIdentifier {
 									name: "priv"
-									loc: Object {
-										filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-										identifierName: "priv"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:16-1:20 (priv)
 								}
-								loc: Object {
-									filename: "experimental/class-private-properties/undeclared-top-level/input.js"
-									identifierName: "priv"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:16-1:20 (priv)
 							}
 						}
 					}

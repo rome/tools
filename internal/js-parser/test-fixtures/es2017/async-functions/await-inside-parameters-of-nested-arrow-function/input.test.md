@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 12
-					line: 2
-				}
+				end: Position 2:12
+				start: Position 2:12
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 1:15-1:17 (fn)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: true
 				generator: false
@@ -90,70 +53,20 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 1:17-1:19
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 1:20-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-							end: Object {
-								column: 22
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:2-2:22
 						expression: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:2-2:21
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-									end: Object {
-										column: 21
-										line: 2
-									}
-									start: Object {
-										column: 19
-										line: 2
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:19-2:21
 							}
 							head: JSFunctionHead {
 								async: false
@@ -161,72 +74,21 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:2-2:18
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-											end: Object {
-												column: 14
-												line: 2
-											}
-											start: Object {
-												column: 3
-												line: 2
-											}
-										}
+										loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:3-2:14
 										left: JSBindingIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 4
-													line: 2
-												}
-												start: Object {
-													column: 3
-													line: 2
-												}
-											}
+											loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:3-2:4 (x)
 										}
 										right: JSAwaitExpression {
-											loc: Object {
-												filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-												end: Object {
-													column: 14
-													line: 2
-												}
-												start: Object {
-													column: 7
-													line: 2
-												}
-											}
+											loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:7-2:14
 											argument: JSNumericLiteral {
 												value: 2
 												format: undefined
-												loc: Object {
-													filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
-													end: Object {
-														column: 14
-														line: 2
-													}
-													start: Object {
-														column: 13
-														line: 2
-													}
-												}
+												loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 2:13-2:14
 											}
 										}
 									}

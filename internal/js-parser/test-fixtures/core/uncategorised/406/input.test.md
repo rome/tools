@@ -17,20 +17,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/406/input.js"
-		end: Object {
-			column: 5
-			line: 1
+	loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
+	body: Array [
+		JSIfStatement {
+			alternate: undefined
+			loc: SourceLocation core/uncategorised/406/input.js 1:0-1:5
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/406/input.js 1:2-1:3
+			}
+			consequent: JSExpressionStatement {
+				loc: SourceLocation core/uncategorised/406/input.js 1:3-1:5
+				expression: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation core/uncategorised/406/input.js 1:3-1:4 (a)
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/406/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:3
+				start: Position 1:2
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,78 +54,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unexpected token, expected "}
 					"("
 				]
-			}
-			location: Object {
-				filename: "core/uncategorised/406/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSIfStatement {
-			alternate: undefined
-			loc: Object {
-				filename: "core/uncategorised/406/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/406/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
-			}
-			consequent: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/406/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
-				expression: JSReferenceIdentifier {
-					name: "a"
-					loc: Object {
-						filename: "core/uncategorised/406/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

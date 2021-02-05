@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/throw-expression/statement/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/throw-expression/statement/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "test"
-				loc: Object {
-					filename: "experimental/throw-expression/statement/input.js"
-					identifierName: "test"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/throw-expression/statement/input.js 1:9-1:13 (test)
 			}
-			loc: Object {
-				filename: "experimental/throw-expression/statement/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/throw-expression/statement/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,58 +35,18 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/throw-expression/statement/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/throw-expression/statement/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/throw-expression/statement/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/throw-expression/statement/input.js 1:16-3:1
 				body: Array [
 					JSThrowStatement {
-						loc: Object {
-							filename: "experimental/throw-expression/statement/input.js"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/throw-expression/statement/input.js 2:2-2:10
 						argument: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/throw-expression/statement/input.js"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/throw-expression/statement/input.js 2:8-2:9
 						}
 					}
 				]

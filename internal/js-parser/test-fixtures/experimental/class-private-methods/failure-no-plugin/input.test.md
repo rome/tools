@@ -18,117 +18,60 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 1:0-5:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 1:0-4:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "p"
-								loc: Object {
-									filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-									identifierName: "p"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:3-2:4 (p)
 							}
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:2-2:4
 						}
 						value: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:7-2:8 (x)
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-							end: Object {
-								column: 8
-								line: 2
+						loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:2-2:8
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 2:2-2:4
+							start: Position 2:2
+						}
+					}
+					JSClassPrivateMethod {
+						kind: "method"
+						key: JSPrivateName {
+							id: JSIdentifier {
+								name: "m"
+								loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:3-3:4 (m)
 							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:2-3:4
+						}
+						loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:2-3:10
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:8-3:10
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,78 +80,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
-						}
-					}
-					JSClassPrivateMethod {
-						kind: "method"
-						key: JSPrivateName {
-							id: JSIdentifier {
-								name: "m"
-								loc: Object {
-									filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-									identifierName: "m"
-									end: Object {
-										column: 4
-										line: 3
-									}
-									start: Object {
-										column: 3
-										line: 3
-									}
-								}
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
-						}
-						loc: Object {
-							filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-							end: Object {
-								column: 10
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-								end: Object {
-									column: 10
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:2-3:4
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -219,40 +92,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 5
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-methods/failure-no-plugin/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-methods/failure-no-plugin/input.js 3:5-3:7
 						}
 					}
 				]

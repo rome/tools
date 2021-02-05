@@ -18,152 +18,40 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/computed-properties/call-expression/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-4:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/computed-properties/call-expression/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-3:2
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/computed-properties/call-expression/input.js"
-					end: Object {
-						column: 2
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:0-3:2
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2015/computed-properties/call-expression/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:4-1:7 (foo)
 						}
-						loc: Object {
-							filename: "es2015/computed-properties/call-expression/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:4-3:1
 						init: JSObjectExpression {
-							loc: Object {
-								filename: "es2015/computed-properties/call-expression/input.js"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/computed-properties/call-expression/input.js 1:10-3:1
 							properties: Array [
 								JSObjectProperty {
 									key: JSComputedPropertyKey {
 										value: JSCallExpression {
 											arguments: Array []
-											loc: Object {
-												filename: "es2015/computed-properties/call-expression/input.js"
-												end: Object {
-													column: 8
-													line: 2
-												}
-												start: Object {
-													column: 3
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:3-2:8
 											callee: JSReferenceIdentifier {
 												name: "bar"
-												loc: Object {
-													filename: "es2015/computed-properties/call-expression/input.js"
-													identifierName: "bar"
-													end: Object {
-														column: 6
-														line: 2
-													}
-													start: Object {
-														column: 3
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:3-2:6 (bar)
 											}
 										}
-										loc: Object {
-											filename: "es2015/computed-properties/call-expression/input.js"
-											end: Object {
-												column: 9
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:2-2:9
 									}
 									value: JSStringLiteral {
 										value: ""
-										loc: Object {
-											filename: "es2015/computed-properties/call-expression/input.js"
-											end: Object {
-												column: 13
-												line: 2
-											}
-											start: Object {
-												column: 11
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:11-2:13
 									}
-									loc: Object {
-										filename: "es2015/computed-properties/call-expression/input.js"
-										end: Object {
-											column: 13
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/computed-properties/call-expression/input.js 2:2-2:13
 								}
 							]
 						}

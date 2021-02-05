@@ -17,17 +17,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/321/input.js"
-		end: Object {
-			column: 1
-			line: 2
+	loc: SourceLocation core/uncategorised/321/input.js 1:0-2:1
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/321/input.js 1:0-1:1
+			expression: JSReferenceIdentifier {
+				name: "a"
+				loc: SourceLocation core/uncategorised/321/input.js 1:0-1:1 (a)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/321/input.js 2:0-2:1
+			expression: JSReferenceIdentifier {
+				name: "b"
+				loc: SourceLocation core/uncategorised/321/input.js 2:0-2:1 (b)
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +48,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/321/input.js"
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "a"
-				loc: Object {
-					filename: "core/uncategorised/321/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 1
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/321/input.js"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "b"
-				loc: Object {
-					filename: "core/uncategorised/321/input.js"
-					identifierName: "b"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				end: Position 1:1
+				start: Position 2:0
 			}
 		}
 	]

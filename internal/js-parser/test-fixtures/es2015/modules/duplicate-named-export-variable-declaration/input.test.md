@@ -18,74 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:0-3:0
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:0-1:15
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:9-1:12
 					exported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:9-1:12 (foo)
 					}
 					local: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 1:9-1:12 (foo)
 					}
 				}
 			]
@@ -93,84 +41,22 @@ JSRoot {
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-				end: Object {
-					column: 23
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:0-2:23
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-					end: Object {
-						column: 23
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:7-2:23
 				declaration: JSVariableDeclaration {
 					kind: "const"
-					loc: Object {
-						filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-						end: Object {
-							column: 23
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:7-2:23
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 16
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:13-2:16 (foo)
 							}
-							loc: Object {
-								filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:13-2:22
 							init: JSReferenceIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "es2015/modules/duplicate-named-export-variable-declaration/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 22
-										line: 2
-									}
-									start: Object {
-										column: 19
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/duplicate-named-export-variable-declaration/input.js 2:19-2:22 (bar)
 							}
 						}
 					]

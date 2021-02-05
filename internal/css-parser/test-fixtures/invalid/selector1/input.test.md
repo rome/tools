@@ -10,17 +10,23 @@ CSSRoot {
 	corrupt: false
 	filename: "invalid/selector1/input.css"
 	integrity: undefined
-	loc: Object {
-		filename: "invalid/selector1/input.css"
-		end: Object {
-			column: 1
-			line: 3
+	loc: SourceLocation invalid/selector1/input.css 1:0-3:1
+	body: Array [
+		CSSRule {
+			loc: SourceLocation invalid/selector1/input.css 1:0-3:1
+			block: CSSBlock {
+				value: Array []
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector1/input.css 1:2-3:1
+			}
+			prelude: Array [
+				CSSSelector {
+					patterns: Array []
+					loc: SourceLocation invalid/selector1/input.css 1:0-1:2
+				}
+			]
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -35,61 +41,9 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:0
+				start: Position 1:0
 			}
-		}
-	]
-	body: Array [
-		CSSRule {
-			loc: Object {
-				filename: "invalid/selector1/input.css"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			block: CSSBlock {
-				value: Array []
-				startingTokenValue: "{"
-				loc: Object {
-					filename: "invalid/selector1/input.css"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
-			}
-			prelude: Array [
-				CSSSelector {
-					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector1/input.css"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
-			]
 		}
 	]
 }

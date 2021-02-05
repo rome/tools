@@ -17,17 +17,16 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0050/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0050/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0050/input.js 1:0-1:7
+			expression: JSReferenceIdentifier {
+				name: "\0FFF"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0050/input.js 1:0-1:7 (\0FFF)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,44 +41,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0050/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "\0FFF"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0050/input.js"
-					identifierName: "\0FFF"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:3
+				start: Position 1:3
 			}
 		}
 	]

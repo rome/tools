@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/96/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/96/input.js 1:0-1:16
 	directives: Array [
 		JSDirective {
 			value: "Hello\\412World"
-			loc: Object {
-				filename: "core/uncategorised/96/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/96/input.js 1:0-1:16
 		}
 	]
 }

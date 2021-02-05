@@ -18,44 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-primary-literal-numeric/migrated_0013/input.js"
-		end: Object {
-			column: 5
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-primary-literal-numeric/migrated_0013/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
 			expression: JSNumericLiteral {
 				value: 3_567
 				format: "hex"
-				loc: Object {
-					filename: "esprima/expression-primary-literal-numeric/migrated_0013/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0013/input.js 1:0-1:5
 			}
 		}
 	]

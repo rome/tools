@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0144/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,100 +32,31 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0144/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:11
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0144/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:11
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: ""
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0144/input.js"
-							identifierName: ""
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:8-1:11 ()
 					}
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0144/input.js"
-						identifierName: ""
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:8-1:11 ()
 				}
 				object: JSNewExpression {
 					arguments: Array []
 					optional: undefined
 					typeArguments: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0144/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:0-1:7
 					callee: JSReferenceIdentifier {
 						name: "X"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0144/input.js"
-							identifierName: "X"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0144/input.js 1:4-1:5 (X)
 					}
 				}
 			}

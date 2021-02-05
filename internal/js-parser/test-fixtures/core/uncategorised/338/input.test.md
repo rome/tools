@@ -18,126 +18,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/338/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/338/input.js 1:0-1:13
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/338/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/338/input.js 1:0-1:13
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "core/uncategorised/338/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/338/input.js 1:1-1:12
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "core/uncategorised/338/input.js"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/338/input.js 1:2-1:3
 							}
-							loc: Object {
-								filename: "core/uncategorised/338/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/338/input.js 1:2-1:3
 						}
 						value: JSBinaryExpression {
 							operator: "/"
-							loc: Object {
-								filename: "core/uncategorised/338/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/338/input.js 1:5-1:11
 							left: JSObjectExpression {
 								properties: Array []
-								loc: Object {
-									filename: "core/uncategorised/338/input.js"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/338/input.js 1:5-1:7
 							}
 							right: JSNumericLiteral {
 								value: 2
 								format: undefined
-								loc: Object {
-									filename: "core/uncategorised/338/input.js"
-									end: Object {
-										column: 11
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/338/input.js 1:10-1:11
 							}
 						}
-						loc: Object {
-							filename: "core/uncategorised/338/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/338/input.js 1:2-1:11
 					}
 				]
 			}

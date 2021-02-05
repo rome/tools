@@ -17,20 +17,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/invalid-27/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-1:2
+			expression: JSNumericLiteral {
+				value: 0
+				format: "hex"
+				loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:0-1:2
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:2-1:5
+			expression: JSReferenceIdentifier {
+				name: "Z_1"
+				loc: SourceLocation experimental/numeric-separator/invalid-27/input.js 1:2-1:5 (Z_1)
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "experimental/numeric-separator/invalid-27/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:2
+				start: Position 1:2
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,78 +54,6 @@ JSRoot {
 					RAW_MARKUP {value: "Expected number in radix "}
 					"16"
 				]
-			}
-			location: Object {
-				filename: "experimental/numeric-separator/invalid-27/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-27/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 0
-				format: "hex"
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-27/input.js"
-					end: Object {
-						column: 2
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/invalid-27/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "Z_1"
-				loc: Object {
-					filename: "experimental/numeric-separator/invalid-27/input.js"
-					identifierName: "Z_1"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
 			}
 		}
 	]

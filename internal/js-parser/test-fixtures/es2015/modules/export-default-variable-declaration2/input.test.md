@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/export-default-variable-declaration2/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,98 +32,30 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
+				end: Position 1:14
+				start: Position 1:15
 			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/export-default-variable-declaration2/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:0-1:18
 			declaration: JSReferenceIdentifier {
 				name: "let"
-				loc: Object {
-					filename: "es2015/modules/export-default-variable-declaration2/input.js"
-					identifierName: "let"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:15-1:18 (let)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/modules/export-default-variable-declaration2/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:19-3:1
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/modules/export-default-variable-declaration2/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:19-3:1
 				left: JSAssignmentIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "es2015/modules/export-default-variable-declaration2/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:19-1:22 (Foo)
 				}
 				right: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "es2015/modules/export-default-variable-declaration2/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:25-3:1
 					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
@@ -141,73 +63,23 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "es2015/modules/export-default-variable-declaration2/input.js"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:25-1:30
 					}
 					body: JSBlockStatement {
 						directives: Array []
-						loc: Object {
-							filename: "es2015/modules/export-default-variable-declaration2/input.js"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 31
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 1:31-3:1
 						body: Array [
 							JSReturnStatement {
-								loc: Object {
-									filename: "es2015/modules/export-default-variable-declaration2/input.js"
-									end: Object {
-										column: 41
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 2:4-2:41
 								argument: JSTemplateLiteral {
 									expressions: Array []
-									loc: Object {
-										filename: "es2015/modules/export-default-variable-declaration2/input.js"
-										end: Object {
-											column: 40
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 2:11-2:40
 									quasis: Array [
 										JSTemplateElement {
 											cooked: "<div class=\"bar\">Hola</div>"
 											raw: "<div class=\"bar\">Hola</div>"
 											tail: true
-											loc: Object {
-												filename: "es2015/modules/export-default-variable-declaration2/input.js"
-												end: Object {
-													column: 39
-													line: 2
-												}
-												start: Object {
-													column: 12
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/modules/export-default-variable-declaration2/input.js 2:12-2:39
 										}
 									]
 								}

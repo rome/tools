@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/196/input.js"
-		end: Object {
-			column: 33
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
 	diagnostics: Array [
 		Object {
 			origins: Array [
@@ -45,30 +35,14 @@ JSRoot {
 				integrity: undefined
 				language: "regex"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:21
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/196/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
 			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
@@ -76,152 +50,42 @@ JSRoot {
 				noDotNewline: false
 				sticky: false
 				unicode: true
-				loc: Object {
-					filename: "es2015/uncategorised/196/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
 				expression: JSRegExpSubExpression {
-					loc: Object {
-						filename: "es2015/uncategorised/196/input.js"
-						end: Object {
-							column: 30
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/196/input.js 1:1-1:30
 					body: Array [
 						JSRegExpCharSet {
 							invert: false
-							loc: Object {
-								filename: "es2015/uncategorised/196/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/196/input.js 1:1-1:30
 							body: Array [
 								JSRegExpCharacter {
 									value: "\ud834"
-									loc: Object {
-										filename: "es2015/uncategorised/196/input.js"
-										end: Object {
-											column: 8
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/196/input.js 1:2-1:8
 								}
 								JSRegExpCharSetRange {
-									loc: Object {
-										filename: "es2015/uncategorised/196/input.js"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/196/input.js 1:8-1:21
 									end: JSRegExpCharacter {
 										value: "\udf06"
-										loc: Object {
-											filename: "es2015/uncategorised/196/input.js"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/196/input.js 1:8-1:14
 									}
 									start: JSRegExpCharacter {
 										value: "\ud834"
-										loc: Object {
-											filename: "es2015/uncategorised/196/input.js"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 15
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/196/input.js 1:15-1:21
 									}
 								}
 								JSRegExpCharacter {
 									value: "\udf08"
-									loc: Object {
-										filename: "es2015/uncategorised/196/input.js"
-										end: Object {
-											column: 27
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/196/input.js 1:21-1:27
 								}
 								JSRegExpCharSetRange {
-									loc: Object {
-										filename: "es2015/uncategorised/196/input.js"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 27
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/196/input.js 1:27-1:30
 									end: JSRegExpCharacter {
 										value: "z"
-										loc: Object {
-											filename: "es2015/uncategorised/196/input.js"
-											end: Object {
-												column: 30
-												line: 1
-											}
-											start: Object {
-												column: 29
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/196/input.js 1:29-1:30
 									}
 									start: JSRegExpCharacter {
 										value: "a"
-										loc: Object {
-											filename: "es2015/uncategorised/196/input.js"
-											end: Object {
-												column: 28
-												line: 1
-											}
-											start: Object {
-												column: 27
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/196/input.js 1:27-1:28
 									}
 								}
 							]

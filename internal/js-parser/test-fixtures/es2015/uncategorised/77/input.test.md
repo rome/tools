@@ -18,73 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/77/input.js"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/77/input.js 1:0-1:27
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/77/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/77/input.js 1:0-1:27
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "parse"
-					loc: Object {
-						filename: "es2015/uncategorised/77/input.js"
-						identifierName: "parse"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/77/input.js 1:16-1:21 (parse)
 				}
-				loc: Object {
-					filename: "es2015/uncategorised/77/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/77/input.js 1:7-1:27
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/77/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/77/input.js 1:24-1:27
 				}
 				head: JSFunctionHead {
 					async: false
@@ -95,17 +44,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/77/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/77/input.js 1:21-1:23
 				}
 			}
 		}

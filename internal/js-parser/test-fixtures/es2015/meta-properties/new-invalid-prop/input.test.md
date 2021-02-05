@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/new-invalid-prop/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/meta-properties/new-invalid-prop/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 2:10
+				start: Position 2:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -44,50 +42,15 @@ JSRoot {
 					"target"
 				]
 			}
-			location: Object {
-				filename: "es2015/meta-properties/new-invalid-prop/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2015/meta-properties/new-invalid-prop/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/new-invalid-prop/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -97,85 +60,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/new-invalid-prop/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/new-invalid-prop/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:13-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/meta-properties/new-invalid-prop/input.js"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:10
 						expression: JSMetaProperty {
-							loc: Object {
-								filename: "es2015/meta-properties/new-invalid-prop/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:10
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "es2015/meta-properties/new-invalid-prop/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:2-2:5 (new)
 							}
 							property: JSIdentifier {
 								name: "prop"
-								loc: Object {
-									filename: "es2015/meta-properties/new-invalid-prop/input.js"
-									identifierName: "prop"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 2:6-2:10 (prop)
 							}
 						}
 					}

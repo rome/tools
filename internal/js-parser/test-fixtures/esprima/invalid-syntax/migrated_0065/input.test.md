@@ -17,17 +17,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0065/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0065/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0065/input.js 1:0-1:7
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: SourceLocation esprima/invalid-syntax/migrated_0065/input.js 1:0-1:7
+				left: JSAssignmentIdentifier {
+					name: "i"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0065/input.js 1:0-1:1 (i)
+				}
+				right: JSNumericLiteral {
+					value: 42
+					format: undefined
+					loc: SourceLocation esprima/invalid-syntax/migrated_0065/input.js 1:5-1:7
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,73 +50,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0065/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSAssignmentExpression {
-				operator: "="
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0065/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "i"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0065/input.js"
-						identifierName: "i"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
-				right: JSNumericLiteral {
-					value: 42
-					format: undefined
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0065/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
-				}
+				end: Position 1:1
+				start: Position 1:2
 			}
 		}
 	]

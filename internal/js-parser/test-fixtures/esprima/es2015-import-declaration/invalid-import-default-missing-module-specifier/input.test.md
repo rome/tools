@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:10
+				start: Position 2:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,20 +38,6 @@ JSRoot {
 					"from"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
@@ -61,71 +45,20 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js 1:0-1:10
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js 1:0-1:10
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js 1:7-1:10 (foo)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-missing-module-specifier/input.js 1:7-1:10
 				}
 			}
 		}

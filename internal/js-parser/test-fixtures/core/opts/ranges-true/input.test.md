@@ -18,185 +18,52 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/opts/ranges-true/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/opts/ranges-true/input.js 1:0-4:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/opts/ranges-true/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/opts/ranges-true/input.js 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/opts/ranges-true/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/opts/ranges-true/input.js 1:0-1:10
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "core/opts/ranges-true/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation core/opts/ranges-true/input.js 1:4-1:5 (a)
 						}
-						loc: Object {
-							filename: "core/opts/ranges-true/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/opts/ranges-true/input.js 1:4-1:9
 						init: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "core/opts/ranges-true/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation core/opts/ranges-true/input.js 1:8-1:9
 						}
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/opts/ranges-true/input.js"
-				end: Object {
-					column: 14
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation core/opts/ranges-true/input.js 3:0-3:14
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "core/opts/ranges-true/input.js"
-					end: Object {
-						column: 14
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation core/opts/ranges-true/input.js 3:0-3:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "core/opts/ranges-true/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation core/opts/ranges-true/input.js 3:4-3:5 (b)
 						}
-						loc: Object {
-							filename: "core/opts/ranges-true/input.js"
-							end: Object {
-								column: 13
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation core/opts/ranges-true/input.js 3:4-3:13
 						init: JSBinaryExpression {
 							operator: "+"
-							loc: Object {
-								filename: "core/opts/ranges-true/input.js"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 3
-								}
-							}
+							loc: SourceLocation core/opts/ranges-true/input.js 3:8-3:13
 							left: JSReferenceIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "core/opts/ranges-true/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 9
-										line: 3
-									}
-									start: Object {
-										column: 8
-										line: 3
-									}
-								}
+								loc: SourceLocation core/opts/ranges-true/input.js 3:8-3:9 (a)
 							}
 							right: JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "core/opts/ranges-true/input.js"
-									end: Object {
-										column: 13
-										line: 3
-									}
-									start: Object {
-										column: 12
-										line: 3
-									}
-								}
+								loc: SourceLocation core/opts/ranges-true/input.js 3:12-3:13
 							}
 						}
 					}

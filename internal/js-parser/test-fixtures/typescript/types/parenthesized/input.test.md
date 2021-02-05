@@ -17,72 +17,21 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/parenthesized/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/parenthesized/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "T"
-				loc: Object {
-					filename: "typescript/types/parenthesized/input.ts"
-					identifierName: "T"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/parenthesized/input.ts 1:5-1:6 (T)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/types/parenthesized/input.ts"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/parenthesized/input.ts 1:0-1:14
 			right: TSParenthesizedType {
-				loc: Object {
-					filename: "typescript/types/parenthesized/input.ts"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/parenthesized/input.ts 1:9-1:13
 				typeAnnotation: TSObjectTypeAnnotation {
 					members: Array []
-					loc: Object {
-						filename: "typescript/types/parenthesized/input.ts"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/types/parenthesized/input.ts 1:10-1:12
 				}
 			}
 		}

@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+				end: Position 1:21
+				start: Position 1:16
 			}
 		}
 	]
@@ -57,97 +41,25 @@ JSRoot {
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:5-1:6 (A)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:0-1:23
 			right: TSTupleType {
-				loc: Object {
-					filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:9-1:22
 				elementTypes: Array [
 					TSTupleElement {
 						name: undefined
 						optional: false
-						loc: Object {
-							filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:10-1:14
 						typeAnnotation: TSRestType {
-							loc: Object {
-								filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:10-1:14
 							argument: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 13
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:13-1:14
 								typeName: JSReferenceIdentifier {
 									name: "N"
-									loc: Object {
-										filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-										identifierName: "N"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:13-1:14 (N)
 								}
 							}
 						}
@@ -155,56 +67,15 @@ JSRoot {
 					TSTupleElement {
 						name: undefined
 						optional: true
-						loc: Object {
-							filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:16-1:21
 						typeAnnotation: TSRestType {
-							loc: Object {
-								filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:16-1:20
 							argument: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:19-1:20
 								typeName: JSReferenceIdentifier {
 									name: "N"
-									loc: Object {
-										filename: "typescript/types/tuple-rest-optional-invalid/input.ts"
-										identifierName: "N"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 19
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/tuple-rest-optional-invalid/input.ts 1:19-1:20 (N)
 								}
 							}
 						}

@@ -17,74 +17,23 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/let/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/let/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: Object {
-				filename: "typescript/declare/let/input.ts"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/let/input.ts 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/declare/let/input.ts"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/let/input.ts 1:0-1:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/declare/let/input.ts"
-								identifierName: "x"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/declare/let/input.ts 1:12-1:13 (x)
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/let/input.ts"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/declare/let/input.ts 1:12-1:13
 					}
 				]
 			}

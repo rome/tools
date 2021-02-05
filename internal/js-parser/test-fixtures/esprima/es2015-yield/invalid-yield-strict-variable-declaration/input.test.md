@@ -16,36 +16,43 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js 1:0-1:13
+		}
+	]
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js 1:14-1:24
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js 1:14-1:24
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "yield"
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js 1:18-1:23 (yield)
+						}
+						init: undefined
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js 1:18-1:23
+					}
+				]
 			}
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:23
+				start: Position 1:18
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -53,80 +60,6 @@ JSRoot {
 				message: Array [
 					"yield"
 					RAW_MARKUP {value: " is a reserved word"}
-				]
-			}
-			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "yield"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
-								identifierName: "yield"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
-						}
-						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-strict-variable-declaration/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
-					}
 				]
 			}
 		}

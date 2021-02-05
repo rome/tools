@@ -18,114 +18,32 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-try/migrated_0004/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:0-2:0
 	body: Array [
 		JSTryStatement {
 			handler: undefined
-			loc: Object {
-				filename: "esprima/statement-try/migrated_0004/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:0-1:34
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/statement-try/migrated_0004/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:4-1:7
 			}
 			finalizer: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/statement-try/migrated_0004/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:16-1:34
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/statement-try/migrated_0004/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:18-1:32
 						expression: JSCallExpression {
-							loc: Object {
-								filename: "esprima/statement-try/migrated_0004/input.js"
-								end: Object {
-									column: 32
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:18-1:32
 							callee: JSReferenceIdentifier {
 								name: "cleanup"
-								loc: Object {
-									filename: "esprima/statement-try/migrated_0004/input.js"
-									identifierName: "cleanup"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:18-1:25 (cleanup)
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "stuff"
-									loc: Object {
-										filename: "esprima/statement-try/migrated_0004/input.js"
-										identifierName: "stuff"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 26
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/statement-try/migrated_0004/input.js 1:26-1:31 (stuff)
 								}
 							]
 						}

@@ -17,20 +17,41 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/327/input.js"
-		end: Object {
-			column: 13
-			line: 1
+	loc: SourceLocation es2015/uncategorised/327/input.js 1:0-1:13
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation es2015/uncategorised/327/input.js 1:0-1:13
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: SourceLocation es2015/uncategorised/327/input.js 1:0-1:13
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "_"
+							loc: SourceLocation es2015/uncategorised/327/input.js 1:6-1:7 (_)
+						}
+						loc: SourceLocation es2015/uncategorised/327/input.js 1:6-1:12
+						init: JSNumericLiteral {
+							value: 12
+							format: undefined
+							loc: SourceLocation es2015/uncategorised/327/input.js 1:10-1:12
+						}
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/327/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:3
+				start: Position 1:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,94 +60,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unexpected character <emphasis>"}
 					"\u{2b81e}"
 					RAW_MARKUP {value: "</emphasis>"}
-				]
-			}
-			location: Object {
-				filename: "es2015/uncategorised/327/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/327/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "var"
-				loc: Object {
-					filename: "es2015/uncategorised/327/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "_"
-							loc: Object {
-								filename: "es2015/uncategorised/327/input.js"
-								identifierName: "_"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "es2015/uncategorised/327/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
-						init: JSNumericLiteral {
-							value: 12
-							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/327/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
-						}
-					}
 				]
 			}
 		}

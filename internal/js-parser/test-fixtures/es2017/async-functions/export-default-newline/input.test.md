@@ -18,87 +18,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/export-default-newline/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:0-3:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2017/async-functions/export-default-newline/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:0-1:20
 			declaration: JSReferenceIdentifier {
 				name: "async"
-				loc: Object {
-					filename: "es2017/async-functions/export-default-newline/input.js"
-					identifierName: "async"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 1:15-1:20 (async)
 			}
 		}
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "bar"
-				loc: Object {
-					filename: "es2017/async-functions/export-default-newline/input.js"
-					identifierName: "bar"
-					end: Object {
-						column: 12
-						line: 2
-					}
-					start: Object {
-						column: 9
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:9-2:12 (bar)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/export-default-newline/input.js"
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:0-2:17
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/export-default-newline/input.js"
-					end: Object {
-						column: 17
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:15-2:17
 			}
 			head: JSFunctionHead {
 				async: false
@@ -109,17 +47,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/export-default-newline/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 12
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/export-default-newline/input.js 2:12-2:14
 			}
 		}
 	]

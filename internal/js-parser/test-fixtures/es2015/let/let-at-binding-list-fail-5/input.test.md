@@ -18,72 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-at-binding-list-fail-5/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/let/let-at-binding-list-fail-5/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-1:7
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "es2015/let/let-at-binding-list-fail-5/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:0-1:7
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "let"
-							loc: Object {
-								filename: "es2015/let/let-at-binding-list-fail-5/input.js"
-								identifierName: "let"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:4-1:7 (let)
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/let/let-at-binding-list-fail-5/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/let/let-at-binding-list-fail-5/input.js 1:4-1:7
 					}
 				]
 			}

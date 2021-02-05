@@ -17,20 +17,40 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0175/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:0-2:0
+	body: Array [
+		JSDoWhileStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:0-1:10
+			test: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:9-1:10
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:3-1:8
+				body: Array [
+					JSExpressionStatement {
+						loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:5-1:6
+						expression: JSReferenceIdentifier {
+							name: "x"
+							loc: SourceLocation esprima/invalid-syntax/migrated_0175/input.js 1:5-1:6 (x)
+						}
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/invalid-syntax/migrated_0175/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:10
+				start: Position 1:9
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -38,93 +58,6 @@ JSRoot {
 				message: Array [
 					RAW_MARKUP {value: "Unexpected token, expected "}
 					"while"
-				]
-			}
-			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0175/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSDoWhileStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0175/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0175/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				directives: Array []
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0175/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
-				body: Array [
-					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0175/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
-						expression: JSReferenceIdentifier {
-							name: "x"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0175/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
-						}
-					}
 				]
 			}
 		}

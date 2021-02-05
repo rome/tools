@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/376/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/376/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/376/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:13
+				start: Position 1:9
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,64 +38,19 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/376/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "enum"
-				loc: Object {
-					filename: "es2015/uncategorised/376/input.js"
-					identifierName: "enum"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/376/input.js 1:9-1:13 (enum)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/376/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/376/input.js 1:0-1:18
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/376/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/376/input.js 1:16-1:18
 			}
 			head: JSFunctionHead {
 				async: false
@@ -108,17 +61,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/376/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/376/input.js 1:13-1:15
 			}
 		}
 	]

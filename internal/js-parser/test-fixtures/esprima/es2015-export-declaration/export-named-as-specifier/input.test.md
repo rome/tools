@@ -18,101 +18,29 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 1:0-3:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 1:0-1:13
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 1:0-1:13
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 1:4-1:7 (foo)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 1:4-1:7
 					}
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 1:9-1:12 (bar)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 1:9-1:12
 					}
 				]
 			}
@@ -120,59 +48,17 @@ JSRoot {
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-				end: Object {
-					column: 20
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 2:0-2:20
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-						end: Object {
-							column: 18
-							line: 2
-						}
-						start: Object {
-							column: 8
-							line: 2
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 2:8-2:18
 					exported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 15
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 2:15-2:18 (bar)
 					}
 					local: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-named-as-specifier/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 11
-								line: 2
-							}
-							start: Object {
-								column: 8
-								line: 2
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-named-as-specifier/input.js 2:8-2:11 (foo)
 					}
 				}
 			]

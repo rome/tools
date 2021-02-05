@@ -17,101 +17,31 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/regression/7/input.jsx 1:0-4:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/regression/7/input.jsx"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/regression/7/input.jsx"
-				end: Object {
-					column: 17
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/regression/7/input.jsx 1:0-3:17
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "path"
-					loc: Object {
-						filename: "jsx/regression/7/input.jsx"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/regression/7/input.jsx 1:1-1:5
 				}
 				children: Array []
 				selfClosing: true
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/regression/7/input.jsx"
-					end: Object {
-						column: 17
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/regression/7/input.jsx 1:0-3:17
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: "d"
-							loc: Object {
-								filename: "jsx/regression/7/input.jsx"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/regression/7/input.jsx 1:6-1:7
 						}
 						value: JSStringLiteral {
 							value: "M230 80\n\t\tA 45 45, 0, 1, 0, 275 125\n    L 275 80 Z"
-							loc: Object {
-								filename: "jsx/regression/7/input.jsx"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/regression/7/input.jsx 1:8-3:15
 						}
-						loc: Object {
-							filename: "jsx/regression/7/input.jsx"
-							end: Object {
-								column: 15
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/regression/7/input.jsx 1:6-3:15
 					}
 				]
 			}

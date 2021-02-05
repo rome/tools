@@ -18,87 +18,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/template-literal-invalid-escapes-tagged/49/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/49/input.js 1:0-1:16
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/template-literal-invalid-escapes-tagged/49/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/49/input.js 1:0-1:16
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "experimental/template-literal-invalid-escapes-tagged/49/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/49/input.js 1:0-1:16
 				tag: JSReferenceIdentifier {
 					name: "sampleTag"
-					loc: Object {
-						filename: "experimental/template-literal-invalid-escapes-tagged/49/input.js"
-						identifierName: "sampleTag"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/49/input.js 1:0-1:9 (sampleTag)
 				}
 				quasi: JSTemplateLiteral {
 					expressions: Array []
-					loc: Object {
-						filename: "experimental/template-literal-invalid-escapes-tagged/49/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/49/input.js 1:9-1:16
 					quasis: Array [
 						JSTemplateElement {
 							cooked: "\\u{\\\\"
 							raw: "\\u{\\\\"
 							tail: true
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/49/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/49/input.js 1:10-1:15
 						}
 					]
 				}

@@ -17,17 +17,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0119/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0119/input.js 1:0-2:0
+	body: Array [
+		JSContinueStatement {
+			label: undefined
+			loc: SourceLocation esprima/invalid-syntax/migrated_0119/input.js 1:0-1:8
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0119/input.js 1:9-1:11
+			expression: JSNumericLiteral {
+				value: 2
+				format: undefined
+				loc: SourceLocation esprima/invalid-syntax/migrated_0119/input.js 1:9-1:10
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,58 +46,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSContinueStatement {
-			label: undefined
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0119/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0119/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 2
-				format: undefined
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0119/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				end: Position 1:10
+				start: Position 1:9
 			}
 		}
 	]

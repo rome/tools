@@ -18,163 +18,50 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/323/input.js"
-		end: Object {
-			column: 33
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/323/input.js 1:0-1:33
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/323/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation es2015/uncategorised/323/input.js 1:0-1:33
+			right: JSReferenceIdentifier {
+				name: "obj"
+				loc: SourceLocation es2015/uncategorised/323/input.js 1:26-1:29 (obj)
 			}
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/323/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
-			}
-			right: JSReferenceIdentifier {
-				name: "obj"
-				loc: Object {
-					filename: "es2015/uncategorised/323/input.js"
-					identifierName: "obj"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 26
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/323/input.js 1:31-1:33
 			}
 			left: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/uncategorised/323/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/323/input.js 1:5-1:22
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingArrayPattern {
 							rest: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/323/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/323/input.js 1:9-1:22
 							elements: Array [
 								JSBindingIdentifier {
 									name: "name"
-									loc: Object {
-										filename: "es2015/uncategorised/323/input.js"
-										identifierName: "name"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/323/input.js 1:10-1:14 (name)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/uncategorised/323/input.js"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 10
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/323/input.js 1:10-1:14
 									}
 								}
 								JSBindingIdentifier {
 									name: "value"
-									loc: Object {
-										filename: "es2015/uncategorised/323/input.js"
-										identifierName: "value"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/323/input.js 1:16-1:21 (value)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/uncategorised/323/input.js"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 16
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/323/input.js 1:16-1:21
 									}
 								}
 							]
 						}
 						init: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/323/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/323/input.js 1:9-1:22
 					}
 				]
 			}

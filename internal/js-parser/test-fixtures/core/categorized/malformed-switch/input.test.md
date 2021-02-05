@@ -17,17 +17,17 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/malformed-switch/input.js"
-		end: Object {
-			column: 1
-			line: 3
+	loc: SourceLocation core/categorized/malformed-switch/input.js 1:0-3:1
+	body: Array [
+		JSSwitchStatement {
+			cases: Array []
+			loc: SourceLocation core/categorized/malformed-switch/input.js 1:0-3:1
+			discriminant: JSReferenceIdentifier {
+				name: "x"
+				loc: SourceLocation core/categorized/malformed-switch/input.js 1:8-1:9 (x)
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,45 +42,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSSwitchStatement {
-			cases: Array []
-			loc: Object {
-				filename: "core/categorized/malformed-switch/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			discriminant: JSReferenceIdentifier {
-				name: "x"
-				loc: Object {
-					filename: "core/categorized/malformed-switch/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				end: Position 2:12
+				start: Position 2:2
 			}
 		}
 	]

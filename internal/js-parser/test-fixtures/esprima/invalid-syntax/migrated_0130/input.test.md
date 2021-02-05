@@ -17,20 +17,34 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0130/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
+	body: Array [
+		JSWhileStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:0-2:0
+			test: JSBooleanLiteral {
+				value: false
+				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 1:6-1:11
+			}
+			body: JSExpressionStatement {
+				loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 2:0-2:0
+				expression: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation esprima/invalid-syntax/migrated_0130/input.js 2:0-2:0
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/invalid-syntax/migrated_0130/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:12
+				start: Position 2:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,76 +53,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unknown start to an "}
 					"statement expression"
 				]
-			}
-			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0130/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSWhileStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0130/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			test: JSBooleanLiteral {
-				value: false
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0130/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
-			}
-			body: JSExpressionStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0130/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
-				expression: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/invalid-syntax/migrated_0130/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
-				}
 			}
 		}
 	]

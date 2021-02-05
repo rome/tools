@@ -18,44 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-binary-integer-literal/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-binary-integer-literal/migrated_0000/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-binary-integer-literal/migrated_0000/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-binary-integer-literal/migrated_0000/input.js 1:0-1:3
 			expression: JSNumericLiteral {
 				value: 0
 				format: "binary"
-				loc: Object {
-					filename: "esprima/es2015-binary-integer-literal/migrated_0000/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-binary-integer-literal/migrated_0000/input.js 1:0-1:3
 			}
 		}
 	]

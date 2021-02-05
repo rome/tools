@@ -18,58 +18,17 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-postfix/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-postfix/migrated_0002/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-postfix/migrated_0002/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-postfix/migrated_0002/input.js 1:0-1:6
 			expression: JSUpdateExpression {
 				operator: "++"
 				prefix: false
-				loc: Object {
-					filename: "esprima/expression-postfix/migrated_0002/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-postfix/migrated_0002/input.js 1:0-1:6
 				argument: JSReferenceIdentifier {
 					name: "eval"
-					loc: Object {
-						filename: "esprima/expression-postfix/migrated_0002/input.js"
-						identifierName: "eval"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-postfix/migrated_0002/input.js 1:0-1:4 (eval)
 				}
 			}
 		}

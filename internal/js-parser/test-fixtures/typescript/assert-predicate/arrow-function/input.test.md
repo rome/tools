@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/assert-predicate/arrow-function/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,196 +32,54 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 31
-					line: 3
-				}
-				start: Object {
-					column: 17
-					line: 3
-				}
+				end: Position 3:31
+				start: Position 3:17
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/assert-predicate/arrow-function/input.ts"
-				end: Object {
-					column: 63
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-1:63
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/assert-predicate/arrow-function/input.ts"
-					end: Object {
-						column: 63
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:0-1:63
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "assert1"
-							loc: Object {
-								filename: "typescript/assert-predicate/arrow-function/input.ts"
-								identifierName: "assert1"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:6-1:13 (assert1)
 						}
-						loc: Object {
-							filename: "typescript/assert-predicate/arrow-function/input.ts"
-							end: Object {
-								column: 63
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:6-1:63
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "typescript/assert-predicate/arrow-function/input.ts"
-								end: Object {
-									column: 63
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:16-1:63
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "typescript/assert-predicate/arrow-function/input.ts"
-									end: Object {
-										column: 63
-										line: 1
-									}
-									start: Object {
-										column: 61
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:63
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/assert-predicate/arrow-function/input.ts"
-									end: Object {
-										column: 60
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:16-1:60
 								returnType: TSTypePredicate {
 									asserts: true
-									loc: Object {
-										filename: "typescript/assert-predicate/arrow-function/input.ts"
-										end: Object {
-											column: 57
-											line: 1
-										}
-										start: Object {
-											column: 42
-											line: 1
-										}
-									}
-									typeAnnotation: TSStringKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/assert-predicate/arrow-function/input.ts"
-											end: Object {
-												column: 57
-												line: 1
-											}
-											start: Object {
-												column: 51
-												line: 1
-											}
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:42-1:57
+									typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:51-1:57}
 									parameterName: JSIdentifier {
 										name: "value"
-										loc: Object {
-											filename: "typescript/assert-predicate/arrow-function/input.ts"
-											identifierName: "value"
-											end: Object {
-												column: 47
-												line: 1
-											}
-											start: Object {
-												column: 42
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:42-1:47 (value)
 									}
 								}
 								params: Array [
 									JSBindingIdentifier {
 										name: "value"
-										loc: Object {
-											filename: "typescript/assert-predicate/arrow-function/input.ts"
-											end: Object {
-												column: 60
-												line: 1
-											}
-											start: Object {
-												column: 61
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:60
 										meta: JSPatternMeta {
 											optional: undefined
-											loc: Object {
-												filename: "typescript/assert-predicate/arrow-function/input.ts"
-												end: Object {
-													column: 60
-													line: 1
-												}
-												start: Object {
-													column: 61
-													line: 1
-												}
-											}
-											typeAnnotation: TSUnknownKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/assert-predicate/arrow-function/input.ts"
-													end: Object {
-														column: 31
-														line: 1
-													}
-													start: Object {
-														column: 24
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:61-1:60
+											typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 1:24-1:31}
 										}
 									}
 								]
@@ -242,171 +90,47 @@ JSRoot {
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/assert-predicate/arrow-function/input.ts"
-				end: Object {
-					column: 53
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:0-2:53
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/assert-predicate/arrow-function/input.ts"
-					end: Object {
-						column: 53
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:0-2:53
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "assert2"
-							loc: Object {
-								filename: "typescript/assert-predicate/arrow-function/input.ts"
-								identifierName: "assert2"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:6-2:13 (assert2)
 						}
-						loc: Object {
-							filename: "typescript/assert-predicate/arrow-function/input.ts"
-							end: Object {
-								column: 53
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:6-2:53
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "typescript/assert-predicate/arrow-function/input.ts"
-								end: Object {
-									column: 53
-									line: 2
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:16-2:53
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "typescript/assert-predicate/arrow-function/input.ts"
-									end: Object {
-										column: 53
-										line: 2
-									}
-									start: Object {
-										column: 51
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:53
 							}
 							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/assert-predicate/arrow-function/input.ts"
-									end: Object {
-										column: 50
-										line: 2
-									}
-									start: Object {
-										column: 16
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:16-2:50
 								returnType: TSTypePredicate {
 									asserts: true
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "typescript/assert-predicate/arrow-function/input.ts"
-										end: Object {
-											column: 47
-											line: 2
-										}
-										start: Object {
-											column: 32
-											line: 2
-										}
-									}
+									loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:32-2:47
 									parameterName: JSIdentifier {
 										name: "value"
-										loc: Object {
-											filename: "typescript/assert-predicate/arrow-function/input.ts"
-											identifierName: "value"
-											end: Object {
-												column: 47
-												line: 2
-											}
-											start: Object {
-												column: 42
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:42-2:47 (value)
 									}
 								}
 								params: Array [
 									JSBindingIdentifier {
 										name: "value"
-										loc: Object {
-											filename: "typescript/assert-predicate/arrow-function/input.ts"
-											end: Object {
-												column: 50
-												line: 2
-											}
-											start: Object {
-												column: 51
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:50
 										meta: JSPatternMeta {
 											optional: undefined
-											loc: Object {
-												filename: "typescript/assert-predicate/arrow-function/input.ts"
-												end: Object {
-													column: 50
-													line: 2
-												}
-												start: Object {
-													column: 51
-													line: 2
-												}
-											}
-											typeAnnotation: TSUnknownKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/assert-predicate/arrow-function/input.ts"
-													end: Object {
-														column: 31
-														line: 2
-													}
-													start: Object {
-														column: 24
-														line: 2
-													}
-												}
-											}
+											loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:51-2:50
+											typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 2:24-2:31}
 										}
 									}
 								]
@@ -417,174 +141,51 @@ JSRoot {
 			}
 		}
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/assert-predicate/arrow-function/input.ts"
-				end: Object {
-					column: 32
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:0-3:32
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/assert-predicate/arrow-function/input.ts"
-					end: Object {
-						column: 32
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:0-3:32
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "assert3"
-							loc: Object {
-								filename: "typescript/assert-predicate/arrow-function/input.ts"
-								identifierName: "assert3"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:6-3:13 (assert3)
 						}
-						loc: Object {
-							filename: "typescript/assert-predicate/arrow-function/input.ts"
-							end: Object {
-								column: 32
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:6-3:32
 						init: JSReferenceIdentifier {
 							name: "value"
-							loc: Object {
-								filename: "typescript/assert-predicate/arrow-function/input.ts"
-								identifierName: "value"
-								end: Object {
-									column: 22
-									line: 3
-								}
-								start: Object {
-									column: 17
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:17-3:22 (value)
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/assert-predicate/arrow-function/input.ts"
-				end: Object {
-					column: 33
-					line: 3
-				}
-				start: Object {
-					column: 32
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:32-3:33
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "typescript/assert-predicate/arrow-function/input.ts"
-					end: Object {
-						column: 33
-						line: 3
-					}
-					start: Object {
-						column: 32
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:32-3:33
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/assert-predicate/arrow-function/input.ts"
-				end: Object {
-					column: 47
-					line: 3
-				}
-				start: Object {
-					column: 34
-					line: 3
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:47
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/assert-predicate/arrow-function/input.ts"
-					end: Object {
-						column: 47
-						line: 3
-					}
-					start: Object {
-						column: 34
-						line: 3
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:47
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "typescript/assert-predicate/arrow-function/input.ts"
-						end: Object {
-							column: 47
-							line: 3
-						}
-						start: Object {
-							column: 45
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:45-3:47
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/assert-predicate/arrow-function/input.ts"
-						end: Object {
-							column: 44
-							line: 3
-						}
-						start: Object {
-							column: 34
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:44
 					params: Array [
 						JSBindingIdentifier {
 							name: "asserts"
-							loc: Object {
-								filename: "typescript/assert-predicate/arrow-function/input.ts"
-								identifierName: "asserts"
-								end: Object {
-									column: 41
-									line: 3
-								}
-								start: Object {
-									column: 34
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/arrow-function/input.ts 3:34-3:41 (asserts)
 						}
 					]
 				}

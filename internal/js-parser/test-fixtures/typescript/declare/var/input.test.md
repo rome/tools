@@ -17,159 +17,46 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/var/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/var/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: Object {
-				filename: "typescript/declare/var/input.ts"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/var/input.ts 1:0-1:14
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "typescript/declare/var/input.ts"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/var/input.ts 1:0-1:14
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/declare/var/input.ts"
-								identifierName: "x"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/declare/var/input.ts 1:12-1:13 (x)
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/var/input.ts"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/declare/var/input.ts 1:12-1:13
 					}
 				]
 			}
 		}
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: Object {
-				filename: "typescript/declare/var/input.ts"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/declare/var/input.ts 2:0-2:19
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "typescript/declare/var/input.ts"
-					end: Object {
-						column: 19
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/declare/var/input.ts 2:0-2:19
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/declare/var/input.ts"
-								end: Object {
-									column: 18
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/declare/var/input.ts 2:12-2:18
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/declare/var/input.ts"
-									end: Object {
-										column: 18
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 2
-									}
-								}
-								typeAnnotation: TSAnyKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/declare/var/input.ts"
-										end: Object {
-											column: 18
-											line: 2
-										}
-										start: Object {
-											column: 15
-											line: 2
-										}
-									}
-								}
+								loc: SourceLocation typescript/declare/var/input.ts 2:12-2:18
+								typeAnnotation: TSAnyKeywordTypeAnnotation {loc: SourceLocation typescript/declare/var/input.ts 2:15-2:18}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/var/input.ts"
-							end: Object {
-								column: 18
-								line: 2
-							}
-							start: Object {
-								column: 12
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/declare/var/input.ts 2:12-2:18
 					}
 				]
 			}

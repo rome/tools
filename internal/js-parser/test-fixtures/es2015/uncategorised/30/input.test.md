@@ -18,55 +18,15 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/30/input.js"
-		end: Object {
-			column: 13
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/30/input.js 1:0-1:13
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/30/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/30/input.js 1:0-1:13
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/30/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/30/input.js 1:0-1:13
 				body: JSStringLiteral {
 					value: "test"
-					loc: Object {
-						filename: "es2015/uncategorised/30/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/30/input.js 1:7-1:13
 				}
 				head: JSFunctionHead {
 					async: false
@@ -74,32 +34,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/30/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/30/input.js 1:0-1:6
 					params: Array [
 						JSBindingIdentifier {
 							name: "e"
-							loc: Object {
-								filename: "es2015/uncategorised/30/input.js"
-								identifierName: "e"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/30/input.js 1:1-1:2 (e)
 						}
 					]
 				}

@@ -16,21 +16,19 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:31
+				start: Position 1:17
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,51 +38,16 @@ JSRoot {
 					"("
 				]
 			}
-			location: Object {
-				filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "function"
-				loc: Object {
-					filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-					identifierName: "function"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:8-1:16 (function)
 			}
 			declare: true
-			loc: Object {
-				filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-				end: Object {
-					column: 73
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:0-1:73
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -93,229 +56,63 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:17-1:31
 				params: Array [
 					JSBindingIdentifier {
 						name: "assertIsString"
-						loc: Object {
-							filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-							identifierName: "assertIsString"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:17-1:31 (assertIsString)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:17-1:31
 						}
 					}
 				]
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-					end: Object {
-						column: 73
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:31-1:73
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-							end: Object {
-								column: 47
-								line: 1
-							}
-							start: Object {
-								column: 31
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:31-1:47
 						expression: JSReferenceIdentifier {
 							name: "value"
-							loc: Object {
-								filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-								identifierName: "value"
-								end: Object {
-									column: 37
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:32-1:37 (value)
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-							end: Object {
-								column: 48
-								line: 1
-							}
-							start: Object {
-								column: 47
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:47-1:48
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-								end: Object {
-									column: 48
-									line: 1
-								}
-								start: Object {
-									column: 47
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:47-1:48
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-							end: Object {
-								column: 56
-								line: 1
-							}
-							start: Object {
-								column: 49
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:49-1:56
 						expression: JSReferenceIdentifier {
 							name: "asserts"
-							loc: Object {
-								filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-								identifierName: "asserts"
-								end: Object {
-									column: 56
-									line: 1
-								}
-								start: Object {
-									column: 49
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:49-1:56 (asserts)
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-							end: Object {
-								column: 62
-								line: 1
-							}
-							start: Object {
-								column: 57
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:57-1:62
 						expression: JSReferenceIdentifier {
 							name: "value"
-							loc: Object {
-								filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-								identifierName: "value"
-								end: Object {
-									column: 62
-									line: 1
-								}
-								start: Object {
-									column: 57
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:57-1:62 (value)
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-							end: Object {
-								column: 65
-								line: 1
-							}
-							start: Object {
-								column: 63
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:63-1:65
 						expression: JSReferenceIdentifier {
 							name: "is"
-							loc: Object {
-								filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-								identifierName: "is"
-								end: Object {
-									column: 65
-									line: 1
-								}
-								start: Object {
-									column: 63
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:63-1:65 (is)
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-							end: Object {
-								column: 73
-								line: 1
-							}
-							start: Object {
-								column: 66
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:66-1:73
 						expression: JSReferenceIdentifier {
 							name: "string"
-							loc: Object {
-								filename: "typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts"
-								identifierName: "string"
-								end: Object {
-									column: 72
-									line: 1
-								}
-								start: Object {
-									column: 66
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts 1:66-1:72 (string)
 						}
 					}
 				]

@@ -18,43 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:0-1:27
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:0-1:27
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:1-1:26
 				head: JSFunctionHead {
 					async: false
 					generator: false
@@ -64,86 +34,25 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:10-1:12
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:13-1:26
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:24
 							expression: JSBinaryExpression {
 								operator: "*"
-								loc: Object {
-									filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:24
 								left: JSReferenceIdentifier {
 									name: "yield"
-									loc: Object {
-										filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-										identifierName: "yield"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 15
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:15-1:20 (yield)
 								}
 								right: JSNumericLiteral {
 									value: 10
 									format: undefined
-									loc: Object {
-										filename: "es2015/yield/yield-star-inside-plain-function/input.js"
-										end: Object {
-											column: 24
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/yield/yield-star-inside-plain-function/input.js 1:22-1:24
 								}
 							}
 						}

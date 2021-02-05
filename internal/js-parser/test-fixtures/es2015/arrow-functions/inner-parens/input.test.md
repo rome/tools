@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/arrow-functions/inner-parens/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,97 +32,30 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
+				end: Position 1:15
+				start: Position 1:12
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/inner-parens/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-1:24
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2015/arrow-functions/inner-parens/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:0-1:24
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2015/arrow-functions/inner-parens/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:4-1:7 (foo)
 						}
-						loc: Object {
-							filename: "es2015/arrow-functions/inner-parens/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:4-1:23
 						init: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2015/arrow-functions/inner-parens/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:10-1:23
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2015/arrow-functions/inner-parens/input.js"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:21-1:23
 							}
 							head: JSFunctionHead {
 								async: false
@@ -140,32 +63,11 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2015/arrow-functions/inner-parens/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:10-1:20
 								params: Array [
 									JSBindingIdentifier {
 										name: "foo"
-										loc: Object {
-											filename: "es2015/arrow-functions/inner-parens/input.js"
-											identifierName: "foo"
-											end: Object {
-												column: 15
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/arrow-functions/inner-parens/input.js 1:12-1:15 (foo)
 									}
 								]
 							}

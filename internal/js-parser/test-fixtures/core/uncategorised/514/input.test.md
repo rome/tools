@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/514/input.js"
-		end: Object {
-			column: 34
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/514/input.js 1:0-1:34
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:15
+				start: Position 1:14
 			}
 			description: Object {
 				category: "parse"
@@ -58,20 +42,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "core/uncategorised/514/input.js"
-							identifierName: "t"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation core/uncategorised/514/input.js 1:14-1:15 (t)}
 				]
 			}
 		}
@@ -80,57 +51,16 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "core/uncategorised/514/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/514/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "core/uncategorised/514/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/514/input.js 1:0-1:34
 			body: JSBlockStatement {
 				body: Array []
-				loc: Object {
-					filename: "core/uncategorised/514/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/514/input.js 1:17-1:34
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "core/uncategorised/514/input.js"
-							end: Object {
-								column: 32
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/514/input.js 1:19-1:32
 					}
 				]
 			}
@@ -142,76 +72,24 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/514/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/514/input.js 1:10-1:16
 				params: Array [
 					JSBindingIdentifier {
 						name: "t"
-						loc: Object {
-							filename: "core/uncategorised/514/input.js"
-							identifierName: "t"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/514/input.js 1:11-1:12 (t)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "core/uncategorised/514/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/514/input.js 1:11-1:12
 						}
 					}
 					JSBindingIdentifier {
 						name: "t"
-						loc: Object {
-							filename: "core/uncategorised/514/input.js"
-							identifierName: "t"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/514/input.js 1:14-1:15 (t)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "core/uncategorised/514/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/514/input.js 1:14-1:15
 						}
 					}
 				]

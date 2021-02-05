@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,150 +32,44 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
+				end: Position 1:20
+				start: Position 1:19
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-1:20
 			expression: JSImportCall {
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:6-1:20
 				argument: JSStringLiteral {
 					value: "./foo.json"
-					loc: Object {
-						filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:7-1:19
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:26
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:26
 				object: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:21-1:24
 				}
 				property: JSComputedMemberProperty {
 					value: JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:25-1:26
 					}
-					loc: Object {
-						filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-						end: Object {
-							column: 26
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:24-1:26
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 26
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:26-1:28
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 26
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:26-1:27
 			}
 		}
 	]

@@ -18,100 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/322/input.js"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/322/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/322/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:9
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/322/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/322/input.js 1:8-1:9
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/322/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/322/input.js 1:0-1:5
 					elements: Array [
 						JSAssignmentIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2015/uncategorised/322/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/322/input.js 1:1-1:2 (x)
 						}
-						JSArrayHole {
-							loc: Object {
-								filename: "es2015/uncategorised/322/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
-						}
+						JSArrayHole {loc: SourceLocation es2015/uncategorised/322/input.js 1:3-1:3}
 					]
 				}
 			}

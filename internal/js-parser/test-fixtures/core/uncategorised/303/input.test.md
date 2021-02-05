@@ -18,173 +18,50 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/303/input.js"
-		end: Object {
-			column: 4
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/303/input.js 1:0-2:4
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/303/input.js"
-				end: Object {
-					column: 4
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/303/input.js 1:0-2:4
 			body: Array [
 				JSVariableDeclarationStatement {
-					loc: Object {
-						filename: "core/uncategorised/303/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/303/input.js 1:2-1:19
 					declaration: JSVariableDeclaration {
 						kind: "var"
-						loc: Object {
-							filename: "core/uncategorised/303/input.js"
-							end: Object {
-								column: 19
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/303/input.js 1:2-1:19
 						declarations: Array [
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "core/uncategorised/303/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 7
-											line: 1
-										}
-										start: Object {
-											column: 6
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/303/input.js 1:6-1:7 (x)
 								}
-								loc: Object {
-									filename: "core/uncategorised/303/input.js"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/303/input.js 1:6-1:12
 								init: JSNumericLiteral {
 									value: 14
 									format: undefined
-									loc: Object {
-										filename: "core/uncategorised/303/input.js"
-										end: Object {
-											column: 12
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/303/input.js 1:10-1:12
 								}
 							}
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "core/uncategorised/303/input.js"
-										identifierName: "y"
-										end: Object {
-											column: 15
-											line: 1
-										}
-										start: Object {
-											column: 14
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/303/input.js 1:14-1:15 (y)
 								}
-								loc: Object {
-									filename: "core/uncategorised/303/input.js"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/303/input.js 1:14-1:19
 								init: JSNumericLiteral {
 									value: 3
 									format: undefined
-									loc: Object {
-										filename: "core/uncategorised/303/input.js"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/303/input.js 1:18-1:19
 								}
 							}
 						]
 					}
 				}
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/303/input.js"
-						end: Object {
-							column: 2
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation core/uncategorised/303/input.js 2:0-2:2
 					expression: JSReferenceIdentifier {
 						name: "z"
-						loc: Object {
-							filename: "core/uncategorised/303/input.js"
-							identifierName: "z"
-							end: Object {
-								column: 1
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/303/input.js 2:0-2:1 (z)
 					}
 				}
 			]

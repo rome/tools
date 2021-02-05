@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/462/input.js"
-		end: Object {
-			column: 50
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/462/input.js 1:0-1:50
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/462/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:33
+				start: Position 1:33
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -41,115 +39,30 @@ JSRoot {
 					RAW_MARKUP {value: "</emphasis>"}
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/462/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 33
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSLabeledStatement {
-			loc: Object {
-				filename: "core/uncategorised/462/input.js"
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/462/input.js 1:0-1:50
 			label: JSIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "core/uncategorised/462/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 1
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/462/input.js 1:0-1:1 (x)
 			}
 			body: JSWhileStatement {
-				loc: Object {
-					filename: "core/uncategorised/462/input.js"
-					end: Object {
-						column: 50
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/462/input.js 1:3-1:50
 				test: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "core/uncategorised/462/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/462/input.js 1:10-1:14
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "core/uncategorised/462/input.js"
-						end: Object {
-							column: 50
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/462/input.js 1:16-1:50
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "core/uncategorised/462/input.js"
-								end: Object {
-									column: 48
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/462/input.js 1:18-1:48
 							expression: JSFunctionExpression {
 								id: undefined
-								loc: Object {
-									filename: "core/uncategorised/462/input.js"
-									end: Object {
-										column: 46
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/462/input.js 1:19-1:46
 								head: JSFunctionHead {
 									async: false
 									generator: false
@@ -159,58 +72,17 @@ JSRoot {
 									returnType: undefined
 									thisType: undefined
 									typeParameters: undefined
-									loc: Object {
-										filename: "core/uncategorised/462/input.js"
-										end: Object {
-											column: 30
-											line: 1
-										}
-										start: Object {
-											column: 28
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/462/input.js 1:28-1:30
 								}
 								body: JSBlockStatement {
 									directives: Array []
-									loc: Object {
-										filename: "core/uncategorised/462/input.js"
-										end: Object {
-											column: 46
-											line: 1
-										}
-										start: Object {
-											column: 31
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/462/input.js 1:31-1:46
 									body: Array [
 										JSContinueStatement {
-											loc: Object {
-												filename: "core/uncategorised/462/input.js"
-												end: Object {
-													column: 44
-													line: 1
-												}
-												start: Object {
-													column: 33
-													line: 1
-												}
-											}
+											loc: SourceLocation core/uncategorised/462/input.js 1:33-1:44
 											label: JSIdentifier {
 												name: "x"
-												loc: Object {
-													filename: "core/uncategorised/462/input.js"
-													identifierName: "x"
-													end: Object {
-														column: 43
-														line: 1
-													}
-													start: Object {
-														column: 42
-														line: 1
-													}
-												}
+												loc: SourceLocation core/uncategorised/462/input.js 1:42-1:43 (x)
 											}
 										}
 									]

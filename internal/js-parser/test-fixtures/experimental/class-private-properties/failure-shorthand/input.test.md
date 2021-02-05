@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/failure-shorthand/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-7:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "experimental/class-private-properties/failure-shorthand/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 4:10
+				start: Position 4:11
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,109 +38,33 @@ JSRoot {
 					"statement expression"
 				]
 			}
-			location: Object {
-				filename: "experimental/class-private-properties/failure-shorthand/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 4
-				}
-				start: Object {
-					column: 11
-					line: 4
-				}
-			}
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-private-properties/failure-shorthand/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/failure-shorthand/input.js"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-6:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/failure-shorthand/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-6:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/failure-shorthand/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-shorthand/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:2-2:4
 						}
 						value: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/failure-shorthand/input.js"
-							end: Object {
-								column: 5
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:2-2:5
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -150,21 +72,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-shorthand/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassMethod {
@@ -172,41 +81,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "experimental/class-private-properties/failure-shorthand/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 13
-										line: 3
-									}
-									start: Object {
-										column: 2
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13 (constructor)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-shorthand/input.js"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
 						}
-						loc: Object {
-							filename: "experimental/class-private-properties/failure-shorthand/input.js"
-							end: Object {
-								column: 3
-								line: 5
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
+						loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-5:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:2-3:13
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -217,123 +105,29 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-shorthand/input.js"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 13
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-shorthand/input.js"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:13-3:15
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-private-properties/failure-shorthand/input.js"
-								end: Object {
-									column: 3
-									line: 5
-								}
-								start: Object {
-									column: 16
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 3:16-5:3
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/failure-shorthand/input.js"
-										end: Object {
-											column: 12
-											line: 4
-										}
-										start: Object {
-											column: 4
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:4-4:12
 									expression: JSUnaryExpression {
 										operator: "delete"
 										prefix: true
-										loc: Object {
-											filename: "experimental/class-private-properties/failure-shorthand/input.js"
-											end: Object {
-												column: 12
-												line: 4
-											}
-											start: Object {
-												column: 4
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:4-4:12
 										argument: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
-											loc: Object {
-												filename: "experimental/class-private-properties/failure-shorthand/input.js"
-												end: Object {
-													column: 12
-													line: 4
-												}
-												start: Object {
-													column: 11
-													line: 4
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:11-4:12
 										}
 									}
 								}
 								JSExpressionStatement {
-									loc: Object {
-										filename: "experimental/class-private-properties/failure-shorthand/input.js"
-										end: Object {
-											column: 14
-											line: 4
-										}
-										start: Object {
-											column: 12
-											line: 4
-										}
-									}
+									loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:12-4:14
 									expression: JSReferenceIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "experimental/class-private-properties/failure-shorthand/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 13
-												line: 4
-											}
-											start: Object {
-												column: 12
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 4:12-4:13 (x)
 									}
 								}
 							]

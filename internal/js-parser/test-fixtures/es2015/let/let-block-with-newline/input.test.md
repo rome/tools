@@ -17,132 +17,40 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-block-with-newline/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-block-with-newline/input.js 1:0-5:0
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " ASI"
-			loc: Object {
-				filename: "es2015/let/let-block-with-newline/input.js"
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 11
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/let/let-block-with-newline/input.js 2:11-2:17
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "es2015/let/let-block-with-newline/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-block-with-newline/input.js 1:0-4:1
 			test: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "es2015/let/let-block-with-newline/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-block-with-newline/input.js 1:4-1:9
 			}
 			consequent: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/let/let-block-with-newline/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-block-with-newline/input.js 1:11-4:1
 				body: Array [
 					JSLabeledStatement {
+						loc: SourceLocation es2015/let/let-block-with-newline/input.js 2:4-2:10
 						trailingComments: Array ["0"]
-						loc: Object {
-							filename: "es2015/let/let-block-with-newline/input.js"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
 						label: JSIdentifier {
 							name: "L"
-							loc: Object {
-								filename: "es2015/let/let-block-with-newline/input.js"
-								identifierName: "L"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-block-with-newline/input.js 2:4-2:5 (L)
 						}
 						body: JSExpressionStatement {
 							trailingComments: undefined
-							loc: Object {
-								filename: "es2015/let/let-block-with-newline/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/let/let-block-with-newline/input.js 2:7-2:10
 							expression: JSReferenceIdentifier {
 								name: "let"
 								trailingComments: undefined
-								loc: Object {
-									filename: "es2015/let/let-block-with-newline/input.js"
-									identifierName: "let"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 7
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/let/let-block-with-newline/input.js 2:7-2:10 (let)
 							}
 						}
 					}
@@ -150,17 +58,7 @@ JSRoot {
 						body: Array []
 						directives: Array []
 						leadingComments: Array ["0"]
-						loc: Object {
-							filename: "es2015/let/let-block-with-newline/input.js"
-							end: Object {
-								column: 6
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/let/let-block-with-newline/input.js 3:4-3:6
 					}
 				]
 			}

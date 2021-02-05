@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 12
-					line: 2
-				}
+				end: Position 2:12
+				start: Position 2:12
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "fn"
-				loc: Object {
-					filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-					identifierName: "fn"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 1:10-1:12 (fn)
 			}
-			loc: Object {
-				filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,70 +53,20 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 1:12-1:14
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 1:15-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:2-2:23
 						expression: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:2-2:22
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-									end: Object {
-										column: 22
-										line: 2
-									}
-									start: Object {
-										column: 20
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:20-2:22
 							}
 							head: JSFunctionHead {
 								async: false
@@ -161,73 +74,21 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-									end: Object {
-										column: 19
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:2-2:19
 								params: Array [
 									JSBindingAssignmentPattern {
 										operator: "="
-										loc: Object {
-											filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-											end: Object {
-												column: 15
-												line: 2
-											}
-											start: Object {
-												column: 3
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:3-2:15
 										left: JSBindingIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-												identifierName: "x"
-												end: Object {
-													column: 4
-													line: 2
-												}
-												start: Object {
-													column: 3
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:3-2:4 (x)
 										}
 										right: JSYieldExpression {
 											delegate: false
-											loc: Object {
-												filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-												end: Object {
-													column: 15
-													line: 2
-												}
-												start: Object {
-													column: 7
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:7-2:15
 											argument: JSReferenceIdentifier {
 												name: "fn"
-												loc: Object {
-													filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js"
-													identifierName: "fn"
-													end: Object {
-														column: 15
-														line: 2
-													}
-													start: Object {
-														column: 13
-														line: 2
-													}
-												}
+												loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-3/input.js 2:13-2:15 (fn)
 											}
 										}
 									}

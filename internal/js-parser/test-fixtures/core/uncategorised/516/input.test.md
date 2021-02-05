@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/516/input.js"
-		end: Object {
-			column: 37
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/516/input.js 1:0-1:37
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/516/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:18
+				start: Position 1:11
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,77 +38,22 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/516/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "core/uncategorised/516/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/516/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "core/uncategorised/516/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/516/input.js 1:0-1:37
 			body: JSBlockStatement {
 				body: Array []
-				loc: Object {
-					filename: "core/uncategorised/516/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/516/input.js 1:20-1:37
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "core/uncategorised/516/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/516/input.js 1:22-1:35
 					}
 				]
 			}
@@ -122,46 +65,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/516/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/516/input.js 1:10-1:19
 				params: Array [
 					JSBindingIdentifier {
 						name: "package"
-						loc: Object {
-							filename: "core/uncategorised/516/input.js"
-							identifierName: "package"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/516/input.js 1:11-1:18 (package)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "core/uncategorised/516/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/516/input.js 1:11-1:18
 						}
 					}
 				]

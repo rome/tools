@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/225/input.js"
-		end: Object {
-			column: 7
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/225/input.js 1:0-2:7
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,100 +32,31 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
+				end: Position 2:5
+				start: Position 2:6
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/225/input.js"
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/225/input.js 1:0-1:1
 			expression: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "es2015/uncategorised/225/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 1
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/225/input.js 1:0-1:1 (x)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/225/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 1
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/225/input.js 2:1-2:5
 			expression: JSReferenceIdentifier {
 				name: "isnt"
-				loc: Object {
-					filename: "es2015/uncategorised/225/input.js"
-					identifierName: "isnt"
-					end: Object {
-						column: 5
-						line: 2
-					}
-					start: Object {
-						column: 1
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/225/input.js 2:1-2:5 (isnt)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/225/input.js"
-				end: Object {
-					column: 7
-					line: 2
-				}
-				start: Object {
-					column: 6
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/225/input.js 2:6-2:7
 			expression: JSReferenceIdentifier {
 				name: "y"
-				loc: Object {
-					filename: "es2015/uncategorised/225/input.js"
-					identifierName: "y"
-					end: Object {
-						column: 7
-						line: 2
-					}
-					start: Object {
-						column: 6
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/225/input.js 2:6-2:7 (y)
 			}
 		}
 	]

@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/declaration-function/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/declaration-function/migrated_0002/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "arguments"
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0002/input.js"
-					identifierName: "arguments"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0002/input.js 1:9-1:18 (arguments)
 			}
-			loc: Object {
-				filename: "esprima/declaration-function/migrated_0002/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/declaration-function/migrated_0002/input.js 1:0-1:24
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0002/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0002/input.js 1:21-1:24
 			}
 			head: JSFunctionHead {
 				async: false
@@ -81,17 +40,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/declaration-function/migrated_0002/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/declaration-function/migrated_0002/input.js 1:18-1:20
 			}
 		}
 	]

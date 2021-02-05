@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/literal-bigint/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,112 +32,36 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:6
+				start: Position 1:7
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/literal-bigint/input.ts"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-1:10
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/literal-bigint/input.ts"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-1:10
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "typescript/types/literal-bigint/input.ts"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/literal-bigint/input.ts"
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 								typeAnnotation: TSTypeReference {
-									loc: Object {
-										filename: "typescript/types/literal-bigint/input.ts"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/literal-bigint/input.ts 1:9-1:9
 									typeName: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "typescript/types/literal-bigint/input.ts"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/literal-bigint/input.ts 1:9-1:9
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/literal-bigint/input.ts"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/literal-bigint/input.ts 1:4-1:9
 					}
 				]
 			}

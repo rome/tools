@@ -18,86 +18,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/220/input.js"
-		end: Object {
-			column: 10
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/220/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
 			expression: JSAssignmentExpression {
 				operator: "+="
-				loc: Object {
-					filename: "es2015/uncategorised/220/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:10
 				right: JSReferenceIdentifier {
 					name: "ary"
-					loc: Object {
-						filename: "es2015/uncategorised/220/input.js"
-						identifierName: "ary"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/220/input.js 1:7-1:10 (ary)
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/220/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/220/input.js 1:0-1:3
 					elements: Array [
 						JSAssignmentIdentifier {
 							name: "v"
-							loc: Object {
-								filename: "es2015/uncategorised/220/input.js"
-								identifierName: "v"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/220/input.js 1:1-1:2 (v)
 						}
 					]
 				}

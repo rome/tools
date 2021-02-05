@@ -16,190 +16,67 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/abstract/input.ts 1:0-8:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/abstract/input.ts"
-		end: Object {
-			column: 0
-			line: 8
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " `export abstract class {}` is not valid TypeScript."
-			loc: Object {
-				filename: "typescript/class/abstract/input.ts"
-				end: Object {
-					column: 54
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation typescript/class/abstract/input.ts 4:0-4:54
 		}
 		CommentLine {
 			id: "1"
 			value: " `abstract class` is not valid as an expression."
-			loc: Object {
-				filename: "typescript/class/abstract/input.ts"
-				end: Object {
-					column: 50
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 7
-				}
-			}
+			loc: SourceLocation typescript/class/abstract/input.ts 7:0-7:50
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C1"
-				loc: Object {
-					filename: "typescript/class/abstract/input.ts"
-					identifierName: "C1"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/abstract/input.ts 1:15-1:17 (C1)
 			}
 			abstract: true
-			loc: Object {
-				filename: "typescript/class/abstract/input.ts"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/abstract/input.ts 1:0-1:20
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/abstract/input.ts"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/abstract/input.ts 1:0-1:20
 			}
 		}
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C2"
-				loc: Object {
-					filename: "typescript/class/abstract/input.ts"
-					identifierName: "C2"
-					end: Object {
-						column: 25
-						line: 2
-					}
-					start: Object {
-						column: 23
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/abstract/input.ts 2:23-2:25 (C2)
 			}
 			abstract: true
 			declare: true
-			loc: Object {
-				filename: "typescript/class/abstract/input.ts"
-				end: Object {
-					column: 28
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/class/abstract/input.ts 2:0-2:28
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/abstract/input.ts"
-					end: Object {
-						column: 28
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/class/abstract/input.ts 2:0-2:28
 			}
 		}
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
+			loc: SourceLocation typescript/class/abstract/input.ts 3:0-3:27
 			trailingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/class/abstract/input.ts"
-				end: Object {
-					column: 27
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "C3"
-					loc: Object {
-						filename: "typescript/class/abstract/input.ts"
-						identifierName: "C3"
-						end: Object {
-							column: 24
-							line: 3
-						}
-						start: Object {
-							column: 22
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/class/abstract/input.ts 3:22-3:24 (C3)
 				}
 				abstract: true
+				loc: SourceLocation typescript/class/abstract/input.ts 3:7-3:27
 				trailingComments: Array ["0"]
-				loc: Object {
-					filename: "typescript/class/abstract/input.ts"
-					end: Object {
-						column: 27
-						line: 3
-					}
-					start: Object {
-						column: 7
-						line: 3
-					}
-				}
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
@@ -207,61 +84,21 @@ JSRoot {
 					superTypeParameters: undefined
 					trailingComments: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/class/abstract/input.ts"
-						end: Object {
-							column: 27
-							line: 3
-						}
-						start: Object {
-							column: 7
-							line: 3
-						}
-					}
+					loc: SourceLocation typescript/class/abstract/input.ts 3:7-3:27
 				}
 			}
 		}
 		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "typescript/class/abstract/input.ts"
-				end: Object {
-					column: 33
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation typescript/class/abstract/input.ts 5:0-5:33
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
-					loc: Object {
-						filename: "typescript/class/abstract/input.ts"
-						end: Object {
-							column: 33
-							line: 5
-						}
-						start: Object {
-							column: 15
-							line: 5
-						}
-					}
+					loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
 				}
 				abstract: true
 				leadingComments: Array ["0"]
-				loc: Object {
-					filename: "typescript/class/abstract/input.ts"
-					end: Object {
-						column: 33
-						line: 5
-					}
-					start: Object {
-						column: 15
-						line: 5
-					}
-				}
+				loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
@@ -269,62 +106,21 @@ JSRoot {
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/class/abstract/input.ts"
-						end: Object {
-							column: 33
-							line: 5
-						}
-						start: Object {
-							column: 15
-							line: 5
-						}
-					}
+					loc: SourceLocation typescript/class/abstract/input.ts 5:15-5:33
 				}
 			}
 		}
 		JSExportDefaultDeclaration {
+			loc: SourceLocation typescript/class/abstract/input.ts 6:0-6:36
 			trailingComments: Array ["1"]
-			loc: Object {
-				filename: "typescript/class/abstract/input.ts"
-				end: Object {
-					column: 36
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "C4"
-					loc: Object {
-						filename: "typescript/class/abstract/input.ts"
-						identifierName: "C4"
-						end: Object {
-							column: 32
-							line: 6
-						}
-						start: Object {
-							column: 30
-							line: 6
-						}
-					}
+					loc: SourceLocation typescript/class/abstract/input.ts 6:30-6:32 (C4)
 				}
 				abstract: true
+				loc: SourceLocation typescript/class/abstract/input.ts 6:15-6:36
 				trailingComments: Array ["1"]
-				loc: Object {
-					filename: "typescript/class/abstract/input.ts"
-					end: Object {
-						column: 36
-						line: 6
-					}
-					start: Object {
-						column: 15
-						line: 6
-					}
-				}
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
@@ -332,17 +128,7 @@ JSRoot {
 					superTypeParameters: undefined
 					trailingComments: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/class/abstract/input.ts"
-						end: Object {
-							column: 36
-							line: 6
-						}
-						start: Object {
-							column: 15
-							line: 6
-						}
-					}
+					loc: SourceLocation typescript/class/abstract/input.ts 6:15-6:36
 				}
 			}
 		}

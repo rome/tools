@@ -18,100 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/537/input.js"
-		end: Object {
-			column: 19
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/537/input.js 1:0-1:19
 	body: Array [
 		JSForStatement {
 			test: undefined
 			update: undefined
-			loc: Object {
-				filename: "core/uncategorised/537/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "core/uncategorised/537/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation core/uncategorised/537/input.js 1:18-1:19}
+			loc: SourceLocation core/uncategorised/537/input.js 1:0-1:19
 			init: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "core/uncategorised/537/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/537/input.js 1:4-1:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/537/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/537/input.js 1:10-1:11 (x)
 						}
-						loc: Object {
-							filename: "core/uncategorised/537/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/537/input.js 1:10-1:15
 						init: JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "core/uncategorised/537/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/537/input.js 1:14-1:15
 						}
 					}
 				]

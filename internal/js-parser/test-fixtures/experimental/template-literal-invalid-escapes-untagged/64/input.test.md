@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-		end: Object {
-			column: 27
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:0-1:27
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,72 +32,26 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:10
+				start: Position 1:10
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:0-1:27
 			expression: JSTemplateLiteral {
-				loc: Object {
-					filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:0-1:27
 				expressions: Array [
 					JSNumericLiteral {
 						value: 0
 						format: undefined
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:7-1:8
 					}
 					JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 19
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:19-1:20
 					}
 				]
 				quasis: Array [
@@ -115,49 +59,19 @@ JSRoot {
 						cooked: "left"
 						raw: "left"
 						tail: false
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:1-1:5
 					}
 					JSTemplateElement {
 						cooked: "\\u{\\u{0}"
 						raw: "\\u{\\u{0}"
 						tail: false
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:9-1:17
 					}
 					JSTemplateElement {
 						cooked: "right"
 						raw: "right"
 						tail: true
-						loc: Object {
-							filename: "experimental/template-literal-invalid-escapes-untagged/64/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/64/input.js 1:21-1:26
 					}
 				]
 			}

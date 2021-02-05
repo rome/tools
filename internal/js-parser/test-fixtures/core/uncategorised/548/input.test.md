@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/548/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/548/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/548/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:17
+				start: Position 1:8
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,160 +38,43 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/548/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/548/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/548/input.js 1:0-1:28
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "core/uncategorised/548/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/548/input.js 1:0-1:28
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "core/uncategorised/548/input.js"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/548/input.js 1:6-1:19
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "arguments"
-											loc: Object {
-												filename: "core/uncategorised/548/input.js"
-												identifierName: "arguments"
-												end: Object {
-													column: 17
-													line: 1
-												}
-												start: Object {
-													column: 8
-													line: 1
-												}
-											}
+											loc: SourceLocation core/uncategorised/548/input.js 1:8-1:17 (arguments)
 										}
-										loc: Object {
-											filename: "core/uncategorised/548/input.js"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/548/input.js 1:8-1:17
 									}
 									value: JSBindingIdentifier {
 										name: "arguments"
-										loc: Object {
-											filename: "core/uncategorised/548/input.js"
-											identifierName: "arguments"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 8
-												line: 1
-											}
-										}
+										loc: SourceLocation core/uncategorised/548/input.js 1:8-1:17 (arguments)
 									}
-									loc: Object {
-										filename: "core/uncategorised/548/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/548/input.js 1:8-1:17
 								}
 							]
 						}
-						loc: Object {
-							filename: "core/uncategorised/548/input.js"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/548/input.js 1:6-1:27
 						init: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "core/uncategorised/548/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/548/input.js 1:22-1:27
 							callee: JSReferenceIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "core/uncategorised/548/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 22
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/548/input.js 1:22-1:25 (foo)
 							}
 						}
 					}

@@ -18,72 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/207/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/207/input.js 1:0-1:8
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/207/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/207/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "<<="
-				loc: Object {
-					filename: "core/uncategorised/207/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/207/input.js 1:0-1:8
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/207/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/207/input.js 1:0-1:1 (x)
 				}
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/207/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/207/input.js 1:6-1:8
 				}
 			}
 		}

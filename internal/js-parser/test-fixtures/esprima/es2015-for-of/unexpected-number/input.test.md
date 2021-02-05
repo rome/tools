@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/unexpected-number/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,101 +32,32 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:13
+				start: Position 1:11
 			}
 		}
 	]
 	body: Array [
 		JSForStatement {
 			update: undefined
-			loc: Object {
-				filename: "esprima/es2015-for-of/unexpected-number/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/unexpected-number/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:17-1:18}
+			loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:0-1:18
 			test: JSNumericLiteral {
 				value: 42
 				format: undefined
-				loc: Object {
-					filename: "esprima/es2015-for-of/unexpected-number/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:14-1:16
 			}
 			init: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "esprima/es2015-for-of/unexpected-number/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:5-1:13
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "of"
-							loc: Object {
-								filename: "esprima/es2015-for-of/unexpected-number/input.js"
-								identifierName: "of"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:11-1:13 (of)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/es2015-for-of/unexpected-number/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-for-of/unexpected-number/input.js 1:11-1:13
 					}
 				]
 			}

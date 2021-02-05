@@ -18,71 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/16/input.js"
-		end: Object {
-			column: 7
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/16/input.js 1:0-1:7
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/16/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/16/input.js 1:0-1:7
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/uncategorised/16/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
+				loc: SourceLocation core/uncategorised/16/input.js 1:0-1:7
+				left: JSAssignmentIdentifier {
+					name: "T\u200c"
+					loc: SourceLocation core/uncategorised/16/input.js 1:0-1:2 (T\u200c)
 				}
 				right: JSArrayExpression {
 					elements: Array []
-					loc: Object {
-						filename: "core/uncategorised/16/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
-				}
-				left: JSAssignmentIdentifier {
-					name: "T\u200c"
-					loc: Object {
-						filename: "core/uncategorised/16/input.js"
-						identifierName: "T\u200c"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/16/input.js 1:5-1:7
 				}
 			}
 		}

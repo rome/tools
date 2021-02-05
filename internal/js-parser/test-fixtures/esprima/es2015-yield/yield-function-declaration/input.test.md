@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-function-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-function-declaration/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "yield"
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-function-declaration/input.js"
-					identifierName: "yield"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-function-declaration/input.js 1:9-1:14 (yield)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-function-declaration/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-function-declaration/input.js 1:0-1:18
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-function-declaration/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-function-declaration/input.js 1:16-1:18
 			}
 			head: JSFunctionHead {
 				async: false
@@ -81,17 +40,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-function-declaration/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/yield-function-declaration/input.js 1:14-1:16
 			}
 		}
 	]

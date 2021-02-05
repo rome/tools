@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0200/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/invalid-syntax/migrated_0200/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:50
+				start: Position 1:41
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,50 +38,15 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0200/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 50
-					line: 1
-				}
-				start: Object {
-					column: 41
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "hello"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0200/input.js"
-					identifierName: "hello"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:9-1:14 (hello)
 			}
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0200/input.js"
-				end: Object {
-					column: 58
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:0-1:58
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -93,88 +56,27 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0200/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:14-1:16
 			}
 			body: JSBlockStatement {
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0200/input.js"
-					end: Object {
-						column: 58
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:17-1:58
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0200/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:18-1:31
 					}
 				]
 				body: Array [
 					JSFunctionDeclaration {
 						id: JSBindingIdentifier {
 							name: "arguments"
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0200/input.js"
-								identifierName: "arguments"
-								end: Object {
-									column: 50
-									line: 1
-								}
-								start: Object {
-									column: 41
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:41-1:50 (arguments)
 						}
-						loc: Object {
-							filename: "esprima/invalid-syntax/migrated_0200/input.js"
-							end: Object {
-								column: 56
-								line: 1
-							}
-							start: Object {
-								column: 32
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:32-1:56
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0200/input.js"
-								end: Object {
-									column: 56
-									line: 1
-								}
-								start: Object {
-									column: 53
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:53-1:56
 						}
 						head: JSFunctionHead {
 							async: false
@@ -185,17 +87,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/invalid-syntax/migrated_0200/input.js"
-								end: Object {
-									column: 52
-									line: 1
-								}
-								start: Object {
-									column: 50
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/invalid-syntax/migrated_0200/input.js 1:50-1:52
 						}
 					}
 				]

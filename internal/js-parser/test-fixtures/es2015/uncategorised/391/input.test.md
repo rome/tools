@@ -18,73 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/391/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/391/input.js 1:0-2:0
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/391/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/391/input.js 1:0-1:25
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/uncategorised/391/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/391/input.js 1:17-1:20 (foo)
 				}
-				loc: Object {
-					filename: "es2015/uncategorised/391/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/391/input.js 1:7-1:25
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/391/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/391/input.js 1:23-1:25
 				}
 				head: JSFunctionHead {
 					async: false
@@ -95,33 +44,11 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/391/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/391/input.js 1:20-1:22
 				}
 			}
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/391/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation es2015/uncategorised/391/input.js 1:25-1:26}
 	]
 }
 ```

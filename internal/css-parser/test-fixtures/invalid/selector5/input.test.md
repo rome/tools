@@ -10,17 +10,61 @@ CSSRoot {
 	corrupt: false
 	filename: "invalid/selector5/input.css"
 	integrity: undefined
-	loc: Object {
-		filename: "invalid/selector5/input.css"
-		end: Object {
-			column: 1
-			line: 3
+	loc: SourceLocation invalid/selector5/input.css 1:0-3:1
+	body: Array [
+		CSSRule {
+			loc: SourceLocation invalid/selector5/input.css 1:0-3:1
+			block: CSSBlock {
+				value: Array [
+					CSSDeclaration {
+						name: "color"
+						value: Array [
+							CSSIdentifier {
+								value: "purple"
+								loc: SourceLocation invalid/selector5/input.css 2:9-2:15
+							}
+						]
+						important: false
+						loc: SourceLocation invalid/selector5/input.css 2:2-2:15
+					}
+				]
+				startingTokenValue: "{"
+				loc: SourceLocation invalid/selector5/input.css 1:24-3:1
+			}
+			prelude: Array [
+				CSSSelector {
+					loc: SourceLocation invalid/selector5/input.css 1:0-1:11
+					patterns: Array [
+						CSSTypeSelector {
+							value: "a"
+							loc: SourceLocation invalid/selector5/input.css 1:0-1:1
+						}
+					]
+				}
+				CSSSelector {
+					patterns: Array []
+					loc: SourceLocation invalid/selector5/input.css 1:11-1:19
+				}
+				CSSSelector {
+					loc: SourceLocation invalid/selector5/input.css 1:19-1:22
+					patterns: Array [
+						CSSTypeSelector {
+							value: "i"
+							loc: SourceLocation invalid/selector5/input.css 1:20-1:21
+						}
+					]
+				}
+				CSSSelector {
+					patterns: Array []
+					loc: SourceLocation invalid/selector5/input.css 1:22-1:23
+				}
+				CSSSelector {
+					patterns: Array []
+					loc: SourceLocation invalid/selector5/input.css 1:23-1:24
+				}
+			]
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -29,14 +73,8 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:9
+				start: Position 1:9
 			}
 			description: Object {
 				category: "parse"
@@ -80,170 +118,6 @@ CSSRoot {
 					}
 				]
 			}
-		}
-	]
-	body: Array [
-		CSSRule {
-			loc: Object {
-				filename: "invalid/selector5/input.css"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			block: CSSBlock {
-				value: Array [
-					CSSDeclaration {
-						name: "color"
-						value: Array [
-							CSSIdentifier {
-								value: "purple"
-								loc: Object {
-									filename: "invalid/selector5/input.css"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
-							}
-						]
-						important: false
-						loc: Object {
-							filename: "invalid/selector5/input.css"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
-					}
-				]
-				startingTokenValue: "{"
-				loc: Object {
-					filename: "invalid/selector5/input.css"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
-			}
-			prelude: Array [
-				CSSSelector {
-					loc: Object {
-						filename: "invalid/selector5/input.css"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-					patterns: Array [
-						CSSTypeSelector {
-							value: "a"
-							loc: Object {
-								filename: "invalid/selector5/input.css"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
-						}
-					]
-				}
-				CSSSelector {
-					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector5/input.css"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 11
-							line: 1
-						}
-					}
-				}
-				CSSSelector {
-					loc: Object {
-						filename: "invalid/selector5/input.css"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
-					patterns: Array [
-						CSSTypeSelector {
-							value: "i"
-							loc: Object {
-								filename: "invalid/selector5/input.css"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
-						}
-					]
-				}
-				CSSSelector {
-					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector5/input.css"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
-				}
-				CSSSelector {
-					patterns: Array []
-					loc: Object {
-						filename: "invalid/selector5/input.css"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
-				}
-			]
 		}
 	]
 }

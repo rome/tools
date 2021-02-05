@@ -17,59 +17,19 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 1:0-7:0
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " here await is an identifier reference"
-			loc: Object {
-				filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-				end: Object {
-					column: 44
-					line: 3
-				}
-				start: Object {
-					column: 4
-					line: 3
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 3:4-3:44
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 1:0-6:1
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 1:0-6:1
 				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
@@ -77,163 +37,51 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 1:0-1:11
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-						end: Object {
-							column: 1
-							line: 6
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 1:12-6:1
 					body: Array [
 						JSClassDeclaration {
 							id: JSBindingIdentifier {
 								name: "C"
-								loc: Object {
-									filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-									identifierName: "C"
-									end: Object {
-										column: 9
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 2:8-2:9 (C)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-								end: Object {
-									column: 3
-									line: 5
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 2:2-5:3
 							meta: JSClassHead {
 								implements: undefined
 								superClass: undefined
 								superTypeParameters: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-									end: Object {
-										column: 3
-										line: 5
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 2:2-5:3
 								body: Array [
 									JSClassPrivateProperty {
 										key: JSPrivateName {
 											id: JSIdentifier {
 												name: "p"
 												leadingComments: undefined
-												loc: Object {
-													filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-													identifierName: "p"
-													end: Object {
-														column: 6
-														line: 4
-													}
-													start: Object {
-														column: 5
-														line: 4
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:5-4:6 (p)
 											}
 											leadingComments: undefined
-											loc: Object {
-												filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-												end: Object {
-													column: 6
-													line: 4
-												}
-												start: Object {
-													column: 4
-													line: 4
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:4-4:6
 										}
 										value: JSAwaitExpression {
-											loc: Object {
-												filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-												end: Object {
-													column: 19
-													line: 4
-												}
-												start: Object {
-													column: 9
-													line: 4
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:9-4:19
 											argument: JSUnaryExpression {
 												operator: "+"
 												prefix: true
-												loc: Object {
-													filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-													end: Object {
-														column: 19
-														line: 4
-													}
-													start: Object {
-														column: 15
-														line: 4
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:15-4:19
 												argument: JSNumericLiteral {
 													value: 42
 													format: undefined
-													loc: Object {
-														filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-														end: Object {
-															column: 19
-															line: 4
-														}
-														start: Object {
-															column: 17
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:17-4:19
 												}
 											}
 										}
 										typeAnnotation: undefined
 										leadingComments: Array ["0"]
-										loc: Object {
-											filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-											end: Object {
-												column: 20
-												line: 4
-											}
-											start: Object {
-												column: 4
-												line: 4
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:4-4:20
 										meta: JSClassPropertyMeta {
 											abstract: false
 											accessibility: undefined
@@ -242,21 +90,8 @@ JSRoot {
 											readonly: false
 											static: false
 											typeAnnotation: undefined
-											start: Object {
-												column: 4
-												line: 4
-											}
-											loc: Object {
-												filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
-												end: Object {
-													column: 6
-													line: 4
-												}
-												start: Object {
-													column: 4
-													line: 4
-												}
-											}
+											loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 4:4-4:6
+											start: Position 4:4
 										}
 									}
 								]

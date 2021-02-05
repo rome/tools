@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/meta-properties/statement/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/meta-properties/statement/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/meta-properties/statement/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/statement/input.js 1:9-1:10 (A)
 			}
-			loc: Object {
-				filename: "es2015/meta-properties/statement/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/meta-properties/statement/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -66,85 +35,23 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/meta-properties/statement/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/statement/input.js 1:10-1:12
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/meta-properties/statement/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/meta-properties/statement/input.js 1:13-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/meta-properties/statement/input.js"
-							end: Object {
-								column: 13
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:13
 						expression: JSMetaProperty {
-							loc: Object {
-								filename: "es2015/meta-properties/statement/input.js"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:12
 							meta: JSIdentifier {
 								name: "new"
-								loc: Object {
-									filename: "es2015/meta-properties/statement/input.js"
-									identifierName: "new"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/statement/input.js 2:2-2:5 (new)
 							}
 							property: JSIdentifier {
 								name: "target"
-								loc: Object {
-									filename: "es2015/meta-properties/statement/input.js"
-									identifierName: "target"
-									end: Object {
-										column: 12
-										line: 2
-									}
-									start: Object {
-										column: 6
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/meta-properties/statement/input.js 2:6-2:12 (target)
 							}
 						}
 					}

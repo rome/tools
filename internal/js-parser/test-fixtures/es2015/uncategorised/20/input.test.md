@@ -18,85 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/20/input.js"
-		end: Object {
-			column: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/20/input.js 1:0-1:18
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/20/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/20/input.js 1:0-1:18
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/20/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/20/input.js 1:0-1:18
 				tag: JSReferenceIdentifier {
 					name: "raw"
-					loc: Object {
-						filename: "es2015/uncategorised/20/input.js"
-						identifierName: "raw"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/20/input.js 1:0-1:3 (raw)
 				}
 				quasi: JSTemplateLiteral {
-					loc: Object {
-						filename: "es2015/uncategorised/20/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/20/input.js 1:3-1:18
 					expressions: Array [
 						JSReferenceIdentifier {
 							name: "name"
-							loc: Object {
-								filename: "es2015/uncategorised/20/input.js"
-								identifierName: "name"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/20/input.js 1:12-1:16 (name)
 						}
 					]
 					quasis: Array [
@@ -104,33 +42,13 @@ JSRoot {
 							cooked: "hello "
 							raw: "hello "
 							tail: false
-							loc: Object {
-								filename: "es2015/uncategorised/20/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/20/input.js 1:4-1:10
 						}
 						JSTemplateElement {
 							cooked: ""
 							raw: ""
 							tail: true
-							loc: Object {
-								filename: "es2015/uncategorised/20/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/20/input.js 1:17-1:17
 						}
 					]
 				}

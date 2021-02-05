@@ -17,17 +17,26 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/536/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation core/uncategorised/536/input.js 1:0-1:8
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: SourceLocation core/uncategorised/536/input.js 1:0-1:8
+			declaration: JSVariableDeclaration {
+				kind: "const"
+				loc: SourceLocation core/uncategorised/536/input.js 1:0-1:8
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "a"
+							loc: SourceLocation core/uncategorised/536/input.js 1:6-1:7 (a)
+						}
+						init: undefined
+						loc: SourceLocation core/uncategorised/536/input.js 1:6-1:7
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,74 +51,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/536/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSVariableDeclaration {
-				kind: "const"
-				loc: Object {
-					filename: "core/uncategorised/536/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				declarations: Array [
-					JSVariableDeclarator {
-						id: JSBindingIdentifier {
-							name: "a"
-							loc: Object {
-								filename: "core/uncategorised/536/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
-						}
-						init: undefined
-						loc: Object {
-							filename: "core/uncategorised/536/input.js"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:7
+				start: Position 1:6
 			}
 		}
 	]

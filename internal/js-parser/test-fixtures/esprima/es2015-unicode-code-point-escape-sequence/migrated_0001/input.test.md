@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-unicode-code-point-escape-sequence/migrated_0001/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "\\\\u{20BB7}\\\\u{91CE}\\\\u{5BB6}"
-			loc: Object {
-				filename: "esprima/es2015-unicode-code-point-escape-sequence/migrated_0001/input.js"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-unicode-code-point-escape-sequence/migrated_0001/input.js 1:0-1:30
 		}
 	]
 }

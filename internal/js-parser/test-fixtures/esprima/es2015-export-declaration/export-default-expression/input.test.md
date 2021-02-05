@@ -18,72 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:0-2:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:0-1:23
 			declaration: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:16-1:21
 				left: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:16-1:17
 				}
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-export-declaration/export-default-expression/input.js"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-export-declaration/export-default-expression/input.js 1:20-1:21
 				}
 			}
 		}

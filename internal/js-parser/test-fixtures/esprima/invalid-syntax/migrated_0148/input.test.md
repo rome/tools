@@ -17,17 +17,16 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0148/input.js"
-		end: Object {
-			column: 0
-			line: 4
+	loc: SourceLocation esprima/invalid-syntax/migrated_0148/input.js 1:0-4:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation esprima/invalid-syntax/migrated_0148/input.js 3:0-3:1
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation esprima/invalid-syntax/migrated_0148/input.js 3:0-3:1
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,43 +41,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0148/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/invalid-syntax/migrated_0148/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]

@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/super-call/input.js"
-		end: Object {
-			column: 1
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/super-call/input.js 1:0-7:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "experimental/class-properties/super-call/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 4:17
+				start: Position 4:12
+			}
 			description: Object {
 				category: "parse"
 				categoryValue: "js"
@@ -42,79 +40,23 @@ JSRoot {
 					}
 				]
 			}
-			location: Object {
-				filename: "experimental/class-properties/super-call/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 4
-				}
-				start: Object {
-					column: 12
-					line: 4
-				}
-			}
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "experimental/class-properties/super-call/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/super-call/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/super-call/input.js"
-				end: Object {
-					column: 1
-					line: 7
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/super-call/input.js 1:0-7:1
 			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/super-call/input.js"
-					end: Object {
-						column: 1
-						line: 7
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/super-call/input.js 1:0-7:1
 				superClass: JSReferenceIdentifier {
 					name: "B"
-					loc: Object {
-						filename: "experimental/class-properties/super-call/input.js"
-						identifierName: "B"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/class-properties/super-call/input.js 1:16-1:17 (B)
 				}
 				body: Array [
 					JSClassMethod {
@@ -122,41 +64,20 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "experimental/class-properties/super-call/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/super-call/input.js 2:2-2:13 (constructor)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/super-call/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-call/input.js 2:2-2:13
 						}
-						loc: Object {
-							filename: "experimental/class-properties/super-call/input.js"
-							end: Object {
-								column: 3
-								line: 6
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+						loc: SourceLocation experimental/class-properties/super-call/input.js 2:2-6:3
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-properties/super-call/input.js 2:2-2:13
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -167,182 +88,44 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/super-call/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/super-call/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-call/input.js 2:13-2:15
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "experimental/class-properties/super-call/input.js"
-								end: Object {
-									column: 3
-									line: 6
-								}
-								start: Object {
-									column: 16
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/super-call/input.js 2:16-6:3
 							body: Array [
 								JSClassDeclaration {
 									id: JSBindingIdentifier {
 										name: "C"
-										loc: Object {
-											filename: "experimental/class-properties/super-call/input.js"
-											identifierName: "C"
-											end: Object {
-												column: 11
-												line: 3
-											}
-											start: Object {
-												column: 10
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/super-call/input.js 3:10-3:11 (C)
 									}
-									loc: Object {
-										filename: "experimental/class-properties/super-call/input.js"
-										end: Object {
-											column: 5
-											line: 5
-										}
-										start: Object {
-											column: 4
-											line: 3
-										}
-									}
+									loc: SourceLocation experimental/class-properties/super-call/input.js 3:4-5:5
 									meta: JSClassHead {
 										implements: undefined
 										superTypeParameters: undefined
 										typeParameters: undefined
-										loc: Object {
-											filename: "experimental/class-properties/super-call/input.js"
-											end: Object {
-												column: 5
-												line: 5
-											}
-											start: Object {
-												column: 4
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-properties/super-call/input.js 3:4-5:5
 										superClass: JSReferenceIdentifier {
 											name: "D"
-											loc: Object {
-												filename: "experimental/class-properties/super-call/input.js"
-												identifierName: "D"
-												end: Object {
-													column: 21
-													line: 3
-												}
-												start: Object {
-													column: 20
-													line: 3
-												}
-											}
+											loc: SourceLocation experimental/class-properties/super-call/input.js 3:20-3:21 (D)
 										}
 										body: Array [
 											JSClassProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "foo"
-														loc: Object {
-															filename: "experimental/class-properties/super-call/input.js"
-															identifierName: "foo"
-															end: Object {
-																column: 9
-																line: 4
-															}
-															start: Object {
-																column: 6
-																line: 4
-															}
-														}
+														loc: SourceLocation experimental/class-properties/super-call/input.js 4:6-4:9 (foo)
 													}
-													loc: Object {
-														filename: "experimental/class-properties/super-call/input.js"
-														end: Object {
-															column: 9
-															line: 4
-														}
-														start: Object {
-															column: 6
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/class-properties/super-call/input.js 4:6-4:9
 												}
 												value: JSCallExpression {
 													arguments: Array []
-													loc: Object {
-														filename: "experimental/class-properties/super-call/input.js"
-														end: Object {
-															column: 19
-															line: 4
-														}
-														start: Object {
-															column: 12
-															line: 4
-														}
-													}
-													callee: JSSuper {
-														loc: Object {
-															filename: "experimental/class-properties/super-call/input.js"
-															end: Object {
-																column: 17
-																line: 4
-															}
-															start: Object {
-																column: 12
-																line: 4
-															}
-														}
-													}
+													callee: JSSuper {loc: SourceLocation experimental/class-properties/super-call/input.js 4:12-4:17}
+													loc: SourceLocation experimental/class-properties/super-call/input.js 4:12-4:19
 												}
 												definite: undefined
 												typeAnnotation: undefined
-												loc: Object {
-													filename: "experimental/class-properties/super-call/input.js"
-													end: Object {
-														column: 20
-														line: 4
-													}
-													start: Object {
-														column: 6
-														line: 4
-													}
-												}
+												loc: SourceLocation experimental/class-properties/super-call/input.js 4:6-4:20
 												meta: JSClassPropertyMeta {
 													abstract: false
 													accessibility: undefined
@@ -350,21 +133,8 @@ JSRoot {
 													readonly: false
 													static: false
 													typeAnnotation: undefined
-													start: Object {
-														column: 6
-														line: 4
-													}
-													loc: Object {
-														filename: "experimental/class-properties/super-call/input.js"
-														end: Object {
-															column: 9
-															line: 4
-														}
-														start: Object {
-															column: 6
-															line: 4
-														}
-													}
+													loc: SourceLocation experimental/class-properties/super-call/input.js 4:6-4:9
+													start: Position 4:6
 												}
 											}
 										]

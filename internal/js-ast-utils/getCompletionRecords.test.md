@@ -10,30 +10,10 @@
 Array [
 	COMPLETION {
 		node: JSReturnStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:28
 			argument: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:22-1:27
 			}
 		}
 	}
@@ -47,17 +27,7 @@ Array [
 	COMPLETION {
 		node: JSReturnStatement {
 			argument: undefined
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:22
 		}
 	}
 ]
@@ -69,30 +39,10 @@ Array [
 Array [
 	COMPLETION {
 		node: JSReturnStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:25-1:38
 			argument: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:32-1:37
 			}
 		}
 	}
@@ -100,71 +50,20 @@ Array [
 		description: "empty alternate"
 		node: JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:39
 			test: JSReferenceIdentifier {
 				name: "bar"
-				loc: Object {
-					filename: "unknown"
-					identifierName: "bar"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:19-1:22 (bar)
 			}
 			consequent: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:24-1:39
 				body: Array [
 					JSReturnStatement {
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 38
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:25-1:38
 						argument: JSBooleanLiteral {
 							value: false
-							loc: Object {
-								filename: "unknown"
-								end: Object {
-									column: 37
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:32-1:37
 						}
 					}
 				]
@@ -180,59 +79,19 @@ Array [
 Array [
 	COMPLETION {
 		node: JSReturnStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:25-1:38
 			argument: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:32-1:37
 			}
 		}
 	}
 	COMPLETION {
 		node: JSReturnStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 58
-					line: 1
-				}
-				start: Object {
-					column: 46
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:46-1:58
 			argument: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 57
-						line: 1
-					}
-					start: Object {
-						column: 53
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:53-1:57
 			}
 		}
 	}
@@ -245,30 +104,10 @@ Array [
 Array [
 	COMPLETION {
 		node: JSReturnStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 52
-					line: 1
-				}
-				start: Object {
-					column: 39
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:39-1:52
 			argument: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 51
-						line: 1
-					}
-					start: Object {
-						column: 46
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:46-1:51
 			}
 		}
 	}
@@ -281,30 +120,10 @@ Array [
 Array [
 	COMPLETION {
 		node: JSReturnStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 52
-					line: 1
-				}
-				start: Object {
-					column: 39
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:39-1:52
 			argument: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 51
-						line: 1
-					}
-					start: Object {
-						column: 46
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:46-1:51
 			}
 		}
 	}
@@ -322,17 +141,7 @@ Array [
 		node: JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:17
 		}
 	}
 ]
@@ -346,31 +155,11 @@ Array [
 		description: "empty block"
 		node: JSBlockStatement {
 			body: Array []
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:14-1:25
 			directives: Array [
 				JSDirective {
 					value: "foobar"
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:15-1:24
 				}
 			]
 		}
@@ -386,43 +175,13 @@ Array [
 		description: "empty block"
 		node: JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 24
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:24-1:35
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 34
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:25-1:34
 					expression: JSStringLiteral {
 						value: "foobar"
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:25-1:33
 					}
 				}
 			]
@@ -432,71 +191,20 @@ Array [
 		description: "empty alternate"
 		node: JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:35
 			test: JSReferenceIdentifier {
 				name: "bar"
-				loc: Object {
-					filename: "unknown"
-					identifierName: "bar"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:19-1:22 (bar)
 			}
 			consequent: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:24-1:35
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:25-1:34
 						expression: JSStringLiteral {
 							value: "foobar"
-							loc: Object {
-								filename: "unknown"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:25-1:33
 						}
 					}
 				]
@@ -514,43 +222,13 @@ Array [
 		description: "empty block"
 		node: JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 35
-					line: 1
-				}
-				start: Object {
-					column: 24
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:24-1:35
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 34
-							line: 1
-						}
-						start: Object {
-							column: 25
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:25-1:34
 					expression: JSStringLiteral {
 						value: "foobar"
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 33
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:25-1:33
 					}
 				}
 			]
@@ -561,17 +239,7 @@ Array [
 		node: JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 43
-					line: 1
-				}
-				start: Object {
-					column: 41
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:41-1:43
 		}
 	}
 ]
@@ -585,31 +253,10 @@ Array [
 		description: "switch with no default clause"
 		node: JSSwitchStatement {
 			cases: Array []
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:30
 			discriminant: JSReferenceIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "unknown"
-					identifierName: "foo"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:23-1:26 (foo)
 			}
 		}
 	}
@@ -623,74 +270,23 @@ Array [
 	INVALID {
 		description: "switch with no default clause"
 		node: JSSwitchStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:15-1:44
 			discriminant: JSReferenceIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "unknown"
-					identifierName: "foo"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:23-1:26 (foo)
 			}
 			cases: Array [
 				JSSwitchCase {
-					loc: Object {
-						filename: "unknown"
-						end: Object {
-							column: 43
-							line: 1
-						}
-						start: Object {
-							column: 29
-							line: 1
-						}
-					}
+					loc: SourceLocation unknown 1:29-1:43
 					test: JSStringLiteral {
 						value: "bar"
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 34
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:34-1:39
 					}
 					consequent: Array [
 						JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "unknown"
-								end: Object {
-									column: 43
-									line: 1
-								}
-								start: Object {
-									column: 41
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:41-1:43
 						}
 					]
 				}
@@ -709,17 +305,7 @@ Array [
 		node: JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 40
-					line: 1
-				}
-				start: Object {
-					column: 38
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:38-1:40
 		}
 	}
 ]
@@ -731,30 +317,10 @@ Array [
 Array [
 	COMPLETION {
 		node: JSReturnStatement {
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 63
-					line: 1
-				}
-				start: Object {
-					column: 50
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:50-1:63
 			argument: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 62
-						line: 1
-					}
-					start: Object {
-						column: 57
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:57-1:62
 			}
 		}
 	}
@@ -762,70 +328,20 @@ Array [
 		description: "empty alternate"
 		node: JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "unknown"
-				end: Object {
-					column: 64
-					line: 1
-				}
-				start: Object {
-					column: 39
-					line: 1
-				}
-			}
+			loc: SourceLocation unknown 1:39-1:64
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 47
-						line: 1
-					}
-					start: Object {
-						column: 43
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:43-1:47
 			}
 			consequent: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "unknown"
-					end: Object {
-						column: 64
-						line: 1
-					}
-					start: Object {
-						column: 49
-						line: 1
-					}
-				}
+				loc: SourceLocation unknown 1:49-1:64
 				body: Array [
 					JSReturnStatement {
-						loc: Object {
-							filename: "unknown"
-							end: Object {
-								column: 63
-								line: 1
-							}
-							start: Object {
-								column: 50
-								line: 1
-							}
-						}
+						loc: SourceLocation unknown 1:50-1:63
 						argument: JSBooleanLiteral {
 							value: false
-							loc: Object {
-								filename: "unknown"
-								end: Object {
-									column: 62
-									line: 1
-								}
-								start: Object {
-									column: 57
-									line: 1
-								}
-							}
+							loc: SourceLocation unknown 1:57-1:62
 						}
 					}
 				]

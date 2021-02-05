@@ -17,85 +17,24 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/null-assertion-and-assign/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/null-assertion-and-assign/input.ts"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "+="
-				loc: Object {
-					filename: "typescript/cast/null-assertion-and-assign/input.ts"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:7
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "typescript/cast/null-assertion-and-assign/input.ts"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:6-1:7
 				}
 				left: TSAssignmentNonNullExpression {
-					loc: Object {
-						filename: "typescript/cast/null-assertion-and-assign/input.ts"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:2
 					expression: JSAssignmentIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/cast/null-assertion-and-assign/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/null-assertion-and-assign/input.ts 1:0-1:1 (x)
 					}
 				}
 			}

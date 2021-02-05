@@ -18,56 +18,16 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/top-level-module/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:8
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/top-level-await/top-level-module/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:8
 			expression: JSAwaitExpression {
-				loc: Object {
-					filename: "experimental/top-level-await/top-level-module/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:0-1:7
 				argument: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "experimental/top-level-await/top-level-module/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/top-level-await/top-level-module/input.js 1:6-1:7
 				}
 			}
 		}

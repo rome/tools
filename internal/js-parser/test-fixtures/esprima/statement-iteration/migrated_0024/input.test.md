@@ -18,141 +18,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-iteration/migrated_0024/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:0-2:0
 	body: Array [
 		JSForInStatement {
-			loc: Object {
-				filename: "esprima/statement-iteration/migrated_0024/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0024/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:20-1:21}
+			loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:0-1:21
 			right: JSReferenceIdentifier {
 				name: "d"
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0024/input.js"
-					identifierName: "d"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:18-1:19 (d)
 			}
 			left: JSMemberExpression {
-				loc: Object {
-					filename: "esprima/statement-iteration/migrated_0024/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:5-1:14
 				object: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0024/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 5
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:5-1:6 (a)
 				}
 				property: JSComputedMemberProperty {
 					value: JSBinaryExpression {
 						operator: "in"
-						loc: Object {
-							filename: "esprima/statement-iteration/migrated_0024/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:7-1:13
 						left: JSReferenceIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "esprima/statement-iteration/migrated_0024/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:7-1:8 (b)
 						}
 						right: JSReferenceIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "esprima/statement-iteration/migrated_0024/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:12-1:13 (c)
 						}
 					}
-					loc: Object {
-						filename: "esprima/statement-iteration/migrated_0024/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/statement-iteration/migrated_0024/input.js 1:6-1:14
 				}
 			}
 		}

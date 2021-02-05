@@ -18,43 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/valid-binary/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/valid-binary/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-1:12
 			expression: JSBigIntLiteral {
 				value: "0b101011101"
-				loc: Object {
-					filename: "es2020/bigint/valid-binary/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/valid-binary/input.js 1:0-1:12
 			}
 		}
 	]

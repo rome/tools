@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/289/input.js"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/289/input.js 1:0-1:32
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/289/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:9
+				start: Position 1:5
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,116 +38,31 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/289/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/289/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/289/input.js 1:0-1:32
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/289/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/289/input.js 1:1-1:30
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "t"
-								loc: Object {
-									filename: "es2015/uncategorised/289/input.js"
-									identifierName: "t"
-									end: Object {
-										column: 4
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/289/input.js 1:3-1:4 (t)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/289/input.js"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/289/input.js 1:3-1:4
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/289/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/289/input.js 1:3-1:28
 						body: JSBlockStatement {
 							body: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/289/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/289/input.js 1:11-1:28
 							directives: Array [
 								JSDirective {
 									value: "use strict"
-									loc: Object {
-										filename: "es2015/uncategorised/289/input.js"
-										end: Object {
-											column: 26
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/289/input.js 1:13-1:26
 								}
 							]
 						}
@@ -161,46 +74,15 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/289/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/289/input.js 1:4-1:10
 							params: Array [
 								JSBindingIdentifier {
 									name: "eval"
-									loc: Object {
-										filename: "es2015/uncategorised/289/input.js"
-										identifierName: "eval"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 5
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/289/input.js 1:5-1:9 (eval)
 									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
-										loc: Object {
-											filename: "es2015/uncategorised/289/input.js"
-											end: Object {
-												column: 9
-												line: 1
-											}
-											start: Object {
-												column: 5
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/289/input.js 1:5-1:9
 									}
 								}
 							]

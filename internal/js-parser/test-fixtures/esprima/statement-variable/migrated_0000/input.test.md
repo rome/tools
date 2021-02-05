@@ -18,72 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-variable/migrated_0000/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-2:0
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/statement-variable/migrated_0000/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-1:5
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/statement-variable/migrated_0000/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:0-1:5
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/statement-variable/migrated_0000/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:4-1:5 (x)
 						}
 						init: undefined
-						loc: Object {
-							filename: "esprima/statement-variable/migrated_0000/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-variable/migrated_0000/input.js 1:4-1:5
 					}
 				]
 			}

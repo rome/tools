@@ -18,43 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
-		end: Object {
-			column: 4
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
 			expression: JSBigIntLiteral {
 				value: "089"
-				loc: Object {
-					filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
-					end: Object {
-						column: 4
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
 			}
 		}
 	]

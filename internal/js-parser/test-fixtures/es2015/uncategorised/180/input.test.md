@@ -18,56 +18,16 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/180/input.js"
-		end: Object {
-			column: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/180/input.js 1:0-1:17
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/180/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/180/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/180/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/180/input.js 1:0-1:17
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/180/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/180/input.js 1:15-1:17
 				}
 				head: JSFunctionHead {
 					async: false
@@ -75,60 +35,18 @@ JSRoot {
 					params: Array []
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/180/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/180/input.js 1:0-1:14
 					rest: JSBindingArrayPattern {
 						rest: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/180/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/180/input.js 1:4-1:10
 						elements: Array [
 							JSBindingIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/uncategorised/180/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/180/input.js 1:5-1:6 (a)
 							}
 							JSBindingIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "es2015/uncategorised/180/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/180/input.js 1:8-1:9 (b)
 							}
 						]
 					}

@@ -18,73 +18,19 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-for-of/for-of/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:0-2:0
 	body: Array [
 		JSForOfStatement {
 			await: false
-			loc: Object {
-				filename: "esprima/es2015-for-of/for-of/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:12-1:13}
+			loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:0-1:13
 			left: JSAssignmentIdentifier {
 				name: "p"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of/input.js"
-					identifierName: "p"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:5-1:6 (p)
 			}
 			right: JSReferenceIdentifier {
 				name: "q"
-				loc: Object {
-					filename: "esprima/es2015-for-of/for-of/input.js"
-					identifierName: "q"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-for-of/for-of/input.js 1:10-1:11 (q)
 			}
 		}
 	]

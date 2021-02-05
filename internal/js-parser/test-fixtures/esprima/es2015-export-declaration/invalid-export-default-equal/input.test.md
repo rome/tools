@@ -17,20 +17,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-2:0
+	body: Array [
+		JSExportDefaultDeclaration {
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-1:16
+			declaration: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:15-1:16
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:17-1:19
+			expression: JSNumericLiteral {
+				value: 42
+				format: undefined
+				loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:17-1:19
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:14
+				start: Position 1:15
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,77 +54,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unknown start to an "}
 					"export default declaration"
 				]
-			}
-			location: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			declaration: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 42
-				format: undefined
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
 			}
 		}
 	]

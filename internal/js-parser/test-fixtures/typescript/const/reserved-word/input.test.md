@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/const/reserved-word/input.ts"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,112 +32,36 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
+				end: Position 1:8
+				start: Position 1:9
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/const/reserved-word/input.ts"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/const/reserved-word/input.ts"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "typescript/const/reserved-word/input.ts"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/const/reserved-word/input.ts"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 								typeAnnotation: TSTypeReference {
-									loc: Object {
-										filename: "typescript/const/reserved-word/input.ts"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 14
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/const/reserved-word/input.ts 1:14-1:14
 									typeName: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
-										loc: Object {
-											filename: "typescript/const/reserved-word/input.ts"
-											end: Object {
-												column: 14
-												line: 1
-											}
-											start: Object {
-												column: 14
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/const/reserved-word/input.ts 1:14-1:14
 									}
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/const/reserved-word/input.ts"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/const/reserved-word/input.ts 1:6-1:14
 					}
 				]
 			}

@@ -17,17 +17,17 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/351/input.js"
-		end: Object {
-			column: 3
-			line: 1
+	loc: SourceLocation core/uncategorised/351/input.js 1:0-1:3
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/351/input.js 1:0-1:3
+			expression: JSNumericLiteral {
+				value: 3
+				format: "scientific"
+				loc: SourceLocation core/uncategorised/351/input.js 1:0-1:3
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,44 +42,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/351/input.js"
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 3
-				format: "scientific"
-				loc: Object {
-					filename: "core/uncategorised/351/input.js"
-					end: Object {
-						column: 3
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:3
+				start: Position 1:3
 			}
 		}
 	]

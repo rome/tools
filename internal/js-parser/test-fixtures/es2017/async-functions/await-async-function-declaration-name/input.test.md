@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
-		end: Object {
-			column: 25
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:0-1:25
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "await"
-				loc: Object {
-					filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
-					identifierName: "await"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:15-1:20 (await)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:0-1:25
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:23-1:25
 			}
 			head: JSFunctionHead {
 				async: true
@@ -81,17 +40,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:20-1:22
 			}
 		}
 	]

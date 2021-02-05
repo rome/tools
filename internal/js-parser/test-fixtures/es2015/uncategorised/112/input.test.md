@@ -18,118 +18,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/112/input.js"
-		end: Object {
-			column: 39
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/uncategorised/112/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/112/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/112/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/112/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/112/input.js 1:0-1:39
 				superClass: JSClassExpression {
 					id: JSBindingIdentifier {
 						name: "B"
-						loc: Object {
-							filename: "es2015/uncategorised/112/input.js"
-							identifierName: "B"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/112/input.js 1:22-1:23 (B)
 					}
-					loc: Object {
-						filename: "es2015/uncategorised/112/input.js"
-						end: Object {
-							column: 36
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/112/input.js 1:16-1:36
 					meta: JSClassHead {
 						body: Array []
 						implements: undefined
 						superTypeParameters: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/112/input.js"
-							end: Object {
-								column: 36
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/112/input.js 1:16-1:36
 						superClass: JSReferenceIdentifier {
 							name: "C"
-							loc: Object {
-								filename: "es2015/uncategorised/112/input.js"
-								identifierName: "C"
-								end: Object {
-									column: 33
-									line: 1
-								}
-								start: Object {
-									column: 32
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/112/input.js 1:32-1:33 (C)
 						}
 					}
 				}

@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/dynamic-import/direct-calls-only/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2020/dynamic-import/direct-calls-only/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 2:20
+				start: Position 2:16
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -44,50 +42,15 @@ JSRoot {
 					"meta"
 				]
 			}
-			location: Object {
-				filename: "es2020/dynamic-import/direct-calls-only/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 2
-				}
-				start: Object {
-					column: 16
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "failsParse"
-				loc: Object {
-					filename: "es2020/dynamic-import/direct-calls-only/input.js"
-					identifierName: "failsParse"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:9-1:19 (failsParse)
 			}
-			loc: Object {
-				filename: "es2020/dynamic-import/direct-calls-only/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -97,98 +60,26 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2020/dynamic-import/direct-calls-only/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:19-1:21
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2020/dynamic-import/direct-calls-only/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:22-3:1
 				body: Array [
 					JSReturnStatement {
-						loc: Object {
-							filename: "es2020/dynamic-import/direct-calls-only/input.js"
-							end: Object {
-								column: 23
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:2-2:23
 						argument: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "es2020/dynamic-import/direct-calls-only/input.js"
-								end: Object {
-									column: 22
-									line: 2
-								}
-								start: Object {
-									column: 9
-									line: 2
-								}
-							}
+							loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:22
 							callee: JSMetaProperty {
-								loc: Object {
-									filename: "es2020/dynamic-import/direct-calls-only/input.js"
-									end: Object {
-										column: 20
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:20
 								meta: JSIdentifier {
 									name: "import"
-									loc: Object {
-										filename: "es2020/dynamic-import/direct-calls-only/input.js"
-										identifierName: "import"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 9
-											line: 2
-										}
-									}
+									loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:9-2:15 (import)
 								}
 								property: JSIdentifier {
 									name: "then"
-									loc: Object {
-										filename: "es2020/dynamic-import/direct-calls-only/input.js"
-										identifierName: "then"
-										end: Object {
-											column: 20
-											line: 2
-										}
-										start: Object {
-											column: 16
-											line: 2
-										}
-									}
+									loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 2:16-2:20 (then)
 								}
 							}
 						}

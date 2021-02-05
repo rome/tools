@@ -18,32 +18,8 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/283/input.js"
-		end: Object {
-			column: 9
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
-	body: Array [
-		JSDebuggerStatement {
-			loc: Object {
-				filename: "core/uncategorised/283/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
+	body: Array [JSDebuggerStatement {loc: SourceLocation core/uncategorised/283/input.js 1:0-1:9}]
+	loc: SourceLocation core/uncategorised/283/input.js 1:0-1:9
 }
 ```
 

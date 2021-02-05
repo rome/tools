@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2018/object-rest-spread/25/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,155 +32,46 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2018/object-rest-spread/25/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-1:16
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "es2018/object-rest-spread/25/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2018/object-rest-spread/25/input.js 1:0-1:16
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
-							loc: Object {
-								filename: "es2018/object-rest-spread/25/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/25/input.js 1:4-1:11
 							rest: JSBindingIdentifier {
 								name: ""
-								loc: Object {
-									filename: "es2018/object-rest-spread/25/input.js"
-									identifierName: ""
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2018/object-rest-spread/25/input.js 1:8-1:9 ()
 							}
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: ""
-											loc: Object {
-												filename: "es2018/object-rest-spread/25/input.js"
-												identifierName: ""
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 9
-													line: 1
-												}
-											}
+											loc: SourceLocation es2018/object-rest-spread/25/input.js 1:9-1:10 ()
 										}
-										loc: Object {
-											filename: "es2018/object-rest-spread/25/input.js"
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/25/input.js 1:9-1:10
 									}
 									value: JSBindingIdentifier {
 										name: ""
-										loc: Object {
-											filename: "es2018/object-rest-spread/25/input.js"
-											identifierName: ""
-											end: Object {
-												column: 10
-												line: 1
-											}
-											start: Object {
-												column: 9
-												line: 1
-											}
-										}
+										loc: SourceLocation es2018/object-rest-spread/25/input.js 1:9-1:10 ()
 									}
-									loc: Object {
-										filename: "es2018/object-rest-spread/25/input.js"
-										end: Object {
-											column: 10
-											line: 1
-										}
-										start: Object {
-											column: 9
-											line: 1
-										}
-									}
+									loc: SourceLocation es2018/object-rest-spread/25/input.js 1:9-1:10
 								}
 							]
 						}
-						loc: Object {
-							filename: "es2018/object-rest-spread/25/input.js"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2018/object-rest-spread/25/input.js 1:4-1:16
 						init: JSObjectExpression {
 							properties: Array []
-							loc: Object {
-								filename: "es2018/object-rest-spread/25/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation es2018/object-rest-spread/25/input.js 1:14-1:16
 						}
 					}
 				]

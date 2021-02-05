@@ -17,90 +17,28 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/export/export-type-from/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/export/export-type-from/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: "type"
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "typescript/export/export-type-from/input.ts"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/export/export-type-from/input.ts 1:0-1:31
 			source: JSStringLiteral {
 				value: "./mod"
-				loc: Object {
-					filename: "typescript/export/export-type-from/input.ts"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/export/export-type-from/input.ts 1:23-1:30
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "typescript/export/export-type-from/input.ts"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/export/export-type-from/input.ts 1:14-1:15
 					exported: JSIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/export/export-type-from/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/export/export-type-from/input.ts 1:14-1:15 (T)
 					}
 					local: JSIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/export/export-type-from/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/export/export-type-from/input.ts 1:14-1:15 (T)
 					}
 				}
 			]

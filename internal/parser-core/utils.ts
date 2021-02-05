@@ -9,6 +9,7 @@ import {
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {ob1Add, ob1Dec} from "@internal/ob1";
+import {isPlainObject} from "@internal/typescript-helpers";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -183,4 +184,39 @@ export function extractSourceLocationRangeFromNodes(
 		start,
 		end,
 	};
+}
+
+export function isPosition(val: unknown): val is Position {
+	return (
+		isPlainObject(val) &&
+		typeof val.line === "number" &&
+		typeof val.column === "number"
+	);
+}
+
+export function isSourceLocation(val: unknown): val is SourceLocation {
+	if (!isPlainObject(val)) {
+		return false;
+	}
+
+	// Make sure there's no other sneaky keys
+	for (const key in val) {
+		if (
+			key !== "filename" &&
+			key !== "identifierName" &&
+			key !== "start" &&
+			key !== "end"
+		) {
+			return false;
+		}
+	}
+
+	// Verify types
+	return (
+		(typeof val.filename === "string" || typeof val.filename === "undefined") &&
+		(typeof val.identifierName === "string" ||
+		typeof val.identifierName === "undefined") &&
+		isPosition(val.start) &&
+		isPosition(val.end)
+	);
 }

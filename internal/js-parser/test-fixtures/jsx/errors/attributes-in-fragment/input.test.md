@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-2:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/attributes-in-fragment/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,115 +32,39 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:5
+				start: Position 1:5
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/attributes-in-fragment/input.jsx"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-1:16
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "key"
-					loc: Object {
-						filename: "jsx/errors/attributes-in-fragment/input.jsx"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:2-1:5
 				}
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/attributes-in-fragment/input.jsx"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:0-1:16
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: ""
-							loc: Object {
-								filename: "jsx/errors/attributes-in-fragment/input.jsx"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:5-1:6
 						}
 						value: undefined
-						loc: Object {
-							filename: "jsx/errors/attributes-in-fragment/input.jsx"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:5-1:6
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
 							name: ""
-							loc: Object {
-								filename: "jsx/errors/attributes-in-fragment/input.jsx"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:6-1:12
 						}
 						value: undefined
-						loc: Object {
-							filename: "jsx/errors/attributes-in-fragment/input.jsx"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/errors/attributes-in-fragment/input.jsx 1:6-1:12
 					}
 				]
 			}

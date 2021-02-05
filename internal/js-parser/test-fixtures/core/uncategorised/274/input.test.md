@@ -18,72 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/274/input.js"
-		end: Object {
-			column: 11
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
 	body: Array [
 		JSThrowStatement {
-			loc: Object {
-				filename: "core/uncategorised/274/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/274/input.js 1:0-1:11
 			argument: JSBinaryExpression {
 				operator: "*"
-				loc: Object {
-					filename: "core/uncategorised/274/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/274/input.js 1:6-1:11
 				left: JSReferenceIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "core/uncategorised/274/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/274/input.js 1:6-1:7 (x)
 				}
 				right: JSReferenceIdentifier {
 					name: "y"
-					loc: Object {
-						filename: "core/uncategorised/274/input.js"
-						identifierName: "y"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/274/input.js 1:10-1:11 (y)
 				}
 			}
 		}

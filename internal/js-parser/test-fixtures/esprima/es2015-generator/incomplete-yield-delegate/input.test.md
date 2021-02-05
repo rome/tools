@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:21
+				start: Position 1:22
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,48 +38,14 @@ JSRoot {
 					"yield argument"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 22
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:0-1:24
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:1-1:24
 				head: JSFunctionHead {
 					async: false
 					generator: true
@@ -91,98 +55,28 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:10-1:12
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:13-1:24
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:15-1:23
 							expression: JSYieldExpression {
 								delegate: true
-								loc: Object {
-									filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-									end: Object {
-										column: 23
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:15-1:23
 								argument: JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
-									loc: Object {
-										filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-										end: Object {
-											column: 23
-											line: 1
-										}
-										start: Object {
-											column: 22
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:22-1:23
 								}
 							}
 						}
 						JSExpressionStatement {
-							loc: Object {
-								filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:23-1:24
 							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "esprima/es2015-generator/incomplete-yield-delegate/input.js"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/incomplete-yield-delegate/input.js 1:23-1:24
 							}
 						}
 					]

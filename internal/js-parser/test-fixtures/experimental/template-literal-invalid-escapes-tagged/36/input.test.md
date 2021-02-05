@@ -18,100 +18,29 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-		end: Object {
-			column: 32
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:0-1:32
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:0-1:32
 			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
-				loc: Object {
-					filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-					end: Object {
-						column: 32
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:0-1:32
 				tag: JSReferenceIdentifier {
 					name: "sampleTag"
-					loc: Object {
-						filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-						identifierName: "sampleTag"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:0-1:9 (sampleTag)
 				}
 				quasi: JSTemplateLiteral {
-					loc: Object {
-						filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:9-1:32
 					expressions: Array [
 						JSNumericLiteral {
 							value: 0
 							format: undefined
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:16-1:17
 						}
 						JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:24-1:25
 						}
 					]
 					quasis: Array [
@@ -119,49 +48,19 @@ JSRoot {
 							cooked: "left"
 							raw: "left"
 							tail: false
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:10-1:14
 						}
 						JSTemplateElement {
 							cooked: "\\u{}"
 							raw: "\\u{}"
 							tail: false
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:18-1:22
 						}
 						JSTemplateElement {
 							cooked: "right"
 							raw: "right"
 							tail: true
-							loc: Object {
-								filename: "experimental/template-literal-invalid-escapes-tagged/36/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/36/input.js 1:26-1:31
 						}
 					]
 				}

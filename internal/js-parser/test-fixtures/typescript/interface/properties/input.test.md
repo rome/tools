@@ -17,216 +17,58 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/properties/input.ts 1:0-6:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/properties/input.ts"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/properties/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/properties/input.ts 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/properties/input.ts"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/properties/input.ts 1:0-5:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/properties/input.ts"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/properties/input.ts 1:12-5:1
 				body: Array [
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "typescript/interface/properties/input.ts"
-									identifierName: "x"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/properties/input.ts 2:4-2:5 (x)
 							}
-							loc: Object {
-								filename: "typescript/interface/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/properties/input.ts 2:4-2:5
 						}
 						optional: false
 						readonly: false
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/interface/properties/input.ts"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/interface/properties/input.ts 2:4-2:6
 					}
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "typescript/interface/properties/input.ts"
-									identifierName: "y"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/interface/properties/input.ts 3:4-3:5 (y)
 							}
-							loc: Object {
-								filename: "typescript/interface/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/interface/properties/input.ts 3:4-3:5
 						}
 						optional: false
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/properties/input.ts"
-							end: Object {
-								column: 14
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/properties/input.ts"
-								end: Object {
-									column: 13
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/properties/input.ts 3:4-3:14
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/properties/input.ts 3:7-3:13}
 					}
 					TSPropertySignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "z"
-								loc: Object {
-									filename: "typescript/interface/properties/input.ts"
-									identifierName: "z"
-									end: Object {
-										column: 5
-										line: 4
-									}
-									start: Object {
-										column: 4
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/interface/properties/input.ts 4:4-4:5 (z)
 							}
-							loc: Object {
-								filename: "typescript/interface/properties/input.ts"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/interface/properties/input.ts 4:4-4:5
 						}
 						optional: true
 						readonly: false
-						loc: Object {
-							filename: "typescript/interface/properties/input.ts"
-							end: Object {
-								column: 15
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/properties/input.ts"
-								end: Object {
-									column: 14
-									line: 4
-								}
-								start: Object {
-									column: 8
-									line: 4
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/properties/input.ts 4:4-4:15
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/properties/input.ts 4:8-4:14}
 					}
 				]
 			}

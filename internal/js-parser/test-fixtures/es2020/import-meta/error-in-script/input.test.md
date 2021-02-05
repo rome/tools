@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/import-meta/error-in-script/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,112 +32,33 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
+				end: Position 1:21
+				start: Position 1:10
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "es2020/import-meta/error-in-script/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "es2020/import-meta/error-in-script/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:0-1:22
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "es2020/import-meta/error-in-script/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:6-1:7 (x)
 						}
-						loc: Object {
-							filename: "es2020/import-meta/error-in-script/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:6-1:21
 						init: JSMetaProperty {
-							loc: Object {
-								filename: "es2020/import-meta/error-in-script/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:10-1:21
 							meta: JSIdentifier {
 								name: "import"
-								loc: Object {
-									filename: "es2020/import-meta/error-in-script/input.js"
-									identifierName: "import"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 10
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:10-1:16 (import)
 							}
 							property: JSIdentifier {
 								name: "meta"
-								loc: Object {
-									filename: "es2020/import-meta/error-in-script/input.js"
-									identifierName: "meta"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/import-meta/error-in-script/input.js 1:17-1:21 (meta)
 							}
 						}
 					}

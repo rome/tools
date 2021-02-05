@@ -17,212 +17,59 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/function-generic/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/function-generic/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/types/function-generic/input.ts"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/function-generic/input.ts 1:0-1:22
 			declaration: JSVariableDeclaration {
 				kind: "let"
-				loc: Object {
-					filename: "typescript/types/function-generic/input.ts"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/function-generic/input.ts 1:0-1:22
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "f"
-							loc: Object {
-								filename: "typescript/types/function-generic/input.ts"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/types/function-generic/input.ts"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 								typeAnnotation: TSFunctionType {
-									loc: Object {
-										filename: "typescript/types/function-generic/input.ts"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 7
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:21
 									typeAnnotation: TSTypeReference {
 										typeParameters: undefined
-										loc: Object {
-											filename: "typescript/types/function-generic/input.ts"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 20
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/function-generic/input.ts 1:20-1:21
 										typeName: JSReferenceIdentifier {
 											name: "T"
-											loc: Object {
-												filename: "typescript/types/function-generic/input.ts"
-												identifierName: "T"
-												end: Object {
-													column: 21
-													line: 1
-												}
-												start: Object {
-													column: 20
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/function-generic/input.ts 1:20-1:21 (T)
 										}
 									}
 									meta: TSSignatureDeclarationMeta {
 										rest: undefined
-										loc: Object {
-											filename: "typescript/types/function-generic/input.ts"
-											end: Object {
-												column: 21
-												line: 1
-											}
-											start: Object {
-												column: 7
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:21
 										typeParameters: TSTypeParameterDeclaration {
-											loc: Object {
-												filename: "typescript/types/function-generic/input.ts"
-												end: Object {
-													column: 10
-													line: 1
-												}
-												start: Object {
-													column: 7
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/types/function-generic/input.ts 1:7-1:10
 											params: Array [
 												TSTypeParameter {
 													name: "T"
 													constraint: undefined
 													default: undefined
-													loc: Object {
-														filename: "typescript/types/function-generic/input.ts"
-														end: Object {
-															column: 9
-															line: 1
-														}
-														start: Object {
-															column: 8
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/types/function-generic/input.ts 1:8-1:9
 												}
 											]
 										}
 										parameters: Array [
 											JSBindingIdentifier {
 												name: "a"
-												loc: Object {
-													filename: "typescript/types/function-generic/input.ts"
-													identifierName: "a"
-													end: Object {
-														column: 12
-														line: 1
-													}
-													start: Object {
-														column: 11
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/types/function-generic/input.ts 1:11-1:12 (a)
 												meta: JSPatternMeta {
 													optional: undefined
-													loc: Object {
-														filename: "typescript/types/function-generic/input.ts"
-														end: Object {
-															column: 15
-															line: 1
-														}
-														start: Object {
-															column: 11
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/types/function-generic/input.ts 1:11-1:15
 													typeAnnotation: TSTypeReference {
 														typeParameters: undefined
-														loc: Object {
-															filename: "typescript/types/function-generic/input.ts"
-															end: Object {
-																column: 15
-																line: 1
-															}
-															start: Object {
-																column: 14
-																line: 1
-															}
-														}
+														loc: SourceLocation typescript/types/function-generic/input.ts 1:14-1:15
 														typeName: JSReferenceIdentifier {
 															name: "T"
-															loc: Object {
-																filename: "typescript/types/function-generic/input.ts"
-																identifierName: "T"
-																end: Object {
-																	column: 15
-																	line: 1
-																}
-																start: Object {
-																	column: 14
-																	line: 1
-																}
-															}
+															loc: SourceLocation typescript/types/function-generic/input.ts 1:14-1:15 (T)
 														}
 													}
 												}
@@ -233,17 +80,7 @@ JSRoot {
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/types/function-generic/input.ts"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/types/function-generic/input.ts 1:4-1:21
 					}
 				]
 			}

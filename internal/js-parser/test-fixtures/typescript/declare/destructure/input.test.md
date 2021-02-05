@@ -17,328 +17,88 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/declare/destructure/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/declare/destructure/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
 			declare: true
-			loc: Object {
-				filename: "typescript/declare/destructure/input.ts"
-				end: Object {
-					column: 49
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/declare/destructure/input.ts 1:0-1:49
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/declare/destructure/input.ts"
-					end: Object {
-						column: 49
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/declare/destructure/input.ts 1:0-1:49
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingObjectPattern {
 							rest: undefined
-							loc: Object {
-								filename: "typescript/declare/destructure/input.ts"
-								end: Object {
-									column: 48
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
 							properties: Array [
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "x"
-											loc: Object {
-												filename: "typescript/declare/destructure/input.ts"
-												identifierName: "x"
-												end: Object {
-													column: 17
-													line: 1
-												}
-												start: Object {
-													column: 16
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure/input.ts 1:16-1:17 (x)
 										}
-										loc: Object {
-											filename: "typescript/declare/destructure/input.ts"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 16
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure/input.ts 1:16-1:17
 									}
 									value: JSBindingIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "typescript/declare/destructure/input.ts"
-											identifierName: "x"
-											end: Object {
-												column: 17
-												line: 1
-											}
-											start: Object {
-												column: 16
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure/input.ts 1:16-1:17 (x)
 									}
-									loc: Object {
-										filename: "typescript/declare/destructure/input.ts"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/declare/destructure/input.ts 1:16-1:17
 								}
 								JSBindingObjectPatternProperty {
 									key: JSStaticPropertyKey {
 										value: JSIdentifier {
 											name: "y"
-											loc: Object {
-												filename: "typescript/declare/destructure/input.ts"
-												identifierName: "y"
-												end: Object {
-													column: 20
-													line: 1
-												}
-												start: Object {
-													column: 19
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure/input.ts 1:19-1:20 (y)
 										}
-										loc: Object {
-											filename: "typescript/declare/destructure/input.ts"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 19
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure/input.ts 1:19-1:20
 									}
 									value: JSBindingIdentifier {
 										name: "y"
-										loc: Object {
-											filename: "typescript/declare/destructure/input.ts"
-											identifierName: "y"
-											end: Object {
-												column: 20
-												line: 1
-											}
-											start: Object {
-												column: 19
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/declare/destructure/input.ts 1:19-1:20 (y)
 									}
-									loc: Object {
-										filename: "typescript/declare/destructure/input.ts"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 19
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/declare/destructure/input.ts 1:19-1:20
 								}
 							]
 							meta: JSPatternMeta {
 								definite: undefined
-								loc: Object {
-									filename: "typescript/declare/destructure/input.ts"
-									end: Object {
-										column: 48
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
 								typeAnnotation: TSObjectTypeAnnotation {
-									loc: Object {
-										filename: "typescript/declare/destructure/input.ts"
-										end: Object {
-											column: 48
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/declare/destructure/input.ts 1:24-1:48
 									members: Array [
 										TSPropertySignature {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "x"
-													loc: Object {
-														filename: "typescript/declare/destructure/input.ts"
-														identifierName: "x"
-														end: Object {
-															column: 27
-															line: 1
-														}
-														start: Object {
-															column: 26
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/declare/destructure/input.ts 1:26-1:27 (x)
 												}
-												loc: Object {
-													filename: "typescript/declare/destructure/input.ts"
-													end: Object {
-														column: 27
-														line: 1
-													}
-													start: Object {
-														column: 26
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/declare/destructure/input.ts 1:26-1:27
 											}
 											optional: false
 											readonly: false
-											loc: Object {
-												filename: "typescript/declare/destructure/input.ts"
-												end: Object {
-													column: 36
-													line: 1
-												}
-												start: Object {
-													column: 26
-													line: 1
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/declare/destructure/input.ts"
-													end: Object {
-														column: 35
-														line: 1
-													}
-													start: Object {
-														column: 29
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure/input.ts 1:26-1:36
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure/input.ts 1:29-1:35}
 										}
 										TSPropertySignature {
 											key: JSStaticPropertyKey {
 												value: JSIdentifier {
 													name: "y"
-													loc: Object {
-														filename: "typescript/declare/destructure/input.ts"
-														identifierName: "y"
-														end: Object {
-															column: 38
-															line: 1
-														}
-														start: Object {
-															column: 37
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/declare/destructure/input.ts 1:37-1:38 (y)
 												}
-												loc: Object {
-													filename: "typescript/declare/destructure/input.ts"
-													end: Object {
-														column: 38
-														line: 1
-													}
-													start: Object {
-														column: 37
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/declare/destructure/input.ts 1:37-1:38
 											}
 											optional: false
 											readonly: false
-											loc: Object {
-												filename: "typescript/declare/destructure/input.ts"
-												end: Object {
-													column: 46
-													line: 1
-												}
-												start: Object {
-													column: 37
-													line: 1
-												}
-											}
-											typeAnnotation: TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/declare/destructure/input.ts"
-													end: Object {
-														column: 46
-														line: 1
-													}
-													start: Object {
-														column: 40
-														line: 1
-													}
-												}
-											}
+											loc: SourceLocation typescript/declare/destructure/input.ts 1:37-1:46
+											typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/declare/destructure/input.ts 1:40-1:46}
 										}
 									]
 								}
 							}
 						}
 						init: undefined
-						loc: Object {
-							filename: "typescript/declare/destructure/input.ts"
-							end: Object {
-								column: 48
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/declare/destructure/input.ts 1:14-1:48
 					}
 				]
 			}

@@ -18,100 +18,29 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/339/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/339/input.js 1:0-1:8
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/339/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/339/input.js 1:0-1:8
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "core/uncategorised/339/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/339/input.js 1:0-1:8
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/339/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/339/input.js 1:7-1:8
 				}
 				left: JSUnaryExpression {
 					operator: "+"
 					prefix: true
-					loc: Object {
-						filename: "core/uncategorised/339/input.js"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/339/input.js 1:0-1:4
 					argument: JSUpdateExpression {
 						operator: "++"
 						prefix: false
-						loc: Object {
-							filename: "core/uncategorised/339/input.js"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/339/input.js 1:1-1:4
 						argument: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "core/uncategorised/339/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/339/input.js 1:1-1:2 (x)
 						}
 					}
 				}

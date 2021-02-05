@@ -17,119 +17,36 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/export/export-type/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/export/export-type/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSTypeAlias {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "typescript/export/export-type/input.ts"
-					identifierName: "A"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/export/export-type/input.ts 1:5-1:6 (A)
 			}
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/export/export-type/input.ts"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/export/export-type/input.ts 1:0-1:11
 			right: TSNumericLiteralTypeAnnotation {
 				value: 2
 				format: undefined
-				loc: Object {
-					filename: "typescript/export/export-type/input.ts"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/export/export-type/input.ts 1:9-1:10
 			}
 		}
 		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "type"
-			loc: Object {
-				filename: "typescript/export/export-type/input.ts"
-				end: Object {
-					column: 18
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/export/export-type/input.ts 2:0-2:18
 			specifiers: Array [
 				JSExportLocalSpecifier {
-					loc: Object {
-						filename: "typescript/export/export-type/input.ts"
-						end: Object {
-							column: 15
-							line: 2
-						}
-						start: Object {
-							column: 14
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/export/export-type/input.ts 2:14-2:15
 					exported: JSIdentifier {
 						name: "A"
-						loc: Object {
-							filename: "typescript/export/export-type/input.ts"
-							identifierName: "A"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 14
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/export/export-type/input.ts 2:14-2:15 (A)
 					}
 					local: JSReferenceIdentifier {
 						name: "A"
-						loc: Object {
-							filename: "typescript/export/export-type/input.ts"
-							identifierName: "A"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 14
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/export/export-type/input.ts 2:14-2:15 (A)
 					}
 				}
 			]

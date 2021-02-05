@@ -18,42 +18,12 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
@@ -61,58 +31,17 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:5
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:6-1:15
 					body: Array [
 						JSExpressionStatement {
-							loc: Object {
-								filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
-								end: Object {
-									column: 13
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:8-1:13
 							expression: JSReferenceIdentifier {
 								name: "await"
-								loc: Object {
-									filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
-									identifierName: "await"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:8-1:13 (await)
 							}
 						}
 					]

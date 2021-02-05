@@ -16,36 +16,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/123/input.js"
-		end: Object {
-			column: 51
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/123/input.js 1:0-1:51
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/123/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/123/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/123/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:45
+				start: Position 1:40
+			}
 			description: Object {
 				category: "parse"
 				categoryValue: "js"
@@ -57,119 +45,43 @@ JSRoot {
 					}
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/123/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 45
-					line: 1
-				}
-				start: Object {
-					column: 40
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/123/input.js"
-				end: Object {
-					column: 51
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/123/input.js 1:14-1:51
 			expression: JSClassExpression {
 				id: JSBindingIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "es2015/uncategorised/123/input.js"
-						identifierName: "A"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/123/input.js 1:21-1:22 (A)
 				}
-				loc: Object {
-					filename: "es2015/uncategorised/123/input.js"
-					end: Object {
-						column: 50
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/123/input.js 1:15-1:50
 				meta: JSClassHead {
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/123/input.js"
-						end: Object {
-							column: 50
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/123/input.js 1:15-1:50
 					body: Array [
 						JSClassMethod {
 							kind: "constructor"
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "constructor"
-									loc: Object {
-										filename: "es2015/uncategorised/123/input.js"
-										identifierName: "constructor"
-										end: Object {
-											column: 35
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35 (constructor)
 								}
-								loc: Object {
-									filename: "es2015/uncategorised/123/input.js"
-									end: Object {
-										column: 35
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/123/input.js"
-								end: Object {
-									column: 49
-									line: 1
-								}
-								start: Object {
-									column: 24
-									line: 1
-								}
+							loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:49
+							meta: JSClassPropertyMeta {
+								abstract: false
+								accessibility: undefined
+								optional: false
+								readonly: false
+								static: false
+								typeAnnotation: undefined
+								loc: SourceLocation es2015/uncategorised/123/input.js 1:24-1:35
+								start: Position 1:24
 							}
 							head: JSFunctionHead {
 								async: false
@@ -180,93 +92,18 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/123/input.js"
-									end: Object {
-										column: 37
-										line: 1
-									}
-									start: Object {
-										column: 35
-										line: 1
-									}
-								}
-							}
-							meta: JSClassPropertyMeta {
-								abstract: false
-								accessibility: undefined
-								optional: false
-								readonly: false
-								static: false
-								typeAnnotation: undefined
-								start: Object {
-									column: 24
-									line: 1
-								}
-								loc: Object {
-									filename: "es2015/uncategorised/123/input.js"
-									end: Object {
-										column: 35
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/123/input.js 1:35-1:37
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "es2015/uncategorised/123/input.js"
-									end: Object {
-										column: 49
-										line: 1
-									}
-									start: Object {
-										column: 38
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/123/input.js 1:38-1:49
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "es2015/uncategorised/123/input.js"
-											end: Object {
-												column: 47
-												line: 1
-											}
-											start: Object {
-												column: 40
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:47
 										expression: JSCallExpression {
 											arguments: Array []
-											loc: Object {
-												filename: "es2015/uncategorised/123/input.js"
-												end: Object {
-													column: 47
-													line: 1
-												}
-												start: Object {
-													column: 40
-													line: 1
-												}
-											}
-											callee: JSSuper {
-												loc: Object {
-													filename: "es2015/uncategorised/123/input.js"
-													end: Object {
-														column: 45
-														line: 1
-													}
-													start: Object {
-														column: 40
-														line: 1
-													}
-												}
-											}
+											callee: JSSuper {loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:45}
+											loc: SourceLocation es2015/uncategorised/123/input.js 1:40-1:47
 										}
 									}
 								]

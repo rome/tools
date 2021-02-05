@@ -17,186 +17,52 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/basic/21/input.jsx 1:0-2:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/basic/21/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/basic/21/input.jsx"
-				end: Object {
-					column: 41
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/basic/21/input.jsx 1:0-1:41
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "div"
-					loc: Object {
-						filename: "jsx/basic/21/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/basic/21/input.jsx 1:1-1:4
 				}
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/basic/21/input.jsx"
-					end: Object {
-						column: 41
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/basic/21/input.jsx 1:0-1:41
 				attributes: Array [
 					JSXSpreadAttribute {
-						loc: Object {
-							filename: "jsx/basic/21/input.jsx"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:5-1:11
 						argument: JSReferenceIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "jsx/basic/21/input.jsx"
-								identifierName: "c"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/21/input.jsx 1:9-1:10 (c)
 						}
 					}
 				]
 				children: Array [
 					JSXText {
 						value: " "
-						loc: Object {
-							filename: "jsx/basic/21/input.jsx"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:12-1:13
 					}
 					JSXSpreadChild {
-						loc: Object {
-							filename: "jsx/basic/21/input.jsx"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:13-1:26
 						expression: JSReferenceIdentifier {
 							name: "children"
-							loc: Object {
-								filename: "jsx/basic/21/input.jsx"
-								identifierName: "children"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/21/input.jsx 1:17-1:25 (children)
 						}
 					}
 					JSXExpressionContainer {
-						loc: Object {
-							filename: "jsx/basic/21/input.jsx"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 26
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:26-1:29
 						expression: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "jsx/basic/21/input.jsx"
-								identifierName: "a"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 27
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/21/input.jsx 1:27-1:28 (a)
 						}
 					}
 					JSXSpreadChild {
-						loc: Object {
-							filename: "jsx/basic/21/input.jsx"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 29
-								line: 1
-							}
-						}
+						loc: SourceLocation jsx/basic/21/input.jsx 1:29-1:35
 						expression: JSReferenceIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "jsx/basic/21/input.jsx"
-								identifierName: "b"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation jsx/basic/21/input.jsx 1:33-1:34 (b)
 						}
 					}
 				]

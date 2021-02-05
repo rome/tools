@@ -17,104 +17,32 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/import/import-named/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/import/import-named/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "typescript/import/import-named/input.ts"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/import/import-named/input.ts 1:0-1:26
 			source: JSStringLiteral {
 				value: "bar"
-				loc: Object {
-					filename: "typescript/import/import-named/input.ts"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/import/import-named/input.ts 1:20-1:25
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "typescript/import/import-named/input.ts"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12
 					imported: JSIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "typescript/import/import-named/input.ts"
-							identifierName: "foo"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12 (foo)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "typescript/import/import-named/input.ts"
-								identifierName: "foo"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12 (foo)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "typescript/import/import-named/input.ts"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/import/import-named/input.ts 1:9-1:12
 					}
 				}
 			]

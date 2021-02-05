@@ -18,44 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/numeric-separator/valid-13/input.js"
-		end: Object {
-			column: 7
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/numeric-separator/valid-13/input.js 1:0-1:7
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/numeric-separator/valid-13/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/numeric-separator/valid-13/input.js 1:0-1:7
 			expression: JSNumericLiteral {
 				value: 3
 				format: "binary"
-				loc: Object {
-					filename: "experimental/numeric-separator/valid-13/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/numeric-separator/valid-13/input.js 1:0-1:7
 			}
 		}
 	]

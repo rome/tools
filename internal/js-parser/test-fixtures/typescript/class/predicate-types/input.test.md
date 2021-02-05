@@ -17,118 +17,36 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-7:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/predicate-types/input.ts"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "typescript/class/predicate-types/input.ts"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/predicate-types/input.ts 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "typescript/class/predicate-types/input.ts"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/predicate-types/input.ts"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/predicate-types/input.ts 1:0-6:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "isBar"
-								loc: Object {
-									filename: "typescript/class/predicate-types/input.ts"
-									identifierName: "isBar"
-									end: Object {
-										column: 7
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7 (isBar)
 							}
-							loc: Object {
-								filename: "typescript/class/predicate-types/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
 						}
-						loc: Object {
-							filename: "typescript/class/predicate-types/input.ts"
-							end: Object {
-								column: 3
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-3:3
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/predicate-types/input.ts"
-								end: Object {
-									column: 3
-									line: 3
-								}
-								start: Object {
-									column: 26
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:26-3:3
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -137,21 +55,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/predicate-types/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:2-2:7
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -161,56 +66,12 @@ JSRoot {
 							rest: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/predicate-types/input.ts"
-								end: Object {
-									column: 25
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 2:7-2:25
 							returnType: TSTypePredicate {
 								asserts: false
-								loc: Object {
-									filename: "typescript/class/predicate-types/input.ts"
-									end: Object {
-										column: 25
-										line: 2
-									}
-									start: Object {
-										column: 11
-										line: 2
-									}
-								}
-								parameterName: TSThisType {
-									loc: Object {
-										filename: "typescript/class/predicate-types/input.ts"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
-								}
-								typeAnnotation: TSStringKeywordTypeAnnotation {
-									loc: Object {
-										filename: "typescript/class/predicate-types/input.ts"
-										end: Object {
-											column: 25
-											line: 2
-										}
-										start: Object {
-											column: 19
-											line: 2
-										}
-									}
-								}
+								loc: SourceLocation typescript/class/predicate-types/input.ts 2:11-2:25
+								parameterName: TSThisType {loc: SourceLocation typescript/class/predicate-types/input.ts 2:11-2:15}
+								typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/predicate-types/input.ts 2:19-2:25}
 							}
 						}
 					}
@@ -218,57 +79,16 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "isBaz"
-								loc: Object {
-									filename: "typescript/class/predicate-types/input.ts"
-									identifierName: "isBaz"
-									end: Object {
-										column: 7
-										line: 4
-									}
-									start: Object {
-										column: 2
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7 (isBaz)
 							}
-							loc: Object {
-								filename: "typescript/class/predicate-types/input.ts"
-								end: Object {
-									column: 7
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "typescript/class/predicate-types/input.ts"
-								end: Object {
-									column: 3
-									line: 5
-								}
-								start: Object {
-									column: 10
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-5:3
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "typescript/class/predicate-types/input.ts"
-									end: Object {
-										column: 3
-										line: 5
-									}
-									start: Object {
-										column: 32
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/predicate-types/input.ts 4:32-5:3
 							}
 							head: JSFunctionHead {
 								async: false
@@ -276,72 +96,18 @@ JSRoot {
 								params: Array []
 								rest: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/class/predicate-types/input.ts"
-									end: Object {
-										column: 31
-										line: 4
-									}
-									start: Object {
-										column: 10
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/predicate-types/input.ts 4:10-4:31
 								returnType: TSTypePredicate {
 									asserts: false
-									loc: Object {
-										filename: "typescript/class/predicate-types/input.ts"
-										end: Object {
-											column: 28
-											line: 4
-										}
-										start: Object {
-											column: 14
-											line: 4
-										}
-									}
-									parameterName: TSThisType {
-										loc: Object {
-											filename: "typescript/class/predicate-types/input.ts"
-											end: Object {
-												column: 18
-												line: 4
-											}
-											start: Object {
-												column: 14
-												line: 4
-											}
-										}
-									}
-									typeAnnotation: TSStringKeywordTypeAnnotation {
-										loc: Object {
-											filename: "typescript/class/predicate-types/input.ts"
-											end: Object {
-												column: 28
-												line: 4
-											}
-											start: Object {
-												column: 22
-												line: 4
-											}
-										}
-									}
+									loc: SourceLocation typescript/class/predicate-types/input.ts 4:14-4:28
+									parameterName: TSThisType {loc: SourceLocation typescript/class/predicate-types/input.ts 4:14-4:18}
+									typeAnnotation: TSStringKeywordTypeAnnotation {loc: SourceLocation typescript/class/predicate-types/input.ts 4:22-4:28}
 								}
 							}
 						}
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/predicate-types/input.ts"
-							end: Object {
-								column: 3
-								line: 5
-							}
-							start: Object {
-								column: 2
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-5:3
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -349,21 +115,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 4
-							}
-							loc: Object {
-								filename: "typescript/class/predicate-types/input.ts"
-								end: Object {
-									column: 7
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/predicate-types/input.ts 4:2-4:7
+							start: Position 4:2
 						}
 					}
 				]

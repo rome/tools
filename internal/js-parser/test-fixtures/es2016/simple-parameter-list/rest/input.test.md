@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/simple-parameter-list/rest/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/simple-parameter-list/rest/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 15
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:15
+				start: Position 2:2
 			}
 		}
 	]
@@ -57,57 +41,16 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "a"
-				loc: Object {
-					filename: "es2016/simple-parameter-list/rest/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/rest/input.js 1:9-1:10 (a)
 			}
-			loc: Object {
-				filename: "es2016/simple-parameter-list/rest/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/simple-parameter-list/rest/input.js 1:0-3:1
 			body: JSBlockStatement {
 				body: Array []
-				loc: Object {
-					filename: "es2016/simple-parameter-list/rest/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/rest/input.js 1:23-3:1
 				directives: Array [
 					JSDirective {
 						value: "use strict"
-						loc: Object {
-							filename: "es2016/simple-parameter-list/rest/input.js"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/rest/input.js 2:2-2:15
 					}
 				]
 			}
@@ -119,45 +62,14 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2016/simple-parameter-list/rest/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/simple-parameter-list/rest/input.js 1:10-1:22
 				rest: JSBindingIdentifier {
 					name: "options"
-					loc: Object {
-						filename: "es2016/simple-parameter-list/rest/input.js"
-						identifierName: "options"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/simple-parameter-list/rest/input.js 1:14-1:21 (options)
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "es2016/simple-parameter-list/rest/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/simple-parameter-list/rest/input.js 1:14-1:21
 					}
 				}
 			}

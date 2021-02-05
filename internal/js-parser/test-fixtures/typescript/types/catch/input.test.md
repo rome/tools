@@ -17,112 +17,30 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/types/catch/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/types/catch/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "typescript/types/catch/input.ts"
-				end: Object {
-					column: 21
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/types/catch/input.ts 1:0-2:21
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/types/catch/input.ts"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/types/catch/input.ts 1:4-1:6
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "typescript/types/catch/input.ts"
-					end: Object {
-						column: 21
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/types/catch/input.ts 2:0-2:21
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "typescript/types/catch/input.ts"
-						end: Object {
-							column: 21
-							line: 2
-						}
-						start: Object {
-							column: 19
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/catch/input.ts 2:19-2:21
 				}
 				param: JSBindingIdentifier {
 					name: "e"
-					loc: Object {
-						filename: "typescript/types/catch/input.ts"
-						end: Object {
-							column: 17
-							line: 2
-						}
-						start: Object {
-							column: 7
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/types/catch/input.ts 2:7-2:17
 					meta: JSPatternMeta {
-						loc: Object {
-							filename: "typescript/types/catch/input.ts"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 7
-								line: 2
-							}
-						}
-						typeAnnotation: TSUnknownKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/types/catch/input.ts"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
-						}
+						loc: SourceLocation typescript/types/catch/input.ts 2:7-2:17
+						typeAnnotation: TSUnknownKeywordTypeAnnotation {loc: SourceLocation typescript/types/catch/input.ts 2:10-2:17}
 					}
 				}
 			}

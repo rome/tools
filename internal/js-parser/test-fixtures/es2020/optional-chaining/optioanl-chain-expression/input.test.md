@@ -18,140 +18,35 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-		end: Object {
-			column: 8
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
 			expression: JSOptionalCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:8
 				callee: JSMemberExpression {
-					loc: Object {
-						filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:6
 					property: JSStaticMemberProperty {
 						value: JSIdentifier {
 							name: "c"
-							loc: Object {
-								filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-								identifierName: "c"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:5-1:6 (c)
 						}
 						optional: true
-						loc: Object {
-							filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-							identifierName: "c"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:5-1:6 (c)
 					}
 					object: JSMemberExpression {
-						loc: Object {
-							filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:3
 						object: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 1
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:0-1:1 (a)
 						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "b"
-								loc: Object {
-									filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-									identifierName: "b"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 2
-										line: 1
-									}
-								}
+								loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:2-1:3 (b)
 							}
-							loc: Object {
-								filename: "es2020/optional-chaining/optioanl-chain-expression/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation es2020/optional-chaining/optioanl-chain-expression/input.js 1:2-1:3 (b)
 						}
 					}
 				}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2016/exponentiation-operator/12/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2016/exponentiation-operator/12/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,86 +32,30 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
+				end: Position 1:3
+				start: Position 1:2
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2016/exponentiation-operator/12/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2016/exponentiation-operator/12/input.js 1:0-1:10
 			expression: JSBinaryExpression {
 				operator: "**"
-				loc: Object {
-					filename: "es2016/exponentiation-operator/12/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2016/exponentiation-operator/12/input.js 1:1-1:8
 				right: JSNumericLiteral {
 					value: 6
 					format: undefined
-					loc: Object {
-						filename: "es2016/exponentiation-operator/12/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/12/input.js 1:7-1:8
 				}
 				left: JSUnaryExpression {
 					operator: "-"
 					prefix: true
-					loc: Object {
-						filename: "es2016/exponentiation-operator/12/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2016/exponentiation-operator/12/input.js 1:1-1:3
 					argument: JSNumericLiteral {
 						value: 5
 						format: undefined
-						loc: Object {
-							filename: "es2016/exponentiation-operator/12/input.js"
-							end: Object {
-								column: 3
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2016/exponentiation-operator/12/input.js 1:2-1:3
 					}
 				}
 			}

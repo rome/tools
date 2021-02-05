@@ -16,18 +16,24 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-		end: Object {
-			column: 23
-			line: 1
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
+			expression: JSXElement {
+				name: JSXReferenceIdentifier {
+					name: ""
+					loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:1-1:10
+				}
+				attributes: Array []
+				children: Array []
+				selfClosing: false
+				typeArguments: undefined
+				loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,60 +48,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSXElement {
-				name: JSXReferenceIdentifier {
-					name: ""
-					loc: Object {
-						filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
-				}
-				attributes: Array []
-				children: Array []
-				selfClosing: false
-				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:1
+				start: Position 1:1
 			}
 		}
 	]

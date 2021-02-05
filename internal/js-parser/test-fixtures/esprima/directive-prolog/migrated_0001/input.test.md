@@ -18,56 +18,16 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/directive-prolog/migrated_0001/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/directive-prolog/migrated_0001/input.js"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:0-1:44
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "esprima/directive-prolog/migrated_0001/input.js"
-					end: Object {
-						column: 43
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:1-1:43
 				callee: JSFunctionExpression {
 					id: undefined
-					loc: Object {
-						filename: "esprima/directive-prolog/migrated_0001/input.js"
-						end: Object {
-							column: 41
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:1-1:41
 					head: JSFunctionHead {
 						async: false
 						generator: false
@@ -77,86 +37,23 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "esprima/directive-prolog/migrated_0001/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:10-1:12
 					}
 					body: JSBlockStatement {
-						loc: Object {
-							filename: "esprima/directive-prolog/migrated_0001/input.js"
-							end: Object {
-								column: 41
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:13-1:41
 						directives: Array [
 							JSDirective {
 								value: "use\\nstrict"
-								loc: Object {
-									filename: "esprima/directive-prolog/migrated_0001/input.js"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 15
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:15-1:29
 							}
 						]
 						body: Array [
 							JSWithStatement {
-								loc: Object {
-									filename: "esprima/directive-prolog/migrated_0001/input.js"
-									end: Object {
-										column: 39
-										line: 1
-									}
-									start: Object {
-										column: 30
-										line: 1
-									}
-								}
-								body: JSEmptyStatement {
-									loc: Object {
-										filename: "esprima/directive-prolog/migrated_0001/input.js"
-										end: Object {
-											column: 39
-											line: 1
-										}
-										start: Object {
-											column: 38
-											line: 1
-										}
-									}
-								}
+								body: JSEmptyStatement {loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:38-1:39}
+								loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:30-1:39
 								object: JSReferenceIdentifier {
 									name: "i"
-									loc: Object {
-										filename: "esprima/directive-prolog/migrated_0001/input.js"
-										identifierName: "i"
-										end: Object {
-											column: 37
-											line: 1
-										}
-										start: Object {
-											column: 36
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/directive-prolog/migrated_0001/input.js 1:36-1:37 (i)
 								}
 							}
 						]

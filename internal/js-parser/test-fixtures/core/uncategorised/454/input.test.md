@@ -18,31 +18,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/454/input.js"
-		end: Object {
-			column: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/454/input.js 1:0-1:6
 	body: Array [
 		JSReturnStatement {
 			argument: undefined
-			loc: Object {
-				filename: "core/uncategorised/454/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/454/input.js 1:0-1:6
 		}
 	]
 }

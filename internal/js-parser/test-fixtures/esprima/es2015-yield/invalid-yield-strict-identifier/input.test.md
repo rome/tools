@@ -16,36 +16,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:34
+				start: Position 1:29
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -55,50 +43,15 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 29
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:23-1:24 (f)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:14-1:36
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -108,58 +61,17 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:24-1:26
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-					end: Object {
-						column: 36
-						line: 1
-					}
-					start: Object {
-						column: 27
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:27-1:36
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 29
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:29-1:34
 						expression: JSReferenceIdentifier {
 							name: "yield"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-strict-identifier/input.js"
-								identifierName: "yield"
-								end: Object {
-									column: 34
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-identifier/input.js 1:29-1:34 (yield)
 						}
 					}
 				]

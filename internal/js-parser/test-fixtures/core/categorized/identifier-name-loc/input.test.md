@@ -18,72 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/categorized/identifier-name-loc/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/categorized/identifier-name-loc/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:9
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "core/categorized/identifier-name-loc/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:8
 				callee: JSReferenceIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "core/categorized/identifier-name-loc/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:0-1:3 (foo)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "core/categorized/identifier-name-loc/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation core/categorized/identifier-name-loc/input.js 1:4-1:7 (bar)
 					}
 				]
 			}

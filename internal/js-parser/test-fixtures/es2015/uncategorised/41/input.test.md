@@ -18,88 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/41/input.js"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/41/input.js 1:0-1:15
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/41/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/41/input.js 1:0-1:15
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/41/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/41/input.js 1:0-1:15
 				body: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/41/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/41/input.js 1:13-1:15
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/41/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/41/input.js 1:0-1:12
 					params: Array [
 						JSBindingIdentifier {
 							name: "arguments"
-							loc: Object {
-								filename: "es2015/uncategorised/41/input.js"
-								identifierName: "arguments"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 0
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/41/input.js 1:0-1:9 (arguments)
 						}
 					]
 				}

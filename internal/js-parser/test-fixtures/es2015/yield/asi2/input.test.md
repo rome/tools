@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/asi2/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/asi2/input.js 1:0-4:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2015/yield/asi2/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/asi2/input.js 1:10-1:11 (f)
 			}
-			loc: Object {
-				filename: "es2015/yield/asi2/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/asi2/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,87 +35,27 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/asi2/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/asi2/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/yield/asi2/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/asi2/input.js 1:14-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/asi2/input.js"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/yield/asi2/input.js 1:16-1:21
 						expression: JSYieldExpression {
 							argument: undefined
 							delegate: false
-							loc: Object {
-								filename: "es2015/yield/asi2/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/yield/asi2/input.js 1:16-1:21
 						}
 					}
 					JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "es2015/yield/asi2/input.js"
-							end: Object {
-								column: 2
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/asi2/input.js 2:0-2:2
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/yield/asi2/input.js"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/asi2/input.js 2:2-2:6
 						expression: JSRegExpLiteral {
 							global: true
 							insensitive: false
@@ -154,43 +63,13 @@ JSRoot {
 							noDotNewline: false
 							sticky: false
 							unicode: false
-							loc: Object {
-								filename: "es2015/yield/asi2/input.js"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/asi2/input.js 2:2-2:6
 							expression: JSRegExpSubExpression {
-								loc: Object {
-									filename: "es2015/yield/asi2/input.js"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/yield/asi2/input.js 2:3-2:4
 								body: Array [
 									JSRegExpCharacter {
 										value: "1"
-										loc: Object {
-											filename: "es2015/yield/asi2/input.js"
-											end: Object {
-												column: 4
-												line: 2
-											}
-											start: Object {
-												column: 3
-												line: 2
-											}
-										}
+										loc: SourceLocation es2015/yield/asi2/input.js 2:3-2:4
 									}
 								]
 							}

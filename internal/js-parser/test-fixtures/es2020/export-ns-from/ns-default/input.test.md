@@ -18,72 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/export-ns-from/ns-default/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:0-2:0
 	body: Array [
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
-			loc: Object {
-				filename: "es2020/export-ns-from/ns-default/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:0-1:31
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "es2020/export-ns-from/ns-default/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:25-1:30
 			}
 			namespaceSpecifier: JSExportNamespaceSpecifier {
-				loc: Object {
-					filename: "es2020/export-ns-from/ns-default/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:7-1:19
 				exported: JSIdentifier {
 					name: "default"
-					loc: Object {
-						filename: "es2020/export-ns-from/ns-default/input.js"
-						identifierName: "default"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/export-ns-from/ns-default/input.js 1:12-1:19 (default)
 				}
 			}
 		}

@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/generators/yield-regex/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/generators/yield-regex/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "es2015/generators/yield-regex/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/generators/yield-regex/input.js 1:10-1:11 (x)
 			}
-			loc: Object {
-				filename: "es2015/generators/yield-regex/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/generators/yield-regex/input.js 1:0-1:28
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,57 +35,17 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/generators/yield-regex/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/generators/yield-regex/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/generators/yield-regex/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/generators/yield-regex/input.js 1:14-1:28
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/generators/yield-regex/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/generators/yield-regex/input.js 1:16-1:26
 						expression: JSYieldExpression {
 							delegate: true
-							loc: Object {
-								filename: "es2015/generators/yield-regex/input.js"
-								end: Object {
-									column: 26
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/generators/yield-regex/input.js 1:16-1:26
 							argument: JSRegExpLiteral {
 								global: false
 								insensitive: false
@@ -124,43 +53,13 @@ JSRoot {
 								noDotNewline: false
 								sticky: false
 								unicode: false
-								loc: Object {
-									filename: "es2015/generators/yield-regex/input.js"
-									end: Object {
-										column: 26
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/generators/yield-regex/input.js 1:23-1:26
 								expression: JSRegExpSubExpression {
-									loc: Object {
-										filename: "es2015/generators/yield-regex/input.js"
-										end: Object {
-											column: 25
-											line: 1
-										}
-										start: Object {
-											column: 24
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/generators/yield-regex/input.js 1:24-1:25
 									body: Array [
 										JSRegExpCharacter {
 											value: "z"
-											loc: Object {
-												filename: "es2015/generators/yield-regex/input.js"
-												end: Object {
-													column: 25
-													line: 1
-												}
-												start: Object {
-													column: 24
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/generators/yield-regex/input.js 1:24-1:25
 										}
 									]
 								}

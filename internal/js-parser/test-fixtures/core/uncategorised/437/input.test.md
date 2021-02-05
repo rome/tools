@@ -17,20 +17,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/437/input.js"
-		end: Object {
-			column: 1
-			line: 2
+	loc: SourceLocation core/uncategorised/437/input.js 1:0-2:1
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/437/input.js 2:0-2:1
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/437/input.js 2:0-2:1
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/437/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:0
+				start: Position 2:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,49 +46,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unknown start to an "}
 					"statement expression"
 				]
-			}
-			location: Object {
-				filename: "core/uncategorised/437/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/437/input.js"
-				end: Object {
-					column: 1
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/437/input.js"
-					end: Object {
-						column: 1
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
 			}
 		}
 	]

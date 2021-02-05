@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 2:13
+				start: Position 2:8
+			}
 			description: Object {
 				category: "parse"
 				categoryValue: "js"
@@ -42,107 +40,41 @@ JSRoot {
 					}
 				]
 			}
-			location: Object {
-				filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 8
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 3
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:3 (x)
 							}
-							loc: Object {
-								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:3
 						}
-						loc: Object {
-							filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-							end: Object {
-								column: 16
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+						loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:16
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:2-2:3
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -153,93 +85,18 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-								end: Object {
-									column: 6
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-								end: Object {
-									column: 3
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:4-2:6
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-								end: Object {
-									column: 16
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:7-2:16
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 8
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:15
 									expression: JSCallExpression {
 										arguments: Array []
-										loc: Object {
-											filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-											end: Object {
-												column: 15
-												line: 2
-											}
-											start: Object {
-												column: 8
-												line: 2
-											}
-										}
-										callee: JSSuper {
-											loc: Object {
-												filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
-												end: Object {
-													column: 13
-													line: 2
-												}
-												start: Object {
-													column: 8
-													line: 2
-												}
-											}
-										}
+										callee: JSSuper {loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:13}
+										loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 2:8-2:15
 									}
 								}
 							]

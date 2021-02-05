@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/generators/invalid-hanging/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/generators/invalid-hanging/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,87 +32,30 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:25
+				start: Position 1:7
 			}
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "es2015/generators/invalid-hanging/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/generators/invalid-hanging/input.js 1:0-1:25
 			test: JSNumericLiteral {
 				value: 1
 				format: undefined
-				loc: Object {
-					filename: "es2015/generators/invalid-hanging/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/generators/invalid-hanging/input.js 1:4-1:5
 			}
 			consequent: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/generators/invalid-hanging/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/generators/invalid-hanging/input.js 1:17-1:20 (foo)
 				}
-				loc: Object {
-					filename: "es2015/generators/invalid-hanging/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/generators/invalid-hanging/input.js 1:7-1:25
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/generators/invalid-hanging/input.js"
-						end: Object {
-							column: 25
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/generators/invalid-hanging/input.js 1:23-1:25
 				}
 				head: JSFunctionHead {
 					async: false
@@ -133,17 +66,7 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/generators/invalid-hanging/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/generators/invalid-hanging/input.js 1:20-1:22
 				}
 			}
 		}

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,102 +32,35 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 1
-					line: 1
-				}
+				end: Position 1:5
+				start: Position 1:1
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:17
 				body: JSNumericLiteral {
 					value: 0
 					format: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:16-1:17
 				}
 				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:0-1:15
 					rest: JSBindingIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:10-1:11 (b)
 					}
 					params: Array [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js 1:16-1:15
 						}
 					]
 				}

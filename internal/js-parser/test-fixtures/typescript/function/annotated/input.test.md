@@ -17,60 +17,19 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/function/annotated/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/function/annotated/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "typescript/function/annotated/input.ts"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/annotated/input.ts 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "typescript/function/annotated/input.ts"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/function/annotated/input.ts 1:0-1:26
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "typescript/function/annotated/input.ts"
-					end: Object {
-						column: 26
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/annotated/input.ts 1:24-1:26
 			}
 			head: JSFunctionHead {
 				async: false
@@ -78,132 +37,39 @@ JSRoot {
 				hasHoistedVars: false
 				rest: undefined
 				thisType: undefined
-				loc: Object {
-					filename: "typescript/function/annotated/input.ts"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/annotated/input.ts 1:10-1:23
 				returnType: TSTypeReference {
 					typeParameters: undefined
-					loc: Object {
-						filename: "typescript/function/annotated/input.ts"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 22
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/function/annotated/input.ts 1:22-1:23
 					typeName: JSReferenceIdentifier {
 						name: "T"
-						loc: Object {
-							filename: "typescript/function/annotated/input.ts"
-							identifierName: "T"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/function/annotated/input.ts 1:22-1:23 (T)
 					}
 				}
 				typeParameters: TSTypeParameterDeclaration {
-					loc: Object {
-						filename: "typescript/function/annotated/input.ts"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/function/annotated/input.ts 1:10-1:13
 					params: Array [
 						TSTypeParameter {
 							name: "T"
 							constraint: undefined
 							default: undefined
-							loc: Object {
-								filename: "typescript/function/annotated/input.ts"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/annotated/input.ts 1:11-1:12
 						}
 					]
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "typescript/function/annotated/input.ts"
-							identifierName: "x"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/function/annotated/input.ts 1:14-1:15 (x)
 						meta: JSPatternMeta {
 							optional: true
-							loc: Object {
-								filename: "typescript/function/annotated/input.ts"
-								end: Object {
-									column: 19
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/annotated/input.ts 1:14-1:19
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/function/annotated/input.ts"
-									end: Object {
-										column: 19
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/function/annotated/input.ts 1:18-1:19
 								typeName: JSReferenceIdentifier {
 									name: "T"
-									loc: Object {
-										filename: "typescript/function/annotated/input.ts"
-										identifierName: "T"
-										end: Object {
-											column: 19
-											line: 1
-										}
-										start: Object {
-											column: 18
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/function/annotated/input.ts 1:18-1:19 (T)
 								}
 							}
 						}

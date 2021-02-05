@@ -17,283 +17,72 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/method-plain/input.ts 1:0-5:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/method-plain/input.ts"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		TSInterfaceDeclaration {
 			id: JSBindingIdentifier {
 				name: "I"
-				loc: Object {
-					filename: "typescript/interface/method-plain/input.ts"
-					identifierName: "I"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/method-plain/input.ts 1:10-1:11 (I)
 			}
 			extends: undefined
 			typeParameters: undefined
-			loc: Object {
-				filename: "typescript/interface/method-plain/input.ts"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/method-plain/input.ts 1:0-4:1
 			body: TSInterfaceBody {
-				loc: Object {
-					filename: "typescript/interface/method-plain/input.ts"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/method-plain/input.ts 1:12-4:1
 				body: Array [
 					TSMethodSignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "typescript/interface/method-plain/input.ts"
-									identifierName: "m"
-									end: Object {
-										column: 5
-										line: 2
-									}
-									start: Object {
-										column: 4
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/interface/method-plain/input.ts 2:4-2:5 (m)
 							}
-							loc: Object {
-								filename: "typescript/interface/method-plain/input.ts"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/method-plain/input.ts 2:4-2:5
 						}
 						optional: false
 						returnType: undefined
-						loc: Object {
-							filename: "typescript/interface/method-plain/input.ts"
-							end: Object {
-								column: 8
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/interface/method-plain/input.ts 2:4-2:8
 						meta: TSSignatureDeclarationMeta {
 							parameters: Array []
 							rest: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/interface/method-plain/input.ts"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 5
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/interface/method-plain/input.ts 2:5-2:7
 						}
 					}
 					TSMethodSignature {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "typescript/interface/method-plain/input.ts"
-									identifierName: "m"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/interface/method-plain/input.ts 3:4-3:5 (m)
 							}
-							loc: Object {
-								filename: "typescript/interface/method-plain/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/interface/method-plain/input.ts 3:4-3:5
 						}
 						optional: false
-						loc: Object {
-							filename: "typescript/interface/method-plain/input.ts"
-							end: Object {
-								column: 40
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
-						returnType: TSVoidKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/interface/method-plain/input.ts"
-								end: Object {
-									column: 39
-									line: 3
-								}
-								start: Object {
-									column: 35
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/interface/method-plain/input.ts 3:4-3:40
+						returnType: TSVoidKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-plain/input.ts 3:35-3:39}
 						meta: TSSignatureDeclarationMeta {
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/interface/method-plain/input.ts"
-								end: Object {
-									column: 39
-									line: 3
-								}
-								start: Object {
-									column: 5
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/interface/method-plain/input.ts 3:5-3:39
 							parameters: Array [
 								JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "typescript/interface/method-plain/input.ts"
-										identifierName: "x"
-										end: Object {
-											column: 7
-											line: 3
-										}
-										start: Object {
-											column: 6
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/interface/method-plain/input.ts 3:6-3:7 (x)
 									meta: JSPatternMeta {
 										optional: true
-										loc: Object {
-											filename: "typescript/interface/method-plain/input.ts"
-											end: Object {
-												column: 16
-												line: 3
-											}
-											start: Object {
-												column: 6
-												line: 3
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/interface/method-plain/input.ts"
-												end: Object {
-													column: 16
-													line: 3
-												}
-												start: Object {
-													column: 10
-													line: 3
-												}
-											}
-										}
+										loc: SourceLocation typescript/interface/method-plain/input.ts 3:6-3:16
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-plain/input.ts 3:10-3:16}
 									}
 								}
 							]
 							rest: JSBindingIdentifier {
 								name: "y"
-								loc: Object {
-									filename: "typescript/interface/method-plain/input.ts"
-									identifierName: "y"
-									end: Object {
-										column: 22
-										line: 3
-									}
-									start: Object {
-										column: 21
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/interface/method-plain/input.ts 3:21-3:22 (y)
 								meta: JSPatternMeta {
 									optional: undefined
-									loc: Object {
-										filename: "typescript/interface/method-plain/input.ts"
-										end: Object {
-											column: 32
-											line: 3
-										}
-										start: Object {
-											column: 21
-											line: 3
-										}
-									}
+									loc: SourceLocation typescript/interface/method-plain/input.ts 3:21-3:32
 									typeAnnotation: TSArrayType {
-										loc: Object {
-											filename: "typescript/interface/method-plain/input.ts"
-											end: Object {
-												column: 32
-												line: 3
-											}
-											start: Object {
-												column: 24
-												line: 3
-											}
-										}
-										elementType: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/interface/method-plain/input.ts"
-												end: Object {
-													column: 30
-													line: 3
-												}
-												start: Object {
-													column: 24
-													line: 3
-												}
-											}
-										}
+										elementType: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/interface/method-plain/input.ts 3:24-3:30}
+										loc: SourceLocation typescript/interface/method-plain/input.ts 3:24-3:32
 									}
 								}
 							}

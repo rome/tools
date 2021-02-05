@@ -16,36 +16,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/246/input.js"
-		end: Object {
-			column: 34
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/246/input.js 1:0-1:34
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/246/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/246/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/246/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:24
+				start: Position 1:15
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -55,61 +43,17 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/246/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 15
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/246/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/246/input.js 1:14-1:34
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/246/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/246/input.js 1:14-1:34
 				body: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/246/input.js"
-						end: Object {
-							column: 34
-							line: 1
-						}
-						start: Object {
-							column: 32
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/246/input.js 1:32-1:34
 				}
 				head: JSFunctionHead {
 					async: false
@@ -117,47 +61,15 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/246/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/246/input.js 1:14-1:31
 					params: Array [
 						JSBindingIdentifier {
 							name: "arguments"
-							loc: Object {
-								filename: "es2015/uncategorised/246/input.js"
-								identifierName: "arguments"
-								end: Object {
-									column: 24
-									line: 1
-								}
-								start: Object {
-									column: 15
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/246/input.js 1:15-1:24 (arguments)
 						}
 						JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "es2015/uncategorised/246/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/246/input.js 1:26-1:27 (a)
 						}
 					]
 				}

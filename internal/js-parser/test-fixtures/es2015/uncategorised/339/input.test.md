@@ -17,17 +17,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/339/input.js"
-		end: Object {
-			column: 5
-			line: 1
+	loc: SourceLocation es2015/uncategorised/339/input.js 1:0-1:5
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/uncategorised/339/input.js 1:0-1:5
+			expression: JSTemplateLiteral {
+				expressions: Array []
+				loc: SourceLocation es2015/uncategorised/339/input.js 1:0-1:5
+				quasis: Array [
+					JSTemplateElement {
+						cooked: "\\07"
+						raw: "\\07"
+						tail: true
+						loc: SourceLocation es2015/uncategorised/339/input.js 1:1-1:4
+					}
+				]
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,61 +49,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/339/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSTemplateLiteral {
-				expressions: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/339/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				quasis: Array [
-					JSTemplateElement {
-						cooked: "\\07"
-						raw: "\\07"
-						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/339/input.js"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
-				]
+				end: Position 1:2
+				start: Position 1:2
 			}
 		}
 	]

@@ -18,100 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2020/nullish-coalescing-operator/and-nullish/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2020/nullish-coalescing-operator/and-nullish/input.js 1:0-1:14
 			expression: JSLogicalExpression {
 				operator: "??"
-				loc: Object {
-					filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2020/nullish-coalescing-operator/and-nullish/input.js 1:0-1:13
 				right: JSReferenceIdentifier {
 					name: "c"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
-						identifierName: "c"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/and-nullish/input.js 1:12-1:13 (c)
 				}
 				left: JSLogicalExpression {
 					operator: "&&"
-					loc: Object {
-						filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2020/nullish-coalescing-operator/and-nullish/input.js 1:1-1:7
 					left: JSReferenceIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 2
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/and-nullish/input.js 1:1-1:2 (a)
 					}
 					right: JSReferenceIdentifier {
 						name: "b"
-						loc: Object {
-							filename: "es2020/nullish-coalescing-operator/and-nullish/input.js"
-							identifierName: "b"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation es2020/nullish-coalescing-operator/and-nullish/input.js 1:6-1:7 (b)
 					}
 				}
 			}

@@ -17,32 +17,12 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/345/input.js"
-		end: Object {
-			column: 1
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/345/input.js 1:0-1:1
 	body: Array [
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/345/input.js"
-				end: Object {
-					column: 1
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/345/input.js 1:0-1:1
 		}
 	]
 	diagnostics: Array [
@@ -53,14 +33,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:0
+				start: Position 1:0
 			}
 			description: Object {
 				category: "parse"
@@ -78,19 +52,7 @@ JSRoot {
 							RAW_MARKUP {value: "</emphasis> here"}
 						]
 					}
-					frame {
-						location: Object {
-							filename: "core/uncategorised/345/input.js"
-							end: Object {
-								column: 1
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation core/uncategorised/345/input.js 1:1-1:1}
 				]
 			}
 		}

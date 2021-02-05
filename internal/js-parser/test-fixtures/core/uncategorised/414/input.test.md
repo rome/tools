@@ -17,20 +17,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/414/input.js"
-		end: Object {
-			column: 6
-			line: 1
+	loc: SourceLocation core/uncategorised/414/input.js 1:0-1:6
+	body: Array [
+		JSThrowStatement {
+			loc: SourceLocation core/uncategorised/414/input.js 1:0-1:6
+			argument: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/414/input.js 1:5-1:6
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/414/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:5
+				start: Position 1:5
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,49 +46,6 @@ JSRoot {
 					RAW_MARKUP {value: "Unknown start to an "}
 					"throw argument"
 				]
-			}
-			location: Object {
-				filename: "core/uncategorised/414/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSThrowStatement {
-			loc: Object {
-				filename: "core/uncategorised/414/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			argument: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/414/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 5
-						line: 1
-					}
-				}
 			}
 		}
 	]

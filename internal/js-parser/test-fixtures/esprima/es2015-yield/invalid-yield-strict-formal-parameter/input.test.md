@@ -16,36 +16,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:0-2:0
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:30
+				start: Position 1:25
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -55,64 +43,19 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 30
-					line: 1
-				}
-				start: Object {
-					column: 25
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:23-1:24 (f)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:14-1:34
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-					end: Object {
-						column: 34
-						line: 1
-					}
-					start: Object {
-						column: 32
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:32-1:34
 			}
 			head: JSFunctionHead {
 				async: false
@@ -122,46 +65,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:24-1:31
 				params: Array [
 					JSBindingIdentifier {
 						name: "yield"
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 30
-								line: 1
-							}
-							start: Object {
-								column: 25
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:25-1:30 (yield)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-formal-parameter/input.js 1:25-1:30
 						}
 					}
 				]

@@ -18,99 +18,28 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/382/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/382/input.js 1:0-2:0
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/382/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/382/input.js 1:0-1:19
 			declaration: JSVariableDeclarationStatement {
-				loc: Object {
-					filename: "es2015/uncategorised/382/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/382/input.js 1:7-1:19
 				declaration: JSVariableDeclaration {
 					kind: "let"
-					loc: Object {
-						filename: "es2015/uncategorised/382/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/382/input.js 1:7-1:19
 					declarations: Array [
 						JSVariableDeclarator {
 							id: JSBindingIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "es2015/uncategorised/382/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/382/input.js 1:11-1:14 (foo)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/382/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/382/input.js 1:11-1:18
 							init: JSNumericLiteral {
 								value: 1
 								format: undefined
-								loc: Object {
-									filename: "es2015/uncategorised/382/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/382/input.js 1:17-1:18
 							}
 						}
 					]

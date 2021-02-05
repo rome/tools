@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/393/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/393/input.js 1:0-1:22
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/393/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:17
+				start: Position 1:16
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,148 +38,40 @@ JSRoot {
 					","
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/393/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/393/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/393/input.js 1:0-1:15
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "core/uncategorised/393/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/393/input.js 1:1-1:15
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "set"
-								loc: Object {
-									filename: "core/uncategorised/393/input.js"
-									identifierName: "set"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/393/input.js 1:3-1:6 (set)
 							}
-							loc: Object {
-								filename: "core/uncategorised/393/input.js"
-								end: Object {
-									column: 6
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/393/input.js 1:3-1:6
 						}
 						value: JSCallExpression {
-							loc: Object {
-								filename: "core/uncategorised/393/input.js"
-								end: Object {
-									column: 15
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation core/uncategorised/393/input.js 1:8-1:15
 							callee: JSReferenceIdentifier {
 								name: "s"
-								loc: Object {
-									filename: "core/uncategorised/393/input.js"
-									identifierName: "s"
-									end: Object {
-										column: 9
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation core/uncategorised/393/input.js 1:8-1:9 (s)
 							}
 							arguments: Array [
 								JSReferenceIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "core/uncategorised/393/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 11
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/393/input.js 1:10-1:11 (a)
 								}
 								JSReferenceIdentifier {
 									name: "b"
-									loc: Object {
-										filename: "core/uncategorised/393/input.js"
-										identifierName: "b"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 13
-											line: 1
-										}
-									}
+									loc: SourceLocation core/uncategorised/393/input.js 1:13-1:14 (b)
 								}
 							]
 						}
-						loc: Object {
-							filename: "core/uncategorised/393/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/393/input.js 1:3-1:15
 					}
 				]
 			}
@@ -189,70 +79,20 @@ JSRoot {
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/393/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
+			loc: SourceLocation core/uncategorised/393/input.js 1:16-1:19
+		}
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/393/input.js 1:20-1:21
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: SourceLocation core/uncategorised/393/input.js 1:20-1:21
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/393/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/393/input.js 1:21-1:22
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/393/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/393/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
-			}
-			expression: JSReferenceIdentifier {
-				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/uncategorised/393/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/393/input.js 1:21-1:22
 			}
 		}
 	]

@@ -17,85 +17,25 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:24
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:24
 				left: JSNumericLiteral {
 					value: 4
 					format: undefined
-					loc: Object {
-						filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:0-1:1
 				}
 				right: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-						end: Object {
-							column: 24
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:4-1:24
 					body: JSNumericLiteral {
 						value: 2
 						format: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-							end: Object {
-								column: 24
-								line: 1
-							}
-							start: Object {
-								column: 23
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:23-1:24
 					}
 					head: JSFunctionHead {
 						async: true
@@ -104,45 +44,15 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:4-1:22
 						typeParameters: TSTypeParameterDeclaration {
-							loc: Object {
-								filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:9-1:17
 							params: Array [
 								TSTypeParameter {
 									name: "number"
 									constraint: undefined
 									default: undefined
-									loc: Object {
-										filename: "typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts"
-										end: Object {
-											column: 16
-											line: 1
-										}
-										start: Object {
-											column: 10
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/arrow-function/async-arrow-function-after-binary-operator/input.ts 1:10-1:16
 								}
 							]
 						}

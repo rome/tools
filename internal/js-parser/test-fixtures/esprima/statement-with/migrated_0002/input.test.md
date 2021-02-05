@@ -18,113 +18,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/statement-with/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:0-2:0
 	body: Array [
 		JSWithStatement {
-			loc: Object {
-				filename: "esprima/statement-with/migrated_0002/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:0-1:22
 			object: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "esprima/statement-with/migrated_0002/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:6-1:7 (x)
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/statement-with/migrated_0002/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:9-1:22
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/statement-with/migrated_0002/input.js"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:20
 						expression: JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "esprima/statement-with/migrated_0002/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:20
 							left: JSAssignmentIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "esprima/statement-with/migrated_0002/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 11
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:11-1:14 (foo)
 							}
 							right: JSReferenceIdentifier {
 								name: "bar"
-								loc: Object {
-									filename: "esprima/statement-with/migrated_0002/input.js"
-									identifierName: "bar"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/statement-with/migrated_0002/input.js 1:17-1:20 (bar)
 							}
 						}
 					}

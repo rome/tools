@@ -17,31 +17,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/411/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/411/input.js 1:0-2:0
 	body: Array [
 		JSContinueStatement {
 			label: undefined
-			loc: Object {
-				filename: "core/uncategorised/411/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/411/input.js 1:0-1:8
 		}
 	]
 	diagnostics: Array [
@@ -58,14 +38,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+				end: Position 1:0
+				start: Position 1:0
 			}
 		}
 	]

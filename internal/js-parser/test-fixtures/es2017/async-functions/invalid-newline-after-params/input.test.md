@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-3:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:9
+				start: Position 2:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,122 +38,36 @@ JSRoot {
 					"statement expression"
 				]
 			}
-			location: Object {
-				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:9
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:9
 				callee: JSReferenceIdentifier {
 					name: "async"
-					loc: Object {
-						filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-						identifierName: "async"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-1:5 (async)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:7-1:8 (x)
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-				end: Object {
-					column: 2
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 2:0-2:2
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-					end: Object {
-						column: 2
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 2:0-2:2
 			}
 		}
 		JSBlockStatement {
 			body: Array []
 			directives: Array []
-			loc: Object {
-				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 3
-					line: 2
-				}
-			}
+			loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 2:3-2:5
 		}
 	]
 }

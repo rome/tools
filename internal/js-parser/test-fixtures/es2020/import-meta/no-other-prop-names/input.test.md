@@ -17,20 +17,34 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/import-meta/no-other-prop-names/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:15
+			expression: JSMetaProperty {
+				loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:14
+				meta: JSIdentifier {
+					name: "import"
+					loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:6 (import)
+				}
+				property: JSIdentifier {
+					name: "notMeta"
+					loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:7-1:14 (notMeta)
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2020/import-meta/no-other-prop-names/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:14
+				start: Position 1:7
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -43,78 +57,6 @@ JSRoot {
 					RAW_MARKUP {value: "."}
 					"meta"
 				]
-			}
-			location: Object {
-				filename: "es2020/import-meta/no-other-prop-names/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/import-meta/no-other-prop-names/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSMetaProperty {
-				loc: Object {
-					filename: "es2020/import-meta/no-other-prop-names/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
-				meta: JSIdentifier {
-					name: "import"
-					loc: Object {
-						filename: "es2020/import-meta/no-other-prop-names/input.js"
-						identifierName: "import"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-				}
-				property: JSIdentifier {
-					name: "notMeta"
-					loc: Object {
-						filename: "es2020/import-meta/no-other-prop-names/input.js"
-						identifierName: "notMeta"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

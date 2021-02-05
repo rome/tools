@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/277/input.js"
-		end: Object {
-			column: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/277/input.js 1:0-1:22
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 18
-					line: 1
-				}
+				end: Position 1:18
+				start: Position 1:18
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		TSDeclareFunction {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2015/uncategorised/277/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/277/input.js 1:9-1:10 (f)
 			}
-			loc: Object {
-				filename: "es2015/uncategorised/277/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/277/input.js 1:0-1:22
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -88,106 +51,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/uncategorised/277/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/277/input.js 1:10-1:22
 				rest: JSBindingIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "es2015/uncategorised/277/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/277/input.js 1:17-1:18 (b)
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/277/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/277/input.js 1:17-1:18
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "es2015/uncategorised/277/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/277/input.js 1:11-1:12 (a)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/277/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/277/input.js 1:11-1:12
 						}
 					}
 					JSBindingIdentifier {
 						name: "c"
-						loc: Object {
-							filename: "es2015/uncategorised/277/input.js"
-							identifierName: "c"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/277/input.js 1:20-1:21 (c)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/277/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/277/input.js 1:20-1:21
 						}
 					}
 				]

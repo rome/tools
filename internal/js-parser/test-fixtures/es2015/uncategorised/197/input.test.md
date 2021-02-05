@@ -18,99 +18,28 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/197/input.js"
-		end: Object {
-			column: 26
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:26
 	body: Array [
 		JSDoWhileStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/197/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:19
 			test: JSBooleanLiteral {
 				value: false
-				loc: Object {
-					filename: "es2015/uncategorised/197/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/197/input.js 1:13-1:18
 			}
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/197/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/197/input.js 1:3-1:5
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/197/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:26
 			expression: JSCallExpression {
 				arguments: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/197/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 20
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:25
 				callee: JSReferenceIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "es2015/uncategorised/197/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 20
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/197/input.js 1:20-1:23 (foo)
 				}
 			}
 		}

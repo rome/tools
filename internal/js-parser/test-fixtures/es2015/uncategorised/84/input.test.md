@@ -17,17 +17,17 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/84/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
+	body: Array [
+		JSExportAllDeclaration {
+			exportKind: undefined
+			loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
+			source: JSStringLiteral {
+				value: ""
+				loc: SourceLocation es2015/uncategorised/84/input.js 1:8-1:8
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,44 +42,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExportAllDeclaration {
-			exportKind: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/84/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			source: JSStringLiteral {
-				value: ""
-				loc: Object {
-					filename: "es2015/uncategorised/84/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]

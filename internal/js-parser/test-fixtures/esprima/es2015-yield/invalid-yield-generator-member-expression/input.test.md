@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
+				end: Position 1:28
+				start: Position 1:28
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:0-1:33
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,113 +53,32 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:14-1:33
 				body: Array [
 					JSReturnStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-							end: Object {
-								column: 28
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:16-1:28
 						argument: JSYieldExpression {
 							argument: undefined
 							delegate: false
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-								end: Object {
-									column: 28
-									line: 1
-								}
-								start: Object {
-									column: 23
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:23-1:28
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-							end: Object {
-								column: 29
-								line: 1
-							}
-							start: Object {
-								column: 28
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:28-1:29
 						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 28
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:28-1:29
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 29
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:29-1:31
 						expression: JSReferenceIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 30
-									line: 1
-								}
-								start: Object {
-									column: 29
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:29-1:30 (x)
 						}
 					}
 				]

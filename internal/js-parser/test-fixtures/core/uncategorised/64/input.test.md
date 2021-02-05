@@ -17,119 +17,37 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/64/input.js"
-		end: Object {
-			column: 11
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/64/input.js 1:0-2:11
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: " Some comment"
-			loc: Object {
-				filename: "core/uncategorised/64/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/64/input.js 1:9-1:24
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "core/uncategorised/64/input.js"
-				end: Object {
-					column: 11
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/64/input.js 1:0-2:11
 			test: JSReferenceIdentifier {
 				name: "x"
-				loc: Object {
-					filename: "core/uncategorised/64/input.js"
-					identifierName: "x"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/64/input.js 1:4-1:5 (x)
 			}
 			consequent: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "core/uncategorised/64/input.js"
-					end: Object {
-						column: 11
-						line: 2
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/64/input.js 1:7-2:11
 				body: Array [
 					JSExpressionStatement {
 						leadingComments: Array ["0"]
-						loc: Object {
-							filename: "core/uncategorised/64/input.js"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/64/input.js 2:0-2:9
 						expression: JSCallExpression {
 							arguments: Array []
 							leadingComments: undefined
-							loc: Object {
-								filename: "core/uncategorised/64/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 0
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/64/input.js 2:0-2:8
 							callee: JSReferenceIdentifier {
 								name: "doThat"
 								leadingComments: undefined
-								loc: Object {
-									filename: "core/uncategorised/64/input.js"
-									identifierName: "doThat"
-									end: Object {
-										column: 6
-										line: 2
-									}
-									start: Object {
-										column: 0
-										line: 2
-									}
-								}
+								loc: SourceLocation core/uncategorised/64/input.js 2:0-2:6 (doThat)
 							}
 						}
 					}

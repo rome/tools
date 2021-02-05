@@ -16,36 +16,24 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/333/input.js"
-		end: Object {
-			column: 39
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/333/input.js 1:0-1:39
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "es2015/uncategorised/333/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/333/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:20
+				start: Position 1:16
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -55,218 +43,60 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/333/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 16
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/333/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:14-1:31
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/333/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/333/input.js 1:15-1:31
 				right: JSReferenceIdentifier {
 					name: "defValue"
-					loc: Object {
-						filename: "es2015/uncategorised/333/input.js"
-						identifierName: "defValue"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 23
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/333/input.js 1:23-1:31 (defValue)
 				}
 				left: JSAssignmentObjectPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/333/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/333/input.js 1:15-1:20
 					properties: Array [
 						JSAssignmentObjectPatternProperty {
 							key: JSStaticPropertyKey {
 								value: JSIdentifier {
 									name: "eval"
-									loc: Object {
-										filename: "es2015/uncategorised/333/input.js"
-										identifierName: "eval"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/333/input.js 1:16-1:20 (eval)
 								}
-								loc: Object {
-									filename: "es2015/uncategorised/333/input.js"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/333/input.js 1:16-1:20
 							}
 							value: JSAssignmentIdentifier {
 								name: "eval"
-								loc: Object {
-									filename: "es2015/uncategorised/333/input.js"
-									identifierName: "eval"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/333/input.js 1:16-1:20 (eval)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/333/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/333/input.js 1:16-1:20
 						}
 					]
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/333/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 31
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:38
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/uncategorised/333/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:38
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "es2015/uncategorised/333/input.js"
-						end: Object {
-							column: 32
-							line: 1
-						}
-						start: Object {
-							column: 31
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/333/input.js 1:31-1:32
 				}
 				right: JSReferenceIdentifier {
 					name: "obj"
-					loc: Object {
-						filename: "es2015/uncategorised/333/input.js"
-						identifierName: "obj"
-						end: Object {
-							column: 38
-							line: 1
-						}
-						start: Object {
-							column: 35
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/333/input.js 1:35-1:38 (obj)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/333/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 38
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/333/input.js 1:38-1:39
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "es2015/uncategorised/333/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 38
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/333/input.js 1:38-1:39
 			}
 		}
 	]

@@ -18,361 +18,104 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/class/division/input.js"
-		end: Object {
-			column: 0
-			line: 10
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/class/division/input.js 1:0-10:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/class/division/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/class/division/input.js 1:0-1:17
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/class/division/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/class/division/input.js 1:0-1:17
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "es2015/class/division/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/class/division/input.js 1:0-1:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: "/"
-					loc: Object {
-						filename: "es2015/class/division/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/class/division/input.js 1:4-1:17
 					right: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "es2015/class/division/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/class/division/input.js 1:14-1:17 (foo)
 					}
 					left: JSClassExpression {
 						id: undefined
-						loc: Object {
-							filename: "es2015/class/division/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/class/division/input.js 1:4-1:11
 						meta: JSClassHead {
 							body: Array []
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/class/division/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/class/division/input.js 1:4-1:11
 						}
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/class/division/input.js"
-				end: Object {
-					column: 10
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 3
-				}
-			}
+			loc: SourceLocation es2015/class/division/input.js 3:0-9:10
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/class/division/input.js"
-					end: Object {
-						column: 10
-						line: 9
-					}
-					start: Object {
-						column: 0
-						line: 3
-					}
-				}
+				loc: SourceLocation es2015/class/division/input.js 3:0-9:10
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "es2015/class/division/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 0
-							line: 3
-						}
-					}
+					loc: SourceLocation es2015/class/division/input.js 3:0-3:1 (x)
 				}
 				right: JSBinaryExpression {
 					operator: "/"
-					loc: Object {
-						filename: "es2015/class/division/input.js"
-						end: Object {
-							column: 10
-							line: 9
-						}
-						start: Object {
-							column: 4
-							line: 3
-						}
-					}
+					loc: SourceLocation es2015/class/division/input.js 3:4-9:10
 					left: JSBinaryExpression {
 						operator: "/"
-						loc: Object {
-							filename: "es2015/class/division/input.js"
-							end: Object {
-								column: 5
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/class/division/input.js 3:4-4:5
 						right: JSReferenceIdentifier {
 							name: "foo"
-							loc: Object {
-								filename: "es2015/class/division/input.js"
-								identifierName: "foo"
-								end: Object {
-									column: 5
-									line: 4
-								}
-								start: Object {
-									column: 2
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/class/division/input.js 4:2-4:5 (foo)
 						}
 						left: JSClassExpression {
 							id: undefined
-							loc: Object {
-								filename: "es2015/class/division/input.js"
-								end: Object {
-									column: 11
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/class/division/input.js 3:4-3:11
 							meta: JSClassHead {
 								body: Array []
 								implements: undefined
 								superClass: undefined
 								superTypeParameters: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "es2015/class/division/input.js"
-									end: Object {
-										column: 11
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation es2015/class/division/input.js 3:4-3:11
 							}
 						}
 					}
 					right: JSCallExpression {
-						loc: Object {
-							filename: "es2015/class/division/input.js"
-							end: Object {
-								column: 10
-								line: 9
-							}
-							start: Object {
-								column: 8
-								line: 4
-							}
-						}
+						loc: SourceLocation es2015/class/division/input.js 4:8-9:10
 						callee: JSCallExpression {
-							loc: Object {
-								filename: "es2015/class/division/input.js"
-								end: Object {
-									column: 19
-									line: 6
-								}
-								start: Object {
-									column: 8
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/class/division/input.js 4:8-6:19
 							callee: JSReferenceIdentifier {
 								name: "g"
-								loc: Object {
-									filename: "es2015/class/division/input.js"
-									identifierName: "g"
-									end: Object {
-										column: 9
-										line: 4
-									}
-									start: Object {
-										column: 8
-										line: 4
-									}
-								}
+								loc: SourceLocation es2015/class/division/input.js 4:8-4:9 (g)
 							}
 							arguments: Array [
 								JSAssignmentExpression {
 									operator: "="
-									loc: Object {
-										filename: "es2015/class/division/input.js"
-										end: Object {
-											column: 18
-											line: 6
-										}
-										start: Object {
-											column: 1
-											line: 6
-										}
-									}
+									loc: SourceLocation es2015/class/division/input.js 6:1-6:18
 									left: JSAssignmentIdentifier {
 										name: "x"
-										loc: Object {
-											filename: "es2015/class/division/input.js"
-											identifierName: "x"
-											end: Object {
-												column: 2
-												line: 6
-											}
-											start: Object {
-												column: 1
-												line: 6
-											}
-										}
+										loc: SourceLocation es2015/class/division/input.js 6:1-6:2 (x)
 									}
 									right: JSBinaryExpression {
 										operator: "/"
-										loc: Object {
-											filename: "es2015/class/division/input.js"
-											end: Object {
-												column: 18
-												line: 6
-											}
-											start: Object {
-												column: 5
-												line: 6
-											}
-										}
+										loc: SourceLocation es2015/class/division/input.js 6:5-6:18
 										right: JSReferenceIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "es2015/class/division/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 18
-													line: 6
-												}
-												start: Object {
-													column: 15
-													line: 6
-												}
-											}
+											loc: SourceLocation es2015/class/division/input.js 6:15-6:18 (foo)
 										}
 										left: JSClassExpression {
 											id: undefined
-											loc: Object {
-												filename: "es2015/class/division/input.js"
-												end: Object {
-													column: 12
-													line: 6
-												}
-												start: Object {
-													column: 5
-													line: 6
-												}
-											}
+											loc: SourceLocation es2015/class/division/input.js 6:5-6:12
 											meta: JSClassHead {
 												body: Array []
 												implements: undefined
 												superClass: undefined
 												superTypeParameters: undefined
 												typeParameters: undefined
-												loc: Object {
-													filename: "es2015/class/division/input.js"
-													end: Object {
-														column: 12
-														line: 6
-													}
-													start: Object {
-														column: 5
-														line: 6
-													}
-												}
+												loc: SourceLocation es2015/class/division/input.js 6:5-6:12
 											}
 										}
 									}
@@ -382,118 +125,35 @@ JSRoot {
 						arguments: Array [
 							JSAssignmentExpression {
 								operator: "="
-								loc: Object {
-									filename: "es2015/class/division/input.js"
-									end: Object {
-										column: 9
-										line: 9
-									}
-									start: Object {
-										column: 1
-										line: 8
-									}
-								}
+								loc: SourceLocation es2015/class/division/input.js 8:1-9:9
 								left: JSAssignmentIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "es2015/class/division/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 2
-											line: 8
-										}
-										start: Object {
-											column: 1
-											line: 8
-										}
-									}
+									loc: SourceLocation es2015/class/division/input.js 8:1-8:2 (x)
 								}
 								right: JSBinaryExpression {
 									operator: "/"
-									loc: Object {
-										filename: "es2015/class/division/input.js"
-										end: Object {
-											column: 9
-											line: 9
-										}
-										start: Object {
-											column: 5
-											line: 8
-										}
-									}
+									loc: SourceLocation es2015/class/division/input.js 8:5-9:9
 									right: JSReferenceIdentifier {
 										name: "g"
-										loc: Object {
-											filename: "es2015/class/division/input.js"
-											identifierName: "g"
-											end: Object {
-												column: 9
-												line: 9
-											}
-											start: Object {
-												column: 8
-												line: 9
-											}
-										}
+										loc: SourceLocation es2015/class/division/input.js 9:8-9:9 (g)
 									}
 									left: JSBinaryExpression {
 										operator: "/"
-										loc: Object {
-											filename: "es2015/class/division/input.js"
-											end: Object {
-												column: 5
-												line: 9
-											}
-											start: Object {
-												column: 5
-												line: 8
-											}
-										}
+										loc: SourceLocation es2015/class/division/input.js 8:5-9:5
 										right: JSReferenceIdentifier {
 											name: "foo"
-											loc: Object {
-												filename: "es2015/class/division/input.js"
-												identifierName: "foo"
-												end: Object {
-													column: 5
-													line: 9
-												}
-												start: Object {
-													column: 2
-													line: 9
-												}
-											}
+											loc: SourceLocation es2015/class/division/input.js 9:2-9:5 (foo)
 										}
 										left: JSClassExpression {
 											id: undefined
-											loc: Object {
-												filename: "es2015/class/division/input.js"
-												end: Object {
-													column: 12
-													line: 8
-												}
-												start: Object {
-													column: 5
-													line: 8
-												}
-											}
+											loc: SourceLocation es2015/class/division/input.js 8:5-8:12
 											meta: JSClassHead {
 												body: Array []
 												implements: undefined
 												superClass: undefined
 												superTypeParameters: undefined
 												typeParameters: undefined
-												loc: Object {
-													filename: "es2015/class/division/input.js"
-													end: Object {
-														column: 12
-														line: 8
-													}
-													start: Object {
-														column: 5
-														line: 8
-													}
-												}
+												loc: SourceLocation es2015/class/division/input.js 8:5-8:12
 											}
 										}
 									}

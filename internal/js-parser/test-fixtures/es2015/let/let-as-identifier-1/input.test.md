@@ -18,72 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-as-identifier-1/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-as-identifier-1/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/let/let-as-identifier-1/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-as-identifier-1/input.js 1:0-1:7
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "es2015/let/let-as-identifier-1/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-as-identifier-1/input.js 1:0-1:7
 				left: JSReferenceIdentifier {
 					name: "let"
-					loc: Object {
-						filename: "es2015/let/let-as-identifier-1/input.js"
-						identifierName: "let"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/let/let-as-identifier-1/input.js 1:0-1:3 (let)
 				}
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "es2015/let/let-as-identifier-1/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/let/let-as-identifier-1/input.js 1:6-1:7
 				}
 			}
 		}

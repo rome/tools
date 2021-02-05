@@ -18,59 +18,19 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/23/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/23/input.js 1:0-3:1
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/23/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/23/input.js 1:0-3:1
 			expression: JSTemplateLiteral {
 				expressions: Array []
-				loc: Object {
-					filename: "es2015/uncategorised/23/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/23/input.js 1:0-3:1
 				quasis: Array [
 					JSTemplateElement {
 						cooked: "\n\n"
 						raw: "\n\n"
 						tail: true
-						loc: Object {
-							filename: "es2015/uncategorised/23/input.js"
-							end: Object {
-								column: 0
-								line: 3
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/23/input.js 1:1-3:0
 					}
 				]
 			}

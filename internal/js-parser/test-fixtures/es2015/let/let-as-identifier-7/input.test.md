@@ -18,99 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/let/let-as-identifier-7/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/let/let-as-identifier-7/input.js 1:0-3:0
 	body: Array [
 		JSWhileStatement {
-			loc: Object {
-				filename: "es2015/let/let-as-identifier-7/input.js"
-				end: Object {
-					column: 14
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/let/let-as-identifier-7/input.js 1:0-2:14
 			test: JSNumericLiteral {
 				value: 0
 				format: undefined
-				loc: Object {
-					filename: "es2015/let/let-as-identifier-7/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-as-identifier-7/input.js 1:7-1:8
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "es2015/let/let-as-identifier-7/input.js"
-					end: Object {
-						column: 14
-						line: 2
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/let/let-as-identifier-7/input.js 1:10-2:14
 				expression: JSBinaryExpression {
 					operator: "instanceof"
-					loc: Object {
-						filename: "es2015/let/let-as-identifier-7/input.js"
-						end: Object {
-							column: 14
-							line: 2
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/let/let-as-identifier-7/input.js 1:10-2:14
 					left: JSReferenceIdentifier {
 						name: "let"
-						loc: Object {
-							filename: "es2015/let/let-as-identifier-7/input.js"
-							identifierName: "let"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/let/let-as-identifier-7/input.js 1:10-1:13 (let)
 					}
 					right: JSReferenceIdentifier {
 						name: "Foo"
-						loc: Object {
-							filename: "es2015/let/let-as-identifier-7/input.js"
-							identifierName: "Foo"
-							end: Object {
-								column: 14
-								line: 2
-							}
-							start: Object {
-								column: 11
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/let/let-as-identifier-7/input.js 2:11-2:14 (Foo)
 					}
 				}
 			}

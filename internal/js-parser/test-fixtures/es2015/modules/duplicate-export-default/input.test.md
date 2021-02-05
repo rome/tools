@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/modules/duplicate-export-default/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/modules/duplicate-export-default/input.js 1:0-3:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 28
-					line: 2
-				}
-				start: Object {
-					column: 15
-					line: 2
-				}
+				end: Position 2:28
+				start: Position 2:15
 			}
 			description: Object {
 				category: "parse"
@@ -54,103 +38,31 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							filename: "es2015/modules/duplicate-export-default/input.js"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 15
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/modules/duplicate-export-default/input.js 1:15-1:17}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/duplicate-export-default/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-export-default/input.js 1:0-1:18
 			declaration: JSObjectExpression {
 				properties: Array []
-				loc: Object {
-					filename: "es2015/modules/duplicate-export-default/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-export-default/input.js 1:15-1:17
 			}
 		}
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "es2015/modules/duplicate-export-default/input.js"
-				end: Object {
-					column: 28
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/modules/duplicate-export-default/input.js 2:0-2:28
 			declaration: JSFunctionDeclaration {
 				id: JSBindingIdentifier {
 					name: "*default*"
-					loc: Object {
-						filename: "es2015/modules/duplicate-export-default/input.js"
-						end: Object {
-							column: 28
-							line: 2
-						}
-						start: Object {
-							column: 15
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-export-default/input.js 2:15-2:28
 				}
-				loc: Object {
-					filename: "es2015/modules/duplicate-export-default/input.js"
-					end: Object {
-						column: 28
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/modules/duplicate-export-default/input.js 2:15-2:28
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/modules/duplicate-export-default/input.js"
-						end: Object {
-							column: 28
-							line: 2
-						}
-						start: Object {
-							column: 26
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-export-default/input.js 2:26-2:28
 				}
 				head: JSFunctionHead {
 					async: false
@@ -161,33 +73,11 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/modules/duplicate-export-default/input.js"
-						end: Object {
-							column: 25
-							line: 2
-						}
-						start: Object {
-							column: 23
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/modules/duplicate-export-default/input.js 2:23-2:25
 				}
 			}
 		}
-		JSEmptyStatement {
-			loc: Object {
-				filename: "es2015/modules/duplicate-export-default/input.js"
-				end: Object {
-					column: 29
-					line: 2
-				}
-				start: Object {
-					column: 28
-					line: 2
-				}
-			}
-		}
+		JSEmptyStatement {loc: SourceLocation es2015/modules/duplicate-export-default/input.js 2:28-2:29}
 	]
 }
 ```

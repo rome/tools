@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 2
-				}
-				start: Object {
-					column: 18
-					line: 2
-				}
+				end: Position 2:17
+				start: Position 2:18
 			}
 		}
 	]
@@ -57,30 +41,9 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 1:10-1:13 (foo)
 			}
-			loc: Object {
-				filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 1:0-3:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -90,98 +53,26 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 1:16-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 2:2-2:17
 						expression: JSCallExpression {
 							arguments: Array []
-							loc: Object {
-								filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-								end: Object {
-									column: 17
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 2:2-2:17
 							callee: JSMetaProperty {
-								loc: Object {
-									filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 2:2-2:15
 								meta: JSIdentifier {
 									name: "function"
-									loc: Object {
-										filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-										identifierName: "function"
-										end: Object {
-											column: 10
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 2:2-2:10 (function)
 								}
 								property: JSIdentifier {
 									name: "sent"
-									loc: Object {
-										filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-										identifierName: "sent"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 11
-											line: 2
-										}
-									}
+									loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 2:11-2:15 (sent)
 								}
 							}
 						}
@@ -189,17 +80,7 @@ JSRoot {
 					JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "experimental/function-sent/enabled-function-keyword-declaration/input.js"
-							end: Object {
-								column: 20
-								line: 2
-							}
-							start: Object {
-								column: 18
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/function-sent/enabled-function-keyword-declaration/input.js 2:18-2:20
 					}
 				]
 			}

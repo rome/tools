@@ -16,61 +16,21 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
+	loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-2:0
 	syntax: Array ["jsx"]
-	loc: Object {
-		filename: "jsx/errors/unclosed-tag/input.jsx"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "jsx/errors/unclosed-tag/input.jsx"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-1:5
 			expression: JSXElement {
 				name: JSXIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "jsx/errors/unclosed-tag/input.jsx"
-						end: Object {
-							column: 4
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4
 				}
 				attributes: Array []
 				children: Array []
 				selfClosing: false
 				typeArguments: undefined
-				loc: Object {
-					filename: "jsx/errors/unclosed-tag/input.jsx"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:0-1:5
 			}
 		}
 	]
@@ -82,14 +42,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 5
-					line: 1
-				}
+				end: Position 1:5
+				start: Position 1:5
 			}
 			description: Object {
 				category: "parse"
@@ -104,19 +58,7 @@ JSRoot {
 							RAW_MARKUP {value: "</emphasis>"}
 						]
 					}
-					frame {
-						location: Object {
-							filename: "jsx/errors/unclosed-tag/input.jsx"
-							end: Object {
-								column: 4
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
+					frame {location: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4}
 				]
 			}
 		}

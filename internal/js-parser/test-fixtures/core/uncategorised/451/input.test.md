@@ -17,20 +17,37 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/451/input.js"
-		end: Object {
-			column: 6
-			line: 1
+	loc: SourceLocation core/uncategorised/451/input.js 1:0-1:6
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/451/input.js 1:2-1:6
+			expression: JSMemberExpression {
+				loc: SourceLocation core/uncategorised/451/input.js 1:2-1:6
+				object: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: SourceLocation core/uncategorised/451/input.js 1:2-1:3
+				}
+				property: JSComputedMemberProperty {
+					value: JSReferenceIdentifier {
+						name: "INVALID_PLACEHOLDER"
+						loc: SourceLocation core/uncategorised/451/input.js 1:5-1:6
+					}
+					loc: SourceLocation core/uncategorised/451/input.js 1:4-1:6
+				}
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/451/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:0
+				start: Position 1:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,89 +57,6 @@ JSRoot {
 					"\u200d"
 					RAW_MARKUP {value: "</emphasis>"}
 				]
-			}
-			location: Object {
-				filename: "core/uncategorised/451/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/451/input.js"
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
-			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/uncategorised/451/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 2
-						line: 1
-					}
-				}
-				object: JSReferenceIdentifier {
-					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/uncategorised/451/input.js"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
-				}
-				property: JSComputedMemberProperty {
-					value: JSReferenceIdentifier {
-						name: "INVALID_PLACEHOLDER"
-						loc: Object {
-							filename: "core/uncategorised/451/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 5
-								line: 1
-							}
-						}
-					}
-					loc: Object {
-						filename: "core/uncategorised/451/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
-				}
 			}
 		}
 	]

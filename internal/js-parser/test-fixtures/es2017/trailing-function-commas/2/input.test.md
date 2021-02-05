@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/trailing-function-commas/2/input.js"
-		end: Object {
-			column: 29
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:0-1:29
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "log"
-				loc: Object {
-					filename: "es2017/trailing-function-commas/2/input.js"
-					identifierName: "log"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:9-1:12 (log)
 			}
-			loc: Object {
-				filename: "es2017/trailing-function-commas/2/input.js"
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:0-1:29
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "es2017/trailing-function-commas/2/input.js"
-					end: Object {
-						column: 29
-						line: 1
-					}
-					start: Object {
-						column: 26
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:26-1:29
 			}
 			head: JSFunctionHead {
 				async: false
@@ -80,106 +39,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/trailing-function-commas/2/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:12-1:25
 				params: Array [
 					JSBindingIdentifier {
 						name: "n"
-						loc: Object {
-							filename: "es2017/trailing-function-commas/2/input.js"
-							identifierName: "n"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:13-1:14 (n)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2017/trailing-function-commas/2/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:13-1:14
 						}
 					}
 					JSBindingIdentifier {
 						name: "op"
-						loc: Object {
-							filename: "es2017/trailing-function-commas/2/input.js"
-							identifierName: "op"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:16-1:18 (op)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2017/trailing-function-commas/2/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:16-1:18
 						}
 					}
 					JSBindingIdentifier {
 						name: "val"
-						loc: Object {
-							filename: "es2017/trailing-function-commas/2/input.js"
-							identifierName: "val"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:20-1:23 (val)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "es2017/trailing-function-commas/2/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2017/trailing-function-commas/2/input.js 1:20-1:23
 						}
 					}
 				]

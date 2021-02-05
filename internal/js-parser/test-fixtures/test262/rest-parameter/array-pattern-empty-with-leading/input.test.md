@@ -18,59 +18,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "emptyWithLeading"
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-					identifierName: "emptyWithLeading"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:9-1:25 (emptyWithLeading)
 			}
-			loc: Object {
-				filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:0-1:38
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-					end: Object {
-						column: 38
-						line: 1
-					}
-					start: Object {
-						column: 36
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:36-1:38
 			}
 			head: JSFunctionHead {
 				async: false
@@ -79,76 +38,25 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-					end: Object {
-						column: 35
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:25-1:35
 				rest: JSBindingArrayPattern {
 					elements: Array []
 					rest: undefined
-					loc: Object {
-						filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-						end: Object {
-							column: 34
-							line: 1
-						}
-						start: Object {
-							column: 32
-							line: 1
-						}
-					}
+					loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:32-1:34
 					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-							end: Object {
-								column: 34
-								line: 1
-							}
-							start: Object {
-								column: 32
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:32-1:34
 					}
 				}
 				params: Array [
 					JSBindingIdentifier {
 						name: "x"
-						loc: Object {
-							filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 27
-								line: 1
-							}
-							start: Object {
-								column: 26
-								line: 1
-							}
-						}
+						loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:26-1:27 (x)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "test262/rest-parameter/array-pattern-empty-with-leading/input.js"
-								end: Object {
-									column: 27
-									line: 1
-								}
-								start: Object {
-									column: 26
-									line: 1
-								}
-							}
+							loc: SourceLocation test262/rest-parameter/array-pattern-empty-with-leading/input.js 1:26-1:27
 						}
 					}
 				]

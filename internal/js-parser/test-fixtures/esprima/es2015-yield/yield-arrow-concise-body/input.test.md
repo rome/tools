@@ -18,40 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:0-1:17
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-					end: Object {
-						column: 16
-						line: 1
+				loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:0-1:16
+				body: JSBinaryExpression {
+					operator: "*"
+					loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:7-1:16
+					left: JSReferenceIdentifier {
+						name: "x"
+						loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:7-1:8 (x)
 					}
-					start: Object {
-						column: 0
-						line: 1
+					right: JSReferenceIdentifier {
+						name: "yield"
+						loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:11-1:16 (yield)
 					}
 				}
 				head: JSFunctionHead {
@@ -60,78 +42,13 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-						end: Object {
-							column: 6
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:0-1:6
 					params: Array [
 						JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 2
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/yield-arrow-concise-body/input.js 1:1-1:2 (x)
 						}
 					]
-				}
-				body: JSBinaryExpression {
-					operator: "*"
-					loc: Object {
-						filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
-					left: JSReferenceIdentifier {
-						name: "x"
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-							identifierName: "x"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
-					}
-					right: JSReferenceIdentifier {
-						name: "yield"
-						loc: Object {
-							filename: "esprima/es2015-yield/yield-arrow-concise-body/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 11
-								line: 1
-							}
-						}
-					}
 				}
 			}
 		}

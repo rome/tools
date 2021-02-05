@@ -17,118 +17,46 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 1:0-7:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/method-with-newline-with-body/input.ts"
-		end: Object {
-			column: 0
-			line: 7
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/method-with-newline-with-body/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/method-with-newline-with-body/input.ts"
-				end: Object {
-					column: 1
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 1:0-6:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/method-with-newline-with-body/input.ts"
-					end: Object {
-						column: 1
-						line: 6
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 1:0-6:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "m"
-								loc: Object {
-									filename: "typescript/class/method-with-newline-with-body/input.ts"
-									identifierName: "m"
-									end: Object {
-										column: 5
-										line: 3
-									}
-									start: Object {
-										column: 4
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-3:5 (m)
 							}
-							loc: Object {
-								filename: "typescript/class/method-with-newline-with-body/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-3:5
 						}
-						loc: Object {
-							filename: "typescript/class/method-with-newline-with-body/input.ts"
-							end: Object {
-								column: 5
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
+						loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-5:5
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "typescript/class/method-with-newline-with-body/input.ts"
-								end: Object {
-									column: 5
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 4:4-5:5
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:4-3:5
+							start: Position 3:4
 						}
 						head: JSFunctionHead {
 							async: false
@@ -139,40 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "typescript/class/method-with-newline-with-body/input.ts"
-								end: Object {
-									column: 7
-									line: 3
-								}
-								start: Object {
-									column: 5
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/method-with-newline-with-body/input.ts"
-								end: Object {
-									column: 5
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 3:5-3:7
 						}
 					}
 				]

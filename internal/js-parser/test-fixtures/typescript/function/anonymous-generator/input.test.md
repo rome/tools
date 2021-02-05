@@ -17,138 +17,37 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:0-4:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/function/anonymous-generator/input.ts"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/function/anonymous-generator/input.ts"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:0-3:1
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/function/anonymous-generator/input.ts"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:0-3:1
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "fn"
-							loc: Object {
-								filename: "typescript/function/anonymous-generator/input.ts"
-								identifierName: "fn"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:6-1:8 (fn)
 						}
-						loc: Object {
-							filename: "typescript/function/anonymous-generator/input.ts"
-							end: Object {
-								column: 1
-								line: 3
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:6-3:1
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "typescript/function/anonymous-generator/input.ts"
-								end: Object {
-									column: 1
-									line: 3
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:11-3:1
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "typescript/function/anonymous-generator/input.ts"
-									end: Object {
-										column: 1
-										line: 3
-									}
-									start: Object {
-										column: 54
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:54-3:1
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "typescript/function/anonymous-generator/input.ts"
-											end: Object {
-												column: 10
-												line: 2
-											}
-											start: Object {
-												column: 2
-												line: 2
-											}
-										}
+										loc: SourceLocation typescript/function/anonymous-generator/input.ts 2:2-2:10
 										expression: JSYieldExpression {
 											delegate: false
-											loc: Object {
-												filename: "typescript/function/anonymous-generator/input.ts"
-												end: Object {
-													column: 9
-													line: 2
-												}
-												start: Object {
-													column: 2
-													line: 2
-												}
-											}
+											loc: SourceLocation typescript/function/anonymous-generator/input.ts 2:2-2:9
 											argument: JSNumericLiteral {
 												value: 2
 												format: undefined
-												loc: Object {
-													filename: "typescript/function/anonymous-generator/input.ts"
-													end: Object {
-														column: 9
-														line: 2
-													}
-													start: Object {
-														column: 8
-														line: 2
-													}
-												}
+												loc: SourceLocation typescript/function/anonymous-generator/input.ts 2:8-2:9
 											}
 										}
 									}
@@ -160,159 +59,42 @@ JSRoot {
 								hasHoistedVars: false
 								rest: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "typescript/function/anonymous-generator/input.ts"
-									end: Object {
-										column: 53
-										line: 1
+								loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:21-1:53
+								returnType: TSTypeReference {
+									loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:36-1:53
+									typeName: JSReferenceIdentifier {
+										name: "Generator"
+										loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:36-1:45 (Generator)
 									}
-									start: Object {
-										column: 21
-										line: 1
+									typeParameters: TSTypeParameterInstantiation {
+										loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:45-1:53
+										params: Array [TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:46-1:52}]
 									}
 								}
 								typeParameters: TSTypeParameterDeclaration {
-									loc: Object {
-										filename: "typescript/function/anonymous-generator/input.ts"
-										end: Object {
-											column: 24
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:21-1:24
 									params: Array [
 										TSTypeParameter {
 											name: "T"
 											constraint: undefined
 											default: undefined
-											loc: Object {
-												filename: "typescript/function/anonymous-generator/input.ts"
-												end: Object {
-													column: 23
-													line: 1
-												}
-												start: Object {
-													column: 22
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:22-1:23
 										}
 									]
-								}
-								returnType: TSTypeReference {
-									loc: Object {
-										filename: "typescript/function/anonymous-generator/input.ts"
-										end: Object {
-											column: 53
-											line: 1
-										}
-										start: Object {
-											column: 36
-											line: 1
-										}
-									}
-									typeName: JSReferenceIdentifier {
-										name: "Generator"
-										loc: Object {
-											filename: "typescript/function/anonymous-generator/input.ts"
-											identifierName: "Generator"
-											end: Object {
-												column: 45
-												line: 1
-											}
-											start: Object {
-												column: 36
-												line: 1
-											}
-										}
-									}
-									typeParameters: TSTypeParameterInstantiation {
-										loc: Object {
-											filename: "typescript/function/anonymous-generator/input.ts"
-											end: Object {
-												column: 53
-												line: 1
-											}
-											start: Object {
-												column: 45
-												line: 1
-											}
-										}
-										params: Array [
-											TSNumberKeywordTypeAnnotation {
-												loc: Object {
-													filename: "typescript/function/anonymous-generator/input.ts"
-													end: Object {
-														column: 52
-														line: 1
-													}
-													start: Object {
-														column: 46
-														line: 1
-													}
-												}
-											}
-										]
-									}
 								}
 								params: Array [
 									JSBindingIdentifier {
 										name: "input"
-										loc: Object {
-											filename: "typescript/function/anonymous-generator/input.ts"
-											identifierName: "input"
-											end: Object {
-												column: 30
-												line: 1
-											}
-											start: Object {
-												column: 25
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:25-1:30 (input)
 										meta: JSPatternMeta {
 											optional: undefined
-											loc: Object {
-												filename: "typescript/function/anonymous-generator/input.ts"
-												end: Object {
-													column: 33
-													line: 1
-												}
-												start: Object {
-													column: 25
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:25-1:33
 											typeAnnotation: TSTypeReference {
 												typeParameters: undefined
-												loc: Object {
-													filename: "typescript/function/anonymous-generator/input.ts"
-													end: Object {
-														column: 33
-														line: 1
-													}
-													start: Object {
-														column: 32
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:32-1:33
 												typeName: JSReferenceIdentifier {
 													name: "T"
-													loc: Object {
-														filename: "typescript/function/anonymous-generator/input.ts"
-														identifierName: "T"
-														end: Object {
-															column: 33
-															line: 1
-														}
-														start: Object {
-															column: 32
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:32-1:33 (T)
 												}
 											}
 										}

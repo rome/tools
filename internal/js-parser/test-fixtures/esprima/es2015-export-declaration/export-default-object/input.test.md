@@ -18,98 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-export-declaration/export-default-object/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:0-2:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "esprima/es2015-export-declaration/export-default-object/input.js"
-				end: Object {
-					column: 26
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:0-1:26
 			declaration: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-export-declaration/export-default-object/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:15-1:25
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "esprima/es2015-export-declaration/export-default-object/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 20
-										line: 1
-									}
-									start: Object {
-										column: 17
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:17-1:20 (foo)
 							}
-							loc: Object {
-								filename: "esprima/es2015-export-declaration/export-default-object/input.js"
-								end: Object {
-									column: 20
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:17-1:20
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "esprima/es2015-export-declaration/export-default-object/input.js"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 22
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:22-1:23
 						}
-						loc: Object {
-							filename: "esprima/es2015-export-declaration/export-default-object/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-export-declaration/export-default-object/input.js 1:17-1:23
 					}
 				]
 			}

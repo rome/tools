@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:5
+				start: Position 1:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,146 +38,40 @@ JSRoot {
 					"spread argument"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:9
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:9
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:0-1:1 (f)
 				}
 				arguments: Array [
 					JSSpreadElement {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:2-1:9
 						argument: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:6-1:9
 						}
 					}
 				]
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-				end: Object {
-					column: 11
-					line: 1
-				}
-				start: Object {
-					column: 10
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:10-1:11
 			expression: JSReferenceIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:10-1:11 (g)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:11-1:13
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "esprima/es2015-spread-element/invalid-call-spreads/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/invalid-call-spreads/input.js 1:11-1:12
 			}
 		}
 	]

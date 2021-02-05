@@ -17,31 +17,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/invalid-syntax/migrated_0169/input.js"
-		end: Object {
-			column: 5
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/invalid-syntax/migrated_0169/input.js 1:0-1:5
 	directives: Array [
 		JSDirective {
 			value: "\\u"
-			loc: Object {
-				filename: "esprima/invalid-syntax/migrated_0169/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/invalid-syntax/migrated_0169/input.js 1:0-1:5
 		}
 	]
 	diagnostics: Array [
@@ -58,14 +38,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				start: Position 1:3
 			}
 		}
 	]

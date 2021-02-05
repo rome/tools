@@ -16,31 +16,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/550/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/550/input.js 1:0-3:0
 	directives: Array [
 		JSDirective {
 			value: "use strict"
-			loc: Object {
-				filename: "core/uncategorised/550/input.js"
-				end: Object {
-					column: 13
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/550/input.js 1:0-1:13
 		}
 	]
 	diagnostics: Array [
@@ -57,85 +37,28 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 12
-					line: 2
-				}
+				end: Position 2:12
+				start: Position 2:12
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "core/uncategorised/550/input.js"
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation core/uncategorised/550/input.js 2:0-2:13
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "core/uncategorised/550/input.js"
-					end: Object {
-						column: 13
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation core/uncategorised/550/input.js 2:0-2:13
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "core/uncategorised/550/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 7
-									line: 2
-								}
-								start: Object {
-									column: 6
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/550/input.js 2:6-2:7 (a)
 						}
-						loc: Object {
-							filename: "core/uncategorised/550/input.js"
-							end: Object {
-								column: 12
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 2
-							}
-						}
+						loc: SourceLocation core/uncategorised/550/input.js 2:6-2:12
 						init: JSNumericLiteral {
 							value: 7
 							format: "octal"
-							loc: Object {
-								filename: "core/uncategorised/550/input.js"
-								end: Object {
-									column: 12
-									line: 2
-								}
-								start: Object {
-									column: 10
-									line: 2
-								}
-							}
+							loc: SourceLocation core/uncategorised/550/input.js 2:10-2:12
 						}
 					}
 				]

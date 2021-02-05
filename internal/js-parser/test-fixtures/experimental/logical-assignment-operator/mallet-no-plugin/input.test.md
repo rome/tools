@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:4
+				start: Position 1:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,105 +38,29 @@ JSRoot {
 					"statement expression"
 				]
 			}
-			location: Object {
-				filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:0-1:5
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: Object {
-					filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-					end: Object {
-						column: 5
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
+				loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:0-1:5
+				left: JSReferenceIdentifier {
+					name: "a"
+					loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:0-1:1 (a)
 				}
 				right: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 4
-							line: 1
-						}
-					}
-				}
-				left: JSReferenceIdentifier {
-					name: "a"
-					loc: Object {
-						filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:4-1:5
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:6-1:8
 			expression: JSReferenceIdentifier {
 				name: "b"
-				loc: Object {
-					filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
-					identifierName: "b"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:6-1:7 (b)
 			}
 		}
 	]

@@ -18,43 +18,13 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:0-1:10
 			expression: JSStringLiteral {
 				value: "hello"
-				loc: Object {
-					filename: "core/create-parenthesized-expressions/valid-parenthesized-expression/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/create-parenthesized-expressions/valid-parenthesized-expression/input.js 1:1-1:8
 			}
 		}
 	]

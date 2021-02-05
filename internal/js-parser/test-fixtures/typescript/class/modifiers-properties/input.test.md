@@ -17,107 +17,35 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/modifiers-properties/input.ts 1:0-22:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/modifiers-properties/input.ts"
-		end: Object {
-			column: 0
-			line: 22
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/modifiers-properties/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/modifiers-properties/input.ts 1:15-1:16 (C)
 			}
 			abstract: true
-			loc: Object {
-				filename: "typescript/class/modifiers-properties/input.ts"
-				end: Object {
-					column: 1
-					line: 21
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/modifiers-properties/input.ts 1:0-21:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/modifiers-properties/input.ts"
-					end: Object {
-						column: 1
-						line: 21
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/modifiers-properties/input.ts 1:0-21:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "r"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "r"
-									end: Object {
-										column: 14
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 2:13-2:14 (r)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 13
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 2:13-2:14
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 15
-								line: 2
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 2:4-2:15
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -125,78 +53,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 2
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 14
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 2:4-2:14
+							start: Position 2:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "r2"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "r2"
-									end: Object {
-										column: 15
-										line: 3
-									}
-									start: Object {
-										column: 13
-										line: 3
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 3:13-3:15 (r2)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 15
-									line: 3
-								}
-								start: Object {
-									column: 13
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 3:13-3:15
 						}
 						value: undefined
 						definite: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 25
-								line: 3
-							}
-							start: Object {
-								column: 4
-								line: 3
-							}
-						}
-						typeAnnotation: TSNumberKeywordTypeAnnotation {
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 24
-									line: 3
-								}
-								start: Object {
-									column: 18
-									line: 3
-								}
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 3:4-3:25
+						typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/modifiers-properties/input.ts 3:18-3:24}
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -204,66 +76,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 3
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 16
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 3:4-3:16
+							start: Position 3:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "a"
-									end: Object {
-										column: 14
-										line: 4
-									}
-									start: Object {
-										column: 13
-										line: 4
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 4:13-4:14 (a)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 14
-									line: 4
-								}
-								start: Object {
-									column: 13
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 4:13-4:14
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 15
-								line: 4
-							}
-							start: Object {
-								column: 4
-								line: 4
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 4:4-4:15
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: undefined
@@ -271,66 +99,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 4
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 14
-									line: 4
-								}
-								start: Object {
-									column: 4
-									line: 4
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 4:4-4:14
+							start: Position 4:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "s"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "s"
-									end: Object {
-										column: 12
-										line: 5
-									}
-									start: Object {
-										column: 11
-										line: 5
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 5:11-5:12 (s)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 12
-									line: 5
-								}
-								start: Object {
-									column: 11
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 5:11-5:12
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 13
-								line: 5
-							}
-							start: Object {
-								column: 4
-								line: 5
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 5:4-5:13
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -338,66 +122,22 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 5
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 12
-									line: 5
-								}
-								start: Object {
-									column: 4
-									line: 5
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 5:4-5:12
+							start: Position 5:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pu"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "pu"
-									end: Object {
-										column: 13
-										line: 7
-									}
-									start: Object {
-										column: 11
-										line: 7
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 7:11-7:13 (pu)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 13
-									line: 7
-								}
-								start: Object {
-									column: 11
-									line: 7
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 7:11-7:13
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 14
-								line: 7
-							}
-							start: Object {
-								column: 4
-								line: 7
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 7:4-7:14
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -405,66 +145,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 7
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 13
-									line: 7
-								}
-								start: Object {
-									column: 4
-									line: 7
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 7:4-7:13
+							start: Position 7:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "po"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "po"
-									end: Object {
-										column: 16
-										line: 8
-									}
-									start: Object {
-										column: 14
-										line: 8
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 8:14-8:16 (po)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 16
-									line: 8
-								}
-								start: Object {
-									column: 14
-									line: 8
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 8:14-8:16
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 17
-								line: 8
-							}
-							start: Object {
-								column: 4
-								line: 8
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 8:4-8:17
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
@@ -472,66 +168,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 8
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 16
-									line: 8
-								}
-								start: Object {
-									column: 4
-									line: 8
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 8:4-8:16
+							start: Position 8:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pi"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "pi"
-									end: Object {
-										column: 14
-										line: 9
-									}
-									start: Object {
-										column: 12
-										line: 9
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 9:12-9:14 (pi)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 14
-									line: 9
-								}
-								start: Object {
-									column: 12
-									line: 9
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 9:12-9:14
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 15
-								line: 9
-							}
-							start: Object {
-								column: 4
-								line: 9
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 9:4-9:15
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
@@ -539,66 +191,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 9
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 14
-									line: 9
-								}
-								start: Object {
-									column: 4
-									line: 9
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 9:4-9:14
+							start: Position 9:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "ra"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "ra"
-									end: Object {
-										column: 24
-										line: 11
-									}
-									start: Object {
-										column: 22
-										line: 11
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 11:22-11:24 (ra)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 24
-									line: 11
-								}
-								start: Object {
-									column: 22
-									line: 11
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 11:22-11:24
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 25
-								line: 11
-							}
-							start: Object {
-								column: 4
-								line: 11
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 11:4-11:25
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: undefined
@@ -606,66 +214,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 11
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 24
-									line: 11
-								}
-								start: Object {
-									column: 4
-									line: 11
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 11:4-11:24
+							start: Position 11:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "ar"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "ar"
-									end: Object {
-										column: 24
-										line: 12
-									}
-									start: Object {
-										column: 22
-										line: 12
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 12:22-12:24 (ar)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 24
-									line: 12
-								}
-								start: Object {
-									column: 22
-									line: 12
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 12:22-12:24
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 25
-								line: 12
-							}
-							start: Object {
-								column: 4
-								line: 12
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 12:4-12:25
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: undefined
@@ -673,66 +237,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 12
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 24
-									line: 12
-								}
-								start: Object {
-									column: 4
-									line: 12
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 12:4-12:24
+							start: Position 12:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "sr"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "sr"
-									end: Object {
-										column: 22
-										line: 13
-									}
-									start: Object {
-										column: 20
-										line: 13
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 13:20-13:22 (sr)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 22
-									line: 13
-								}
-								start: Object {
-									column: 20
-									line: 13
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 13:20-13:22
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 23
-								line: 13
-							}
-							start: Object {
-								column: 4
-								line: 13
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 13:4-13:23
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -740,66 +260,22 @@ JSRoot {
 							readonly: true
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 13
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 22
-									line: 13
-								}
-								start: Object {
-									column: 4
-									line: 13
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 13:4-13:22
+							start: Position 13:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pur"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "pur"
-									end: Object {
-										column: 23
-										line: 15
-									}
-									start: Object {
-										column: 20
-										line: 15
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 15:20-15:23 (pur)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 23
-									line: 15
-								}
-								start: Object {
-									column: 20
-									line: 15
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 15:20-15:23
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 24
-								line: 15
-							}
-							start: Object {
-								column: 4
-								line: 15
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 15:4-15:24
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -807,66 +283,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 15
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 23
-									line: 15
-								}
-								start: Object {
-									column: 4
-									line: 15
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 15:4-15:23
+							start: Position 15:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pua"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "pua"
-									end: Object {
-										column: 23
-										line: 16
-									}
-									start: Object {
-										column: 20
-										line: 16
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 16:20-16:23 (pua)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 23
-									line: 16
-								}
-								start: Object {
-									column: 20
-									line: 16
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 16:20-16:23
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 24
-								line: 16
-							}
-							start: Object {
-								column: 4
-								line: 16
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 16:4-16:24
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
@@ -874,66 +306,22 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 16
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 23
-									line: 16
-								}
-								start: Object {
-									column: 4
-									line: 16
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 16:4-16:23
+							start: Position 16:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pus"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "pus"
-									end: Object {
-										column: 21
-										line: 17
-									}
-									start: Object {
-										column: 18
-										line: 17
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 17:18-17:21 (pus)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 21
-									line: 17
-								}
-								start: Object {
-									column: 18
-									line: 17
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 17:18-17:21
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 22
-								line: 17
-							}
-							start: Object {
-								column: 4
-								line: 17
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 17:4-17:22
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -941,66 +329,22 @@ JSRoot {
 							readonly: false
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 17
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 21
-									line: 17
-								}
-								start: Object {
-									column: 4
-									line: 17
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 17:4-17:21
+							start: Position 17:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pura"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "pura"
-									end: Object {
-										column: 33
-										line: 18
-									}
-									start: Object {
-										column: 29
-										line: 18
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 18:29-18:33 (pura)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 33
-									line: 18
-								}
-								start: Object {
-									column: 29
-									line: 18
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 18:29-18:33
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 34
-								line: 18
-							}
-							start: Object {
-								column: 4
-								line: 18
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 18:4-18:34
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
@@ -1008,66 +352,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 18
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 33
-									line: 18
-								}
-								start: Object {
-									column: 4
-									line: 18
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 18:4-18:33
+							start: Position 18:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "puar"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "puar"
-									end: Object {
-										column: 33
-										line: 19
-									}
-									start: Object {
-										column: 29
-										line: 19
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 19:29-19:33 (puar)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 33
-									line: 19
-								}
-								start: Object {
-									column: 29
-									line: 19
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 19:29-19:33
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 34
-								line: 19
-							}
-							start: Object {
-								column: 4
-								line: 19
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 19:4-19:34
 						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
@@ -1075,66 +375,22 @@ JSRoot {
 							readonly: true
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 19
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 33
-									line: 19
-								}
-								start: Object {
-									column: 4
-									line: 19
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 19:4-19:33
+							start: Position 19:4
 						}
 					}
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "pusr"
-								loc: Object {
-									filename: "typescript/class/modifiers-properties/input.ts"
-									identifierName: "pusr"
-									end: Object {
-										column: 31
-										line: 20
-									}
-									start: Object {
-										column: 27
-										line: 20
-									}
-								}
+								loc: SourceLocation typescript/class/modifiers-properties/input.ts 20:27-20:31 (pusr)
 							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 31
-									line: 20
-								}
-								start: Object {
-									column: 27
-									line: 20
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 20:27-20:31
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "typescript/class/modifiers-properties/input.ts"
-							end: Object {
-								column: 32
-								line: 20
-							}
-							start: Object {
-								column: 4
-								line: 20
-							}
-						}
+						loc: SourceLocation typescript/class/modifiers-properties/input.ts 20:4-20:32
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
@@ -1142,21 +398,8 @@ JSRoot {
 							readonly: true
 							static: true
 							typeAnnotation: undefined
-							start: Object {
-								column: 4
-								line: 20
-							}
-							loc: Object {
-								filename: "typescript/class/modifiers-properties/input.ts"
-								end: Object {
-									column: 31
-									line: 20
-								}
-								start: Object {
-									column: 4
-									line: 20
-								}
-							}
+							loc: SourceLocation typescript/class/modifiers-properties/input.ts 20:4-20:31
+							start: Position 20:4
 						}
 					}
 				]

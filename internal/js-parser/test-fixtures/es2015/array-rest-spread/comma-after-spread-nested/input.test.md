@@ -18,98 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
-		end: Object {
-			column: 15
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:15
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:15
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:14
 				right: JSArrayExpression {
 					elements: Array []
-					loc: Object {
-						filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:12-1:14
 				}
 				left: JSAssignmentArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:0-1:9
 					elements: Array [
 						JSAssignmentArrayPattern {
 							elements: Array []
-							loc: Object {
-								filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:1-1:8
 							rest: JSAssignmentIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "es2015/array-rest-spread/comma-after-spread-nested/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 6
-										line: 1
-									}
-									start: Object {
-										column: 5
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/array-rest-spread/comma-after-spread-nested/input.js 1:5-1:6 (a)
 							}
 						}
 					]

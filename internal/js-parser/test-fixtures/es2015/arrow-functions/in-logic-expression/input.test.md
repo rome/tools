@@ -18,83 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/arrow-functions/in-logic-expression/input.js"
-		end: Object {
-			column: 19
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-2:19
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/in-logic-expression/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-1:19
 			expression: JSLogicalExpression {
 				operator: "||"
-				loc: Object {
-					filename: "es2015/arrow-functions/in-logic-expression/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:0-1:18
 				right: JSBooleanLiteral {
 					value: true
-					loc: Object {
-						filename: "es2015/arrow-functions/in-logic-expression/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:14-1:18
 				}
 				left: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "es2015/arrow-functions/in-logic-expression/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:1-1:9
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "es2015/arrow-functions/in-logic-expression/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:7-1:9
 					}
 					head: JSFunctionHead {
 						async: false
@@ -103,101 +43,29 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "es2015/arrow-functions/in-logic-expression/input.js"
-							end: Object {
-								column: 6
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 1:1-1:6
 					}
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/in-logic-expression/input.js"
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:0-2:19
 			expression: JSConditionalExpression {
-				loc: Object {
-					filename: "es2015/arrow-functions/in-logic-expression/input.js"
-					end: Object {
-						column: 18
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:0-2:18
 				alternate: JSReferenceIdentifier {
 					name: "b"
-					loc: Object {
-						filename: "es2015/arrow-functions/in-logic-expression/input.js"
-						identifierName: "b"
-						end: Object {
-							column: 18
-							line: 2
-						}
-						start: Object {
-							column: 17
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:17-2:18 (b)
 				}
 				consequent: JSReferenceIdentifier {
 					name: "a"
-					loc: Object {
-						filename: "es2015/arrow-functions/in-logic-expression/input.js"
-						identifierName: "a"
-						end: Object {
-							column: 14
-							line: 2
-						}
-						start: Object {
-							column: 13
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:13-2:14 (a)
 				}
 				test: JSArrowFunctionExpression {
-					loc: Object {
-						filename: "es2015/arrow-functions/in-logic-expression/input.js"
-						end: Object {
-							column: 9
-							line: 2
-						}
-						start: Object {
-							column: 1
-							line: 2
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:1-2:9
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "es2015/arrow-functions/in-logic-expression/input.js"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 7
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:7-2:9
 					}
 					head: JSFunctionHead {
 						async: false
@@ -206,17 +74,7 @@ JSRoot {
 						rest: undefined
 						returnType: undefined
 						thisType: undefined
-						loc: Object {
-							filename: "es2015/arrow-functions/in-logic-expression/input.js"
-							end: Object {
-								column: 6
-								line: 2
-							}
-							start: Object {
-								column: 1
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/arrow-functions/in-logic-expression/input.js 2:1-2:6
 					}
 				}
 			}

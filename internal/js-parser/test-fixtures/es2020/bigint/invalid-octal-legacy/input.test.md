@@ -17,17 +17,16 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2020/bigint/invalid-octal-legacy/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-1:7
+			expression: JSBigIntLiteral {
+				value: "016432"
+				loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-1:7
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,43 +41,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 6
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2020/bigint/invalid-octal-legacy/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBigIntLiteral {
-				value: "016432"
-				loc: Object {
-					filename: "es2020/bigint/invalid-octal-legacy/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				end: Position 1:6
+				start: Position 1:6
 			}
 		}
 	]

@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,84 +32,27 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 29
-					line: 1
-				}
+				end: Position 1:29
+				start: Position 1:29
 			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-1:39
 			declaration: JSVariableDeclaration {
 				kind: "var"
-				loc: Object {
-					filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-1:39
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "x"
-							loc: Object {
-								filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-								identifierName: "x"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:4-1:5 (x)
 						}
-						loc: Object {
-							filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-							end: Object {
-								column: 39
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:4-1:39
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-								end: Object {
-									column: 39
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:8-1:39
 							head: JSFunctionHead {
 								async: false
 								generator: false
@@ -129,143 +62,39 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-									end: Object {
-										column: 18
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:16-1:18
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-									end: Object {
-										column: 39
-										line: 1
-									}
-									start: Object {
-										column: 19
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:19-1:39
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-											end: Object {
-												column: 30
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:30
 										expression: JSAssignmentExpression {
 											operator: "="
-											loc: Object {
-												filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-												end: Object {
-													column: 30
-													line: 1
-												}
-												start: Object {
-													column: 21
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:30
 											left: JSAssignmentIdentifier {
 												name: "y"
-												loc: Object {
-													filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-													identifierName: "y"
-													end: Object {
-														column: 22
-														line: 1
-													}
-													start: Object {
-														column: 21
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:21-1:22 (y)
 											}
 											right: JSMetaProperty {
-												loc: Object {
-													filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-													end: Object {
-														column: 30
-														line: 1
-													}
-													start: Object {
-														column: 25
-														line: 1
-													}
-												}
+												loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:25-1:30
 												meta: JSIdentifier {
 													name: "new"
-													loc: Object {
-														filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-														identifierName: "new"
-														end: Object {
-															column: 28
-															line: 1
-														}
-														start: Object {
-															column: 25
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:25-1:28 (new)
 												}
 												property: JSIdentifier {
 													name: ""
-													loc: Object {
-														filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-														identifierName: ""
-														end: Object {
-															column: 30
-															line: 1
-														}
-														start: Object {
-															column: 29
-															line: 1
-														}
-													}
+													loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:29-1:30 ()
 												}
 											}
 										}
 									}
 									JSExpressionStatement {
-										loc: Object {
-											filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-											end: Object {
-												column: 37
-												line: 1
-											}
-											start: Object {
-												column: 30
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:30-1:37
 										expression: JSReferenceIdentifier {
 											name: "target"
-											loc: Object {
-												filename: "esprima/es2015-meta-property/invalid-dots/input.js"
-												identifierName: "target"
-												end: Object {
-													column: 36
-													line: 1
-												}
-												start: Object {
-													column: 30
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:30-1:36 (target)
 										}
 									}
 								]

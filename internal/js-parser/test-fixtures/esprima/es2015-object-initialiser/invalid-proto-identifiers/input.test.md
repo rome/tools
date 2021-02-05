@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,150 +32,38 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 29
-					line: 1
-				}
-				start: Object {
-					column: 20
-					line: 1
-				}
+				end: Position 1:29
+				start: Position 1:20
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-				end: Object {
-					column: 38
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:0-1:38
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:1-1:37
 				properties: Array [
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 12
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:3-1:12 (__proto__)
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-								end: Object {
-									column: 12
-									line: 1
-								}
-								start: Object {
-									column: 3
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:3-1:12
 						}
-						value: JSNullLiteral {
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 14
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:14-1:18}
+						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:3-1:18
 					}
 					JSObjectProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 29
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:20-1:29 (__proto__)
 							}
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-								end: Object {
-									column: 29
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:20-1:29
 						}
-						value: JSNullLiteral {
-							loc: Object {
-								filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-								end: Object {
-									column: 35
-									line: 1
-								}
-								start: Object {
-									column: 31
-									line: 1
-								}
-							}
-						}
-						loc: Object {
-							filename: "esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 20
-								line: 1
-							}
-						}
+						value: JSNullLiteral {loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:31-1:35}
+						loc: SourceLocation esprima/es2015-object-initialiser/invalid-proto-identifiers/input.js 1:20-1:35
 					}
 				]
 			}

@@ -18,72 +18,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-assignment/migrated_0008/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-assignment/migrated_0008/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-assignment/migrated_0008/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-assignment/migrated_0008/input.js 1:0-1:8
 			expression: JSAssignmentExpression {
 				operator: "<<="
-				loc: Object {
-					filename: "esprima/expression-assignment/migrated_0008/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-assignment/migrated_0008/input.js 1:0-1:8
 				left: JSAssignmentIdentifier {
 					name: "x"
-					loc: Object {
-						filename: "esprima/expression-assignment/migrated_0008/input.js"
-						identifierName: "x"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-assignment/migrated_0008/input.js 1:0-1:1 (x)
 				}
 				right: JSNumericLiteral {
 					value: 42
 					format: undefined
-					loc: Object {
-						filename: "esprima/expression-assignment/migrated_0008/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-assignment/migrated_0008/input.js 1:6-1:8
 				}
 			}
 		}

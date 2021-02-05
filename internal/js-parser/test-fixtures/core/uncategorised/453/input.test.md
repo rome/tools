@@ -17,31 +17,11 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/453/input.js"
-		end: Object {
-			column: 4
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/453/input.js 1:0-1:4
 	directives: Array [
 		JSDirective {
 			value: "\\"
-			loc: Object {
-				filename: "core/uncategorised/453/input.js"
-				end: Object {
-					column: 4
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/453/input.js 1:0-1:4
 		}
 	]
 	diagnostics: Array [
@@ -58,14 +38,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 3
-					line: 1
-				}
-				start: Object {
-					column: 3
-					line: 1
-				}
+				end: Position 1:3
+				start: Position 1:3
 			}
 		}
 	]

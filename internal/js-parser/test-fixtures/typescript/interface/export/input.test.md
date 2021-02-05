@@ -17,132 +17,40 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/interface/export/input.ts 1:0-3:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/interface/export/input.ts"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
-			loc: Object {
-				filename: "typescript/interface/export/input.ts"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/interface/export/input.ts 1:0-1:21
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "I"
-					loc: Object {
-						filename: "typescript/interface/export/input.ts"
-						identifierName: "I"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/interface/export/input.ts 1:17-1:18 (I)
 				}
 				extends: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/interface/export/input.ts"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/interface/export/input.ts 1:7-1:21
 				body: TSInterfaceBody {
 					body: Array []
-					loc: Object {
-						filename: "typescript/interface/export/input.ts"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 19
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/interface/export/input.ts 1:19-1:21
 				}
 			}
 		}
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "typescript/interface/export/input.ts"
-				end: Object {
-					column: 29
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation typescript/interface/export/input.ts 2:0-2:29
 			declaration: TSInterfaceDeclaration {
 				id: JSBindingIdentifier {
 					name: "A"
-					loc: Object {
-						filename: "typescript/interface/export/input.ts"
-						identifierName: "A"
-						end: Object {
-							column: 26
-							line: 2
-						}
-						start: Object {
-							column: 25
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/interface/export/input.ts 2:25-2:26 (A)
 				}
 				extends: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "typescript/interface/export/input.ts"
-					end: Object {
-						column: 29
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation typescript/interface/export/input.ts 2:15-2:29
 				body: TSInterfaceBody {
 					body: Array []
-					loc: Object {
-						filename: "typescript/interface/export/input.ts"
-						end: Object {
-							column: 29
-							line: 2
-						}
-						start: Object {
-							column: 27
-							line: 2
-						}
-					}
+					loc: SourceLocation typescript/interface/export/input.ts 2:27-2:29
 				}
 			}
 		}

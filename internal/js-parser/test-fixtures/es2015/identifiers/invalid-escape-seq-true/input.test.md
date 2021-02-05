@@ -17,20 +17,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
-		end: Object {
-			column: 0
-			line: 2
+	loc: SourceLocation es2015/identifiers/invalid-escape-seq-true/input.js 1:0-2:0
+	body: Array [
+		JSExpressionStatement {
+			loc: SourceLocation es2015/identifiers/invalid-escape-seq-true/input.js 1:0-1:9
+			expression: JSBooleanLiteral {
+				value: true
+				loc: SourceLocation es2015/identifiers/invalid-escape-seq-true/input.js 1:0-1:9
+			}
 		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:0
+				start: Position 1:0
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -39,49 +46,6 @@ JSRoot {
 					RAW_MARKUP {value: "Escape sequence in keyword "}
 					"true"
 				]
-			}
-			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 0
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			expression: JSBooleanLiteral {
-				value: true
-				loc: Object {
-					filename: "es2015/identifiers/invalid-escape-seq-true/input.js"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
 			}
 		}
 	]

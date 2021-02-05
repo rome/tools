@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/286/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/286/input.js 1:0-1:16
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "es2015/uncategorised/286/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:7
+				start: Position 1:6
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,61 +38,17 @@ JSRoot {
 					"arrow function parameters"
 				]
 			}
-			location: Object {
-				filename: "es2015/uncategorised/286/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/286/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/286/input.js 1:0-1:16
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/286/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/286/input.js 1:0-1:16
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/uncategorised/286/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/286/input.js 1:14-1:16
 				}
 				head: JSFunctionHead {
 					async: false
@@ -102,44 +56,14 @@ JSRoot {
 					params: Array []
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/286/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/286/input.js 1:0-1:13
 					rest: JSBindingArrayPattern {
 						rest: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/286/input.js"
-							end: Object {
-								column: 9
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/286/input.js 1:4-1:9
 						elements: Array [
 							JSBindingIdentifier {
 								name: "INVALID_PLACEHOLDER"
-								loc: Object {
-									filename: "es2015/uncategorised/286/input.js"
-									end: Object {
-										column: 13
-										line: 1
-									}
-									start: Object {
-										column: 14
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/286/input.js 1:14-1:13
 							}
 						]
 					}

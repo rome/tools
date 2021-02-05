@@ -18,76 +18,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/383/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/383/input.js 1:0-2:0
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/383/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/383/input.js 1:0-1:19
 			declaration: JSClassDeclaration {
 				id: JSBindingIdentifier {
 					name: "Foo"
-					loc: Object {
-						filename: "es2015/uncategorised/383/input.js"
-						identifierName: "Foo"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/383/input.js 1:13-1:16 (Foo)
 				}
-				loc: Object {
-					filename: "es2015/uncategorised/383/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/383/input.js 1:7-1:19
 				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "es2015/uncategorised/383/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/383/input.js 1:7-1:19
 				}
 			}
 		}

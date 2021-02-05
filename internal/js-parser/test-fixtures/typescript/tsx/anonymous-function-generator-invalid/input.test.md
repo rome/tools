@@ -16,24 +16,22 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:0-4:0
 	syntax: Array [
 		"ts"
 		"jsx"
 	]
-	loc: Object {
-		filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:22
+				start: Position 1:21
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -43,89 +41,24 @@ JSRoot {
 					"("
 				]
 			}
-			location: Object {
-				filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 21
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSVariableDeclarationStatement {
-			loc: Object {
-				filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-				end: Object {
-					column: 10
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:0-2:10
 			declaration: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-					end: Object {
-						column: 10
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:0-2:10
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "fn"
-							loc: Object {
-								filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-								identifierName: "fn"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 6
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:6-1:8 (fn)
 						}
-						loc: Object {
-							filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 6
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:6-2:10
 						init: JSFunctionExpression {
 							id: undefined
-							loc: Object {
-								filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:11-2:10
 							head: JSFunctionHead {
 								async: false
 								generator: true
@@ -134,216 +67,64 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 21
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:21-1:24
 								params: Array [
 									JSBindingIdentifier {
 										name: ""
-										loc: Object {
-											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-											identifierName: ""
-											end: Object {
-												column: 22
-												line: 1
-											}
-											start: Object {
-												column: 21
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:21-1:22 ()
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-												end: Object {
-													column: 22
-													line: 1
-												}
-												start: Object {
-													column: 21
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:21-1:22
 										}
 									}
 									JSBindingIdentifier {
 										name: ""
-										loc: Object {
-											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-											identifierName: ""
-											end: Object {
-												column: 24
-												line: 1
-											}
-											start: Object {
-												column: 23
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:23-1:24 ()
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-												end: Object {
-													column: 24
-													line: 1
-												}
-												start: Object {
-													column: 23
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:23-1:24
 										}
 									}
 								]
 							}
 							body: JSBlockStatement {
 								directives: Array []
-								loc: Object {
-									filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-									end: Object {
-										column: 10
-										line: 2
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:24-2:10
 								body: Array [
 									JSExpressionStatement {
-										loc: Object {
-											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-											end: Object {
-												column: 45
-												line: 1
-											}
-											start: Object {
-												column: 24
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:24-1:45
 										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
-											loc: Object {
-												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-												end: Object {
-													column: 45
-													line: 1
-												}
-												start: Object {
-													column: 24
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:24-1:45
 										}
 									}
 									JSExpressionStatement {
-										loc: Object {
-											filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-											end: Object {
-												column: 10
-												line: 2
-											}
-											start: Object {
-												column: 45
-												line: 1
-											}
-										}
+										loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:45-2:10
 										expression: JSXElement {
 											name: JSXIdentifier {
 												name: "number"
-												loc: Object {
-													filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-													end: Object {
-														column: 52
-														line: 1
-													}
-													start: Object {
-														column: 46
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:46-1:52
 											}
 											attributes: Array []
 											selfClosing: false
 											typeArguments: undefined
-											loc: Object {
-												filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-												end: Object {
-													column: 9
-													line: 2
-												}
-												start: Object {
-													column: 45
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:45-2:9
 											children: Array [
 												JSXText {
 													value: " "
-													loc: Object {
-														filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-														end: Object {
-															column: 54
-															line: 1
-														}
-														start: Object {
-															column: 53
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:53-1:54
 												}
 												JSXExpressionContainer {
-													loc: Object {
-														filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-														end: Object {
-															column: 9
-															line: 2
-														}
-														start: Object {
-															column: 54
-															line: 1
-														}
-													}
+													loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:54-2:9
 													expression: JSYieldExpression {
 														delegate: false
-														loc: Object {
-															filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-															end: Object {
-																column: 9
-																line: 2
-															}
-															start: Object {
-																column: 2
-																line: 2
-															}
-														}
+														loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 2:2-2:9
 														argument: JSNumericLiteral {
 															value: 2
 															format: undefined
-															loc: Object {
-																filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
-																end: Object {
-																	column: 9
-																	line: 2
-																}
-																start: Object {
-																	column: 8
-																	line: 2
-																}
-															}
+															loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 2:8-2:9
 														}
 													}
 												}

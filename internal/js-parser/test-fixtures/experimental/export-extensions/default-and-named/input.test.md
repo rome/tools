@@ -18,116 +18,33 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/default-and-named/input.js"
-		end: Object {
-			column: 31
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:0-1:31
 	body: Array [
 		JSExportExternalDeclaration {
 			exportKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/export-extensions/default-and-named/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:0-1:31
 			source: JSStringLiteral {
 				value: "bar"
-				loc: Object {
-					filename: "experimental/export-extensions/default-and-named/input.js"
-					end: Object {
-						column: 30
-						line: 1
-					}
-					start: Object {
-						column: 25
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:25-1:30
 			}
 			defaultSpecifier: JSExportDefaultSpecifier {
-				loc: Object {
-					filename: "experimental/export-extensions/default-and-named/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:7-1:10
 				exported: JSIdentifier {
 					name: "foo"
-					loc: Object {
-						filename: "experimental/export-extensions/default-and-named/input.js"
-						identifierName: "foo"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:7-1:10 (foo)
 				}
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "experimental/export-extensions/default-and-named/input.js"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:14-1:17
 					exported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "experimental/export-extensions/default-and-named/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:14-1:17 (bar)
 					}
 					local: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "experimental/export-extensions/default-and-named/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 14
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/export-extensions/default-and-named/input.js 1:14-1:17 (bar)
 					}
 				}
 			]

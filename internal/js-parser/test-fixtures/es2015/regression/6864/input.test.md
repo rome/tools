@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/regression/6864/input.js"
-		end: Object {
-			column: 0
-			line: 6
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/regression/6864/input.js 1:0-6:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "f"
-				loc: Object {
-					filename: "es2015/regression/6864/input.js"
-					identifierName: "f"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/regression/6864/input.js 1:10-1:11 (f)
 			}
-			loc: Object {
-				filename: "es2015/regression/6864/input.js"
-				end: Object {
-					column: 1
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/regression/6864/input.js 1:0-5:1
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,115 +35,33 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/regression/6864/input.js"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/regression/6864/input.js 1:11-1:13
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "es2015/regression/6864/input.js"
-					end: Object {
-						column: 1
-						line: 5
-					}
-					start: Object {
-						column: 14
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/regression/6864/input.js 1:14-5:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/regression/6864/input.js"
-							end: Object {
-								column: 17
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/regression/6864/input.js 2:2-2:17
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "es2015/regression/6864/input.js"
-								end: Object {
-									column: 15
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/regression/6864/input.js 2:3-2:15
 							argument: JSArrowFunctionExpression {
-								loc: Object {
-									filename: "es2015/regression/6864/input.js"
-									end: Object {
-										column: 15
-										line: 2
-									}
-									start: Object {
-										column: 9
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/regression/6864/input.js 2:9-2:15
 								body: JSReferenceIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/regression/6864/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 15
-											line: 2
-										}
-										start: Object {
-											column: 14
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/regression/6864/input.js 2:14-2:15 (a)
 								}
 								head: JSFunctionHead {
 									async: false
 									hasHoistedVars: false
 									rest: undefined
 									thisType: undefined
-									loc: Object {
-										filename: "es2015/regression/6864/input.js"
-										end: Object {
-											column: 13
-											line: 2
-										}
-										start: Object {
-											column: 9
-											line: 2
-										}
-									}
+									loc: SourceLocation es2015/regression/6864/input.js 2:9-2:13
 									params: Array [
 										JSBindingIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/regression/6864/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 10
-													line: 2
-												}
-												start: Object {
-													column: 9
-													line: 2
-												}
-											}
+											loc: SourceLocation es2015/regression/6864/input.js 2:9-2:10 (a)
 										}
 									]
 								}
@@ -182,88 +69,26 @@ JSRoot {
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/regression/6864/input.js"
-							end: Object {
-								column: 23
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation es2015/regression/6864/input.js 3:2-3:23
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "es2015/regression/6864/input.js"
-								end: Object {
-									column: 21
-									line: 3
-								}
-								start: Object {
-									column: 3
-									line: 3
-								}
-							}
+							loc: SourceLocation es2015/regression/6864/input.js 3:3-3:21
 							argument: JSArrowFunctionExpression {
-								loc: Object {
-									filename: "es2015/regression/6864/input.js"
-									end: Object {
-										column: 21
-										line: 3
-									}
-									start: Object {
-										column: 9
-										line: 3
-									}
-								}
+								loc: SourceLocation es2015/regression/6864/input.js 3:9-3:21
 								body: JSReferenceIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/regression/6864/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 21
-											line: 3
-										}
-										start: Object {
-											column: 20
-											line: 3
-										}
-									}
+									loc: SourceLocation es2015/regression/6864/input.js 3:20-3:21 (a)
 								}
 								head: JSFunctionHead {
 									async: true
 									hasHoistedVars: false
 									rest: undefined
 									thisType: undefined
-									loc: Object {
-										filename: "es2015/regression/6864/input.js"
-										end: Object {
-											column: 19
-											line: 3
-										}
-										start: Object {
-											column: 9
-											line: 3
-										}
-									}
+									loc: SourceLocation es2015/regression/6864/input.js 3:9-3:19
 									params: Array [
 										JSBindingIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/regression/6864/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 16
-													line: 3
-												}
-												start: Object {
-													column: 15
-													line: 3
-												}
-											}
+											loc: SourceLocation es2015/regression/6864/input.js 3:15-3:16 (a)
 										}
 									]
 								}
@@ -271,56 +96,15 @@ JSRoot {
 						}
 					}
 					JSExpressionStatement {
-						loc: Object {
-							filename: "es2015/regression/6864/input.js"
-							end: Object {
-								column: 25
-								line: 4
-							}
-							start: Object {
-								column: 2
-								line: 4
-							}
-						}
+						loc: SourceLocation es2015/regression/6864/input.js 4:2-4:25
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "es2015/regression/6864/input.js"
-								end: Object {
-									column: 23
-									line: 4
-								}
-								start: Object {
-									column: 3
-									line: 4
-								}
-							}
+							loc: SourceLocation es2015/regression/6864/input.js 4:3-4:23
 							argument: JSArrowFunctionExpression {
-								loc: Object {
-									filename: "es2015/regression/6864/input.js"
-									end: Object {
-										column: 23
-										line: 4
-									}
-									start: Object {
-										column: 9
-										line: 4
-									}
-								}
+								loc: SourceLocation es2015/regression/6864/input.js 4:9-4:23
 								body: JSReferenceIdentifier {
 									name: "a"
-									loc: Object {
-										filename: "es2015/regression/6864/input.js"
-										identifierName: "a"
-										end: Object {
-											column: 23
-											line: 4
-										}
-										start: Object {
-											column: 22
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/regression/6864/input.js 4:22-4:23 (a)
 								}
 								head: JSFunctionHead {
 									async: true
@@ -328,32 +112,11 @@ JSRoot {
 									rest: undefined
 									returnType: undefined
 									thisType: undefined
-									loc: Object {
-										filename: "es2015/regression/6864/input.js"
-										end: Object {
-											column: 21
-											line: 4
-										}
-										start: Object {
-											column: 9
-											line: 4
-										}
-									}
+									loc: SourceLocation es2015/regression/6864/input.js 4:9-4:21
 									params: Array [
 										JSBindingIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/regression/6864/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 17
-													line: 4
-												}
-												start: Object {
-													column: 16
-													line: 4
-												}
-											}
+											loc: SourceLocation es2015/regression/6864/input.js 4:16-4:17 (a)
 										}
 									]
 								}

@@ -18,89 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/90/input.js"
-		end: Object {
-			column: 31
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/90/input.js 1:0-1:31
 	body: Array [
 		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/90/input.js"
-				end: Object {
-					column: 31
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/90/input.js 1:0-1:31
 			source: JSStringLiteral {
 				value: "other"
-				loc: Object {
-					filename: "es2015/uncategorised/90/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/90/input.js 1:24-1:31
 			}
 			namedSpecifiers: Array [
 				JSExportExternalSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/90/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/90/input.js 1:9-1:16
 					exported: JSIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "es2015/uncategorised/90/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/90/input.js 1:9-1:16 (default)
 					}
 					local: JSIdentifier {
 						name: "default"
-						loc: Object {
-							filename: "es2015/uncategorised/90/input.js"
-							identifierName: "default"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/90/input.js 1:9-1:16 (default)
 					}
 				}
 			]

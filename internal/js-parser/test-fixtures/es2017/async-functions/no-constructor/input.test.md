@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/async-functions/no-constructor/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/async-functions/no-constructor/input.js 1:0-3:1
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 19
-					line: 2
-				}
-				start: Object {
-					column: 8
-					line: 2
-				}
+				end: Position 2:19
+				start: Position 2:8
 			}
 		}
 	]
@@ -57,102 +41,40 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2017/async-functions/no-constructor/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/no-constructor/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2017/async-functions/no-constructor/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/async-functions/no-constructor/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2017/async-functions/no-constructor/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/async-functions/no-constructor/input.js 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "es2017/async-functions/no-constructor/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 19
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:8-2:19 (constructor)
 							}
-							loc: Object {
-								filename: "es2017/async-functions/no-constructor/input.js"
-								end: Object {
-									column: 19
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:8-2:19
 						}
-						loc: Object {
-							filename: "es2017/async-functions/no-constructor/input.js"
-							end: Object {
-								column: 24
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:2-2:24
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2017/async-functions/no-constructor/input.js"
-								end: Object {
-									column: 24
-									line: 2
-								}
-								start: Object {
-									column: 22
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:22-2:24
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:2-2:19
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: true
@@ -163,40 +85,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2017/async-functions/no-constructor/input.js"
-								end: Object {
-									column: 21
-									line: 2
-								}
-								start: Object {
-									column: 19
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2017/async-functions/no-constructor/input.js"
-								end: Object {
-									column: 19
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2017/async-functions/no-constructor/input.js 2:19-2:21
 						}
 					}
 				]

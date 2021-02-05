@@ -18,117 +18,45 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/yield/function-name-generator-method/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "A"
-				loc: Object {
-					filename: "es2015/yield/function-name-generator-method/input.js"
-					identifierName: "A"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:6-1:7 (A)
 			}
-			loc: Object {
-				filename: "es2015/yield/function-name-generator-method/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "es2015/yield/function-name-generator-method/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/yield/function-name-generator-method/input.js 1:0-3:1
 				body: Array [
 					JSClassMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "yield"
-								loc: Object {
-									filename: "es2015/yield/function-name-generator-method/input.js"
-									identifierName: "yield"
-									end: Object {
-										column: 8
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:3-2:8 (yield)
 							}
-							loc: Object {
-								filename: "es2015/yield/function-name-generator-method/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 3
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:3-2:8
 						}
-						loc: Object {
-							filename: "es2015/yield/function-name-generator-method/input.js"
-							end: Object {
-								column: 13
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:13
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/yield/function-name-generator-method/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 11
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:11-2:13
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:2-2:8
+							start: Position 2:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -139,40 +67,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/yield/function-name-generator-method/input.js"
-								end: Object {
-									column: 10
-									line: 2
-								}
-								start: Object {
-									column: 8
-									line: 2
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "es2015/yield/function-name-generator-method/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation es2015/yield/function-name-generator-method/input.js 2:8-2:10
 						}
 					}
 				]

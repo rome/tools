@@ -18,103 +18,31 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/94/input.js"
-		end: Object {
-			column: 39
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/94/input.js 1:0-1:39
 	body: Array [
 		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "es2015/uncategorised/94/input.js"
-				end: Object {
-					column: 39
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/94/input.js 1:0-1:39
 			source: JSStringLiteral {
 				value: "crypto"
-				loc: Object {
-					filename: "es2015/uncategorised/94/input.js"
-					end: Object {
-						column: 39
-						line: 1
-					}
-					start: Object {
-						column: 31
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/94/input.js 1:31-1:39
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "es2015/uncategorised/94/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/94/input.js 1:9-1:23
 					imported: JSIdentifier {
 						name: "encrypt"
-						loc: Object {
-							filename: "es2015/uncategorised/94/input.js"
-							identifierName: "encrypt"
-							end: Object {
-								column: 16
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/94/input.js 1:9-1:16 (encrypt)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "enc"
-							loc: Object {
-								filename: "es2015/uncategorised/94/input.js"
-								identifierName: "enc"
-								end: Object {
-									column: 23
-									line: 1
-								}
-								start: Object {
-									column: 20
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/94/input.js 1:20-1:23 (enc)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/94/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/94/input.js 1:9-1:23
 					}
 				}
 			]

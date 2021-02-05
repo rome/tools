@@ -18,101 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/for-await-module/input.js"
-		end: Object {
-			column: 25
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:0-1:25
 	body: Array [
 		JSForOfStatement {
 			await: true
-			loc: Object {
-				filename: "experimental/top-level-await/for-await-module/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-			body: JSEmptyStatement {
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-module/input.js"
-					end: Object {
-						column: 25
-						line: 1
-					}
-					start: Object {
-						column: 24
-						line: 1
-					}
-				}
-			}
+			body: JSEmptyStatement {loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:24-1:25}
+			loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:0-1:25
 			right: JSReferenceIdentifier {
 				name: "b"
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-module/input.js"
-					identifierName: "b"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 22
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:22-1:23 (b)
 			}
 			left: JSVariableDeclaration {
 				kind: "const"
-				loc: Object {
-					filename: "experimental/top-level-await/for-await-module/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:11-1:18
 				declarations: Array [
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "experimental/top-level-await/for-await-module/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:17-1:18 (a)
 						}
 						init: undefined
-						loc: Object {
-							filename: "experimental/top-level-await/for-await-module/input.js"
-							end: Object {
-								column: 18
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation experimental/top-level-await/for-await-module/input.js 1:17-1:18
 					}
 				]
 			}

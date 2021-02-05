@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-properties/no-ctor-2/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 1:0-5:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 2
-					line: 2
-				}
+				end: Position 2:13
+				start: Position 2:2
 			}
 		}
 	]
@@ -57,89 +41,53 @@ JSRoot {
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "Foo"
-				loc: Object {
-					filename: "experimental/class-properties/no-ctor-2/input.js"
-					identifierName: "Foo"
-					end: Object {
-						column: 9
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 1:6-1:9 (Foo)
 			}
-			loc: Object {
-				filename: "experimental/class-properties/no-ctor-2/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-properties/no-ctor-2/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 1:0-4:1
 				body: Array [
 					JSClassProperty {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "constructor"
-								loc: Object {
-									filename: "experimental/class-properties/no-ctor-2/input.js"
-									identifierName: "constructor"
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 2
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 2:2-2:13 (constructor)
 							}
-							loc: Object {
-								filename: "experimental/class-properties/no-ctor-2/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 2:2-2:13
 						}
 						value: undefined
 						definite: undefined
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-properties/no-ctor-2/input.js"
-							end: Object {
-								column: 13
-								line: 2
+						loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 2:2-2:13
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 2:2-2:13
+							start: Position 2:2
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "x"
+								loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:3-3:4 (x)
 							}
-							start: Object {
-								column: 2
-								line: 2
-							}
+							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:3-3:4
+						}
+						loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:2-3:8
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:6-3:8
 						}
 						meta: JSClassPropertyMeta {
 							abstract: false
@@ -148,78 +96,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-properties/no-ctor-2/input.js"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
-						}
-					}
-					JSClassMethod {
-						kind: "method"
-						key: JSStaticPropertyKey {
-							value: JSIdentifier {
-								name: "x"
-								loc: Object {
-									filename: "experimental/class-properties/no-ctor-2/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 3
-									}
-									start: Object {
-										column: 3
-										line: 3
-									}
-								}
-							}
-							loc: Object {
-								filename: "experimental/class-properties/no-ctor-2/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 3
-									line: 3
-								}
-							}
-						}
-						loc: Object {
-							filename: "experimental/class-properties/no-ctor-2/input.js"
-							end: Object {
-								column: 8
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
-						body: JSBlockStatement {
-							body: Array []
-							directives: Array []
-							loc: Object {
-								filename: "experimental/class-properties/no-ctor-2/input.js"
-								end: Object {
-									column: 8
-									line: 3
-								}
-								start: Object {
-									column: 6
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:2-3:4
+							start: Position 3:2
 						}
 						head: JSFunctionHead {
 							async: false
@@ -230,40 +108,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "experimental/class-properties/no-ctor-2/input.js"
-								end: Object {
-									column: 6
-									line: 3
-								}
-								start: Object {
-									column: 4
-									line: 3
-								}
-							}
-						}
-						meta: JSClassPropertyMeta {
-							abstract: false
-							accessibility: undefined
-							optional: false
-							readonly: false
-							static: false
-							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-properties/no-ctor-2/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-properties/no-ctor-2/input.js 3:4-3:6
 						}
 					}
 				]

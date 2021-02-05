@@ -13,73 +13,23 @@ MarkdownRoot {
 	diagnostics: Array []
 	filename: "lists/input.md"
 	integrity: undefined
-	loc: Object {
-		filename: "lists/input.md"
-		end: Object {
-			column: 14
-			line: 11
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation lists/input.md 1:0-11:14
 	body: Array [
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation lists/input.md 1:0-1:5
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: undefined
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation lists/input.md 1:2-1:5
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation lists/input.md 1:2-1:5
 							children: Array [
 								MarkdownText {
 									value: "foo"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 2
-											line: 1
-										}
-										start: Object {
-											column: 2
-											line: 1
-										}
-									}
+									loc: SourceLocation lists/input.md 1:2-1:2
 								}
 							]
 						}
@@ -89,59 +39,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 5
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation lists/input.md 2:0-2:5
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: undefined
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 5
-							line: 2
-						}
-						start: Object {
-							column: 2
-							line: 2
-						}
-					}
+					loc: SourceLocation lists/input.md 2:2-2:5
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 5
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation lists/input.md 2:2-2:5
 							children: Array [
 								MarkdownText {
 									value: "bar"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 2
-											line: 2
-										}
-										start: Object {
-											column: 2
-											line: 2
-										}
-									}
+									loc: SourceLocation lists/input.md 2:2-2:2
 								}
 							]
 						}
@@ -151,59 +61,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: true
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 6
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 4
-				}
-			}
+			loc: SourceLocation lists/input.md 4:0-4:6
 			children: Array [
 				MarkdownListItem {
 					value: undefined
 					checked: undefined
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 6
-							line: 4
-						}
-						start: Object {
-							column: 3
-							line: 4
-						}
-					}
+					loc: SourceLocation lists/input.md 4:3-4:6
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 6
-									line: 4
-								}
-								start: Object {
-									column: 3
-									line: 4
-								}
-							}
+							loc: SourceLocation lists/input.md 4:3-4:6
 							children: Array [
 								MarkdownText {
 									value: "foo"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 3
-											line: 4
-										}
-										start: Object {
-											column: 3
-											line: 4
-										}
-									}
+									loc: SourceLocation lists/input.md 4:3-4:3
 								}
 							]
 						}
@@ -213,59 +83,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: true
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 6
-					line: 5
-				}
-				start: Object {
-					column: 0
-					line: 5
-				}
-			}
+			loc: SourceLocation lists/input.md 5:0-5:6
 			children: Array [
 				MarkdownListItem {
 					value: undefined
 					checked: undefined
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 6
-							line: 5
-						}
-						start: Object {
-							column: 3
-							line: 5
-						}
-					}
+					loc: SourceLocation lists/input.md 5:3-5:6
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 6
-									line: 5
-								}
-								start: Object {
-									column: 3
-									line: 5
-								}
-							}
+							loc: SourceLocation lists/input.md 5:3-5:6
 							children: Array [
 								MarkdownText {
 									value: "bar"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 3
-											line: 5
-										}
-										start: Object {
-											column: 3
-											line: 5
-										}
-									}
+									loc: SourceLocation lists/input.md 5:3-5:3
 								}
 							]
 						}
@@ -275,59 +105,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: true
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 10
-					line: 6
-				}
-				start: Object {
-					column: 0
-					line: 6
-				}
-			}
+			loc: SourceLocation lists/input.md 6:0-6:10
 			children: Array [
 				MarkdownListItem {
 					value: undefined
 					checked: undefined
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 10
-							line: 6
-						}
-						start: Object {
-							column: 3
-							line: 6
-						}
-					}
+					loc: SourceLocation lists/input.md 6:3-6:10
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 10
-									line: 6
-								}
-								start: Object {
-									column: 3
-									line: 6
-								}
-							}
+							loc: SourceLocation lists/input.md 6:3-6:10
 							children: Array [
 								MarkdownText {
 									value: "example"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 3
-											line: 6
-										}
-										start: Object {
-											column: 3
-											line: 6
-										}
-									}
+									loc: SourceLocation lists/input.md 6:3-6:3
 								}
 							]
 						}
@@ -337,59 +127,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 9
-					line: 8
-				}
-				start: Object {
-					column: 0
-					line: 8
-				}
-			}
+			loc: SourceLocation lists/input.md 8:0-8:9
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: false
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 9
-							line: 8
-						}
-						start: Object {
-							column: 6
-							line: 8
-						}
-					}
+					loc: SourceLocation lists/input.md 8:6-8:9
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 9
-									line: 8
-								}
-								start: Object {
-									column: 6
-									line: 8
-								}
-							}
+							loc: SourceLocation lists/input.md 8:6-8:9
 							children: Array [
 								MarkdownText {
 									value: "foo"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 6
-											line: 8
-										}
-										start: Object {
-											column: 6
-											line: 8
-										}
-									}
+									loc: SourceLocation lists/input.md 8:6-8:6
 								}
 							]
 						}
@@ -399,59 +149,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 9
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 9
-				}
-			}
+			loc: SourceLocation lists/input.md 9:0-9:9
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: true
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 9
-							line: 9
-						}
-						start: Object {
-							column: 6
-							line: 9
-						}
-					}
+					loc: SourceLocation lists/input.md 9:6-9:9
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 9
-									line: 9
-								}
-								start: Object {
-									column: 6
-									line: 9
-								}
-							}
+							loc: SourceLocation lists/input.md 9:6-9:9
 							children: Array [
 								MarkdownText {
 									value: "bar"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 6
-											line: 9
-										}
-										start: Object {
-											column: 6
-											line: 9
-										}
-									}
+									loc: SourceLocation lists/input.md 9:6-9:6
 								}
 							]
 						}
@@ -461,59 +171,19 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 11
-					line: 10
-				}
-				start: Object {
-					column: 0
-					line: 10
-				}
-			}
+			loc: SourceLocation lists/input.md 10:0-10:11
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: true
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 11
-							line: 10
-						}
-						start: Object {
-							column: 6
-							line: 10
-						}
-					}
+					loc: SourceLocation lists/input.md 10:6-10:11
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 11
-									line: 10
-								}
-								start: Object {
-									column: 6
-									line: 10
-								}
-							}
+							loc: SourceLocation lists/input.md 10:6-10:11
 							children: Array [
 								MarkdownText {
 									value: "lorem"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 6
-											line: 10
-										}
-										start: Object {
-											column: 6
-											line: 10
-										}
-									}
+									loc: SourceLocation lists/input.md 10:6-10:6
 								}
 							]
 						}
@@ -523,74 +193,24 @@ MarkdownRoot {
 		}
 		MarkdownListBlock {
 			ordered: false
-			loc: Object {
-				filename: "lists/input.md"
-				end: Object {
-					column: 14
-					line: 11
-				}
-				start: Object {
-					column: 0
-					line: 11
-				}
-			}
+			loc: SourceLocation lists/input.md 11:0-11:14
 			children: Array [
 				MarkdownListItem {
 					value: "-"
 					checked: undefined
-					loc: Object {
-						filename: "lists/input.md"
-						end: Object {
-							column: 14
-							line: 11
-						}
-						start: Object {
-							column: 2
-							line: 11
-						}
-					}
+					loc: SourceLocation lists/input.md 11:2-11:14
 					children: Array [
 						MarkdownParagraph {
-							loc: Object {
-								filename: "lists/input.md"
-								end: Object {
-									column: 14
-									line: 11
-								}
-								start: Object {
-									column: 2
-									line: 11
-								}
-							}
+							loc: SourceLocation lists/input.md 11:2-11:14
 							children: Array [
 								MarkdownReferenceInline {
 									value: ""
 									reference: Array []
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 4
-											line: 11
-										}
-										start: Object {
-											column: 2
-											line: 11
-										}
-									}
+									loc: SourceLocation lists/input.md 11:2-11:4
 								}
 								MarkdownText {
 									value: " something"
-									loc: Object {
-										filename: "lists/input.md"
-										end: Object {
-											column: 4
-											line: 11
-										}
-										start: Object {
-											column: 4
-											line: 11
-										}
-									}
+									loc: SourceLocation lists/input.md 11:4-11:4
 								}
 							]
 						}

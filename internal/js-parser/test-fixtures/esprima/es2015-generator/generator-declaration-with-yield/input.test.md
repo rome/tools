@@ -18,45 +18,14 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:0-2:0
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 13
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:10-1:13 (foo)
 			}
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-				end: Object {
-					column: 28
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:0-1:28
 			head: JSFunctionHead {
 				async: false
 				generator: true
@@ -66,71 +35,21 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 13
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:13-1:15
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-					end: Object {
-						column: 28
-						line: 1
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:16-1:28
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-							end: Object {
-								column: 26
-								line: 1
-							}
-							start: Object {
-								column: 18
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:18-1:26
 						expression: JSYieldExpression {
 							delegate: false
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-								end: Object {
-									column: 25
-									line: 1
-								}
-								start: Object {
-									column: 18
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:18-1:25
 							argument: JSNumericLiteral {
 								value: 3
 								format: undefined
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-declaration-with-yield/input.js"
-									end: Object {
-										column: 25
-										line: 1
-									}
-									start: Object {
-										column: 24
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-declaration-with-yield/input.js 1:24-1:25
 							}
 						}
 					}

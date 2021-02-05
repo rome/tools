@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,56 +32,20 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 8
-					line: 1
-				}
+				end: Position 1:8
+				start: Position 1:8
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:16
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:16
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 14
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:14-1:16
 				}
 				head: JSFunctionHead {
 					async: false
@@ -99,31 +53,10 @@ JSRoot {
 					params: Array []
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:0-1:13
 					rest: JSBindingIdentifier {
 						name: "rest"
-						loc: Object {
-							filename: "es2015/arrow-functions/comma-after-rest-param/input.js"
-							identifierName: "rest"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/arrow-functions/comma-after-rest-param/input.js 1:4-1:8 (rest)
 					}
 				}
 			}

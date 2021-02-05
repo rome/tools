@@ -18,98 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/146/input.js"
-		end: Object {
-			column: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/146/input.js 1:0-1:12
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/146/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/146/input.js 1:0-1:12
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/146/input.js"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/146/input.js 1:1-1:11
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSComputedPropertyKey {
 							value: JSReferenceIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "es2015/uncategorised/146/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 1
-									}
-									start: Object {
-										column: 3
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/146/input.js 1:3-1:4 (x)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/146/input.js"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/146/input.js 1:2-1:5
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/146/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/146/input.js 1:2-1:10
 						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/146/input.js"
-								end: Object {
-									column: 10
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/146/input.js 1:8-1:10
 						}
 						head: JSFunctionHead {
 							async: false
@@ -120,17 +49,7 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/146/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 5
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/146/input.js 1:5-1:7
 						}
 					}
 				]

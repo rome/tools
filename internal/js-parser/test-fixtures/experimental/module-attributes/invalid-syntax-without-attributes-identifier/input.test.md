@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
+				end: Position 1:10
+				start: Position 1:11
 			}
 		}
 	]
@@ -59,83 +43,23 @@ JSRoot {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
-				end: Object {
-					column: 10
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:0-1:10
 			source: JSStringLiteral {
 				value: "x"
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 7
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:7-1:10
 			}
 		}
 		JSWithStatement {
-			loc: Object {
-				filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
-				end: Object {
-					column: 0
-					line: 2
-				}
-				start: Object {
-					column: 11
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:11-2:0
 			object: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
-					end: Object {
-						column: 16
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 1:15-1:16
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
-					end: Object {
-						column: 0
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 2:0-2:0
 				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js"
-						end: Object {
-							column: 0
-							line: 2
-						}
-						start: Object {
-							column: 0
-							line: 2
-						}
-					}
+					loc: SourceLocation experimental/module-attributes/invalid-syntax-without-attributes-identifier/input.js 2:0-2:0
 				}
 			}
 		}

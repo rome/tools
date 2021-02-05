@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/295/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/295/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -36,14 +26,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 14
-					line: 1
-				}
+				end: Position 1:14
+				start: Position 1:14
 			}
 			description: Object {
 				category: "parse"
@@ -61,147 +45,43 @@ JSRoot {
 							RAW_MARKUP {value: "</emphasis> here"}
 						]
 					}
-					frame {
-						location: Object {
-							filename: "es2015/uncategorised/295/input.js"
-							end: Object {
-								column: 0
-								line: 2
-							}
-							start: Object {
-								column: 0
-								line: 2
-							}
-						}
-					}
+					frame {location: SourceLocation es2015/uncategorised/295/input.js 2:0-2:0}
 				]
 			}
 		}
 	]
 	body: Array [
 		JSSwitchStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/295/input.js"
-				end: Object {
-					column: 36
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/295/input.js 1:0-1:36
 			discriminant: JSReferenceIdentifier {
 				name: "cond"
-				loc: Object {
-					filename: "es2015/uncategorised/295/input.js"
-					identifierName: "cond"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/295/input.js 1:8-1:12 (cond)
 			}
 			cases: Array [
 				JSSwitchCase {
-					loc: Object {
-						filename: "es2015/uncategorised/295/input.js"
-						end: Object {
-							column: 36
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation es2015/uncategorised/295/input.js 1:16-1:36
 					test: JSNumericLiteral {
 						value: 10
 						format: undefined
-						loc: Object {
-							filename: "es2015/uncategorised/295/input.js"
-							end: Object {
-								column: 23
-								line: 1
-							}
-							start: Object {
-								column: 21
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/295/input.js 1:21-1:23
 					}
 					consequent: Array [
 						JSVariableDeclarationStatement {
-							loc: Object {
-								filename: "es2015/uncategorised/295/input.js"
-								end: Object {
-									column: 36
-									line: 1
-								}
-								start: Object {
-									column: 25
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/295/input.js 1:25-1:36
 							declaration: JSVariableDeclaration {
 								kind: "let"
-								loc: Object {
-									filename: "es2015/uncategorised/295/input.js"
-									end: Object {
-										column: 36
-										line: 1
-									}
-									start: Object {
-										column: 25
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/295/input.js 1:25-1:36
 								declarations: Array [
 									JSVariableDeclarator {
 										id: JSBindingIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "es2015/uncategorised/295/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 30
-													line: 1
-												}
-												start: Object {
-													column: 29
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/295/input.js 1:29-1:30 (a)
 										}
-										loc: Object {
-											filename: "es2015/uncategorised/295/input.js"
-											end: Object {
-												column: 35
-												line: 1
-											}
-											start: Object {
-												column: 29
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/295/input.js 1:29-1:35
 										init: JSNumericLiteral {
 											value: 20
 											format: undefined
-											loc: Object {
-												filename: "es2015/uncategorised/295/input.js"
-												end: Object {
-													column: 35
-													line: 1
-												}
-												start: Object {
-													column: 33
-													line: 1
-												}
-											}
+											loc: SourceLocation es2015/uncategorised/295/input.js 1:33-1:35
 										}
 									}
 								]

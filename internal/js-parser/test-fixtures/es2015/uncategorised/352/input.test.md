@@ -18,84 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2015/uncategorised/352/input.js"
-		end: Object {
-			column: 48
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2015/uncategorised/352/input.js 1:0-1:48
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2015/uncategorised/352/input.js"
-				end: Object {
-					column: 48
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2015/uncategorised/352/input.js 1:0-1:48
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "es2015/uncategorised/352/input.js"
-					end: Object {
-						column: 47
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation es2015/uncategorised/352/input.js 1:1-1:47
 				properties: Array [
 					JSObjectMethod {
 						kind: "get"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "es2015/uncategorised/352/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 16
-										line: 1
-									}
-									start: Object {
-										column: 7
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/352/input.js 1:7-1:16 (__proto__)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/352/input.js"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/352/input.js 1:7-1:16
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/352/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/352/input.js 1:3-1:31
 						head: JSFunctionHead {
 							async: false
 							generator: false
@@ -105,58 +44,18 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/352/input.js"
-								end: Object {
-									column: 18
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/352/input.js 1:16-1:18
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "es2015/uncategorised/352/input.js"
-								end: Object {
-									column: 31
-									line: 1
-								}
-								start: Object {
-									column: 19
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/352/input.js 1:19-1:31
 							body: Array [
 								JSReturnStatement {
-									loc: Object {
-										filename: "es2015/uncategorised/352/input.js"
-										end: Object {
-											column: 29
-											line: 1
-										}
-										start: Object {
-											column: 21
-											line: 1
-										}
-									}
+									loc: SourceLocation es2015/uncategorised/352/input.js 1:21-1:29
 									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
-										loc: Object {
-											filename: "es2015/uncategorised/352/input.js"
-											end: Object {
-												column: 29
-												line: 1
-											}
-											start: Object {
-												column: 28
-												line: 1
-											}
-										}
+										loc: SourceLocation es2015/uncategorised/352/input.js 1:28-1:29
 									}
 								}
 							]
@@ -166,57 +65,16 @@ JSRoot {
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "__proto__"
-								loc: Object {
-									filename: "es2015/uncategorised/352/input.js"
-									identifierName: "__proto__"
-									end: Object {
-										column: 42
-										line: 1
-									}
-									start: Object {
-										column: 33
-										line: 1
-									}
-								}
+								loc: SourceLocation es2015/uncategorised/352/input.js 1:33-1:42 (__proto__)
 							}
-							loc: Object {
-								filename: "es2015/uncategorised/352/input.js"
-								end: Object {
-									column: 42
-									line: 1
-								}
-								start: Object {
-									column: 33
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/352/input.js 1:33-1:42
 						}
 						value: JSNumericLiteral {
 							value: 2
 							format: undefined
-							loc: Object {
-								filename: "es2015/uncategorised/352/input.js"
-								end: Object {
-									column: 45
-									line: 1
-								}
-								start: Object {
-									column: 44
-									line: 1
-								}
-							}
+							loc: SourceLocation es2015/uncategorised/352/input.js 1:44-1:45
 						}
-						loc: Object {
-							filename: "es2015/uncategorised/352/input.js"
-							end: Object {
-								column: 45
-								line: 1
-							}
-							start: Object {
-								column: 33
-								line: 1
-							}
-						}
+						loc: SourceLocation es2015/uncategorised/352/input.js 1:33-1:45
 					}
 				]
 			}

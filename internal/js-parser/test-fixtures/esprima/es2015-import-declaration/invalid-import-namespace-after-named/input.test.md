@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:12
+				start: Position 1:12
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,20 +38,6 @@ JSRoot {
 					"from"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
@@ -61,228 +45,63 @@ JSRoot {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:0-1:12
 			source: JSStringLiteral {
 				value: ""
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:0-1:12
 			}
 			namedSpecifiers: Array [
 				JSImportSpecifier {
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-						end: Object {
-							column: 11
-							line: 1
-						}
-						start: Object {
-							column: 8
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:8-1:11
 					imported: JSIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:8-1:11 (bar)
 					}
 					local: JSImportSpecifierLocal {
 						name: JSBindingIdentifier {
 							name: "bar"
-							loc: Object {
-								filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-								identifierName: "bar"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:8-1:11 (bar)
 						}
 						importKind: undefined
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-							end: Object {
-								column: 11
-								line: 1
-							}
-							start: Object {
-								column: 8
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:8-1:11
 					}
 				}
 			]
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:12-1:18
 			expression: JSBinaryExpression {
 				operator: "*"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:12-1:18
 				left: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-						end: Object {
-							column: 13
-							line: 1
-						}
-						start: Object {
-							column: 12
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:12-1:13
 				}
 				right: JSReferenceIdentifier {
 					name: "as"
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-						identifierName: "as"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:16-1:18 (as)
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-				end: Object {
-					column: 22
-					line: 1
-				}
-				start: Object {
-					column: 19
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:19-1:22
 			expression: JSReferenceIdentifier {
 				name: "foo"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-					identifierName: "foo"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 19
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:19-1:22 (foo)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:23-1:27
 			expression: JSReferenceIdentifier {
 				name: "from"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-					identifierName: "from"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:23-1:27 (from)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-				end: Object {
-					column: 34
-					line: 1
-				}
-				start: Object {
-					column: 28
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:28-1:34
 			expression: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js"
-					end: Object {
-						column: 33
-						line: 1
-					}
-					start: Object {
-						column: 28
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/invalid-import-namespace-after-named/input.js 1:28-1:33
 			}
 		}
 	]

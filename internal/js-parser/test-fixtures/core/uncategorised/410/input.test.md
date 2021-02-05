@@ -17,17 +17,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/410/input.js"
-		end: Object {
-			column: 8
-			line: 1
+	loc: SourceLocation core/uncategorised/410/input.js 1:0-1:8
+	body: Array [
+		JSBreakStatement {
+			label: undefined
+			loc: SourceLocation core/uncategorised/410/input.js 1:0-1:5
 		}
-		start: Object {
-			column: 0
-			line: 1
+		JSExpressionStatement {
+			loc: SourceLocation core/uncategorised/410/input.js 1:6-1:8
+			expression: JSNumericLiteral {
+				value: 1
+				format: undefined
+				loc: SourceLocation core/uncategorised/410/input.js 1:6-1:7
+			}
 		}
-	}
+	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,58 +46,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-		}
-	]
-	body: Array [
-		JSBreakStatement {
-			label: undefined
-			loc: Object {
-				filename: "core/uncategorised/410/input.js"
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
-		}
-		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/410/input.js"
-				end: Object {
-					column: 8
-					line: 1
-				}
-				start: Object {
-					column: 6
-					line: 1
-				}
-			}
-			expression: JSNumericLiteral {
-				value: 1
-				format: undefined
-				loc: Object {
-					filename: "core/uncategorised/410/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				end: Position 1:7
+				start: Position 1:6
 			}
 		}
 	]

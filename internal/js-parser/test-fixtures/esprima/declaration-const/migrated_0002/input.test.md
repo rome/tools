@@ -18,185 +18,52 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/declaration-const/migrated_0002/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:0-2:0
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "esprima/declaration-const/migrated_0002/input.js"
-				end: Object {
-					column: 33
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:0-1:33
 			body: Array [
 				JSVariableDeclarationStatement {
-					loc: Object {
-						filename: "esprima/declaration-const/migrated_0002/input.js"
-						end: Object {
-							column: 31
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:2-1:31
 					declaration: JSVariableDeclaration {
 						kind: "const"
-						loc: Object {
-							filename: "esprima/declaration-const/migrated_0002/input.js"
-							end: Object {
-								column: 31
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:2-1:31
 						declarations: Array [
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "x"
-									loc: Object {
-										filename: "esprima/declaration-const/migrated_0002/input.js"
-										identifierName: "x"
-										end: Object {
-											column: 9
-											line: 1
-										}
-										start: Object {
-											column: 8
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:8-1:9 (x)
 								}
-								loc: Object {
-									filename: "esprima/declaration-const/migrated_0002/input.js"
-									end: Object {
-										column: 14
-										line: 1
-									}
-									start: Object {
-										column: 8
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:8-1:14
 								init: JSNumericLiteral {
 									value: 14
 									format: undefined
-									loc: Object {
-										filename: "esprima/declaration-const/migrated_0002/input.js"
-										end: Object {
-											column: 14
-											line: 1
-										}
-										start: Object {
-											column: 12
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:12-1:14
 								}
 							}
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "y"
-									loc: Object {
-										filename: "esprima/declaration-const/migrated_0002/input.js"
-										identifierName: "y"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:16-1:17 (y)
 								}
-								loc: Object {
-									filename: "esprima/declaration-const/migrated_0002/input.js"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:16-1:21
 								init: JSNumericLiteral {
 									value: 3
 									format: undefined
-									loc: Object {
-										filename: "esprima/declaration-const/migrated_0002/input.js"
-										end: Object {
-											column: 21
-											line: 1
-										}
-										start: Object {
-											column: 20
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:20-1:21
 								}
 							}
 							JSVariableDeclarator {
 								id: JSBindingIdentifier {
 									name: "z"
-									loc: Object {
-										filename: "esprima/declaration-const/migrated_0002/input.js"
-										identifierName: "z"
-										end: Object {
-											column: 24
-											line: 1
-										}
-										start: Object {
-											column: 23
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:23-1:24 (z)
 								}
-								loc: Object {
-									filename: "esprima/declaration-const/migrated_0002/input.js"
-									end: Object {
-										column: 31
-										line: 1
-									}
-									start: Object {
-										column: 23
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:23-1:31
 								init: JSNumericLiteral {
 									value: 1_977
 									format: undefined
-									loc: Object {
-										filename: "esprima/declaration-const/migrated_0002/input.js"
-										end: Object {
-											column: 31
-											line: 1
-										}
-										start: Object {
-											column: 27
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/declaration-const/migrated_0002/input.js 1:27-1:31
 								}
 							}
 						]

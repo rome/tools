@@ -20,32 +20,12 @@ JSRoot {
 	syntax: Array []
 	trailingComments: Array []
 	innerComments: Array ["0"]
-	loc: Object {
-		filename: "core/uncategorised/60/input.js"
-		end: Object {
-			column: 2
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/60/input.js 1:0-1:2
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: ""
-			loc: Object {
-				filename: "core/uncategorised/60/input.js"
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/60/input.js 1:0-1:2
 		}
 	]
 }

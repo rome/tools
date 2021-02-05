@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-		end: Object {
-			column: 0
-			line: 4
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 1:0-4:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,43 +32,17 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 2
-				}
-				start: Object {
-					column: 12
-					line: 2
-				}
+				end: Position 2:12
+				start: Position 2:12
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-				end: Object {
-					column: 2
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 1:0-3:2
 			expression: JSFunctionExpression {
 				id: undefined
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 1:1-3:1
 				head: JSFunctionHead {
 					async: false
 					generator: true
@@ -88,73 +52,22 @@ JSRoot {
 					returnType: undefined
 					thisType: undefined
 					typeParameters: undefined
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 10
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 1:10-1:12
 				}
 				body: JSBlockStatement {
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-						end: Object {
-							column: 1
-							line: 3
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 1:13-3:1
 					body: Array [
 						JSFunctionDeclaration {
 							id: JSBindingIdentifier {
 								name: ""
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-									identifierName: ""
-									end: Object {
-										column: 13
-										line: 2
-									}
-									start: Object {
-										column: 12
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:12-2:13 ()
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-								end: Object {
-									column: 33
-									line: 2
-								}
-								start: Object {
-									column: 4
-									line: 2
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:4-2:33
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-									end: Object {
-										column: 33
-										line: 2
-									}
-									start: Object {
-										column: 31
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:31-2:33
 							}
 							head: JSFunctionHead {
 								async: false
@@ -164,130 +77,37 @@ JSRoot {
 								returnType: undefined
 								thisType: undefined
 								typeParameters: undefined
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-									end: Object {
-										column: 30
-										line: 2
-									}
-									start: Object {
-										column: 13
-										line: 2
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:13-2:30
 								params: Array [
 									JSBindingObjectPattern {
 										rest: undefined
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-											end: Object {
-												column: 29
-												line: 2
-											}
-											start: Object {
-												column: 13
-												line: 2
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:13-2:29
 										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
-											loc: Object {
-												filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-												end: Object {
-													column: 29
-													line: 2
-												}
-												start: Object {
-													column: 13
-													line: 2
-												}
-											}
+											loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:13-2:29
 										}
 										properties: Array [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSIdentifier {
 														name: "x"
-														loc: Object {
-															filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-															identifierName: "x"
-															end: Object {
-																column: 15
-																line: 2
-															}
-															start: Object {
-																column: 14
-																line: 2
-															}
-														}
+														loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:14-2:15 (x)
 													}
-													loc: Object {
-														filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-														end: Object {
-															column: 15
-															line: 2
-														}
-														start: Object {
-															column: 14
-															line: 2
-														}
-													}
+													loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:14-2:15
 												}
 												value: JSBindingAssignmentPattern {
-													loc: Object {
-														filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-														end: Object {
-															column: 26
-															line: 2
-														}
-														start: Object {
-															column: 17
-															line: 2
-														}
-													}
+													loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:17-2:26
 													left: JSBindingIdentifier {
 														name: "y"
-														loc: Object {
-															filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-															identifierName: "y"
-															end: Object {
-																column: 18
-																line: 2
-															}
-															start: Object {
-																column: 17
-																line: 2
-															}
-														}
+														loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:17-2:18 (y)
 													}
 													right: JSReferenceIdentifier {
 														name: "yield"
-														loc: Object {
-															filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-															identifierName: "yield"
-															end: Object {
-																column: 26
-																line: 2
-															}
-															start: Object {
-																column: 21
-																line: 2
-															}
-														}
+														loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:21-2:26 (yield)
 													}
 												}
-												loc: Object {
-													filename: "esprima/es2015-generator/generator-parameter-binding-property/input.js"
-													end: Object {
-														column: 26
-														line: 2
-													}
-													start: Object {
-														column: 14
-														line: 2
-													}
-												}
+												loc: SourceLocation esprima/es2015-generator/generator-parameter-binding-property/input.js 2:14-2:26
 											}
 										]
 									}

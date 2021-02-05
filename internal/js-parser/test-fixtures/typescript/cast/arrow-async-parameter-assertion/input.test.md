@@ -16,18 +16,8 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:20
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,56 +32,20 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 12
-					line: 1
-				}
-				start: Object {
-					column: 7
-					line: 1
-				}
+				end: Position 1:12
+				start: Position 1:7
 			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:20
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:19
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:17-1:19
 				}
 				head: JSFunctionHead {
 					async: true
@@ -99,31 +53,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
-						end: Object {
-							column: 16
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:0-1:16
 					params: Array [
 						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "typescript/cast/arrow-async-parameter-assertion/input.ts"
-								end: Object {
-									column: 16
-									line: 1
-								}
-								start: Object {
-									column: 17
-									line: 1
-								}
-							}
+							loc: SourceLocation typescript/cast/arrow-async-parameter-assertion/input.ts 1:17-1:16
 						}
 					]
 				}

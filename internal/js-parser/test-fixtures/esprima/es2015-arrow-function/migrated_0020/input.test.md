@@ -18,56 +18,15 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-arrow-function/migrated_0020/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-arrow-function/migrated_0020/input.js"
-				end: Object {
-					column: 14
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:14
 			expression: JSArrowFunctionExpression {
-				loc: Object {
-					filename: "esprima/es2015-arrow-function/migrated_0020/input.js"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:14
 				body: JSReferenceIdentifier {
 					name: "earth"
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/migrated_0020/input.js"
-						identifierName: "earth"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 9
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:9-1:14 (earth)
 				}
 				head: JSFunctionHead {
 					async: false
@@ -75,32 +34,11 @@ JSRoot {
 					rest: undefined
 					returnType: undefined
 					thisType: undefined
-					loc: Object {
-						filename: "esprima/es2015-arrow-function/migrated_0020/input.js"
-						end: Object {
-							column: 8
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:0-1:8
 					params: Array [
 						JSBindingIdentifier {
 							name: "sun"
-							loc: Object {
-								filename: "esprima/es2015-arrow-function/migrated_0020/input.js"
-								identifierName: "sun"
-								end: Object {
-									column: 4
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-arrow-function/migrated_0020/input.js 1:1-1:4 (sun)
 						}
 					]
 				}

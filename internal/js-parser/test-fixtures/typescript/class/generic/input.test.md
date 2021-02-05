@@ -17,169 +17,43 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/class/generic/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/class/generic/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "typescript/class/generic/input.ts"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/generic/input.ts 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "typescript/class/generic/input.ts"
-				end: Object {
-					column: 44
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/class/generic/input.ts 1:0-1:44
 			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
-				loc: Object {
-					filename: "typescript/class/generic/input.ts"
-					end: Object {
-						column: 44
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/class/generic/input.ts 1:0-1:44
 				typeParameters: TSTypeParameterDeclaration {
-					loc: Object {
-						filename: "typescript/class/generic/input.ts"
-						end: Object {
-							column: 41
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/class/generic/input.ts 1:7-1:41
 					params: Array [
 						TSTypeParameter {
 							name: "T"
-							loc: Object {
-								filename: "typescript/class/generic/input.ts"
-								end: Object {
-									column: 40
-									line: 1
-								}
-								start: Object {
-									column: 8
-									line: 1
-								}
-							}
-							constraint: TSObjectKeywordTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/generic/input.ts"
-									end: Object {
-										column: 24
-										line: 1
-									}
-									start: Object {
-										column: 18
-										line: 1
-									}
-								}
-							}
+							constraint: TSObjectKeywordTypeAnnotation {loc: SourceLocation typescript/class/generic/input.ts 1:18-1:24}
+							loc: SourceLocation typescript/class/generic/input.ts 1:8-1:40
 							default: TSObjectTypeAnnotation {
-								loc: Object {
-									filename: "typescript/class/generic/input.ts"
-									end: Object {
-										column: 40
-										line: 1
-									}
-									start: Object {
-										column: 27
-										line: 1
-									}
-								}
+								loc: SourceLocation typescript/class/generic/input.ts 1:27-1:40
 								members: Array [
 									TSPropertySignature {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "x"
-												loc: Object {
-													filename: "typescript/class/generic/input.ts"
-													identifierName: "x"
-													end: Object {
-														column: 30
-														line: 1
-													}
-													start: Object {
-														column: 29
-														line: 1
-													}
-												}
+												loc: SourceLocation typescript/class/generic/input.ts 1:29-1:30 (x)
 											}
-											loc: Object {
-												filename: "typescript/class/generic/input.ts"
-												end: Object {
-													column: 30
-													line: 1
-												}
-												start: Object {
-													column: 29
-													line: 1
-												}
-											}
+											loc: SourceLocation typescript/class/generic/input.ts 1:29-1:30
 										}
 										optional: false
 										readonly: false
-										loc: Object {
-											filename: "typescript/class/generic/input.ts"
-											end: Object {
-												column: 38
-												line: 1
-											}
-											start: Object {
-												column: 29
-												line: 1
-											}
-										}
-										typeAnnotation: TSNumberKeywordTypeAnnotation {
-											loc: Object {
-												filename: "typescript/class/generic/input.ts"
-												end: Object {
-													column: 38
-													line: 1
-												}
-												start: Object {
-													column: 32
-													line: 1
-												}
-											}
-										}
+										loc: SourceLocation typescript/class/generic/input.ts 1:29-1:38
+										typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/class/generic/input.ts 1:32-1:38}
 									}
 								]
 							}

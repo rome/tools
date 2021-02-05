@@ -18,85 +18,25 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/540/input.js"
-		end: Object {
-			column: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/540/input.js 1:0-1:20
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/540/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/540/input.js 1:0-1:20
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "core/uncategorised/540/input.js"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/540/input.js 1:1-1:19
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/540/input.js"
-						end: Object {
-							column: 19
-							line: 1
-						}
-						start: Object {
-							column: 18
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/540/input.js 1:18-1:19
 				}
 				left: JSFunctionExpression {
 					id: undefined
-					loc: Object {
-						filename: "core/uncategorised/540/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/540/input.js 1:1-1:15
 					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
-						loc: Object {
-							filename: "core/uncategorised/540/input.js"
-							end: Object {
-								column: 15
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/540/input.js 1:13-1:15
 					}
 					head: JSFunctionHead {
 						async: false
@@ -107,17 +47,7 @@ JSRoot {
 						returnType: undefined
 						thisType: undefined
 						typeParameters: undefined
-						loc: Object {
-							filename: "core/uncategorised/540/input.js"
-							end: Object {
-								column: 12
-								line: 1
-							}
-							start: Object {
-								column: 10
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/540/input.js 1:10-1:12
 					}
 				}
 			}

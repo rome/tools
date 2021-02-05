@@ -18,101 +18,29 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "es2017/trailing-function-commas/1/input.js"
-		end: Object {
-			column: 16
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:16
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "es2017/trailing-function-commas/1/input.js"
-				end: Object {
-					column: 16
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:16
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "es2017/trailing-function-commas/1/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:15
 				callee: JSReferenceIdentifier {
 					name: "log"
-					loc: Object {
-						filename: "es2017/trailing-function-commas/1/input.js"
-						identifierName: "log"
-						end: Object {
-							column: 3
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:0-1:3 (log)
 				}
 				arguments: Array [
 					JSReferenceIdentifier {
 						name: "n"
-						loc: Object {
-							filename: "es2017/trailing-function-commas/1/input.js"
-							identifierName: "n"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 4
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:4-1:5 (n)
 					}
 					JSStringLiteral {
 						value: "="
-						loc: Object {
-							filename: "es2017/trailing-function-commas/1/input.js"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:7-1:10
 					}
 					JSNumericLiteral {
 						value: 2
 						format: undefined
-						loc: Object {
-							filename: "es2017/trailing-function-commas/1/input.js"
-							end: Object {
-								column: 13
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation es2017/trailing-function-commas/1/input.js 1:12-1:13
 					}
 				]
 			}

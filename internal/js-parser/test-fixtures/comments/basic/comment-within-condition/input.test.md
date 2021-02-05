@@ -17,94 +17,33 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/comment-within-condition/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/comment-within-condition/input.js 1:0-3:0
 	comments: Array [
 		CommentBlock {
 			id: "0"
 			value: " foo "
-			loc: Object {
-				filename: "comments/basic/comment-within-condition/input.js"
-				end: Object {
-					column: 9
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/comment-within-condition/input.js 1:0-1:9
 		}
 		CommentBlock {
 			id: "1"
 			value: " bar "
-			loc: Object {
-				filename: "comments/basic/comment-within-condition/input.js"
-				end: Object {
-					column: 13
-					line: 2
-				}
-				start: Object {
-					column: 4
-					line: 2
-				}
-			}
+			loc: SourceLocation comments/basic/comment-within-condition/input.js 2:4-2:13
 		}
 	]
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
 			leadingComments: Array ["0"]
-			loc: Object {
-				filename: "comments/basic/comment-within-condition/input.js"
-				end: Object {
-					column: 20
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation comments/basic/comment-within-condition/input.js 2:0-2:20
 			consequent: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "comments/basic/comment-within-condition/input.js"
-					end: Object {
-						column: 20
-						line: 2
-					}
-					start: Object {
-						column: 18
-						line: 2
-					}
-				}
+				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:18-2:20
 			}
 			test: JSReferenceIdentifier {
 				name: "a"
 				leadingComments: Array ["1"]
-				loc: Object {
-					filename: "comments/basic/comment-within-condition/input.js"
-					identifierName: "a"
-					end: Object {
-						column: 16
-						line: 2
-					}
-					start: Object {
-						column: 15
-						line: 2
-					}
-				}
+				loc: SourceLocation comments/basic/comment-within-condition/input.js 2:15-2:16 (a)
 			}
 		}
 	]

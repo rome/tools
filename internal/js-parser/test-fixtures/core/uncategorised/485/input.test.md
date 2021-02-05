@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/485/input.js"
-		end: Object {
-			column: 37
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/uncategorised/485/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:18
+				start: Position 1:9
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,49 +38,24 @@ JSRoot {
 					RAW_MARKUP {value: " is a reserved word"}
 				]
 			}
-			location: Object {
-				filename: "core/uncategorised/485/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 18
-					line: 1
-				}
-				start: Object {
-					column: 9
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "arguments"
-				loc: Object {
-					filename: "core/uncategorised/485/input.js"
-					identifierName: "arguments"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/485/input.js 1:9-1:18 (arguments)
 			}
-			loc: Object {
-				filename: "core/uncategorised/485/input.js"
-				end: Object {
-					column: 37
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
+			loc: SourceLocation core/uncategorised/485/input.js 1:0-1:37
+			body: JSBlockStatement {
+				body: Array []
+				loc: SourceLocation core/uncategorised/485/input.js 1:21-1:37
+				directives: Array [
+					JSDirective {
+						value: "use strict"
+						loc: SourceLocation core/uncategorised/485/input.js 1:22-1:35
+					}
+				]
 			}
 			head: JSFunctionHead {
 				async: false
@@ -93,47 +66,7 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "core/uncategorised/485/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
-			}
-			body: JSBlockStatement {
-				body: Array []
-				loc: Object {
-					filename: "core/uncategorised/485/input.js"
-					end: Object {
-						column: 37
-						line: 1
-					}
-					start: Object {
-						column: 21
-						line: 1
-					}
-				}
-				directives: Array [
-					JSDirective {
-						value: "use strict"
-						loc: Object {
-							filename: "core/uncategorised/485/input.js"
-							end: Object {
-								column: 35
-								line: 1
-							}
-							start: Object {
-								column: 22
-								line: 1
-							}
-						}
-					}
-				]
+				loc: SourceLocation core/uncategorised/485/input.js 1:18-1:20
 			}
 		}
 	]

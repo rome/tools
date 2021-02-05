@@ -18,128 +18,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:0-2:0
 	body: Array [
 		JSImportDeclaration {
 			importKind: undefined
 			namedSpecifiers: Array []
-			loc: Object {
-				filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-				end: Object {
-					column: 32
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:0-1:32
 			source: JSStringLiteral {
 				value: "foo"
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-					end: Object {
-						column: 31
-						line: 1
-					}
-					start: Object {
-						column: 26
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:26-1:31
 			}
 			defaultSpecifier: JSImportDefaultSpecifier {
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:0-1:10
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 7
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:7-1:10 (foo)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 7
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:7-1:10
 				}
 			}
 			namespaceSpecifier: JSImportNamespaceSpecifier {
-				loc: Object {
-					filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:0-1:20
 				local: JSImportSpecifierLocal {
 					name: JSBindingIdentifier {
 						name: "bar"
-						loc: Object {
-							filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-							identifierName: "bar"
-							end: Object {
-								column: 20
-								line: 1
-							}
-							start: Object {
-								column: 17
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:17-1:20 (bar)
 					}
 					importKind: undefined
-					loc: Object {
-						filename: "esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js"
-						end: Object {
-							column: 20
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-import-declaration/import-default-and-namespace-specifiers/input.js 1:17-1:20
 				}
 			}
 		}

@@ -18,71 +18,20 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/export-extensions/default-default-asi/input.js"
-		end: Object {
-			column: 0
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:0-3:0
 	body: Array [
 		JSExportDefaultDeclaration {
-			loc: Object {
-				filename: "experimental/export-extensions/default-default-asi/input.js"
-				end: Object {
-					column: 19
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:0-1:19
 			declaration: JSReferenceIdentifier {
 				name: "from"
-				loc: Object {
-					filename: "experimental/export-extensions/default-default-asi/input.js"
-					identifierName: "from"
-					end: Object {
-						column: 19
-						line: 1
-					}
-					start: Object {
-						column: 15
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 1:15-1:19 (from)
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "experimental/export-extensions/default-default-asi/input.js"
-				end: Object {
-					column: 6
-					line: 2
-				}
-				start: Object {
-					column: 0
-					line: 2
-				}
-			}
+			loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 2:0-2:6
 			expression: JSStringLiteral {
 				value: "bar"
-				loc: Object {
-					filename: "experimental/export-extensions/default-default-asi/input.js"
-					end: Object {
-						column: 5
-						line: 2
-					}
-					start: Object {
-						column: 0
-						line: 2
-					}
-				}
+				loc: SourceLocation experimental/export-extensions/default-default-asi/input.js 2:0-2:5
 			}
 		}
 	]

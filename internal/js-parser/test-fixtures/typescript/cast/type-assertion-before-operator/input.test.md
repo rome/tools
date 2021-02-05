@@ -17,98 +17,26 @@ JSRoot {
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
+	loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-2:0
 	syntax: Array ["ts"]
-	loc: Object {
-		filename: "typescript/cast/type-assertion-before-operator/input.ts"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "typescript/cast/type-assertion-before-operator/input.ts"
-				end: Object {
-					column: 15
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:15
 			expression: JSBinaryExpression {
 				operator: "+"
-				loc: Object {
-					filename: "typescript/cast/type-assertion-before-operator/input.ts"
-					end: Object {
-						column: 14
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:14
 				right: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "typescript/cast/type-assertion-before-operator/input.ts"
-						end: Object {
-							column: 14
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:13-1:14
 				}
 				left: TSTypeAssertion {
-					loc: Object {
-						filename: "typescript/cast/type-assertion-before-operator/input.ts"
-						end: Object {
-							column: 10
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
-					typeAnnotation: TSNumberKeywordTypeAnnotation {
-						loc: Object {
-							filename: "typescript/cast/type-assertion-before-operator/input.ts"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 1
-								line: 1
-							}
-						}
-					}
+					loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:0-1:10
+					typeAnnotation: TSNumberKeywordTypeAnnotation {loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:1-1:7}
 					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
-						loc: Object {
-							filename: "typescript/cast/type-assertion-before-operator/input.ts"
-							end: Object {
-								column: 10
-								line: 1
-							}
-							start: Object {
-								column: 9
-								line: 1
-							}
-						}
+						loc: SourceLocation typescript/cast/type-assertion-before-operator/input.ts 1:9-1:10
 					}
 				}
 			}

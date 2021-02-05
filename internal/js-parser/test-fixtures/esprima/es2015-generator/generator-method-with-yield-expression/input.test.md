@@ -18,84 +18,23 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-				end: Object {
-					column: 25
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:0-1:25
 			expression: JSObjectExpression {
-				loc: Object {
-					filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 1
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:1-1:24
 				properties: Array [
 					JSObjectMethod {
 						kind: "method"
 						key: JSStaticPropertyKey {
 							value: JSIdentifier {
 								name: "foo"
-								loc: Object {
-									filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-									identifierName: "foo"
-									end: Object {
-										column: 7
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:4-1:7 (foo)
 							}
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-								end: Object {
-									column: 7
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:4-1:7
 						}
-						loc: Object {
-							filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-							end: Object {
-								column: 22
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:3-1:22
 						head: JSFunctionHead {
 							async: false
 							generator: true
@@ -105,71 +44,21 @@ JSRoot {
 							returnType: undefined
 							thisType: undefined
 							typeParameters: undefined
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-								end: Object {
-									column: 9
-									line: 1
-								}
-								start: Object {
-									column: 7
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:7-1:9
 						}
 						body: JSBlockStatement {
 							directives: Array []
-							loc: Object {
-								filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-								end: Object {
-									column: 22
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:10-1:22
 							body: Array [
 								JSExpressionStatement {
-									loc: Object {
-										filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-										end: Object {
-											column: 20
-											line: 1
-										}
-										start: Object {
-											column: 12
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:12-1:20
 									expression: JSYieldExpression {
 										delegate: false
-										loc: Object {
-											filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-											end: Object {
-												column: 19
-												line: 1
-											}
-											start: Object {
-												column: 12
-												line: 1
-											}
-										}
+										loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:12-1:19
 										argument: JSNumericLiteral {
 											value: 3
 											format: undefined
-											loc: Object {
-												filename: "esprima/es2015-generator/generator-method-with-yield-expression/input.js"
-												end: Object {
-													column: 19
-													line: 1
-												}
-												start: Object {
-													column: 18
-													line: 1
-												}
-											}
+											loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-expression/input.js 1:18-1:19
 										}
 									}
 								}

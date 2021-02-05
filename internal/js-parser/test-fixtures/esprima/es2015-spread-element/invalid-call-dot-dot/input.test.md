@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:2
+				start: Position 1:2
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,117 +38,30 @@ JSRoot {
 					"call expression argument"
 				]
 			}
-			location: Object {
-				filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 2
-					line: 1
-				}
-				start: Object {
-					column: 2
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:0-1:7
 			expression: JSCallExpression {
-				loc: Object {
-					filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-					end: Object {
-						column: 6
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:0-1:6
 				callee: JSReferenceIdentifier {
 					name: "f"
-					loc: Object {
-						filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-						identifierName: "f"
-						end: Object {
-							column: 1
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:0-1:1 (f)
 				}
 				arguments: Array [
 					JSMemberExpression {
-						loc: Object {
-							filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:2-1:5
 						object: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
-							loc: Object {
-								filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-								end: Object {
-									column: 3
-									line: 1
-								}
-								start: Object {
-									column: 2
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:2-1:3
 						}
 						property: JSStaticMemberProperty {
 							value: JSIdentifier {
 								name: "g"
-								loc: Object {
-									filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-									identifierName: "g"
-									end: Object {
-										column: 5
-										line: 1
-									}
-									start: Object {
-										column: 4
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:4-1:5 (g)
 							}
-							loc: Object {
-								filename: "esprima/es2015-spread-element/invalid-call-dot-dot/input.js"
-								identifierName: "g"
-								end: Object {
-									column: 5
-									line: 1
-								}
-								start: Object {
-									column: 4
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-spread-element/invalid-call-dot-dot/input.js 1:4-1:5 (g)
 						}
 					}
 				]

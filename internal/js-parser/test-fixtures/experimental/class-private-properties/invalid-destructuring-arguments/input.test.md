@@ -18,118 +18,36 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-		end: Object {
-			column: 0
-			line: 5
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 1:0-5:0
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
 				name: "C"
-				loc: Object {
-					filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-					identifierName: "C"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 6
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 1:6-1:7 (C)
 			}
-			loc: Object {
-				filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-				end: Object {
-					column: 1
-					line: 4
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 1:0-4:1
 			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-					end: Object {
-						column: 1
-						line: 4
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 1:0-4:1
 				body: Array [
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "x"
-								loc: Object {
-									filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-									identifierName: "x"
-									end: Object {
-										column: 4
-										line: 2
-									}
-									start: Object {
-										column: 3
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:3-2:4 (x)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:2-2:4
 						}
 						value: JSNumericLiteral {
 							value: 1
 							format: undefined
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-								end: Object {
-									column: 8
-									line: 2
-								}
-								start: Object {
-									column: 7
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:7-2:8
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-							end: Object {
-								column: 9
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:2-2:9
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -137,78 +55,24 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 2
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-								end: Object {
-									column: 4
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 2:2-2:4
+							start: Position 2:2
 						}
 					}
 					JSClassPrivateProperty {
 						key: JSPrivateName {
 							id: JSIdentifier {
 								name: "p"
-								loc: Object {
-									filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-									identifierName: "p"
-									end: Object {
-										column: 4
-										line: 3
-									}
-									start: Object {
-										column: 3
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:3-3:4 (p)
 							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:2-3:4
 						}
 						value: JSArrowFunctionExpression {
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-								end: Object {
-									column: 24
-									line: 3
-								}
-								start: Object {
-									column: 7
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:7-3:24
 							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
-								loc: Object {
-									filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-									end: Object {
-										column: 24
-										line: 3
-									}
-									start: Object {
-										column: 22
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:22-3:24
 							}
 							head: JSFunctionHead {
 								async: false
@@ -216,100 +80,28 @@ JSRoot {
 								rest: undefined
 								returnType: undefined
 								thisType: undefined
-								loc: Object {
-									filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-									end: Object {
-										column: 21
-										line: 3
-									}
-									start: Object {
-										column: 7
-										line: 3
-									}
-								}
+								loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:7-3:21
 								params: Array [
 									JSBindingObjectPattern {
 										rest: undefined
-										loc: Object {
-											filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-											end: Object {
-												column: 17
-												line: 3
-											}
-											start: Object {
-												column: 8
-												line: 3
-											}
-										}
+										loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:8-3:17
 										properties: Array [
 											JSBindingObjectPatternProperty {
 												key: JSStaticPropertyKey {
 													value: JSPrivateName {
 														id: JSIdentifier {
 															name: "x"
-															loc: Object {
-																filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-																identifierName: "x"
-																end: Object {
-																	column: 12
-																	line: 3
-																}
-																start: Object {
-																	column: 11
-																	line: 3
-																}
-															}
+															loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:11-3:12 (x)
 														}
-														loc: Object {
-															filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-															end: Object {
-																column: 12
-																line: 3
-															}
-															start: Object {
-																column: 10
-																line: 3
-															}
-														}
+														loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:10-3:12
 													}
-													loc: Object {
-														filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-														end: Object {
-															column: 12
-															line: 3
-														}
-														start: Object {
-															column: 10
-															line: 3
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:10-3:12
 												}
 												value: JSBindingIdentifier {
 													name: "x"
-													loc: Object {
-														filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-														identifierName: "x"
-														end: Object {
-															column: 15
-															line: 3
-														}
-														start: Object {
-															column: 14
-															line: 3
-														}
-													}
+													loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:14-3:15 (x)
 												}
-												loc: Object {
-													filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-													end: Object {
-														column: 15
-														line: 3
-													}
-													start: Object {
-														column: 10
-														line: 3
-													}
-												}
+												loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:10-3:15
 											}
 										]
 									}
@@ -317,17 +109,7 @@ JSRoot {
 							}
 						}
 						typeAnnotation: undefined
-						loc: Object {
-							filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-							end: Object {
-								column: 24
-								line: 3
-							}
-							start: Object {
-								column: 2
-								line: 3
-							}
-						}
+						loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:2-3:24
 						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
@@ -335,21 +117,8 @@ JSRoot {
 							readonly: false
 							static: false
 							typeAnnotation: undefined
-							start: Object {
-								column: 2
-								line: 3
-							}
-							loc: Object {
-								filename: "experimental/class-private-properties/invalid-destructuring-arguments/input.js"
-								end: Object {
-									column: 4
-									line: 3
-								}
-								start: Object {
-									column: 2
-									line: 3
-								}
-							}
+							loc: SourceLocation experimental/class-private-properties/invalid-destructuring-arguments/input.js 3:2-3:4
+							start: Position 3:2
 						}
 					}
 				]

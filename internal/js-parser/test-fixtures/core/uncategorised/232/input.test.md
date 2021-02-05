@@ -18,83 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/232/input.js"
-		end: Object {
-			column: 23
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/232/input.js 1:0-1:23
 	body: Array [
 		JSDoWhileStatement {
-			loc: Object {
-				filename: "core/uncategorised/232/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/232/input.js 1:0-1:23
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "core/uncategorised/232/input.js"
-					end: Object {
-						column: 22
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/232/input.js 1:18-1:22
 			}
 			body: JSExpressionStatement {
-				loc: Object {
-					filename: "core/uncategorised/232/input.js"
-					end: Object {
-						column: 10
-						line: 1
-					}
-					start: Object {
-						column: 3
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/232/input.js 1:3-1:10
 				expression: JSCallExpression {
 					arguments: Array []
-					loc: Object {
-						filename: "core/uncategorised/232/input.js"
-						end: Object {
-							column: 9
-							line: 1
-						}
-						start: Object {
-							column: 3
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/232/input.js 1:3-1:9
 					callee: JSReferenceIdentifier {
 						name: "keep"
-						loc: Object {
-							filename: "core/uncategorised/232/input.js"
-							identifierName: "keep"
-							end: Object {
-								column: 7
-								line: 1
-							}
-							start: Object {
-								column: 3
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/232/input.js 1:3-1:7 (keep)
 					}
 				}
 			}

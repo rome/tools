@@ -17,17 +17,7 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-yield/invalid-yield-generator-parameter/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-parameter/input.js 1:0-2:0
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -42,14 +32,8 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 12
-					line: 1
-				}
+				end: Position 1:17
+				start: Position 1:12
 			}
 		}
 	]
@@ -57,44 +41,13 @@ JSRoot {
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "g"
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-parameter/input.js"
-					identifierName: "g"
-					end: Object {
-						column: 11
-						line: 1
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-parameter/input.js 1:10-1:11 (g)
 			}
-			loc: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-parameter/input.js"
-				end: Object {
-					column: 20
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-parameter/input.js 1:0-1:20
 			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-parameter/input.js"
-					end: Object {
-						column: 20
-						line: 1
-					}
-					start: Object {
-						column: 18
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-parameter/input.js 1:18-1:20
 			}
 			head: JSFunctionHead {
 				async: false
@@ -104,46 +57,15 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "esprima/es2015-yield/invalid-yield-generator-parameter/input.js"
-					end: Object {
-						column: 18
-						line: 1
-					}
-					start: Object {
-						column: 11
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-parameter/input.js 1:11-1:18
 				params: Array [
 					JSBindingIdentifier {
 						name: "yield"
-						loc: Object {
-							filename: "esprima/es2015-yield/invalid-yield-generator-parameter/input.js"
-							identifierName: "yield"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 12
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-parameter/input.js 1:12-1:17 (yield)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "esprima/es2015-yield/invalid-yield-generator-parameter/input.js"
-								end: Object {
-									column: 17
-									line: 1
-								}
-								start: Object {
-									column: 12
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-parameter/input.js 1:12-1:17
 						}
 					}
 				]

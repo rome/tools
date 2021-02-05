@@ -17,20 +17,18 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/object/member-expression-after-property-initializer-2/input.js"
-		end: Object {
-			column: 24
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:24
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				filename: "core/object/member-expression-after-property-initializer-2/input.js"
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:5
+				start: Position 1:4
+			}
 			description: Object {
 				advice: Array []
 				category: "parse"
@@ -40,289 +38,80 @@ JSRoot {
 					","
 				]
 			}
-			location: Object {
-				filename: "core/object/member-expression-after-property-initializer-2/input.js"
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Object {
-					column: 5
-					line: 1
-				}
-				start: Object {
-					column: 4
-					line: 1
-				}
-			}
 		}
 	]
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/object/member-expression-after-property-initializer-2/input.js"
-				end: Object {
-					column: 17
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:17
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "core/object/member-expression-after-property-initializer-2/input.js"
-					end: Object {
-						column: 17
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:17
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "d"
-						loc: Object {
-							filename: "core/object/member-expression-after-property-initializer-2/input.js"
-							identifierName: "d"
-							end: Object {
-								column: 17
-								line: 1
-							}
-							start: Object {
-								column: 16
-								line: 1
-							}
-						}
+						loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:16-1:17 (d)
 					}
-					loc: Object {
-						filename: "core/object/member-expression-after-property-initializer-2/input.js"
-						identifierName: "d"
-						end: Object {
-							column: 17
-							line: 1
-						}
-						start: Object {
-							column: 16
-							line: 1
-						}
-					}
+					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:16-1:17 (d)
 				}
 				object: JSSequenceExpression {
-					loc: Object {
-						filename: "core/object/member-expression-after-property-initializer-2/input.js"
-						end: Object {
-							column: 15
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:15
 					expressions: Array [
 						JSAssignmentExpression {
 							operator: "="
-							loc: Object {
-								filename: "core/object/member-expression-after-property-initializer-2/input.js"
-								end: Object {
-									column: 8
-									line: 1
-								}
-								start: Object {
-									column: 1
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:8
 							right: JSNumericLiteral {
 								value: 42
 								format: undefined
-								loc: Object {
-									filename: "core/object/member-expression-after-property-initializer-2/input.js"
-									end: Object {
-										column: 8
-										line: 1
-									}
-									start: Object {
-										column: 6
-										line: 1
-									}
-								}
+								loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:6-1:8
 							}
 							left: JSAssignmentObjectPattern {
 								rest: undefined
-								loc: Object {
-									filename: "core/object/member-expression-after-property-initializer-2/input.js"
-									end: Object {
-										column: 3
-										line: 1
-									}
-									start: Object {
-										column: 1
-										line: 1
-									}
-								}
+								loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:1-1:3
 								properties: Array [
 									JSAssignmentObjectPatternProperty {
 										key: JSStaticPropertyKey {
 											value: JSIdentifier {
 												name: "a"
-												loc: Object {
-													filename: "core/object/member-expression-after-property-initializer-2/input.js"
-													identifierName: "a"
-													end: Object {
-														column: 3
-														line: 1
-													}
-													start: Object {
-														column: 2
-														line: 1
-													}
-												}
+												loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3 (a)
 											}
-											loc: Object {
-												filename: "core/object/member-expression-after-property-initializer-2/input.js"
-												end: Object {
-													column: 3
-													line: 1
-												}
-												start: Object {
-													column: 2
-													line: 1
-												}
-											}
+											loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3
 										}
 										value: JSAssignmentIdentifier {
 											name: "a"
-											loc: Object {
-												filename: "core/object/member-expression-after-property-initializer-2/input.js"
-												identifierName: "a"
-												end: Object {
-													column: 3
-													line: 1
-												}
-												start: Object {
-													column: 2
-													line: 1
-												}
-											}
+											loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3 (a)
 										}
-										loc: Object {
-											filename: "core/object/member-expression-after-property-initializer-2/input.js"
-											end: Object {
-												column: 3
-												line: 1
-											}
-											start: Object {
-												column: 2
-												line: 1
-											}
-										}
+										loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:2-1:3
 									}
 								]
 							}
 						}
 						JSReferenceIdentifier {
 							name: "b"
-							loc: Object {
-								filename: "core/object/member-expression-after-property-initializer-2/input.js"
-								identifierName: "b"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 10
-									line: 1
-								}
-							}
+							loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:10-1:11 (b)
 						}
 					]
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/object/member-expression-after-property-initializer-2/input.js"
-				end: Object {
-					column: 23
-					line: 1
-				}
-				start: Object {
-					column: 17
-					line: 1
-				}
-			}
+			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:23
 			expression: JSAssignmentExpression {
 				operator: "="
-				loc: Object {
-					filename: "core/object/member-expression-after-property-initializer-2/input.js"
-					end: Object {
-						column: 23
-						line: 1
-					}
-					start: Object {
-						column: 17
-						line: 1
-					}
-				}
+				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:23
 				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
-					loc: Object {
-						filename: "core/object/member-expression-after-property-initializer-2/input.js"
-						end: Object {
-							column: 18
-							line: 1
-						}
-						start: Object {
-							column: 17
-							line: 1
-						}
-					}
+					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:17-1:18
 				}
 				right: JSObjectExpression {
 					properties: Array []
-					loc: Object {
-						filename: "core/object/member-expression-after-property-initializer-2/input.js"
-						end: Object {
-							column: 23
-							line: 1
-						}
-						start: Object {
-							column: 21
-							line: 1
-						}
-					}
+					loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:21-1:23
 				}
 			}
 		}
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/object/member-expression-after-property-initializer-2/input.js"
-				end: Object {
-					column: 24
-					line: 1
-				}
-				start: Object {
-					column: 23
-					line: 1
-				}
-			}
+			loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:23-1:24
 			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
-				loc: Object {
-					filename: "core/object/member-expression-after-property-initializer-2/input.js"
-					end: Object {
-						column: 24
-						line: 1
-					}
-					start: Object {
-						column: 23
-						line: 1
-					}
-				}
+				loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:23-1:24
 			}
 		}
 	]

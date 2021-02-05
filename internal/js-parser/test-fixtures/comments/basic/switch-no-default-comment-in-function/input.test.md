@@ -17,62 +17,21 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-		end: Object {
-			column: 0
-			line: 10
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:0-10:0
 	comments: Array [
 		CommentLine {
 			id: "0"
 			value: "no default"
-			loc: Object {
-				filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-				end: Object {
-					column: 20
-					line: 7
-				}
-				start: Object {
-					column: 8
-					line: 7
-				}
-			}
+			loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 7:8-7:20
 		}
 	]
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {
 				name: "bar"
-				loc: Object {
-					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-					identifierName: "bar"
-					end: Object {
-						column: 12
-						line: 1
-					}
-					start: Object {
-						column: 9
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:9-1:12 (bar)
 			}
-			loc: Object {
-				filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-				end: Object {
-					column: 1
-					line: 9
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:0-9:1
 			head: JSFunctionHead {
 				async: false
 				generator: false
@@ -81,179 +40,57 @@ JSRoot {
 				returnType: undefined
 				thisType: undefined
 				typeParameters: undefined
-				loc: Object {
-					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-					end: Object {
-						column: 15
-						line: 1
-					}
-					start: Object {
-						column: 12
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:12-1:15
 				params: Array [
 					JSBindingIdentifier {
 						name: "a"
-						loc: Object {
-							filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-							identifierName: "a"
-							end: Object {
-								column: 14
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:13-1:14 (a)
 						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
-							loc: Object {
-								filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-								end: Object {
-									column: 14
-									line: 1
-								}
-								start: Object {
-									column: 13
-									line: 1
-								}
-							}
+							loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:13-1:14
 						}
 					}
 				]
 			}
 			body: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-					end: Object {
-						column: 1
-						line: 9
-					}
-					start: Object {
-						column: 16
-						line: 1
-					}
-				}
+				loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 1:16-9:1
 				body: Array [
 					JSSwitchStatement {
-						loc: Object {
-							filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-							end: Object {
-								column: 5
-								line: 8
-							}
-							start: Object {
-								column: 4
-								line: 2
-							}
-						}
+						loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 2:4-8:5
 						discriminant: JSReferenceIdentifier {
 							name: "a"
-							loc: Object {
-								filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-								identifierName: "a"
-								end: Object {
-									column: 13
-									line: 2
-								}
-								start: Object {
-									column: 12
-									line: 2
-								}
-							}
+							loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 2:12-2:13 (a)
 						}
 						cases: Array [
 							JSSwitchCase {
-								loc: Object {
-									filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-									end: Object {
-										column: 18
-										line: 4
-									}
-									start: Object {
-										column: 8
-										line: 3
-									}
-								}
+								loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 3:8-4:18
 								test: JSNumericLiteral {
 									value: 2
 									format: undefined
-									loc: Object {
-										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-										end: Object {
-											column: 14
-											line: 3
-										}
-										start: Object {
-											column: 13
-											line: 3
-										}
-									}
+									loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 3:13-3:14
 								}
 								consequent: Array [
 									JSBreakStatement {
 										label: undefined
-										loc: Object {
-											filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-											end: Object {
-												column: 18
-												line: 4
-											}
-											start: Object {
-												column: 12
-												line: 4
-											}
-										}
+										loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 4:12-4:18
 									}
 								]
 							}
 							JSSwitchCase {
+								loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 5:8-6:18
 								trailingComments: Array ["0"]
-								loc: Object {
-									filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-									end: Object {
-										column: 18
-										line: 6
-									}
-									start: Object {
-										column: 8
-										line: 5
-									}
-								}
 								test: JSNumericLiteral {
 									value: 1
 									format: undefined
-									loc: Object {
-										filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-										end: Object {
-											column: 14
-											line: 5
-										}
-										start: Object {
-											column: 13
-											line: 5
-										}
-									}
+									loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 5:13-5:14
 								}
 								consequent: Array [
 									JSBreakStatement {
 										label: undefined
 										trailingComments: undefined
-										loc: Object {
-											filename: "comments/basic/switch-no-default-comment-in-function/input.js"
-											end: Object {
-												column: 18
-												line: 6
-											}
-											start: Object {
-												column: 12
-												line: 6
-											}
-										}
+										loc: SourceLocation comments/basic/switch-no-default-comment-in-function/input.js 6:12-6:18
 									}
 								]
 							}

@@ -18,142 +18,41 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:0-2:0
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
-			loc: Object {
-				filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-				end: Object {
-					column: 27
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:0-1:27
 			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:4-1:7
 			}
 			handler: JSCatchClause {
-				loc: Object {
-					filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-					end: Object {
-						column: 27
-						line: 1
-					}
-					start: Object {
-						column: 8
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:8-1:27
 				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-						end: Object {
-							column: 27
-							line: 1
-						}
-						start: Object {
-							column: 24
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:24-1:27
 				}
 				param: JSBindingArrayPattern {
 					rest: undefined
-					loc: Object {
-						filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-						end: Object {
-							column: 22
-							line: 1
-						}
-						start: Object {
-							column: 15
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:15-1:22
 					elements: Array [
 						JSBindingAssignmentPattern {
-							loc: Object {
-								filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-								end: Object {
-									column: 21
-									line: 1
-								}
-								start: Object {
-									column: 16
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:21
 							right: JSNumericLiteral {
 								value: 0
 								format: undefined
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-									end: Object {
-										column: 21
-										line: 1
-									}
-									start: Object {
-										column: 20
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:20-1:21
 							}
 							left: JSBindingIdentifier {
 								name: "a"
-								loc: Object {
-									filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-									identifierName: "a"
-									end: Object {
-										column: 17
-										line: 1
-									}
-									start: Object {
-										column: 16
-										line: 1
-									}
-								}
+								loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:17 (a)
 								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
-									loc: Object {
-										filename: "esprima/es2015-array-pattern/with-default-catch-param/input.js"
-										end: Object {
-											column: 17
-											line: 1
-										}
-										start: Object {
-											column: 16
-											line: 1
-										}
-									}
+									loc: SourceLocation esprima/es2015-array-pattern/with-default-catch-param/input.js 1:16-1:17
 								}
 							}
 						}

@@ -18,58 +18,17 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/213/input.js"
-		end: Object {
-			column: 7
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/213/input.js 1:0-1:7
 	body: Array [
 		JSBlockStatement {
 			directives: Array []
-			loc: Object {
-				filename: "core/uncategorised/213/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/213/input.js 1:0-1:7
 			body: Array [
 				JSExpressionStatement {
-					loc: Object {
-						filename: "core/uncategorised/213/input.js"
-						end: Object {
-							column: 5
-							line: 1
-						}
-						start: Object {
-							column: 2
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/213/input.js 1:2-1:5
 					expression: JSReferenceIdentifier {
 						name: "foo"
-						loc: Object {
-							filename: "core/uncategorised/213/input.js"
-							identifierName: "foo"
-							end: Object {
-								column: 5
-								line: 1
-							}
-							start: Object {
-								column: 2
-								line: 1
-							}
-						}
+						loc: SourceLocation core/uncategorised/213/input.js 1:2-1:5 (foo)
 					}
 				}
 			]

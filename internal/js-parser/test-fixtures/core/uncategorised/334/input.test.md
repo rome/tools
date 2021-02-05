@@ -18,72 +18,22 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "core/uncategorised/334/input.js"
-		end: Object {
-			column: 7
-			line: 1
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation core/uncategorised/334/input.js 1:0-1:7
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "core/uncategorised/334/input.js"
-				end: Object {
-					column: 7
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation core/uncategorised/334/input.js 1:0-1:7
 			expression: JSBinaryExpression {
 				operator: "/"
-				loc: Object {
-					filename: "core/uncategorised/334/input.js"
-					end: Object {
-						column: 7
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation core/uncategorised/334/input.js 1:0-1:7
 				left: JSNumericLiteral {
 					value: 1
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/334/input.js"
-						end: Object {
-							column: 2
-							line: 1
-						}
-						start: Object {
-							column: 1
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/334/input.js 1:1-1:2
 				}
 				right: JSNumericLiteral {
 					value: 2
 					format: undefined
-					loc: Object {
-						filename: "core/uncategorised/334/input.js"
-						end: Object {
-							column: 7
-							line: 1
-						}
-						start: Object {
-							column: 6
-							line: 1
-						}
-					}
+					loc: SourceLocation core/uncategorised/334/input.js 1:6-1:7
 				}
 			}
 		}

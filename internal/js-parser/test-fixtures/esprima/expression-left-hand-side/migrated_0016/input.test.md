@@ -18,113 +18,30 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
-	loc: Object {
-		filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-		end: Object {
-			column: 0
-			line: 2
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:0-2:0
 	body: Array [
 		JSExpressionStatement {
-			loc: Object {
-				filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-				end: Object {
-					column: 21
-					line: 1
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:0-1:21
 			expression: JSMemberExpression {
-				loc: Object {
-					filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-					end: Object {
-						column: 21
-						line: 1
-					}
-					start: Object {
-						column: 0
-						line: 1
-					}
-				}
+				loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:0-1:21
 				property: JSStaticMemberProperty {
 					value: JSIdentifier {
 						name: "galaxies"
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-							identifierName: "galaxies"
-							end: Object {
-								column: 21
-								line: 1
-							}
-							start: Object {
-								column: 13
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:13-1:21 (galaxies)
 					}
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-						identifierName: "galaxies"
-						end: Object {
-							column: 21
-							line: 1
-						}
-						start: Object {
-							column: 13
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:13-1:21 (galaxies)
 				}
 				object: JSCallExpression {
-					loc: Object {
-						filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-						end: Object {
-							column: 12
-							line: 1
-						}
-						start: Object {
-							column: 0
-							line: 1
-						}
-					}
+					loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:0-1:12
 					callee: JSReferenceIdentifier {
 						name: "universe"
-						loc: Object {
-							filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-							identifierName: "universe"
-							end: Object {
-								column: 8
-								line: 1
-							}
-							start: Object {
-								column: 0
-								line: 1
-							}
-						}
+						loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:0-1:8 (universe)
 					}
 					arguments: Array [
 						JSNumericLiteral {
 							value: 42
 							format: undefined
-							loc: Object {
-								filename: "esprima/expression-left-hand-side/migrated_0016/input.js"
-								end: Object {
-									column: 11
-									line: 1
-								}
-								start: Object {
-									column: 9
-									line: 1
-								}
-							}
+							loc: SourceLocation esprima/expression-left-hand-side/migrated_0016/input.js 1:9-1:11
 						}
 					]
 				}

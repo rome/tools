@@ -18,97 +18,27 @@ JSRoot {
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
-	loc: Object {
-		filename: "experimental/top-level-await/inside-block/input.js"
-		end: Object {
-			column: 1
-			line: 3
-		}
-		start: Object {
-			column: 0
-			line: 1
-		}
-	}
+	loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:0-3:1
 	body: Array [
 		JSIfStatement {
 			alternate: undefined
-			loc: Object {
-				filename: "experimental/top-level-await/inside-block/input.js"
-				end: Object {
-					column: 1
-					line: 3
-				}
-				start: Object {
-					column: 0
-					line: 1
-				}
-			}
+			loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:0-3:1
 			test: JSBooleanLiteral {
 				value: true
-				loc: Object {
-					filename: "experimental/top-level-await/inside-block/input.js"
-					end: Object {
-						column: 8
-						line: 1
-					}
-					start: Object {
-						column: 4
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:4-1:8
 			}
 			consequent: JSBlockStatement {
 				directives: Array []
-				loc: Object {
-					filename: "experimental/top-level-await/inside-block/input.js"
-					end: Object {
-						column: 1
-						line: 3
-					}
-					start: Object {
-						column: 10
-						line: 1
-					}
-				}
+				loc: SourceLocation experimental/top-level-await/inside-block/input.js 1:10-3:1
 				body: Array [
 					JSExpressionStatement {
-						loc: Object {
-							filename: "experimental/top-level-await/inside-block/input.js"
-							end: Object {
-								column: 10
-								line: 2
-							}
-							start: Object {
-								column: 2
-								line: 2
-							}
-						}
+						loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:10
 						expression: JSAwaitExpression {
-							loc: Object {
-								filename: "experimental/top-level-await/inside-block/input.js"
-								end: Object {
-									column: 9
-									line: 2
-								}
-								start: Object {
-									column: 2
-									line: 2
-								}
-							}
+							loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:2-2:9
 							argument: JSNumericLiteral {
 								value: 0
 								format: undefined
-								loc: Object {
-									filename: "experimental/top-level-await/inside-block/input.js"
-									end: Object {
-										column: 9
-										line: 2
-									}
-									start: Object {
-										column: 8
-										line: 2
-									}
-								}
+								loc: SourceLocation experimental/top-level-await/inside-block/input.js 2:8-2:9
 							}
 						}
 					}
