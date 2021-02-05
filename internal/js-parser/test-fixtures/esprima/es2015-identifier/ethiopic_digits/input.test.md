@@ -29,7 +29,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "_\u1369\u136a\u136b\u136c\u136d\u136e\u136f\u1370\u1371"
-							loc: SourceLocation esprima/es2015-identifier/ethiopic_digits/input.js 1:4-1:14 (_፩፪፫፬፭፮፯፰፱)
+							loc: SourceLocation esprima/es2015-identifier/ethiopic_digits/input.js 1:4-1:14 (_\u1369\u136a\u136b\u136c\u136d\u136e\u136f\u1370\u1371)
 						}
 						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/ethiopic_digits/input.js 1:4-1:14

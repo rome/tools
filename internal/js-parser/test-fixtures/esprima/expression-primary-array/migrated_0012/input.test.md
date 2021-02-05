@@ -23,7 +23,7 @@ JSRoot {
 			loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18
 			expression: JSReferenceIdentifier {
 				name: "\u2163\u2161\u200a"
-				loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18 (ⅣⅡ )
+				loc: SourceLocation esprima/expression-primary-array/migrated_0012/input.js 1:0-1:18 (\u2163\u2161\u200a)
 			}
 		}
 	]

@@ -28,7 +28,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "\u{1ee00}"
-							loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:4-1:16 (𞸀)
+							loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:4-1:16 (\u{1ee00})
 						}
 						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js 1:4-1:16

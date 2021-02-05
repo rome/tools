@@ -29,7 +29,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "_\u{104a6}"
-							loc: SourceLocation es2015/uncategorised/319/input.js 1:4-1:14 (_𐒦)
+							loc: SourceLocation es2015/uncategorised/319/input.js 1:4-1:14 (_\u{104a6})
 						}
 						loc: SourceLocation es2015/uncategorised/319/input.js 1:4-1:19
 						init: JSNumericLiteral {

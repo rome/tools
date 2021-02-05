@@ -23,7 +23,7 @@ JSRoot {
 			loc: SourceLocation core/uncategorised/447/input.js 1:0-1:6
 			expression: JSReferenceIdentifier {
 				name: "\\"
-				loc: SourceLocation core/uncategorised/447/input.js 1:0-1:6 (\)
+				loc: SourceLocation core/uncategorised/447/input.js 1:0-1:6 (\\)
 			}
 		}
 	]

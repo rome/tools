@@ -23,7 +23,7 @@ JSRoot {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0163/input.js 1:0-1:6
 			expression: JSReferenceIdentifier {
 				name: "\\"
-				loc: SourceLocation esprima/invalid-syntax/migrated_0163/input.js 1:0-1:6 (\)
+				loc: SourceLocation esprima/invalid-syntax/migrated_0163/input.js 1:0-1:6 (\\)
 			}
 		}
 	]

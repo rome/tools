@@ -29,7 +29,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "\u212e"
-							loc: SourceLocation esprima/es2015-identifier/estimated/input.js 1:4-1:5 (℮)
+							loc: SourceLocation esprima/es2015-identifier/estimated/input.js 1:4-1:5 (\u212e)
 						}
 						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/estimated/input.js 1:4-1:5

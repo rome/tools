@@ -26,7 +26,7 @@ JSRoot {
 				loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:0-1:11
 				left: JSAssignmentIdentifier {
 					name: "\u200c"
-					loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:0-1:6 (‌)
+					loc: SourceLocation esprima/invalid-syntax/migrated_0166/input.js 1:0-1:6 (\u200c)
 				}
 				right: JSArrayExpression {
 					elements: Array []

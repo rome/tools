@@ -27,7 +27,7 @@ JSRoot {
 				loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:8
 				left: JSAssignmentIdentifier {
 					name: "\u65e5\u672c\u8a9e"
-					loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:3 (日本語)
+					loc: SourceLocation esprima/expression-primary-array/migrated_0007/input.js 1:0-1:3 (\u65e5\u672c\u8a9e)
 				}
 				right: JSArrayExpression {
 					elements: Array []

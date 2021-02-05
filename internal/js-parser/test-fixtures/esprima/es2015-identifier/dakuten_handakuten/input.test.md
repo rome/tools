@@ -27,11 +27,11 @@ JSRoot {
 				loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:4
 				left: JSReferenceIdentifier {
 					name: "\u309b"
-					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:1 (゛)
+					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:0-1:1 (\u309b)
 				}
 				right: JSReferenceIdentifier {
 					name: "\u309c"
-					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:3-1:4 (゜)
+					loc: SourceLocation esprima/es2015-identifier/dakuten_handakuten/input.js 1:3-1:4 (\u309c)
 				}
 			}
 		}

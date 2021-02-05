@@ -29,7 +29,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "\u{1ee00}"
-							loc: SourceLocation esprima/es2015-identifier/math_alef/input.js 1:4-1:6 (𞸀)
+							loc: SourceLocation esprima/es2015-identifier/math_alef/input.js 1:4-1:6 (\u{1ee00})
 						}
 						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/math_alef/input.js 1:4-1:6

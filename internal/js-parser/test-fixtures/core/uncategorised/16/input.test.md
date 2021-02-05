@@ -27,7 +27,7 @@ JSRoot {
 				loc: SourceLocation core/uncategorised/16/input.js 1:0-1:7
 				left: JSAssignmentIdentifier {
 					name: "T\u200c"
-					loc: SourceLocation core/uncategorised/16/input.js 1:0-1:2 (T‌)
+					loc: SourceLocation core/uncategorised/16/input.js 1:0-1:2 (T\u200c)
 				}
 				right: JSArrayExpression {
 					elements: Array []

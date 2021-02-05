@@ -331,7 +331,7 @@ function formatObject(
 			inner = markup`<token type="string">${obj.filename}</token> ${inner}`;
 		}
 		if (obj.identifierName !== undefined) {
-			inner = markup`${inner} (${obj.identifierName})`;
+			inner = markup`${inner} (${escapeJSString(obj.identifierName)})`;
 		}
 
 		const label = formatObjectLabel(markup`SourceLocation`);

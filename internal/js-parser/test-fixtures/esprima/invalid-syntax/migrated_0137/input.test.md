@@ -26,7 +26,7 @@ JSRoot {
 				loc: SourceLocation esprima/invalid-syntax/migrated_0137/input.js 1:0-1:11
 				left: JSAssignmentIdentifier {
 					name: "\u203f"
-					loc: SourceLocation esprima/invalid-syntax/migrated_0137/input.js 1:0-1:6 (‿)
+					loc: SourceLocation esprima/invalid-syntax/migrated_0137/input.js 1:0-1:6 (\u203f)
 				}
 				right: JSNumericLiteral {
 					value: 10

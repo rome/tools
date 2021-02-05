@@ -29,7 +29,7 @@ JSRoot {
 					JSVariableDeclarator {
 						id: JSBindingIdentifier {
 							name: "\u{1ee06}_$"
-							loc: SourceLocation esprima/es2015-identifier/math_zain_start/input.js 1:4-1:8 (𞸆_$)
+							loc: SourceLocation esprima/es2015-identifier/math_zain_start/input.js 1:4-1:8 (\u{1ee06}_$)
 						}
 						init: undefined
 						loc: SourceLocation esprima/es2015-identifier/math_zain_start/input.js 1:4-1:8

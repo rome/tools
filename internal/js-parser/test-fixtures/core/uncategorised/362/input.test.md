@@ -23,7 +23,7 @@ JSRoot {
 			loc: SourceLocation core/uncategorised/362/input.js 1:0-1:7
 			expression: JSReferenceIdentifier {
 				name: "x\\"
-				loc: SourceLocation core/uncategorised/362/input.js 1:0-1:7 (x\)
+				loc: SourceLocation core/uncategorised/362/input.js 1:0-1:7 (x\\)
 			}
 		}
 	]

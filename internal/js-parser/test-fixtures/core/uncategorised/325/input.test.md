@@ -24,7 +24,7 @@ JSRoot {
 			loc: SourceLocation core/uncategorised/325/input.js 1:0-1:13
 			expression: JSReferenceIdentifier {
 				name: "price_9\u03369\u0336_89"
-				loc: SourceLocation core/uncategorised/325/input.js 1:0-1:13 (price_9̶9̶_89)
+				loc: SourceLocation core/uncategorised/325/input.js 1:0-1:13 (price_9\u03369\u0336_89)
 			}
 		}
 	]
