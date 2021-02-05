@@ -7,10 +7,7 @@
 
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
-import {
-	SPDXExpressionNode,
-	SpdxLicenseParser,
-} from "@internal/codec-spdx-license";
+import {SpdxLicenseParser} from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
 	MBoolean,
@@ -31,12 +28,14 @@ import {descriptions} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	RelativeFilePathMap,
+	UnknownPath,
 	createRelativeFilePath,
 } from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
 import {ProjectDefinition} from "@internal/project";
+import {SpdxLicenseParse} from "@internal/codec-spdx-license/SpdxLicenseParser";
 
 export * from "./types";
 
@@ -167,23 +166,11 @@ function extractLicenseFromObjectConsumer(
 	return [value, prop];
 }
 
-// These are all licenses I found that are wrong, we should eventually remove this as we update those deps
-const INVALID_IGNORE_LICENSES = [
-	"UNLICENSED",
-	"none",
-	"Facebook Platform License",
-	"BSD",
-	"MIT/X11",
-	"Public Domain",
-	"MIT License",
-	"BSD-like",
-];
-
 function normalizeLicense(
 	consumer: Consumer,
 	loose: boolean,
 	projects: ProjectDefinition[],
-): undefined | SPDXExpressionNode {
+): undefined | SpdxLicenseParse {
 	if (!consumer.has("license")) {
 		return undefined;
 	}
@@ -209,18 +196,20 @@ function normalizeLicense(
 		return undefined;
 	}
 
-	// Not valid licenses...
-	if (INVALID_IGNORE_LICENSES.includes(licenseId)) {
-		return undefined;
-	}
-
 	// Parse as a SPDX expression
 	const spdxLisenceCode = new SpdxLicenseParser({
 		packageVersion: consumer.get("version").asString(),
 		packageName: consumer.get("name").asString(),
 		projects,
 	});
-	return tryParseWithOptionalOffsetPosition(
+	return tryParseWithOptionalOffsetPosition<
+		{
+			loose: boolean;
+			path: UnknownPath | undefined;
+			input: string;
+		},
+		SpdxLicenseParse
+	>(
 		{
 			loose,
 			path: consumer.path,
@@ -646,13 +635,14 @@ export async function normalizeManifest(
 	if (loose) {
 		normalizeCompatManifest(consumer, name, version);
 	}
+	const license = normalizeLicense(consumer, loose, projects);
 
 	return {
 		name,
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
-		license: normalizeLicense(consumer, loose, projects),
+		license: license?.license,
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),
@@ -687,5 +677,8 @@ export async function normalizeManifest(
 		contributors: normalizePeople(consumer.get("contributors"), loose),
 		maintainers: normalizePeople(consumer.get("maintainers"), loose),
 		raw: consumer.asJSONObject(),
+		diagnostics: {
+			license: license?.diagnostics,
+		},
 	};
 }

@@ -6,19 +6,19 @@ const IGNORE_ADVICE: DiagnosticAdvice = [
 	{
 		type: "log",
 		category: "info",
-		text: markup`If you still really want to do this, you can bypass the restriction and create a project in this directory with the flag <code>--allow-dirty</code>:`,
+		text: markup`If you still really want to do this, you can bypass the restriction and auto configurate the project with <code>--allow-dirty</code>:`,
 	},
 	{
 		type: "code",
 		language: "shell",
-		sourceText: "rome init --allow-dirty",
+		sourceText: "rome auto-config --allow-dirty",
 	},
 ];
 
 // @internal/core/server/commands/init.ts
 export const initCommand = createDiagnosticsCategory({
 	UNCOMMITTED_CHANGES: {
-		category: "commands/init/uncommittedChanges",
+		category: "commands/auto-config/uncommittedChanges",
 		message: markup`Uncommitted changes in repository`,
 		advice: [
 			{
@@ -29,13 +29,13 @@ export const initCommand = createDiagnosticsCategory({
 			{
 				type: "code",
 				language: "shell",
-				sourceText: `git add -A && git commit -m "Rome init backup"`,
+				sourceText: `git add -A && git commit -m "chore: rome init backup"`,
 			},
 			...IGNORE_ADVICE,
 		],
 	},
 	EXPECTED_REPO: {
-		category: "commands/init/expectedRepo",
+		category: "commands/auto-config/expectedRepo",
 		message: markup`Directory is not a repository. Are you sure this is where you wanted to create a project?`,
 		advice: [
 			{

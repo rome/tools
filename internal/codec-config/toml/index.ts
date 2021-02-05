@@ -11,6 +11,7 @@ import {
 
 import {descriptions} from "@internal/diagnostics";
 import {Number0, ob1Inc} from "@internal/ob1";
+import convertToTomlFromConsumer from "@internal/codec-config/toml/convertToTomlFromConsumer";
 
 function isSingleStringValueChar(
 	char: string,
@@ -200,6 +201,6 @@ export const toml: PartialConfigHandler = {
 	},
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {
-		throw new Error("todo");
+		return convertToTomlFromConsumer(opts.consumer, opts.comments);
 	},
 };

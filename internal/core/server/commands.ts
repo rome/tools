@@ -22,6 +22,7 @@ import ci from "./commands/ci";
 import test from "./commands/test";
 import noop from "./commands/noop";
 import json from "./commands/json";
+import autoConfig from "./commands/autoConfig";
 import * as recover from "./commands/recover";
 import * as cache from "./commands/cache";
 
@@ -121,6 +122,7 @@ serverCommands.set("run", run);
 serverCommands.set("stop", stop);
 serverCommands.set("status", status);
 serverCommands.set("test", test);
+serverCommands.set("auto-config", autoConfig);
 serverCommands.set("recover apply", recover.apply);
 serverCommands.set("recover clear", recover.clear);
 serverCommands.set("recover diff", recover.diff);

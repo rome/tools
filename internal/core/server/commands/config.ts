@@ -76,9 +76,9 @@ async function runCommand(
 		}
 
 		reporter.success(
-			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
+			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${JSON.stringify(
 				value,
-			)}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
+			)}</emphasis> to <emphasis>${keyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
 		);
 
 		if (value === "true" || value === "false") {
