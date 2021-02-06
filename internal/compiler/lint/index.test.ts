@@ -18,7 +18,7 @@ function createLintTransformOptions(
 		}),
 		options: {},
 		project: {
-			configHashes: [],
+			configCacheKeys: [],
 			config: mutateConfig(createDefaultProjectConfig()),
 			directory: undefined,
 		},
@@ -50,7 +50,7 @@ function createLintTransformSuppressions(
 			},
 		},
 		project: {
-			configHashes: [],
+			configCacheKeys: [],
 			config: mutateConfig(createDefaultProjectConfig()),
 			directory: undefined,
 		},

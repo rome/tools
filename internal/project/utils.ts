@@ -8,7 +8,7 @@
 import {Consumer} from "@internal/consume";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {ProjectConfig, ProjectConfigMeta, ProjectConfigMetaHard} from "./types";
+import {PartialProjectConfig, ProjectConfigMeta, ProjectConfigMetaHard} from "./types";
 import {PROJECT_CONFIG_FILENAMES} from "./constants";
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
@@ -88,19 +88,27 @@ const ESLINT_CONFIG_FILENAMES: Array<string> = [
 ];
 
 // Get an array of possible files in parent directories that will cause a project cache invalidation
-export function getParentConfigDependencies(
-	path: AbsoluteFilePath,
-	config: ProjectConfig,
-): AbsoluteFilePathSet {
+export function getParentConfigDependencies({projectDirectory, rootProjectDirectory, partialConfig}: {
+	projectDirectory: AbsoluteFilePath,
+	rootProjectDirectory: AbsoluteFilePath,
+	partialConfig: PartialProjectConfig,
+}): AbsoluteFilePathSet {
 	const deps: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-	for (const directory of path.getChain()) {
+	for (const directory of projectDirectory.getChain()) {
+		const atRoot = directory.equal(rootProjectDirectory);
+
+		// If we are at the root directory then stop
+		if (atRoot && !projectDirectory.equal(rootProjectDirectory)) {
+			break;
+		}
+
 		let basenames: Array<string> = [
 			"package.json",
 		];
 
 		// If eslint integration is enabled then eslint config changes should cause invalid cache files
-		if (config.integrations.eslint.enabled) {
+		if (partialConfig.integrations.eslint.enabled) {
 			basenames = basenames.concat(ESLINT_CONFIG_FILENAMES);
 		}
 
@@ -111,6 +119,11 @@ export function getParentConfigDependencies(
 
 		for (const basename of basenames) {
 			deps.add(directory.append(basename));
+		}
+
+		// If we are the root project then don't go higher
+		if (atRoot) {
+			break;
 		}
 	}
 

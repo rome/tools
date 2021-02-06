@@ -312,18 +312,18 @@ class CacheFile {
 	private async createFreshPortableMetadata(): Promise<PortableCacheMetadataHashless> {
 		const {ref} = this;
 		const project = this.worker.getProject(ref.project);
-		const configHashes = [...project.configHashes];
+		const configCacheKeys = [...project.configCacheKeys];
 
 		if (ref.manifest !== undefined) {
 			const manifest = this.worker.getPartialManifest(ref.manifest);
-			configHashes.push(manifest.hash);
+			configCacheKeys.push(`manifest:${manifest.hash}`);
 		}
 
 		const stats = await this.getStats();
 
 		return {
 			version: VERSION,
-			cacheKey: configHashes.join(";"),
+			cacheKey: configCacheKeys.join(";"),
 			size: stats.size,
 		};
 	}

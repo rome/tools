@@ -98,7 +98,7 @@ export default class CompilerContext {
 			frozen = false,
 			options = {},
 			project = {
-				configHashes: [],
+				configCacheKeys: [],
 				directory: undefined,
 				config: createDefaultProjectConfig(),
 			},

@@ -619,7 +619,7 @@ export default class Worker {
 					id,
 					{
 						directory,
-						configHashes,
+						configCacheKeys: configHashes,
 						config,
 					},
 				);

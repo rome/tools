@@ -35,6 +35,7 @@ import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
 import {PROJECT_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
 import {lintRuleNames} from "@internal/compiler";
+import { sha256 } from "@internal/string-utils";
 
 const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
@@ -65,10 +66,11 @@ export async function loadCompleteProjectConfig(
 	config: ProjectConfig;
 }> {
 	// TODO use consumer.capture somehow here to aggregate errors
-	const {partial, meta} = await loadPartialProjectConfig(
+	const {partial, meta} = await loadPartialProjectConfig({
+		rootProjectDirectory: projectDirectory,
 		projectDirectory,
 		configPath,
-	);
+	});
 	const {consumer} = meta;
 
 	// Produce a defaultConfig with some directory specific values
@@ -112,17 +114,24 @@ export async function loadCompleteProjectConfig(
 		}
 	}
 
-	meta.configDependencies = meta.configDependencies.concat(getParentConfigDependencies(projectDirectory, config));
-
 	return {
 		config,
 		meta,
 	};
 }
 
+type LoadProjectConfigContext = {
+	rootProjectDirectory: AbsoluteFilePath;
+	projectDirectory: AbsoluteFilePath;
+	configPath: AbsoluteFilePath;
+};
+
 async function loadPartialProjectConfig(
-	projectDirectory: AbsoluteFilePath,
-	configPath: AbsoluteFilePath,
+	{
+		rootProjectDirectory,
+		projectDirectory,
+		configPath,
+	}: LoadProjectConfigContext
 ): Promise<NormalizedPartial> {
 	const configFile = await readFileText(configPath);
 	const res = consumeConfig({
@@ -130,29 +139,29 @@ async function loadPartialProjectConfig(
 		input: configFile,
 	});
 
-	return normalizeProjectConfig(res, configPath, configFile, projectDirectory);
+	return normalizeProjectConfig(res, {configPath, configFile, projectDirectory, rootProjectDirectory});
 }
 
 export async function normalizeProjectConfig(
 	res: ConsumeConfigResult,
-	configPath: AbsoluteFilePath,
-	configFile: string,
-	projectDirectory: AbsoluteFilePath,
+	{configPath, configFile, projectDirectory, rootProjectDirectory}: LoadProjectConfigContext & {
+		configFile: string,
+	}
 ): Promise<NormalizedPartial> {
 	let {consumer} = res;
 
 	let configSourceSubKey;
-	let name: undefined | string;
+	let inferredName: undefined | string;
 	const isInPackageJson = configPath.getBasename() === "package.json";
 	if (isInPackageJson) {
 		// Infer name from package.json
-		name = consumer.get("name").asStringOrVoid();
+		inferredName = consumer.get("name").asStringOrVoid();
 
 		consumer = consumer.get(PROJECT_CONFIG_PACKAGE_JSON_FIELD);
 		configSourceSubKey = PROJECT_CONFIG_PACKAGE_JSON_FIELD;
 	}
 
-	const hash = crypto.createHash("sha256").update(configFile).digest("hex");
+	const hash = sha256.sync(configFile);
 
 	const config: PartialProjectConfig = {
 		presets: [],
@@ -174,8 +183,8 @@ export async function normalizeProjectConfig(
 		},
 	};
 
-	if (name !== undefined) {
-		config.name = name;
+	if (inferredName !== undefined) {
+		config.name = inferredName;
 	}
 
 	const meta: ProjectConfigMetaHard = {
@@ -183,7 +192,7 @@ export async function normalizeProjectConfig(
 		configPath,
 		consumer,
 		consumersChain: [consumer],
-		configHashes: [hash],
+		configCacheKeys: [`project:${rootProjectDirectory.relative(projectDirectory)}:${hash}`],
 		configSourceSubKey,
 		configDependencies: new AbsoluteFilePathSet(),
 	};
@@ -399,8 +408,10 @@ export async function normalizeProjectConfig(
 		}
 	}
 
+	meta.configDependencies = meta.configDependencies.concat(getParentConfigDependencies({projectDirectory, rootProjectDirectory, partialConfig: config}));
+
 	// Need to get this before enforceUsedProperties so it will be flagged
-	const _extends = consumer.get("extends");
+	const extendsProp = consumer.get("extends");
 
 	// Flag unknown properties
 	consumer.enforceUsedProperties("config property");
@@ -410,9 +421,9 @@ export async function normalizeProjectConfig(
 		meta,
 	};
 
-	if (_extends.exists()) {
-		for (const elem of _extends.asImplicitArray()) {
-			normalized = await extendProjectConfig(projectDirectory, elem, normalized);
+	if (extendsProp.exists()) {
+		for (const elem of extendsProp.asImplicitArray()) {
+			normalized = await extendProjectConfig(elem, {projectDirectory, rootProjectDirectory}, normalized);
 		}
 	}
 
@@ -453,8 +464,11 @@ async function normalizeTypeCheckingLibs(
 }
 
 async function extendProjectConfig(
-	projectDirectory: AbsoluteFilePath,
 	extendsStrConsumer: Consumer,
+	{projectDirectory, rootProjectDirectory}: {
+		projectDirectory: AbsoluteFilePath;
+		rootProjectDirectory: AbsoluteFilePath;
+	},
 	{partial: config, meta}: NormalizedPartial,
 ): Promise<NormalizedPartial> {
 	const extendsRelative = extendsStrConsumer.asString();
@@ -464,10 +478,11 @@ async function extendProjectConfig(
 	}
 
 	const extendsPath = projectDirectory.resolve(extendsRelative);
-	const {partial: extendsObj, meta: extendsMeta} = await loadPartialProjectConfig(
-		extendsPath.getParent(),
-		extendsPath,
-	);
+	const {partial: extendsObj, meta: extendsMeta} = await loadPartialProjectConfig({
+		rootProjectDirectory,
+		projectDirectory: extendsPath.getParent(),
+		configPath: extendsPath,
+	});
 
 	// Check for recursive config
 	if (extendsMeta.configDependencies.has(meta.configPath)) {
@@ -542,7 +557,7 @@ async function extendProjectConfig(
 				extendsMeta.configDependencies,
 				[extendsPath],
 			),
-			configHashes: [...meta.configHashes, ...extendsMeta.configHashes],
+			configCacheKeys: [...meta.configCacheKeys, ...extendsMeta.configCacheKeys],
 		},
 	};
 }

@@ -27,6 +27,7 @@ export type ProjectDefinition = {
 	packages: Map<string, ManifestDefinition>;
 	manifests: Map<number, ManifestDefinition>;
 	children: Set<ProjectDefinition>;
+	root: undefined | ProjectDefinition;
 	parent: undefined | ProjectDefinition;
 	initialized: boolean;
 	partial: boolean;
@@ -131,7 +132,7 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
 export type ProjectConfigMeta = {
 	projectDirectory: undefined | AbsoluteFilePath;
 	configPath: undefined | AbsoluteFilePath;
-	configHashes: string[];
+	configCacheKeys: string[];
 	configDependencies: AbsoluteFilePathSet;
 	consumer: undefined | Consumer;
 	configSourceSubKey: undefined | string;
@@ -148,11 +149,74 @@ export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects & {
 	integrations: ProjectConfigIntegrations;
 };
 
+// The actual type that we allow users to specify their configuration
+// Types are deliberately wider than they need to be to more accurately represent how they will be provided. ie. `string` rather than string literals
+export type RawUserProjectConfig = {
+	name?: string;
+	version?: string;
+	root?: boolean;
+	extends?: boolean;
+	cache?: {};
+	resolver?: {};
+	compiler?: {};
+	bundler?: {
+		externals?: Array<string>;
+	};
+	typeChecking?: {
+		enabled?: boolean;
+		libs?: Array<string>;
+	};
+	dependencies?: {
+		enabled?: boolean;
+		exceptions?: {
+			invalidLicenses?: {
+				[key: string]: Array<string>;
+			};
+		};
+	};
+	lint?: {
+		ignore?: Array<string>;
+		globals?: Array<string>;
+		disabledRules?: Array<string>;
+		requireSuppressionExplanations?: boolean;
+	};
+	format: {
+		enabled?: boolean;
+		indentStyle?: string;
+		indentSize?: number;
+	};
+	tests?: {
+		ignore?: Array<string>;
+	};
+	develop?: {
+		serveStatic?: boolean;
+	};
+	files?: {
+		vendorPath?: string;
+		maxSize?: number;
+		maxSizeIgnore?: Array<string>;
+		assetExtensions?: Array<string>;
+	};
+	vcs?: {
+		root?: string;
+	};
+	targets?: {
+		[key: string]: {
+			constraints?: Array<string>;
+		};
+	};
+	integrations?: {
+		eslint?: {
+			enabled?: boolean;
+		};
+	};
+};
+
 export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
 	return {
 		projectDirectory: undefined,
 		configPath: undefined,
-		configHashes: [],
+		configCacheKeys: [],
 		configDependencies: new AbsoluteFilePathSet(),
 		consumer: undefined,
 		configSourceSubKey: undefined,

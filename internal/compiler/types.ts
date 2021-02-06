@@ -57,7 +57,7 @@ export type LintRequest = TransformRequest & {
 };
 
 export type TransformProjectDefinition = {
-	configHashes: string[];
+	configCacheKeys: string[];
 	config: ProjectConfig;
 	directory: undefined | AbsoluteFilePath;
 };

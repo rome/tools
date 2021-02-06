@@ -154,6 +154,7 @@ async function runCommand(
 			const project = await req.assertClientCwdProject();
 			const meta = assertHardMeta(project.meta);
 			const {configPath, configSourceSubKey} = meta;
+			const rootProject = project.root ?? project;
 
 			await handleConfig(
 				configPath,
@@ -161,9 +162,12 @@ async function runCommand(
 				async (res, stringified) => {
 					await normalizeProjectConfig(
 						res,
-						meta.configPath,
-						stringified,
-						meta.projectDirectory,
+						{
+							configPath: meta.configPath,
+							configFile: stringified,
+							projectDirectory: project.directory,
+							rootProjectDirectory: rootProject.directory,
+						},
 					);
 				},
 			);

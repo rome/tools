@@ -619,8 +619,12 @@ export default class ProjectManager {
 			}
 		}
 
-		// Declare the project
 		const parentProject = this.findLoadedProject(projectDirectory.getParent());
+
+		// The root project is the highest reachable project. The `root` project will not have the `root` property visible.
+		const rootProject = parentProject === undefined ? undefined : parentProject.root ?? parentProject;
+
+		// Declare the project
 		const project: ProjectDefinition = {
 			config,
 			meta,
@@ -628,6 +632,7 @@ export default class ProjectManager {
 			id: this.projectIdCounter++,
 			packages: new Map(),
 			manifests: new Map(),
+			root: rootProject,
 			parent: parentProject,
 			children: new Set(),
 			initialized: false,
@@ -718,7 +723,7 @@ export default class ProjectManager {
 		const projectsSerial: WorkerProjects = [];
 		for (const project of projects) {
 			projectsSerial.push({
-				configHashes: project.meta.configHashes,
+				configHashes: project.meta.configCacheKeys,
 				config: project.config,
 				id: project.id,
 				directory: project.directory,
