@@ -44,8 +44,8 @@ function findRoot(): AbsoluteFilePath {
 
 let forceGenerated = false;
 
-const COMMENT_START = /(?:\/\*|<!--)/;
-const COMMENT_END = /(?:\*\/|-->)/;
+const COMMENT_START = /(?:\/\*|<!--|#)/;
+const COMMENT_END = /(?:\*\/|-->|#)/;
 
 export async function modifyGeneratedFile(
 	{path, scriptName, id = "main"}: {
@@ -111,7 +111,7 @@ export async function modifyGeneratedFile(
 
 	// Append comments
 	const commentOpts: CommentOptions = {
-		isJS: path.hasExtension("ts") || path.hasExtension("js"),
+		delimiter: determineDelimiter(path),
 		hash: expectedHash,
 		scriptName,
 		id,
@@ -138,39 +138,61 @@ type CommentOptions = {
 	scriptName: string;
 	id: string;
 	hash: string;
-	isJS: boolean;
+	delimiter: CommentDelimiter;
 };
+
+type CommentDelimiter = "SLASH" | "ARROW" | "HASH";
+
+function determineDelimiter(path: AbsoluteFilePath): CommentDelimiter {
+	if (path.hasExtension("ts") || path.hasExtension("js") || path.hasExtension("rjson")) return "SLASH";
+	if (path.hasExtension("sh") || path.hasExtension("yml") || path.hasExtension("yaml") || path.hasExtension("toml")) return "HASH";
+	return "ARROW";
+}
 
 function createGeneratedCommentInstructions(scriptName: string): string {
 	return `Everything below is automatically generated. DO NOT MODIFY. Run \`./rome run scripts/${scriptName}\` to update.`;
 }
 
 function createGeneratedStartComment(opts: CommentOptions): string {
-	const {hash, id, isJS, scriptName} = opts;
+	const {hash, id, delimiter, scriptName} = opts;
 	return wrapComment(
 		`GENERATED:START(hash:${hash},id:${id}) ${createGeneratedCommentInstructions(
 			scriptName,
 		)}`,
-		isJS,
+		delimiter,
 	);
 }
 
-function createGeneratedEndComment({id, isJS}: CommentOptions): string {
-	return wrapComment(`GENERATED:END(id:${id})`, isJS);
+function createGeneratedEndComment({id, delimiter}: CommentOptions): string {
+	return wrapComment(`GENERATED:END(id:${id})`, delimiter);
 }
 
-function wrapComment(value: string, isJS: boolean): string {
+function wrapComment(value: string, delimiter: CommentDelimiter): string {
 	let comment = "";
-	if (isJS) {
-		comment += "/* ";
-	} else {
-		comment += "<!-- ";
+
+	switch (delimiter) {
+		case "SLASH":
+			comment += "/* ";
+			break;
+		case "ARROW":
+			comment += "<!-- ";
+			break;
+		case "HASH":
+			comment += "# ";
+			break;
 	}
 	comment += value;
-	if (isJS) {
-		comment += " */";
-	} else {
-		comment += " -->";
+
+	switch (delimiter) {
+		case "SLASH":
+			comment += " */";
+			break;
+		case "ARROW":
+			comment += " -->";
+			break;
+		case "HASH":
+			comment += " #";
+			break;
 	}
 	return comment;
 }
