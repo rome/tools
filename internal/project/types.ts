@@ -91,6 +91,12 @@ export type ProjectConfigObjects = {
 	targets: Map<string, ProjectConfigTarget>;
 };
 
+export type ProjectConfigIntegrations = {
+	eslint: {
+		enabled: boolean;
+	};
+};
+
 export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
 
 export type ProjectConfigTarget = {
@@ -109,6 +115,12 @@ export type PartialProjectConfig = Partial<ProjectConfigBase> & {
 	[Key in keyof ProjectConfigObjects]: PartialProjectValue<
 		ProjectConfigObjects[Key]
 	>
+} & {
+	integrations: {
+		[Key in keyof ProjectConfigIntegrations]: PartialProjectValue<
+		ProjectConfigIntegrations[Key]
+		>
+	},
 };
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
@@ -132,7 +144,9 @@ export type ProjectConfigMetaHard = RequiredProps<
 >;
 
 // Final project config
-export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects;
+export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects & {
+	integrations: ProjectConfigIntegrations;
+};
 
 export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
 	return {
@@ -196,5 +210,10 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			maxSize: 40_000_000, // 40 megabytes
 		},
 		targets: new Map(),
+		integrations: {
+			eslint: {
+				enabled: false,
+			},
+		},
 	};
 }

@@ -167,6 +167,9 @@ export async function normalizeProjectConfig(
 		vcs: {},
 		dependencies: {},
 		targets: new Map(),
+		integrations: {
+			eslint: {},
+		},
 	};
 
 	if (name !== undefined) {
@@ -385,6 +388,16 @@ export async function normalizeProjectConfig(
 		}
 	}
 
+	const integrations = consumer.get("integrations");
+	if (integrations.exists()) {
+		const eslint = integrations.get("eslint");
+		if (categoryExists(eslint)) {
+			if (eslint.has("enabled")) {
+				config.integrations.eslint.enabled = eslint.get("enabled").asBoolean();
+			}
+		}
+	}
+
 	// Need to get this before enforceUsedProperties so it will be flagged
 	const _extends = consumer.get("extends");
 
@@ -537,7 +550,7 @@ async function extendProjectConfig(
 type MergedPartialConfig<
 	A extends PartialProjectConfig,
 	B extends PartialProjectConfig
-> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]};
+> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]} & {integrations: A["integrations"] & B["integrations"]};
 
 function mergePartialConfig<
 	A extends PartialProjectConfig,
@@ -594,5 +607,13 @@ function mergePartialConfig<
 			...b.vcs,
 		},
 		targets: new Map([...a.targets.entries(), ...b.targets.entries()]),
+		integrations: {
+			...a.integrations,
+			...b.integrations,
+			eslint: {
+				...a.integrations.eslint,
+				...b.integrations.eslint,
+			},
+		},
 	};
 }
