@@ -112,6 +112,8 @@ export async function loadCompleteProjectConfig(
 		}
 	}
 
+	meta.configDependencies = meta.configDependencies.concat(getParentConfigDependencies(projectDirectory, config));
+
 	return {
 		config,
 		meta,
@@ -183,7 +185,7 @@ export async function normalizeProjectConfig(
 		consumersChain: [consumer],
 		configHashes: [hash],
 		configSourceSubKey,
-		configDependencies: getParentConfigDependencies(projectDirectory),
+		configDependencies: new AbsoluteFilePathSet(),
 	};
 
 	// We never use `name` here but it's used in `loadCompleteProjectConfig`
@@ -236,11 +238,10 @@ export async function normalizeProjectConfig(
 				typeChecking.get("libs"),
 			);
 			config.typeCheck.libs = libs.files;
-			meta.configDependencies = new AbsoluteFilePathSet([
-				...meta.configDependencies,
-				...libs.directories,
-				...libs.files,
-			]);
+			meta.configDependencies = meta.configDependencies.concat(
+				libs.directories,
+				libs.files,
+			);
 		}
 	}
 
@@ -537,11 +538,10 @@ async function extendProjectConfig(
 		meta: {
 			...meta,
 			consumersChain: [...meta.consumersChain, ...extendsMeta.consumersChain],
-			configDependencies: new AbsoluteFilePathSet([
-				...meta.configDependencies,
-				...extendsMeta.configDependencies,
-				extendsPath,
-			]),
+			configDependencies: meta.configDependencies.concat(
+				extendsMeta.configDependencies,
+				[extendsPath],
+			),
 			configHashes: [...meta.configHashes, ...extendsMeta.configHashes],
 		},
 	};

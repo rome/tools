@@ -15,6 +15,14 @@ import {
 	createUnknownPath,
 } from "./index";
 
+function concat<FilePath extends AnyFilePath>(items: Array<Iterable<FilePath>>): Array<FilePath> {
+	let paths: Array<FilePath> = [];
+	for (const iterable of items) {
+		paths = paths.concat(Array.from(iterable));
+	}
+	return paths;
+}
+
 // Sometimes we don't want to have to deal with what a FilePath serializes into
 // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
 // to speed up the usage of FilePaths in these scenarios.
@@ -224,6 +232,10 @@ export class AbsoluteFilePathSet
 	createMap(): AbsoluteFilePathMap<void> {
 		return new AbsoluteFilePathMap();
 	}
+
+	public concat(...items: Array<Iterable<AbsoluteFilePath>>): AbsoluteFilePathSet {
+		return new AbsoluteFilePathSet(concat(items));
+	}
 }
 
 export class RelativeFilePathSet
@@ -233,6 +245,10 @@ export class RelativeFilePathSet
 	createMap(): RelativeFilePathMap<void> {
 		return new RelativeFilePathMap();
 	}
+
+	public concat(...items: Array<Iterable<RelativeFilePath>>): RelativeFilePathSet {
+		return new RelativeFilePathSet(concat(items));
+	}
 }
 
 export class UnknownPathSet
@@ -241,6 +257,10 @@ export class UnknownPathSet
 
 	createMap(): UnknownPathMap<void> {
 		return new UnknownPathMap();
+	}
+
+	public concat(...items: Array<Iterable<AnyFilePath>>): UnknownPathSet {
+		return new UnknownPathSet(concat(items));
 	}
 }
 
