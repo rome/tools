@@ -98,7 +98,7 @@ function isntBlockCommentEnd(
 	input: string,
 ): boolean {
 	const nextChar = input[ob1Get0(index) + 1];
-	return char !== "*" && nextChar !== "/";
+	return !(char === "*" && nextChar === "/");
 }
 
 // Used for Number token validation, allow underscore as a separatore
