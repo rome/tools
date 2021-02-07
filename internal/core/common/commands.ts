@@ -15,6 +15,7 @@ export type CommandName =
 	| "_evict"
 	| "_moduleSignature"
 	| "_projectDump"
+	| "auto-config"
 	| "analyzeDependencies"
 	| "bundle"
 	| "cache dir"

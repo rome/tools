@@ -18,10 +18,9 @@ import {
 import {convertManifestToJSON} from "@internal/codec-js-manifest";
 import {parseSemverRange} from "@internal/codec-semver";
 import {spawn} from "@internal/child-process";
-import getManifest from "@internal/core/server/utils/getManifest";
 import {ConfigHandler} from "@internal/codec-config/types";
 import updateConfig from "@internal/core/server/utils/updateConfig";
-import retrieveConfigHandler from "@internal/core/server/utils/retrieveConfigHandler";
+import retrieveConfigHandler from "@internal/codec-config/retrieveConfigHandler";
 
 type ConfigType = "rjson" | "toml" | "json";
 
@@ -118,7 +117,6 @@ export default createServerCommand<Flags>({
 					reporter.info(
 						markup`Use <code>rome config</code> to update an existing config`,
 					);
-					existingProject.packages;
 					return true;
 				}
 				return false;
@@ -132,7 +130,6 @@ export default createServerCommand<Flags>({
 				reporter.info(
 					markup`Use <code>rome config</code> to update an existing config`,
 				);
-				existingProject.packages;
 				return true;
 			}
 			return value;
@@ -199,7 +196,12 @@ export default createServerCommand<Flags>({
 
 			//
 			const manifestPath = cwd.append("package.json");
-			const manifest = await getManifest(server, cwd);
+			const manifestDefinition = server.memoryFs.getManifestDefinition(cwd);
+			if (!manifestDefinition) {
+				reporter.error(markup`Couldn't find any manifest at path ${cwd}`);
+
+				return;
+			}
 
 			// Generate files
 			await reporter.steps([
@@ -207,19 +209,19 @@ export default createServerCommand<Flags>({
 					message: markup`Installing Rome as a dependency`,
 					test() {
 						return (
-							manifest !== undefined &&
-							!manifest.dependencies.has("rome") &&
-							!manifest.devDependencies.has("rome")
+							manifestDefinition !== undefined &&
+							!manifestDefinition.manifest.dependencies.has("rome") &&
+							!manifestDefinition.manifest.devDependencies.has("rome")
 						);
 					},
 					async callback() {
-						if (manifest === undefined) {
+						if (manifestDefinition === undefined) {
 							// Should not be because of test()
 							return;
 						}
 
 						// Modify package.json
-						manifest.devDependencies.set(
+						manifestDefinition.manifest.devDependencies.set(
 							"rome",
 							{
 								type: "semver",
@@ -228,7 +230,11 @@ export default createServerCommand<Flags>({
 						);
 						await writeFile(
 							manifestPath,
-							JSON.stringify(convertManifestToJSON(manifest), null, "  "),
+							JSON.stringify(
+								convertManifestToJSON(manifestDefinition.manifest),
+								null,
+								"  ",
+							),
 						);
 
 						// Run package manager

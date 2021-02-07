@@ -2,13 +2,13 @@ import {ConfigCommentMap} from "@internal/codec-config";
 import {writeFile} from "@internal/fs";
 import {ConfigHandler} from "@internal/codec-config/types";
 import {AbsoluteFilePath} from "@internal/path";
-import {ProjectConfig} from "@internal/project";
+import {RawUserProjectConfig} from "@internal/project";
 import {DeepPartial} from "@internal/typescript-helpers";
 
 interface UpdateConfig {
-	config: Partial<ProjectConfig>;
+	config: Partial<RawUserProjectConfig>;
 	configPath: AbsoluteFilePath;
-	partial?: DeepPartial<ProjectConfig>;
+	partial?: DeepPartial<RawUserProjectConfig>;
 	configHandler: ConfigHandler;
 	comments?: ConfigCommentMap;
 }

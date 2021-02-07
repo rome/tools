@@ -67,25 +67,41 @@ Show the config location that would be modified.
 
 #### `rome init`
 
-This command assists in the creation of a new Rome project. Actions that are performed:
+This command assists in the creation of a new Rome project. The command will
+ask few questions about coding style and configuration extension.
+
+Actions that are performed:
 
  - `rome.rjson` is created that serves as your [project configuration](#project-configuration).
  - `.editorconfig` is created that correctly sets indentation for editors that support [EditorConfig](https://editorconfig.org/).
 
-**Flags**
-
-- `--apply`
-
-Additional operations are applied with this flag:
-
- - `rome check --apply` is ran which will automatically format and autofix your files.
- - Global variables are extracted from previous errors and automatically added to your project config.
-
-**Uncomitted changes and `--apply`**
-
-Since this command can be destructive and may have unintended consequences, we check if you have any uncomitted changes. It's important to make sure you have everything committed in case you aren't happy with the effects of running this command. ie. you run into a bug, you don't like Rome, or want to try it some other time. You can bypass this restriction by adding the `--allow-dirty` flag.
+The command only works on projects that don't have Rome configuration.
 
 {% include docs/cli-screenshots/init.md %}
+
+#### `rome auto-config`
+
+This command is useful to "fix" some issues inside the projects. Rome will scan your project
+and detect the configuration of your existing project, and craft some configuration setting
+tailored on your project.
+
+**Flags**
+
+- `--allowDirty` bypasses the VCS check, allowing to perform the command on a working
+directory with uncommitted files
+
+**Uncommitted changes and `--allowDirty`**
+
+Since this command can be destructive and may have unintended consequences,
+we check if you have any uncommitted changes. It's important to make sure you have everything committed in case
+you aren't happy with the effects of running this command. ie. you run into a bug,
+you don't like Rome, or want to try it some other time.
+
+Operations are applied with this command:
+
+- `rome check --apply` is ran which will automatically format and autofix your files.
+- Global variables are extracted from previous errors and automatically added to your project config.
+- Invalid licenses found inside the dependencies of the project are stored in the configuration file.
 
 #### `rome logs`
 

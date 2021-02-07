@@ -1,5 +1,5 @@
 import {createLocalCommand} from "@internal/core/client/commands";
-import {commandCategories} from "@internal/core/common/commands";
+import {CommandName, commandCategories} from "@internal/core/common/commands";
 import {markup} from "@internal/markup";
 import ClientRequest from "@internal/core/client/ClientRequest";
 import {consumeUnknown} from "@internal/consume";
@@ -126,7 +126,7 @@ export default createLocalCommand({
 
 										await req.client.query(
 											{
-												commandName: command,
+												commandName: command as CommandName,
 												args,
 											},
 											"server",
