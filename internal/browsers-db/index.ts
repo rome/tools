@@ -1,7 +1,9 @@
-/* GENERATED:START(hash:3f42659e9ff5ed1dea844f26004131b1fb419a2d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/browsers-db` to update. */
-export const version = "1.0.30001183";
+/* GENERATED:START(hash:8db8612e2f429916dd2eb40e3ae50cc75650d293,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/browsers-db` to update. */
+export const version = "1.0.30001185";
 /* GENERATED:END(id:main) */
 
-export {default as data} from "./data";
+// @ts-ignore
+export {default as data} from "./data.rjson";
 
-export {default as regions} from "./regions";
+// @ts-ignore
+export {default as regions} from "./regions.rjson";

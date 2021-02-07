@@ -295,12 +295,12 @@ export async function main() {
 		"version",
 	).asString();
 	if (currentVersion !== version) {
-		reporter.success(`Update found! ${currentVersion} -> ${version}`);
-		await updateVersion(version);
+		reporter.success(`[browsers-db] Update found! ${currentVersion} -> ${version}`);
 		await updateData();
 		await updateRegions();
+		await updateVersion(version);
 	} else {
-		reporter.success(`Already using latest version! ${version}`);
+		reporter.success(`[browsers-db] Already using latest version! ${version}`);
 	}
 }
 
@@ -367,12 +367,12 @@ async function updateData() {
 
 	await modifyGeneratedFile(
 		{
-			path: browsersDbFolder.append("data.ts"),
+			path: browsersDbFolder.append("data.rjson"),
 			scriptName: "generated-files/browsers-db",
 		},
 		async () => {
 			return {
-				lines: [`export default ${JSON.stringify(mapToObject(data))}`],
+				lines: [JSON.stringify(mapToObject(data))],
 				hash: JSON.stringify(mapToObject(data)),
 			};
 		},
@@ -495,12 +495,12 @@ async function updateRegions() {
 
 	await modifyGeneratedFile(
 		{
-			path: browsersDbFolder.append("regions.ts"),
+			path: browsersDbFolder.append("regions.rjson"),
 			scriptName: "generated-files/browsers-db",
 		},
 		async () => {
 			return {
-				lines: [`export default ${JSON.stringify(mapToObject(regionsUsage))}`],
+				lines: [JSON.stringify(mapToObject(regionsUsage))],
 				hash: JSON.stringify(mapToObject(regionsUsage)),
 			};
 		},
