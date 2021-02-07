@@ -14,7 +14,7 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {Consumer} from "@internal/consume";
-import {Dict, RequiredProps} from "@internal/typescript-helpers";
+import {Dict, RequiredProps, DeepPartial} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 
@@ -46,6 +46,10 @@ export type DependenciesExceptions = {
 
 export type ProjectConfigPresetNames = "electron" | "cypress" | "jest";
 
+type Enableable = {
+	enabled: boolean;
+};
+
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
 	presets: ProjectConfigPresetNames[];
@@ -55,8 +59,7 @@ export type ProjectConfigObjects = {
 	bundler: {
 		externals: string[];
 	};
-	format: {
-		enabled: boolean;
+	format: Enableable & {
 		indentStyle: "tab" | "space";
 		indentSize: number;
 	};
@@ -66,8 +69,7 @@ export type ProjectConfigObjects = {
 		requireSuppressionExplanations: boolean;
 		disabledRules: LintRuleName[];
 	};
-	typeCheck: {
-		enabled: boolean;
+	typeCheck: Enableable & {
 		libs: AbsoluteFilePathSet;
 	};
 	tests: {
@@ -85,17 +87,16 @@ export type ProjectConfigObjects = {
 		maxSize: number;
 		vendorPath: AbsoluteFilePath;
 	};
-	dependencies: {
-		enabled: boolean;
+	dependencies: Enableable & {
 		exceptions: DependenciesExceptions;
 	};
 	targets: Map<string, ProjectConfigTarget>;
 };
 
 export type ProjectConfigIntegrations = {
-	eslint: {
-		enabled: boolean;
-	};
+	eslint: Enableable;
+	typescriptChecker: Enableable;
+	prettier: Enableable;
 };
 
 export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
@@ -152,66 +153,64 @@ export type ProjectConfig = ProjectConfigBase &
 
 // The actual type that we allow users to specify their configuration
 // Types are deliberately wider than they need to be to more accurately represent how they will be provided. ie. `string` rather than string literals
-export type RawUserProjectConfig = {
-	name?: string;
-	version?: string;
-	root?: boolean;
-	extends?: boolean;
-	cache?: {};
-	resolver?: {};
-	compiler?: {};
-	bundler?: {
-		externals?: string[];
+export type RawUserProjectConfig = DeepPartial<{
+	name: string;
+	version: string;
+	root: boolean;
+	extends: boolean;
+	cache: {};
+	resolver: {};
+	compiler: {};
+	bundler: {
+		externals: string[];
 	};
-	typeChecking?: {
-		enabled?: boolean;
-		libs?: string[];
+	typeChecking: Enableable & {
+		libs: string[];
 	};
-	dependencies?: {
-		enabled?: boolean;
-		exceptions?: {
-			invalidLicenses?: {
+	dependencies: Enableable & {
+		exceptions: {
+			invalidLicenses: {
 				[key: string]: string[];
 			};
 		};
 	};
-	lint?: {
-		ignore?: string[];
-		globals?: string[];
-		disabledRules?: string[];
-		requireSuppressionExplanations?: boolean;
+	lint: {
+		ignore: string[];
+		globals: string[];
+		disabledRules: string[];
+		requireSuppressionExplanations: boolean;
 	};
 	format: {
-		enabled?: boolean;
-		indentStyle?: string;
-		indentSize?: number;
+		enabled: boolean;
+		indentStyle: string;
+		indentSize: number;
 	};
-	tests?: {
-		ignore?: string[];
+	tests: {
+		ignore: string[];
 	};
-	develop?: {
-		serveStatic?: boolean;
+	develop: {
+		serveStatic: boolean;
 	};
-	files?: {
-		vendorPath?: string;
-		maxSize?: number;
-		maxSizeIgnore?: string[];
-		assetExtensions?: string[];
+	files: {
+		vendorPath: string;
+		maxSize: number;
+		maxSizeIgnore: string[];
+		assetExtensions: string[];
 	};
-	vcs?: {
-		root?: string;
+	vcs: {
+		root: string;
 	};
-	targets?: {
+	targets: {
 		[key: string]: {
-			constraints?: string[];
+			constraints: string[];
 		};
 	};
-	integrations?: {
-		eslint?: {
-			enabled?: boolean;
-		};
+	integrations: {
+		eslint: Enableable;
+		typescriptChecker: Enableable;
+		prettier: Enableable;
 	};
-};
+}>;
 
 export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
 	return {
@@ -277,6 +276,12 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		targets: new Map(),
 		integrations: {
 			eslint: {
+				enabled: false,
+			},
+			typescriptChecker: {
+				enabled: false,
+			},
+			prettier: {
 				enabled: false,
 			},
 		},

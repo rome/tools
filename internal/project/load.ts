@@ -191,6 +191,8 @@ export async function normalizeProjectConfig(
 		targets: new Map(),
 		integrations: {
 			eslint: {},
+			typescriptChecker: {},
+			prettier: {},
 		},
 	};
 
@@ -651,6 +653,14 @@ function mergePartialConfig<
 			eslint: {
 				...a.integrations.eslint,
 				...b.integrations.eslint,
+			},
+			typescriptChecker: {
+				...a.integrations.typescriptChecker,
+				...b.integrations.typescriptChecker,
+			},
+			prettier: {
+				...a.integrations.prettier,
+				...b.integrations.prettier,
 			},
 		},
 	};
