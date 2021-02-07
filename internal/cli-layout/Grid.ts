@@ -721,7 +721,9 @@ export default class Grid {
 			// Add middle lines
 			for (let i = ob1Get1(start.line) + 1; i < ob1Get1(end.line); i++) {
 				const line = ob1Coerce1(i);
-				this.setRange(line, ob1Coerce1(1), this.getLineWidth(line), ancestry);
+				const start = ob1Coerce1(1);
+				const end = ob1Inc(this.getLineWidth(line));
+				this.setRange(line, start, end, ancestry);
 			}
 
 			// Add last line
