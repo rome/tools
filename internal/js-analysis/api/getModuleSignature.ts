@@ -15,7 +15,7 @@ import {JSRoot} from "@internal/ast";
 import buildGraph from "./buildGraph";
 import T from "../types/T";
 import E from "../types/errors/E";
-import {TransformProjectDefinition} from "@internal/compiler";
+import {CompilerProject} from "@internal/compiler";
 import {Dict} from "@internal/typescript-helpers";
 
 const exportsCache: WeakMap<JSRoot, ModuleSignature> = new WeakMap();
@@ -23,7 +23,7 @@ const exportsCache: WeakMap<JSRoot, ModuleSignature> = new WeakMap();
 export default async function getModuleSignature(
 	opts: {
 		ast: JSRoot;
-		project: TransformProjectDefinition;
+		project: CompilerProject;
 		provider: CheckProvider;
 	},
 ): Promise<ModuleSignature> {

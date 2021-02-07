@@ -6,7 +6,7 @@
  */
 
 import T from "./types/T";
-import {CompilerContext, TransformProjectDefinition} from "@internal/compiler";
+import {CompilerContext, CompilerProject} from "@internal/compiler";
 import {JSRoot} from "@internal/ast";
 import Graph from "./Graph";
 import Evaluator from "./Evaluator";
@@ -21,7 +21,7 @@ const statuses = {
 type HubStatus = number;
 
 export default class Hub {
-	constructor(ast: JSRoot, project: TransformProjectDefinition) {
+	constructor(ast: JSRoot, project?: CompilerProject) {
 		this.context = new CompilerContext({
 			ast,
 			project,

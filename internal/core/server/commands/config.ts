@@ -19,7 +19,7 @@ import {
 	json,
 	stringifyConfig,
 } from "@internal/codec-config";
-import {readFileText, writeFile} from "@internal/fs";
+import {CachedFileReader, readFileText, writeFile} from "@internal/fs";
 import {
 	loadUserConfig,
 	normalizeUserConfig,
@@ -154,16 +154,20 @@ async function runCommand(
 			const project = await req.assertClientCwdProject();
 			const meta = assertHardMeta(project.meta);
 			const {configPath, configSourceSubKey} = meta;
+			const rootProject = project.root ?? project;
 
 			await handleConfig(
 				configPath,
 				configSourceSubKey,
-				async (res, stringified) => {
+				async (res) => {
 					await normalizeProjectConfig(
 						res,
-						meta.configPath,
-						stringified,
-						meta.projectDirectory,
+						{
+							reader: new CachedFileReader(),
+							configPath: meta.configPath,
+							projectDirectory: project.directory,
+							rootProjectDirectory: rootProject.directory,
+						},
 					);
 				},
 			);

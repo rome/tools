@@ -14,7 +14,7 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {Consumer} from "@internal/consume";
-import {RequiredProps} from "@internal/typescript-helpers";
+import {Dict, RequiredProps} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 
@@ -27,6 +27,7 @@ export type ProjectDefinition = {
 	packages: Map<string, ManifestDefinition>;
 	manifests: Map<number, ManifestDefinition>;
 	children: Set<ProjectDefinition>;
+	root: undefined | ProjectDefinition;
 	parent: undefined | ProjectDefinition;
 	initialized: boolean;
 	partial: boolean;
@@ -91,6 +92,12 @@ export type ProjectConfigObjects = {
 	targets: Map<string, ProjectConfigTarget>;
 };
 
+export type ProjectConfigIntegrations = {
+	eslint: {
+		enabled: boolean;
+	};
+};
+
 export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
 
 export type ProjectConfigTarget = {
@@ -109,6 +116,12 @@ export type PartialProjectConfig = Partial<ProjectConfigBase> & {
 	[Key in keyof ProjectConfigObjects]: PartialProjectValue<
 		ProjectConfigObjects[Key]
 	>
+} & {
+	integrations: {
+		[Key in keyof ProjectConfigIntegrations]: PartialProjectValue<
+			ProjectConfigIntegrations[Key]
+		>
+	};
 };
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
@@ -119,7 +132,7 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
 export type ProjectConfigMeta = {
 	projectDirectory: undefined | AbsoluteFilePath;
 	configPath: undefined | AbsoluteFilePath;
-	configHashes: string[];
+	configCacheKeys: Dict<string>;
 	configDependencies: AbsoluteFilePathSet;
 	consumer: undefined | Consumer;
 	configSourceSubKey: undefined | string;
@@ -132,13 +145,79 @@ export type ProjectConfigMetaHard = RequiredProps<
 >;
 
 // Final project config
-export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects;
+export type ProjectConfig = ProjectConfigBase &
+	ProjectConfigObjects & {
+		integrations: ProjectConfigIntegrations;
+	};
+
+// The actual type that we allow users to specify their configuration
+// Types are deliberately wider than they need to be to more accurately represent how they will be provided. ie. `string` rather than string literals
+export type RawUserProjectConfig = {
+	name?: string;
+	version?: string;
+	root?: boolean;
+	extends?: boolean;
+	cache?: {};
+	resolver?: {};
+	compiler?: {};
+	bundler?: {
+		externals?: string[];
+	};
+	typeChecking?: {
+		enabled?: boolean;
+		libs?: string[];
+	};
+	dependencies?: {
+		enabled?: boolean;
+		exceptions?: {
+			invalidLicenses?: {
+				[key: string]: string[];
+			};
+		};
+	};
+	lint?: {
+		ignore?: string[];
+		globals?: string[];
+		disabledRules?: string[];
+		requireSuppressionExplanations?: boolean;
+	};
+	format: {
+		enabled?: boolean;
+		indentStyle?: string;
+		indentSize?: number;
+	};
+	tests?: {
+		ignore?: string[];
+	};
+	develop?: {
+		serveStatic?: boolean;
+	};
+	files?: {
+		vendorPath?: string;
+		maxSize?: number;
+		maxSizeIgnore?: string[];
+		assetExtensions?: string[];
+	};
+	vcs?: {
+		root?: string;
+	};
+	targets?: {
+		[key: string]: {
+			constraints?: string[];
+		};
+	};
+	integrations?: {
+		eslint?: {
+			enabled?: boolean;
+		};
+	};
+};
 
 export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
 	return {
 		projectDirectory: undefined,
 		configPath: undefined,
-		configHashes: [],
+		configCacheKeys: {},
 		configDependencies: new AbsoluteFilePathSet(),
 		consumer: undefined,
 		configSourceSubKey: undefined,
@@ -196,5 +275,10 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			maxSize: 40_000_000, // 40 megabytes
 		},
 		targets: new Map(),
+		integrations: {
+			eslint: {
+				enabled: false,
+			},
+		},
 	};
 }

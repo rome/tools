@@ -44,7 +44,7 @@ export default async function compile(
 	const formatted = formatAST(
 		transformedAst,
 		{
-			projectConfig: project.config,
+			projectConfig: project?.config,
 			typeAnnotations: false,
 			indent: req.stage === "compileForBundle" ? 1 : 0,
 			sourceMaps: true,

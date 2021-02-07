@@ -50,12 +50,17 @@ import {
 	getFileHandlerFromPath,
 } from "../../common/file-handlers/index";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {createDirectory, readFileText} from "@internal/fs";
+import {
+	CachedFileReader,
+	FileNotFound,
+	createDirectory,
+	readFileText,
+} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {json} from "@internal/codec-config";
 import {VCSClient, getVCSClient} from "@internal/vcs";
 import {FilePathLocker} from "@internal/async/lockers";
-import {FileNotFound} from "@internal/fs/FileNotFound";
+
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
@@ -434,16 +439,7 @@ export default class ProjectManager {
 			// Notify all workers that it should delete the project
 			for (const {bridge} of this.server.workerManager.getWorkers()) {
 				// Evict project
-				bridge.events.updateProjects.send({
-					projects: [
-						{
-							id: evictProjectId,
-							directory: project.directory,
-							configHashes: [],
-							config: undefined,
-						},
-					],
-				});
+				bridge.events.evictProject.send(evictProjectId);
 
 				// Evict packages
 				bridge.events.updateManifests.send({
@@ -569,6 +565,7 @@ export default class ProjectManager {
 			isPartial: boolean;
 			projectDirectory: AbsoluteFilePath;
 			configPath: AbsoluteFilePath;
+			reader: CachedFileReader;
 		},
 	): Promise<void> {
 		const {projectDirectory, configPath, isPartial} = opts;
@@ -584,6 +581,7 @@ export default class ProjectManager {
 				const {config, meta} = await loadCompleteProjectConfig(
 					projectDirectory,
 					configPath,
+					opts.reader,
 				);
 
 				await this.declareProject({
@@ -619,8 +617,15 @@ export default class ProjectManager {
 			}
 		}
 
-		// Declare the project
 		const parentProject = this.findLoadedProject(projectDirectory.getParent());
+
+		// The root project is the highest reachable project. The `root` project will not have the `root` property visible.
+		const rootProject =
+			parentProject === undefined
+				? undefined
+				: parentProject.root ?? parentProject;
+
+		// Declare the project
 		const project: ProjectDefinition = {
 			config,
 			meta,
@@ -628,6 +633,7 @@ export default class ProjectManager {
 			id: this.projectIdCounter++,
 			packages: new Map(),
 			manifests: new Map(),
+			root: rootProject,
 			parent: parentProject,
 			children: new Set(),
 			initialized: false,
@@ -715,14 +721,16 @@ export default class ProjectManager {
 		}
 
 		const manifestsSerial: WorkerPartialManifests = [];
-		const projectsSerial: WorkerProjects = [];
+		const workerProjects: WorkerProjects = new Map();
 		for (const project of projects) {
-			projectsSerial.push({
-				configHashes: project.meta.configHashes,
-				config: project.config,
-				id: project.id,
-				directory: project.directory,
-			});
+			workerProjects.set(
+				project.id,
+				{
+					configCacheKeys: project.meta.configCacheKeys,
+					config: project.config,
+					directory: project.directory,
+				},
+			);
 
 			for (const def of project.manifests.values()) {
 				manifestsSerial.push({
@@ -735,9 +743,7 @@ export default class ProjectManager {
 		const promises = [];
 
 		for (const worker of workers) {
-			promises.push(
-				worker.bridge.events.updateProjects.call({projects: projectsSerial}),
-			);
+			promises.push(worker.bridge.events.updateProjects.call(workerProjects));
 			promises.push(
 				worker.bridge.events.updateManifests.call({
 					manifests: manifestsSerial,

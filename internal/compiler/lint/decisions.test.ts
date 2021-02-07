@@ -4,7 +4,6 @@ import {parseDecisionStrings} from "@internal/compiler";
 import {createAbsoluteFilePath} from "@internal/path";
 import lint from "./index";
 import {parseJS} from "@internal/js-parser";
-import {createDefaultProjectConfig} from "@internal/project";
 import {ob1Number0, ob1Number1} from "@internal/ob1";
 
 test(
@@ -30,11 +29,6 @@ test(
 
 		const res = await lint({
 			applySafeFixes: true,
-			project: {
-				configHashes: [],
-				directory: undefined,
-				config: createDefaultProjectConfig(),
-			},
 			options: {
 				lint: compilerOptions,
 			},

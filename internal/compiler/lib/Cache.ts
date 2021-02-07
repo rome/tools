@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformProjectDefinition, TransformRequest} from "../types";
+import {CompilerProject, TransformRequest} from "../types";
 import {AnyRoot} from "@internal/ast";
 import {JSONObject} from "@internal/codec-config";
 
@@ -15,7 +15,7 @@ type CacheQuery = {
 };
 
 let projectIdCounter = 0;
-const projectToId: WeakMap<TransformProjectDefinition, number> = new WeakMap();
+const projectToId: WeakMap<CompilerProject, number> = new WeakMap();
 
 export default class Cache<Result> {
 	constructor() {
@@ -31,14 +31,16 @@ export default class Cache<Result> {
 		const {ast, project, options} = req;
 		const keyParts: string[] = [];
 
-		let projectId = projectToId.get(project);
-		if (projectId === undefined) {
-			projectId = projectIdCounter++;
-			projectToId.set(project, projectId);
-		}
+		if (project !== undefined) {
+			let projectId = projectToId.get(project);
+			if (projectId === undefined) {
+				projectId = projectIdCounter++;
+				projectToId.set(project, projectId);
+			}
 
-		// Add project config cache counter
-		keyParts.push(String(projectId));
+			// Add project config cache counter
+			keyParts.push(String(projectId));
+		}
 
 		// Add options if they exist
 		const extra = {

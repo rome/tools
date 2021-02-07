@@ -36,13 +36,17 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		return this.buffer.byteLength - this.writeOffset;
 	}
 
-	private assertWritableSize(size: number) {
+	private assertWritableSize(size: number): number {
 		const remaining = this.getWritableSize();
 
 		if (remaining < size) {
 			throw new Error(
 				`Wanted to write ${size} bytes but only have ${remaining} remaining`,
 			);
+		} else {
+			const currWriteOffset = this.writeOffset;
+			this.writeOffset += size;
+			return currWriteOffset;
 		}
 	}
 
@@ -51,15 +55,17 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 			return;
 		}
 
-		const size = buf.byteLength;
-		this.assertWritableSize(size);
-		this.bytes.set(buf, this.writeOffset);
-		this.writeOffset += size;
+		const offset = this.assertWritableSize(buf.byteLength);
+		this.bytes.set(buf, offset);
 	}
 
 	protected appendString(text: string, size: number) {
-		utf8Encode(text, this.bytes, this.writeOffset, size);
-		this.writeOffset += size;
+		if (size === 0) {
+			return;
+		}
+
+		const offset = this.assertWritableSize(size);
+		utf8Encode(text, this.bytes, offset, size);
 	}
 
 	protected writeCode(code: number) {
@@ -67,18 +73,16 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 	}
 
 	protected writeByte(value: number) {
-		this.assertWritableSize(1);
-		this.view.setInt8(this.writeOffset, value);
-		this.writeOffset++;
+		const offset = this.assertWritableSize(1);
+		this.view.setInt8(offset, value);
 	}
 
 	protected writeInt(value: bigint | number, size: IntSize) {
-		this.assertWritableSize(size);
+		const offset = this.assertWritableSize(size);
 
 		if (typeof value === "bigint") {
 			if (size === 8) {
-				this.view.setBigInt64(this.writeOffset, value);
-				this.writeOffset += size;
+				this.view.setBigInt64(offset, value);
 				return;
 			} else {
 				throw new Error(`Expected size 8 for bigint but got ${size}`);
@@ -87,30 +91,27 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 
 		switch (size) {
 			case 1: {
-				this.view.setInt8(this.writeOffset, value);
+				this.view.setInt8(offset, value);
 				break;
 			}
 
 			case 2: {
-				this.view.setInt16(this.writeOffset, value);
+				this.view.setInt16(offset, value);
 				break;
 			}
 
 			case 4: {
-				this.view.setInt32(this.writeOffset, value);
+				this.view.setInt32(offset, value);
 				break;
 			}
 
 			default:
 				throw new Error(`Unsupported integer size ${size}`);
 		}
-
-		this.writeOffset += size;
 	}
 
 	protected writeFloat(value: number) {
-		this.assertWritableSize(8);
-		this.view.setFloat64(this.writeOffset, value);
-		this.writeOffset += 8;
+		const offset = this.assertWritableSize(8);
+		this.view.setFloat64(offset, value);
 	}
 }

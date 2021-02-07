@@ -51,7 +51,8 @@ function getVisitors(config: ProjectConfig): AnyVisitor[] {
 const lintCache: Cache<LintResult> = new Cache();
 
 export default async function lint(req: LintRequest): Promise<LintResult> {
-	const {ast, project, applySafeFixes, options, suppressionExplanation} = req;
+	const {ast, applySafeFixes, options, suppressionExplanation} = req;
+	const project = CompilerContext.normalizeProject(req.project);
 
 	const query = Cache.buildQuery(req, {applySafeFixes, suppressionExplanation});
 	const cached = lintCache.get(query);

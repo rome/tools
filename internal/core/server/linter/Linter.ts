@@ -32,7 +32,7 @@ import {
 } from "@internal/compiler";
 import {markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
-import {FileNotFound} from "@internal/fs/FileNotFound";
+import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
 
 type LintWatchChanges = {

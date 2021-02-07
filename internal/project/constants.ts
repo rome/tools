@@ -5,6 +5,17 @@ import {
 } from "@internal/path";
 import {CONFIG_EXTENSIONS} from "@internal/codec-config";
 
+export const VCS_IGNORE_FILENAMES = [".gitignore", ".hgignore"];
+
+export const ESLINT_CONFIG_FILENAMES: string[] = [
+	".eslintrc.js",
+	".eslintrc.cjs",
+	".eslintrc.yaml",
+	".eslintrc.yml",
+	".eslintrc.json",
+	".eslintignore",
+];
+
 export const PROJECT_CONFIG_PACKAGE_JSON_FIELD = "rome";
 export const PROJECT_CONFIG_DIRECTORY = ".config";
 export const PROJECT_CONFIG_FILENAMES: string[] = [];

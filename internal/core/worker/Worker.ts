@@ -12,6 +12,7 @@ import WorkerBridge, {
 	WorkerParseOptions,
 	WorkerPartialManifest,
 	WorkerPartialManifests,
+	WorkerProject,
 	WorkerProjects,
 } from "../common/bridges/WorkerBridge";
 import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
@@ -34,7 +35,7 @@ import {
 } from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
-import {TransformProjectDefinition} from "@internal/compiler";
+import {CompilerProject} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
@@ -51,7 +52,7 @@ export type ParseResult = {
 	ast: AnyRoot;
 	integrity: undefined | DiagnosticIntegrity;
 	mtimeNs: bigint;
-	project: TransformProjectDefinition;
+	project: CompilerProject;
 	path: AbsoluteFilePath;
 	lastAccessed: number;
 	sourceText: string;
@@ -148,7 +149,7 @@ export default class Worker {
 	private cache: WorkerCache;
 	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
-	private projects: Map<number, TransformProjectDefinition>;
+	private projects: WorkerProjects;
 	private astCache: AbsoluteFilePathMap<ParseResult>;
 	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
@@ -234,8 +235,12 @@ export default class Worker {
 			return this.api.moduleSignatureJS(payload.ref, payload.parseOptions);
 		});
 
-		bridge.events.updateProjects.subscribe((payload) => {
-			return this.updateProjects(payload.projects);
+		bridge.events.evictProject.subscribe((id) => {
+			return this.evictProject(id);
+		});
+
+		bridge.events.updateProjects.subscribe((projects) => {
+			return this.updateProjects(projects);
 		});
 
 		bridge.events.setLogs.subscribe((enabled) => {
@@ -578,7 +583,7 @@ export default class Worker {
 		return res;
 	}
 
-	public getProject(id: number): TransformProjectDefinition {
+	public getProject(id: number): WorkerProject {
 		const config = this.projects.get(id);
 		if (config === undefined) {
 			throw new Error(
@@ -610,20 +615,13 @@ export default class Worker {
 		}
 	}
 
+	public evictProject(projectId: number) {
+		this.projects.delete(projectId);
+	}
+
 	public updateProjects(projects: WorkerProjects) {
-		for (const {config, directory, configHashes, id} of projects) {
-			if (config === undefined) {
-				this.projects.delete(id);
-			} else {
-				this.projects.set(
-					id,
-					{
-						directory,
-						configHashes,
-						config,
-					},
-				);
-			}
+		for (const [id, project] of projects) {
+			this.projects.set(id, project);
 		}
 	}
 }

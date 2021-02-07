@@ -9,12 +9,12 @@ import {AnyJSStatement, JSRoot} from "@internal/ast";
 import {CheckProvider} from "../types";
 import {ModuleSignatureManager} from "../Evaluator";
 import Hub from "../Hub";
-import {TransformProjectDefinition} from "@internal/compiler";
+import {CompilerProject} from "@internal/compiler";
 
 export default async function buildGraph(
 	opts: {
 		ast: JSRoot;
-		project: TransformProjectDefinition;
+		project?: CompilerProject;
 		connected: boolean;
 		provider: CheckProvider;
 	},

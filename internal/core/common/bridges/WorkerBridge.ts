@@ -11,6 +11,7 @@ import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {
 	BundleCompileOptions,
 	CompileResult,
+	CompilerProject,
 	LintCompilerOptions,
 	TransformStageName,
 } from "@internal/compiler";
@@ -30,17 +31,16 @@ import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
 import {Number0} from "@internal/ob1";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
-import {ProjectConfig} from "@internal/project";
 import {WorkerBuffer} from "@internal/core/worker/Worker";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {FileNotFound} from "@internal/fs";
+import {Dict} from "@internal/typescript-helpers";
 
-export type WorkerProjects = {
-	id: number;
-	directory: AbsoluteFilePath;
-	configHashes: string[];
-	config: undefined | ProjectConfig;
-}[];
+export type WorkerProject = CompilerProject & {
+	configCacheKeys: Dict<string>;
+};
+
+export type WorkerProjects = Map<number, WorkerProject>;
 
 export type WorkerPartialManifest = {
 	path: AbsoluteFilePath;
@@ -165,12 +165,9 @@ export default createBridge({
 	client: {
 		setLogs: createBridgeEventDeclaration<boolean, void>(),
 
-		updateProjects: createBridgeEventDeclaration<
-			{
-				projects: WorkerProjects;
-			},
-			void
-		>(),
+		evictProject: createBridgeEventDeclaration<number, void>(),
+
+		updateProjects: createBridgeEventDeclaration<WorkerProjects, void>(),
 
 		updateManifests: createBridgeEventDeclaration<
 			{

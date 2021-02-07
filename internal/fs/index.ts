@@ -21,7 +21,7 @@ import {
 	setNodeErrorProps,
 } from "@internal/v8";
 import fs = require("fs");
-import {FileNotFound} from "@internal/fs/FileNotFound";
+import {FileNotFound} from "@internal/fs";
 
 // Most fs errors don't have a stack trace. This is due to the way that node queues file operations.
 // Capturing a stacktrace would be very expensive.
@@ -54,7 +54,8 @@ function wrapReject<T>(promise: Promise<T>, addFrames: number): Promise<T> {
 	});
 }
 
-export {FileNotFound} from "./FileNotFound";
+export {default as FileNotFound} from "./FileNotFound";
+export {default as CachedFileReader} from "./CachedFileReader";
 
 // Reexported types: Only file that ever imports the fs module is this one
 export type FSHandle = fs.promises.FileHandle;
