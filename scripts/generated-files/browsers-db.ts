@@ -295,7 +295,9 @@ export async function main() {
 		"version",
 	).asString();
 	if (currentVersion !== version) {
-		reporter.success(`[browsers-db] Update found! ${currentVersion} -> ${version}`);
+		reporter.success(
+			`[browsers-db] Update found! ${currentVersion} -> ${version}`,
+		);
 		await updateData();
 		await updateRegions();
 		await updateVersion(version);
