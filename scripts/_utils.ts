@@ -144,8 +144,21 @@ type CommentOptions = {
 type CommentDelimiter = "SLASH" | "ARROW" | "HASH";
 
 function determineDelimiter(path: AbsoluteFilePath): CommentDelimiter {
-	if (path.hasExtension("ts") || path.hasExtension("js") || path.hasExtension("rjson")) return "SLASH";
-	if (path.hasExtension("sh") || path.hasExtension("yml") || path.hasExtension("yaml") || path.hasExtension("toml")) return "HASH";
+	if (
+		path.hasExtension("ts") ||
+		path.hasExtension("js") ||
+		path.hasExtension("rjson")
+	) {
+		return "SLASH";
+	}
+	if (
+		path.hasExtension("sh") ||
+		path.hasExtension("yml") ||
+		path.hasExtension("yaml") ||
+		path.hasExtension("toml")
+	) {
+		return "HASH";
+	}
 	return "ARROW";
 }
 
@@ -171,28 +184,34 @@ function wrapComment(value: string, delimiter: CommentDelimiter): string {
 	let comment = "";
 
 	switch (delimiter) {
-		case "SLASH":
+		case "SLASH": {
 			comment += "/* ";
 			break;
-		case "ARROW":
+		}
+		case "ARROW": {
 			comment += "<!-- ";
 			break;
-		case "HASH":
+		}
+		case "HASH": {
 			comment += "# ";
 			break;
+		}
 	}
 	comment += value;
 
 	switch (delimiter) {
-		case "SLASH":
+		case "SLASH": {
 			comment += " */";
 			break;
-		case "ARROW":
+		}
+		case "ARROW": {
 			comment += " -->";
 			break;
-		case "HASH":
+		}
+		case "HASH": {
 			comment += " #";
 			break;
+		}
 	}
 	return comment;
 }
