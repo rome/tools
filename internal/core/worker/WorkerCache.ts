@@ -312,7 +312,7 @@ class CacheFile {
 	private async createFreshPortableMetadata(): Promise<PortableCacheMetadataHashless> {
 		const {ref} = this;
 		const project = this.worker.getProject(ref.project);
-		const configCacheKeys: Array<string> = [];
+		const configCacheKeys: string[] = [];
 
 		for (const key of Object.keys(project.configCacheKeys).sort()) {
 			configCacheKeys.push(`${key}:${project.configCacheKeys[key]}`);

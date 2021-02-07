@@ -32,9 +32,12 @@ import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
 import {CachedFileReader, exists, lstat, readDirectory} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
-import {PROJECT_CONFIG_PACKAGE_JSON_FIELD, VCS_IGNORE_FILENAMES} from "./constants";
+import {
+	PROJECT_CONFIG_PACKAGE_JSON_FIELD,
+	VCS_IGNORE_FILENAMES,
+} from "./constants";
 import {lintRuleNames} from "@internal/compiler";
-import { sha256 } from "@internal/string-utils";
+import {sha256} from "@internal/string-utils";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -114,14 +117,19 @@ export async function loadCompleteProjectConfig(
 	}
 
 	// Calculate config hash keys
-	await Promise.all(Array.from(meta.configDependencies, async path => {
-		if (await exists(path)) {
-			const content = await reader.readFile(path);
-			const hash = sha256.sync(content);
-			const key = projectDirectory.relative(path).join();
-			meta.configCacheKeys[key] = hash;
-		}
-	}));
+	await Promise.all(
+		Array.from(
+			meta.configDependencies,
+			async (path) => {
+				if (await exists(path)) {
+					const content = await reader.readFile(path);
+					const hash = sha256.sync(content);
+					const key = projectDirectory.relative(path).join();
+					meta.configCacheKeys[key] = hash;
+				}
+			},
+		),
+	);
 
 	return {
 		config,
@@ -136,7 +144,9 @@ type LoadProjectConfigContext = {
 	reader: CachedFileReader;
 };
 
-async function loadPartialProjectConfig(context: LoadProjectConfigContext): Promise<NormalizedPartial> {
+async function loadPartialProjectConfig(
+	context: LoadProjectConfigContext,
+): Promise<NormalizedPartial> {
 	const configFile = await context.reader.readFileText(context.configPath);
 	const res = consumeConfig({
 		path: context.configPath,
@@ -148,7 +158,7 @@ async function loadPartialProjectConfig(context: LoadProjectConfigContext): Prom
 
 export async function normalizeProjectConfig(
 	res: ConsumeConfigResult,
-	context: LoadProjectConfigContext
+	context: LoadProjectConfigContext,
 ): Promise<NormalizedPartial> {
 	const {configPath, projectDirectory, rootProjectDirectory} = context;
 	let {consumer} = res;
@@ -409,7 +419,13 @@ export async function normalizeProjectConfig(
 		}
 	}
 
-	meta.configDependencies = meta.configDependencies.concat(getParentConfigDependencies({projectDirectory, rootProjectDirectory, partialConfig: config}));
+	meta.configDependencies = meta.configDependencies.concat(
+		getParentConfigDependencies({
+			projectDirectory,
+			rootProjectDirectory,
+			partialConfig: config,
+		}),
+	);
 
 	// Need to get this before enforceUsedProperties so it will be flagged
 	const extendsProp = consumer.get("extends");
@@ -424,7 +440,11 @@ export async function normalizeProjectConfig(
 
 	if (extendsProp.exists()) {
 		for (const elem of extendsProp.asImplicitArray()) {
-			normalized = await extendProjectConfig(elem, {...context, projectDirectory, rootProjectDirectory}, normalized);
+			normalized = await extendProjectConfig(
+				elem,
+				{...context, projectDirectory, rootProjectDirectory},
+				normalized,
+			);
 		}
 	}
 
@@ -566,7 +586,9 @@ async function extendProjectConfig(
 type MergedPartialConfig<
 	A extends PartialProjectConfig,
 	B extends PartialProjectConfig
-> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]} & {integrations: A["integrations"] & B["integrations"]};
+> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]} & {
+	integrations: A["integrations"] & B["integrations"];
+};
 
 function mergePartialConfig<
 	A extends PartialProjectConfig,

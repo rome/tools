@@ -119,9 +119,9 @@ export type PartialProjectConfig = Partial<ProjectConfigBase> & {
 } & {
 	integrations: {
 		[Key in keyof ProjectConfigIntegrations]: PartialProjectValue<
-		ProjectConfigIntegrations[Key]
+			ProjectConfigIntegrations[Key]
 		>
-	},
+	};
 };
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
@@ -145,9 +145,10 @@ export type ProjectConfigMetaHard = RequiredProps<
 >;
 
 // Final project config
-export type ProjectConfig = ProjectConfigBase & ProjectConfigObjects & {
-	integrations: ProjectConfigIntegrations;
-};
+export type ProjectConfig = ProjectConfigBase &
+	ProjectConfigObjects & {
+		integrations: ProjectConfigIntegrations;
+	};
 
 // The actual type that we allow users to specify their configuration
 // Types are deliberately wider than they need to be to more accurately represent how they will be provided. ie. `string` rather than string literals
@@ -160,24 +161,24 @@ export type RawUserProjectConfig = {
 	resolver?: {};
 	compiler?: {};
 	bundler?: {
-		externals?: Array<string>;
+		externals?: string[];
 	};
 	typeChecking?: {
 		enabled?: boolean;
-		libs?: Array<string>;
+		libs?: string[];
 	};
 	dependencies?: {
 		enabled?: boolean;
 		exceptions?: {
 			invalidLicenses?: {
-				[key: string]: Array<string>;
+				[key: string]: string[];
 			};
 		};
 	};
 	lint?: {
-		ignore?: Array<string>;
-		globals?: Array<string>;
-		disabledRules?: Array<string>;
+		ignore?: string[];
+		globals?: string[];
+		disabledRules?: string[];
 		requireSuppressionExplanations?: boolean;
 	};
 	format: {
@@ -186,7 +187,7 @@ export type RawUserProjectConfig = {
 		indentSize?: number;
 	};
 	tests?: {
-		ignore?: Array<string>;
+		ignore?: string[];
 	};
 	develop?: {
 		serveStatic?: boolean;
@@ -194,15 +195,15 @@ export type RawUserProjectConfig = {
 	files?: {
 		vendorPath?: string;
 		maxSize?: number;
-		maxSizeIgnore?: Array<string>;
-		assetExtensions?: Array<string>;
+		maxSizeIgnore?: string[];
+		assetExtensions?: string[];
 	};
 	vcs?: {
 		root?: string;
 	};
 	targets?: {
 		[key: string]: {
-			constraints?: Array<string>;
+			constraints?: string[];
 		};
 	};
 	integrations?: {

@@ -34,7 +34,7 @@ import {RecoverySaveFile} from "@internal/core/server/fs/RecoveryStore";
 import {WorkerBuffer} from "@internal/core/worker/Worker";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {FileNotFound} from "@internal/fs";
-import { Dict } from "@internal/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 export type WorkerProject = CompilerProject & {
 	configCacheKeys: Dict<string>;
@@ -167,10 +167,7 @@ export default createBridge({
 
 		evictProject: createBridgeEventDeclaration<number, void>(),
 
-		updateProjects: createBridgeEventDeclaration<
-			WorkerProjects,
-			void
-		>(),
+		updateProjects: createBridgeEventDeclaration<WorkerProjects, void>(),
 
 		updateManifests: createBridgeEventDeclaration<
 			{

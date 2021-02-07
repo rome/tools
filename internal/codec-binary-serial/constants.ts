@@ -36,38 +36,52 @@ export function formatCode(code: number): string {
 export enum VALUE_CODES {
 	STREAM_HEADER,
 	MESSAGE_HEADER,
+
 	STRING,
-	ARRAY,
-	SET,
-	MAP,
-	OBJECT,
-	SYMBOL,
-	DATE,
 	TRUE,
 	FALSE,
 	NULL,
 	UNDEFINED,
+
+	SYMBOL,
+	DATE,
+	ERROR,
+	REGEXP,
+
+	ARRAY,
+	SET,
+	MAP,
+	OBJECT,
+	TEMPLATED_OBJECT_ARRAY,
+
 	INT8,
 	INT16,
 	INT32,
 	INT64,
 	FLOAT,
 	NAN,
+
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
 	NEGATIVE_ZERO,
+
 	FILE_PATH,
 	FILE_PATH_SET,
 	FILE_PATH_MAP,
-	ERROR,
-	REGEXP,
-	TEMPLATED_OBJECT_ARRAY,
+
 	REFERENCE,
 	DECLARE_REFERENCE,
+
 	ARRAY_BUFFER,
 	ARRAY_BUFFER_VIEW,
+
 	POSITION,
 	SOURCE_LOCATION,
+
+	// These save a single byte having to specify an Int8...
+	NEGATIVE_ONE,
+	POSITIVE_ZERO,
+	POSITIVE_ONE,
 }
 
 export function validateValueCode(code: number): VALUE_CODES {
@@ -107,6 +121,9 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.STREAM_HEADER:
 		case VALUE_CODES.POSITION:
 		case VALUE_CODES.SOURCE_LOCATION:
+		case VALUE_CODES.NEGATIVE_ONE:
+		case VALUE_CODES.POSITIVE_ZERO:
+		case VALUE_CODES.POSITIVE_ONE:
 			return code;
 
 		default:

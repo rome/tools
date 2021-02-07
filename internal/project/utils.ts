@@ -8,8 +8,16 @@
 import {Consumer} from "@internal/consume";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {PartialProjectConfig, ProjectConfigMeta, ProjectConfigMetaHard} from "./types";
-import {ESLINT_CONFIG_FILENAMES, PROJECT_CONFIG_FILENAMES, VCS_IGNORE_FILENAMES} from "./constants";
+import {
+	PartialProjectConfig,
+	ProjectConfigMeta,
+	ProjectConfigMetaHard,
+} from "./types";
+import {
+	ESLINT_CONFIG_FILENAMES,
+	PROJECT_CONFIG_FILENAMES,
+	VCS_IGNORE_FILENAMES,
+} from "./constants";
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
 	const {configPath, projectDirectory: directory, consumer} = meta;
@@ -79,11 +87,13 @@ export function mergeAbsoluteFilePathSets(
 }
 
 // Get an array of possible files in parent directories that will cause a project cache invalidation
-export function getParentConfigDependencies({projectDirectory, rootProjectDirectory, partialConfig}: {
-	projectDirectory: AbsoluteFilePath,
-	rootProjectDirectory: AbsoluteFilePath,
-	partialConfig: PartialProjectConfig,
-}): AbsoluteFilePathSet {
+export function getParentConfigDependencies(
+	{projectDirectory, rootProjectDirectory, partialConfig}: {
+		projectDirectory: AbsoluteFilePath;
+		rootProjectDirectory: AbsoluteFilePath;
+		partialConfig: PartialProjectConfig;
+	},
+): AbsoluteFilePathSet {
 	const deps: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	for (const directory of projectDirectory.getChain()) {
@@ -94,16 +104,17 @@ export function getParentConfigDependencies({projectDirectory, rootProjectDirect
 			break;
 		}
 
-		let basenames: Array<string> = [
-			"package.json",
-		];
+		let basenames: string[] = ["package.json"];
 
 		// If eslint integration is enabled then eslint config changes should cause invalid cache files
 		if (partialConfig.integrations.eslint.enabled) {
 			basenames = basenames.concat(ESLINT_CONFIG_FILENAMES);
 		}
 
-		if (partialConfig.vcs.root !== undefined && partialConfig.vcs.root.equal(directory)) {
+		if (
+			partialConfig.vcs.root !== undefined &&
+			partialConfig.vcs.root.equal(directory)
+		) {
 			basenames = basenames.concat(VCS_IGNORE_FILENAMES);
 		}
 

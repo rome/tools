@@ -154,8 +154,10 @@ export default class CompilerContext {
 	public frozen: boolean;
 	private origin: undefined | DiagnosticOrigin;
 	public options: CompilerOptions;
-	
-	public static normalizeProject(project: undefined | CompilerProject): CompilerProject {
+
+	public static normalizeProject(
+		project: undefined | CompilerProject,
+	): CompilerProject {
 		if (project === undefined) {
 			return {
 				config: createDefaultProjectConfig(),

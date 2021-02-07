@@ -50,12 +50,17 @@ import {
 	getFileHandlerFromPath,
 } from "../../common/file-handlers/index";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {CachedFileReader, createDirectory, readFileText} from "@internal/fs";
+import {
+	CachedFileReader,
+	FileNotFound,
+	createDirectory,
+	readFileText,
+} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {json} from "@internal/codec-config";
 import {VCSClient, getVCSClient} from "@internal/vcs";
 import {FilePathLocker} from "@internal/async/lockers";
-import {FileNotFound} from "@internal/fs";
+
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
@@ -615,7 +620,10 @@ export default class ProjectManager {
 		const parentProject = this.findLoadedProject(projectDirectory.getParent());
 
 		// The root project is the highest reachable project. The `root` project will not have the `root` property visible.
-		const rootProject = parentProject === undefined ? undefined : parentProject.root ?? parentProject;
+		const rootProject =
+			parentProject === undefined
+				? undefined
+				: parentProject.root ?? parentProject;
 
 		// Declare the project
 		const project: ProjectDefinition = {
@@ -715,11 +723,14 @@ export default class ProjectManager {
 		const manifestsSerial: WorkerPartialManifests = [];
 		const workerProjects: WorkerProjects = new Map();
 		for (const project of projects) {
-			workerProjects.set(project.id, {
-				configCacheKeys: project.meta.configCacheKeys,
-				config: project.config,
-				directory: project.directory,
-			});
+			workerProjects.set(
+				project.id,
+				{
+					configCacheKeys: project.meta.configCacheKeys,
+					config: project.config,
+					directory: project.directory,
+				},
+			);
 
 			for (const def of project.manifests.values()) {
 				manifestsSerial.push({
@@ -732,9 +743,7 @@ export default class ProjectManager {
 		const promises = [];
 
 		for (const worker of workers) {
-			promises.push(
-				worker.bridge.events.updateProjects.call(workerProjects),
-			);
+			promises.push(worker.bridge.events.updateProjects.call(workerProjects));
 			promises.push(
 				worker.bridge.events.updateManifests.call({
 					manifests: manifestsSerial,

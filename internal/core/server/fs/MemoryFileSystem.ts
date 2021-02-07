@@ -31,16 +31,17 @@ import {
 	AbsoluteFilePathSet,
 } from "@internal/path";
 import {
+	CachedFileReader,
 	FSStats,
 	FSWatcher,
+	FileNotFound,
 	exists,
 	lstat,
 	readDirectory,
 	watch,
-	CachedFileReader,
 } from "@internal/fs";
 import crypto = require("crypto");
-import {FileNotFound} from "@internal/fs";
+
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";

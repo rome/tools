@@ -22,7 +22,6 @@ import {
 	RSERSet,
 	RSERValue,
 	RSERValueObject,
-	RSERValueReferenceable,
 } from "./types";
 import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
 import {
@@ -48,7 +47,7 @@ const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
 const MAX_INT32 = 2_147_483_647;
 
-export type RSERBufferAssemblerReferences = Map<RSERValueReferenceable, number>;
+export type RSERBufferAssemblerReferences = Map<RSERValue, number>;
 
 export default class RSERBufferAssembler {
 	constructor() {
@@ -59,7 +58,7 @@ export default class RSERBufferAssembler {
 
 	public totalSize: number;
 	public references: RSERBufferAssemblerReferences;
-	private seenReferenceable: Set<RSERValueReferenceable>;
+	private seenReferenceable: Set<RSERValue>;
 
 	protected writeCode(code: number) {
 		this.totalSize += 1;
@@ -112,6 +111,22 @@ export default class RSERBufferAssembler {
 	private encodeInt(val: bigint | number) {
 		if (typeof val === "bigint") {
 			return this.encodeBigInt(val);
+		}
+
+		if (Object.is(val, -0)) {
+			return this.writeCode(VALUE_CODES.NEGATIVE_ZERO);
+		}
+
+		if (val === 0) {
+			return this.writeCode(VALUE_CODES.POSITIVE_ZERO);
+		}
+
+		if (val === 1) {
+			return this.writeCode(VALUE_CODES.POSITIVE_ONE);
+		}
+
+		if (val === -1) {
+			return this.writeCode(VALUE_CODES.NEGATIVE_ONE);
 		}
 
 		const abs = Math.abs(val);
@@ -257,26 +272,27 @@ export default class RSERBufferAssembler {
 		this.encodeArrayBuffer(val.buffer);
 	}
 
-	private encodePossibleReference(val: RSERValueReferenceable): boolean {
-		// Already a declared reference
+	private encodePossibleReference(val: RSERValue): boolean {
 		const refId = this.references.get(val);
-		if (refId !== undefined) {
+
+		if (refId === undefined) {
+			// Is this the second time we've seen this object?
 			if (this.seenReferenceable.has(val)) {
+				const id = this.references.size;
+				this.references.set(val, id);
+				this.onReferenceCreate(id);
+				this.encodeReference(id);
+				return true;
+			}
+		} else {
+			if (this.seenReferenceable.has(val)) {
+				// Already a declared reference
 				this.encodeReference(refId);
 				return true;
 			} else {
+				// First time we've seen this but we want it to be a reference
 				this.encodeDeclareReferenceHead(refId);
-				return false;
 			}
-		}
-
-		// Is this the second time we've seen this object?
-		if (this.seenReferenceable.has(val)) {
-			const id = this.references.size;
-			this.references.set(val, id);
-			this.onReferenceCreate(id);
-			this.encodeReference(id);
-			return true;
 		}
 
 		this.seenReferenceable.add(val);
@@ -416,7 +432,7 @@ export default class RSERBufferAssembler {
 		if (val === undefined) {
 			this.encodeUndefined();
 		} else {
-			this.encodeString(val, true);
+			this.encodeString(val, false);
 		}
 	}
 
@@ -436,6 +452,16 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeNumber(val: bigint | number) {
+		// +Infinity
+		if (val === Number.POSITIVE_INFINITY) {
+			return this.writeCode(VALUE_CODES.POSITIVE_INFINITY);
+		}
+
+		// -Infinity
+		if (val === Number.NEGATIVE_INFINITY) {
+			return this.writeCode(VALUE_CODES.NEGATIVE_INFINITY);
+		}
+
 		if (typeof val === "bigint" || Number.isSafeInteger(val)) {
 			this.encodeInt(val);
 		} else {
@@ -454,45 +480,21 @@ export default class RSERBufferAssembler {
 			case "number": {
 				// NaN
 				if (typeof val === "number" && isNaN(val)) {
-					this.writeCode(VALUE_CODES.NAN);
-					return;
+					return this.writeCode(VALUE_CODES.NAN);
 				}
 
-				// -0
-				if (Object.is(val, -0)) {
-					this.writeCode(VALUE_CODES.NEGATIVE_ZERO);
-					return;
-				}
-
-				// +Infinity
-				if (val === Number.POSITIVE_INFINITY) {
-					this.writeCode(VALUE_CODES.POSITIVE_INFINITY);
-					return;
-				}
-
-				// -Infinity
-				if (val === Number.NEGATIVE_INFINITY) {
-					this.writeCode(VALUE_CODES.NEGATIVE_INFINITY);
-					return;
-				}
-
-				this.encodeNumber(val);
-				return;
+				return this.encodeNumber(val);
 			}
 
 			case "undefined": {
 				return this.encodeUndefined();
 			}
 
-			case "string": {
-				this.encodeString(val);
-				return;
-			}
+			case "string":
+				return this.encodeString(val);
 
-			case "boolean": {
-				this.writeByte(val ? VALUE_CODES.TRUE : VALUE_CODES.FALSE);
-				return;
-			}
+			case "boolean":
+				return this.writeByte(val ? VALUE_CODES.TRUE : VALUE_CODES.FALSE);
 
 			case "symbol": {
 				this.writeCode(VALUE_CODES.SYMBOL);

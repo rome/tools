@@ -15,8 +15,10 @@ import {
 	createUnknownPath,
 } from "./index";
 
-function concat<FilePath extends AnyFilePath>(items: Array<Iterable<FilePath>>): Array<FilePath> {
-	let paths: Array<FilePath> = [];
+function concat<FilePath extends AnyFilePath>(
+	items: Iterable<FilePath>[],
+): FilePath[] {
+	let paths: FilePath[] = [];
 	for (const iterable of items) {
 		paths = paths.concat(Array.from(iterable));
 	}
@@ -233,7 +235,7 @@ export class AbsoluteFilePathSet
 		return new AbsoluteFilePathMap();
 	}
 
-	public concat(...items: Array<Iterable<AbsoluteFilePath>>): AbsoluteFilePathSet {
+	public concat(...items: Iterable<AbsoluteFilePath>[]): AbsoluteFilePathSet {
 		return new AbsoluteFilePathSet(concat(items));
 	}
 }
@@ -246,7 +248,7 @@ export class RelativeFilePathSet
 		return new RelativeFilePathMap();
 	}
 
-	public concat(...items: Array<Iterable<RelativeFilePath>>): RelativeFilePathSet {
+	public concat(...items: Iterable<RelativeFilePath>[]): RelativeFilePathSet {
 		return new RelativeFilePathSet(concat(items));
 	}
 }
@@ -259,7 +261,7 @@ export class UnknownPathSet
 		return new UnknownPathMap();
 	}
 
-	public concat(...items: Array<Iterable<AnyFilePath>>): UnknownPathSet {
+	public concat(...items: Iterable<AnyFilePath>[]): UnknownPathSet {
 		return new UnknownPathSet(concat(items));
 	}
 }
