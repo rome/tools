@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:597245eb8834112a41cd840eaf0aec4d34f43e1f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:5fe5dea0ef03a9c9ea79e8e39f9eb9fe28074485,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -27,7 +27,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">You should avoid declaring constants with a string that&apos;s the same</span>
-    <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessar</span>y
+    <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessary</span>
     <span style="color: rgb(38, 148, 255);">indirection when it&apos;s only two additional characters to inline.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">This constant is declared here</span>
@@ -55,7 +55,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">You should avoid declaring constants with a string that&apos;s the same</span>
-    <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessar</span>y
+    <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessary</span>
     <span style="color: rgb(38, 148, 255);">indirection when it&apos;s only two additional characters to inline.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">This constant is declared here</span>
@@ -82,7 +82,7 @@ MISSING DOCUMENTATION
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">You should avoid declaring constants with a string that&apos;s the same</span>
-    <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessar</span>y
+    <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessary</span>
     <span style="color: rgb(38, 148, 255);">indirection when it&apos;s only two additional characters to inline.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">This constant is declared here</span>

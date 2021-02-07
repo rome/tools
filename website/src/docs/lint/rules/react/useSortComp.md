@@ -17,7 +17,7 @@ This rule enforces methods and properties order. When creating React components 
 **ESLint Equivalent:** [sort-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:a944b7f3e2b01c8f0edf03c4c0e430f242ca4adb,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:8a556c8c9a0694fdbdca04f346049770379d380e,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -42,7 +42,7 @@ This rule enforces methods and properties order. When creating React components 
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">When creating React components it is more convenient to always follow</span>
-    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily fin</span>d
+    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily find</span>
     <span style="color: rgb(38, 148, 255);">lifecycle methods, event handlers, etc.</span>
 
 </code></pre>{% endraw %}
@@ -69,7 +69,7 @@ This rule enforces methods and properties order. When creating React components 
   <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">When creating React components it is more convenient to always follow</span>
-    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily fin</span>d
+    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily find</span>
     <span style="color: rgb(38, 148, 255);">lifecycle methods, event handlers, etc.</span>
 
 </code></pre>{% endraw %}
@@ -98,7 +98,7 @@ This rule enforces methods and properties order. When creating React components 
   <strong>  6</strong><strong> │ </strong>    <span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">When creating React components it is more convenient to always follow</span>
-    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily fin</span>d
+    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily find</span>
     <span style="color: rgb(38, 148, 255);">lifecycle methods, event handlers, etc.</span>
 
 </code></pre>{% endraw %}
@@ -127,7 +127,7 @@ This rule enforces methods and properties order. When creating React components 
   <strong>  5</strong><strong> │ </strong>  <span class="token variable">state</span><span class="token punctuation">:</span> <span class="token variable">Object</span> <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">When creating React components it is more convenient to always follow</span>
-    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily fin</span>d
+    <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily find</span>
     <span style="color: rgb(38, 148, 255);">lifecycle methods, event handlers, etc.</span>
 
 </code></pre>{% endraw %}

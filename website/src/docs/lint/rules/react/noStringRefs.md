@@ -17,7 +17,7 @@ prevent string definitions for references and prevent referencing `this.refs`
 **ESLint Equivalent:** [no-string-refs](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-string-refs.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:c73f01a0fa5e6f345d43ea8c27f39bb3e97ed201,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0a0614560618b38f3dffba39bd5bdfd864e5c725,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -43,7 +43,7 @@ prevent string definitions for references and prevent referencing `this.refs`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span>
-    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-ref</a></span>s
+    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs</a></span>
     <span style="color: rgb(38, 148, 255);"> for more information.</span>
 
 </code></pre>{% endraw %}
@@ -68,7 +68,7 @@ prevent string definitions for references and prevent referencing `this.refs`
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span>
-    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-ref</a></span>s
+    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs</a></span>
     <span style="color: rgb(38, 148, 255);"> for more information.</span>
 
 </code></pre>{% endraw %}
@@ -117,7 +117,7 @@ prevent string definitions for references and prevent referencing `this.refs`
   <strong>  5</strong><strong> │ </strong><span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span>
-    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-ref</a></span>s
+    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs</a></span>
     <span style="color: rgb(38, 148, 255);"> for more information.</span>
 
 </code></pre>{% endraw %}
@@ -169,7 +169,7 @@ prevent string definitions for references and prevent referencing `this.refs`
   <strong>  4</strong><strong> │ </strong>  <span class="token punctuation">}</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span>
-    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-ref</a></span>s
+    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs</a></span>
     <span style="color: rgb(38, 148, 255);"> for more information.</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:7:14</span> <strong>lint/react/noStringRefs</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -177,7 +177,7 @@ prevent string definitions for references and prevent referencing `this.refs`
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Using string literals in ref attributes is a deprecated pattern.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span>
-    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-ref</a></span>s
+    <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs">https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs</a></span>
     <span style="color: rgb(38, 148, 255);"> for more information.</span>
 
 </code></pre>{% endraw %}
