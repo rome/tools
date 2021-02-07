@@ -17,6 +17,11 @@ import {Dict, UnknownObject} from "@internal/typescript-helpers";
 import {DiagnosticCategory} from "@internal/diagnostics";
 import {VisitorStateEnter, VisitorStateExit} from "./lib/VisitorState";
 
+export type CompilerProject = {
+	config: ProjectConfig;
+	directory?: undefined | AbsoluteFilePath;
+};
+
 //
 export type TransformStageName = "pre" | "compile" | "compileForBundle";
 
@@ -56,18 +61,12 @@ export type LintRequest = TransformRequest & {
 	suppressionExplanation?: string;
 };
 
-export type TransformProjectDefinition = {
-	configCacheKeys: string[];
-	config: ProjectConfig;
-	directory: undefined | AbsoluteFilePath;
-};
-
 export type TransformRequest = {
-	ref?: FileReference;
 	sourceText: string;
 	ast: AnyRoot;
-	project: TransformProjectDefinition;
 	options: CompilerOptions;
+	ref?: FileReference;
+	project?: CompilerProject;
 	stage?: TransformStageName;
 };
 

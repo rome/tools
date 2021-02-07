@@ -11,7 +11,7 @@ export type MissingFileReturn<T> =
 			value: undefined;
 		};
 
-export class FileNotFound extends Error implements NodeSystemError {
+export default class FileNotFound extends Error implements NodeSystemError {
 	constructor(path: AbsoluteFilePath, suffixMessage?: string) {
 		super(
 			suffixMessage === undefined

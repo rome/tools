@@ -6,7 +6,7 @@
  */
 
 import {FileReference} from "@internal/core";
-import {WorkerParseOptions} from "../bridges/WorkerBridge";
+import {WorkerParseOptions, WorkerProject} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {
 	DiagnosticIntegrity,
@@ -14,7 +14,6 @@ import {
 	DiagnosticSuppressions,
 	Diagnostics,
 } from "@internal/diagnostics";
-import * as compiler from "@internal/compiler";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {UnknownPath} from "@internal/path";
 
@@ -31,7 +30,7 @@ export type ExtensionHandlerMethodInfo = {
 	mtimeNs: bigint;
 	integrity: undefined | DiagnosticIntegrity;
 	file: FileReference;
-	project: compiler.TransformProjectDefinition;
+	project: WorkerProject;
 	worker: Worker;
 };
 

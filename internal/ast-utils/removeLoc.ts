@@ -11,7 +11,6 @@ import {
 	MOCK_PROGRAM,
 	NodeBaseWithComments,
 } from "@internal/ast";
-import {createDefaultProjectConfig} from "@internal/project";
 import {AnyVisitors, CompilerContext, Path, signals} from "@internal/compiler";
 import {SourceLocation} from "@internal/parser-core";
 
@@ -53,11 +52,6 @@ const removeLocTransform: AnyVisitors = [
 export function removeLoc(ast: AnyNode): AnyNodes {
 	const context = new CompilerContext({
 		ast: MOCK_PROGRAM,
-		project: {
-			configCacheKeys: [],
-			directory: undefined,
-			config: createDefaultProjectConfig(),
-		},
 	});
 	return context.reduce(ast, removeLocTransform);
 }

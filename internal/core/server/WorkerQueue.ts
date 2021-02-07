@@ -8,7 +8,7 @@
 import {WorkerContainer} from "./WorkerManager";
 import Server from "./Server";
 import {AbsoluteFilePath} from "@internal/path";
-import {FileNotFound} from "@internal/fs/FileNotFound";
+import {FileNotFound} from "@internal/fs";
 import {Queue, QueueOptions} from "@internal/async";
 
 export type WorkerQueueOptions<M> = QueueOptions<

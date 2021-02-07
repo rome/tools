@@ -7,7 +7,7 @@ import {
 	RSERObject,
 	RSERSet,
 	RSERValue,
-	RSERValueObject,
+	RSERValueReferenceable,
 } from "./types";
 import {
 	FILE_CODES,
@@ -48,7 +48,7 @@ export default class RSERBufferParser {
 		this.references = new ExtendedMap("references");
 	}
 
-	private references: ExtendedMap<number, RSERValueObject>;
+	private references: ExtendedMap<number, RSERValueReferenceable>;
 	private view: DataView;
 	private bytes: Uint8Array;
 	public readOffset: number;
@@ -199,7 +199,7 @@ export default class RSERBufferParser {
 		return undefined;
 	}
 
-	public decodeDeclareReference(): RSERValueObject {
+	public decodeDeclareReference(): RSERValueReferenceable {
 		this.expectCode(VALUE_CODES.DECLARE_REFERENCE);
 		const id = this.decodeNumber();
 		const code = this.peekCode();
@@ -248,8 +248,13 @@ export default class RSERBufferParser {
 		}
 
 		// These can never refer to itself
-		let val: RSERValueObject;
+		let val: RSERValueReferenceable;
 		switch (code) {
+			case VALUE_CODES.STRING: {
+				val = this.decodeString();
+				break;
+			}
+
 			case VALUE_CODES.REGEXP: {
 				val = this.decodeRegExp();
 				break;
@@ -304,7 +309,7 @@ export default class RSERBufferParser {
 		return val;
 	}
 
-	public decodeReference(): RSERValueObject {
+	public decodeReference(): RSERValueReferenceable {
 		this.expectCode(VALUE_CODES.REFERENCE);
 		const id = this.decodeNumber();
 		return this.references.assert(id);

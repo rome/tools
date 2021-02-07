@@ -36,11 +36,11 @@ import {
 	exists,
 	lstat,
 	readDirectory,
-	readFileText,
 	watch,
+	CachedFileReader,
 } from "@internal/fs";
 import crypto = require("crypto");
-import {FileNotFound} from "@internal/fs/FileNotFound";
+import {FileNotFound} from "@internal/fs";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {GlobOptions, Globber} from "./glob";
@@ -103,11 +103,12 @@ type DeclareManifestOpts = {
 	dirname: AbsoluteFilePath;
 	path: AbsoluteFilePath;
 	isPartialProject: boolean;
-	content: undefined | string;
+	reader: CachedFileReader;
 };
 
 type CrawlOptions = {
 	reason: "watch" | "initial";
+	reader: CachedFileReader;
 	watcherId?: number;
 	partialAllowlist?: AbsoluteFilePath[];
 	diagnostics: DiagnosticsProcessor;
@@ -210,21 +211,23 @@ export default class MemoryFileSystem {
 	// Inject virtual modules so they are discoverable
 	private async injectVirtualModules() {
 		const files = this.server.virtualModules.getStatMap();
+		const reader = new CachedFileReader();
 
 		for (const [path, {stats, content}] of files) {
 			if (stats.isDirectory()) {
 				this.directories.set(path, toSimpleStats(stats));
 			} else {
+				reader.cache(path, Buffer.from(content ?? ""));
 				this.files.set(path, toSimpleStats(stats));
 				this.addFileToDirectoryListing(path);
 
 				if (isValidManifest(path)) {
 					await this.declareManifest({
 						isPartialProject: false,
-						content,
 						diagnostics: this.server.createDisconnectedDiagnosticsProcessor([]),
 						dirname: path.getParent(),
 						path,
+						reader,
 					});
 				}
 			}
@@ -328,6 +331,7 @@ export default class MemoryFileSystem {
 					diagnostics,
 					onFoundDirectory,
 					reason: "initial",
+					reader: new CachedFileReader(),
 				},
 			);
 			const took = Date.now() - start;
@@ -680,12 +684,12 @@ export default class MemoryFileSystem {
 		{
 			path,
 			diagnostics,
-			content,
 			isPartialProject,
+			reader,
 		}: DeclareManifestOpts,
 	): Promise<void> {
 		// Fetch the manifest
-		const manifestRaw = content ?? (await readFileText(path));
+		const manifestRaw = await reader.readFileText(path);
 		const hash = crypto.createHash("sha256").update(manifestRaw).digest("hex");
 
 		const consumer = json.consumeValue({
@@ -741,6 +745,7 @@ export default class MemoryFileSystem {
 
 		if (isProjectPackage && consumer.has(PROJECT_CONFIG_PACKAGE_JSON_FIELD)) {
 			await projectManager.addDiskProject({
+				reader,
 				projectDirectory: directory,
 				configPath: path,
 				isPartial: isPartialProject,
@@ -954,6 +959,7 @@ export default class MemoryFileSystem {
 		const crawlOpts: CrawlOptions = {
 			reason: "watch",
 			diagnostics,
+			reader: new CachedFileReader(),
 			...customCrawlOpts,
 		};
 
@@ -1040,6 +1046,7 @@ export default class MemoryFileSystem {
 			}
 
 			await projectManager.addDiskProject({
+				reader: opts.reader,
 				isPartial: opts.partialAllowlist !== undefined,
 				// Get the directory above .config
 				projectDirectory: dirname.getParent(),
@@ -1049,8 +1056,8 @@ export default class MemoryFileSystem {
 
 		if (isValidManifest(path)) {
 			await this.declareManifest({
+				reader: opts.reader,
 				isPartialProject: opts.partialAllowlist !== undefined,
-				content: undefined,
 				diagnostics: opts.diagnostics,
 				dirname,
 				path,

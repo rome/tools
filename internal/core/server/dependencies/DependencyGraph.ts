@@ -26,9 +26,8 @@ import {
 	AbsoluteFilePathMap,
 	createUnknownPath,
 } from "@internal/path";
-
 import {markup} from "@internal/markup";
-import {FileNotFound, MissingFileReturn} from "@internal/fs/FileNotFound";
+import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;

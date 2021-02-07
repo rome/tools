@@ -11,7 +11,6 @@ import {
 	jsReferenceIdentifier,
 	jsStaticMemberProperty,
 } from "@internal/ast";
-import {createDefaultProjectConfig} from "@internal/project";
 
 test(
 	"should rename biding",
@@ -41,11 +40,6 @@ test(
 
 		const context = new CompilerContext({
 			ast: MOCK_PROGRAM,
-			project: {
-				configCacheKeys: [],
-				directory: undefined,
-				config: createDefaultProjectConfig(),
-			},
 		});
 
 		const path = new Path(js, context, {});

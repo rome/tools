@@ -29,15 +29,12 @@ import {
 } from "./utils";
 import {ConsumeConfigResult, consumeConfig} from "@internal/codec-config";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {exists, lstat, readDirectory, readFileText} from "@internal/fs";
-import crypto = require("crypto");
+import {CachedFileReader, exists, lstat, readDirectory} from "@internal/fs";
 import {parseSemverRange} from "@internal/codec-semver";
 import {descriptions} from "@internal/diagnostics";
-import {PROJECT_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
+import {PROJECT_CONFIG_PACKAGE_JSON_FIELD, VCS_IGNORE_FILENAMES} from "./constants";
 import {lintRuleNames} from "@internal/compiler";
 import { sha256 } from "@internal/string-utils";
-
-const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
@@ -61,12 +58,14 @@ function categoryExists(consumer: Consumer): boolean {
 export async function loadCompleteProjectConfig(
 	projectDirectory: AbsoluteFilePath,
 	configPath: AbsoluteFilePath,
+	reader: CachedFileReader,
 ): Promise<{
 	meta: ProjectConfigMeta;
 	config: ProjectConfig;
 }> {
 	// TODO use consumer.capture somehow here to aggregate errors
 	const {partial, meta} = await loadPartialProjectConfig({
+		reader,
 		rootProjectDirectory: projectDirectory,
 		projectDirectory,
 		configPath,
@@ -95,12 +94,12 @@ export async function loadCompleteProjectConfig(
 	};
 
 	// Infer VCS ignore files as lint ignore rules
-	for (const filename of IGNORE_FILENAMES) {
+	for (const filename of VCS_IGNORE_FILENAMES) {
 		const possiblePath = config.vcs.root.append(filename);
 		meta.configDependencies.add(possiblePath);
 
 		if (await exists(possiblePath)) {
-			const file = await readFileText(possiblePath);
+			const file = await reader.readFileText(possiblePath);
 
 			consumer.handleThrownDiagnostics(() => {
 				const patterns = parsePathPatternsFile({
@@ -114,6 +113,16 @@ export async function loadCompleteProjectConfig(
 		}
 	}
 
+	// Calculate config hash keys
+	await Promise.all(Array.from(meta.configDependencies, async path => {
+		if (await exists(path)) {
+			const content = await reader.readFile(path);
+			const hash = sha256.sync(content);
+			const key = projectDirectory.relative(path).join();
+			meta.configCacheKeys[key] = hash;
+		}
+	}));
+
 	return {
 		config,
 		meta,
@@ -124,30 +133,24 @@ type LoadProjectConfigContext = {
 	rootProjectDirectory: AbsoluteFilePath;
 	projectDirectory: AbsoluteFilePath;
 	configPath: AbsoluteFilePath;
+	reader: CachedFileReader;
 };
 
-async function loadPartialProjectConfig(
-	{
-		rootProjectDirectory,
-		projectDirectory,
-		configPath,
-	}: LoadProjectConfigContext
-): Promise<NormalizedPartial> {
-	const configFile = await readFileText(configPath);
+async function loadPartialProjectConfig(context: LoadProjectConfigContext): Promise<NormalizedPartial> {
+	const configFile = await context.reader.readFileText(context.configPath);
 	const res = consumeConfig({
-		path: configPath,
+		path: context.configPath,
 		input: configFile,
 	});
 
-	return normalizeProjectConfig(res, {configPath, configFile, projectDirectory, rootProjectDirectory});
+	return normalizeProjectConfig(res, context);
 }
 
 export async function normalizeProjectConfig(
 	res: ConsumeConfigResult,
-	{configPath, configFile, projectDirectory, rootProjectDirectory}: LoadProjectConfigContext & {
-		configFile: string,
-	}
+	context: LoadProjectConfigContext
 ): Promise<NormalizedPartial> {
+	const {configPath, projectDirectory, rootProjectDirectory} = context;
 	let {consumer} = res;
 
 	let configSourceSubKey;
@@ -160,8 +163,6 @@ export async function normalizeProjectConfig(
 		consumer = consumer.get(PROJECT_CONFIG_PACKAGE_JSON_FIELD);
 		configSourceSubKey = PROJECT_CONFIG_PACKAGE_JSON_FIELD;
 	}
-
-	const hash = sha256.sync(configFile);
 
 	const config: PartialProjectConfig = {
 		presets: [],
@@ -192,7 +193,7 @@ export async function normalizeProjectConfig(
 		configPath,
 		consumer,
 		consumersChain: [consumer],
-		configCacheKeys: [`project:${rootProjectDirectory.relative(projectDirectory)}:${hash}`],
+		configCacheKeys: {},
 		configSourceSubKey,
 		configDependencies: new AbsoluteFilePathSet(),
 	};
@@ -423,7 +424,7 @@ export async function normalizeProjectConfig(
 
 	if (extendsProp.exists()) {
 		for (const elem of extendsProp.asImplicitArray()) {
-			normalized = await extendProjectConfig(elem, {projectDirectory, rootProjectDirectory}, normalized);
+			normalized = await extendProjectConfig(elem, {...context, projectDirectory, rootProjectDirectory}, normalized);
 		}
 	}
 
@@ -465,10 +466,7 @@ async function normalizeTypeCheckingLibs(
 
 async function extendProjectConfig(
 	extendsStrConsumer: Consumer,
-	{projectDirectory, rootProjectDirectory}: {
-		projectDirectory: AbsoluteFilePath;
-		rootProjectDirectory: AbsoluteFilePath;
-	},
+	context: LoadProjectConfigContext,
 	{partial: config, meta}: NormalizedPartial,
 ): Promise<NormalizedPartial> {
 	const extendsRelative = extendsStrConsumer.asString();
@@ -477,9 +475,9 @@ async function extendProjectConfig(
 		// TODO maybe do some magic here?
 	}
 
-	const extendsPath = projectDirectory.resolve(extendsRelative);
+	const extendsPath = context.projectDirectory.resolve(extendsRelative);
 	const {partial: extendsObj, meta: extendsMeta} = await loadPartialProjectConfig({
-		rootProjectDirectory,
+		...context,
 		projectDirectory: extendsPath.getParent(),
 		configPath: extendsPath,
 	});
@@ -557,7 +555,10 @@ async function extendProjectConfig(
 				extendsMeta.configDependencies,
 				[extendsPath],
 			),
-			configCacheKeys: [...meta.configCacheKeys, ...extendsMeta.configCacheKeys],
+			configCacheKeys: {
+				...meta.configCacheKeys,
+				...extendsMeta.configCacheKeys,
+			},
 		},
 	};
 }

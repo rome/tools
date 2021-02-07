@@ -64,3 +64,5 @@ export type RSERObject = {
 export type RSERArray = RSERValue[];
 
 export type RSERValueObject = Extract<RSERValue, object>;
+
+export type RSERValueReferenceable = RSERValueObject | string;

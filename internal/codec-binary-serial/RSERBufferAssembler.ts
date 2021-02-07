@@ -22,6 +22,7 @@ import {
 	RSERSet,
 	RSERValue,
 	RSERValueObject,
+	RSERValueReferenceable,
 } from "./types";
 import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
 import {
@@ -47,19 +48,18 @@ const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
 const MAX_INT32 = 2_147_483_647;
 
-export type RSERBufferAssemblerReferences = Map<RSERValueObject, number>;
+export type RSERBufferAssemblerReferences = Map<RSERValueReferenceable, number>;
 
 export default class RSERBufferAssembler {
 	constructor() {
 		this.totalSize = 0;
-		this.seenObjects = new Set();
+		this.seenReferenceable = new Set();
 		this.references = new Map();
 	}
 
 	public totalSize: number;
 	public references: RSERBufferAssemblerReferences;
-
-	private seenObjects: Set<RSERValueObject>;
+	private seenReferenceable: Set<RSERValueReferenceable>;
 
 	protected writeCode(code: number) {
 		this.totalSize += 1;
@@ -257,28 +257,37 @@ export default class RSERBufferAssembler {
 		this.encodeArrayBuffer(val.buffer);
 	}
 
-	private encodeObject(val: RSERValueObject) {
+	private encodePossibleReference(val: RSERValueReferenceable): boolean {
 		// Already a declared reference
 		const refId = this.references.get(val);
 		if (refId !== undefined) {
-			if (this.seenObjects.has(val)) {
+			if (this.seenReferenceable.has(val)) {
 				this.encodeReference(refId);
-				return;
+				return true;
 			} else {
 				this.encodeDeclareReferenceHead(refId);
+				return false;
 			}
 		}
 
 		// Is this the second time we've seen this object?
-		if (this.seenObjects.has(val)) {
+		if (this.seenReferenceable.has(val)) {
 			const id = this.references.size;
 			this.references.set(val, id);
 			this.onReferenceCreate(id);
 			this.encodeReference(id);
-			return;
+			return true;
 		}
 
-		this.seenObjects.add(val);
+		this.seenReferenceable.add(val);
+		return false;
+	}
+
+	private encodeObject(val: RSERValueObject) {
+		const isReference = this.encodePossibleReference(val);
+		if (isReference) {
+			return;
+		}
 
 		if (val instanceof ArrayBuffer) {
 			return this.encodeArrayBuffer(val);
@@ -354,8 +363,8 @@ export default class RSERBufferAssembler {
 
 	private encodeSourceLocation(loc: SourceLocation) {
 		this.writeCode(VALUE_CODES.SOURCE_LOCATION);
-		this.encodeValue(loc.filename);
-		this.encodeValue(loc.identifierName);
+		this.encodeVoidOrReferenceString(loc.filename);
+		this.encodeVoidOrReferenceString(loc.identifierName);
 		this.encodeInt(ob1Get(loc.start.line));
 		this.encodeInt(ob1Get(loc.start.column));
 		this.encodeInt(ob1Get(loc.end.line));
@@ -401,6 +410,23 @@ export default class RSERBufferAssembler {
 
 	private encodeUndefined() {
 		this.writeCode(VALUE_CODES.UNDEFINED);
+	}
+
+	private encodeVoidOrReferenceString(val: string | undefined) {
+		if (val === undefined) {
+			this.encodeUndefined();
+		} else {
+			this.encodeString(val, true);
+		}
+	}
+
+	private encodeString(val: string, allowReference?: boolean) {
+		if (allowReference && this.encodePossibleReference(val)) {
+			return;
+		}
+
+		this.writeCode(VALUE_CODES.STRING);
+		this.encodeStringValue(val);
 	}
 
 	private encodeStringValue(val: string) {
@@ -459,8 +485,7 @@ export default class RSERBufferAssembler {
 			}
 
 			case "string": {
-				this.writeCode(VALUE_CODES.STRING);
-				this.encodeStringValue(val);
+				this.encodeString(val);
 				return;
 			}
 

@@ -6,7 +6,6 @@
  */
 
 import analyzeDependencies from "./analyzeDependencies";
-import {createDefaultProjectConfig} from "@internal/project";
 import {test} from "rome";
 import {parseJS} from "@internal/js-parser";
 import {ConstJSSourceType} from "@internal/ast";
@@ -18,11 +17,6 @@ async function testAnalyzeDeps(input: string, sourceType: ConstJSSourceType) {
 		options: {},
 		ast: parseJS({input, sourceType, path: createUnknownPath("unknown")}),
 		sourceText: input,
-		project: {
-			configCacheKeys: [],
-			directory: undefined,
-			config: createDefaultProjectConfig(),
-		},
 	});
 }
 

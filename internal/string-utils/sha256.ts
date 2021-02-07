@@ -2,7 +2,7 @@ import stream = require("stream");
 import crypto = require("crypto");
 
 export const sha256 = {
-	sync(str: string): string {
+	sync(str: crypto.BinaryLike): string {
 		return crypto.createHash("sha256").update(str).digest("hex");
 	},
 

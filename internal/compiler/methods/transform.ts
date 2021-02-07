@@ -67,7 +67,7 @@ export default async function transform(
 	});
 
 	const transformFactory = stageTransforms[stage];
-	const transforms = transformFactory(project.config, options);
+	const transforms = transformFactory(context.project.config, options);
 
 	let visitors: AnyVisitors = await context.normalizeTransforms(transforms);
 

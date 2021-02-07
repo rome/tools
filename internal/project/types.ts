@@ -14,7 +14,7 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {Consumer} from "@internal/consume";
-import {RequiredProps} from "@internal/typescript-helpers";
+import {Dict, RequiredProps} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 
@@ -132,7 +132,7 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
 export type ProjectConfigMeta = {
 	projectDirectory: undefined | AbsoluteFilePath;
 	configPath: undefined | AbsoluteFilePath;
-	configCacheKeys: string[];
+	configCacheKeys: Dict<string>;
 	configDependencies: AbsoluteFilePathSet;
 	consumer: undefined | Consumer;
 	configSourceSubKey: undefined | string;
@@ -216,7 +216,7 @@ export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
 	return {
 		projectDirectory: undefined,
 		configPath: undefined,
-		configCacheKeys: [],
+		configCacheKeys: {},
 		configDependencies: new AbsoluteFilePathSet(),
 		consumer: undefined,
 		configSourceSubKey: undefined,

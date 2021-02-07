@@ -220,14 +220,16 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 
 	function addProject(config: ProjectConfig): number {
 		let id = projectIdCounter++;
-		worker.updateProjects([
-			{
-				config,
-				id,
-				configHashes: [],
-				directory: createAbsoluteFilePath(`/project-${id}`),
-			},
-		]);
+		worker.updateProjects(new Map([
+			[
+				id, 
+				{
+					config,
+					configCacheKeys: {},
+					directory: createAbsoluteFilePath(`/project-${id}`),
+				},
+			],
+		]));
 		return id;
 	}
 

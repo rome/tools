@@ -50,12 +50,12 @@ import {
 	getFileHandlerFromPath,
 } from "../../common/file-handlers/index";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
-import {createDirectory, readFileText} from "@internal/fs";
+import {CachedFileReader, createDirectory, readFileText} from "@internal/fs";
 import {Consumer} from "@internal/consume";
 import {json} from "@internal/codec-config";
 import {VCSClient, getVCSClient} from "@internal/vcs";
 import {FilePathLocker} from "@internal/async/lockers";
-import {FileNotFound} from "@internal/fs/FileNotFound";
+import {FileNotFound} from "@internal/fs";
 import {markup} from "@internal/markup";
 import {ReporterNamespace} from "@internal/cli-reporter";
 import {ExtendedMap} from "@internal/collections";
@@ -434,16 +434,7 @@ export default class ProjectManager {
 			// Notify all workers that it should delete the project
 			for (const {bridge} of this.server.workerManager.getWorkers()) {
 				// Evict project
-				bridge.events.updateProjects.send({
-					projects: [
-						{
-							id: evictProjectId,
-							directory: project.directory,
-							configHashes: [],
-							config: undefined,
-						},
-					],
-				});
+				bridge.events.evictProject.send(evictProjectId);
 
 				// Evict packages
 				bridge.events.updateManifests.send({
@@ -569,6 +560,7 @@ export default class ProjectManager {
 			isPartial: boolean;
 			projectDirectory: AbsoluteFilePath;
 			configPath: AbsoluteFilePath;
+			reader: CachedFileReader;
 		},
 	): Promise<void> {
 		const {projectDirectory, configPath, isPartial} = opts;
@@ -584,6 +576,7 @@ export default class ProjectManager {
 				const {config, meta} = await loadCompleteProjectConfig(
 					projectDirectory,
 					configPath,
+					opts.reader,
 				);
 
 				await this.declareProject({
@@ -720,12 +713,11 @@ export default class ProjectManager {
 		}
 
 		const manifestsSerial: WorkerPartialManifests = [];
-		const projectsSerial: WorkerProjects = [];
+		const workerProjects: WorkerProjects = new Map();
 		for (const project of projects) {
-			projectsSerial.push({
-				configHashes: project.meta.configCacheKeys,
+			workerProjects.set(project.id, {
+				configCacheKeys: project.meta.configCacheKeys,
 				config: project.config,
-				id: project.id,
 				directory: project.directory,
 			});
 
@@ -741,7 +733,7 @@ export default class ProjectManager {
 
 		for (const worker of workers) {
 			promises.push(
-				worker.bridge.events.updateProjects.call({projects: projectsSerial}),
+				worker.bridge.events.updateProjects.call(workerProjects),
 			);
 			promises.push(
 				worker.bridge.events.updateManifests.call({
