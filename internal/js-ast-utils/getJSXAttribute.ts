@@ -24,7 +24,7 @@ function isEmptyAttributeValue(
 export function getJSXAttribute(
 	tag: JSXElement,
 	name: string,
-	allowEmpty: boolean = false,
+	allowEmpty = false,
 ): JSXAttribute | undefined {
 	for (const attr of tag.attributes) {
 		if (attr.type === "JSXAttribute" && attr.name.name === name) {

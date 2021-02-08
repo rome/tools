@@ -371,8 +371,8 @@ export const lint = createDiagnosticsCategory({
 		message: markup`Provide a valid value for the <emphasis>lang</emphasis> attribute.`,
 		advice: buildSuggestionAdvice(value, suggestions),
 	}),
-	JSX_A11Y_ALT_TEXT: {
-		category: "lint/jsx-a11y/useAltText",
+	A11Y_ALT_TEXT: {
+		category: "lint/a11y/useAltText",
 		message: markup`Provide <emphasis>alt</emphasis> text when using <emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, and <emphasis>object</emphasis> elements.`,
 		advice: [
 			{

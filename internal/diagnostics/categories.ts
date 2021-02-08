@@ -96,8 +96,9 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:92539582bfc1d4c5d6912e9ef9f03a1c826f693f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:acbcb392f902b761e16385ab8608212f8d544de1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
+	| "lint/a11y/useAltText"
 	| "lint/a11y/useHtmlLang"
 	| "lint/a11y/useValidLang"
 	| "lint/html/useClosingNonVoid"
@@ -162,7 +163,6 @@ export type DiagnosticLintCategory =
 	| "lint/jsx-a11y/noRedundantRoles"
 	| "lint/jsx-a11y/noSvgWithoutTitle"
 	| "lint/jsx-a11y/noTargetBlank"
-	| "lint/jsx-a11y/useAltText"
 	| "lint/jsx-a11y/useAnchorContent"
 	| "lint/jsx-a11y/useAriaProps"
 	| "lint/jsx-a11y/useAriaPropsForRole"
@@ -214,6 +214,7 @@ export type DiagnosticLintCategory =
 	| "lint/ts/useInterfaces"
 	| "lint/ts/useSimplifiedBooleanExpression";
 const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
+	"lint/a11y/useAltText": true,
 	"lint/a11y/useHtmlLang": true,
 	"lint/a11y/useValidLang": true,
 	"lint/html/useClosingNonVoid": true,
@@ -278,7 +279,6 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/jsx-a11y/noRedundantRoles": true,
 	"lint/jsx-a11y/noSvgWithoutTitle": true,
 	"lint/jsx-a11y/noTargetBlank": true,
-	"lint/jsx-a11y/useAltText": true,
 	"lint/jsx-a11y/useAnchorContent": true,
 	"lint/jsx-a11y/useAriaProps": true,
 	"lint/jsx-a11y/useAriaPropsForRole": true,

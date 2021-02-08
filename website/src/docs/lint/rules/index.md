@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:72a0c8ce99457d9d94b453c7f42cdec82eeb59f5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:107ead3db9840c392b813835d3345afce45a984f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -384,6 +384,32 @@ discard redundant terms or operators in boolean expressions
 </div>
 </section>
 <section>
+<h2>Accessibility (JSX and HTML)</h2>
+<p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
+and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule docs for direct references.</p>
+<div class="rule">
+<h3 data-toc-exclude id="useAltText">
+	<a href="/docs/lint/rules/a11y/useAltText">useAltText</a>
+	<a class="header-anchor" href="#useAltText"></a>
+</h3>
+Checks that images have a valid alternative text
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useHtmlLang">
+	<a href="/docs/lint/rules/a11y/useHtmlLang">useHtmlLang</a>
+	<a class="header-anchor" href="#useHtmlLang"></a>
+</h3>
+the `lang` attribute is mandatory
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="useValidLang">
+	<a href="/docs/lint/rules/a11y/useValidLang">useValidLang</a>
+	<a class="header-anchor" href="#useValidLang"></a>
+</h3>
+check if `lang` attribute is valid
+</div>
+</section>
+<section>
 <h2>JSX Accessibility</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>. See individual rule docs for direct references.</p>
 <div class="rule">
@@ -476,13 +502,6 @@ MISSING DOCUMENTATION
 	<a class="header-anchor" href="#noTargetBlank"></a>
 </h3>
 Prevent usage of unsafe `target=&quot;_blank&quot;`
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useAltText">
-	<a href="/docs/lint/rules/jsx-a11y/useAltText">useAltText</a>
-	<a class="header-anchor" href="#useAltText"></a>
-</h3>
-enforce alternative text
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAnchorContent">
