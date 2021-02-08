@@ -16,8 +16,8 @@ export type DiagnosticCategory =
 	| "bundler/moduleCycle"
 	| "bundler/topLevelAwait"
 	| "childProcess/failure"
-	| "commands/init/uncommittedChanges"
-	| "commands/init/expectedRepo"
+	| "commands/auto-config/uncommittedChanges"
+	| "commands/auto-config/expectedRepo"
 	| "compile/classes"
 	| "compile/const-enums"
 	| "compile/jsx"
@@ -342,8 +342,8 @@ const categoryNameMap: {[name in DiagnosticCategory]: true} = {
 	"bundler/moduleCycle": true,
 	"bundler/topLevelAwait": true,
 	"childProcess/failure": true,
-	"commands/init/uncommittedChanges": true,
-	"commands/init/expectedRepo": true,
+	"commands/auto-config/uncommittedChanges": true,
+	"commands/auto-config/expectedRepo": true,
 	"compile/classes": true,
 	"compile/const-enums": true,
 	"compile/jsx": true,

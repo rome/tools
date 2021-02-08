@@ -456,13 +456,13 @@ export default class Reporter implements ReporterNamespace {
 			message,
 			{
 				options: {
-					yes: {
-						label: markup`Yes`,
-						shortcut: "y",
-					},
 					no: {
 						label: markup`No`,
 						shortcut: "n",
+					},
+					yes: {
+						label: markup`Yes`,
+						shortcut: "y",
 					},
 				},
 			},

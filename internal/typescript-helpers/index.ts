@@ -11,6 +11,8 @@ export type VoidCallback<Args extends unknown[] = []> = Args extends []
 	? ((arg?: VoidReturn) => VoidReturn)
 	: ((...args: Args) => VoidReturn);
 
+export type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
+
 export type AsyncVoidCallback<Args extends unknown[] = []> = AsyncCallback<
 	VoidReturn,
 	Args

@@ -21656,7 +21656,11 @@ const ___R$$priv$project$rome$$internal$path$index_ts$os = require("os");
 			}
 		}
 
-		hasExtensions() {
+		getDotlessExtensions() {
+			return this.getExtensions().slice(1);
+		}
+
+		hasAnyExtensions() {
 			return this.getExtensions() !== "";
 		}
 
@@ -47737,6 +47741,7 @@ const ___R$project$rome$$internal$project$types_ts = {
 					"rome-remote",
 				),
 				assetExtensions: [],
+				maxSizeIgnore: [],
 				maxSize: 40_000_000, // 40 megabytes
 			},
 			targets: new Map(),
@@ -48430,11 +48435,8 @@ function ___R$project$rome$$internal$path$match$index_ts$flipPathPatterns(
 
 
 
-  // project-rome/@internal/codec-config/json/parse.ts
-// Words can't start with a digit
-	function ___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isWordStartChar(
-		char,
-	) {
+  // project-rome/@internal/codec-config/util.ts
+function ___R$project$rome$$internal$codec$config$util_ts$isWordStartChar(char) {
 		return (
 			___R$project$rome$$internal$parser$core$utils_ts$isAlpha(char) ||
 			char === "_" ||
@@ -48442,37 +48444,23 @@ function ___R$project$rome$$internal$path$match$index_ts$flipPathPatterns(
 		);
 	}
 
-	// But a digit can appear inside of a word
-	function ___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isWordChar(
-		char,
-	) {
+	function ___R$project$rome$$internal$codec$config$util_ts$isWordChar(char) {
 		return (
-			___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isWordStartChar(
-				char,
-			) || ___R$project$rome$$internal$parser$core$utils_ts$isDigit(char)
+			___R$project$rome$$internal$codec$config$util_ts$isWordStartChar(char) ||
+			___R$project$rome$$internal$parser$core$utils_ts$isDigit(char)
 		);
 	}
 
-	// Check if an input string is a valid word, this is used by the stringifier to
-	// determine if a property key should be quoted
-	function ___R$project$rome$$internal$codec$config$json$parse_ts$isValidWord(
-		word,
-	) {
+	function ___R$project$rome$$internal$codec$config$util_ts$isValidWord(word) {
 		if (
 			word.length === 0 ||
-			!___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isWordStartChar(
-				word[0],
-			)
+			!___R$project$rome$$internal$codec$config$util_ts$isWordStartChar(word[0])
 		) {
 			return false;
 		}
 
 		for (const char of word) {
-			if (
-				!___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isWordChar(
-					char,
-				)
-			) {
+			if (!___R$project$rome$$internal$codec$config$util_ts$isWordChar(char)) {
 				return false;
 			}
 		}
@@ -48480,7 +48468,9 @@ function ___R$project$rome$$internal$path$match$index_ts$flipPathPatterns(
 		return true;
 	}
 
-	// Check if a character is a part of a string, returning false for a newline or unescaped quote char
+
+  // project-rome/@internal/codec-config/json/parse.ts
+// Check if a character is a part of a string, returning false for a newline or unescaped quote char
 	function ___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isJSONStringValueChar(
 		char,
 		index,
@@ -48740,14 +48730,10 @@ function ___R$project$rome$$internal$path$match$index_ts$flipPathPatterns(
 			}
 
 			// Word - boolean, undefined etc
-			if (
-				___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isWordStartChar(
-					char,
-				)
-			) {
+			if (___R$project$rome$$internal$codec$config$util_ts$isWordStartChar(char)) {
 				const [value] = parser.readInputFrom(
 					index,
-					___R$$priv$project$rome$$internal$codec$config$json$parse_ts$isWordChar,
+					___R$project$rome$$internal$codec$config$util_ts$isWordChar,
 				);
 				return parser.finishValueToken(
 					"Word",
@@ -49575,7 +49561,7 @@ function ___R$$priv$project$rome$$internal$codec$config$json$stringify_ts$joinLi
 	function ___R$$priv$project$rome$$internal$codec$config$json$stringify_ts$stringifyKey(
 		key,
 	) {
-		if (___R$project$rome$$internal$codec$config$json$parse_ts$isValidWord(key)) {
+		if (___R$project$rome$$internal$codec$config$util_ts$isValidWord(key)) {
 			// A property key doesn't need quotes if it's a valid word
 			return key;
 		} else {
@@ -50044,6 +50030,176 @@ function ___R$$priv$project$rome$$internal$codec$config$json$index_ts$createJSON
 	);
 
 
+  // project-rome/@internal/codec-config/toml/convertToTomlFromConsumer.ts
+function ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$convertArray(
+		consumer,
+		value,
+	) {
+		let buff = [];
+		const arr = consumer.asIterable();
+		for (const consumer of arr) {
+			const element = ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyConsumer(
+				consumer,
+			);
+			buff.push(element);
+		}
+
+		return ["[", buff.join(", "), "]"].join("");
+	}
+
+	function ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyKey(
+		key,
+	) {
+		if (___R$project$rome$$internal$codec$config$util_ts$isValidWord(key)) {
+			// A property key doesn't need quotes if it's a valid word
+			return key;
+		} else {
+			return ___R$project$rome$$internal$string$escape$escapeJSString_ts$default(
+				key,
+				{
+					quote: '"',
+					ignoreWhitespaceEscapes: true,
+					json: true,
+				},
+			);
+		}
+	}
+
+	function ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyPrimitives(
+		value,
+	) {
+		if (value === null) {
+			return "null";
+		}
+
+		// Coerce primitive objects to their primitive form, as specified in ECMA262 24.5.2.1
+		if (
+			value instanceof Number ||
+			value instanceof String ||
+			value instanceof Boolean
+		) {
+			value = value.valueOf();
+		}
+
+		// Basic primitive types
+		switch (typeof value) {
+			case "symbol":
+			case "function":
+			case "undefined":
+				return "null";
+
+			case "boolean":
+				return value;
+
+			case "string":
+				return ___R$project$rome$$internal$string$escape$escapeJSString_ts$default(
+					value,
+					{
+						quote: '"',
+						json: true,
+						ignoreWhitespaceEscapes: true,
+					},
+				);
+
+			case "bigint":
+				// This is the actual V8 message lol
+				throw new Error("Do not know how to serialize a BigInt");
+
+			case "number":
+				return value;
+		}
+
+		return undefined;
+	}
+
+	function ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyConsumer(
+		consumer,
+	) {
+		const value = consumer.asUnknown();
+
+		// Stringify primitives
+		const asPrim = ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyPrimitives(
+			value,
+		);
+		if (asPrim !== undefined) {
+			return asPrim;
+		}
+
+		return ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$convertObject(
+			consumer,
+			value,
+		);
+	}
+
+	function ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$convertPlainObject(
+		consumer,
+		value,
+	) {
+		const map = consumer.asMap();
+		let buff = [];
+
+		for (const [key, consumer] of map) {
+			const value = consumer.asUnknown();
+
+			if (
+				typeof value === "function" ||
+				typeof value === "undefined" ||
+				typeof value === "symbol"
+			) {
+				map.delete(key);
+			}
+		}
+
+		for (const [key, consumer] of map) {
+			const propKey = ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyKey(
+				key,
+			);
+			const possibleValue = consumer.getValue();
+			if (typeof possibleValue === "object" && !Array.isArray(possibleValue)) {
+				buff.push("[" + propKey + "]");
+				const element = ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyConsumer(
+					consumer,
+				);
+				buff.push("" + element);
+			} else {
+				const propValue = ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$stringifyConsumer(
+					consumer,
+				);
+				buff.push(propKey + " = " + propValue);
+			}
+		}
+
+		return "" + buff.join("\n");
+	}
+
+	function ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$convertObject(
+		consumer,
+		value,
+	) {
+		if (Array.isArray(value) || value instanceof Set) {
+			return ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$convertArray(
+				consumer,
+				value,
+			);
+		}
+		return ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$convertPlainObject(
+			consumer,
+			value,
+		);
+	}
+
+	function ___R$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$default(
+		consumer,
+		pathToComments,
+	) {
+		const value = consumer.asUnknown();
+		return ___R$$priv$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$convertObject(
+			consumer,
+			value,
+		);
+	}
+
+
   // project-rome/@internal/codec-config/toml/index.ts
 function ___R$$priv$project$rome$$internal$codec$config$toml$index_ts$isSingleStringValueChar(
 		char,
@@ -50283,7 +50439,10 @@ function ___R$$priv$project$rome$$internal$codec$config$toml$index_ts$isSingleSt
 		},
 
 		stringifyFromConsumer(opts) {
-			throw new Error("todo");
+			return ___R$project$rome$$internal$codec$config$toml$convertToTomlFromConsumer_ts$default(
+				opts.consumer,
+				opts.comments,
+			);
 		},
 	};
 
@@ -54753,6 +54912,10 @@ const ___R$project$rome$$internal$events$utils_ts = {
 	function ___R$project$rome$$internal$events$utils_ts$mergeEventSubscriptions(
 		subs,
 	) {
+		if (subs.length === 1) {
+			return subs[0];
+		}
+
 		return {
 			async unsubscribe() {
 				for (const sub of subs) {
@@ -57065,6 +57228,12 @@ const ___R$project$rome$$internal$project$load_ts = {
 				config.files.maxSize = files.get("maxSize").asNumber();
 			}
 
+			if (files.has("maxSizeIgnore")) {
+				config.files.maxSizeIgnore = ___R$project$rome$$internal$project$utils_ts$arrayOfPatterns(
+					files.get("maxSizeIgnore"),
+				);
+			}
+
 			if (files.has("assetExtensions")) {
 				config.files.assetExtensions = files.get("assetExtensions").asMappedArray((
 					item,
@@ -57240,6 +57409,14 @@ const ___R$project$rome$$internal$project$load_ts = {
 		);
 		if (bundlerExternals !== undefined) {
 			merged.bundler.externals = bundlerExternals;
+		}
+
+		const filesMaxSizeIgnore = ___R$project$rome$$internal$project$utils_ts$mergeArrays(
+			extendsObj.files.maxSizeIgnore,
+			config.files.maxSizeIgnore,
+		);
+		if (filesMaxSizeIgnore !== undefined) {
+			merged.files.maxSizeIgnore = filesMaxSizeIgnore;
 		}
 
 		return {
@@ -91524,19 +91701,25 @@ const ___R$$priv$project$rome$$internal$cli$reporter$Reporter_ts$stream = requir
 			let handle;
 
 			const cond = {
-				update: () => {
-					if (check()) {
-						if (handle === undefined) {
-							handle = this.addStream(stream);
-						}
-						return true;
-					} else {
-						if (handle !== undefined) {
-							handle.remove();
-							handle = undefined;
-						}
-						return false;
+				enable: () => {
+					if (handle === undefined) {
+						handle = this.addStream(stream);
 					}
+				},
+				disable: () => {
+					if (handle !== undefined) {
+						handle.remove();
+						handle = undefined;
+					}
+				},
+				update: () => {
+					if (check !== undefined && check()) {
+						cond.enable();
+					} else {
+						cond.disable();
+					}
+
+					return handle !== undefined;
 				},
 			};
 
@@ -91747,13 +91930,13 @@ const ___R$$priv$project$rome$$internal$cli$reporter$Reporter_ts$stream = requir
 				message,
 				{
 					options: {
-						yes: {
-							label: ___R$project$rome$$internal$markup$escape_ts$markup`Yes`,
-							shortcut: "y",
-						},
 						no: {
 							label: ___R$project$rome$$internal$markup$escape_ts$markup`No`,
 							shortcut: "n",
+						},
+						yes: {
+							label: ___R$project$rome$$internal$markup$escape_ts$markup`Yes`,
+							shortcut: "y",
 						},
 					},
 				},
@@ -98653,7 +98836,14 @@ function ___R$project$rome$$internal$core$common$file$handlers$index_ts$inferDia
 		);
 
 		if (handler === undefined) {
-			throw new Error("No file handler found for '" + path.join() + "'");
+			throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
+				description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.FILES.NO_FILE_HANDLER(
+					path,
+				),
+				location: {
+					filename: path.join(),
+				},
+			});
 		} else {
 			return {handler, ext};
 		}
@@ -98761,8 +98951,8 @@ function ___R$project$rome$$internal$core$common$file$handlers$index_ts$inferDia
 		"css",
 		___R$project$rome$$internal$core$common$file$handlers$css_ts$cssHandler,
 	);
-	// Config
 
+	// Config
 	for (const handler of ___R$project$rome$$internal$codec$config$index_ts$CONFIG_HANDLERS) {
 		for (const ext of handler.extensions) {
 			if (ext === "yaml" || ext === "yml" || ext === "toml" || ext === "ini") {
@@ -113268,12 +113458,14 @@ const ___R$project$rome$$internal$diagnostics$categories_ts = {
 			"bundler/moduleCycle": true,
 			"bundler/topLevelAwait": true,
 			"childProcess/failure": true,
-			"commands/init/uncommittedChanges": true,
-			"commands/init/expectedRepo": true,
+			"commands/auto-config/uncommittedChanges": true,
+			"commands/auto-config/expectedRepo": true,
 			"compile/classes": true,
 			"compile/const-enums": true,
 			"compile/jsx": true,
 			"compile/nonnumeric-enum-values": true,
+			"files/missingHandler": true,
+			"files/tooBig": true,
 			"flags/invalid": true,
 			"format/disabled": true,
 			"internalError/fatal": true,
@@ -113414,8 +113606,8 @@ const ___R$project$rome$$internal$diagnostics$descriptions$flags_ts$flags = ___R
 		}),
 		NO_FILES_FOUND: (noun) => ({
 			message: noun === undefined
-				? ___R$project$rome$$internal$markup$escape_ts$markup`No files found`
-				: ___R$project$rome$$internal$markup$escape_ts$markup`No files to ${noun} found`,
+				? ___R$project$rome$$internal$markup$escape_ts$markup`No matching files found`
+				: ___R$project$rome$$internal$markup$escape_ts$markup`No matching ${noun} files found`,
 		}),
 		UNKNOWN_COMMAND: (
 			{
@@ -113766,6 +113958,72 @@ const ___R$project$rome$$internal$diagnostics$descriptions$projectManager_ts$pro
 				},
 			],
 		}),
+	});
+
+
+  // project-rome/@internal/diagnostics/descriptions/files.ts
+const ___R$project$rome$$internal$diagnostics$descriptions$files_ts$files = ___R$project$rome$$internal$diagnostics$descriptions$index_ts$createDiagnosticsCategory({
+		NO_FILE_HANDLER: (path) => {
+			let advice = [];
+
+			if (path.hasAnyExtensions()) {
+				advice.push({
+					type: "action",
+					instruction: ___R$project$rome$$internal$markup$escape_ts$markup`You can treat this file extension as a binary asset by running`,
+					noun: ___R$project$rome$$internal$markup$escape_ts$markup`Treat this file extension as a binary asset`,
+					command: "config",
+					args: ["push", "files.assetExtensions", path.getDotlessExtensions()],
+				});
+			}
+
+			return {
+				category: "files/missingHandler",
+				message: ___R$project$rome$$internal$markup$escape_ts$markup`No file handler found for <emphasis>${path}</emphasis>`,
+				advice,
+			};
+		},
+		TOO_BIG: (path, projectPath, size, maxSize) => {
+			const relative = projectPath.relative(path).join();
+
+			return {
+				category: "files/tooBig",
+				message: ___R$project$rome$$internal$markup$escape_ts$markup`Size of <emphasis>${path}</emphasis> is <filesize>${String(
+					size,
+				)}</filesize> which exceeds the project maximum of <filesize>${String(
+					maxSize,
+				)}</filesize>`,
+				advice: [
+					{
+						type: "log",
+						category: "none",
+						text: ___R$project$rome$$internal$markup$escape_ts$markup`The file size limit exists to prevent us inadvertently slowing down and loading large files that we shouldn't.`,
+					},
+					{
+						type: "action",
+						instruction: ___R$project$rome$$internal$markup$escape_ts$markup`You can ignore this file from linting by running`,
+						noun: ___R$project$rome$$internal$markup$escape_ts$markup`Ignore this file from linting`,
+						command: "config",
+						args: ["push", "lint.ignore", relative],
+					},
+					{
+						type: "action",
+						instruction: ___R$project$rome$$internal$markup$escape_ts$markup`Or can allow this specific file to exceed the size limit with`,
+						noun: ___R$project$rome$$internal$markup$escape_ts$markup`Allow only this specific file to exceed the limit`,
+						command: "config",
+						args: ["push", "files.maxSizeIgnore", relative],
+					},
+					{
+						type: "action",
+						instruction: ___R$project$rome$$internal$markup$escape_ts$markup`Or just increase the size limit for all files to <filesize>${String(
+							size,
+						)}</filesize>`,
+						noun: ___R$project$rome$$internal$markup$escape_ts$markup`Increase project max file size limit`,
+						command: "config",
+						args: ["set", "files.maxSize", String(size)],
+					},
+				],
+			};
+		},
 	});
 
 
@@ -114216,19 +114474,14 @@ const ___R$project$rome$$internal$diagnostics$descriptions$parsers$spdx_ts$spdx 
 					text: ___R$project$rome$$internal$markup$escape_ts$markup`The <emphasis>SPDX</emphasis> registry is used to ensure valid and legal licenses. See <hyperlink target="https://spdx.org/licenses/" /> for more information.`,
 				},
 				{
-					type: "log",
-					category: "info",
-					text: ___R$project$rome$$internal$markup$escape_ts$markup`To automatically add an exception for this license, run:`,
-				},
-				{
-					type: "command",
-					command: "rome config push dependencies.exceptions.invalidLicenses." +
-					id +
-					' "' +
-					packageName +
-					"@" +
-					packageVersion +
-					'"',
+					type: "action",
+					command: "config set",
+					noun: ___R$project$rome$$internal$markup$escape_ts$markup`Add this license to the exceptions`,
+					instruction: ___R$project$rome$$internal$markup$escape_ts$markup`To automatically add an exception for this license, run:`,
+					args: [
+						"dependencies.exceptions.invalidLicenses." + id,
+						packageName + "@" + packageVersion,
+					],
 				},
 			],
 		}),
@@ -114250,13 +114503,23 @@ const ___R$project$rome$$internal$diagnostics$descriptions$parsers$spdx_ts$spdx 
 				},
 				{
 					type: "command",
-					command: "rome config set dependencies.exceptions.invalidLicenses." +
+					command: "rome config push dependencies.exceptions.invalidLicenses." +
 					id +
-					' "' +
+					" " +
 					packageName +
 					"@" +
 					newPackageVersion +
 					'"',
+				},
+				{
+					type: "action",
+					instruction: ___R$project$rome$$internal$markup$escape_ts$markup`To automatically add an exception for this license, run:`,
+					noun: ___R$project$rome$$internal$markup$escape_ts$markup`Fix invalid licenses`,
+					command: "config push",
+					args: [
+						"dependencies.exceptions.invalidLicenses." + id,
+						packageName + "@" + newPackageVersion,
+					],
 				},
 			],
 		}),
@@ -116590,19 +116853,19 @@ const ___R$$priv$project$rome$$internal$diagnostics$descriptions$commands$initCo
 		{
 			type: "log",
 			category: "info",
-			text: ___R$project$rome$$internal$markup$escape_ts$markup`If you still really want to do this, you can bypass the restriction and create a project in this directory with the flag <code>--allow-dirty</code>:`,
+			text: ___R$project$rome$$internal$markup$escape_ts$markup`If you still really want to do this, you can bypass the restriction and auto configurate the project with <code>--allow-dirty</code>:`,
 		},
 		{
 			type: "code",
 			language: "shell",
-			sourceText: "rome init --allow-dirty",
+			sourceText: "rome auto-config --allow-dirty",
 		},
 	];
 
 	// @internal/core/server/commands/init.ts
 	const ___R$project$rome$$internal$diagnostics$descriptions$commands$initCommand_ts$initCommand = ___R$project$rome$$internal$diagnostics$descriptions$index_ts$createDiagnosticsCategory({
 		UNCOMMITTED_CHANGES: {
-			category: "commands/init/uncommittedChanges",
+			category: "commands/auto-config/uncommittedChanges",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Uncommitted changes in repository`,
 			advice: [
 				{
@@ -116613,13 +116876,14 @@ const ___R$$priv$project$rome$$internal$diagnostics$descriptions$commands$initCo
 				{
 					type: "code",
 					language: "shell",
-					sourceText: "" + 'git add -A && git commit -m "Rome init backup"',
+					sourceText: "" +
+					'git add -A && git commit -m "chore: rome init backup"',
 				},
 				...___R$$priv$project$rome$$internal$diagnostics$descriptions$commands$initCommand_ts$IGNORE_ADVICE,
 			],
 		},
 		EXPECTED_REPO: {
-			category: "commands/init/expectedRepo",
+			category: "commands/auto-config/expectedRepo",
 			message: ___R$project$rome$$internal$markup$escape_ts$markup`Directory is not a repository. Are you sure this is where you wanted to create a project?`,
 			advice: [
 				{
@@ -116778,6 +117042,7 @@ const ___R$project$rome$$internal$diagnostics$descriptions$index_ts = {
 		CONSUME: ___R$project$rome$$internal$diagnostics$descriptions$consume_ts$consume,
 		MANIFEST: ___R$project$rome$$internal$diagnostics$descriptions$manifest_ts$manifest,
 		PROJECT_CONFIG: ___R$project$rome$$internal$diagnostics$descriptions$projectConfig_ts$projectConfig,
+		FILES: ___R$project$rome$$internal$diagnostics$descriptions$files_ts$files,
 		USER_CONFIG: ___R$project$rome$$internal$diagnostics$descriptions$userConfig_ts$userConfig,
 		HTML_PARSER: ___R$project$rome$$internal$diagnostics$descriptions$parsers$htmlParser_ts$htmlParser,
 		MARKDOWN_PARSER: ___R$project$rome$$internal$diagnostics$descriptions$parsers$markdownParser_ts$markdownParser,
@@ -122075,6 +122340,299 @@ const ___R$project$rome$$internal$core$client$commands$lsp_ts$default = ___R$pro
 	});
 
 
+  // project-rome/@internal/core/client/commands/init.ts
+const ___R$project$rome$$internal$core$client$commands$init_ts$default = ___R$project$rome$$internal$core$client$commands_ts$createLocalCommand({
+		category: ___R$project$rome$$internal$core$common$commands_ts$commandCategories.PROCESS_MANAGEMENT,
+		description: ___R$project$rome$$internal$markup$escape_ts$markup`Initialise the project by emitting a configuration file and a .editorconfig file`,
+		usage: ___R$project$rome$$internal$markup$escape_ts$markup`<cmd>npx rome init</cmd>`,
+		examples: [],
+		defineFlags() {
+			return {};
+		},
+		async callback(req) {
+			const {client} = req;
+
+			const hasProject = await client.query(
+				{
+					commandName: "init",
+					commandFlags: {
+						checkProject: true,
+					},
+				},
+				"server",
+			);
+
+			if (hasProject.type !== "SUCCESS") {
+				return true;
+			}
+			if (hasProject.data === false) {
+				client.reporter.warn(
+					___R$project$rome$$internal$markup$escape_ts$markup`Rome has been already configured inside this project.`,
+				);
+				return true;
+			}
+
+			const configTypeOptions = {
+				json: {
+					label: ___R$project$rome$$internal$markup$escape_ts$markup`JSON (package.json)`,
+				},
+				rjson: {
+					label: ___R$project$rome$$internal$markup$escape_ts$markup`RJSON (loose JSON format)`,
+				},
+				// TODO: not supported yet
+				// toml: {
+				// 	label: markup`TOML`,
+				// },
+				// TODO: not supported yet
+				// yaml: {
+				// 	label: markup`YAML`,
+				// },
+			};
+
+			const indentationTypeOptions = {
+				space: {
+					label: ___R$project$rome$$internal$markup$escape_ts$markup`Spaces`,
+				},
+				tab: {
+					label: ___R$project$rome$$internal$markup$escape_ts$markup`Tabs`,
+				},
+			};
+
+			const configType = await client.reporter.radio(
+				___R$project$rome$$internal$markup$escape_ts$markup`Please choose the extension of your Rome configuration file`,
+				{
+					options: configTypeOptions,
+				},
+			);
+
+			const indentStyle = await client.reporter.radio(
+				___R$project$rome$$internal$markup$escape_ts$markup`Please choose the type of indentation (default Tabs)`,
+				{
+					options: indentationTypeOptions,
+				},
+			);
+
+			const indentSize = await client.reporter.question(
+				___R$project$rome$$internal$markup$escape_ts$markup`Please choose the size of the indentation (default 2)`,
+			);
+
+			const identSizeAsNumber = Number(indentSize);
+			if (isNaN(identSizeAsNumber) || identSizeAsNumber > 10) {
+				client.reporter.warn(
+					___R$project$rome$$internal$markup$escape_ts$markup`You inserted a value that is not a number o is greater than 10. Rome will fallback to the default value (1).`,
+				);
+				client.reporter.info(
+					___R$project$rome$$internal$markup$escape_ts$markup`You can change this value later when this command is finished.`,
+				);
+			}
+
+			await client.query(
+				{
+					commandName: "init",
+					commandFlags: {
+						configType,
+						indentStyle,
+						indentSize: identSizeAsNumber,
+					},
+				},
+				"server",
+			);
+
+			return true;
+		},
+	});
+
+
+  // project-rome/@internal/core/client/commands/autoConfig.ts
+const ___R$project$rome$$internal$core$client$commands$autoConfig_ts$default = ___R$project$rome$$internal$core$client$commands_ts$createLocalCommand({
+		category: ___R$project$rome$$internal$core$common$commands_ts$commandCategories.PROCESS_MANAGEMENT,
+		description: ___R$project$rome$$internal$markup$escape_ts$markup`It scans the project and provides possible fixes to apply to Rome configuration`,
+		usage: ___R$project$rome$$internal$markup$escape_ts$markup`<cmd>rome auto-config</cmd>`,
+		examples: [],
+		defineFlags(c) {
+			return {
+				allowDirty: c.get(
+					"allowDirty",
+					{
+						description: ___R$project$rome$$internal$markup$escape_ts$markup`Allows running auto-config command by skipping the check on uncommitted files.`,
+					},
+				).asBoolean(false),
+			};
+		},
+		async callback(req, flags) {
+			const {client} = req;
+			const {reporter} = client;
+			const {allowDirty} = flags;
+			let savedCheckFiles = undefined;
+			let remainingCheckErrors = undefined;
+
+			// const hasProject = await req.client.query(
+			// 	{
+			// 		commandName: "init",
+			// 		commandFlags: {
+			// 			checkProject: true,
+			// 		},
+			// 	},
+			// 	"server",
+			// );
+			//
+			// if (hasProject.type !== "SUCCESS") {
+			// 	return true;
+			// }
+			// if (hasProject.data === false) {
+			//
+			// 	reporter.warn(
+			// 		markup`Rome couldn't find configuration for this project. Try run <cmd>npx rome init</cmd>.`
+			// 	)
+			// 	return true;
+			// }
+
+			const result = await req.client.query(
+				{
+					commandName: "auto-config",
+					commandFlags: {
+						checkVSC: !allowDirty,
+					},
+				},
+				"server",
+			);
+
+			if (result.type !== "SUCCESS") {
+				return false;
+			}
+
+			const res = await req.client.query(
+				{
+					commandName: "auto-config",
+				},
+				"server",
+			);
+
+			if (res.type !== "SUCCESS") {
+				reporter.log(
+					___R$project$rome$$internal$markup$escape_ts$markup`Something went wrong during the execution of the command.`,
+				);
+				return true;
+			}
+			const data = ___R$project$rome$$internal$consume$index_ts$consumeUnknown(
+				res.data,
+				"parse",
+				"json",
+			);
+
+			if (!data.exists()) {
+				reporter.log(
+					___R$project$rome$$internal$markup$escape_ts$markup`No problems or updates found in you project.`,
+				);
+				return true;
+			}
+
+			if (data.get("lint").exists()) {
+				const lint = data.get("lint").asMap();
+				const diagnostics = lint.get("diagnostics");
+				const savedCount = lint.get("savedCount");
+				if (savedCount) {
+					savedCheckFiles = savedCount.asNumber();
+				}
+				if (diagnostics) {
+					const lintDiagnostics = diagnostics.asImplicitArray();
+					if (lintDiagnostics.length > 0) {
+						remainingCheckErrors = 0;
+						for (const diagnostic of lintDiagnostics) {
+							const description = diagnostic.get("description").asMap();
+							if (description.has("category")) {
+								const category = description.get("category");
+								const categoryValue = description.get("categoryValue");
+								if (
+									category &&
+									categoryValue &&
+									category.exists() &&
+									categoryValue.exists()
+								) {
+									if (category.asString() === "lint/js/noUndeclaredVariables") {
+										await req.client.query(
+											{
+												commandName: "config push",
+												args: ["lint.globals", categoryValue.asString()],
+											},
+											"server",
+										);
+									} else {
+										remainingCheckErrors++;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			if (data.get("licenses").exists()) {
+				const licenses = data.get("licenses").asImplicitArray();
+
+				if (licenses.length > 0) {
+					for (const license of licenses) {
+						const description = license.get("description").asMap();
+						if (description.has("advice")) {
+							const advice = description.get("advice");
+							if (advice && advice.exists()) {
+								const diags = advice.asImplicitArray();
+								if (diags.length > 0) {
+									const actionDiagnostics = diags.filter((d) =>
+										d.get("type").asString() === "action"
+									);
+									if (actionDiagnostics.length > 0) {
+										for (const action of actionDiagnostics) {
+											const command = action.get("command").asString();
+											const args = action.get("args").asMappedArray((c) =>
+												c.asString()
+											);
+
+											await req.client.query(
+												{
+													commandName: command,
+													args,
+												},
+												"server",
+											);
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			if (savedCheckFiles !== undefined && remainingCheckErrors !== undefined) {
+				await reporter.section(
+					___R$project$rome$$internal$markup$escape_ts$markup`Summary`,
+					async () => {
+						if (savedCheckFiles !== undefined && savedCheckFiles > 0) {
+							reporter.info(
+								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${savedCheckFiles}</emphasis> <grammarNumber plural="files" singular="file">${String(
+									savedCheckFiles,
+								)}</grammarNumber> saved`,
+							);
+						}
+						if (remainingCheckErrors === 0) {
+							reporter.success(
+								___R$project$rome$$internal$markup$escape_ts$markup`No problems found!`,
+							);
+						} else {
+							reporter.warn(
+								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${remainingCheckErrors}</emphasis> errors remaining. Run <code>rome check</code> to view.`,
+							);
+						}
+						reporter.br();
+					},
+				);
+			}
+
+			return true;
+		},
+	});
+
+
   // project-rome/@internal/core/client/commands.ts
 function ___R$project$rome$$internal$core$client$commands_ts$createLocalCommand(
 		cmd,
@@ -122110,6 +122668,14 @@ function ___R$project$rome$$internal$core$client$commands_ts$createLocalCommand(
 	___R$project$rome$$internal$core$client$commands_ts$localCommands.set(
 		"lsp",
 		___R$project$rome$$internal$core$client$commands$lsp_ts$default,
+	);
+	___R$project$rome$$internal$core$client$commands_ts$localCommands.set(
+		"init",
+		___R$project$rome$$internal$core$client$commands$init_ts$default,
+	);
+	___R$project$rome$$internal$core$client$commands_ts$localCommands.set(
+		"auto-config",
+		___R$project$rome$$internal$core$client$commands$autoConfig_ts$default,
 	);
 
 
@@ -122198,8 +122764,10 @@ const ___R$$priv$project$rome$$internal$core$server$fs$glob_ts$GLOB_IGNORE = [
 						continue;
 					}
 
-					// Check extensions
-					if (extensions !== undefined) {
+					// Check extensions against input list only when it is a child of the input search path
+					// Explicitly specifying the exact filename is enough signal that they really wanted to
+					// target this file
+					if (!this.args.has(path) && extensions !== undefined) {
 						let matchedExt = false;
 						for (const ext of extensions) {
 							matchedExt = path.hasEndExtension(ext);
@@ -122413,7 +122981,11 @@ let ___R$$priv$project$rome$$internal$core$server$ServerRequest_ts$requestIdCoun
 		// Hint if all files were ignored
 		if (configCategory !== undefined && !ignoreProjectIgnore) {
 			const globber = await req.glob(
-				Object.assign({}, opts, {ignoreProjectIgnore: true}),
+				Object.assign(
+					{},
+					opts,
+					{configCategory: undefined, ignoreProjectIgnore: true},
+				),
 			);
 			const withoutIgnore = await globber.get(false);
 
@@ -122519,7 +123091,8 @@ let ___R$$priv$project$rome$$internal$core$server$ServerRequest_ts$requestIdCoun
 			this.files = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
 
 			this.logger = server.logger.namespace(
-				___R$project$rome$$internal$markup$escape_ts$markup`[ServerRequest] Request #${this.id}:`,
+				___R$project$rome$$internal$markup$escape_ts$markup`ServerRequest`,
+				___R$project$rome$$internal$markup$escape_ts$markup`Request #${this.id}`,
 			);
 
 			this.markerEvent = new ___R$project$rome$$internal$events$Event_ts$default({
@@ -129979,7 +130552,8 @@ function ___R$$priv$project$rome$$internal$codec$spdx$license$SpdxLicenseParser_
 			___R$project$rome$$internal$parser$core$utils_ts$isAlpha(char) ||
 			___R$project$rome$$internal$parser$core$utils_ts$isDigit(char) ||
 			char === "-" ||
-			char === "."
+			char === "." ||
+			char === "/"
 		);
 	}
 
@@ -130131,20 +130705,40 @@ function ___R$$priv$project$rome$$internal$codec$spdx$license$SpdxLicenseParser_
 
 		parseLicense(parser, token) {
 			const startPos = parser.getPosition();
-			parser.nextToken();
+			const nextToken = parser.nextToken();
 
 			// Validate id
 			const id = token.value;
-			let licenseInfo = ___R$project$rome$$internal$codec$spdx$license$index_ts$getSPDXLicense(
-				id,
-			);
-			const nextToken = parser.getToken();
+			let licenseInfo;
+			// retrieve the license info only if the next token is not a word
+			if (nextToken.type !== "Word") {
+				licenseInfo = ___R$project$rome$$internal$codec$spdx$license$index_ts$getSPDXLicense(
+					id,
+				);
+			}
+			// if next token is a word,
 			let possibleCorrectLicense;
+			if (licenseInfo === undefined && nextToken.type === "Word") {
+				const words = [id, nextToken.value];
+				while (parser.matchToken("Word")) {
+					const token = parser.nextToken();
+					if (token.type === "Word") {
+						words.push(token.value);
+					}
+				}
+				possibleCorrectLicense = words.join(" ");
+				licenseInfo = ___R$project$rome$$internal$codec$spdx$license$index_ts$getSPDXLicense(
+					possibleCorrectLicense,
+				);
+			}
+
 			// Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
 
 			// In loose mode, just make it equivalent, otherwise, complain
 			if (licenseInfo === undefined && nextToken.type === "Word") {
-				possibleCorrectLicense = id + "-" + nextToken.value;
+				if (!possibleCorrectLicense) {
+					possibleCorrectLicense = id + "-" + nextToken.value;
+				}
 				const possibleLicenseInfo = ___R$project$rome$$internal$codec$spdx$license$index_ts$getSPDXLicense(
 					possibleCorrectLicense,
 				);
@@ -130155,7 +130749,7 @@ function ___R$$priv$project$rome$$internal$codec$spdx$license$SpdxLicenseParser_
 						licenseInfo = possibleLicenseInfo;
 						parser.nextToken();
 					} else {
-						throw parser.unexpected({
+						parser.unexpectedDiagnostic({
 							description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.SPDX.VALID_LICENSE_WITH_MISSING_DASH(
 								possibleCorrectLicense,
 							),
@@ -130174,8 +130768,19 @@ function ___R$$priv$project$rome$$internal$codec$spdx$license$SpdxLicenseParser_
 				);
 
 				if (!inConfig) {
-					if (!satisfiesVersion) {
-						throw parser.unexpected({
+					if (satisfiesVersion) {
+						parser.unexpectedDiagnostic({
+							description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.SPDX.UNKNOWN_LICENSE({
+								id: possibleCorrectLicense || id,
+								knownLicenses: ___R$project$rome$$internal$codec$spdx$license$index_ts$licenseNames,
+								packageName: this.packageName,
+								packageVersion: this.packageVersion,
+							}),
+							start: parser.getPositionFromIndex(token.start),
+							end: parser.getPositionFromIndex(token.end),
+						});
+					} else {
+						parser.unexpectedDiagnostic({
 							description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.SPDX.UNKNOWN_LICENSE_IN_VERSION({
 								packageName: this.packageName,
 								packageVersionInConfig,
@@ -130186,16 +130791,6 @@ function ___R$$priv$project$rome$$internal$codec$spdx$license$SpdxLicenseParser_
 							end: parser.getPositionFromIndex(token.end),
 						});
 					}
-					throw parser.unexpected({
-						description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.SPDX.UNKNOWN_LICENSE({
-							id: possibleCorrectLicense || id,
-							knownLicenses: ___R$project$rome$$internal$codec$spdx$license$index_ts$licenseNames,
-							packageName: this.packageName,
-							packageVersion: this.packageVersion,
-						}),
-						start: parser.getPositionFromIndex(token.start),
-						end: parser.getPositionFromIndex(token.end),
-					});
 				}
 				licenseId = id;
 				// allow the license because it's inside the config
@@ -130236,7 +130831,10 @@ function ___R$$priv$project$rome$$internal$codec$spdx$license$SpdxLicenseParser_
 			);
 			const expr = this.parseExpression(parser);
 			parser.finalize();
-			return expr;
+			return {
+				license: expr,
+				diagnostics: parser.getDiagnostics(),
+			};
 		}
 	}
 
@@ -131419,18 +132017,6 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 		return [value, prop];
 	}
 
-	// These are all licenses I found that are wrong, we should eventually remove this as we update those deps
-	const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$INVALID_IGNORE_LICENSES = [
-		"UNLICENSED",
-		"none",
-		"Facebook Platform License",
-		"BSD",
-		"MIT/X11",
-		"Public Domain",
-		"MIT License",
-		"BSD-like",
-	];
-
 	function ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$normalizeLicense(
 		consumer,
 		loose,
@@ -131462,15 +132048,6 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 
 		// Allow referring to a custom license
 		if (licenseId.startsWith("SEE LICENSE IN ")) {
-			return undefined;
-		}
-
-		// Not valid licenses...
-		if (
-			___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$INVALID_IGNORE_LICENSES.includes(
-				licenseId,
-			)
-		) {
 			return undefined;
 		}
 
@@ -132012,6 +132589,11 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 				version,
 			);
 		}
+		const license = ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$normalizeLicense(
+			consumer,
+			loose,
+			projects,
+		);
 
 		return {
 			name,
@@ -132024,11 +132606,7 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 				consumer,
 				"description",
 			),
-			license: ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$normalizeLicense(
-				consumer,
-				loose,
-				projects,
-			),
+			license: license == void 0 ? void 0 : license.license,
 			type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 			bin: ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$normalizeBin(
 				consumer,
@@ -132128,6 +132706,9 @@ const ___R$$priv$project$rome$$internal$codec$js$manifest$index_ts$TYPO_KEYS = n
 				loose,
 			),
 			raw: consumer.asJSONObject(),
+			diagnostics: {
+				license: license == void 0 ? void 0 : license.diagnostics,
+			},
 		};
 	}
 
@@ -132966,9 +133547,7 @@ const ___R$project$rome$$internal$core$server$commands$config_ts = {
 			reporter.success(
 				___R$project$rome$$internal$markup$escape_ts$markup`${action === "push"
 					? "Adding"
-					: "Setting"} <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
-					value,
-				)}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
+					: "Setting"} <emphasis>${JSON.stringify(value)}</emphasis> to <emphasis>${keyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
 			);
 
 			if (value === "true" || value === "false") {
@@ -138079,6 +138658,320 @@ const ___R$project$rome$$internal$core$server$commands$json_ts$default = ___R$pr
 	});
 
 
+  // project-rome/@internal/child-process/index.ts
+const ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess = require(
+		"child_process",
+	);
+	class ___R$project$rome$$internal$child$process$index_ts$ChildProcess {
+		constructor(command, args, opts) {
+			this.process = ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess.spawn(
+				command,
+				args,
+				Object.assign({}, opts, {cwd: opts.cwd.join()}),
+			);
+			this.cwd = opts.cwd;
+			this.command = command;
+			this.args = args;
+			this.output = [];
+
+			const {stdout, stderr} = this.process;
+
+			if (stdout != null) {
+				stdout.on(
+					"data",
+					(chunk) => {
+						this.output.push([0, chunk]);
+					},
+				);
+			}
+
+			if (stderr != null) {
+				stderr.on(
+					"data",
+					(chunk) => {
+						this.output.push([1, chunk]);
+					},
+				);
+			}
+		}
+
+		getDisplayCommand() {
+			return this.command + " " + this.args.join(" ");
+		}
+
+		getOutput(out = true, err = true) {
+			if (!(out || err)) {
+				return "";
+			}
+
+			return this.output.map(([code, chunk]) => {
+				if (code === 0 && !out) {
+					return "";
+				}
+
+				if (code === 1 && !err) {
+					return "";
+				}
+
+				return chunk;
+			}).join("");
+		}
+
+		unexpected(message, category = "childProcess/failure") {
+			throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
+				description: {
+					category,
+					message,
+					advice: [
+						{
+							type: "log",
+							category: "info",
+							text: ___R$project$rome$$internal$markup$escape_ts$markup`Full command`,
+						},
+						{
+							type: "command",
+							command: this.getDisplayCommand(),
+						},
+						{
+							type: "log",
+							category: "info",
+							text: ___R$project$rome$$internal$markup$escape_ts$markup`Output`,
+						},
+						{
+							type: "code",
+							language: "text",
+							sourceText: this.getOutput(),
+						},
+					],
+				},
+				location: {
+					language: "binary",
+					filename: this.cwd.join(),
+				},
+			});
+		}
+
+		async waitSuccess() {
+			const code = await this.wait();
+			if (code !== 0) {
+				throw this.unexpected(
+					___R$project$rome$$internal$markup$escape_ts$markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${code}.`,
+				);
+			}
+			return this;
+		}
+
+		wait() {
+			return new Promise((resolve) => {
+				this.process.on(
+					"close",
+					(code) => {
+						resolve(code);
+					},
+				);
+			});
+		}
+	}
+
+	function ___R$project$rome$$internal$child$process$index_ts$spawn(
+		command,
+		args,
+		opts,
+	) {
+		return new ___R$project$rome$$internal$child$process$index_ts$ChildProcess(
+			command,
+			args,
+			opts,
+		);
+	}
+
+
+  // project-rome/@internal/vcs/index.ts
+function ___R$project$rome$$internal$vcs$index_ts$extractFileList(out) {
+		const lines = out.trim().split("\n");
+
+		const files = [];
+
+		for (const line of lines) {
+			const match = line.trim().match(/^(?:[AM]|\?\?)\s+(.*?)$/);
+			if (match != null) {
+				files.push(match[1]);
+			}
+		}
+
+		return files;
+	}
+
+	class ___R$project$rome$$internal$vcs$index_ts$VCSClient {
+		constructor(root) {
+			this.root = root;
+		}
+
+		getDefaultBranch() {
+			throw new Error("unimplemented");
+		}
+
+		getModifiedFiles(branch) {
+			throw new Error("unimplemented");
+		}
+
+		getUncommittedFiles() {
+			throw new Error("unimplemented");
+		}
+	}
+
+	class ___R$$priv$project$rome$$internal$vcs$index_ts$GitVCSClient
+		extends ___R$project$rome$$internal$vcs$index_ts$VCSClient {
+		constructor(root) {
+			super(root);
+		}
+
+		async getDefaultBranch() {
+			const exitCode = await ___R$project$rome$$internal$child$process$index_ts$spawn(
+				"git",
+				["show-ref", "--verify", "--quiet", "refs/heads/main"],
+				{cwd: this.root},
+			).wait();
+			return exitCode === 0 ? "main" : "master";
+		}
+
+		async getUncommittedFiles() {
+			const stdout = (await ___R$project$rome$$internal$child$process$index_ts$spawn(
+				"git",
+				["status", "--short"],
+				{cwd: this.root},
+			).waitSuccess()).getOutput(true, false);
+			return ___R$project$rome$$internal$vcs$index_ts$extractFileList(stdout);
+		}
+
+		async getModifiedFiles(branch) {
+			const stdout = (await ___R$project$rome$$internal$child$process$index_ts$spawn(
+				"git",
+				["diff", "--name-status", branch],
+				{cwd: this.root},
+			).waitSuccess()).getOutput(true, false);
+			return ___R$project$rome$$internal$vcs$index_ts$extractFileList(stdout);
+		}
+	}
+
+	async function ___R$project$rome$$internal$vcs$index_ts$getVCSClient(root) {
+		if (
+			await ___R$project$rome$$internal$fs$index_ts$exists(root.append(".git"))
+		) {
+			return new ___R$$priv$project$rome$$internal$vcs$index_ts$GitVCSClient(
+				root,
+			);
+		}
+
+		return undefined;
+	}
+
+
+  // project-rome/@internal/core/server/commands/autoConfig.ts
+const ___R$project$rome$$internal$core$server$commands$autoConfig_ts$default = ___R$project$rome$$internal$core$server$commands_ts$createServerCommand({
+		category: ___R$project$rome$$internal$core$common$commands_ts$commandCategories.PROCESS_MANAGEMENT,
+		description: ___R$project$rome$$internal$markup$escape_ts$markup`Configure the project and fixes possible issues tha might occur while using Rome commands.`,
+		usage: "",
+		examples: [],
+		defineFlags(c) {
+			return {
+				checkVSC: c.get(
+					"checkVSC",
+					{
+						description: ___R$project$rome$$internal$markup$escape_ts$markup`Check the existence of uncommitted files inside the repository.`,
+					},
+				).asBoolean(false),
+			};
+		},
+		async callback(req, flags) {
+			const {server, client, reporter} = req;
+
+			// const {args} = req.query;
+			const {cwd} = client.flags;
+			const {checkVSC} = flags;
+			const currentProject = await server.projectManager.assertProject(cwd);
+			if (currentProject === undefined) {
+				reporter.error(
+					___R$project$rome$$internal$markup$escape_ts$markup`No Rome project found at <emphasis>${cwd}</emphasis>`,
+				);
+				reporter.info(
+					___R$project$rome$$internal$markup$escape_ts$markup`Run <cmd>rome init</cmd> to boostrap your project.`,
+				);
+				return;
+			}
+
+			if (!currentProject.initialized) {
+				reporter.error(
+					___R$project$rome$$internal$markup$escape_ts$markup`Project not initialised.`,
+				);
+				return;
+			}
+
+			const result = {};
+
+			// Check for no or dirty repo
+			if (checkVSC) {
+				const vcsClient = await ___R$project$rome$$internal$vcs$index_ts$getVCSClient(
+					cwd,
+				);
+				if (vcsClient === undefined) {
+					throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
+						location: req.getDiagnosticLocationForClientCwd(),
+						description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.INIT_COMMAND.EXPECTED_REPO,
+					});
+				} else {
+					const uncommittedFiles = await vcsClient.getUncommittedFiles();
+					if (uncommittedFiles.length > 0) {
+						throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
+							location: req.getDiagnosticLocationForClientCwd(),
+							description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
+						});
+					}
+				}
+			} else {
+				// Generate files
+				await reporter.steps([
+					{
+						message: ___R$project$rome$$internal$markup$escape_ts$markup`Generating lint config and apply formatting`,
+						async callback() {
+							const linter = new ___R$project$rome$$internal$core$server$linter$Linter_ts$default(
+								req,
+								{
+									apply: true,
+								},
+							);
+							const {printer, savedCount} = await linter.runSingle();
+							result.lint = {
+								diagnostics: printer.processor.getDiagnostics(),
+								savedCount,
+							};
+						},
+					},
+					{
+						message: ___R$project$rome$$internal$markup$escape_ts$markup`Scanning dependencies their licenses.`,
+						async callback() {
+							for (const def of currentProject.manifests.values()) {
+								const diagnostics = def.manifest.diagnostics.license;
+
+								if (diagnostics && diagnostics.length > 0) {
+									var ___R$;
+									if (!result.licenses) {
+										result.licenses = [];
+									}
+									___R$ = result.licenses,
+										___R$.push.apply(___R$, [...diagnostics]);
+								}
+							}
+						},
+					},
+				]);
+			}
+
+			return result;
+		},
+	});
+
+
   // project-rome/@internal/core/server/commands/recover.ts
 const ___R$project$rome$$internal$core$server$commands$recover_ts = {
 		get list() {
@@ -138503,242 +139396,106 @@ const ___R$project$rome$$internal$core$server$commands$_projectDump_ts$default =
 	});
 
 
-  // project-rome/@internal/child-process/index.ts
-const ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess = require(
-		"child_process",
-	);
-	class ___R$project$rome$$internal$child$process$index_ts$ChildProcess {
-		constructor(command, args, opts) {
-			this.process = ___R$$priv$project$rome$$internal$child$process$index_ts$childProcess.spawn(
-				command,
-				args,
-				Object.assign({}, opts, {cwd: opts.cwd.join()}),
+  // project-rome/@internal/core/server/utils/getManifest.ts
+async function ___R$project$rome$$internal$core$server$utils$getManifest_ts$default(
+		server,
+		cwd,
+	) {
+		const manifestPath = cwd.append("package.json");
+		let manifest;
+		const projects = await server.projectManager.getProjectHierarchyFromPath(
+			manifestPath,
+		);
+		if (await ___R$project$rome$$internal$fs$index_ts$exists(manifestPath)) {
+			manifest = await ___R$project$rome$$internal$codec$js$manifest$index_ts$normalizeManifest(
+				manifestPath,
+				___R$project$rome$$internal$codec$config$index_ts$json.consumeValue(
+					await ___R$project$rome$$internal$fs$index_ts$readFileTextMeta(
+						manifestPath,
+					),
+				),
+				projects,
 			);
-			this.cwd = opts.cwd;
-			this.command = command;
-			this.args = args;
-			this.output = [];
-
-			const {stdout, stderr} = this.process;
-
-			if (stdout != null) {
-				stdout.on(
-					"data",
-					(chunk) => {
-						this.output.push([0, chunk]);
-					},
-				);
-			}
-
-			if (stderr != null) {
-				stderr.on(
-					"data",
-					(chunk) => {
-						this.output.push([1, chunk]);
-					},
-				);
-			}
 		}
-
-		getDisplayCommand() {
-			return this.command + " " + this.args.join(" ");
-		}
-
-		getOutput(out = true, err = true) {
-			if (!(out || err)) {
-				return "";
-			}
-
-			return this.output.map(([code, chunk]) => {
-				if (code === 0 && !out) {
-					return "";
-				}
-
-				if (code === 1 && !err) {
-					return "";
-				}
-
-				return chunk;
-			}).join("");
-		}
-
-		unexpected(message, category = "childProcess/failure") {
-			throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
-				description: {
-					category,
-					message,
-					advice: [
-						{
-							type: "log",
-							category: "info",
-							text: ___R$project$rome$$internal$markup$escape_ts$markup`Full command`,
-						},
-						{
-							type: "command",
-							command: this.getDisplayCommand(),
-						},
-						{
-							type: "log",
-							category: "info",
-							text: ___R$project$rome$$internal$markup$escape_ts$markup`Output`,
-						},
-						{
-							type: "code",
-							language: "text",
-							sourceText: this.getOutput(),
-						},
-					],
-				},
-				location: {
-					language: "binary",
-					filename: this.cwd.join(),
-				},
-			});
-		}
-
-		async waitSuccess() {
-			const code = await this.wait();
-			if (code !== 0) {
-				throw this.unexpected(
-					___R$project$rome$$internal$markup$escape_ts$markup`Command <emphasis>${this.command}</emphasis> failed. Exited with code ${code}.`,
-				);
-			}
-			return this;
-		}
-
-		wait() {
-			return new Promise((resolve) => {
-				this.process.on(
-					"close",
-					(code) => {
-						resolve(code);
-					},
-				);
-			});
-		}
+		return manifest;
 	}
 
-	function ___R$project$rome$$internal$child$process$index_ts$spawn(
-		command,
-		args,
-		opts,
+
+  // project-rome/@internal/core/server/utils/updateConfig.ts
+async function ___R$project$rome$$internal$core$server$utils$updateConfig_ts$default(
+		{config, configPath, configHandler, partial = {}, comments = new Map()},
 	) {
-		return new ___R$project$rome$$internal$child$process$index_ts$ChildProcess(
-			command,
-			args,
-			opts,
+		// Update it on disk
+		const finalConfig = Object.assign({}, config, partial);
+		await ___R$project$rome$$internal$fs$index_ts$writeFile(
+			configPath,
+			configHandler.stringify(finalConfig, comments) + "\n",
 		);
 	}
 
 
-  // project-rome/@internal/vcs/index.ts
-function ___R$project$rome$$internal$vcs$index_ts$extractFileList(out) {
-		const lines = out.trim().split("\n");
-
-		const files = [];
-
-		for (const line of lines) {
-			const match = line.trim().match(/^(?:[AM]|\?\?)\s+(.*?)$/);
-			if (match != null) {
-				files.push(match[1]);
-			}
+  // project-rome/@internal/core/server/utils/retrieveConfigHandler.ts
+function ___R$project$rome$$internal$core$server$utils$retrieveConfigHandler_ts$default(
+		extension,
+	) {
+		let manifestHandler = undefined;
+		// TODO: add yaml and toml to config
+		// if (configType === "yaml") {
+		// 	manifestHandler = yaml;
+		// 	fileExtension = "yaml";
+		// } else
+		// if (extension === "toml") {
+		// 	manifestHandler = toml;
+		// } else
+		if (extension === "rjson") {
+			manifestHandler = ___R$project$rome$$internal$codec$config$index_ts$rjson;
+		} else if (extension === "json") {
+			manifestHandler = ___R$project$rome$$internal$codec$config$index_ts$json;
 		}
 
-		return files;
-	}
-
-	class ___R$project$rome$$internal$vcs$index_ts$VCSClient {
-		constructor(root) {
-			this.root = root;
+		if (!manifestHandler) {
+			manifestHandler = ___R$project$rome$$internal$codec$config$index_ts$rjson;
 		}
 
-		getDefaultBranch() {
-			throw new Error("unimplemented");
-		}
-
-		getModifiedFiles(branch) {
-			throw new Error("unimplemented");
-		}
-
-		getUncommittedFiles() {
-			throw new Error("unimplemented");
-		}
-	}
-
-	class ___R$$priv$project$rome$$internal$vcs$index_ts$GitVCSClient
-		extends ___R$project$rome$$internal$vcs$index_ts$VCSClient {
-		constructor(root) {
-			super(root);
-		}
-
-		async getDefaultBranch() {
-			const exitCode = await ___R$project$rome$$internal$child$process$index_ts$spawn(
-				"git",
-				["show-ref", "--verify", "--quiet", "refs/heads/main"],
-				{cwd: this.root},
-			).wait();
-			return exitCode === 0 ? "main" : "master";
-		}
-
-		async getUncommittedFiles() {
-			const stdout = (await ___R$project$rome$$internal$child$process$index_ts$spawn(
-				"git",
-				["status", "--short"],
-				{cwd: this.root},
-			).waitSuccess()).getOutput(true, false);
-			return ___R$project$rome$$internal$vcs$index_ts$extractFileList(stdout);
-		}
-
-		async getModifiedFiles(branch) {
-			const stdout = (await ___R$project$rome$$internal$child$process$index_ts$spawn(
-				"git",
-				["diff", "--name-status", branch],
-				{cwd: this.root},
-			).waitSuccess()).getOutput(true, false);
-			return ___R$project$rome$$internal$vcs$index_ts$extractFileList(stdout);
-		}
-	}
-
-	async function ___R$project$rome$$internal$vcs$index_ts$getVCSClient(root) {
-		if (
-			await ___R$project$rome$$internal$fs$index_ts$exists(root.append(".git"))
-		) {
-			return new ___R$$priv$project$rome$$internal$vcs$index_ts$GitVCSClient(
-				root,
-			);
-		}
-
-		return undefined;
+		return manifestHandler;
 	}
 
 
   // project-rome/@internal/core/server/commands/init.ts
 const ___R$project$rome$$internal$core$server$commands$init_ts$default = ___R$project$rome$$internal$core$server$commands_ts$createServerCommand({
 		category: ___R$project$rome$$internal$core$common$commands_ts$commandCategories.PROCESS_MANAGEMENT,
-		description: ___R$project$rome$$internal$markup$escape_ts$markup`initialise the project`,
+		description: ___R$project$rome$$internal$markup$escape_ts$markup``,
 		usage: "",
 		examples: [],
+		hidden: true,
 		defineFlags(c) {
 			return {
-				apply: c.get(
-					"apply",
+				checkProject: c.get("checkProject").asBoolean(),
+				configType: c.get(
+					"configType",
 					{
 						description: ___R$project$rome$$internal$markup$escape_ts$markup``,
 					},
-				).asBoolean(false),
-				allowDirty: c.get(
-					"allowDirty",
+				).asStringSet(["rjson", "json"], "rjson"),
+				indentStyle: c.get(
+					"indentStyle",
 					{
-						description: ___R$project$rome$$internal$markup$escape_ts$markup`Allow running command with a dirty checkout`,
+						description: ___R$project$rome$$internal$markup$escape_ts$markup``,
 					},
-				).asBoolean(false),
+				).asStringSet(["tab", "space"], "tab"),
+				indentSize: c.get(
+					"indentSize",
+					{
+						description: ___R$project$rome$$internal$markup$escape_ts$markup``,
+					},
+				).asNumber(1),
 			};
 		},
 		async callback(req, flags) {
-			const {server, client, reporter} = req;
-
-			const {args} = req.query;
-			let {cwd} = client.flags;
+			const {server, client, reporter, query} = req;
+			const {args} = query;
+			const {cwd} = client.flags;
+			const {configType, indentSize, indentStyle, checkProject} = flags;
 
 			// Warn if provided with arguments
 			if (args.length > 0) {
@@ -138759,350 +139516,296 @@ const ___R$project$rome$$internal$core$server$commands$init_ts$default = ___R$pr
 				);
 			}
 
-			// Check for sensitive directory
-			if (server.projectManager.isBannedProjectPath(cwd)) {
-				const diagnostic = {
-					description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.PROJECT_MANAGER.INITING_SENSITIVE(
-						cwd,
-					),
-					location: req.getDiagnosticLocationFromFlags("cwd"),
+			// This command is split in two:
+			// - first part checks if a project exists or not
+			// - second part creates a basic configuration file and and the .editorconfig
+			// part of the command where we check if a configuration already exists
+			if (checkProject) {
+				req.expectArgumentLength(1);
+				// Check for sensitive directory
+				if (server.projectManager.isBannedProjectPath(cwd)) {
+					const diagnostic = {
+						description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.PROJECT_MANAGER.INITING_SENSITIVE(
+							cwd,
+						),
+						location: req.getDiagnosticLocationFromFlags("cwd"),
+					};
+					throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError(
+						diagnostic,
+					);
+				}
+
+				// Don't allow if we're already in a project
+				const {value} = ___R$project$rome$$internal$diagnostics$wrap_ts$catchDiagnosticsSync(async () => {
+					const existingProject = await server.projectManager.findProject(cwd);
+					if (existingProject !== undefined) {
+						reporter.error(
+							___R$project$rome$$internal$markup$escape_ts$markup`Project already exists. Defined at <emphasis>${existingProject.meta.configPath}</emphasis>`,
+						);
+						reporter.info(
+							___R$project$rome$$internal$markup$escape_ts$markup`Use <code>rome config</code> to update an existing config`,
+						);
+						existingProject.packages;
+						return true;
+					}
+					return false;
+				});
+
+				const existingProject = await server.projectManager.findProject(cwd);
+				if (existingProject !== undefined) {
+					reporter.error(
+						___R$project$rome$$internal$markup$escape_ts$markup`Project already exists. Defined at <emphasis>${existingProject.meta.configPath}</emphasis>`,
+					);
+					reporter.info(
+						___R$project$rome$$internal$markup$escape_ts$markup`Use <code>rome config</code> to update an existing config`,
+					);
+					existingProject.packages;
+					return true;
+				}
+				return value;
+			} else if (configType && indentSize && indentStyle) {
+				req.expectArgumentLength(3);
+				let configHandler = ___R$project$rome$$internal$core$server$utils$retrieveConfigHandler_ts$default(
+					configType,
+				);
+
+				if (!configType) {
+					client.reporter.warn(
+						___R$project$rome$$internal$markup$escape_ts$markup`No extension chosen; Rome will now use RJSON extension for your project configuration as fallback.`,
+					);
+					configHandler = ___R$project$rome$$internal$codec$config$index_ts$rjson;
+				}
+
+				reporter.heading(
+					___R$project$rome$$internal$markup$escape_ts$markup`Welcome to Rome! Let's get you started...`,
+				);
+
+				const configPath = cwd.append(
+					___R$project$rome$$internal$project$constants_ts$PROJECT_CONFIG_DIRECTORY,
+					"rome." + configType,
+				);
+
+				// Track some information about our project generation
+				const files = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
+				files.set(
+					configPath,
+					___R$project$rome$$internal$markup$escape_ts$markup`Your project configuration. Documentation: <hyperlink target="https://rome.tools/#project-configuration" />`,
+				);
+
+				// We are only using JSONObject here because we don't have an accurate type definition for what
+				// the config actually looks like on disk
+				let config = {
+					root: true,
+					name: cwd.getBasename(),
+					format: {
+						enabled: true,
+						indentSize,
+						indentStyle,
+					},
 				};
-				throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError(
-					diagnostic,
-				);
-			}
 
-			// Don't allow if we're already in a project
-			const existingProject = await server.projectManager.findProject(cwd);
-			if (existingProject !== undefined) {
-				reporter.error(
-					___R$project$rome$$internal$markup$escape_ts$markup`Project already exists. Defined at <emphasis>${existingProject.meta.configPath}</emphasis>`,
+				// Comments to include in the created project config
+				const comments = new Map();
+				comments.set(
+					"",
+					{
+						inner: [],
+						outer: [
+							{
+								type: "LineComment",
+								value: " For configuration documentation see https://rome.tools/#project-configuration",
+							},
+						],
+					},
 				);
-				reporter.info(
-					___R$project$rome$$internal$markup$escape_ts$markup`Use <code>rome config</code> to update an existing config`,
-				);
-				return;
-			}
 
-			// Check for no or dirty repo
-			if (flags.apply && !flags.allowDirty) {
-				const vcsClient = await ___R$project$rome$$internal$vcs$index_ts$getVCSClient(
+				// Create initial project config
+				await ___R$project$rome$$internal$fs$index_ts$createDirectory(
+					configPath.getParent(),
+				);
+				await ___R$project$rome$$internal$core$server$utils$updateConfig_ts$default({
+					comments,
+					configHandler,
+					configPath,
+					config,
+				});
+
+				//
+				const manifestPath = cwd.append("package.json");
+				const manifest = await ___R$project$rome$$internal$core$server$utils$getManifest_ts$default(
+					server,
 					cwd,
 				);
 
-				if (vcsClient === undefined) {
-					throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
-						location: req.getDiagnosticLocationFromFlags("cwd"),
-						description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.INIT_COMMAND.EXPECTED_REPO,
-					});
-				} else {
-					const uncommittedFiles = await vcsClient.getUncommittedFiles();
-					if (uncommittedFiles.length > 0) {
-						throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
-							location: req.getDiagnosticLocationFromFlags("cwd"),
-							description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.INIT_COMMAND.UNCOMMITTED_CHANGES,
-						});
-					}
-				}
-			}
-
-			reporter.heading(
-				___R$project$rome$$internal$markup$escape_ts$markup`Welcome to Rome! Let's get you started...`,
-			);
-
-			const configPath = cwd.append(
-				___R$project$rome$$internal$project$constants_ts$PROJECT_CONFIG_DIRECTORY,
-				"rome.rjson",
-			);
-
-			// Track some information about our project generation
-			let savedCheckFiles = undefined;
-			let remainingCheckErrors = undefined;
-			const files = new ___R$project$rome$$internal$path$collections_ts$AbsoluteFilePathMap();
-			files.set(
-				configPath,
-				___R$project$rome$$internal$markup$escape_ts$markup`Your project configuration. Documentation: <hyperlink target="https://rome.tools/#project-configuration" />`,
-			);
-
-			// We are only using JSONObject here because we don't have an accurate type definition for what
-			// the config actually looks like on disk
-			let config = {
-				root: true,
-				name: cwd.getBasename(),
-			};
-
-			// Comments to include in the created project config
-			const comments = new Map();
-			comments.set(
-				"",
-				{
-					inner: [],
-					outer: [
-						{
-							type: "LineComment",
-							value: " For configuration documentation see https://rome.tools/#project-configuration",
+				// Generate files
+				await reporter.steps([
+					{
+						message: ___R$project$rome$$internal$markup$escape_ts$markup`Installing Rome as a dependency`,
+						test() {
+							return (
+								manifest !== undefined &&
+								!manifest.dependencies.has("rome") &&
+								!manifest.devDependencies.has("rome")
+							);
 						},
-					],
-				},
-			);
+						async callback() {
+							if (manifest === undefined) {
+								// Should not be because of test()
+								return;
+							}
 
-			async function updateConfig(partial = {}) {
-				// Update it on disk
-				config = Object.assign({}, config, partial);
-				await ___R$project$rome$$internal$fs$index_ts$writeFile(
-					configPath,
-					___R$project$rome$$internal$codec$config$index_ts$rjson.stringify(
-						config,
-						comments,
-					) + "\n",
-				);
-			}
-
-			// Create initial project config
-			await ___R$project$rome$$internal$fs$index_ts$createDirectory(
-				configPath.getParent(),
-			);
-			await updateConfig();
-
-			//
-			const manifestPath = cwd.append("package.json");
-			let manifest;
-			const projects = await server.projectManager.getProjectHierarchyFromPath(
-				manifestPath,
-			);
-			if (await ___R$project$rome$$internal$fs$index_ts$exists(manifestPath)) {
-				manifest = await ___R$project$rome$$internal$codec$js$manifest$index_ts$normalizeManifest(
-					manifestPath,
-					___R$project$rome$$internal$codec$config$index_ts$json.consumeValue(
-						await ___R$project$rome$$internal$fs$index_ts$readFileTextMeta(
-							manifestPath,
-						),
-					),
-					projects,
-				);
-			}
-
-			// Generate files
-			await reporter.steps([
-				{
-					message: ___R$project$rome$$internal$markup$escape_ts$markup`Installing Rome as a dependency`,
-					test() {
-						return (
-							manifest !== undefined &&
-							!manifest.dependencies.has("rome") &&
-							!manifest.devDependencies.has("rome")
-						);
-					},
-					async callback() {
-						if (manifest === undefined) {
-							// Should not be because of test()
-							return;
-						}
-
-						// Modify package.json
-						manifest.devDependencies.set(
-							"rome",
-							{
-								type: "semver",
-								range: ___R$project$rome$$internal$codec$semver$parse_ts$parseSemverRange({
-									input: "^" +
-									___R$project$rome$$internal$core$common$constants_ts$VERSION,
-								}),
-							},
-						);
-						await ___R$project$rome$$internal$fs$index_ts$writeFile(
-							manifestPath,
-							JSON.stringify(
-								___R$project$rome$$internal$codec$js$manifest$convert_ts$convertManifestToJSON(
-									manifest,
+							// Modify package.json
+							manifest.devDependencies.set(
+								"rome",
+								{
+									type: "semver",
+									range: ___R$project$rome$$internal$codec$semver$parse_ts$parseSemverRange({
+										input: "^" +
+										___R$project$rome$$internal$core$common$constants_ts$VERSION,
+									}),
+								},
+							);
+							await ___R$project$rome$$internal$fs$index_ts$writeFile(
+								manifestPath,
+								JSON.stringify(
+									___R$project$rome$$internal$codec$js$manifest$convert_ts$convertManifestToJSON(
+										manifest,
+									),
+									null,
+									"  ",
 								),
-								null,
-								"  ",
+							);
+
+							// Run package manager
+							let installCommand;
+							if (
+								await ___R$project$rome$$internal$fs$index_ts$exists(
+									cwd.append("yarn.lock"),
+								)
+							) {
+								installCommand = "yarn";
+							} else if (
+								await ___R$project$rome$$internal$fs$index_ts$exists(
+									cwd.append("package-lock.json"),
+								)
+							) {
+								installCommand = "npm";
+							} else if (
+								await ___R$project$rome$$internal$fs$index_ts$exists(
+									cwd.append("pnpm-lock.yml"),
+								)
+							) {
+								installCommand = "pnpm";
+							}
+							if (installCommand !== undefined) {
+								const proc = ___R$project$rome$$internal$child$process$index_ts$spawn(
+									installCommand,
+									["install"],
+									{
+										cwd,
+									},
+								);
+								await proc.waitSuccess();
+							}
+						},
+					},
+					{
+						message: ___R$project$rome$$internal$markup$escape_ts$markup`Generating .editorconfig`,
+						async callback() {
+							const editorConfigPath = cwd.append(".editorconfig");
+							if (
+								await ___R$project$rome$$internal$fs$index_ts$exists(
+									editorConfigPath,
+								)
+							) {
+								reporter.warn(
+									___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${editorConfigPath}</emphasis> already exists`,
+								);
+								return;
+							}
+
+							await server.projectManager.assertProject(cwd);
+
+							// Get unique handlers
+							const uniqueHandlers = new Map();
+							for (const path of server.memoryFs.glob(cwd)) {
+								const {handler} = ___R$project$rome$$internal$core$common$file$handlers$index_ts$getFileHandlerFromPath(
+									path,
+									undefined,
+								);
+								if (handler !== undefined) {
+									uniqueHandlers.set(handler.ext, handler);
+								}
+							}
+
+							let editorConfigTabExtensions = [];
+							for (const [ext, handler] of uniqueHandlers) {
+								if (handler.hasTabs) {
+									editorConfigTabExtensions.push("*." + ext);
+								}
+							}
+
+							let editorConfigTemplate = "";
+
+							if (editorConfigTabExtensions.length > 0) {
+								editorConfigTemplate = ___R$project$rome$$internal$string$utils$dedent_ts$dedent`
+								[{${editorConfigTabExtensions.sort().join(",")}}]
+								end_of_line = lf
+								trim_trailing_whitespace = true
+								insert_final_newline = true
+								charset = utf-8
+								indent_style = ${indentStyle}
+								indent_size = ${String(indentSize)}
+							`;
+							}
+
+							files.set(
+								editorConfigPath,
+								___R$project$rome$$internal$markup$escape_ts$markup`Sets editor formatting and indentation options. Documentation: <hyperlink target="https://editorconfig.org/" />`,
+							);
+							await ___R$project$rome$$internal$fs$index_ts$writeFile(
+								editorConfigPath,
+								editorConfigTemplate.trim() + "\n",
+							);
+						},
+					},
+				]);
+
+				await reporter.section(
+					___R$project$rome$$internal$markup$escape_ts$markup`Files created`,
+					async () => {
+						reporter.list(
+							Array.from(
+								files,
+								([path, purpose]) =>
+									___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${path}</emphasis>: ${purpose}`
+								,
 							),
 						);
+					},
+				);
 
-						// Run package manager
-						let installCommand;
-						if (
-							await ___R$project$rome$$internal$fs$index_ts$exists(
-								cwd.append("yarn.lock"),
-							)
-						) {
-							installCommand = "yarn";
-						} else if (
-							await ___R$project$rome$$internal$fs$index_ts$exists(
-								cwd.append("package-lock.json"),
-							)
-						) {
-							installCommand = "npm";
-						}
-						if (installCommand !== undefined) {
-							const proc = ___R$project$rome$$internal$child$process$index_ts$spawn(
-								installCommand,
-								["install"],
-								{
-									cwd,
-								},
-							);
-							await proc.waitSuccess();
-						}
-					},
-				},
-				{
-					message: ___R$project$rome$$internal$markup$escape_ts$markup`Generating lint config and apply formatting`,
-					test() {
-						return flags.apply;
-					},
-					async callback() {
-						const linter = new ___R$project$rome$$internal$core$server$linter$Linter_ts$default(
-							req,
+				await reporter.section(
+					___R$project$rome$$internal$markup$escape_ts$markup`What next?`,
+					() => {
+						reporter.list(
+							[
+								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Setup an editor extension</emphasis>\nGet live errors as you type and format when you save. Learn more: <hyperlink target="https://rome.tools/#editor-integration" />`,
+								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Try a command</emphasis>\n<code>rome check</code> is used to validate your code, verify formatting, and check for lint errors. Run <code>rome --help</code> for a full list of commands and flags.`,
+								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Read documentation</emphasis>\nOur website serves as a comprehensive source of guides and documentation <hyperlink target="https://rome.tools/" />`,
+								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Get involved in the community</emphasis>\nAsk questions, get support, or contribute by participating on GitHub (<hyperlink target="https://github.com/rome/tools"/>) or our community Discord (<hyperlink target="https://discord.gg/rome" />)`,
+							],
 							{
-								apply: true,
+								ordered: true,
+								pad: true,
 							},
 						);
-						const {printer, savedCount} = await linter.runSingle();
-						savedCheckFiles = savedCount;
-
-						const globals = [];
-						remainingCheckErrors = 0;
-						for (const diag of printer.processor.getDiagnostics()) {
-							if (diag.description.category === "lint/js/noUndeclaredVariables") {
-								if (diag.description.categoryValue) {
-									globals.push(diag.description.categoryValue);
-								}
-							} else {
-								remainingCheckErrors++;
-							}
-						}
-						if (globals.length > 0) {
-							await updateConfig({
-								lint: {
-									globals,
-								},
-							});
-						}
-					},
-				},
-				{
-					message: ___R$project$rome$$internal$markup$escape_ts$markup`Generating .editorconfig`,
-					async callback() {
-						const editorConfigPath = cwd.append(".editorconfig");
-						if (
-							await ___R$project$rome$$internal$fs$index_ts$exists(
-								editorConfigPath,
-							)
-						) {
-							reporter.warn(
-								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${editorConfigPath}</emphasis> already exists`,
-							);
-							return;
-						}
-
-						await server.projectManager.assertProject(cwd);
-
-						// Get unique handlers
-						const uniqueHandlers = new Map();
-						for (const path of server.memoryFs.glob(cwd)) {
-							const {handler} = ___R$project$rome$$internal$core$common$file$handlers$index_ts$getFileHandlerFromPath(
-								path,
-								undefined,
-							);
-							if (handler !== undefined) {
-								uniqueHandlers.set(handler.ext, handler);
-							}
-						}
-
-						let editorConfigTabExtensions = [];
-						for (const [ext, handler] of uniqueHandlers) {
-							if (handler.hasTabs) {
-								editorConfigTabExtensions.push("*." + ext);
-							}
-						}
-
-						let editorConfigTemplate = "";
-
-						if (editorConfigTabExtensions.length > 0) {
-							editorConfigTemplate = ___R$project$rome$$internal$string$utils$dedent_ts$dedent`
-							[{${editorConfigTabExtensions.sort().join(",")}}]
-							end_of_line = lf
-							trim_trailing_whitespace = true
-							insert_final_newline = true
-							charset = utf-8
-							indent_style = tab
-							indent_size = 2
-						`;
-						}
-
-						files.set(
-							editorConfigPath,
-							___R$project$rome$$internal$markup$escape_ts$markup`Sets editor formatting and indentation options. Documentation: <hyperlink target="https://editorconfig.org/" />`,
-						);
-						await ___R$project$rome$$internal$fs$index_ts$writeFile(
-							editorConfigPath,
-							editorConfigTemplate.trim() + "\n",
-						);
-					},
-				},
-			]);
-
-			if (savedCheckFiles !== undefined && remainingCheckErrors !== undefined) {
-				await reporter.section(
-					___R$project$rome$$internal$markup$escape_ts$markup`Summary`,
-					async () => {
-						if (savedCheckFiles !== undefined && savedCheckFiles > 0) {
-							reporter.info(
-								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${savedCheckFiles}</emphasis> <grammarNumber plural="files" singular="file">${String(
-									savedCheckFiles,
-								)}</grammarNumber> saved`,
-							);
-						}
-						if (remainingCheckErrors === 0) {
-							reporter.success(
-								___R$project$rome$$internal$markup$escape_ts$markup`No problems found!`,
-							);
-						} else {
-							reporter.warn(
-								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${remainingCheckErrors}</emphasis> errors remaining. Run <code>rome check</code> to view.`,
-							);
-						}
 						reporter.br();
 					},
 				);
+
+				return true;
 			}
-
-			await reporter.section(
-				___R$project$rome$$internal$markup$escape_ts$markup`Files created`,
-				async () => {
-					reporter.list(
-						Array.from(
-							files,
-							([path, purpose]) =>
-								___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>${path}</emphasis>: ${purpose}`
-							,
-						),
-					);
-				},
-			);
-
-			await reporter.section(
-				___R$project$rome$$internal$markup$escape_ts$markup`What next?`,
-				() => {
-					reporter.list(
-						[
-							___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Setup an editor extension</emphasis>\nGet live errors as you type and format when you save. Learn more: <hyperlink target="https://rome.tools/#editor-integration" />`,
-							___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Try a command</emphasis>\n<code>rome check</code> is used to validate your code, verify formatting, and check for lint errors. Run <code>rome --help</code> for a full list of commands and flags.`,
-							___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Read documentation</emphasis>\nOur website serves as a comprehensive source of guides and documentation <hyperlink target="https://rome.tools/" />`,
-							___R$project$rome$$internal$markup$escape_ts$markup`<emphasis>Get involved in the community</emphasis>\nAsk questions, get support, or contribute by participating on GitHub (<hyperlink target="https://github.com/rome/tools"/>) or our community Discord (<hyperlink target="https://discord.gg/rome" />)`,
-						],
-						{
-							ordered: true,
-							pad: true,
-						},
-					);
-					reporter.br();
-				},
-			);
-
 			return true;
 		},
 	});
@@ -139264,6 +139967,10 @@ function ___R$project$rome$$internal$core$server$commands_ts$createServerCommand
 	___R$project$rome$$internal$core$server$commands_ts$serverCommands.set(
 		"test",
 		___R$project$rome$$internal$core$server$commands$test_ts$default,
+	);
+	___R$project$rome$$internal$core$server$commands_ts$serverCommands.set(
+		"auto-config",
+		___R$project$rome$$internal$core$server$commands$autoConfig_ts$default,
 	);
 	___R$project$rome$$internal$core$server$commands_ts$serverCommands.set(
 		"recover apply",
@@ -140369,7 +141076,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				bridges.client.handshake(),
 			]);
 
-			this.workerStartEvent.send(bridges.server);
+			this.workerStartEvent.send(container);
 		}
 
 		async replaceOwnWorker() {
@@ -140481,6 +141188,10 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				);
 			});
 
+			bridge.events.log.subscribe(({chunk, isError}) => {
+				this.server.emitLog(chunk, "worker", isError);
+			});
+
 			bridge.monitorHeartbeat(
 				___R$project$rome$$internal$core$common$constants_ts$LAG_INTERVAL,
 				({summary, totalTime, iterations}) => {
@@ -140510,7 +141221,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				},
 			);
 
-			const worker = {
+			const container = {
 				id: workerId,
 				fileCount: 0,
 				byteCount: 0n,
@@ -140519,7 +141230,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				ghost: isGhost,
 				ready: false,
 			};
-			this.workers.set(workerId, worker);
+			this.workers.set(workerId, container);
 
 			thread.once(
 				"error",
@@ -140532,7 +141243,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				},
 			);
 
-			await this.workerHandshake(worker);
+			await this.workerHandshake(container);
 
 			// If a worker is spawned while we're profiling then make sure it's profiling too
 			const profileData = this.server.getRunningProfilingData();
@@ -140540,7 +141251,11 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				await bridge.events.profilingStart.call(profileData);
 			}
 
-			this.workerStartEvent.send(bridge);
+			if (this.server.hasWorkerLogsSubscriptions()) {
+				await bridge.events.setLogs.call(true);
+			}
+
+			this.workerStartEvent.send(container);
 
 			this.logger.info(
 				___R$project$rome$$internal$markup$escape_ts$markup`Worker ${String(
@@ -140548,7 +141263,7 @@ const ___R$$priv$project$rome$$internal$core$server$WorkerManager_ts$workerThrea
 				)} started after <duration>${String(Date.now() - start)}</duration>`,
 			);
 
-			return worker;
+			return container;
 		}
 
 		own(workerId, stats) {
@@ -140806,7 +141521,7 @@ function ___R$project$rome$$internal$core$server$fs$resolverSuggest_ts$default(
 							let relativePath = originDirectory.relative(absolute);
 
 							// If the user didn't use extensions, then neither should we
-							if (!query.source.hasExtensions()) {
+							if (!query.source.hasAnyExtensions()) {
 								// TODO only do this if it's an implicit extension
 								relativePath = relativePath.changeBasename(
 									relativePath.getExtensionlessBasename(),
@@ -141920,14 +142635,25 @@ class ___R$project$rome$$internal$core$server$fs$FileAllocator_ts$default {
 			}
 
 			const maxSize = project.config.files.maxSize;
-			if (stats.size > maxSize) {
-				throw new Error(
-					"The file " +
-					path.join() +
-					" exceeds the project config max size of " +
-					maxSize +
-					" bytes",
-				);
+			if (
+				stats.size > maxSize &&
+				___R$project$rome$$internal$path$match$index_ts$matchPathPatterns(
+					path,
+					project.config.files.maxSizeIgnore,
+					project.directory,
+				) === "NO_MATCH"
+			) {
+				throw ___R$project$rome$$internal$diagnostics$errors_ts$createSingleDiagnosticError({
+					description: ___R$project$rome$$internal$diagnostics$descriptions$index_ts$descriptions.FILES.TOO_BIG(
+						path,
+						project.directory,
+						stats.size,
+						maxSize,
+					),
+					location: {
+						filename: path.join(),
+					},
+				});
 			}
 		}
 
@@ -142104,26 +142830,9 @@ const ___R$$priv$project$rome$$internal$core$common$utils$Logger_ts$workerThread
 	);
 	class ___R$project$rome$$internal$core$common$utils$Logger_ts$default
 		extends ___R$project$rome$$internal$cli$reporter$Reporter_ts$default {
-		constructor(opts, {loggerType, write, check}) {
+		constructor(opts, loggerType) {
 			super(opts);
 			this.loggerType = loggerType;
-
-			this.conditionalStream = this.attachConditionalStream(
-				{
-					format: "markup",
-					features: Object.assign(
-						{},
-						___R$project$rome$$internal$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES,
-						{columns: undefined},
-					),
-					write,
-				},
-				check,
-			);
-		}
-
-		updateStream() {
-			this.conditionalStream.update();
 		}
 
 		getMessagePrefix() {
@@ -142705,20 +143414,11 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 		}
 
 		isIgnored(path, type) {
+			type;
+
 			const project = this.server.projectManager.findLoadedProject(path);
 			if (project === undefined) {
 				return false;
-			}
-
-			// If we're a file and don't have an extension handler so there's no reason for us to care about it
-			if (
-				type === "file" &&
-				___R$project$rome$$internal$core$common$file$handlers$index_ts$getFileHandlerFromPath(
-					path,
-					project.config,
-				) === undefined
-			) {
-				return true;
 			}
 
 			// Ensure we aren't in any of the default denylists
@@ -143387,6 +144087,7 @@ const ___R$$priv$project$rome$$internal$core$server$fs$MemoryFileSystem_ts$crypt
 				logger.warn(
 					___R$project$rome$$internal$markup$escape_ts$markup`Read disabled, skipping breaker verification`,
 				);
+				return;
 			}
 
 			if (await ___R$project$rome$$internal$fs$index_ts$exists(breakerPath)) {
@@ -144351,6 +145052,21 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 		}
 	}
 
+	function ___R$$priv$project$rome$$internal$core$server$Server_ts$sendLog(
+		bridge,
+		level,
+		log,
+	) {
+		// Sometimes the bridge hasn't completely been teardown and we still consider it connected
+		if (!bridge.alive) {
+			return;
+		}
+
+		if (log.isError || level === "all") {
+			bridge.events.log.send(log);
+		}
+	}
+
 	class ___R$project$rome$$internal$core$server$Server_ts$default {
 		constructor(opts) {
 			this.profiling = undefined;
@@ -144377,13 +145093,14 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 				this,
 			);
 
-			this.connectedClientsListeningForLogs = new Set();
+			this.connectedClientsListeningForWorkerLogs = new Set();
+			this.connectedClientsListeningForLogs = new Map();
 			this.connectedLSPServers = new Set();
 			this.connectedClients = new Set();
 
 			this.clientIdCounter = 0;
 
-			this.logInitBuffer = "";
+			this.logInitBuffer = [];
 			this.requestRunningCounter = 0;
 			this.terminateWhenIdle = false;
 
@@ -144430,20 +145147,28 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 						},
 					},
 				},
+				"server",
+			);
+
+			this.loggerStream = this.logger.attachConditionalStream(
 				{
-					loggerType: "server",
-					write: (chunk) => {
-						this.emitServerLog(chunk);
-					},
-					check: () => {
-						return (
-							this.clientIdCounter === 0 ||
-							this.connectedClientsListeningForLogs.size > 0
-						);
+					format: "markup",
+					features: Object.assign(
+						{},
+						___R$project$rome$$internal$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES,
+						{columns: undefined},
+					),
+					write: (chunk, isError) => {
+						this.emitLog(chunk, "server", isError);
 					},
 				},
+				() => {
+					return (
+						this.clientIdCounter === 0 ||
+						this.connectedClientsListeningForLogs.size > 0
+					);
+				},
 			);
-			this.logger.updateStream();
 
 			this.virtualModules = new ___R$project$rome$$internal$core$common$VirtualModules_ts$default();
 			this.recoveryStore = new ___R$project$rome$$internal$core$server$fs$RecoveryStore_ts$default(
@@ -144481,6 +145206,21 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 			return this.profiling;
 		}
 
+		// Used when starting up workers and indicates whether they should start sending logs
+		hasWorkerLogsSubscriptions() {
+			return this.connectedClientsListeningForWorkerLogs.size > 0;
+		}
+
+		async updateWorkerLogsSubscriptions() {
+			const enabled = this.hasWorkerLogsSubscriptions();
+
+			await Promise.all(
+				this.workerManager.getWorkers().map((worker) => {
+					return worker.bridge.events.setLogs.call(enabled);
+				}),
+			);
+		}
+
 		// Derive a concatenated reporter from the logger and all connected clients
 		// This should only be used synchronously as the streams will not stay in sync
 		// Used for very important log messages
@@ -144498,16 +145238,26 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 			);
 		}
 
-		emitServerLog(chunk) {
+		emitLog(chunk, origin, isError) {
 			if (this.clientIdCounter === 0) {
-				this.logInitBuffer += chunk;
+				this.logInitBuffer.push([chunk, isError]);
 			}
 
-			for (const {bridge} of this.connectedClientsListeningForLogs) {
-				// Sometimes the bridge hasn't completely been teardown and we still consider it connected
-				if (bridge.alive) {
-					bridge.events.log.send({chunk, origin: "server"});
+			const log = {chunk, origin, isError};
+
+			for (const [client, level] of this.connectedClientsListeningForLogs) {
+				if (
+					origin === "worker" &&
+					!this.connectedClientsListeningForWorkerLogs.has(client)
+				) {
+					continue;
 				}
+
+				___R$$priv$project$rome$$internal$core$server$Server_ts$sendLog(
+					client.bridge,
+					level,
+					log,
+				);
 			}
 		}
 
@@ -144699,36 +145449,6 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 				return await worker.bridge.events.profilingStop.call();
 			});
 
-			// When enableWorkerLogs is called we setup subscriptions to the worker logs
-			// Logs are never transported from workers to the server unless there is a subscription
-			let subscribedWorkers = false;
-			bridge.events.enableWorkerLogs.subscribe(() => {
-				// enableWorkerLogs could be called twice in the case of `--logs --rage`. We'll only want to setup the subscriptions once
-				if (subscribedWorkers) {
-					return;
-				} else {
-					subscribedWorkers = true;
-				}
-
-				function onLog(chunk) {
-					bridge.events.log.call({origin: "worker", chunk});
-				}
-
-				// Add on existing workers if there are any
-				for (const worker of this.workerManager.getWorkers()) {
-					bridge.attachEndSubscriptionRemoval(
-						worker.bridge.events.log.subscribe(onLog),
-					);
-				}
-
-				// Listen for logs for any workers that start later
-				this.workerManager.workerStartEvent.subscribe((worker) => {
-					bridge.attachEndSubscriptionRemoval(
-						worker.events.log.subscribe(onLog),
-					);
-				});
-			});
-
 			await bridge.handshake();
 
 			const client = await this.createClient(bridge);
@@ -144834,31 +145554,54 @@ const ___R$$priv$project$rome$$internal$core$server$Server_ts$disallowedFlagsWhe
 
 			this.connectedClients.add(client);
 
-			bridge.updatedListenersEvent.subscribe((listeners) => {
-				if (listeners.has("log")) {
-					if (!this.connectedClientsListeningForLogs.has(client)) {
-						this.connectedClientsListeningForLogs.add(client);
-						let buffer = this.logInitBuffer;
-						buffer += ".".repeat(20);
-						buffer += "\n";
-						bridge.events.log.send({
-							chunk: buffer,
-							origin: "server",
-						});
-					}
-				} else {
-					this.connectedClientsListeningForLogs.delete(client);
+			bridge.events.setLogLevel.subscribe(async ({level, includeWorker}) => {
+				let startWorkerLogsEnabled = this.hasWorkerLogsSubscriptions();
+
+				if (includeWorker) {
+					this.connectedClientsListeningForWorkerLogs.add(client);
 				}
-				this.logger.updateStream();
+
+				if (level === undefined) {
+					this.connectedClientsListeningForLogs.delete(client);
+					this.connectedClientsListeningForWorkerLogs.delete(client);
+				} else {
+					if (!this.connectedClientsListeningForLogs.has(client)) {
+						// Send init logs
+						for (const [chunk, isError] of this.logInitBuffer) {
+							___R$$priv$project$rome$$internal$core$server$Server_ts$sendLog(
+								bridge,
+								level,
+								{chunk, origin: "server", isError},
+							);
+						}
+
+						// Send separator
+						___R$$priv$project$rome$$internal$core$server$Server_ts$sendLog(
+							bridge,
+							level,
+							{chunk: ".".repeat(20) + "\n", origin: "server", isError: false},
+						);
+					}
+
+					this.connectedClientsListeningForLogs.set(client, level);
+				}
+
+				this.loggerStream.update();
+
+				const currWorkerLogsEnabled = this.hasWorkerLogsSubscriptions();
+				if (currWorkerLogsEnabled !== startWorkerLogsEnabled) {
+					await this.updateWorkerLogsSubscriptions();
+				}
 			});
 
 			bridge.endEvent.subscribe(() => {
 				this.connectedClients.delete(client);
 				this.connectedClientsListeningForLogs.delete(client);
+				this.connectedClientsListeningForWorkerLogs.delete(client);
 				for (const handle of streamHandles) {
 					handle.remove();
 				}
-				this.logger.updateStream();
+				this.loggerStream.update();
 
 				// Cancel any requests still in flight
 				for (const req of client.requestsInFlight) {
@@ -145623,16 +146366,26 @@ const ___R$$priv$project$rome$$internal$core$client$Client_ts$stream = require(
 			});
 		}
 
-		subscribeLogs(includeWorkerLogs, callback) {
+		subscribeLogs(level, includeWorker, callback) {
 			return this.onBridge(async ({bridge}) => {
-				if (includeWorkerLogs) {
-					await bridge.events.enableWorkerLogs.call();
-				}
+				await bridge.events.setLogLevel.call({
+					level,
+					includeWorker,
+				});
 
-				return bridge.events.log.subscribe(({origin, chunk}) => {
-					if (origin === "worker" && !includeWorkerLogs) {
-						// We allow multiple calls to bridge.enableWorkerLogs
-						// Filter the event if necessary if it wasn't requested by this log subscription
+				return bridge.events.log.subscribe((
+					{
+						origin,
+						chunk,
+						isError,
+					},
+				) => {
+					// We allow multiple calls to bridge.subscribeLogs
+					// Filter the event if necessary if it wasn't requested by this log subscription
+					if (origin === "worker" && !includeWorker) {
+						return;
+					}
+					if (!isError && level !== "all") {
 						return;
 					}
 
@@ -145736,6 +146489,7 @@ const ___R$$priv$project$rome$$internal$core$client$Client_ts$stream = require(
 			let logsHTML = "";
 			let logsPlain = "";
 			await this.subscribeLogs(
+				"all",
 				true,
 				(chunk) => {
 					logsPlain += ___R$project$rome$$internal$markup$normalize_ts$joinMarkupLines(
@@ -146166,6 +146920,8 @@ const ___R$project$rome$$internal$core$common$bridges$WorkerBridge_ts$default = 
 		},
 
 		client: {
+			setLogs: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
+
 			updateProjects: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
 
 			updateManifests: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
@@ -146273,7 +147029,7 @@ const ___R$project$rome$$internal$core$common$bridges$ServerBridge_ts$default = 
 		},
 
 		server: {
-			enableWorkerLogs: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
+			setLogLevel: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
 			endServer: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
 			updateFeatures: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
 			query: ___R$project$rome$$internal$events$createBridge_ts$createBridgeEventDeclaration(),
@@ -147461,16 +148217,19 @@ class ___R$project$rome$$internal$core$worker$Worker_ts$default {
 
 			this.logger = new ___R$project$rome$$internal$core$common$utils$Logger_ts$default(
 				{},
-				{
-					loggerType: "worker",
-					check: () => opts.bridge.events.log.hasSubscribers(),
-					write(chunk) {
-						opts.bridge.events.log.send(chunk.toString());
-					},
-				},
+				"worker",
 			);
-			opts.bridge.updatedListenersEvent.subscribe(() => {
-				this.logger.updateStream();
+
+			this.loggerStream = this.logger.attachConditionalStream({
+				format: "markup",
+				features: Object.assign(
+					{},
+					___R$project$rome$$internal$cli$environment$index_ts$DEFAULT_TERMINAL_FEATURES,
+					{columns: undefined},
+				),
+				write(chunk, isError) {
+					opts.bridge.events.log.send({chunk: chunk.toString(), isError});
+				},
 			});
 
 			this.cache = new ___R$project$rome$$internal$core$worker$WorkerCache_ts$default(
@@ -147608,6 +148367,14 @@ class ___R$project$rome$$internal$core$worker$Worker_ts$default {
 
 			bridge.events.updateProjects.subscribe((payload) => {
 				return this.updateProjects(payload.projects);
+			});
+
+			bridge.events.setLogs.subscribe((enabled) => {
+				if (enabled) {
+					this.loggerStream.enable();
+				} else {
+					this.loggerStream.disable();
+				}
 			});
 
 			bridge.events.updateManifests.subscribe((payload) => {
@@ -149695,7 +150462,7 @@ async function ___R$project$rome$$internal$cli$cli_ts$default() {
 						{
 							description: ___R$project$rome$$internal$markup$escape_ts$markup`Output server logs`,
 						},
-					).asBoolean(false),
+					).asStringSetOrVoid(["all", "error"]),
 					logWorkers: c.get(
 						"logWorkers",
 						{
@@ -149937,7 +150704,7 @@ async function ___R$project$rome$$internal$cli$cli_ts$default() {
 			description: ___R$project$rome$$internal$markup$escape_ts$markup`view the logs stream`,
 			callback() {
 				overrideCLIFlags = {
-					logs: true,
+					logs: "all",
 				};
 
 				commandFlags = {
@@ -149975,8 +150742,11 @@ async function ___R$project$rome$$internal$cli$cli_ts$default() {
 		}
 
 		// Force logs when logPath or logWorkers is set
-		if (cliFlags.logPath !== undefined || cliFlags.logWorkers === true) {
-			cliFlags.logs = true;
+		if (
+			cliFlags.logs === undefined &&
+			(cliFlags.logPath !== undefined || cliFlags.logWorkers === true)
+		) {
+			cliFlags.logs = "error";
 		}
 
 		const userConfig = await ___R$project$rome$$internal$core$common$userConfig_ts$loadUserConfig();
@@ -150061,6 +150831,7 @@ async function ___R$project$rome$$internal$cli$cli_ts$default() {
 				}
 
 				await client.subscribeLogs(
+					cliFlags.logs,
 					cliFlags.logWorkers === true,
 					(chunk) => {
 						if (fileout === undefined) {

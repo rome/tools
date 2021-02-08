@@ -58,7 +58,7 @@ type CommandOptions<T extends RSERObject> = {
 	name: string;
 	category?: string;
 	description?: StaticMarkup;
-	usage?: string;
+	usage?: StaticMarkup;
 	examples?: Examples;
 	ignoreFlags?: string[];
 	hidden?: boolean;
@@ -689,7 +689,7 @@ export default class Parser<T> {
 
 	private async showUsageHelp(
 		description?: StaticMarkup,
-		usage: string = "[flags]",
+		usage: StaticMarkup = "[flags]",
 		prefix?: string,
 	) {
 		const {reporter} = this;
@@ -703,7 +703,7 @@ export default class Parser<T> {
 					reporter.br({force: true});
 				}
 
-				const commandParts = [programName];
+				const commandParts: StaticMarkup[] = [programName];
 				if (prefix !== undefined) {
 					commandParts.push(prefix);
 				}

@@ -36,13 +36,14 @@ export const spdx = createDiagnosticsCategory({
 				text: markup`The <emphasis>SPDX</emphasis> registry is used to ensure valid and legal licenses. See <hyperlink target="https://spdx.org/licenses/" /> for more information.`,
 			},
 			{
-				type: "log",
-				category: "info",
-				text: markup`To automatically add an exception for this license, run:`,
-			},
-			{
-				type: "command",
-				command: `rome config push dependencies.exceptions.invalidLicenses.${id} "${packageName}@${packageVersion}"`,
+				type: "action",
+				command: "config set",
+				noun: markup`Add this license to the exceptions`,
+				instruction: markup`To automatically add an exception for this license, run:`,
+				args: [
+					`dependencies.exceptions.invalidLicenses.${id}`,
+					`${packageName}@${packageVersion}`,
+				],
 			},
 		],
 	}),
@@ -63,8 +64,14 @@ export const spdx = createDiagnosticsCategory({
 				text: markup`To automatically update the exception for this license, run:`,
 			},
 			{
-				type: "command",
-				command: `rome config set dependencies.exceptions.invalidLicenses.${id} "${packageName}@${newPackageVersion}"`,
+				type: "action",
+				instruction: markup`To automatically add an exception for this license, run:`,
+				noun: markup`Fix invalid licenses`,
+				command: "config push",
+				args: [
+					`dependencies.exceptions.invalidLicenses.${id}`,
+					`${packageName}@${newPackageVersion}`,
+				],
 			},
 		],
 	}),

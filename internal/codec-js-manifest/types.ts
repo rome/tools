@@ -17,6 +17,7 @@ import {
 import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Dict} from "@internal/typescript-helpers";
 import {PathPatterns} from "@internal/path-match";
+import {Diagnostics} from "@internal/diagnostics";
 
 export type StringObject = Dict<string>;
 
@@ -102,6 +103,9 @@ export type Manifest = {
 	peerDependencies: ManifestDependencies;
 	bundledDependencies: string[];
 	raw: JSONObject;
+	diagnostics: {
+		license: Diagnostics | undefined;
+	};
 };
 
 // Serialized version of a Manifest

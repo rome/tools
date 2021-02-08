@@ -46,6 +46,8 @@ export type DependenciesExceptions = {
 
 export type ProjectConfigPresetNames = "electron" | "cypress" | "jest";
 
+export type IndentStyle = "tab" | "space";
+
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
 	presets: ProjectConfigPresetNames[];
@@ -57,7 +59,7 @@ export type ProjectConfigObjects = {
 	};
 	format: {
 		enabled: boolean;
-		indentStyle: "tab" | "space";
+		indentStyle: IndentStyle;
 		indentSize: number;
 	};
 	lint: {

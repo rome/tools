@@ -12,11 +12,11 @@ import {
 	PathComments,
 } from "../types";
 import {naturalCompare} from "@internal/string-utils";
-import {isValidWord} from "./parse";
 import {Consumer} from "@internal/consume";
 import {PRIORITIZE_KEYS, formatNumber} from "@internal/pretty-format";
 import {escapeJSString} from "@internal/string-escape";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
+import {isValidWord} from "@internal/codec-config/util";
 
 function joinList(open: string, close: string, indent: string, items: string[]) {
 	if (items.length === 0) {

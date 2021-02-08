@@ -15,6 +15,7 @@ export type CommandName =
 	| "_evict"
 	| "_moduleSignature"
 	| "_projectDump"
+	| "auto-config"
 	| "analyzeDependencies"
 	| "bundle"
 	| "cache dir"
@@ -54,7 +55,7 @@ export interface SharedCommand<Req, Flags extends UnknownObject, Ret> {
 	category: string;
 	description: StaticMarkup;
 	defineFlags: (c: Consumer) => Flags;
-	usage: string;
+	usage: StaticMarkup;
 	examples: Examples;
 	hidden?: boolean;
 	ignoreFlags?: string[];

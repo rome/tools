@@ -25,6 +25,7 @@ import {
 	normalizeUserConfig,
 } from "@internal/core/common/userConfig";
 import {USER_CONFIG_DIRECTORY} from "@internal/core/common/constants";
+import prettyFormat from "@internal/pretty-format";
 
 type Flags = {
 	user: boolean;
@@ -76,9 +77,9 @@ async function runCommand(
 		}
 
 		reporter.success(
-			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${keyParts}</emphasis> to <emphasis>${JSON.stringify(
+			markup`${action === "push" ? "Adding" : "Setting"} <emphasis>${prettyFormat(
 				value,
-			)}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
+			)}</emphasis> to <emphasis>${keyParts}</emphasis> in the config <emphasis>${configPath}</emphasis>`,
 		);
 
 		if (value === "true" || value === "false") {
