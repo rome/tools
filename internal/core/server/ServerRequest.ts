@@ -36,7 +36,6 @@ import {
 } from "@internal/cli-diagnostics";
 import {ProjectDefinition} from "@internal/project";
 import {ResolverOptions} from "./fs/Resolver";
-
 import ServerBridge, {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -57,8 +56,8 @@ import {
 } from "@internal/cli-flags";
 import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
-import WorkerBridge, {
-	PrefetchedModuleSignatures,
+import {
+	WorkerPrefetchedModuleSignatures,
 	WorkerAnalyzeDependencyResult,
 	WorkerBufferPatch,
 	WorkerCompileResult,
@@ -68,7 +67,7 @@ import WorkerBridge, {
 	WorkerLintResult,
 	WorkerParseOptions,
 	WorkerUpdateInlineSnapshotResult,
-} from "../common/bridges/WorkerBridge";
+} from "@internal/core";
 import {ModuleSignature} from "@internal/js-analysis";
 import {
 	AbsoluteFilePath,
@@ -77,8 +76,8 @@ import {
 	AnyFilePath,
 	RelativeFilePath,
 	UnknownPath,
-	createAbsoluteFilePath,
 	createUnknownPath,
+	createAbsoluteFilePath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
@@ -89,6 +88,7 @@ import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
+import WorkerBridge from "../common/bridges/WorkerBridge";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -1068,12 +1068,12 @@ export default class ServerRequest {
 
 	private async maybePrefetchModuleSignatures(
 		path: AbsoluteFilePath,
-	): Promise<PrefetchedModuleSignatures> {
+	): Promise<WorkerPrefetchedModuleSignatures> {
 		this.checkCancelled();
 
 		const {projectManager} = this.server;
 
-		const prefetchedModuleSignatures: PrefetchedModuleSignatures = {};
+		const prefetchedModuleSignatures: WorkerPrefetchedModuleSignatures = {};
 		const project = await projectManager.assertProject(path);
 		if (!project.config.typeCheck.enabled) {
 			return prefetchedModuleSignatures;

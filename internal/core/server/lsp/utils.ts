@@ -17,7 +17,7 @@ import {
 	Diagnostics,
 } from "@internal/diagnostics";
 import {Server} from "@internal/core";
-import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
+import {WorkerBufferPatch} from "@internal/core";
 
 export function convertPositionToLSP(pos: undefined | Position): LSPPosition {
 	if (pos === undefined) {

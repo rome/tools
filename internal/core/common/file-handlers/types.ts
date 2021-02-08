@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FileReference} from "@internal/core";
-import {WorkerParseOptions, WorkerProject} from "../bridges/WorkerBridge";
+import {WorkerLintResult, WorkerParseOptions, WorkerProject, FileReference} from "@internal/core";
 import Worker from "../../worker/Worker";
 import {
 	DiagnosticIntegrity,
@@ -17,13 +16,17 @@ import {
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {UnknownPath} from "@internal/path";
 
-export type ExtensionLintResult = {
+export interface ExtensionCustomLintResult {
 	mtimeNs: bigint;
 	sourceText: string;
 	diagnostics: Diagnostics;
 	formatted: string;
 	suppressions: DiagnosticSuppressions;
-};
+}
+
+export interface ExtensionLintResult extends ExtensionCustomLintResult {
+	timingsNs: WorkerLintResult["timingsNs"];
+}
 
 export type ExtensionHandlerMethodInfo = {
 	parseOptions: WorkerParseOptions;
@@ -60,7 +63,7 @@ export type PartialExtensionHandler = {
 
 	customFormat?: (
 		info: ExtensionHandlerMethodInfo,
-	) => Promise<ExtensionLintResult>;
+	) => Promise<ExtensionCustomLintResult>;
 
 	parse: (opts: ExtensionParseInfo) => Promise<ExtensionHandlerParseResult>;
 };

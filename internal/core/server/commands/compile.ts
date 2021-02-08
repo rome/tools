@@ -6,7 +6,7 @@
  */
 
 import {ServerRequest} from "@internal/core";
-import {WorkerCompileResult} from "../../common/bridges/WorkerBridge";
+import {WorkerCompileResult} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {DiagnosticsError} from "@internal/diagnostics";

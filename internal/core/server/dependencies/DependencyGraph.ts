@@ -19,7 +19,7 @@ import DependencyNode from "./DependencyNode";
 import {ReporterProgress} from "@internal/cli-reporter";
 import {Locker} from "../../../async/lockers";
 import {DependencyOrder} from "./DependencyOrderer";
-import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
+import {WorkerAnalyzeDependencyResult} from "@internal/core";
 
 import {
 	AbsoluteFilePath,

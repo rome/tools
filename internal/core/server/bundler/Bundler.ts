@@ -28,7 +28,7 @@ import {
 import {
 	WorkerBundleCompileOptions,
 	WorkerCompileResult,
-} from "../../common/bridges/WorkerBridge";
+} from "@internal/core";
 import {Dict} from "@internal/typescript-helpers";
 import {readFile} from "@internal/fs";
 import {flipPathPatterns} from "@internal/path-match";

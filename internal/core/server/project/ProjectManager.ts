@@ -23,7 +23,7 @@ import {
 import {
 	WorkerPartialManifests,
 	WorkerProjects,
-} from "../../common/bridges/WorkerBridge";
+} from "@internal/core";
 import {WorkerContainer} from "../WorkerManager";
 import {
 	DiagnosticLocation,

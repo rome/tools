@@ -18,7 +18,7 @@ import {
 } from "@internal/diagnostics";
 import {ProjectDefinition} from "@internal/project";
 import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
-import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
+import {WorkerAnalyzeDependencyResult} from "@internal/core";
 import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
 import {
 	AnalyzeDependency,

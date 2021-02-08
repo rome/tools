@@ -6,20 +6,22 @@
  */
 
 import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
-import WorkerBridge, {
-	PrefetchedModuleSignatures,
+import {
+	WorkerPrefetchedModuleSignatures,
 	WorkerBufferPatch,
 	WorkerParseOptions,
 	WorkerPartialManifest,
 	WorkerPartialManifests,
 	WorkerProject,
+	WorkerBuffer,
 	WorkerProjects,
-} from "../common/bridges/WorkerBridge";
-import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
+} from "./types";
+import WorkerBridge from "../common/bridges/WorkerBridge";
+import {ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import {UserConfig} from "@internal/core";
-import {DiagnosticIntegrity, DiagnosticsError} from "@internal/diagnostics";
+import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -35,7 +37,6 @@ import {
 } from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
-import {CompilerProject} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
@@ -47,31 +48,7 @@ import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/codec-binary-serial";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
-
-export type ParseResult = {
-	ast: AnyRoot;
-	integrity: undefined | DiagnosticIntegrity;
-	mtimeNs: bigint;
-	project: CompilerProject;
-	path: AbsoluteFilePath;
-	lastAccessed: number;
-	sourceText: string;
-	astModifiedFromSource: boolean;
-};
-
-export type WorkerBuffer = {
-	content: string;
-	mtimeNs: bigint;
-};
-
-export type WorkerOptions = {
-	userConfig: UserConfig;
-	dedicated: boolean;
-	bridge: BridgeClient<typeof WorkerBridge>;
-	id: number;
-	cacheWriteDisabled: boolean;
-	cacheReadDisabled: boolean;
-};
+import { WorkerParseResult, WorkerOptions } from "./types";
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
@@ -142,15 +119,15 @@ export default class Worker {
 	public api: WorkerAPI;
 	public options: WorkerOptions;
 	public logger: Logger;
+	public cache: WorkerCache;
 	public fatalErrorHandler: FatalErrorHandler;
 	public virtualModules: VirtualModules;
 
 	private loggerStream: ReporterConditionalStream;
-	private cache: WorkerCache;
 	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: WorkerProjects;
-	private astCache: AbsoluteFilePathMap<ParseResult>;
+	private astCache: AbsoluteFilePathMap<WorkerParseResult>;
 	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
@@ -350,7 +327,7 @@ export default class Worker {
 
 	public async getTypeCheckProvider(
 		projectId: number,
-		prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
+		prefetchedModuleSignatures: WorkerPrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
 	): Promise<TypeCheckProvider> {
 		const libs: JSRoot[] = [];
@@ -468,7 +445,7 @@ export default class Worker {
 	public async parse(
 		ref: FileReference,
 		options: WorkerParseOptions,
-	): Promise<ParseResult> {
+	): Promise<WorkerParseResult> {
 		const path = createAbsoluteFilePath(ref.real);
 
 		const {project: projectId, uid} = ref;
@@ -502,7 +479,7 @@ export default class Worker {
 		if (cacheEnabled) {
 			// Update the lastAccessed of the ast cache and return it, it will be evicted on
 			// any file change
-			const cachedResult: undefined | ParseResult = this.astCache.get(path);
+			const cachedResult: undefined | WorkerParseResult = this.astCache.get(path);
 			if (cachedResult !== undefined) {
 				let useCached = true;
 
@@ -565,7 +542,7 @@ export default class Worker {
 			);
 		}
 
-		const res: ParseResult = {
+		const res: WorkerParseResult = {
 			ast,
 			lastAccessed: Date.now(),
 			sourceText,

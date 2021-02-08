@@ -6,7 +6,7 @@
  */
 
 import {ServerRequest} from "@internal/core";
-import {WorkerStatus} from "../../common/bridges/WorkerBridge";
+import {WorkerStatus} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {markup} from "@internal/markup";

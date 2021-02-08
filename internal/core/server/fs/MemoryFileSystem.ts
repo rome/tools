@@ -24,7 +24,7 @@ import {
 } from "@internal/diagnostics";
 import {EventQueue} from "@internal/events";
 import {json} from "@internal/codec-config";
-import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
+import {WorkerPartialManifest} from "@internal/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,

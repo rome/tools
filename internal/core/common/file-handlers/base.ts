@@ -1,6 +1,6 @@
 import {
 	ExtensionHandlerMethodInfo,
-	ExtensionLintResult,
+	ExtensionCustomLintResult,
 	PartialExtensionHandler,
 } from "@internal/core/common/file-handlers/types";
 import {createUnknownPath} from "@internal/path";
@@ -18,7 +18,7 @@ export const configHandler: PartialExtensionHandler = {
 
 	async customFormat(
 		info: ExtensionHandlerMethodInfo,
-	): Promise<ExtensionLintResult> {
+	): Promise<ExtensionCustomLintResult> {
 		const {file, integrity, mtimeNs, worker} = info;
 		const {uid} = file;
 
