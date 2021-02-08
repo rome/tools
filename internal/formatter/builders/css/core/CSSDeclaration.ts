@@ -7,7 +7,11 @@ export default function CSSDeclaration(
 ): Token {
 	const tokens: Token[] = [];
 
-	tokens.push(node.name);
+	if (typeof node.name === "string") {
+		tokens.push(node.name);
+	} else {
+		tokens.push(builder.tokenize(node.name, node));
+	}
 	tokens.push(":");
 	tokens.push(
 		...node.value.map((value) => {

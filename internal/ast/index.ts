@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:15d059007f27c5ddbb93c3a503de7b6fb6fd005c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:79acf76f90f36aac8aa0f75805e5852709034779,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -21,6 +21,7 @@ export * from "./css/core/CSSBlock";
 export * from "./css/selectors/CSSClassSelector";
 export * from "./css/selectors/CSSCombinator";
 export * from "./css/core/CSSComma";
+export * from "./css/core/CSSCustomProperty";
 export * from "./css/core/CSSDeclaration";
 export * from "./css/core/CSSDimension";
 export * from "./css/core/CSSFunction";
@@ -38,6 +39,7 @@ export * from "./css/selectors/CSSSelector";
 export * from "./css/core/CSSString";
 export * from "./css/selectors/CSSTypeSelector";
 export * from "./css/selectors/CSSUniversalSelector";
+export * from "./css/core/CSSVarFunction";
 export * from "./css/core/CSSWhitespace";
 export * from "./html/attributes/HTMLAttribute";
 export * from "./html/tags/HTMLCdataTag";
@@ -284,6 +286,7 @@ export type AnyNode =
 	| n.CSSClassSelector
 	| n.CSSCombinator
 	| n.CSSComma
+	| n.CSSCustomProperty
 	| n.CSSDeclaration
 	| n.CSSDimension
 	| n.CSSFunction
@@ -301,6 +304,7 @@ export type AnyNode =
 	| n.CSSString
 	| n.CSSTypeSelector
 	| n.CSSUniversalSelector
+	| n.CSSVarFunction
 	| n.CSSWhitespace
 	| n.HTMLAttribute
 	| n.HTMLCdataTag

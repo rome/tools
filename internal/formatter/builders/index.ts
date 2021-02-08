@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:9994b3f0141b124eaba88fd1af1514a55e3f4b39,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:5b86cbb3c5b2995985507134c2e0e7f8c011bfc9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -33,6 +33,8 @@ import CSSCombinator from "./css/selectors/CSSCombinator";
 builders.set("CSSCombinator", CSSCombinator);
 import CSSComma from "./css/core/CSSComma";
 builders.set("CSSComma", CSSComma);
+import CSSCustomProperty from "./css/core/CSSCustomProperty";
+builders.set("CSSCustomProperty", CSSCustomProperty);
 import CSSDeclaration from "./css/core/CSSDeclaration";
 builders.set("CSSDeclaration", CSSDeclaration);
 import CSSDimension from "./css/core/CSSDimension";
@@ -67,6 +69,8 @@ import CSSTypeSelector from "./css/selectors/CSSTypeSelector";
 builders.set("CSSTypeSelector", CSSTypeSelector);
 import CSSUniversalSelector from "./css/selectors/CSSUniversalSelector";
 builders.set("CSSUniversalSelector", CSSUniversalSelector);
+import CSSVarFunction from "./css/core/CSSVarFunction";
+builders.set("CSSVarFunction", CSSVarFunction);
 import CSSWhitespace from "./css/core/CSSWhitespace";
 builders.set("CSSWhitespace", CSSWhitespace);
 import HTMLAttribute from "./html/attributes/HTMLAttribute";
