@@ -40,9 +40,9 @@ export function isntWhitespace(char: string): boolean {
 	return char !== "\n" && char !== " " && char !== "\t";
 }
 
-export function createParser<Types extends ParserCoreTypes>(
-	impl: ParserCoreImplementation<Types>,
-): ParserCoreFactory<Types> {
+export function createParser<Types extends ParserCoreTypes, Impl extends ParserCoreImplementation<Types> = ParserCoreImplementation<Types>>(
+	impl: Impl,
+): ParserCoreFactory<Types, Impl> {
 	return {
 		create: (
 			opts: Types["options"],

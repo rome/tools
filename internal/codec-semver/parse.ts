@@ -45,7 +45,7 @@ type SemverParserTypes = {
 };
 type SemverParser = ParserCore<SemverParserTypes>;
 
-const createSemverParser = createParser<SemverParserTypes>({
+const semverParser = createParser<SemverParserTypes>({
 	diagnosticLanguage: "semver",
 	normalizeInput: (input) => input.trimRight(),
 	tokenize(parser, index) {
@@ -510,11 +510,11 @@ function parseInitialVersion(parser: SemverParser): AbsoluteVersionNode {
 }
 
 export function parseSemverRange(opts: SemverParserOptions): RangeNode {
-	return parseInitialRange(createSemverParser(opts, {mode: "range"}));
+	return parseInitialRange(semverParser.create(opts, {mode: "range"}));
 }
 
 export function parseSemverVersion(
 	opts: SemverParserOptions,
 ): AbsoluteVersionNode {
-	return parseInitialVersion(createSemverParser(opts, {mode: "version"}));
+	return parseInitialVersion(semverParser.create(opts, {mode: "version"}));
 }

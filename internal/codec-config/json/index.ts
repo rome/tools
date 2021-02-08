@@ -1,5 +1,5 @@
 import {
-	createJSONParser,
+	jsonParser,
 	parseJSONExtra,
 } from "@internal/codec-config/json/parse";
 import {TokenValues} from "@internal/parser-core";
@@ -28,7 +28,7 @@ function createJSONParserMethods(
 		},
 
 		tokenize(opts: ConfigParserOptions): TokenValues<Tokens>[] {
-			return createJSONParser(opts, {type}, {diagnosticLanguage: type}).getAllTokens();
+			return jsonParser.create(opts, {type}, {diagnosticLanguage: type}).getAllTokens();
 		},
 	};
 }

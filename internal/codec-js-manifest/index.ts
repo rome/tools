@@ -8,8 +8,8 @@
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
+	parseSPDXLicense,
 	SPDXExpressionNode,
-	SpdxLicenseParser,
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
@@ -214,21 +214,18 @@ function normalizeLicense(
 		return undefined;
 	}
 
-	// Parse as a SPDX expression
-	const spdxLisenceCode = new SpdxLicenseParser({
-		packageVersion: consumer.get("version").asString(),
-		packageName: consumer.get("name").asString(),
-		projects,
-	});
 	return tryParseWithOptionalOffsetPosition(
 		{
 			loose,
 			path: consumer.path,
 			input: licenseId,
+			packageVersion: consumer.get("version").asString(),
+			packageName: consumer.get("name").asString(),
+			projects,
 		},
 		{
 			getOffsetPosition: () => licenseProp.getLocation("inner-value").start,
-			parse: (opts) => spdxLisenceCode.parse(opts),
+			parse: (opts) => parseSPDXLicense(opts),
 		},
 	);
 }

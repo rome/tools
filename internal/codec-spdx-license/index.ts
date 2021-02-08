@@ -34,5 +34,5 @@ export function getSPDXLicense(licenseId: string): undefined | License {
 	return idToLicense.get(licenseId.toLowerCase());
 }
 
-export {default as stringifySPDXLicense} from "./stringify";
-export {default as SpdxLicenseParser} from "./SpdxLicenseParser";
+export {stringifySPDXLicense} from "./stringify";
+export {parseSPDXLicense} from "./parse";

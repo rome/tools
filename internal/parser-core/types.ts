@@ -25,12 +25,12 @@ export type AnyParserCore = ParserCore<{
 	meta: Dict<any> | void;
 }>;
 
-export type ParserCoreFactory<Types extends ParserCoreTypes> = {
+export type ParserCoreFactory<Types extends ParserCoreTypes, Impl extends ParserCoreImplementation<Types>> = {
 	create(
 		opts: Types["options"],
 		meta: Types["meta"],
 		overrides?: ParserCoreOverrides,
-	): ParserCore<Types>
+	): ParserCore<Types>;
 };
 
 export type ParserCoreTypes = {
@@ -68,6 +68,7 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 		getIndex: (parser: ParserCore<Types>) => Number0;
 		getLastEndPosition: (parser: ParserCore<Types>) => Position;
 	};
+	parseTemplate?: (opts: ParserOptionsWithRequiredPath) => unknown;
 };
 
 export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = [
