@@ -14,6 +14,8 @@ import Consumer from "./Consumer";
 import {UnknownPath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
+export type ConsumeProtectedFunction = (...args: Array<unknown>) => Consumer;
+
 export type ConsumeKey = number | string;
 
 export type ConsumePath = ConsumeKey[];
@@ -52,7 +54,7 @@ type ConsumePropertyDefinitionBase = {
 };
 
 export type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase & {
-	type: "boolean" | "bigint" | "date" | "array" | "object";
+	type: "boolean" | "bigint" | "date" | "array" | "object" | "function";
 };
 
 export type ConsumePropertyStringDefinition = ConsumePropertyDefinitionBase & {

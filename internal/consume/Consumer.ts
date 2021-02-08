@@ -40,6 +40,7 @@ import {
 	ConsumerHandleUnexpected,
 	ConsumerOnDefinition,
 	ConsumerOptions,
+	ConsumeProtectedFunction,
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
@@ -63,6 +64,7 @@ import {
 	createUnknownPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
+import { consumeUnknown } from ".";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -942,6 +944,30 @@ export default class Consumer {
 		} else {
 			return undefined;
 		}
+	}
+
+	public asFunction(def?: (...args: Array<unknown>) => unknown): ConsumeProtectedFunction {
+		this.declareDefinition({
+			type: "function",
+			default: def,
+			required: def === undefined,
+		});
+
+		const fn = this.getValue(def);
+		const context = this.parent?.getValue();
+
+		if (typeof fn !== "function") {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FUNCTION);
+			
+			return () => {
+				return consumeUnknown(undefined, this.context.category, this.context.categoryValue);
+			};
+		}
+
+		return (...args) => {
+			const ret = fn.apply(context, args);
+			return consumeUnknown(ret, this.context.category, this.context.categoryValue);
+		};
 	}
 
 	public asString(def?: string): string {
