@@ -18,6 +18,7 @@ import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {
 	Symbols,
 	hexToUtf8,
+	isCustomProperty,
 	isIdentifierStart,
 	isName,
 	isNameStart,
@@ -29,11 +30,13 @@ import {
 import {
 	CSSAtRule,
 	CSSBlock,
+	CSSCustomProperty,
 	CSSDeclaration,
 	CSSFunction,
 	CSSRoot,
 	CSSRule,
 	CSSSelector,
+	CSSVarFunction,
 } from "@internal/ast";
 import {parseSelectors} from "./parser/selectors";
 import {matchToken, nextToken, readToken} from "./tokenizer";
@@ -867,6 +870,16 @@ function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
 	if (matchToken(parser, "Ident")) {
 		const value = (parser.getToken() as Tokens["Ident"]).value;
 		nextToken(parser);
+		if (isCustomProperty(value)) {
+			return parser.finishNode(
+				parser.getPosition(),
+				{
+					type: "CSSCustomProperty",
+					value,
+				},
+			);
+		}
+
 		return parser.finishNode(
 			start,
 			{
@@ -947,11 +960,13 @@ function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
 	);
 }
 
-export function parseFunction(parser: CSSParser): CSSFunction {
+export function parseFunction(parser: CSSParser): CSSFunction | CSSVarFunction {
 	const start = parser.getPosition();
-	const token = parser.expectToken("Function");
+	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
-	const params = [];
+	const params: AnyCSSValue[] = [];
+	const isVarFunction = name === "var";
+	parser.nextToken();
 
 	while (true) {
 		if (matchToken(parser, "RightParen")) {
@@ -965,7 +980,29 @@ export function parseFunction(parser: CSSParser): CSSFunction {
 			break;
 		}
 		const parsedValue = parseComponentValue(parser);
-		parsedValue && params.push(parsedValue);
+		if (parsedValue) {
+			if (!params.length && isVarFunction) {
+				if (parsedValue.type !== "CSSCustomProperty") {
+					parser.unexpectedDiagnostic({
+						description: descriptions.CSS_PARSER.INVALID_CUSTOM_PROPERTY,
+					});
+				}
+				params.push(parsedValue);
+			} else {
+				params.push(parsedValue);
+			}
+		}
+	}
+
+	if (isVarFunction) {
+		return parser.finishNode(
+			start,
+			{
+				type: "CSSVarFunction",
+				name,
+				params: params as [CSSCustomProperty, ...AnyCSSValue[]],
+			},
+		);
 	}
 
 	return parser.finishNode(
@@ -1037,8 +1074,18 @@ function parseDeclaration(
 			});
 			return undefined;
 		}
-
-		const name = currentToken.value;
+		let name: string | CSSCustomProperty;
+		if (isCustomProperty(currentToken.value)) {
+			name = parser.finishNode(
+				parser.getPosition(),
+				{
+					type: "CSSCustomProperty",
+					value: currentToken.value,
+				},
+			);
+		} else {
+			name = currentToken.value;
+		}
 		const start = parser.getPosition();
 		let important = false;
 		let value: Array<AnyCSSValue | undefined> = [];
