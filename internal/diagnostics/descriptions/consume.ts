@@ -14,6 +14,7 @@ export const consume = createDiagnosticsCategory({
 	EXPECTED_DATE: {message: markup`Expected a date`},
 	EXPECTED_BOOLEAN: {message: markup`Expected a boolean`},
 	EXPECTED_STRING: {message: markup`Expected a string`},
+	EXPECTED_FUNCTION: {message: markup`Expected a function`},
 	EXPECTED_BIGINT: {message: markup`Expected a bigint`},
 	EXPECTED_NUMBER: {message: markup`Expected a number`},
 	EXPECTED_URL: {message: markup`Expected a URL`},

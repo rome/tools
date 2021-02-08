@@ -25,6 +25,14 @@ export type AnyParserCore = ParserCore<{
 	meta: Dict<any> | void;
 }>;
 
+export type ParserCoreFactory<Types extends ParserCoreTypes> = {
+	create(
+		opts: Types["options"],
+		meta: Types["meta"],
+		overrides?: ParserCoreOverrides,
+	): ParserCore<Types>
+};
+
 export type ParserCoreTypes = {
 	tokens: BaseTokens;
 	state: object;

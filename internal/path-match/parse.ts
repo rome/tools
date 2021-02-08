@@ -30,7 +30,7 @@ type PatchMatchParserTypes = {
 
 type PatchMatchParser = ParserCore<PatchMatchParserTypes>;
 
-const createPathMatchParser = createParser<PatchMatchParserTypes>({
+const pathMatchParser = createParser<PatchMatchParserTypes>({
 	diagnosticLanguage: "path",
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);
@@ -283,7 +283,7 @@ function parsePatternNode(parser: PatchMatchParser): PathPattern {
 }
 
 export function parsePattern(opts: ParserOptions): PathPattern {
-	const parser = createPathMatchParser(opts);
+	const parser = pathMatchParser.create(opts);
 	const pattern = parsePatternNode(parser);
 	eatEOL(parser);
 	parser.finalize();
@@ -291,7 +291,7 @@ export function parsePattern(opts: ParserOptions): PathPattern {
 }
 
 export function parsePatternsFile(opts: ParserOptions): PathPattern[] {
-	const parser = createPathMatchParser(opts);
+	const parser = pathMatchParser.create(opts);
 	const patterns: PathPattern[] = [];
 
 	while (true) {

@@ -114,7 +114,7 @@ const EMPTY_POS: Position = {
 	column: ob1Number0,
 };
 
-export const createJSParser = createParser<JSParserTypes>({
+export const jsParser = createParser<JSParserTypes>({
 	diagnosticLanguage: "js",
 	getInitialState(): State {
 		return {

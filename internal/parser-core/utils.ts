@@ -1,5 +1,6 @@
 import {default as ParserCore} from "./ParserCore";
 import {
+	ParserCoreFactory,
 	ParserCoreImplementation,
 	ParserCoreOverrides,
 	ParserCoreTypes,
@@ -41,17 +42,15 @@ export function isntWhitespace(char: string): boolean {
 
 export function createParser<Types extends ParserCoreTypes>(
 	impl: ParserCoreImplementation<Types>,
-): (
-	opts: Types["options"],
-	meta: Types["meta"],
-	overrides?: ParserCoreOverrides,
-) => ParserCore<Types> {
-	return (
-		opts: Types["options"],
-		meta: Types["meta"],
-		overrides?: ParserCoreOverrides,
-	) => {
-		return new ParserCore(impl, opts, meta, overrides);
+): ParserCoreFactory<Types> {
+	return {
+		create: (
+			opts: Types["options"],
+			meta: Types["meta"],
+			overrides?: ParserCoreOverrides,
+		) => {
+			return new ParserCore(impl, opts, meta, overrides);
+		},
 	};
 }
 

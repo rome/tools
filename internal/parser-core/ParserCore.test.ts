@@ -33,7 +33,7 @@ test(
 	"test parsing",
 	(t) => {
 		// Simple testing parser
-		const createTestParser = createParser<TestParserTypes>({
+		const testParser = createParser<TestParserTypes>({
 			diagnosticLanguage: "unknown",
 			ignoreWhitespaceTokens: true,
 
@@ -96,7 +96,7 @@ test(
 		});
 
 		// Testing helper
-		function testParser(parser: ParserCore<TestParserTypes>): object {
+		function runParserTests(parser: ParserCore<TestParserTypes>): object {
 			const parsed: object[] = [];
 
 			while (!parser.matchToken("EOF")) {
@@ -141,7 +141,7 @@ test(
 			};
 		}
 
-		const parser = createTestParser({
+		const parser = testParser.create({
 			input: dedent`
 				"im a string"
 
@@ -152,18 +152,18 @@ test(
 			path: createUnknownPath("0.test"),
 		});
 
-		const parser1 = createTestParser({
+		const parser1 = testParser.create({
 			path: createUnknownPath("1.test"),
 			input: "a", // Invalid
 		});
 
-		const parser2 = createTestParser({
+		const parser2 = testParser.create({
 			path: createUnknownPath("2.test"),
 			input: `"i'm an unterminated string`,
 		});
 
-		t.snapshot(testParser(parser));
-		t.snapshot(testParser(parser1));
-		t.snapshot(testParser(parser2));
+		t.snapshot(runParserTests(parser));
+		t.snapshot(runParserTests(parser1));
+		t.snapshot(runParserTests(parser2));
 	},
 );

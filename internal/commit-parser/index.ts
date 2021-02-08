@@ -12,7 +12,7 @@ type CommitParserTypes = {
 	meta: void;
 };
 
-const createCommitParser = createParser<CommitParserTypes>({
+const commitParser = createParser<CommitParserTypes>({
 	diagnosticLanguage: "text",
 	diagnosticCategoryValue: "commit",
 
@@ -49,7 +49,7 @@ const createCommitParser = createParser<CommitParserTypes>({
 });
 
 export function parseCommit(opts: ParserOptions): CommitRoot {
-	const parser = createCommitParser(opts);
+	const parser = commitParser.create(opts);
 	const start = parser.getPosition();
 
 	let commitType = "";
@@ -172,5 +172,5 @@ export function parseCommit(opts: ParserOptions): CommitRoot {
 }
 
 export function tokenizeCommit(opts: ParserOptions): TokenValues<Tokens>[] {
-	return createCommitParser(opts).getAllTokens();
+	return commitParser.create(opts).getAllTokens();
 }

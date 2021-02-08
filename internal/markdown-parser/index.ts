@@ -30,7 +30,7 @@ import {parseReference} from "@internal/markdown-parser/parser/reference";
 
 export type MarkdownParser = ParserCore<MarkdownParserTypes>;
 
-const createMarkdownParser = createParser<MarkdownParserTypes>({
+const markdownParser = createParser<MarkdownParserTypes>({
 	diagnosticLanguage: "markdown",
 	ignoreWhitespaceTokens: false,
 	getInitialState: () => createMarkdownInitialState(),
@@ -365,7 +365,7 @@ function parseBlock(
 }
 
 export function parseMarkdown(opts: ParserOptionsWithRequiredPath): MarkdownRoot {
-	const parser = createMarkdownParser(opts);
+	const parser = markdownParser.create(opts);
 	const start = parser.getPosition();
 	const body: AnyMarkdownNode[] = [];
 
@@ -425,7 +425,7 @@ function consumeCode(parser: MarkdownParser, index: Number0) {
 }
 
 export function tokenizeMarkdown(opts: ParserOptionsWithRequiredPath) {
-	return createMarkdownParser(opts).getAllTokens();
+	return markdownParser.create(opts).getAllTokens();
 }
 
 export * from "./types";

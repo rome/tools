@@ -14,14 +14,14 @@ import {
 import {PublicToken, Token} from "./tokenizer/index";
 import {types as tokTypes} from "./tokenizer/types";
 import "./tokenizer/context";
-import {createJSParser, createMeta, parseRoot} from "./parser";
+import {jsParser, createMeta, parseRoot} from "./parser";
 
 export {default as CommentsConsumer} from "./CommentsConsumer";
 
 export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 	const options = normalizeOptions(userOptions);
 	const meta = createMeta(options);
-	const parser = createJSParser(options, meta);
+	const parser = jsParser.create(options, meta);
 	return parseRoot(parser);
 }
 
@@ -31,7 +31,7 @@ export function tokenizeJS(userOptions: JSParserUserOptions): PublicToken[] {
 		tokens: true,
 	};
 	const meta = createMeta(options);
-	const parser = createJSParser(options, meta);
+	const parser = jsParser.create(options, meta);
 	parseRoot(parser);
 
 	let tokens: PublicToken[] = [];

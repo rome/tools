@@ -8,7 +8,6 @@ import { FileReference } from "../common/types/files";
 import * as jsAnalysis from "@internal/js-analysis";
 import Worker from "./Worker";
 import { formatAST } from "@internal/formatter";
-import worker from "@internal/cli/worker";
 
 const EMPTY_TIMINGS: WorkerLintResult["timingsNs"] ={
   eslint: 0n,
