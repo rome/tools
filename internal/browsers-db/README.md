@@ -8,12 +8,15 @@ Stripped down data CC BY 4.0 https://caniuse.com
 
 ```ts
 import {version, data, regions} from "@internal/browsers-db";
+import {consumeUnknown} from "@internal/consume";
 
 version; // Current version of the data from caniuse
 
 data; // Data (check below)
+consumeUnknown(data).get(...).as...(); // Recommended to wrap with Consumer
 
 regions; // Region usage (check below)
+consumeUnknown(regions).get(...).as...(); // Recommended to wrap with Consumer
 ```
 
 ## Format
