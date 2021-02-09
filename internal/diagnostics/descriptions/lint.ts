@@ -17,6 +17,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_SVG_WITHOUT_TITLE: {
+		category: "lint/a11y/noSvgWithoutTitle",
+		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
+			},
+		],
+	},
 	A11_Y_USE_ARIA_PROPTYPES: (
 		attributeName: string,
 		values?: Array<string | boolean>,
@@ -184,30 +195,6 @@ export const lint = createDiagnosticsCategory({
 				text: markup`The <emphasis>this</emphasis> keyword has no binding in functional components. Use hooks instead.`,
 			},
 		],
-	},
-	JSX_A11Y_ARIA_PROPTYPES: (
-		attributeName: string,
-		values?: Array<string | boolean>,
-	) => {
-		let advice: DiagnosticAdvice = [];
-		if (values) {
-			advice.push({
-				type: "log",
-				category: "info",
-				text: markup`The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
-					(str, value) => {
-						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
-						return str;
-					},
-					[] as string[],
-				).join(", ")}`,
-			});
-		}
-		return {
-			category: "lint/jsx-a11y/useAriaProptypes",
-			message: markup`The value of the ARIA attribute <emphasis>${attributeName}</emphasis> is not correct.`,
-			advice,
-		};
 	},
 
 	JSX_USE_PASCAL_CASE: (oldName: string, newName: string) => ({
@@ -414,28 +401,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.`,
-			},
-		],
-	},
-	JSX_A11Y_SVG_TITLE_IS_EMPTY: {
-		category: "lint/jsx-a11y/noSvgWithoutTitle",
-		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
-			},
-		],
-	},
-	JSX_A11Y_SVG_HAS_TITLE: {
-		category: "lint/jsx-a11y/noSvgWithoutTitle",
-		message: markup`Provide <emphasis>title</emphasis> when using <emphasis>svg</emphasis>`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
 			},
 		],
 	},

@@ -8,13 +8,15 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:0cd18e307e35be34dc1e4841e9eb5a1a9c72d97b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:02b7feddd7b65e88b8e890ff7b6238ed22ffcbe9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
 import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
 // @ts-ignore
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
+// @ts-ignore
+import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
 // @ts-ignore
@@ -138,8 +140,6 @@ import noRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
-import noSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle.test.rjson";
-// @ts-ignore
 import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
 import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
@@ -234,6 +234,7 @@ export const tests: Tests = {
 	"a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
 	"a11y/noDistractingElements": noDistractingElements,
 	"a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
+	"a11y/noSvgWithoutTitle": noSvgWithoutTitle,
 	"a11y/useAltText": useAltText,
 	"a11y/useAriaProptypes": useAriaProptypes,
 	"a11y/useHtmlLang": useHtmlLang,
@@ -295,7 +296,6 @@ export const tests: Tests = {
 	"jsx-a11y/noPositiveTabindex": noPositiveTabindex,
 	"jsx-a11y/noRedundantAlt": noRedundantAlt,
 	"jsx-a11y/noRedundantRoles": noRedundantRoles,
-	"jsx-a11y/noSvgWithoutTitle": noSvgWithoutTitle,
 	"jsx-a11y/noTargetBlank": noTargetBlank,
 	"jsx-a11y/useAnchorContent": useAnchorContent,
 	"jsx-a11y/useAriaProps": useAriaProps,

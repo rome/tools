@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:f07740d5fc3d87800007d0a5e550b8a33a08116c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:8a002e5b9b32f8866c95ccb84fc74e71ec592e12,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -409,6 +409,13 @@ enforce distracting elements are not used
 non-interactive elements should not be assigned interactive roles
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noSvgWithoutTitle">
+	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
+	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useAltText">
 	<a href="/docs/lint/rules/a11y/useAltText">useAltText</a>
 	<a class="header-anchor" href="#useAltText"></a>
@@ -502,13 +509,6 @@ enforce `img` alt prop does not contain the word &quot;image&quot;, &quot;pictur
 	<a class="header-anchor" href="#noRedundantRoles"></a>
 </h3>
 enforce explicit role property is not the same as implicit/default role property on element
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noSvgWithoutTitle">
-	<a href="/docs/lint/rules/jsx-a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
-	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
-</h3>
-MISSING DOCUMENTATION
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noTargetBlank">

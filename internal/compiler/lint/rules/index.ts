@@ -1,7 +1,8 @@
-/* GENERATED:START(hash:6c2d593fee71cdac35cf068b1af0bac7a508a19d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:4a8fd487de82026507cc5b0fb06bb775476ebac9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noDistractingElements from "./a11y/noDistractingElements";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
+import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle";
 import useAltText from "./a11y/useAltText";
 import useAriaProptypes from "./a11y/useAriaProptypes";
 import useHtmlLang from "./a11y/useHtmlLang";
@@ -64,7 +65,6 @@ import noOnChange from "./jsx-a11y/noOnChange";
 import noPositiveTabindex from "./jsx-a11y/noPositiveTabindex";
 import noRedundantAlt from "./jsx-a11y/noRedundantAlt";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
-import noSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import useAnchorContent from "./jsx-a11y/useAnchorContent";
 import useAriaProps from "./jsx-a11y/useAriaProps";
@@ -123,6 +123,7 @@ lintTransforms.set(
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	noNoninteractiveElementToInteractiveRole,
 );
+lintTransforms.set("a11y/noSvgWithoutTitle", noSvgWithoutTitle);
 lintTransforms.set("a11y/useAltText", useAltText);
 lintTransforms.set("a11y/useAriaProptypes", useAriaProptypes);
 lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
@@ -194,7 +195,6 @@ lintTransforms.set("jsx-a11y/noOnChange", noOnChange);
 lintTransforms.set("jsx-a11y/noPositiveTabindex", noPositiveTabindex);
 lintTransforms.set("jsx-a11y/noRedundantAlt", noRedundantAlt);
 lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
-lintTransforms.set("jsx-a11y/noSvgWithoutTitle", noSvgWithoutTitle);
 lintTransforms.set("jsx-a11y/noTargetBlank", noTargetBlank);
 lintTransforms.set("jsx-a11y/useAnchorContent", useAnchorContent);
 lintTransforms.set("jsx-a11y/useAriaProps", useAriaProps);
@@ -270,6 +270,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/noAriaUnsupportedElements",
 	"a11y/noDistractingElements",
 	"a11y/noNoninteractiveElementToInteractiveRole",
+	"a11y/noSvgWithoutTitle",
 	"a11y/useAltText",
 	"a11y/useAriaProptypes",
 	"a11y/useHtmlLang",
@@ -332,7 +333,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"jsx-a11y/noPositiveTabindex",
 	"jsx-a11y/noRedundantAlt",
 	"jsx-a11y/noRedundantRoles",
-	"jsx-a11y/noSvgWithoutTitle",
 	"jsx-a11y/noTargetBlank",
 	"jsx-a11y/useAnchorContent",
 	"jsx-a11y/useAriaProps",
@@ -388,6 +388,7 @@ export type LintRuleName =
 	| "a11y/noAriaUnsupportedElements"
 	| "a11y/noDistractingElements"
 	| "a11y/noNoninteractiveElementToInteractiveRole"
+	| "a11y/noSvgWithoutTitle"
 	| "a11y/useAltText"
 	| "a11y/useAriaProptypes"
 	| "a11y/useHtmlLang"
@@ -450,7 +451,6 @@ export type LintRuleName =
 	| "jsx-a11y/noPositiveTabindex"
 	| "jsx-a11y/noRedundantAlt"
 	| "jsx-a11y/noRedundantRoles"
-	| "jsx-a11y/noSvgWithoutTitle"
 	| "jsx-a11y/noTargetBlank"
 	| "jsx-a11y/useAnchorContent"
 	| "jsx-a11y/useAriaProps"
