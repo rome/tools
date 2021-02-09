@@ -92,9 +92,4 @@ export abstract class Browser {
 	public getRegionUsage(region: string): number|undefined {
 		return consumeUnknown(regions, "parse").get(region).get("data").get(this.getId()).get(this.getVersion()).asNumberOrVoid()
 	}
-
-	// https://github.com/microsoft/TypeScript/issues/34516
-	public /*abstract*/ static getVersionImplementation(version: string): Browser {
-		throw new Error("Unimplemented");
-	}
 }

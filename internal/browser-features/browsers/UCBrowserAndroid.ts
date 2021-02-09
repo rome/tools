@@ -7,8 +7,4 @@ export default class UCBrowserAndroid extends Browser {
 			version
 		})
 	}
-
-	public static getVersionImplementation(version: string): UCBrowserAndroid {
-		return new UCBrowserAndroid({version});
-	}
 }
