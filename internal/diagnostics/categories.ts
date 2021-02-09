@@ -96,8 +96,10 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:acbcb392f902b761e16385ab8608212f8d544de1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:c8e18c5c630b5a2a521612713f3eca20f65d171d,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
+	| "lint/a11y/noDistractingElements"
+	| "lint/a11y/noNoninteractiveElementToInteractiveRole"
 	| "lint/a11y/useAltText"
 	| "lint/a11y/useHtmlLang"
 	| "lint/a11y/useValidLang"
@@ -153,9 +155,7 @@ export type DiagnosticLintCategory =
 	| "lint/jsx-a11y/noAccessKey"
 	| "lint/jsx-a11y/noAriaUnsupportedElements"
 	| "lint/jsx-a11y/noAutofocus"
-	| "lint/jsx-a11y/noDistractingElements"
 	| "lint/jsx-a11y/noHeaderScope"
-	| "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole"
 	| "lint/jsx-a11y/noNoninteractiveTabindex"
 	| "lint/jsx-a11y/noOnChange"
 	| "lint/jsx-a11y/noPositiveTabindex"
@@ -214,6 +214,8 @@ export type DiagnosticLintCategory =
 	| "lint/ts/useInterfaces"
 	| "lint/ts/useSimplifiedBooleanExpression";
 const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
+	"lint/a11y/noDistractingElements": true,
+	"lint/a11y/noNoninteractiveElementToInteractiveRole": true,
 	"lint/a11y/useAltText": true,
 	"lint/a11y/useHtmlLang": true,
 	"lint/a11y/useValidLang": true,
@@ -269,9 +271,7 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/jsx-a11y/noAccessKey": true,
 	"lint/jsx-a11y/noAriaUnsupportedElements": true,
 	"lint/jsx-a11y/noAutofocus": true,
-	"lint/jsx-a11y/noDistractingElements": true,
 	"lint/jsx-a11y/noHeaderScope": true,
-	"lint/jsx-a11y/noNoninteractiveElementToInteractiveRole": true,
 	"lint/jsx-a11y/noNoninteractiveTabindex": true,
 	"lint/jsx-a11y/noOnChange": true,
 	"lint/jsx-a11y/noPositiveTabindex": true,

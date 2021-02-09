@@ -17,6 +17,28 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
+		category: "lint/a11y/noNoninteractiveElementToInteractiveRole",
+		message: markup`The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Replace <emphasis>${element}</emphasis> with a div or a span.`,
+			},
+		],
+	}),
+	A11_Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
+		category: "lint/a11y/noDistractingElements",
+		message: markup`Avoid using deprecated ${element} elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Deprecated ${element} are difficult to read and distract attention away from page content, especially for users with visual impairments.`,
+			},
+		],
+	}),
 	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
 		category: "lint/js/noSingleCharRegexAlternatives",
 		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
@@ -142,17 +164,6 @@ export const lint = createDiagnosticsCategory({
 		};
 	},
 
-	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
-		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
-		message: markup`The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Replace <emphasis>${element}</emphasis> with a div or a span.`,
-			},
-		],
-	}),
 	JSX_USE_PASCAL_CASE: (oldName: string, newName: string) => ({
 		category: "lint/jsx/usePascalCase",
 		message: markup`Switch <emphasis>${oldName}</emphasis> to <emphasis>${newName}</emphasis>.`,
@@ -470,17 +481,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
-		category: "lint/jsx-a11y/noDistractingElements",
-		message: markup`Avoid using deprecated ${element} elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Deprecated ${element} are difficult to read and distract attention away from page content, especially for users with visual impairments.`,
-			},
-		],
-	}),
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: "lint/jsx-a11y/noOnChange",
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,

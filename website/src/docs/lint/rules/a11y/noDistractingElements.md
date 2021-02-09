@@ -1,15 +1,15 @@
 ---
-title: Lint Rule jsx-a11y/noDistractingElements
+title: Lint Rule a11y/noDistractingElements
 layout: layouts/rule.liquid
 description: enforce distracting elements are not used
 eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-distracting-elements.md
 eleventyNavigation:
-	key: lint-rules/jsx-a11y/noDistractingElements
+	key: lint-rules/a11y/noDistractingElements
 	parent: lint-rules
-	title: jsx-a11y/noDistractingElements
+	title: a11y/noDistractingElements
 ---
 
-# jsx-a11y/noDistractingElements
+# a11y/noDistractingElements
 
 <!-- GENERATED:START(hash:a7b38b5eb09839f5285348000ab4147d0401816d,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 enforce distracting elements are not used

@@ -8,7 +8,11 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:17d9900af78cbe2dca1840e3a49194934efb403e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:bff7e07e4d94a35356563555d553ad1f9a7fac38,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// @ts-ignore
+import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
+// @ts-ignore
+import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
 // @ts-ignore
@@ -118,11 +122,7 @@ import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements.test
 // @ts-ignore
 import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
 // @ts-ignore
-import noDistractingElements from "./jsx-a11y/noDistractingElements.test.rjson";
-// @ts-ignore
 import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
-// @ts-ignore
-import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
 import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex.test.rjson";
 // @ts-ignore
@@ -231,6 +231,8 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
+	"a11y/noDistractingElements": noDistractingElements,
+	"a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
 	"a11y/useAltText": useAltText,
 	"a11y/useHtmlLang": useHtmlLang,
 	"a11y/useValidLang": useValidLang,
@@ -285,9 +287,7 @@ export const tests: Tests = {
 	"jsx-a11y/noAccessKey": noAccessKey,
 	"jsx-a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
 	"jsx-a11y/noAutofocus": noAutofocus,
-	"jsx-a11y/noDistractingElements": noDistractingElements,
 	"jsx-a11y/noHeaderScope": noHeaderScope,
-	"jsx-a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
 	"jsx-a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,
 	"jsx-a11y/noOnChange": noOnChange,
 	"jsx-a11y/noPositiveTabindex": noPositiveTabindex,

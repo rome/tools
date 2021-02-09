@@ -1,15 +1,15 @@
 ---
-title: Lint Rule jsx-a11y/noNoninteractiveElementToInteractiveRole
+title: Lint Rule a11y/noNoninteractiveElementToInteractiveRole
 layout: layouts/rule.liquid
 description: non-interactive elements should not be assigned interactive roles
 eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-noninteractive-element-to-interactive-role.md
 eleventyNavigation:
-	key: lint-rules/jsx-a11y/noNoninteractiveElementToInteractiveRole
+	key: lint-rules/a11y/noNoninteractiveElementToInteractiveRole
 	parent: lint-rules
-	title: jsx-a11y/noNoninteractiveElementToInteractiveRole
+	title: a11y/noNoninteractiveElementToInteractiveRole
 ---
 
-# jsx-a11y/noNoninteractiveElementToInteractiveRole
+# a11y/noNoninteractiveElementToInteractiveRole
 
 <!-- GENERATED:START(hash:3908576fa556cf0a0a48b5a2d878d36c0abc6769,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 non-interactive elements should not be assigned interactive roles

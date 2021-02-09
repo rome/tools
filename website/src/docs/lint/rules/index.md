@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:107ead3db9840c392b813835d3345afce45a984f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:f07f15249e80f7cb0d0259849a7c12b6283df2f3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -387,6 +387,20 @@ discard redundant terms or operators in boolean expressions
 <h2>Accessibility (JSX and HTML)</h2>
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
 and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule docs for direct references.</p>
+<div class="rule">
+<h3 data-toc-exclude id="noDistractingElements">
+	<a href="/docs/lint/rules/a11y/noDistractingElements">noDistractingElements</a>
+	<a class="header-anchor" href="#noDistractingElements"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
+<h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
+	<a href="/docs/lint/rules/a11y/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
+	<a class="header-anchor" href="#noNoninteractiveElementToInteractiveRole"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
 <div class="rule">
 <h3 data-toc-exclude id="useAltText">
 	<a href="/docs/lint/rules/a11y/useAltText">useAltText</a>
