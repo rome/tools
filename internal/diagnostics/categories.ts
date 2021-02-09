@@ -27,6 +27,10 @@ export type DiagnosticCategory =
 	| "files/tooBig"
 	| "flags/invalid"
 	| "format/disabled"
+	| "integration/load"
+	| "integration/missingVersion"
+	| "integration/unsupportedVersion"
+	| "integration/notFound"
 	| "internalError/fatal"
 	| "internalError/fs"
 	| "internalError/httpServer"
@@ -354,6 +358,10 @@ const categoryNameMap: {[name in DiagnosticCategory]: true} = {
 	"files/tooBig": true,
 	"flags/invalid": true,
 	"format/disabled": true,
+	"integration/missingVersion": true,
+	"integration/unsupportedVersion": true,
+	"integration/notFound": true,
+	"integration/load": true,
 	"internalError/fatal": true,
 	"internalError/fs": true,
 	"internalError/httpServer": true,

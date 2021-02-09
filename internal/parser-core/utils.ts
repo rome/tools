@@ -10,7 +10,7 @@ import {
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {ob1Add, ob1Dec} from "@internal/ob1";
-import {isPlainObject} from "@internal/typescript-helpers";
+import {isPlainObject, TaggedTemplateFunction} from "@internal/typescript-helpers";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -51,6 +51,34 @@ export function createParser<Types extends ParserCoreTypes, Impl extends ParserC
 		) => {
 			return new ParserCore(impl, opts, meta, overrides);
 		},
+	};
+}
+
+export function createParserTemplateFactory<Ret>(callback: (input: string) => Ret): TaggedTemplateFunction<Ret, string> {
+	const cache: Map<TemplateStringsArray, {
+		input: string;
+		value: Ret,
+	}> = new Map();
+
+	return (strs, ...subs) => {
+		let input = "";
+		for (let i = 0; i < strs.length; i++) {
+			input += strs[i];
+
+			const sub = subs[i];
+			if (sub) {
+				input += sub;
+			}
+		}
+
+		const cached = cache.get(strs);
+		if (cached !== undefined && cached.input === input) {
+			return cached.value;
+		}
+
+		const value = callback(input);
+		cache.set(strs, {input, value});
+		return value;
 	};
 }
 

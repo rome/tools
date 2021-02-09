@@ -34,6 +34,9 @@ import {markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
+import { EMPTY_LINT_TIMINGS, WorkerLintTimings } from "@internal/core/worker/types";
+import { ExtendedMap } from "@internal/collections";
+import { humanizeDuration } from "@internal/string-utils";
 
 type LintWatchChanges = {
 	type: "absolute" | "unknown";
@@ -70,6 +73,7 @@ type WatchResults = {
 };
 
 function createDiagnosticsPrinter(
+	runner: LintRunner,
 	request: ServerRequest,
 	processor: DiagnosticsProcessor,
 	totalCount: number,
@@ -121,6 +125,12 @@ function createDiagnosticsPrinter(
 				);
 			}
 		}
+
+		const timings = runner.getFinalTimings();
+		if (timings.slowest.eslint > 0n) {
+			const ms = Number(timings.slowest.eslint / 1000000n);
+			reporter.warn(markup`Spent <emphasis>${humanizeDuration(ms, {longform: true, allowMilliseconds: true})}</emphasis> running ESLint`);
+		}
 	});
 
 	return printer;
@@ -145,6 +155,7 @@ class LintRunner {
 		this.events = events;
 		this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
+		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => EMPTY_LINT_TIMINGS);
 	}
 
 	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
@@ -158,6 +169,36 @@ class LintRunner {
 	private request: ServerRequest;
 	private graph: DependencyGraph;
 	private options: LinterOptions;
+	private timingsByWorker: ExtendedMap<number, WorkerLintTimings>;
+
+	public getFinalTimings(): {
+		slowest: WorkerLintTimings,
+		total: WorkerLintTimings,
+	 } {
+		let slowest: WorkerLintTimings = EMPTY_LINT_TIMINGS;
+		let total: WorkerLintTimings = EMPTY_LINT_TIMINGS;
+
+		for (const timings of this.timingsByWorker.values()) {
+			total.eslint += timings.eslint;
+			total.prettier += timings.prettier;
+
+			if (timings.eslint > slowest.eslint) {
+				slowest = {
+					...slowest,
+					eslint: timings.eslint,
+				};
+			}
+
+			if (timings.prettier > slowest.prettier) {
+				slowest = {
+					...slowest,
+					prettier: timings.prettier,
+				};
+			}
+		}
+
+		return {slowest, total};
+	}
 
 	public hasCompilerDiagnostics(path: AbsoluteFilePath): boolean {
 		return this.compilerDiagnosticsCache.has(path);
@@ -232,6 +273,7 @@ class LintRunner {
 					diagnostics,
 					suppressions,
 					save,
+					timingsNs,
 				} = res.value;
 				processor.addSuppressions(suppressions);
 				processor.addDiagnostics(diagnostics);
@@ -239,6 +281,13 @@ class LintRunner {
 				if (save !== undefined) {
 					this.request.queueSaveFile(path, save);
 				}
+
+				const workerId = server.fileAllocator.getOwnerAssert(path).id;
+				const workerTimings = this.timingsByWorker.assert(workerId);
+				this.timingsByWorker.set(workerId, {
+					eslint: workerTimings.eslint + timingsNs.eslint,
+					prettier: workerTimings.prettier + timingsNs.prettier,
+				})
 
 				progress.popText(progressId);
 				progress.tick();
@@ -482,10 +531,7 @@ export default class Linter {
 		return apply || hasDecisions || this.shouldOnlyFormat();
 	}
 
-	private createDiagnosticsProcessor(
-		evictedPaths: AbsoluteFilePathSet,
-		runner?: LintRunner,
-	): DiagnosticsProcessor {
+	private createDiagnosticsProcessor(): DiagnosticsProcessor {
 		const processor = this.request.createDiagnosticsProcessor({
 			origins: [
 				{
@@ -496,22 +542,6 @@ export default class Linter {
 		});
 
 		processor.addAllowedUnusedSuppressionPrefix("bundler");
-
-		// Only display files that aren't absolute, are in the changed paths, or have had previous compiler diagnostics
-		// This hides errors that have been lint ignored but may have been produced by dependency analysis
-		processor.addFilter({
-			test: (diag) => {
-				const absolute = this.request.server.projectManager.getFilePathFromUidOrAbsolute(
-					diag.location.filename,
-				);
-				return (
-					diag.description.category === "parse" ||
-					absolute === undefined ||
-					evictedPaths.has(absolute) ||
-					(runner !== undefined && runner.hasCompilerDiagnostics(absolute))
-				);
-			},
-		});
 
 		return processor;
 	}
@@ -535,7 +565,7 @@ export default class Linter {
 		});
 
 		return globber.watch(async (event) => {
-			const processor = this.createDiagnosticsProcessor(event.paths, runner);
+			const processor = this.createDiagnosticsProcessor();
 			const result = await runner.run(event, processor);
 			await events.onChanges(result);
 		});
@@ -556,8 +586,9 @@ export default class Linter {
 			},
 			onChanges: async ({evictedPaths, changes, totalCount, savedCount, runner}) => {
 				const printer = createDiagnosticsPrinter(
+					runner,
 					request,
-					this.createDiagnosticsProcessor(evictedPaths, runner),
+					this.createDiagnosticsProcessor(),
 					totalCount,
 					savedCount,
 				);
@@ -595,6 +626,7 @@ export default class Linter {
 
 		let savedCount = 0;
 		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+		let runner: undefined | LintRunner;
 
 		const watchEvent = await this.watch({
 			onRunStart: () => {},
@@ -605,6 +637,7 @@ export default class Linter {
 				// Update counts
 				savedCount += res.savedCount;
 				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
+				runner = res.runner;
 
 				// Update our diagnostics with the changes
 				for (const {filename, diagnostics} of res.changes) {
@@ -620,8 +653,9 @@ export default class Linter {
 		await watchEvent.unsubscribe();
 
 		const printer = createDiagnosticsPrinter(
+			runner!,
 			request,
-			this.createDiagnosticsProcessor(paths),
+			this.createDiagnosticsProcessor(),
 			paths.size,
 			savedCount,
 		);

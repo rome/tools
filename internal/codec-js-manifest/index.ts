@@ -10,6 +10,7 @@ import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
 	parseSPDXLicense,
 	SPDXExpressionNode,
+	SPDXLicenseParserOptions,
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
@@ -26,7 +27,7 @@ import {
 	ManifestRepository,
 } from "./types";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
-import {normalizeName} from "./name";
+import {normalizeName, manifestNameToString} from "./name";
 import {descriptions} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
@@ -36,7 +37,7 @@ import {
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
-import {ProjectDefinition} from "@internal/project";
+import {CompilerProjects } from "@internal/compiler";
 
 export * from "./types";
 
@@ -181,8 +182,12 @@ const INVALID_IGNORE_LICENSES = [
 
 function normalizeLicense(
 	consumer: Consumer,
-	loose: boolean,
-	projects: ProjectDefinition[],
+	{name, version, loose, projects}: {
+		name: undefined | string;
+		version: undefined | SemverVersionNode;
+		loose: boolean,
+		projects: CompilerProjects,
+	}
 ): undefined | SPDXExpressionNode {
 	if (!consumer.has("license")) {
 		return undefined;
@@ -214,15 +219,22 @@ function normalizeLicense(
 		return undefined;
 	}
 
-	return tryParseWithOptionalOffsetPosition(
-		{
-			loose,
-			path: consumer.path,
-			input: licenseId,
-			packageVersion: consumer.get("version").asString(),
-			packageName: consumer.get("name").asString(),
+	const opts: SPDXLicenseParserOptions = {
+		loose,
+		path: consumer.path,
+		input: licenseId,
+	};
+	
+	if (name !== undefined && version !== undefined) {
+		opts.exceptions = {
+			packageName: name,
+			packageVersion: version,
 			projects,
-		},
+		};
+	}
+
+	return tryParseWithOptionalOffsetPosition(
+		opts,
 		{
 			getOffsetPosition: () => licenseProp.getLocation("inner-value").start,
 			parse: (opts) => parseSPDXLicense(opts),
@@ -423,6 +435,7 @@ function normalizeRepo(
 }
 
 function normalizeExports(consumer: Consumer): boolean | ManifestExports {
+	return true;
 	const unknown = consumer.asUnknown();
 
 	// "exports": false
@@ -617,7 +630,7 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
 export async function normalizeManifest(
 	path: AbsoluteFilePath,
 	consumer: Consumer,
-	projects: ProjectDefinition[],
+	projects: CompilerProjects,
 ): Promise<Manifest> {
 	const loose =
 		consumer.path !== undefined &&
@@ -644,12 +657,14 @@ export async function normalizeManifest(
 		normalizeCompatManifest(consumer, name, version);
 	}
 
+	const strName = name === undefined ? undefined : manifestNameToString(name);
+
 	return {
 		name,
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
-		license: normalizeLicense(consumer, loose, projects),
+		license: normalizeLicense(consumer, {name: strName, version, loose, projects}),
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),

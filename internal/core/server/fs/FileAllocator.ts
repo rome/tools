@@ -79,7 +79,7 @@ export default class FileAllocator {
 		}
 	}
 
-	private getOwnerAssert(path: AbsoluteFilePath): WorkerContainer {
+	public getOwnerAssert(path: AbsoluteFilePath): WorkerContainer {
 		const {workerManager} = this.server;
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {

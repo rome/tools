@@ -13,12 +13,11 @@ import {
 	PROJECT_CONFIG_SENSITIVE_DIRECTORIES,
 	PROJECT_CONFIG_WARN_FILENAMES,
 	ProjectConfig,
-	ProjectConfigMeta,
 	ProjectDefinition,
-	assertHardMeta,
 	createDefaultProjectConfig,
-	createDefaultProjectConfigMeta,
+	createMockProjectConfigMeta,
 	loadCompleteProjectConfig,
+	ProjectConfigMeta,
 } from "@internal/project";
 import {
 	WorkerPartialManifests,
@@ -179,7 +178,7 @@ export default class ProjectManager {
 		await this.declareProject({
 			isPartial: false,
 			projectDirectory: defaultVendorPath,
-			meta: createDefaultProjectConfigMeta(),
+			meta: createMockProjectConfigMeta(defaultVendorPath),
 			config: vendorProjectConfig,
 		});
 		await this.server.memoryFs.watch(defaultVendorPath);
@@ -198,7 +197,7 @@ export default class ProjectManager {
 		await this.declareProject({
 			isPartial: false,
 			projectDirectory,
-			meta: createDefaultProjectConfigMeta(),
+			meta: createMockProjectConfigMeta(projectDirectory),
 			config: projectConfig,
 		});
 	}
@@ -511,7 +510,7 @@ export default class ProjectManager {
 		def: ProjectDefinition,
 		test: (consumer: Consumer) => undefined | false | Consumer,
 	): ProjectConfigSource {
-		const meta = assertHardMeta(def.meta);
+		const {meta} = def;
 
 		for (const consumer of meta.consumersChain) {
 			const value = test(consumer);
@@ -727,6 +726,7 @@ export default class ProjectManager {
 				project.id,
 				{
 					configCacheKeys: project.meta.configCacheKeys,
+					configPath: project.meta.configPath,
 					config: project.config,
 					directory: project.directory,
 				},
@@ -880,7 +880,7 @@ export default class ProjectManager {
 			}
 			if (rewatch) {
 				await this.server.memoryFs.watch(
-					assertHardMeta(syncProject.meta).projectDirectory,
+					syncProject.meta.projectDirectory,
 				);
 			}
 

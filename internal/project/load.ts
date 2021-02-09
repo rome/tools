@@ -14,7 +14,6 @@ import {
 	PartialProjectConfig,
 	ProjectConfig,
 	ProjectConfigMeta,
-	ProjectConfigMetaHard,
 	ProjectConfigObjects,
 	ProjectConfigTarget,
 	createDefaultProjectConfig,
@@ -41,7 +40,7 @@ import {sha256} from "@internal/string-utils";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
-	meta: ProjectConfigMetaHard;
+	meta: ProjectConfigMeta;
 };
 
 function categoryExists(consumer: Consumer): boolean {
@@ -200,7 +199,7 @@ export async function normalizeProjectConfig(
 		config.name = inferredName;
 	}
 
-	const meta: ProjectConfigMetaHard = {
+	const meta: ProjectConfigMeta = {
 		projectDirectory,
 		configPath,
 		consumer,

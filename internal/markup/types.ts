@@ -10,6 +10,7 @@ import {AbsoluteFilePath} from "@internal/path";
 import {UserConfig} from "@internal/core";
 import {Number0, Number1} from "@internal/ob1";
 import {Consumer} from "@internal/consume";
+import { GridLocators } from "@internal/cli-layout";
 
 export type Tokens = BaseTokens & {
 	Text: StringToken<"Text">;
@@ -75,7 +76,8 @@ export type MarkupTagName =
 	| "td"
 	| "ol"
 	| "ul"
-	| "li";
+	| "li"
+	| "locator";
 
 export type MarkupFormatPositionNormalizer = (
 	filename: string,
@@ -104,6 +106,7 @@ export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
 };
 
 export type MarkupLinesAndWidth = {
+	locators: GridLocators;
 	width: number;
 	lines: string[];
 };

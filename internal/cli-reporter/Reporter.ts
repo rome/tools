@@ -242,10 +242,12 @@ export default class Reporter implements ReporterNamespace {
 				}
 			},
 			update: () => {
-				if (check !== undefined && check()) {
-					cond.enable();
-				} else {
-					cond.disable();
+				if (check !== undefined) {
+					if (check()) {
+						cond.enable();
+					} else {
+						cond.disable();
+					}
 				}
 
 				return handle !== undefined;

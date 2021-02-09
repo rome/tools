@@ -60,12 +60,22 @@ export type OptionalProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
 	[Key in Keys]?: Obj[Key]
 };
 
+export type TaggedTemplateFunction<Ret, Sub> = (
+	strs: TemplateStringsArray,
+	...substitutions: Array<Sub>
+) => Ret;
+
 // Turn a type that contains interfaces into regular objects
 export type InterfaceToObject<T> = T extends {}
 	? {[K in keyof T]: InterfaceToObject<T[K]>}
 	: T;
 
 export type UnknownObject = Dict<unknown>;
+
+export type UnknownFunction = ((...args: Array<unknown>) => unknown) | {
+	(...args: Array<unknown>): unknown;
+	new(...args: Array<unknown>): unknown;
+};
 
 export function isPlainObject<T = UnknownObject>(
 	obj: unknown,

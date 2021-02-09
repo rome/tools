@@ -8,8 +8,6 @@
 import {UnknownObject} from "@internal/typescript-helpers";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {sourceMapManager} from "@internal/v8";
-import internalModule = require("module");
-
 import vm = require("vm");
 
 import {
@@ -20,6 +18,7 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
 import {ob1Coerce1, ob1Number0} from "@internal/ob1";
+import { getRequire } from "../IntegrationLoader";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;
@@ -51,9 +50,7 @@ export default async function executeMain(
 		setImmediate,
 		setInterval,
 		setTimeout,
-		require: internalModule.createRequire
-			? internalModule.createRequire(filename)
-			: internalModule.createRequireFromPath(filename),
+		require: getRequire(path),
 		console,
 		__dirname: path.getParent().join(),
 		__filename: filename,

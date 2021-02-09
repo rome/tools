@@ -22,6 +22,8 @@ export type CompilerProject = {
 	directory?: undefined | AbsoluteFilePath;
 };
 
+export type CompilerProjects = Array<CompilerProject>;
+
 //
 export type TransformStageName = "pre" | "compile" | "compileForBundle";
 

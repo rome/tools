@@ -34,13 +34,17 @@ type FormatOptions = {
 	depth: number;
 	maxDepth: number;
 	compact: boolean;
+	path: (number | string)[];
+	insertLocator: undefined | (number | string)[];
 };
 
 type FormatPartialOptions = {
 	allowCustom?: boolean;
 	maxDepth?: number;
+	path?: FormatOptions["path"];
 	stack?: RecursiveStack;
 	compact?: boolean;
+	insertLocator?: FormatOptions["insertLocator"];
 };
 
 const DEFAULT_OPTIONS: FormatOptions = {
@@ -48,7 +52,9 @@ const DEFAULT_OPTIONS: FormatOptions = {
 	maxDepth: Infinity,
 	depth: 0,
 	stack: [],
+	path: [],
 	compact: false,
+	insertLocator: undefined,
 };
 
 export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
@@ -87,43 +93,81 @@ export default function prettyFormat(
 ): LazyMarkupFactory {
 	return () => {
 		const opts: FormatOptions = mergeObjects(DEFAULT_OPTIONS, rawOpts);
+		const value = formatValue(obj, opts);
 
-		if (opts.maxDepth === opts.depth) {
-			return markup`[depth exceeded]`;
-		}
-
-		switch (typeof obj) {
-			case "symbol": {
-				return markupTag("token", formatSymbol(obj), {type: "string"});
-			}
-
-			case "string": {
-				return markupTag("token", formatString(obj), {type: "string"});
-			}
-
-			case "bigint":
-			case "number": {
-				return markupTag("token", formatNumber(obj), {type: "number"});
-			}
-
-			case "boolean": {
-				return markupTag("token", formatBoolean(obj), {type: "boolean"});
-			}
-
-			case "undefined": {
-				return markupTag("color", formatUndefined(), {fg: "brightBlack"});
-			}
-
-			case "function":
-				return formatFunction(obj, opts);
-
-			case "object":
-				return formatObjectish(obj as Objectish, opts);
-
-			default:
-				throw new Error("Unknown type");
+		if (needsLocator(opts)) {
+			return markup`<locator>${value}</locator>`;
+		} else {
+			return value;
 		}
 	};
+}
+
+function formatValue(obj: unknown, opts: FormatOptions): AnyMarkup {
+	if (opts.maxDepth === opts.depth) {
+		return markup`[depth exceeded]`;
+	}
+
+	switch (typeof obj) {
+		case "symbol": {
+			return markupTag("token", formatSymbol(obj), {type: "string"});
+		}
+
+		case "string": {
+			return markupTag("token", formatString(obj), {type: "string"});
+		}
+
+		case "bigint":
+		case "number": {
+			return markupTag("token", formatNumber(obj), {type: "number"});
+		}
+
+		case "boolean": {
+			return markupTag("token", formatBoolean(obj), {type: "boolean"});
+		}
+
+		case "undefined": {
+			return markupTag("color", formatUndefined(), {fg: "brightBlack"});
+		}
+
+		case "function":
+			return formatFunction(obj, opts);
+
+		case "object":
+			return formatObjectish(obj as Objectish, opts);
+
+		default:
+			throw new Error("Unknown type");
+	}
+}
+
+function needsLocator(opts: FormatOptions): boolean {
+	const {path, insertLocator} = opts;
+	if (insertLocator === undefined) {
+		return false;
+	}
+
+	// Cannot possibly be the same if there's a different amount of parts
+	if (path.length !== insertLocator.length) {
+		return false;
+	}
+
+	// Check first and last entry as they are the most likely to trigger a negative
+	if (path[0] !== insertLocator[0]) {
+		return false;
+	}
+	if (path[path.length - 1] !== insertLocator[insertLocator.length - 1]) {
+		return false;
+	}
+
+	// Verify parts
+	for (let i = 0; i < path.length; i++) {
+		if (path[i] !== insertLocator[i]) {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 function isNativeFunction(val: Function): boolean {
@@ -207,21 +251,30 @@ function getExtraObjectProps(
 			typeof obj.values === "function" &&
 			typeof obj.size === "number"
 		) {
+			let i = 0;
 			for (const item of obj) {
+				const elemOpts: FormatOptions = {
+					...opts,
+					path: [...opts.path, i],
+				};
 				if (Array.isArray(item) && item.length === 2) {
 					const [key, val] = item;
 					const formattedKey =
 						typeof key === "string" ? formatKey(key) : prettyFormat(key, opts);
-					props.push(markup`${formattedKey} => ${prettyFormat(val, opts)}`);
+					props.push(markup`${formattedKey} => ${prettyFormat(val, elemOpts)}`);
 				} else {
-					props.push(markup`${prettyFormat(item, opts)}`);
+					props.push(prettyFormat(item, elemOpts));
 				}
+				i++;
 			}
 		} else {
 			let i = 0;
 			for (const val of obj) {
+				props.push(prettyFormat(val, {
+					...opts,
+					path: [...opts.path, i],
+				}));
 				ignoreKeys[String(i++)] = val;
-				props.push(markup`${prettyFormat(val, opts)}`);
 			}
 		}
 	}
@@ -365,7 +418,12 @@ function formatObject(
 			continue;
 		}
 
-		const prop = markup`${formatKey(key)}: ${prettyFormat(val, nextOpts)}`;
+		const propOpts: FormatOptions = {
+			...nextOpts,
+			path: [...nextOpts.path, key]
+		};
+
+		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;
 		if (object) {
 			objProps.push(prop);
 		} else {

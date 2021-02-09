@@ -99,6 +99,7 @@ tags.set("strike", new Map());
 tags.set("token", new Map([["type", validateTokenType]]));
 tags.set("error", new Map());
 tags.set("success", new Map());
+tags.set("locator", new Map([["id", stringValidator]]));
 tags.set("warn", new Map());
 tags.set("info", new Map());
 tags.set("code", new Map());

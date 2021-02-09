@@ -1,21 +1,17 @@
 import { lint } from "@internal/compiler";
-import { catchDiagnostics, descriptions, Diagnostics } from "@internal/diagnostics";
+import { catchDiagnostics, descriptions } from "@internal/diagnostics";
 import { markup } from "@internal/markup";
-import { WorkerFormatOptions, WorkerLintOptions, WorkerLintResult, WorkerParseOptions, WorkerProject, WorkerFormatResult } from "./types";
+import { WorkerFormatOptions, WorkerLintOptions, WorkerLintResult, WorkerParseOptions, WorkerFormatResult, WorkerLintTimings, EMPTY_LINT_TIMINGS } from "./types";
 import { getFileHandlerFromPathAssert } from "../common/file-handlers";
 import { ExtensionHandler, ExtensionLintResult } from "../common/file-handlers/types";
 import { FileReference } from "../common/types/files";
 import * as jsAnalysis from "@internal/js-analysis";
 import Worker from "./Worker";
 import { formatAST } from "@internal/formatter";
-
-const EMPTY_TIMINGS: WorkerLintResult["timingsNs"] ={
-  eslint: 0n,
-  prettier: 0n,
-};
+import {maybeRunESLint} from "./integrations/eslint";
 
 const EMPTY_LINT_RESULT: WorkerLintResult = {
-  timingsNs: EMPTY_TIMINGS,
+  timingsNs: EMPTY_LINT_TIMINGS,
   save: undefined,
   diagnostics: [],
   suppressions: [],
@@ -63,7 +59,7 @@ async function lintOrFormat(handler: ExtensionHandler, param: Param<WorkerLintOp
     diagnostics: result.diagnostics,
     formatted: result.formatted,
     suppressions: result.suppressions,
-    timingsNs: EMPTY_TIMINGS,
+    timingsNs: EMPTY_LINT_TIMINGS,
   };
 }
 
@@ -211,9 +207,9 @@ export async function compilerLint(
     diagnostics = [...diagnostics, ...typeDiagnostics];
   }
 
-  let timingsNs: WorkerLintResult["timingsNs"] = EMPTY_TIMINGS;
+  let timingsNs: WorkerLintTimings = EMPTY_LINT_TIMINGS;
 
-  const eslintResult = await maybeRunESLint({ref, project});
+  const eslintResult = await maybeRunESLint({worker, ref, project});
   if (eslintResult !== undefined) {
     timingsNs = {
       ...timingsNs,
@@ -306,31 +302,5 @@ export async function uncachedFormat(
       diagnostics: ast.diagnostics,
       suppressions: [],
     }, {astModifiedFromSource}),
-  };
-}
-
-// Run and convert ESLint diagnostics if project config integrations.eslint is enabled
-async function maybeRunESLint({ref, project}: {
-  ref: FileReference;
-  project: WorkerProject;
-}): Promise<undefined | {
-  timingNs: bigint;
-  diagnostics: Diagnostics;
-}> {
-  if (!project.config.integrations.eslint.enabled) {
-    return undefined;
-  }
-
-  const start = process.hrtime.bigint();
-
-  const diagnostics: Diagnostics = [];
-
-  // TODO
-
-  const end = process.hrtime.bigint();
-
-  return {
-    diagnostics,
-    timingNs: end - start,
   };
 }

@@ -20,6 +20,7 @@ import {
 	UnknownObject,
 	VoidCallback,
 	isPlainObject,
+	UnknownFunction,
 } from "@internal/typescript-helpers";
 import {
 	JSONArray,
@@ -323,7 +324,7 @@ export default class Consumer {
 
 			// If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
 			// We allow a computed part at the beginning of a path
-			if (isComputedPart(part) && i > 0) {
+			if (isComputedPart(part)) {
 				const inner =
 					typeof part === "number"
 						? String(part)
@@ -566,6 +567,14 @@ export default class Consumer {
 		}
 
 		return value;
+	}
+
+	public getParentValue(def?: unknown): unknown {
+		if (this.parent === undefined) {
+			return def;
+		} else {
+			return this.parent.getValue();
+		}
 	}
 
 	public getValue(def?: unknown): unknown {
@@ -946,7 +955,7 @@ export default class Consumer {
 		}
 	}
 
-	public asFunction(def?: (...args: Array<unknown>) => unknown): ConsumeProtectedFunction {
+	public asFunction(def?: UnknownFunction): UnknownFunction {
 		this.declareDefinition({
 			type: "function",
 			default: def,
@@ -954,15 +963,34 @@ export default class Consumer {
 		});
 
 		const fn = this.getValue(def);
-		const context = this.parent?.getValue();
 
-		if (typeof fn !== "function") {
+		if (typeof fn === "function") {
+			return fn as UnknownFunction;
+		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_FUNCTION);
 			
 			return () => {
-				return consumeUnknown(undefined, this.context.category, this.context.categoryValue);
+				return undefined;
 			};
 		}
+	}
+
+	public async asPromise(def?: PromiseLike<unknown>): Promise<Consumer> {
+		const obj = this.asOriginalUnknownObject();
+		let value;
+
+		if (typeof obj.then === "function") {
+			value = await obj;
+		} else {
+			value = obj;
+		}
+
+		return consumeUnknown(value, this.context.category, this.context.categoryValue);
+	}
+
+	public asWrappedFunction(def?: UnknownFunction): ConsumeProtectedFunction {
+		const fn = this.asFunction(def);
+		const context = this.getParentValue();
 
 		return (...args) => {
 			const ret = fn.apply(context, args);

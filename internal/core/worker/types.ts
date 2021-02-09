@@ -40,6 +40,7 @@ export type WorkerOptions = {
 };
 
 export type WorkerProject = Required<CompilerProject> & {
+	configPath: AbsoluteFilePath;
 	configCacheKeys: Dict<string>;
 };
 
@@ -131,14 +132,21 @@ export type WorkerFormatResult = {
 	suppressions: DiagnosticSuppressions;
 };
 
+export type WorkerLintTimings = {
+	eslint: bigint;
+	prettier: bigint;
+};
+
+export const EMPTY_LINT_TIMINGS: WorkerLintTimings ={
+  eslint: 0n,
+  prettier: 0n,
+};
+
 export type WorkerLintResult = {
 	save: undefined | RecoverySaveFile;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
-	timingsNs: {
-		eslint: bigint;
-		prettier: bigint;
-	};
+	timingsNs: WorkerLintTimings;
 };
 
 export type WorkerBufferPosition = {

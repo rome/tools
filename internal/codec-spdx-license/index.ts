@@ -5,21 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {SPDXLicenseDefinition} from "./types";
 import data from "./data";
 
-type License = {
-	reference: string;
-	isDeprecatedLicenseId: boolean;
-	isFsfLibre?: boolean;
-	detailsUrl: string;
-	referenceNumber: string;
-	name: string;
-	licenseId: string;
-	seeAlso: string[];
-	isOsiApproved: boolean;
-};
+export {SPDXLicenseDefinition, SPDXLicenseParserOptions, SPDXLicenseParserExceptions} from "./types";
 
-const idToLicense: Map<string, License> = new Map();
+const idToLicense: Map<string, SPDXLicenseDefinition> = new Map();
 const licenseNames: string[] = [];
 for (const license of data.licenses) {
 	licenseNames.push(license.licenseId);
@@ -30,7 +21,7 @@ export {licenseNames};
 
 export {ExpressionNode as SPDXExpressionNode} from "./types";
 
-export function getSPDXLicense(licenseId: string): undefined | License {
+export function getSPDXLicense(licenseId: string): undefined | SPDXLicenseDefinition {
 	return idToLicense.get(licenseId.toLowerCase());
 }
 

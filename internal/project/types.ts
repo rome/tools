@@ -13,8 +13,8 @@ import {
 	TEMP_PATH,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {Consumer} from "@internal/consume";
-import {Dict, RequiredProps, DeepPartial} from "@internal/typescript-helpers";
+import {Consumer, consumeUnknown} from "@internal/consume";
+import {Dict, DeepPartial} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 
@@ -131,19 +131,14 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
 	: Partial<Type>;
 
 export type ProjectConfigMeta = {
-	projectDirectory: undefined | AbsoluteFilePath;
-	configPath: undefined | AbsoluteFilePath;
+	projectDirectory: AbsoluteFilePath;
+	configPath: AbsoluteFilePath;
 	configCacheKeys: Dict<string>;
 	configDependencies: AbsoluteFilePathSet;
-	consumer: undefined | Consumer;
+	consumer: Consumer;
 	configSourceSubKey: undefined | string;
 	consumersChain: Consumer[];
 };
-
-export type ProjectConfigMetaHard = RequiredProps<
-	ProjectConfigMeta,
-	"consumer" | "projectDirectory" | "configPath"
->;
 
 // Final project config
 export type ProjectConfig = ProjectConfigBase &
@@ -212,13 +207,13 @@ export type RawUserProjectConfig = DeepPartial<{
 	};
 }>;
 
-export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
+export function createMockProjectConfigMeta(projectDirectory: AbsoluteFilePath): ProjectConfigMeta {
 	return {
-		projectDirectory: undefined,
-		configPath: undefined,
+		projectDirectory,
+		configPath: projectDirectory.append("package.json"),
 		configCacheKeys: {},
 		configDependencies: new AbsoluteFilePathSet(),
-		consumer: undefined,
+		consumer: consumeUnknown({}, "parse", "json"),
 		configSourceSubKey: undefined,
 		consumersChain: [],
 	};

@@ -9,6 +9,9 @@ import {ConsumerOptions} from "./types";
 import Consumer from "./Consumer";
 import {RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {DiagnosticCategory} from "@internal/diagnostics";
+import {prettyFormatEager} from "@internal/pretty-format";
+import {markupToPlainText} from "@internal/cli-layout";
+import {joinMarkupLines} from "@internal/markup";
 
 const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 	propertyMetadata: undefined,
@@ -44,6 +47,16 @@ export function consumeUnknown(
 		context: {
 			category,
 			categoryValue,
+			getDiagnosticLocation: (keys, target) => {
+				const res = markupToPlainText(prettyFormatEager(value, {insertLocator: keys}));
+				const locator = res.locators.get("default");
+				return {
+					filename: "unknown",
+					start: locator?.start,
+					end: locator?.end,
+					sourceText: joinMarkupLines(res),
+				}
+			},
 		},
 		value,
 	});

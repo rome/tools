@@ -214,6 +214,7 @@ export default class Server {
 		this.connectedLSPServers = new Set();
 		this.connectedClients = new Set();
 
+		this.hadConnectedClient = false;
 		this.clientIdCounter = 0;
 
 		this.logInitBuffer = [];
@@ -277,7 +278,7 @@ export default class Server {
 			},
 			() => {
 				return (
-					this.clientIdCounter === 0 ||
+					!this.hadConnectedClient ||
 					this.connectedClientsListeningForLogs.size > 0
 				);
 			},
@@ -335,6 +336,7 @@ export default class Server {
 	private requestRunningCounter: number;
 	private terminateWhenIdle: boolean;
 	private clientIdCounter: number;
+	private hadConnectedClient: boolean;
 	private profiling: undefined | ProfilingStartData;
 
 	private connectedClients: Set<ServerClient>;
@@ -546,6 +548,11 @@ export default class Server {
 	public async attachToBridge(
 		bridge: BridgeServer<typeof ServerBridge>,
 	): Promise<ServerClient> {
+		if (!this.hadConnectedClient) {
+			this.hadConnectedClient = true;
+			this.loggerStream.update();
+		}
+		
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection

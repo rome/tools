@@ -227,6 +227,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 					{
 						config,
 						configCacheKeys: {},
+						configPath: createAbsoluteFilePath(`/project-${id}/package.json`),
 						directory: createAbsoluteFilePath(`/project-${id}`),
 					},
 				],
