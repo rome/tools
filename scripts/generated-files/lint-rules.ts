@@ -178,6 +178,13 @@ export async function main() {
 			title: "TypeScript",
 			credits: undefined,
 		},
+		a11y: {
+			title: "Accessibility (JSX and HTML)",
+			credits: dedent`
+				<a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
+				and <a href="https://axe-linter.deque.com/">axe Linter</a>
+			`,
+		},
 		"jsx-a11y": {
 			title: "JSX Accessibility",
 			credits: `<a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>`,
@@ -192,6 +199,7 @@ export async function main() {
 	const categoryDocsOrder: Array<keyof typeof categoryDocsAliases> = [
 		"js",
 		"ts",
+		"a11y",
 		"jsx-a11y",
 		"react",
 	];
