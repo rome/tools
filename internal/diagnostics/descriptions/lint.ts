@@ -17,6 +17,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_NONINTERACTIVE_TABINDEX: {
+		category: "lint/a11y/noNoninteractiveTabindex",
+		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Adding non-interactive elements to the keyboard navigation flow can confuse users.`,
+			},
+		],
+	},
 	A11_Y_NO_SVG_WITHOUT_TITLE: {
 		category: "lint/a11y/noSvgWithoutTitle",
 		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
@@ -245,17 +256,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_NO_NONINTERACTIVE_TABINDEX: {
-		category: "lint/jsx-a11y/noNoninteractiveTabindex",
-		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Adding non-interactive elements to the keyboard navigation flow can confuse users.`,
-			},
-		],
-	},
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
 		category: "lint/jsx-a11y/useAriaProps",
 		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,

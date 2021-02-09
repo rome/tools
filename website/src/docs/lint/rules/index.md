@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:8a002e5b9b32f8866c95ccb84fc74e71ec592e12,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:a84121d08a825f38c8f1ccad3433756a29808fd7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -409,6 +409,13 @@ enforce distracting elements are not used
 non-interactive elements should not be assigned interactive roles
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="noNoninteractiveTabindex">
+	<a href="/docs/lint/rules/a11y/noNoninteractiveTabindex">noNoninteractiveTabindex</a>
+	<a class="header-anchor" href="#noNoninteractiveTabindex"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noSvgWithoutTitle">
 	<a href="/docs/lint/rules/a11y/noSvgWithoutTitle">noSvgWithoutTitle</a>
 	<a class="header-anchor" href="#noSvgWithoutTitle"></a>
@@ -474,13 +481,6 @@ discourage the usage of `autoFocus`
 	<a class="header-anchor" href="#noHeaderScope"></a>
 </h3>
 enforce scope prop is only used on `th` elements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noNoninteractiveTabindex">
-	<a href="/docs/lint/rules/jsx-a11y/noNoninteractiveTabindex">noNoninteractiveTabindex</a>
-	<a class="header-anchor" href="#noNoninteractiveTabindex"></a>
-</h3>
-&quot;`tabIndex` should only be declared on interactive elements&quot;
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noOnChange">
