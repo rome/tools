@@ -1,9 +1,10 @@
-/* GENERATED:START(hash:013200ff7db1bd6e1869d3c3507c5cbe32967a1b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:f32fbe7a4ca10c190039f6e56002870288a1787b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noDistractingElements from "./a11y/noDistractingElements";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
 import useAltText from "./a11y/useAltText";
 import useHtmlLang from "./a11y/useHtmlLang";
+import useMediaCaption from "./a11y/useMediaCaption";
 import useValidLang from "./a11y/useValidLang";
 import useClosingNonVoid from "./html/useClosingNonVoid";
 import noArguments from "./js/noArguments";
@@ -72,7 +73,6 @@ import useHeadingContent from "./jsx-a11y/useHeadingContent";
 import useIframeTitle from "./jsx-a11y/useIframeTitle";
 import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents";
 import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents";
-import useMediaCaption from "./jsx-a11y/useMediaCaption";
 import useValidAnchor from "./jsx-a11y/useValidAnchor";
 import noCommentText from "./jsx/noCommentText";
 import noDuplicateProps from "./jsx/noDuplicateProps";
@@ -125,6 +125,7 @@ lintTransforms.set(
 );
 lintTransforms.set("a11y/useAltText", useAltText);
 lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
+lintTransforms.set("a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("a11y/useValidLang", useValidLang);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
 lintTransforms.set("js/noArguments", noArguments);
@@ -202,7 +203,6 @@ lintTransforms.set("jsx-a11y/useHeadingContent", useHeadingContent);
 lintTransforms.set("jsx-a11y/useIframeTitle", useIframeTitle);
 lintTransforms.set("jsx-a11y/useKeyWithClickEvents", useKeyWithClickEvents);
 lintTransforms.set("jsx-a11y/useKeyWithMouseEvents", useKeyWithMouseEvents);
-lintTransforms.set("jsx-a11y/useMediaCaption", useMediaCaption);
 lintTransforms.set("jsx-a11y/useValidAnchor", useValidAnchor);
 lintTransforms.set("jsx/noCommentText", noCommentText);
 lintTransforms.set("jsx/noDuplicateProps", noDuplicateProps);
@@ -272,6 +272,7 @@ export const lintRuleNames: LintRuleName[] = [
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	"a11y/useAltText",
 	"a11y/useHtmlLang",
+	"a11y/useMediaCaption",
 	"a11y/useValidLang",
 	"html/useClosingNonVoid",
 	"js/noArguments",
@@ -340,7 +341,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"jsx-a11y/useIframeTitle",
 	"jsx-a11y/useKeyWithClickEvents",
 	"jsx-a11y/useKeyWithMouseEvents",
-	"jsx-a11y/useMediaCaption",
 	"jsx-a11y/useValidAnchor",
 	"jsx/noCommentText",
 	"jsx/noDuplicateProps",
@@ -390,6 +390,7 @@ export type LintRuleName =
 	| "a11y/noNoninteractiveElementToInteractiveRole"
 	| "a11y/useAltText"
 	| "a11y/useHtmlLang"
+	| "a11y/useMediaCaption"
 	| "a11y/useValidLang"
 	| "html/useClosingNonVoid"
 	| "js/noArguments"
@@ -458,7 +459,6 @@ export type LintRuleName =
 	| "jsx-a11y/useIframeTitle"
 	| "jsx-a11y/useKeyWithClickEvents"
 	| "jsx-a11y/useKeyWithMouseEvents"
-	| "jsx-a11y/useMediaCaption"
 	| "jsx-a11y/useValidAnchor"
 	| "jsx/noCommentText"
 	| "jsx/noDuplicateProps"

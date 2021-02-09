@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:b1e8f50c3cf62507f46d7f02d5011b002b7d23be,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:02af74210cd425d246ad4ca28968dd96605a33f2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -19,6 +19,8 @@ import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveEle
 import useAltText from "./a11y/useAltText.test.rjson";
 // @ts-ignore
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
+// @ts-ignore
+import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-ignore
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
@@ -154,8 +156,6 @@ import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.rjson";
 // @ts-ignore
 import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.rjson";
 // @ts-ignore
-import useMediaCaption from "./jsx-a11y/useMediaCaption.test.rjson";
-// @ts-ignore
 import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-ignore
 import noCommentText from "./jsx/noCommentText.test.rjson";
@@ -236,6 +236,7 @@ export const tests: Tests = {
 	"a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
 	"a11y/useAltText": useAltText,
 	"a11y/useHtmlLang": useHtmlLang,
+	"a11y/useMediaCaption": useMediaCaption,
 	"a11y/useValidLang": useValidLang,
 	"html/useClosingNonVoid": useClosingNonVoid,
 	"js/noArguments": noArguments,
@@ -303,7 +304,6 @@ export const tests: Tests = {
 	"jsx-a11y/useIframeTitle": useIframeTitle,
 	"jsx-a11y/useKeyWithClickEvents": useKeyWithClickEvents,
 	"jsx-a11y/useKeyWithMouseEvents": useKeyWithMouseEvents,
-	"jsx-a11y/useMediaCaption": useMediaCaption,
 	"jsx-a11y/useValidAnchor": useValidAnchor,
 	"jsx/noCommentText": noCommentText,
 	"jsx/noDuplicateProps": noDuplicateProps,

@@ -19,12 +19,7 @@ function hasAriaAttributes(node: JSXElement): boolean {
 	);
 }
 
-const ELEMENTS_TO_CHECK = new Set([
-	"meta",
-	"html",
-	"script",
-	"style"
-])
+const ELEMENTS_TO_CHECK = new Set(["meta", "html", "script", "style"]);
 
 export default createVisitor({
 	name: "a11y/noAriaUnsupportedElements",
@@ -35,22 +30,25 @@ export default createVisitor({
 			if (ELEMENTS_TO_CHECK.has(node.name.name)) {
 				const role = getHTMLAttribute(node, "role");
 
-				if (role || node.attributes.some(attr => (
-					ariaPropsMap.has(attr.name.name as ARIAProperty)
-				))) {
+				if (
+					role ||
+					node.attributes.some((attr) =>
+						ariaPropsMap.has(attr.name.name as ARIAProperty)
+					)
+				) {
 					path.context.addNodeDiagnostic(
 						node,
 						descriptions.LINT.A11_Y_NO_ARIA_UNSUPPORTED_ELEMENTS,
 					);
 				}
 			}
-				return signals.retain
+			return signals.retain;
 		} else if (node.type === "JSXElement") {
 			if (
 				!(isJSXElement(node, "meta") ||
-					isJSXElement(node, "html") ||
-					isJSXElement(node, "script") ||
-					isJSXElement(node, "style"))
+				isJSXElement(node, "html") ||
+				isJSXElement(node, "script") ||
+				isJSXElement(node, "style"))
 			) {
 				return signals.retain;
 			}

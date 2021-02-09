@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:00bc2f374e032b09f10f42f2b516f63c7d1f8e46,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:f5b2a1996b8191bac2c4112f5f6dd6291bd7fd16,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -392,7 +392,7 @@ and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule 
 	<a href="/docs/lint/rules/a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
 	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
 </h3>
-MISSING DOCUMENTATION
+enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noDistractingElements">
@@ -423,6 +423,13 @@ Checks that images have a valid alternative text
 the `lang` attribute is mandatory
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useMediaCaption">
+	<a href="/docs/lint/rules/a11y/useMediaCaption">useMediaCaption</a>
+	<a class="header-anchor" href="#useMediaCaption"></a>
+</h3>
+enforces that `audio` and `video` elements must have a `track` for captions
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useValidLang">
 	<a href="/docs/lint/rules/a11y/useValidLang">useValidLang</a>
 	<a class="header-anchor" href="#useValidLang"></a>
@@ -439,13 +446,6 @@ check if `lang` attribute is valid
 	<a class="header-anchor" href="#noAccessKey"></a>
 </h3>
 enforce that the `accessKey` prop is not used on any element to avoid complications with keyboard commands used by a screenreader
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noAriaUnsupportedElements">
-	<a href="/docs/lint/rules/jsx-a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
-	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
-</h3>
-enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noAutofocus">
@@ -565,13 +565,6 @@ enforce a clickable non-interactive element has at least one keyboard event list
 	<a class="header-anchor" href="#useKeyWithMouseEvents"></a>
 </h3>
 enforce that `onMouseOver`/`onMouseOut` are accompanied by `onFocus`/`onBlur` for keyboard-only users
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useMediaCaption">
-	<a href="/docs/lint/rules/jsx-a11y/useMediaCaption">useMediaCaption</a>
-	<a class="header-anchor" href="#useMediaCaption"></a>
-</h3>
-enforces that `audio` and `video` elements must have a `track` for captions
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useValidAnchor">
