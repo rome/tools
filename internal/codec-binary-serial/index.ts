@@ -13,7 +13,7 @@ export {default as RSERBufferWriter} from "./RSERBufferWriter";
 export {default as RSERStream} from "./RSERStream";
 
 export {
-	AnyRSERFilePathMap,
+	AnyRSERPathMap as AnyRSERFilePathMap,
 	RSERAbsoluteFilePathMap,
 	RSERArray,
 	RSERMap,

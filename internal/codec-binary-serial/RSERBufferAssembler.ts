@@ -1,9 +1,9 @@
 import {
 	VALUE_CODES,
 	VERSION,
-	filePathMapToCode,
-	filePathSetToCode,
-	filePathToCode,
+	pathMapToCode,
+	pathSetToCode,
+	pathToCode,
 	instanceToArrayBufferViewCode,
 	instanceToErrorCode,
 } from "./constants";
@@ -14,7 +14,7 @@ import {
 	isSourceLocation,
 } from "@internal/parser-core";
 import {
-	AnyRSERFilePathMap,
+	AnyRSERPathMap,
 	IntSize,
 	RSERArray,
 	RSERMap,
@@ -28,8 +28,8 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
-	AnyFilePathSet,
+	AnyPath,
+	AnyPathSet,
 	RelativeFilePath,
 	RelativeFilePathMap,
 	RelativeFilePathSet,
@@ -197,9 +197,9 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	private encodeFilePathMap(map: AnyRSERFilePathMap) {
+	private encodeFilePathMap(map: AnyRSERPathMap) {
 		this.writeCode(VALUE_CODES.FILE_PATH_MAP);
-		this.writeByte(filePathMapToCode(map));
+		this.writeByte(pathMapToCode(map));
 		this.encodeInt(map.size);
 		for (const [path, value] of map) {
 			this.encodeStringValue(path.join());
@@ -207,18 +207,18 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	private encodeFilePathSet(set: AnyFilePathSet) {
+	private encodeFilePathSet(set: AnyPathSet) {
 		this.writeCode(VALUE_CODES.FILE_PATH_SET);
-		this.writeByte(filePathSetToCode(set));
+		this.writeByte(pathSetToCode(set));
 		this.encodeInt(set.size);
 		for (const path of set) {
 			this.encodeStringValue(path.join());
 		}
 	}
 
-	private encodeFilePath(path: AnyFilePath) {
+	private encodeFilePath(path: AnyPath) {
 		this.writeCode(VALUE_CODES.FILE_PATH);
-		this.writeByte(filePathToCode(path));
+		this.writeByte(pathToCode(path));
 		this.encodeStringValue(path.join());
 	}
 

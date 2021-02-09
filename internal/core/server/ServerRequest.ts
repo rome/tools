@@ -73,7 +73,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
+	AnyPath,
 	RelativeFilePath,
 	UnknownPath,
 	createUnknownPath,
@@ -1156,7 +1156,7 @@ export default class ServerRequest {
 		const argToLocation: AbsoluteFilePathMap<DiagnosticLocation> = new AbsoluteFilePathMap();
 		const args: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-		let rawArgs: Array<string | AnyFilePath> = opts.args ?? this.query.args;
+		let rawArgs: Array<string | AnyPath> = opts.args ?? this.query.args;
 		if (rawArgs.length === 0) {
 			rawArgs = [cwd];
 			argToLocation.set(cwd, this.getDiagnosticLocationForClientCwd());

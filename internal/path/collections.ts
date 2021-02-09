@@ -7,15 +7,19 @@
 
 import {
 	AbsoluteFilePath,
-	AnyFilePath,
+	AnyPath,
 	RelativeFilePath,
 	UnknownPath,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
 	createUnknownPath,
+	createURLPath,
+	createUIDPath,
+	UIDPath,
+	URLPath,
 } from "./index";
 
-function concat<FilePath extends AnyFilePath>(
+function concat<FilePath extends AnyPath>(
 	items: Iterable<FilePath>[],
 ): FilePath[] {
 	let paths: FilePath[] = [];
@@ -30,7 +34,7 @@ function concat<FilePath extends AnyFilePath>(
 // to speed up the usage of FilePaths in these scenarios.
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
-abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
+abstract class BasePathMap<FilePath extends AnyPath, Value> {
 	constructor(entries?: [FilePath, Value][]) {
 		this.joinedToValue = new Map();
 		this.joinedToPath = new Map();
@@ -122,10 +126,10 @@ abstract class BasePathMap<FilePath extends AnyFilePath, Value> {
 }
 
 abstract class BasePathSet<
-	FilePath extends AnyFilePath,
-	FilePathMap extends BasePathMap<FilePath, void>
+	Path extends AnyPath,
+	PathMap extends BasePathMap<Path, void>
 > {
-	constructor(entries?: Iterable<FilePath>) {
+	constructor(entries?: Iterable<Path>) {
 		this.map = this.createMap();
 		this.size = 0;
 
@@ -136,12 +140,12 @@ abstract class BasePathSet<
 		}
 	}
 
-	abstract createMap(): FilePathMap
+	abstract createMap(): PathMap
 
-	private map: FilePathMap;
+	private map: PathMap;
 	public size: number;
 
-	public createKey(str: string): FilePath {
+	public createKey(str: string): Path {
 		return this.map.createKey(str);
 	}
 
@@ -149,7 +153,7 @@ abstract class BasePathSet<
 		this.size = this.map.size;
 	}
 
-	public [Symbol.iterator](): IterableIterator<FilePath> {
+	public [Symbol.iterator](): IterableIterator<Path> {
 		return this.map.keys()[Symbol.iterator]();
 	}
 
@@ -159,11 +163,11 @@ abstract class BasePathSet<
 		return Array.from(this.map.joinedToPath.keys(), callback);
 	}
 
-	public has(path: FilePath) {
+	public has(path: Path) {
 		return this.map.has(path);
 	}
 
-	public add(path: FilePath): this {
+	public add(path: Path): this {
 		this.map.set(path);
 		this._updateSize();
 		return this;
@@ -173,7 +177,7 @@ abstract class BasePathSet<
 		this.add(this.createKey(str));
 	}
 
-	public delete(path: FilePath): boolean {
+	public delete(path: Path): boolean {
 		if (this.map.has(path)) {
 			this.map.delete(path);
 			this._updateSize();
@@ -215,7 +219,33 @@ export class RelativeFilePathMap<Value>
 	}
 }
 
-export class UnknownPathMap<Value> extends BasePathMap<AnyFilePath, Value> {
+export class URLPathMap<Value>
+	extends BasePathMap<URLPath, Value> {
+	public type: "url" = "url";
+
+	public createKey(str: string): URLPath {
+		return createURLPath(str);
+	}
+
+	public keysToSet(): URLPathSet {
+		return new URLPathSet(this.keys());
+	}
+}
+
+export class UIDPathMap<Value>
+	extends BasePathMap<UIDPath, Value> {
+	public type: "uid" = "uid";
+
+	public createKey(str: string): UIDPath {
+		return createUIDPath(str);
+	}
+
+	public keysToSet(): UIDPathSet {
+		return new UIDPathSet(this.keys());
+	}
+}
+
+export class UnknownPathMap<Value> extends BasePathMap<AnyPath, Value> {
 	public type: "unknown" = "unknown";
 
 	public createKey(str: string): UnknownPath {
@@ -253,20 +283,49 @@ export class RelativeFilePathSet
 	}
 }
 
+export class URLPathSet
+	extends BasePathSet<URLPath, URLPathMap<void>> {
+	public type: "url" = "url";
+
+	createMap(): URLPathMap<void> {
+		return new URLPathMap();
+	}
+
+	public concat(...items: Iterable<URLPath>[]): URLPathSet {
+		return new URLPathSet(concat(items));
+	}
+}
+
+
+export class UIDPathSet
+	extends BasePathSet<UIDPath, UIDPathMap<void>> {
+	public type: "uid" = "uid";
+
+	createMap(): UIDPathMap<void> {
+		return new UIDPathMap();
+	}
+
+	public concat(...items: Iterable<UIDPath>[]): UIDPathSet {
+		return new UIDPathSet(concat(items));
+	}
+}
+
 export class UnknownPathSet
-	extends BasePathSet<AnyFilePath, UnknownPathMap<void>> {
+	extends BasePathSet<AnyPath, UnknownPathMap<void>> {
 	public type: "unknown" = "unknown";
 
 	createMap(): UnknownPathMap<void> {
 		return new UnknownPathMap();
 	}
 
-	public concat(...items: Iterable<AnyFilePath>[]): UnknownPathSet {
+	public concat(...items: Iterable<AnyPath>[]): UnknownPathSet {
 		return new UnknownPathSet(concat(items));
 	}
 }
 
-export type AnyFilePathSet =
+export type AnyPathSet =
 	| AbsoluteFilePathSet
 	| RelativeFilePathSet
+	| URLPathSet
+	| UIDPathSet
 	| UnknownPathSet;

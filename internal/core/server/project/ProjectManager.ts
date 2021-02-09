@@ -38,7 +38,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
+	AnyPath,
 	URLPath,
 	UnknownPathMap,
 	createAbsoluteFilePath,
@@ -93,7 +93,7 @@ function cleanUidParts(parts: string[]): string {
 }
 
 // If a UID has a relative path that's just index.js, index.ts etc then omit it
-function cleanRelativeUidPath(relative: AnyFilePath): undefined | string {
+function cleanRelativeUidPath(relative: AnyPath): undefined | string {
 	return relative.join();
 
 	const segments = relative.getSegments();

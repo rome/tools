@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WorkerLintResult, WorkerParseOptions, WorkerProject, FileReference} from "@internal/core";
+import {WorkerParseOptions, WorkerProject, FileReference} from "@internal/core";
 import Worker from "../../worker/Worker";
 import {
 	DiagnosticIntegrity,

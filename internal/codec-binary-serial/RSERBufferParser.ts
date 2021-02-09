@@ -1,5 +1,5 @@
 import {
-	AnyRSERFilePathMap,
+	AnyRSERPathMap,
 	IntSize,
 	RSERArray,
 	RSERArrayBufferView,
@@ -9,21 +9,21 @@ import {
 	RSERValue,
 } from "./types";
 import {
-	FILE_CODES,
+	PATH_CODES,
 	VALUE_CODES,
 	VERSION,
 	arrayBufferViewCodeToInstance,
 	errorCodeToInstance,
-	filePathFromCode,
-	filePathMapFromCode,
-	filePathSetFromCode,
+	pathFromCode,
+	pathMapFromCode,
+	pathSetFromCode,
 	formatCode,
 	validateArrayBufferViewCode,
 	validateErrorCode,
 	validateFileCode,
 	validateValueCode,
 } from "./constants";
-import {AnyFilePath, AnyFilePathSet} from "@internal/path";
+import {AnyPath, AnyPathSet} from "@internal/path";
 import {
 	ErrorFrames,
 	StructuredNodeSystemErrorProperties,
@@ -212,7 +212,7 @@ export default class RSERBufferParser {
 			case VALUE_CODES.FILE_PATH_MAP: {
 				this.readOffset++;
 				const code = this.decodeFilePathCode();
-				const map = filePathMapFromCode(code);
+				const map = pathMapFromCode(code);
 				this.references.set(id, map);
 				return this.decodeFilePathMapValue(map);
 			}
@@ -571,25 +571,25 @@ export default class RSERBufferParser {
 		return new Date(time);
 	}
 
-	private decodeFilePathCode(): FILE_CODES {
+	private decodeFilePathCode(): PATH_CODES {
 		return validateFileCode(this.readInt(1));
 	}
 
-	private decodeFilePath(): AnyFilePath {
+	private decodeFilePath(): AnyPath {
 		this.expectCode(VALUE_CODES.FILE_PATH);
 		const code = this.decodeFilePathCode();
 		const str = this.readString();
-		return filePathFromCode(code, str);
+		return pathFromCode(code, str);
 	}
 
-	private decodeFilePathMap(): AnyRSERFilePathMap {
+	private decodeFilePathMap(): AnyRSERPathMap {
 		this.expectCode(VALUE_CODES.FILE_PATH_MAP);
 		const code = this.decodeFilePathCode();
-		const map = filePathMapFromCode(code);
+		const map = pathMapFromCode(code);
 		return this.decodeFilePathMapValue(map);
 	}
 
-	private decodeFilePathMapValue(map: AnyRSERFilePathMap): AnyRSERFilePathMap {
+	private decodeFilePathMapValue(map: AnyRSERPathMap): AnyRSERPathMap {
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {
 			const str = this.readString();
@@ -599,11 +599,11 @@ export default class RSERBufferParser {
 		return map;
 	}
 
-	private decodeFilePathSet(): AnyFilePathSet {
+	private decodeFilePathSet(): AnyPathSet {
 		this.expectCode(VALUE_CODES.FILE_PATH_SET);
 
 		const code = this.decodeFilePathCode();
-		const set = filePathSetFromCode(code);
+		const set = pathSetFromCode(code);
 
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {

@@ -1,9 +1,11 @@
 import {
 	AbsoluteFilePathMap,
-	AnyFilePath,
-	AnyFilePathSet,
+	AnyPath,
+	AnyPathSet,
 	RelativeFilePathMap,
+	UIDPathMap,
 	UnknownPathMap,
+	URLPathMap,
 } from "@internal/path";
 
 export type IntSize = 0 | 1 | 2 | 4 | 8;
@@ -24,18 +26,20 @@ export type RSERValue =
 	| Error
 	| ArrayBuffer
 	| RSERArrayBufferView
-	| AnyFilePath
-	| AnyFilePathSet
-	| AnyRSERFilePathMap
+	| AnyPath
+	| AnyPathSet
+	| AnyRSERPathMap
 	| RSERMap
 	| RSERSet
 	| RSERObject
 	| RSERArray;
 
-export type AnyRSERFilePathMap =
+export type AnyRSERPathMap =
 	| RSERAbsoluteFilePathMap
 	| RSERRelativeFilePathMap
-	| RSERUnknownPathMap;
+	| RSERUnknownPathMap
+	| RSERURLPathMap
+	| RSERUIDPathMap;
 
 export type RSERArrayBufferView =
 	| Int8Array
@@ -54,6 +58,8 @@ export type RSERArrayBufferView =
 export type RSERUnknownPathMap = UnknownPathMap<RSERValue>;
 export type RSERAbsoluteFilePathMap = AbsoluteFilePathMap<RSERValue>;
 export type RSERRelativeFilePathMap = RelativeFilePathMap<RSERValue>;
+export type RSERURLPathMap = URLPathMap<RSERValue>;
+export type RSERUIDPathMap = UIDPathMap<RSERValue>;
 
 export type RSERMap = Map<RSERValue, RSERValue>;
 export type RSERSet = Set<RSERValue>;

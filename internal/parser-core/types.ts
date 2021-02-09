@@ -6,7 +6,7 @@
  */
 
 import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from "@internal/ob1";
-import {AnyFilePath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
@@ -159,7 +159,7 @@ export const UNKNOWN_POSITION: Position = {
 };
 
 export type ParserOptions = {
-	path?: string | AnyFilePath;
+	path?: string | AnyPath;
 	integrity?: DiagnosticIntegrity;
 	input?: string;
 	sourceText?: string;

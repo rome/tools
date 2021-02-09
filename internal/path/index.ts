@@ -26,12 +26,12 @@ function createEmptyMemo<FilePath>(): FilePathMemo<FilePath> {
 	};
 }
 
-type FilePathOrString = string | AnyFilePath;
+type FilePathOrString = string | AnyPath;
 
 function toFilePath(
 	pathOrString: FilePathOrString,
 	hint: PathTypeHint,
-): AnyFilePath {
+): AnyPath {
 	if (typeof pathOrString === "string") {
 		return createUnknownPath(pathOrString, hint);
 	} else {
@@ -41,15 +41,16 @@ function toFilePath(
 
 export * from "./collections";
 
-export type AnyFilePath =
+export type AnyPath =
 	| UnknownPath
 	| AbsoluteFilePath
 	| RelativeFilePath
-	| URLPath;
+	| URLPath
+	| UIDPath;
 
 export type PathSegments = string[];
 
-export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
+export abstract class BasePath<Super extends AnyPath = AnyPath> {
 	constructor(parsed: ParsedPath, memo: FilePathMemo<Super>) {
 		this.segments = parsed.segments;
 		this.parsed = parsed;
@@ -200,6 +201,10 @@ export abstract class BasePath<Super extends AnyFilePath = AnyFilePath> {
 		} else {
 			return new RelativeFilePath(this.parsed, this.getPortableMemo());
 		}
+	}
+
+	public assertUID(): UIDPath {
+		return new UIDPath(this.parsed, this.getPortableMemo());
 	}
 
 	public assertAbsolute(): AbsoluteFilePath {
@@ -631,7 +636,7 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		);
 	}
 
-	public relative(otherRaw: FilePathOrString): AnyFilePath {
+	public relative(otherRaw: FilePathOrString): AnyPath {
 		const other = this.resolve(toFilePath(otherRaw, "relative"));
 
 		if (other.equal(this)) {
@@ -662,6 +667,26 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 			parsePathSegments(finalSegments, "relative"),
 			createEmptyMemo(),
 		);
+	}
+}
+
+export class UIDPath extends BasePath<UIDPath> {
+	protected static displayName = "UIDPath";
+	protected type: "uid" = "uid";
+
+	protected _assert(): UIDPath {
+		return this;
+	}
+
+	protected _fork(
+		parsed: ParsedPath,
+		opts: FilePathMemo<UIDPath>,
+	): UIDPath {
+		return new UIDPath(parsed, opts);
+	}
+
+	public assertUID(): UIDPath {
+		return this;
 	}
 }
 
@@ -697,7 +722,7 @@ export class URLPath extends BasePath<URLPath> {
 		return absoluteTarget;
 	}
 
-	public resolve(path: AnyFilePath): URLPath {
+	public resolve(path: AnyPath): URLPath {
 		if (path.isURL()) {
 			return path.assertURL();
 		} else if (path.isAbsolute()) {
@@ -731,7 +756,7 @@ function isWindowsDrive(first: string): boolean {
 	return first.length === 2 && first[1] === ":" && /[A-Z]/i.test(first[0]);
 }
 
-type ParsedPathAbsoluteType = "windows-drive" | "windows-unc" | "posix" | "url";
+type ParsedPathAbsoluteType = "windows-drive" | "windows-unc" | "posix" | "url" | "uid";
 
 type ParsedPath = {
 	hint: PathTypeHint;
@@ -898,7 +923,7 @@ function normalizeSegments(
 	};
 }
 
-type CreationArg = AnyFilePath | string;
+type CreationArg = AnyPath | string;
 
 export function createFilePathFromSegments(
 	segments: string[],
@@ -918,6 +943,10 @@ export function createURLPath(filename: CreationArg): URLPath {
 
 export function createAbsoluteFilePath(filename: CreationArg): AbsoluteFilePath {
 	return createUnknownPath(filename, "absolute").assertAbsolute();
+}
+
+export function createUIDPath(filename: CreationArg): UIDPath {
+	return createUnknownPath(filename, "auto").assertUID();
 }
 
 export function createUnknownPath(
@@ -971,6 +1000,16 @@ export function maybeCreateUnknownPath(
 ): undefined | UnknownPath {
 	if (filename !== undefined) {
 		return createUnknownPath(filename, "auto");
+	} else {
+		return undefined;
+	}
+}
+
+export function maybeCreateUIDPath(
+	filename: undefined | CreationArg,
+): undefined | UIDPath {
+	if (filename !== undefined) {
+		return createUIDPath(filename);
 	} else {
 		return undefined;
 	}

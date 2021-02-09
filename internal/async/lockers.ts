@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyFilePath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {createDeferredPromise} from "@internal/async/index";
 import {Event} from "@internal/events";
@@ -114,8 +114,8 @@ export class Locker<Key> extends LockerNormalized<Key, Key> {
 	}
 }
 
-export class FilePathLocker extends LockerNormalized<AnyFilePath, string> {
-	protected normalizeKey(path: AnyFilePath): string {
+export class FilePathLocker extends LockerNormalized<AnyPath, string> {
+	protected normalizeKey(path: AnyPath): string {
 		return path.join();
 	}
 }

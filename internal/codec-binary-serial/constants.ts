@@ -2,8 +2,8 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
-	AnyFilePathSet,
+	AnyPath,
+	AnyPathSet,
 	RelativeFilePath,
 	RelativeFilePathMap,
 	RelativeFilePathSet,
@@ -15,9 +15,15 @@ import {
 	createRelativeFilePath,
 	createURLPath,
 	createUnknownPath,
+	UIDPathSet,
+	URLPathMap,
+	UIDPathMap,
+	createUIDPath,
+	UIDPath,
+	URLPathSet,
 } from "@internal/path";
 import {
-	AnyRSERFilePathMap,
+	AnyRSERPathMap,
 	RSERArrayBufferView,
 } from "@internal/codec-binary-serial/types";
 import RSERParserError from "./RSERParserError";
@@ -317,109 +323,133 @@ export function errorCodeToInstance(code: ERROR_CODES): Error {
 	}
 }
 
-export enum FILE_CODES {
+export enum PATH_CODES {
 	UNKNOWN,
 	ABSOLUTE,
 	RELATIVE,
 	URL,
+	UID,
 }
 
-export function validateFileCode(code: number): FILE_CODES {
+export function validateFileCode(code: number): PATH_CODES {
 	switch (code) {
-		case FILE_CODES.UNKNOWN:
-		case FILE_CODES.ABSOLUTE:
-		case FILE_CODES.RELATIVE:
-		case FILE_CODES.URL:
+		case PATH_CODES.UNKNOWN:
+		case PATH_CODES.ABSOLUTE:
+		case PATH_CODES.RELATIVE:
+		case PATH_CODES.URL:
+		case PATH_CODES.UID:
 			return code;
 
 		default:
-			throw new RSERParserError(`Unknown file code ${code}`);
+			throw new RSERParserError(`Unknown path code ${code}`);
 	}
 }
 
-export function filePathMapToCode(map: AnyRSERFilePathMap): FILE_CODES {
+export function pathMapToCode(map: AnyRSERPathMap): PATH_CODES {
 	if (map instanceof RelativeFilePathMap) {
-		return FILE_CODES.RELATIVE;
+		return PATH_CODES.RELATIVE;
 	} else if (map instanceof AbsoluteFilePathMap) {
-		return FILE_CODES.ABSOLUTE;
+		return PATH_CODES.ABSOLUTE;
 	} else if (map instanceof UnknownPathMap) {
-		return FILE_CODES.UNKNOWN;
+		return PATH_CODES.UNKNOWN;
+	} else if (map instanceof URLPathMap) {
+		return PATH_CODES.URL;
+	} else if (map instanceof UIDPathMap) {
+		return PATH_CODES.UID;
 	} else {
 		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function filePathSetToCode(set: AnyFilePathSet): FILE_CODES {
+export function pathSetToCode(set: AnyPathSet): PATH_CODES {
 	if (set instanceof RelativeFilePathSet) {
-		return FILE_CODES.RELATIVE;
+		return PATH_CODES.RELATIVE;
 	} else if (set instanceof AbsoluteFilePathSet) {
-		return FILE_CODES.ABSOLUTE;
+		return PATH_CODES.ABSOLUTE;
 	} else if (set instanceof UnknownPathSet) {
-		return FILE_CODES.UNKNOWN;
+		return PATH_CODES.UNKNOWN;
+	} else if (set instanceof URLPathSet) {
+		return PATH_CODES.URL;
+	} else if (set instanceof UIDPathSet) {
+		return PATH_CODES.UID;
 	} else {
 		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function filePathToCode(path: AnyFilePath): FILE_CODES {
+export function pathToCode(path: AnyPath): PATH_CODES {
 	if (path instanceof RelativeFilePath) {
-		return FILE_CODES.RELATIVE;
+		return PATH_CODES.RELATIVE;
 	} else if (path instanceof AbsoluteFilePath) {
-		return FILE_CODES.ABSOLUTE;
+		return PATH_CODES.ABSOLUTE;
 	} else if (path instanceof UnknownPath) {
-		return FILE_CODES.UNKNOWN;
+		return PATH_CODES.UNKNOWN;
 	} else if (path instanceof URLPath) {
-		return FILE_CODES.URL;
+		return PATH_CODES.URL;
+	} else if (path instanceof UIDPath) {
+		return PATH_CODES.UID;
 	} else {
 		throw new RSERParserError("Unknown FilePath type");
 	}
 }
 
-export function filePathFromCode(
-	code: FILE_CODES,
+export function pathFromCode(
+	code: PATH_CODES,
 	filename: string,
-): AnyFilePath {
+): AnyPath {
 	switch (code) {
-		case FILE_CODES.RELATIVE:
+		case PATH_CODES.RELATIVE:
 			return createRelativeFilePath(filename);
 
-		case FILE_CODES.ABSOLUTE:
+		case PATH_CODES.ABSOLUTE:
 			return createAbsoluteFilePath(filename);
 
-		case FILE_CODES.URL:
+		case PATH_CODES.URL:
 			return createURLPath(filename);
 
-		case FILE_CODES.UNKNOWN:
+		case PATH_CODES.UNKNOWN:
 			return createUnknownPath(filename);
+
+		case PATH_CODES.UID:
+			return createUIDPath(filename);
 	}
 }
 
-export function filePathMapFromCode(code: FILE_CODES): AnyRSERFilePathMap {
+export function pathMapFromCode(code: PATH_CODES): AnyRSERPathMap {
 	switch (code) {
-		case FILE_CODES.UNKNOWN:
+		case PATH_CODES.UNKNOWN:
 			return new UnknownPathMap();
 
-		case FILE_CODES.RELATIVE:
+		case PATH_CODES.RELATIVE:
 			return new RelativeFilePathMap();
 
-		case FILE_CODES.ABSOLUTE:
+		case PATH_CODES.ABSOLUTE:
 			return new AbsoluteFilePathMap();
+
+		case PATH_CODES.URL:
+			return new URLPathMap();
+
+		case PATH_CODES.UID:
+			return new UIDPathMap();
 
 		default:
 			throw new RSERParserError(`File path code ${code} cannot be a map`);
 	}
 }
 
-export function filePathSetFromCode(code: FILE_CODES): AnyFilePathSet {
+export function pathSetFromCode(code: PATH_CODES): AnyPathSet {
 	switch (code) {
-		case FILE_CODES.UNKNOWN:
+		case PATH_CODES.UNKNOWN:
 			return new UnknownPathSet();
 
-		case FILE_CODES.RELATIVE:
+		case PATH_CODES.RELATIVE:
 			return new RelativeFilePathSet();
 
-		case FILE_CODES.ABSOLUTE:
+		case PATH_CODES.ABSOLUTE:
 			return new AbsoluteFilePathSet();
+
+		case PATH_CODES.UID:
+			return new UIDPathSet();
 
 		default:
 			throw new RSERParserError(`File path code ${code} cannot be a map`);
