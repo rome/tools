@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:f07f15249e80f7cb0d0259849a7c12b6283df2f3,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:00bc2f374e032b09f10f42f2b516f63c7d1f8e46,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -388,18 +388,25 @@ discard redundant terms or operators in boolean expressions
 <p>Rule semantics and descriptions taken from <a href="https://github.com/jsx-eslint/eslint-plugin-jsx-a11y">eslint-plugin-jsx-a11y</a>
 and <a href="https://axe-linter.deque.com/">axe Linter</a>. See individual rule docs for direct references.</p>
 <div class="rule">
+<h3 data-toc-exclude id="noAriaUnsupportedElements">
+	<a href="/docs/lint/rules/a11y/noAriaUnsupportedElements">noAriaUnsupportedElements</a>
+	<a class="header-anchor" href="#noAriaUnsupportedElements"></a>
+</h3>
+MISSING DOCUMENTATION
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="noDistractingElements">
 	<a href="/docs/lint/rules/a11y/noDistractingElements">noDistractingElements</a>
 	<a class="header-anchor" href="#noDistractingElements"></a>
 </h3>
-MISSING DOCUMENTATION
+enforce distracting elements are not used
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
 	<a href="/docs/lint/rules/a11y/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
 	<a class="header-anchor" href="#noNoninteractiveElementToInteractiveRole"></a>
 </h3>
-MISSING DOCUMENTATION
+non-interactive elements should not be assigned interactive roles
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useAltText">
@@ -448,25 +455,11 @@ enforce that elements that do not support ARIA roles, states, and properties do 
 discourage the usage of `autoFocus`
 </div>
 <div class="rule">
-<h3 data-toc-exclude id="noDistractingElements">
-	<a href="/docs/lint/rules/jsx-a11y/noDistractingElements">noDistractingElements</a>
-	<a class="header-anchor" href="#noDistractingElements"></a>
-</h3>
-enforce distracting elements are not used
-</div>
-<div class="rule">
 <h3 data-toc-exclude id="noHeaderScope">
 	<a href="/docs/lint/rules/jsx-a11y/noHeaderScope">noHeaderScope</a>
 	<a class="header-anchor" href="#noHeaderScope"></a>
 </h3>
 enforce scope prop is only used on `th` elements
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="noNoninteractiveElementToInteractiveRole">
-	<a href="/docs/lint/rules/jsx-a11y/noNoninteractiveElementToInteractiveRole">noNoninteractiveElementToInteractiveRole</a>
-	<a class="header-anchor" href="#noNoninteractiveElementToInteractiveRole"></a>
-</h3>
-non-interactive elements should not be assigned interactive roles
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="noNoninteractiveTabindex">

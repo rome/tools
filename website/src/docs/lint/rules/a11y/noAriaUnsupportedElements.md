@@ -1,15 +1,15 @@
 ---
-title: Lint Rule jsx-a11y/noAriaUnsupportedElements
+title: Lint Rule a11y/noAriaUnsupportedElements
 layout: layouts/rule.liquid
 description: enforce that elements that do not support ARIA roles, states, and properties do not have those attributes
 eslint-rule: https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-unsupported-elements.md
 eleventyNavigation:
-	key: lint-rules/jsx-a11y/noAriaUnsupportedElements
+	key: lint-rules/a11y/noAriaUnsupportedElements
 	parent: lint-rules
-	title: jsx-a11y/noAriaUnsupportedElements
+	title: a11y/noAriaUnsupportedElements
 ---
 
-# jsx-a11y/noAriaUnsupportedElements
+# a11y/noAriaUnsupportedElements
 
 <!-- GENERATED:START(hash:55d6d38ab5c8f7b4fb7076d1c8db356e484db55a,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 enforce that elements that do not support ARIA roles, states, and properties do not have those attributes

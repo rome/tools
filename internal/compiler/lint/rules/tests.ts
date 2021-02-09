@@ -8,7 +8,9 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:bff7e07e4d94a35356563555d553ad1f9a7fac38,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:b1e8f50c3cf62507f46d7f02d5011b002b7d23be,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// @ts-ignore
+import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
 import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
 // @ts-ignore
@@ -117,8 +119,6 @@ import useTemplate from "./js/useTemplate.test.rjson";
 import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
-// @ts-ignore
-import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
 import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
 // @ts-ignore
@@ -231,6 +231,7 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
+	"a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
 	"a11y/noDistractingElements": noDistractingElements,
 	"a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
 	"a11y/useAltText": useAltText,
@@ -285,7 +286,6 @@ export const tests: Tests = {
 	"js/useTemplate": useTemplate,
 	"js/useWhile": useWhile,
 	"jsx-a11y/noAccessKey": noAccessKey,
-	"jsx-a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
 	"jsx-a11y/noAutofocus": noAutofocus,
 	"jsx-a11y/noHeaderScope": noHeaderScope,
 	"jsx-a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,

@@ -17,6 +17,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_ARIA_UNSUPPORTED_ELEMENTS: {
+		category: "lint/a11y/noAriaUnsupportedElements",
+		message: markup`Avoid the <emphasis>role</emphasis> attribute and <emphasis>aria-*</emphasis> attributes when using <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Using roles on elements that do not support them can cause issues with screen readers.`,
+			},
+		],
+	},
 	A11_Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
 		category: "lint/a11y/noNoninteractiveElementToInteractiveRole",
 		message: markup`The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
@@ -352,17 +363,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Updating state immediately before a scheduled render causes a second render that can cause visual layout thrashing.`,
-			},
-		],
-	},
-	JSX_A11Y_ARIA_UNSUPPORTED_ELEMENTS: {
-		category: "lint/jsx-a11y/noAriaUnsupportedElements",
-		message: markup`Avoid the <emphasis>role</emphasis> attribute and <emphasis>aria-*</emphasis> attributes when using <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Using roles on elements that do not support them can cause issues with screen readers.`,
 			},
 		],
 	},

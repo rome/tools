@@ -1,4 +1,5 @@
-/* GENERATED:START(hash:c212720949d4eef3e88eab12b75c94c28d3261a4,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:013200ff7db1bd6e1869d3c3507c5cbe32967a1b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements";
 import noDistractingElements from "./a11y/noDistractingElements";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole";
 import useAltText from "./a11y/useAltText";
@@ -54,7 +55,6 @@ import useSortedSpecifiers from "./js/useSortedSpecifiers";
 import useTemplate from "./js/useTemplate";
 import useWhile from "./js/useWhile";
 import noAccessKey from "./jsx-a11y/noAccessKey";
-import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements";
 import noAutofocus from "./jsx-a11y/noAutofocus";
 import noHeaderScope from "./jsx-a11y/noHeaderScope";
 import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex";
@@ -117,6 +117,7 @@ import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression"
 import {AnyVisitor} from "@internal/compiler";
 
 export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
+lintTransforms.set("a11y/noAriaUnsupportedElements", noAriaUnsupportedElements);
 lintTransforms.set("a11y/noDistractingElements", noDistractingElements);
 lintTransforms.set(
 	"a11y/noNoninteractiveElementToInteractiveRole",
@@ -181,10 +182,6 @@ lintTransforms.set("js/useSortedSpecifiers", useSortedSpecifiers);
 lintTransforms.set("js/useTemplate", useTemplate);
 lintTransforms.set("js/useWhile", useWhile);
 lintTransforms.set("jsx-a11y/noAccessKey", noAccessKey);
-lintTransforms.set(
-	"jsx-a11y/noAriaUnsupportedElements",
-	noAriaUnsupportedElements,
-);
 lintTransforms.set("jsx-a11y/noAutofocus", noAutofocus);
 lintTransforms.set("jsx-a11y/noHeaderScope", noHeaderScope);
 lintTransforms.set(
@@ -270,6 +267,7 @@ lintTransforms.set(
 );
 
 export const lintRuleNames: LintRuleName[] = [
+	"a11y/noAriaUnsupportedElements",
 	"a11y/noDistractingElements",
 	"a11y/noNoninteractiveElementToInteractiveRole",
 	"a11y/useAltText",
@@ -325,7 +323,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"js/useTemplate",
 	"js/useWhile",
 	"jsx-a11y/noAccessKey",
-	"jsx-a11y/noAriaUnsupportedElements",
 	"jsx-a11y/noAutofocus",
 	"jsx-a11y/noHeaderScope",
 	"jsx-a11y/noNoninteractiveTabindex",
@@ -388,6 +385,7 @@ export const lintRuleNames: LintRuleName[] = [
 ];
 
 export type LintRuleName =
+	| "a11y/noAriaUnsupportedElements"
 	| "a11y/noDistractingElements"
 	| "a11y/noNoninteractiveElementToInteractiveRole"
 	| "a11y/useAltText"
@@ -443,7 +441,6 @@ export type LintRuleName =
 	| "js/useTemplate"
 	| "js/useWhile"
 	| "jsx-a11y/noAccessKey"
-	| "jsx-a11y/noAriaUnsupportedElements"
 	| "jsx-a11y/noAutofocus"
 	| "jsx-a11y/noHeaderScope"
 	| "jsx-a11y/noNoninteractiveTabindex"
