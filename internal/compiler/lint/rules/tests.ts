@@ -8,7 +8,7 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:02af74210cd425d246ad4ca28968dd96605a33f2,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:0cd18e307e35be34dc1e4841e9eb5a1a9c72d97b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -17,6 +17,8 @@ import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
 import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
+// @ts-ignore
+import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
 // @ts-ignore
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
 // @ts-ignore
@@ -146,8 +148,6 @@ import useAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
 // @ts-ignore
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
-import useAriaProptypes from "./jsx-a11y/useAriaProptypes.test.rjson";
-// @ts-ignore
 import useHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
 // @ts-ignore
 import useIframeTitle from "./jsx-a11y/useIframeTitle.test.rjson";
@@ -235,6 +235,7 @@ export const tests: Tests = {
 	"a11y/noDistractingElements": noDistractingElements,
 	"a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
 	"a11y/useAltText": useAltText,
+	"a11y/useAriaProptypes": useAriaProptypes,
 	"a11y/useHtmlLang": useHtmlLang,
 	"a11y/useMediaCaption": useMediaCaption,
 	"a11y/useValidLang": useValidLang,
@@ -299,7 +300,6 @@ export const tests: Tests = {
 	"jsx-a11y/useAnchorContent": useAnchorContent,
 	"jsx-a11y/useAriaProps": useAriaProps,
 	"jsx-a11y/useAriaPropsForRole": useAriaPropsForRole,
-	"jsx-a11y/useAriaProptypes": useAriaProptypes,
 	"jsx-a11y/useHeadingContent": useHeadingContent,
 	"jsx-a11y/useIframeTitle": useIframeTitle,
 	"jsx-a11y/useKeyWithClickEvents": useKeyWithClickEvents,

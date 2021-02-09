@@ -11,7 +11,7 @@ eleventyNavigation:
 
 # Rules
 
-<!-- GENERATED:START(hash:f5b2a1996b8191bac2c4112f5f6dd6291bd7fd16,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
+<!-- GENERATED:START(hash:f07740d5fc3d87800007d0a5e550b8a33a08116c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 <section>
 <h2>JavaScript</h2>
 <p>Rule semantics and descriptions taken from <a href="https://eslint.org/">ESLint</a>. See individual rule docs for direct references.</p>
@@ -416,6 +416,13 @@ non-interactive elements should not be assigned interactive roles
 Checks that images have a valid alternative text
 </div>
 <div class="rule">
+<h3 data-toc-exclude id="useAriaProptypes">
+	<a href="/docs/lint/rules/a11y/useAriaProptypes">useAriaProptypes</a>
+	<a class="header-anchor" href="#useAriaProptypes"></a>
+</h3>
+enforce ARIA state and property values are valid
+</div>
+<div class="rule">
 <h3 data-toc-exclude id="useHtmlLang">
 	<a href="/docs/lint/rules/a11y/useHtmlLang">useHtmlLang</a>
 	<a class="header-anchor" href="#useHtmlLang"></a>
@@ -530,13 +537,6 @@ enforce all `aria-*` props are valid
 	<a class="header-anchor" href="#useAriaPropsForRole"></a>
 </h3>
 enforce that elements with ARIA roles must have all required attributes for that role
-</div>
-<div class="rule">
-<h3 data-toc-exclude id="useAriaProptypes">
-	<a href="/docs/lint/rules/jsx-a11y/useAriaProptypes">useAriaProptypes</a>
-	<a class="header-anchor" href="#useAriaProptypes"></a>
-</h3>
-enforce ARIA state and property values are valid
 </div>
 <div class="rule">
 <h3 data-toc-exclude id="useHeadingContent">

@@ -17,6 +17,30 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_USE_ARIA_PROPTYPES: (
+		attributeName: string,
+		values?: Array<string | boolean>,
+	) => {
+		let advice: DiagnosticAdvice = [];
+		if (values) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
+					(str, value) => {
+						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
+						return str;
+					},
+					[] as string[],
+				).join(", ")}`,
+			});
+		}
+		return {
+			category: "lint/a11y/useAriaProptypes",
+			message: markup`The value of the ARIA attribute <emphasis>${attributeName}</emphasis> is not correct.`,
+			advice,
+		};
+	},
 	A11_Y_USE_MEDIA_CAPTION: {
 		category: "lint/a11y/useMediaCaption",
 		message: markup`Provide a <emphasis>track</emphasis> for captions when using <emphasis>audio</emphasis> or <emphasis>video</emphasis> elements.`,

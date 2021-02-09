@@ -96,12 +96,13 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:b6467bf44877c6eb0df380b3890961fe4dd8b620,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:836fa22c1c0d42785f19620a6d73bd8c734a263c,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
 	| "lint/a11y/noAriaUnsupportedElements"
 	| "lint/a11y/noDistractingElements"
 	| "lint/a11y/noNoninteractiveElementToInteractiveRole"
 	| "lint/a11y/useAltText"
+	| "lint/a11y/useAriaProptypes"
 	| "lint/a11y/useHtmlLang"
 	| "lint/a11y/useMediaCaption"
 	| "lint/a11y/useValidLang"
@@ -167,7 +168,6 @@ export type DiagnosticLintCategory =
 	| "lint/jsx-a11y/useAnchorContent"
 	| "lint/jsx-a11y/useAriaProps"
 	| "lint/jsx-a11y/useAriaPropsForRole"
-	| "lint/jsx-a11y/useAriaProptypes"
 	| "lint/jsx-a11y/useHeadingContent"
 	| "lint/jsx-a11y/useIframeTitle"
 	| "lint/jsx-a11y/useKeyWithClickEvents"
@@ -218,6 +218,7 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/a11y/noDistractingElements": true,
 	"lint/a11y/noNoninteractiveElementToInteractiveRole": true,
 	"lint/a11y/useAltText": true,
+	"lint/a11y/useAriaProptypes": true,
 	"lint/a11y/useHtmlLang": true,
 	"lint/a11y/useMediaCaption": true,
 	"lint/a11y/useValidLang": true,
@@ -283,7 +284,6 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/jsx-a11y/useAnchorContent": true,
 	"lint/jsx-a11y/useAriaProps": true,
 	"lint/jsx-a11y/useAriaPropsForRole": true,
-	"lint/jsx-a11y/useAriaProptypes": true,
 	"lint/jsx-a11y/useHeadingContent": true,
 	"lint/jsx-a11y/useIframeTitle": true,
 	"lint/jsx-a11y/useKeyWithClickEvents": true,
