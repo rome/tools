@@ -11,7 +11,7 @@ import {AnyRoot} from "@internal/ast";
 import {ProjectConfig} from "@internal/project";
 import {EnterSignal, ExitSignal} from "./signals";
 import CompilerContext from "./lib/CompilerContext";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, UIDPath} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 import {Dict, UnknownObject} from "@internal/typescript-helpers";
 import {DiagnosticCategory} from "@internal/diagnostics";
@@ -74,16 +74,16 @@ export type TransformRequest = {
 
 export type BundleCompileResolvedImports = {
 	[key: string]: {
-		id: string;
+		id: UIDPath;
 		name: string;
 	};
 };
 
 export type BundleCompileOptions = {
 	moduleAll: boolean;
-	moduleId: string;
+	moduleId: UIDPath;
 	analyze: AnalyzeDependencyResult;
-	relativeSourcesToModuleId: Dict<string>;
+	relativeSourcesToModuleId: Dict<UIDPath>;
 	resolvedImports: BundleCompileResolvedImports;
 	assetPath: undefined | string;
 };

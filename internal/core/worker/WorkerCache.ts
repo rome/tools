@@ -1,5 +1,5 @@
 import {VERSION} from "@internal/core";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import {FSStats, createReadStream, exists, lstat} from "@internal/fs";
 import Cache from "../common/Cache";
 import Worker from "./Worker";
@@ -387,7 +387,7 @@ export default class WorkerCache extends Cache {
 	private worker: Worker;
 	private loadedFiles: AbsoluteFilePathMap<CacheFile>;
 
-	public async remove(uid: string, path: AbsoluteFilePath) {
+	public async remove(uid: UIDPath, path: AbsoluteFilePath) {
 		this.loadedFiles.delete(path);
 		await super.remove(uid, path);
 	}

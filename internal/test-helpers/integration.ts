@@ -16,6 +16,8 @@ import {
 	createAbsoluteFilePath,
 	createRelativeFilePath,
 	createUnknownPath,
+	createUIDPath,
+	UIDPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
 import {
@@ -111,7 +113,7 @@ type IntegrationWorkerFileRefOptions = {
 	real?: string | AbsoluteFilePath;
 	project?: number;
 	once?: boolean;
-	uid: string;
+	uid: string | UIDPath;
 };
 
 export function findFixtureInput(
@@ -187,7 +189,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 			project,
 			manifest: undefined,
 			remote: false,
-			uid,
+			uid: createUIDPath(uid),
 			relative,
 			real,
 		};
@@ -281,7 +283,7 @@ export async function declareParserTests() {
 
 		// Inline diagnostics
 		const processor = new DiagnosticsProcessor();
-		processor.normalizer.setInlineSourceText(ast.filename, inputContent);
+		processor.normalizer.setInlineSourceText(ast.path, inputContent);
 		processor.addDiagnostics(ast.diagnostics);
 		const diagnostics = processor.getDiagnostics();
 

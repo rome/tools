@@ -10,13 +10,14 @@ import {Position} from "./types";
 import {pretty} from "@internal/pretty-format";
 import {derivePositionKey} from "./utils";
 import {ExtendedMap} from "@internal/collections";
+import { AnyPath, equalPaths } from "@internal/path";
 
 type GetPosition = () => Position;
 
 export default class PositionTracker {
 	constructor(
 		{
-			filename,
+			path,
 			input,
 			offsetPosition = {
 				line: ob1Number1,
@@ -24,14 +25,14 @@ export default class PositionTracker {
 			},
 			getPosition,
 		}: {
-			filename: undefined | string;
+			path: undefined | AnyPath;
 			input: string;
 			offsetPosition?: Position;
 			getPosition?: GetPosition;
 		},
 	) {
 		this.getPosition = getPosition;
-		this.filename = filename;
+		this.path = path;
 		this.input = input;
 
 		this.latestPosition = offsetPosition;
@@ -42,7 +43,7 @@ export default class PositionTracker {
 		this.cachedPositions = new Map();
 	}
 
-	private filename: undefined | string;
+	private path: undefined | AnyPath;
 	private input: string;
 	private latestPosition: Position;
 	public cachedPositions: Map<Number0, Position>;
@@ -51,11 +52,11 @@ export default class PositionTracker {
 
 	public getIndexFromPosition(
 		pos: Position,
-		filename: undefined | string,
+		path: undefined | AnyPath,
 	): Number0 {
-		if (filename !== this.filename) {
+		if (!equalPaths(path, this.path)) {
 			throw new Error(
-				pretty`PositionTracker filename mismatch. DiagnosticLocation filename ${filename} is different than the filename we're tracking of ${this.filename}. Position: ${pos}`,
+				pretty`PositionTracker filename mismatch. DiagnosticLocation path ${path} is different than the filename we're tracking of ${this.path}. Position: ${pos}`,
 			);
 		}
 
@@ -77,7 +78,7 @@ export default class PositionTracker {
 		const {latestPosition} = this;
 		const latestPositionIndex = this.getIndexFromPosition(
 			latestPosition,
-			this.filename,
+			this.path,
 		);
 
 		const currPosition =
@@ -85,7 +86,7 @@ export default class PositionTracker {
 		const currPositionIndex =
 			currPosition === undefined
 				? undefined
-				: this.getIndexFromPosition(latestPosition, this.filename);
+				: this.getIndexFromPosition(latestPosition, this.path);
 
 		if (
 			currPosition !== undefined &&

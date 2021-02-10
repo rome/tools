@@ -313,7 +313,7 @@ function parseJSXOpeningElementAt(
 			typeArguments: undefined,
 			name: undefined,
 			loc: {
-				filename: parser.filename,
+				path: parser.path,
 				start,
 				end: parser.getPosition(),
 			},
@@ -415,7 +415,7 @@ function parseJSXElementAt(
 					if (eat(parser, tt.slash)) {
 						closingName = parseJSXClosingElementAt(parser);
 						closingNameLoc = {
-							filename: parser.filename,
+							path: parser.path,
 							start,
 							end: parser.getPosition(),
 						};

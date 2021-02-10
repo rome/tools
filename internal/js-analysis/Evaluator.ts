@@ -21,6 +21,8 @@ import types from "./types/index";
 import evaluators from "./evaluators/index";
 import {ModuleSignatureType} from "./types";
 import {ExtendedMap} from "@internal/collections";
+import { AnyPath } from "@internal/path";
+import { pretty } from "@internal/pretty-format";
 
 export type HydrateTypeFactory = (id: unknown) => T;
 
@@ -28,7 +30,7 @@ export type HydrateData = JSONObject;
 
 export type GetModuleSignature = (
 	source: string,
-	relative: string,
+	relative: AnyPath,
 ) => Promise<undefined | ModuleSignatureManager>;
 
 export class ModuleSignatureManager {
@@ -41,12 +43,12 @@ export class ModuleSignatureManager {
 		this.getModuleSignature = getModuleSignature;
 		this.graph = graph;
 		this.openTypes = new ExtendedMap("openTypes");
-		this.filename = graph.filename;
+		this.path = graph.path;
 
 		this.exportNamesToTypeId = new Map();
 	}
 
-	public filename: string;
+	public path: AnyPath;
 	private getModuleSignature: GetModuleSignature;
 	private topScope: Scope;
 	private exportNamesToTypeId: Map<string, string>;
@@ -92,9 +94,7 @@ export class ModuleSignatureManager {
 
 			if (type === undefined) {
 				throw new Error(
-					`${graph.filename}: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
-						JSON.stringify(currGetType),
-					)}`,
+					pretty`${graph.path}: Expected type of id ${id} but it doesn't exist, serialized data: ${currGetType}`,
 				);
 			}
 
@@ -105,7 +105,7 @@ export class ModuleSignatureManager {
 		await Promise.all(
 			graph.exports.map((def) => {
 				if (def.type === "all") {
-					return this.getModuleSignature(def.source, graph.filename);
+					return this.getModuleSignature(def.source, graph.path);
 				} else {
 					return undefined;
 				}
@@ -117,7 +117,7 @@ export class ModuleSignatureManager {
 			if (def.type === "all") {
 				const manager = await this.getModuleSignature(
 					def.source,
-					graph.filename,
+					graph.path,
 				);
 				if (manager !== undefined) {
 					this.addAll(manager);
@@ -170,7 +170,7 @@ export class ModuleSignatureManager {
 				{
 					possibleNames: Array.from(this.exportNamesToTypeId.keys()),
 					importedName,
-					source: graph.filename,
+					source: graph.path,
 				},
 			);
 			error.shouldMatch(type);
@@ -197,8 +197,8 @@ type Export =
 		};
 
 export default class Evaluator {
-	constructor(hub: Hub, filename: string) {
-		this.filename = filename;
+	constructor(hub: Hub, path: AnyPath) {
+		this.path = path;
 		this.nodeToType = new ExtendedMap("nodeToType");
 		this.exports = [];
 		this.imports = [];
@@ -211,13 +211,13 @@ export default class Evaluator {
 	}
 
 	public evaluatingType: undefined | string;
-	public filename: string;
+	public path: AnyPath;
 	private nodeToType: ExtendedMap<AnyNode, T>;
 	public hub: Hub;
 	public intrinsics: Intrinsics;
 	public exports: Export[];
 	public imports: {
-		relative: string;
+		origin: AnyPath;
 		importedName: undefined | string;
 		source: string;
 		type: ImportT;
@@ -278,11 +278,11 @@ export default class Evaluator {
 		opts: {
 			importedName: undefined | string;
 			source: string;
-			relative: string;
+			originPath: AnyPath;
 		},
 	) {
 		this.imports.push({
-			relative: opts.relative,
+			origin: opts.originPath,
 			importedName: opts.importedName,
 			source: opts.source,
 			type: t,

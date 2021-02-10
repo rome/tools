@@ -11,6 +11,8 @@ import {
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {ob1Add, ob1Dec} from "@internal/ob1";
 import {isPlainObject, TaggedTemplateFunction} from "@internal/typescript-helpers";
+import { pretty } from "@internal/pretty-format";
+import { AnyPath } from "@internal/path";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -175,7 +177,7 @@ export function extractSourceLocationRangeFromNodes(
 		return undefined;
 	}
 
-	let filename: undefined | string = undefined;
+	let path: undefined | AnyPath = undefined;
 	let start: undefined | Position = undefined;
 	let end: undefined | Position = undefined;
 
@@ -193,11 +195,11 @@ export function extractSourceLocationRangeFromNodes(
 			end = loc.end;
 		}
 
-		if (filename === undefined) {
-			filename = loc.filename;
-		} else if (filename !== loc.filename) {
+		if (path === undefined) {
+			path = loc.path;
+		} else if (path !== loc.path) {
 			throw new Error(
-				`Mixed filenames in node, expected ${filename} but got ${loc.filename}`,
+				pretty`Mixed filenames in node, expected ${path} but got ${loc.path}`,
 			);
 		}
 	}
@@ -207,7 +209,7 @@ export function extractSourceLocationRangeFromNodes(
 	}
 
 	return {
-		filename,
+		path,
 		start,
 		end,
 	};

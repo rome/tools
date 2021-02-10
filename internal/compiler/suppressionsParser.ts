@@ -363,7 +363,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 							});
 						} else {
 							suppressions.push({
-								filename: parser.getFilenameAssert(),
+								path: parser.getPathAssert(),
 								category: categoryToken.value,
 								categoryValue,
 								loc,

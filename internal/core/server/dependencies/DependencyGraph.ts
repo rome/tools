@@ -126,10 +126,10 @@ export default class DependencyGraph {
 		const stats: BundleBuddyStats = [];
 
 		for (const node of this.nodes.values()) {
-			const source = node.uid;
+			const source = node.uid.join();
 
 			for (const absoluteTarget of node.relativeToAbsolutePath.values()) {
-				const target = this.getNode(absoluteTarget).uid;
+				const target = this.getNode(absoluteTarget).uid.join();
 				stats.push({
 					target,
 					source,
@@ -138,7 +138,7 @@ export default class DependencyGraph {
 		}
 
 		for (const absoluteEntry of entries) {
-			const source = this.getNode(absoluteEntry).uid;
+			const source = this.getNode(absoluteEntry).uid.join();
 			stats.push({
 				source,
 				target: undefined,

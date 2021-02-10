@@ -142,7 +142,7 @@ export type BaseTokens = {
 
 //# Other types
 export type SourceLocation = {
-	filename?: string;
+	path?: AnyPath;
 	identifierName?: string;
 	start: Position;
 	end: Position;

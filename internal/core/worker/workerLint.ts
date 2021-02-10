@@ -149,7 +149,7 @@ export async function uncachedLint(param: Param<WorkerLintOptions>): Promise<Wor
       {
         tags: {fixable: true},
         location: {
-          filename: ref.uid,
+          path: ref.uid,
         },
         description: descriptions.LINT.PENDING_FIXES(
           ref.relative.join(),

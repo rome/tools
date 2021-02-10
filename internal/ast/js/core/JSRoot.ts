@@ -14,6 +14,7 @@ import {
 	NodeBaseWithComments,
 	RootBase,
 } from "@internal/ast";
+import { createUnknownPath } from "@internal/path";
 import {createBuilder} from "../../utils";
 
 export interface JSRoot extends NodeBaseWithComments,
@@ -31,7 +32,7 @@ export const MOCK_PROGRAM: JSRoot = {
 	type: "JSRoot",
 	directives: [],
 	body: [],
-	filename: "unknown",
+	path: createUnknownPath("unknown"),
 	integrity: undefined,
 	interpreter: undefined,
 	corrupt: false,

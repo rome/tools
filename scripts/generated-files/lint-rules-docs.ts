@@ -87,7 +87,9 @@ async function run(
 			const processor = new DiagnosticsProcessor({
 				markupOptions: {
 					normalizePosition() {
-						return {filename};
+						return {
+							path: createUnknownPath(filename),
+						};
 					},
 				},
 			});

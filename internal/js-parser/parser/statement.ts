@@ -1090,7 +1090,7 @@ export function parseLabeledStatement(
 		kind = "switch";
 	}
 
-	const startIndex = parser.getIndexFromPosition(start, parser.filename);
+	const startIndex = parser.getIndexFromPosition(start, parser.path);
 	for (let i = parser.state.labels.length - 1; i >= 0; i--) {
 		const label = parser.state.labels[i];
 		if (label.statementStart === startIndex) {

@@ -454,7 +454,7 @@ function parseLogicalAnd(parser: SemverParser, left: RangeNode): LogicalAndNode 
 		left,
 		right,
 		loc: {
-			filename: parser.filename,
+			path: parser.path,
 			start: parser.getLoc(left).start,
 			end: parser.getLoc(right).end,
 		},

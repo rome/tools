@@ -161,7 +161,7 @@ export const diff = createServerCommand({
 
 			diagnostics.push({
 				location: {
-					filename: originalPath.join(),
+					path: originalPath,
 				},
 				description: descriptions.RECOVERY_STORE.DIFF(original, artifact),
 			});

@@ -18,7 +18,7 @@ import {
 import {BridgeErrorResponseDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
-import {AbsoluteFilePath, createAbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, createAbsoluteFilePath, UIDPath} from "@internal/path";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {FileNotFound} from "@internal/fs";
 import {
@@ -71,7 +71,7 @@ export default createBridge({
 		evict: createBridgeEventDeclaration<
 			{
 				real: AbsoluteFilePath;
-				uid: string;
+				uid: UIDPath;
 			},
 			void
 		>(),

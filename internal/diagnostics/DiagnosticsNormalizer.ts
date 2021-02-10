@@ -22,6 +22,7 @@ import {
 } from "@internal/markup";
 import {ob1Number0, ob1Number1} from "@internal/ob1";
 import {RequiredProps} from "@internal/typescript-helpers";
+import { AnyPath, UnknownPathMap, UnknownPathSet } from "@internal/path";
 
 type NormalizeOptionsRequiredPosition = RequiredProps<
 	MarkupFormatNormalizeOptions,
@@ -29,7 +30,7 @@ type NormalizeOptionsRequiredPosition = RequiredProps<
 >;
 
 export type DiagnosticsNormalizerOptions = {
-	getIntegrity?: (filename: string) => undefined | DiagnosticIntegrity;
+	getIntegrity?: (path: AnyPath) => undefined | DiagnosticIntegrity;
 	tags?: DiagnosticTags;
 	label?: StaticMarkup;
 };
@@ -41,13 +42,13 @@ export default class DiagnosticsNormalizer {
 		sourceMaps?: SourceMapConsumerCollection,
 	) {
 		this.sourceMaps = sourceMaps;
-		this.inlineSourceText = new Map();
+		this.inlineSourceText = new UnknownPathMap();
 		this.hasMarkupOptions = markupOptions !== undefined;
 
 		this.hasOptions = normalizeOptions !== undefined;
 		this.options = normalizeOptions ?? {};
 
-		this.inlinedSourceTextFilenames = new Set();
+		this.inlinedSourceTextFilenames = new UnknownPathSet();
 
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
@@ -60,8 +61,8 @@ export default class DiagnosticsNormalizer {
 	private markupOptions: NormalizeOptionsRequiredPosition;
 	private hasMarkupOptions: boolean;
 
-	private inlineSourceText: Map<string, string>;
-	private inlinedSourceTextFilenames: Set<string>;
+	private inlineSourceText: UnknownPathMap<string>;
+	private inlinedSourceTextFilenames: UnknownPathSet;
 
 	private createMarkupOptions(
 		markupOptions: MarkupFormatNormalizeOptions = {},
@@ -70,10 +71,10 @@ export default class DiagnosticsNormalizer {
 
 		return {
 			...markupOptions,
-			normalizePosition: (filename, line, column) => {
+			normalizePosition: (path, line, column) => {
 				if (markupOptions?.normalizePosition !== undefined) {
-					({filename, line, column} = markupOptions.normalizePosition(
-						filename,
+					({path, line, column} = markupOptions.normalizePosition(
+						path,
 						line,
 						column,
 					));
@@ -83,42 +84,42 @@ export default class DiagnosticsNormalizer {
 					// line and column can be undefined so we do some weirdness to try and get only the filename if possible
 					// using some default positions and then we'll toss whatever positions they return
 					const resolved = sourceMaps.approxOriginalPositionFor(
-						filename,
+						path,
 						line ?? ob1Number1,
 						column ?? ob1Number0,
 					);
 					if (resolved !== undefined) {
 						return {
-							filename: resolved.source,
+							path: resolved.source,
 							line: line === undefined ? undefined : resolved.line,
 							column: column === undefined ? undefined : resolved.column,
 						};
 					}
 				}
 
-				return {filename, line, column};
+				return {path, line, column};
 			},
 		};
 	}
 
-	public setInlineSourceText(filename: string, sourceText: string) {
-		this.inlineSourceText.set(filename, sourceText);
+	public setInlineSourceText(path: AnyPath, sourceText: string) {
+		this.inlineSourceText.set(path, sourceText);
 	}
 
-	private normalizeFilename(filename: string): string
-	private normalizeFilename(filename: undefined | string): undefined | string
-	private normalizeFilename(filename: undefined | string): undefined | string {
+	private normalizePath(path: AnyPath): AnyPath
+	private normalizePath(path: undefined | AnyPath): undefined | AnyPath
+	private normalizePath(path: undefined | AnyPath): undefined | AnyPath {
 		const {markupOptions} = this;
-		if (markupOptions === undefined || filename === undefined) {
-			return filename;
+		if (markupOptions === undefined || path === undefined) {
+			return path;
 		}
 
 		const {normalizePosition} = markupOptions;
 		if (normalizePosition === undefined) {
-			return filename;
+			return path;
 		}
 
-		return normalizePosition(filename, undefined, undefined).filename;
+		return normalizePosition(path, undefined, undefined).path;
 	}
 
 	private normalizePositionValue<T>(value: T): undefined | T {
@@ -136,22 +137,22 @@ export default class DiagnosticsNormalizer {
 			return location;
 		}
 
-		let {marker, filename, start, end, integrity} = location;
-		let origFilename = filename;
+		let {marker, path, start, end, integrity} = location;
+		let origPath = path;
 
 		if (
-			filename !== undefined &&
-			origFilename !== undefined &&
+			path !== undefined &&
+			origPath !== undefined &&
 			sourceMaps !== undefined
 		) {
 			if (start !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
-					origFilename,
+					origPath,
 					start.line,
 					start.column,
 				);
 				if (resolved !== undefined) {
-					filename = resolved.source;
+					path = resolved.source;
 					start = {
 						...start,
 						line: resolved.line,
@@ -162,13 +163,13 @@ export default class DiagnosticsNormalizer {
 
 			if (end !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
-					origFilename,
+					origPath,
 					end.line,
 					end.column,
 				);
 				if (resolved !== undefined) {
 					// TODO confirm this is the same as `start` if it resolved
-					filename = resolved.source;
+					path = resolved.source;
 					end = {
 						...end,
 						line: resolved.line,
@@ -178,17 +179,17 @@ export default class DiagnosticsNormalizer {
 			}
 		}
 
-		const normalizedFilename = this.normalizeFilename(filename);
+		const normalizedPath = this.normalizePath(path);
 
 		// Inline sourceText. We keep track of filenames we've already inlined to avoid duplicating sourceText
 		// During printing we'll fill it back in
 		let {sourceText} = location;
-		if (filename !== undefined && !this.inlinedSourceTextFilenames.has(filename)) {
+		if (path !== undefined && !this.inlinedSourceTextFilenames.has(path)) {
 			if (sourceText === undefined) {
-				sourceText = this.inlineSourceText.get(filename);
+				sourceText = this.inlineSourceText.get(path);
 			}
-			if (sourceText === undefined && normalizedFilename !== undefined) {
-				sourceText = this.inlineSourceText.get(normalizedFilename);
+			if (sourceText === undefined && normalizedPath !== undefined) {
+				sourceText = this.inlineSourceText.get(normalizedPath);
 			}
 
 			// Remove sourceText if it's not pointing anywhere
@@ -198,10 +199,10 @@ export default class DiagnosticsNormalizer {
 
 			// Register filename as inlined if necessary
 			if (sourceText !== undefined) {
-				this.inlinedSourceTextFilenames.add(filename);
+				this.inlinedSourceTextFilenames.add(path);
 
-				if (normalizedFilename !== undefined) {
-					this.inlinedSourceTextFilenames.add(normalizedFilename);
+				if (normalizedPath !== undefined) {
+					this.inlinedSourceTextFilenames.add(normalizedPath);
 				}
 			}
 		}
@@ -209,16 +210,16 @@ export default class DiagnosticsNormalizer {
 		if (
 			integrity === undefined &&
 			getIntegrity !== undefined &&
-			normalizedFilename !== undefined
+			normalizedPath !== undefined
 		) {
-			integrity = getIntegrity(normalizedFilename);
+			integrity = getIntegrity(normalizedPath);
 		}
 
 		return {
 			...location,
 			integrity,
 			sourceText,
-			filename: normalizedFilename,
+			path: normalizedPath,
 			marker: this.maybeNormalizeMarkup(marker),
 			start: this.normalizePositionValue(start),
 			end: this.normalizePositionValue(end),
@@ -241,7 +242,7 @@ export default class DiagnosticsNormalizer {
 		return deps.map((dep) => {
 			return {
 				...dep,
-				filename: this.normalizeFilename(dep.filename),
+				path: this.normalizePath(dep.path),
 			};
 		});
 	}
@@ -284,36 +285,34 @@ export default class DiagnosticsNormalizer {
 			case "stacktrace":
 				return {
 					...item,
-					importantFilenames: (item.importantFilenames ?? []).map((filename) =>
-						this.normalizeFilename(filename)
-					),
+					importantPaths: new UnknownPathSet(Array.from(item.importantPaths ?? [], (path) => this.normalizePath(path))),
 					frames: item.frames.map((frame) => {
-						const {filename, line, column} = frame;
+						const {path, line, column} = frame;
 
 						if (
-							filename === undefined ||
+							path === undefined ||
 							line === undefined ||
 							column === undefined ||
-							(sourceMaps !== undefined && !sourceMaps.has(filename))
+							(sourceMaps !== undefined && !sourceMaps.has(path))
 						) {
 							return {
 								...frame,
 								start: this.normalizePositionValue(line),
 								column: this.normalizePositionValue(column),
-								filename: this.normalizeFilename(filename),
+								path: this.normalizePath(path),
 							};
 						}
 
 						if (sourceMaps !== undefined) {
 							const resolved = sourceMaps.approxOriginalPositionFor(
-								filename,
+								path,
 								line,
 								column,
 							);
 							if (resolved !== undefined) {
 								return {
 									...frame,
-									filename: this.normalizeFilename(resolved.source),
+									path: this.normalizePath(resolved.source),
 									line: this.normalizePositionValue(resolved.line),
 									column: this.normalizePositionValue(resolved.column),
 								};

@@ -6,7 +6,7 @@
  */
 
 import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {UserConfig} from "@internal/core";
 import {Number0, Number1} from "@internal/ob1";
 import {Consumer} from "@internal/consume";
@@ -80,17 +80,17 @@ export type MarkupTagName =
 	| "locator";
 
 export type MarkupFormatPositionNormalizer = (
-	filename: string,
+	path: AnyPath,
 	line: undefined | Number1,
 	column: undefined | Number0,
 ) => {
-	filename: string;
+	path: AnyPath;
 	line?: Number1;
 	column?: Number0;
 };
 
 export type MarkupFormatFilenameHumanizer = (
-	filename: string,
+	path: AnyPath,
 ) => undefined | string;
 
 export type MarkupFormatOptions = {

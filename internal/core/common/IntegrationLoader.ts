@@ -50,7 +50,7 @@ export default class IntegrationLoader<Value> {
         throw createSingleDiagnosticError({
           description: descriptions.INTEGRATIONS.NOT_FOUND(this.name),
           location: {
-            filename: path.join(),
+            path,
           },
         });
       } else {

@@ -96,7 +96,7 @@ export default async function executeMain(
 				location: {
 					start: pos,
 					end: pos,
-					filename,
+					path,
 					sourceText: truncateSourceText(code, pos, pos),
 				},
 				tags: {
@@ -111,7 +111,7 @@ export default async function executeMain(
 
 	// Execute the script if there was no syntax error
 	if (sourceMap !== undefined) {
-		sourceMapManager.add(filename, sourceMap);
+		sourceMapManager.add(path, sourceMap);
 	}
 	const res = await script.runInContext(context);
 

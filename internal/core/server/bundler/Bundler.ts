@@ -19,6 +19,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	createUnknownPath,
+	UIDPath,
 } from "@internal/path";
 import {
 	JSONManifest,
@@ -153,7 +154,7 @@ export default class Bundler {
 		const mod = graph.getNode(path);
 
 		// Build a map of relative module sources to module id
-		const relativeSourcesToModuleId: Dict<string> = {};
+		const relativeSourcesToModuleId: Dict<UIDPath> = {};
 		for (const [relative, absolute] of mod.relativeToAbsolutePath) {
 			const moduleId = graph.getNode(absolute).uid;
 			relativeSourcesToModuleId[relative] = moduleId;

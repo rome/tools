@@ -31,9 +31,9 @@ function buildTag(
 			// Clone
 			attributes = attributes.copy();
 
-			const {filename, line, column, text} = buildFileLink(attributes, opts);
+			const {path, line, column, text} = buildFileLink(attributes, opts);
 
-			attributes.get("target").setValue(filename);
+			attributes.get("target").setValue(path.join());
 
 			if (isEmptyMarkup(inner) || opts.stripFilelinkText) {
 				inner = markup`${text}`;

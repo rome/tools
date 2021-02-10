@@ -14,6 +14,7 @@ import {
 	tsTypeAssertion,
 } from "@internal/ast";
 import {CompilerContext, Path} from "@internal/compiler";
+import { createUnknownPath } from "@internal/path";
 
 function helper(node: AnyNode) {
 	let path = new Path(
@@ -25,7 +26,7 @@ function helper(node: AnyNode) {
 				corrupt: false,
 				diagnostics: [],
 				directives: [],
-				filename: "",
+				path: createUnknownPath("unknown"),
 				hasHoistedVars: false,
 				interpreter: undefined,
 				sourceType: "script",

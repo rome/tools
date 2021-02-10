@@ -36,10 +36,10 @@ import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
 	CWD_PATH,
-	UnknownPath,
 	UnknownPathMap,
 	UnknownPathSet,
-	createUnknownPath,
+	AnyPath,
+	equalPaths,
 } from "@internal/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {createReadStream, exists, lstat} from "@internal/fs";
@@ -103,14 +103,14 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 // Dependency that may not be included in the output diagnostic but whose changes may effect the validity of this one
 type ChangeFileDependency = {
 	type: "change";
-	path: UnknownPath;
+	path: AnyPath;
 	integrity: undefined | DiagnosticIntegrity;
 };
 
 // Dependency that will have a code frame in the output diagnostic
 type ReferenceFileDependency = {
 	type: "reference";
-	path: UnknownPath;
+	path: AnyPath;
 	integrity: undefined | DiagnosticIntegrity;
 	sourceTypeJS: undefined | DiagnosticSourceType;
 	language: undefined | DiagnosticLanguage;
@@ -185,15 +185,13 @@ export default class DiagnosticsPrinter extends Error {
 	private filteredCount: number;
 	private truncatedCount: number;
 
-	public createFilePath(filename: string): UnknownPath {
+	public normalizePath(path: AnyPath): AnyPath {
 		const {normalizePosition} = this.reporter.markupOptions;
 
 		if (normalizePosition === undefined) {
-			return createUnknownPath(filename);
+			return path;
 		} else {
-			return createUnknownPath(
-				normalizePosition(filename, undefined, undefined).filename,
-			);
+			return normalizePosition(path, undefined, undefined).path;
 		}
 	}
 
@@ -353,15 +351,15 @@ export default class DiagnosticsPrinter extends Error {
 		const {
 			dependencies,
 			description: {advice},
-			location: {language, sourceTypeJS, sourceText, integrity, filename},
+			location: {language, sourceTypeJS, sourceText, integrity, path},
 		} = diag;
 
-		if (filename !== undefined) {
-			const path = this.createFilePath(filename);
+		if (path !== undefined) {
+			const normalPath = this.normalizePath(path);
 			if (hasFrame(diag.location)) {
 				deps.push({
 					type: "reference",
-					path,
+					path: normalPath,
 					integrity,
 					language,
 					sourceTypeJS,
@@ -370,17 +368,17 @@ export default class DiagnosticsPrinter extends Error {
 			} else {
 				deps.push({
 					type: "change",
-					path,
+					path: normalPath,
 					integrity,
 				});
 			}
 		}
 
 		if (dependencies !== undefined) {
-			for (const {filename, integrity} of dependencies) {
+			for (const {path, integrity} of dependencies) {
 				deps.push({
 					type: "change",
-					path: this.createFilePath(filename),
+					path: this.normalizePath(path),
 					integrity,
 				});
 			}
@@ -389,8 +387,8 @@ export default class DiagnosticsPrinter extends Error {
 		for (const item of advice) {
 			if (item.type === "frame") {
 				const {location} = item;
-				if (location.filename !== undefined) {
-					const path = this.createFilePath(location.filename);
+				if (location.path !== undefined) {
+					const path = this.normalizePath(location.path);
 					if (hasFrame(location)) {
 						deps.push({
 							type: "reference",
@@ -411,13 +409,13 @@ export default class DiagnosticsPrinter extends Error {
 			}
 
 			if (item.type === "stacktrace") {
-				for (const {filename, line, column, sourceText} of item.frames) {
-					if (filename !== undefined) {
-						const path = this.createFilePath(filename);
+				for (const {path, line, column, sourceText} of item.frames) {
+					if (path !== undefined) {
+						const normalPath = this.normalizePath(path);
 						if (line !== undefined && column !== undefined) {
 							deps.push({
 								type: "reference",
-								path,
+								path: normalPath,
 								language: undefined,
 								sourceTypeJS: undefined,
 								integrity: undefined,
@@ -426,7 +424,7 @@ export default class DiagnosticsPrinter extends Error {
 						} else {
 							deps.push({
 								type: "change",
-								path,
+								path: normalPath,
 								integrity: undefined,
 							});
 						}
@@ -554,9 +552,9 @@ export default class DiagnosticsPrinter extends Error {
 	public getDiagnosticDependencyMeta(
 		diag: Diagnostic,
 	): {
-		outdatedFiles: UnknownPathSet;
+		outdatedPaths: UnknownPathSet;
 	} {
-		let outdatedFiles: UnknownPathSet = new UnknownPathSet();
+		let outdatedPaths: UnknownPathSet = new UnknownPathSet();
 
 		for (const {
 			path,
@@ -569,15 +567,15 @@ export default class DiagnosticsPrinter extends Error {
 			const actualHash = this.fileHashes.get(path);
 			const isOutdated = actualHash !== expectedIntegrity.hash;
 			if (isOutdated) {
-				outdatedFiles.add(path);
+				outdatedPaths.add(path);
 			}
 		}
 
-		return {outdatedFiles};
+		return {outdatedPaths: outdatedPaths};
 	}
 
 	private printAuxiliaryDiagnostic(diag: Diagnostic) {
-		const {description: {message}, location: {start, filename}} = diag;
+		const {description: {message}, location: {start, path}} = diag;
 
 		switch (this.flags.auxiliaryDiagnosticFormat) {
 			// https://docs.github.com/en/actions/reference/workflow-commands-for-github-actions#setting-an-error-message
@@ -586,13 +584,11 @@ export default class DiagnosticsPrinter extends Error {
 			case "github-actions": {
 				const parts = [];
 
-				if (filename !== undefined) {
-					const path = createUnknownPath(filename);
-
+				if (path !== undefined) {
 					if (path.isAbsolute() && path.isRelativeTo(this.cwd)) {
 						parts.push(`file=${this.cwd.relative(path).join()}`);
 					} else {
-						parts.push(`file=${filename}`);
+						parts.push(`file=${path.join()}`);
 					}
 				}
 
@@ -617,14 +613,14 @@ export default class DiagnosticsPrinter extends Error {
 
 	public printDiagnostic(diag: Diagnostic) {
 		const {reporter} = this;
-		const {start, end, filename} = diag.location;
+		const {start, end, path} = diag.location;
 		let advice = [...diag.description.advice];
 
 		// Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
 		const firstAdvice = advice[0];
 		if (firstAdvice?.type === "stacktrace" && firstAdvice.frames.length === 1) {
 			const frame = firstAdvice.frames[0];
-			if (frame.filename === filename && equalPosition(frame, start)) {
+			if (equalPaths(frame.path, path) && equalPosition(frame, start)) {
 				advice.shift();
 			}
 		}
@@ -637,7 +633,7 @@ export default class DiagnosticsPrinter extends Error {
 			adviceLoop: for (const item of advice) {
 				if (
 					item.type === "frame" &&
-					item.location.filename === filename &&
+					equalPaths(item.location.path, path) &&
 					equalPosition(item.location.start, start) &&
 					equalPosition(item.location.end, end)
 				) {
@@ -647,7 +643,7 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (item.type === "stacktrace") {
 					for (const frame of item.frames) {
-						if (frame.filename === filename && equalPosition(frame, start)) {
+						if (equalPaths(frame.path, path) && equalPosition(frame, start)) {
 							skipFrame = true;
 							break adviceLoop;
 						}
@@ -658,11 +654,11 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Check for outdated files
 		const outdatedAdvice: DiagnosticAdvice = [];
-		const {outdatedFiles} = this.getDiagnosticDependencyMeta(diag);
+		const {outdatedPaths: outdatedFiles} = this.getDiagnosticDependencyMeta(diag);
 
 		// Check if this file doesn't even exist
-		if (filename !== undefined) {
-			const path = this.createFilePath(filename);
+		if (path !== undefined) {
+			const normalPath = this.normalizePath(path);
 			const isMissing = this.missingFileSources.has(path);
 			if (isMissing) {
 				outdatedAdvice.push({
@@ -671,7 +667,7 @@ export default class DiagnosticsPrinter extends Error {
 					text: markup`This diagnostic refers to a file that does not exist`,
 				});
 				// Don't need to duplicate this path
-				outdatedFiles.delete(path);
+				outdatedFiles.delete(normalPath);
 				skipFrame = true;
 			}
 		}
@@ -679,9 +675,9 @@ export default class DiagnosticsPrinter extends Error {
 		// List outdated
 		const isOutdated = outdatedFiles.size > 0;
 		if (isOutdated) {
-			const outdatedFilesArr = Array.from(outdatedFiles, (path) => path.join());
+			const outdatedFilesArr = Array.from(outdatedFiles);
 
-			if (outdatedFilesArr.length === 1 && outdatedFilesArr[0] === filename) {
+			if (outdatedFilesArr.length === 1 && outdatedFilesArr[0].equal(path)) {
 				outdatedAdvice.push({
 					type: "log",
 					category: "warn",
@@ -696,8 +692,8 @@ export default class DiagnosticsPrinter extends Error {
 
 				outdatedAdvice.push({
 					type: "list",
-					list: outdatedFilesArr.map((filename) =>
-						markup`<filelink target="${filename}" />`
+					list: outdatedFilesArr.map((path) =>
+						markup`${path}`
 					),
 				});
 			}

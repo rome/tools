@@ -8,32 +8,33 @@
 import SourceMapConsumer from "./SourceMapConsumer";
 import {Number0, Number1} from "@internal/ob1";
 import {ResolvedLocation} from "./types";
+import { AnyPath, UnknownPathMap } from "@internal/path";
 
 export default class SourceMapConsumerCollection {
 	constructor() {
-		this.maps = new Map();
+		this.maps = new UnknownPathMap();
 	}
 
-	private maps: Map<string, SourceMapConsumer>;
+	private maps: UnknownPathMap<SourceMapConsumer>;
 
 	public hasAny(): boolean {
 		return this.maps.size > 0;
 	}
 
-	public has(file: undefined | string): boolean {
-		return file !== undefined && this.maps.has(file);
+	public has(path: undefined | AnyPath): boolean {
+		return path !== undefined && this.maps.has(path);
 	}
 
-	public add(file: string, map: SourceMapConsumer) {
-		this.maps.set(file, map);
+	public add(path: AnyPath, map: SourceMapConsumer) {
+		this.maps.set(path, map);
 	}
 
-	private get(file: string): undefined | SourceMapConsumer {
-		return this.maps.get(file);
+	private get(path: AnyPath): undefined | SourceMapConsumer {
+		return this.maps.get(path);
 	}
 
 	private normalizeResolved(
-		source: string,
+		source: AnyPath,
 		line: Number1,
 		column: Number0,
 		loc: undefined | ResolvedLocation,
@@ -52,37 +53,37 @@ export default class SourceMapConsumerCollection {
 	}
 
 	public assertApproxOriginalPositionFor(
-		file: string,
+		path: AnyPath,
 		line: Number1,
 		column: Number0,
 	): ResolvedLocation {
 		return this.normalizeResolved(
-			file,
+			path,
 			line,
 			column,
-			this.approxOriginalPositionFor(file, line, column),
+			this.approxOriginalPositionFor(path, line, column),
 		);
 	}
 
 	public assertExactOriginalPositionFor(
-		file: string,
+		path: AnyPath,
 		line: Number1,
 		column: Number0,
 	): ResolvedLocation {
 		return this.normalizeResolved(
-			file,
+			path,
 			line,
 			column,
-			this.exactOriginalPositionFor(file, line, column),
+			this.exactOriginalPositionFor(path, line, column),
 		);
 	}
 
 	public approxOriginalPositionFor(
-		file: string,
+		path: AnyPath,
 		line: Number1,
 		column: Number0,
 	): undefined | ResolvedLocation {
-		const map = this.get(file);
+		const map = this.get(path);
 		if (map === undefined) {
 			return undefined;
 		} else {
@@ -91,11 +92,11 @@ export default class SourceMapConsumerCollection {
 	}
 
 	public exactOriginalPositionFor(
-		file: string,
+		path: AnyPath,
 		line: Number1,
 		column: Number0,
 	): undefined | ResolvedLocation {
-		const map = this.get(file);
+		const map = this.get(path);
 		if (map === undefined) {
 			return undefined;
 		} else {

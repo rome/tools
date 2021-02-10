@@ -6,7 +6,7 @@ import { BridgeClient } from "@internal/events";
 import { FormatterOptions } from "@internal/formatter";
 import { ModuleSignature } from "@internal/js-analysis";
 import { Number0 } from "@internal/ob1";
-import { AbsoluteFilePath } from "@internal/path";
+import { AbsoluteFilePath, AnyPath } from "@internal/path";
 import { Dict } from "@internal/typescript-helpers";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import { AnalyzeDependencyResult } from "../common/types/analyzeDependencies";
@@ -109,7 +109,7 @@ export type WorkerPrefetchedModuleSignatures = {
 	[key: string]:
 		| {
 				type: "USE_CACHED";
-				filename: string;
+				path: AnyPath;
 			}
 		| {
 				type: "RESOLVED";

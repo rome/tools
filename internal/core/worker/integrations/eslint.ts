@@ -12,7 +12,8 @@ const eslintLoader = new IntegrationLoader({
   range: "^7.0.0",
   normalize: (consumer) => {
     const Factory = consumer.get("ESLint").asFunction();
-    return consumer.setValue(new Factory({fix: true}));
+    const eslint = Reflect.construct(Factory, [{fix: true}]);
+    return consumer.setValue(eslint);
   },
 });
 
@@ -67,7 +68,7 @@ export async function maybeRunESLint({ref, project, worker}: {
         categoryValue: message.get("ruleId").asStringOrVoid(),
       },
       location: {
-        filename: ref.uid,
+        path: ref.uid,
         start,
         end,
       },

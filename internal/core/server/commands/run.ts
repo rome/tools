@@ -18,7 +18,7 @@ import {markup} from "@internal/markup";
 type RunResult = {
 	type: "executeCode";
 	args: string[];
-	filename: string;
+	path: AbsoluteFilePath;
 	code: string;
 	map: SourceMap;
 };
@@ -44,7 +44,7 @@ export default createServerCommand({
 			return {
 				type: "executeCode",
 				args,
-				filename: path.join(),
+				path,
 				code: entry.js.content(),
 				map: entry.sourceMap.map.serialize(),
 			};

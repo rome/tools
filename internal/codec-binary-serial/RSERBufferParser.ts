@@ -23,7 +23,7 @@ import {
 	validateFileCode,
 	validateValueCode,
 } from "./constants";
-import {AnyPath, AnyPathSet} from "@internal/path";
+import {AnyPath, AnyPathSet, isPath} from "@internal/path";
 import {
 	ErrorFrames,
 	StructuredNodeSystemErrorProperties,
@@ -209,12 +209,12 @@ export default class RSERBufferParser {
 		const code = this.peekCode();
 
 		switch (code) {
-			case VALUE_CODES.FILE_PATH_MAP: {
+			case VALUE_CODES.PATH_MAP: {
 				this.readOffset++;
-				const code = this.decodeFilePathCode();
+				const code = this.decodePathCode();
 				const map = pathMapFromCode(code);
 				this.references.set(id, map);
-				return this.decodeFilePathMapValue(map);
+				return this.decodePathMapValue(map);
 			}
 
 			case VALUE_CODES.SET: {
@@ -278,8 +278,8 @@ export default class RSERBufferParser {
 	// These are values that can hold other values
 	private decodeReferentialValue(code: VALUE_CODES): undefined | RSERValue {
 		switch (code) {
-			case VALUE_CODES.FILE_PATH_MAP:
-				return this.decodeFilePathMap();
+			case VALUE_CODES.PATH_MAP:
+				return this.decodePathMap();
 
 			case VALUE_CODES.SET:
 				return this.decodeSet();
@@ -342,11 +342,11 @@ export default class RSERBufferParser {
 			case VALUE_CODES.NAN:
 				return this.decodeNaN();
 
-			case VALUE_CODES.FILE_PATH:
-				return this.decodeFilePath();
+			case VALUE_CODES.PATH:
+				return this.decodePath();
 
-			case VALUE_CODES.FILE_PATH_SET:
-				return this.decodeFilePathSet();
+			case VALUE_CODES.PATH_SET:
+				return this.decodePathSet();
 
 			case VALUE_CODES.ERROR:
 				return this.decodeError();
@@ -392,7 +392,7 @@ export default class RSERBufferParser {
 	private decodeSourceLocation(): SourceLocation {
 		this.expectCode(VALUE_CODES.SOURCE_LOCATION);
 		return {
-			filename: this.decodeStringOrVoid(),
+			path: this.decodePathOrVoid(),
 			identifierName: this.decodeStringOrVoid(),
 			start: this.decodePositionValue(),
 			end: this.decodePositionValue(),
@@ -571,25 +571,50 @@ export default class RSERBufferParser {
 		return new Date(time);
 	}
 
-	private decodeFilePathCode(): PATH_CODES {
+	private decodePathCode(): PATH_CODES {
 		return validateFileCode(this.readInt(1));
 	}
 
-	private decodeFilePath(): AnyPath {
-		this.expectCode(VALUE_CODES.FILE_PATH);
-		const code = this.decodeFilePathCode();
+	private decodePath(): AnyPath {
+		this.expectCode(VALUE_CODES.PATH);
+		const code = this.decodePathCode();
 		const str = this.readString();
 		return pathFromCode(code, str);
 	}
 
-	private decodeFilePathMap(): AnyRSERPathMap {
-		this.expectCode(VALUE_CODES.FILE_PATH_MAP);
-		const code = this.decodeFilePathCode();
-		const map = pathMapFromCode(code);
-		return this.decodeFilePathMapValue(map);
+	private decodePathOrVoid(): undefined | AnyPath {
+		const code = this.peekCode();
+		switch (code) {
+			case VALUE_CODES.UNDEFINED:
+			case VALUE_CODES.PATH:
+			case VALUE_CODES.REFERENCE:
+			case VALUE_CODES.DECLARE_REFERENCE: {
+				const value = this.decodeValue();
+
+				if (!isPath(value) && typeof value !== "undefined") {
+					throw this.unexpected(
+						`Expected path or undefined but got a type of ${typeof value}`,
+					);
+				}
+
+				return value;
+			}
+
+			default:
+				throw this.unexpected(
+					`Expected path or undefined but got ${formatCode(code)}`,
+				);
+		}
 	}
 
-	private decodeFilePathMapValue(map: AnyRSERPathMap): AnyRSERPathMap {
+	private decodePathMap(): AnyRSERPathMap {
+		this.expectCode(VALUE_CODES.PATH_MAP);
+		const code = this.decodePathCode();
+		const map = pathMapFromCode(code);
+		return this.decodePathMapValue(map);
+	}
+
+	private decodePathMapValue(map: AnyRSERPathMap): AnyRSERPathMap {
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {
 			const str = this.readString();
@@ -599,10 +624,10 @@ export default class RSERBufferParser {
 		return map;
 	}
 
-	private decodeFilePathSet(): AnyPathSet {
-		this.expectCode(VALUE_CODES.FILE_PATH_SET);
+	private decodePathSet(): AnyPathSet {
+		this.expectCode(VALUE_CODES.PATH_SET);
 
-		const code = this.decodeFilePathCode();
+		const code = this.decodePathCode();
 		const set = pathSetFromCode(code);
 
 		const size = this.decodeNumber();

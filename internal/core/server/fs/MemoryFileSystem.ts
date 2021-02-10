@@ -1041,7 +1041,7 @@ export default class MemoryFileSystem {
 				opts.diagnostics.addDiagnostic({
 					description: descriptions.PROJECT_MANAGER.MULTIPLE_CONFIGS,
 					location: {
-						filename: path.join(),
+						path,
 					},
 				});
 			}

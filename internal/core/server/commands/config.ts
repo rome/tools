@@ -119,7 +119,7 @@ async function runCommand(
 				return {};
 			},
 			(processor) => {
-				processor.normalizer.setInlineSourceText(configPath.join(), stringified);
+				processor.normalizer.setInlineSourceText(configPath, stringified);
 			},
 		);
 

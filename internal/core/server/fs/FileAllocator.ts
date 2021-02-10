@@ -73,7 +73,7 @@ export default class FileAllocator {
 					maxSize,
 				),
 				location: {
-					filename: path.join(),
+					path,
 				},
 			});
 		}

@@ -916,7 +916,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 			if (info === undefined) {
 				return {
 					language: parser.language,
-					filename: parser.filename,
+					path: parser.path,
 				};
 			}
 
@@ -932,7 +932,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 			}
 
 			let loc: SourceLocation = {
-				filename: parser.filename,
+				path: parser.path,
 				start,
 				end,
 			};

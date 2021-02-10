@@ -36,7 +36,7 @@ async function main(): Promise<void> {
 	}
 }
 
-const bin = getBinPath().join();
+const bin = getBinPath();
 sourceMapManager.add(
 	bin,
 	SourceMapConsumer.fromJSONLazy(

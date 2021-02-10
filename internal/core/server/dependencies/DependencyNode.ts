@@ -19,7 +19,7 @@ import {
 import {ProjectDefinition} from "@internal/project";
 import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
 import {WorkerAnalyzeDependencyResult} from "@internal/core";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import {
 	AnalyzeDependency,
 	AnalyzeExportLocal,
@@ -108,7 +108,7 @@ export default class DependencyNode {
 		this.shallow = false;
 	}
 
-	public uid: string;
+	public uid: UIDPath;
 	public type: AnalyzeModuleType;
 	public all: boolean;
 	public path: AbsoluteFilePath;
@@ -296,7 +296,7 @@ export default class DependencyNode {
 				const localLoc = mod.analyze.value.topLevelLocalBindings[expectedName];
 				if (localLoc !== undefined) {
 					return {
-						dependencies: [{filename: fromSource}],
+						dependencies: [{path: fromSource}],
 						description: descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
 							expectedName,
 							fromSource,
@@ -309,7 +309,7 @@ export default class DependencyNode {
 		}
 
 		return {
-			dependencies: [{filename: fromSource}],
+			dependencies: [{path: fromSource}],
 			description: descriptions.RESOLVER.UNKNOWN_EXPORT(
 				expectedName,
 				fromSource,

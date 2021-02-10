@@ -37,6 +37,9 @@ import {
 	UnknownPath,
 	UnknownPathMap,
 	UnknownPathSet,
+	isPath,
+	isPathSet,
+	isPathMap,
 } from "@internal/path";
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
@@ -197,8 +200,8 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	private encodeFilePathMap(map: AnyRSERPathMap) {
-		this.writeCode(VALUE_CODES.FILE_PATH_MAP);
+	private encodePathMap(map: AnyRSERPathMap) {
+		this.writeCode(VALUE_CODES.PATH_MAP);
 		this.writeByte(pathMapToCode(map));
 		this.encodeInt(map.size);
 		for (const [path, value] of map) {
@@ -207,8 +210,8 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	private encodeFilePathSet(set: AnyPathSet) {
-		this.writeCode(VALUE_CODES.FILE_PATH_SET);
+	private encodePathSet(set: AnyPathSet) {
+		this.writeCode(VALUE_CODES.PATH_SET);
 		this.writeByte(pathSetToCode(set));
 		this.encodeInt(set.size);
 		for (const path of set) {
@@ -216,8 +219,8 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	private encodeFilePath(path: AnyPath) {
-		this.writeCode(VALUE_CODES.FILE_PATH);
+	private encodePath(path: AnyPath) {
+		this.writeCode(VALUE_CODES.PATH);
 		this.writeByte(pathToCode(path));
 		this.encodeStringValue(path.join());
 	}
@@ -313,15 +316,6 @@ export default class RSERBufferAssembler {
 			return this.encodeArrayBufferView(val);
 		}
 
-		if (
-			val instanceof UnknownPath ||
-			val instanceof RelativeFilePath ||
-			val instanceof AbsoluteFilePath ||
-			val instanceof URLPath
-		) {
-			return this.encodeFilePath(val);
-		}
-
 		if (val instanceof Set) {
 			return this.encodeSet(val);
 		}
@@ -338,20 +332,16 @@ export default class RSERBufferAssembler {
 			return this.encodeRegExp(val);
 		}
 
-		if (
-			val instanceof RelativeFilePathMap ||
-			val instanceof AbsoluteFilePathMap ||
-			val instanceof UnknownPathMap
-		) {
-			return this.encodeFilePathMap(val);
+		if (isPath(val)) {
+			return this.encodePath(val);
 		}
 
-		if (
-			val instanceof RelativeFilePathSet ||
-			val instanceof AbsoluteFilePathSet ||
-			val instanceof UnknownPathSet
-		) {
-			return this.encodeFilePathSet(val);
+		if (isPathMap(val)) {
+			return this.encodePathMap(val);
+		}
+
+		if (isPathSet(val)) {
+			return this.encodePathSet(val);
 		}
 
 		if (Array.isArray(val)) {
@@ -379,8 +369,20 @@ export default class RSERBufferAssembler {
 
 	private encodeSourceLocation(loc: SourceLocation) {
 		this.writeCode(VALUE_CODES.SOURCE_LOCATION);
-		this.encodeVoidOrReferenceString(loc.filename);
-		this.encodeVoidOrReferenceString(loc.identifierName);
+		
+		if (loc.path === undefined) {
+			this.encodeUndefined();
+		} else {
+			this.encodePath(loc.path);
+		}
+
+		// We don't use encodeValue here as we want to allow identifierName to use our reference table
+		if (loc.identifierName === undefined) {
+			this.encodeUndefined();
+		} else {
+			this.encodeString(loc.identifierName, true);
+		}
+
 		this.encodeInt(ob1Get(loc.start.line));
 		this.encodeInt(ob1Get(loc.start.column));
 		this.encodeInt(ob1Get(loc.end.line));
@@ -426,14 +428,6 @@ export default class RSERBufferAssembler {
 
 	private encodeUndefined() {
 		this.writeCode(VALUE_CODES.UNDEFINED);
-	}
-
-	private encodeVoidOrReferenceString(val: string | undefined) {
-		if (val === undefined) {
-			this.encodeUndefined();
-		} else {
-			this.encodeString(val, false);
-		}
 	}
 
 	private encodeString(val: string, allowReference?: boolean) {
@@ -486,9 +480,8 @@ export default class RSERBufferAssembler {
 				return this.encodeNumber(val);
 			}
 
-			case "undefined": {
+			case "undefined":
 				return this.encodeUndefined();
-			}
 
 			case "string":
 				return this.encodeString(val);

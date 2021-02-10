@@ -193,11 +193,13 @@ export default class LSPServer {
 				return this.createProgress();
 			},
 			onChanges: ({changes}) => {
-				for (const {type, filename, diagnostics} of changes) {
-					if (filename === undefined || type !== "absolute") {
+				for (let change of changes) {
+					if (change.type !== "absolute") {
 						// Can only display absolute path diagnostics
 						continue;
 					}
+
+					const {path, diagnostics} = change;
 
 					// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
 					const processor = this.request.createDiagnosticsProcessor();
@@ -207,14 +209,14 @@ export default class LSPServer {
 					processor.addDiagnostics(diagnostics);
 
 					this.pathToDiagnostics.set(
-						createAbsoluteFilePath(filename),
+						path,
 						processor.getDiagnostics(),
 					);
 
 					this.transport.write({
 						method: "textDocument/publishDiagnostics",
 						params: {
-							uri: `file://${filename}`,
+							uri: `file://${path.join()}`,
 							diagnostics: convertDiagnosticsToLSP(
 								processor.getDiagnostics(),
 								this.server,

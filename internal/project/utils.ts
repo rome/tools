@@ -29,7 +29,7 @@ export function arrayOfPatterns(consumer: Consumer): PathPatterns {
 	// TODO consumer.handleThrownDiagnostics
 	return consumer.asMappedArray((item) => {
 		return parsePathPattern({
-			path: consumer.filename,
+			path: consumer.path,
 			input: item.asString(),
 			offsetPosition: item.getLocation("inner-value").start,
 		});

@@ -17,12 +17,12 @@ import {
 	jsNullLiteral,
 	jsNumericLiteral,
 	jsReferenceIdentifier,
-	jsRoot,
 	jsSpreadProperty,
 	jsStaticPropertyKey,
 	jsStringLiteral,
 	jsVariableDeclaration,
 	jsVariableDeclarator,
+	MOCK_PROGRAM,
 } from "@internal/ast";
 import {CompilerContext} from "@internal/compiler";
 
@@ -86,33 +86,9 @@ test(
 			parentScope: undefined,
 			rootScope: new RootScope(
 				new CompilerContext({
-					ast: jsRoot.create({
-						body: [],
-						comments: [],
-						corrupt: false,
-						diagnostics: [],
-						directives: [],
-						filename: "",
-						hasHoistedVars: false,
-						interpreter: undefined,
-						integrity: undefined,
-						sourceType: "script",
-						syntax: [],
-					}),
+					ast: MOCK_PROGRAM,
 				}),
-				jsRoot.create({
-					body: [],
-					comments: [],
-					corrupt: false,
-					diagnostics: [],
-					directives: [],
-					filename: "",
-					hasHoistedVars: false,
-					interpreter: undefined,
-					integrity: undefined,
-					sourceType: "script",
-					syntax: [],
-				}),
+				MOCK_PROGRAM,
 			),
 		});
 

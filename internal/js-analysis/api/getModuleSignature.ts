@@ -28,11 +28,11 @@ export default async function getModuleSignature(
 	},
 ): Promise<ModuleSignature> {
 	const {ast, provider} = opts;
-	const {filename} = ast;
+	const {path} = ast;
 
-	if (filename.includes("node_modules")) {
+	if (path.hasSegment("node_modules")) {
 		return {
-			filename,
+			path,
 			exports: [],
 			types: {},
 		};
@@ -105,7 +105,7 @@ export default async function getModuleSignature(
 	}
 
 	const result: ModuleSignature = {
-		filename,
+		path,
 		exports: exportMap,
 		types,
 	};

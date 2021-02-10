@@ -136,7 +136,7 @@ test(
 				parsed,
 				corrupt: parser.state.corrupt,
 				diagnostics: parser.getDiagnostics(),
-				filename: parser.getFilenameAssert(),
+				path: parser.getPathAssert(),
 				comments: parser.state.comments,
 			};
 		}

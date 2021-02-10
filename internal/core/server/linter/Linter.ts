@@ -17,6 +17,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	AnyPath,
 } from "@internal/path";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -38,11 +39,17 @@ import { EMPTY_LINT_TIMINGS, WorkerLintTimings } from "@internal/core/worker/typ
 import { ExtendedMap } from "@internal/collections";
 import { humanizeDuration } from "@internal/string-utils";
 
-type LintWatchChanges = {
-	type: "absolute" | "unknown";
-	filename: undefined | string;
+type LintWatchChange = {
+	type: "absolute";
+	path: AbsoluteFilePath;
 	diagnostics: Diagnostics;
-}[];
+} | {
+	type: "unknown";
+	path: undefined | AnyPath;
+	diagnostics: Diagnostics;
+};
+
+type LintWatchChanges = LintWatchChange[];
 
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
@@ -422,13 +429,13 @@ class LintRunner {
 			}
 		}
 
-		const diagnosticsByFilename = processor.getDiagnosticsByFilename();
+		const diagnosticsByPath = processor.getDiagnosticsByPath();
 
 		// In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
-		const includedFilenamesInDiagnostics = server.projectManager.normalizeFilenamesToFilePaths(
-			diagnosticsByFilename.keys(),
+		const includedPathsInDiagnostics = server.projectManager.categorizePaths(
+			diagnosticsByPath.map.keys(),
 		);
-		for (const path of includedFilenamesInDiagnostics.absolutes) {
+		for (const path of includedPathsInDiagnostics.absolutes) {
 			updatedPaths.add(path);
 		}
 
@@ -447,20 +454,17 @@ class LintRunner {
 
 		// We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
 		for (const path of updatedPaths) {
-			const filename = path.join();
-			let diagnostics = [...(diagnosticsByFilename.get(filename) || [])];
-
 			// Could have been a UID that we turned into an absolute path so turn it back
-			diagnostics = [
-				...diagnostics,
-				...(diagnosticsByFilename.get(
+			const diagnostics = [
+				...(diagnosticsByPath.map.get(path) || []),
+				...(diagnosticsByPath.map.get(
 					this.server.projectManager.getUid(path, true),
 				) || []),
 			];
 
 			changes.push({
 				type: "absolute",
-				filename,
+				path,
 				diagnostics,
 			});
 		}
@@ -468,11 +472,19 @@ class LintRunner {
 		// We can produce diagnostics that don't actually point at a file. For LSP we will just throw these away,
 		// otherwise inside of Rome we can display them.
 		// These filenames may be relative or undefined
-		for (const filename of includedFilenamesInDiagnostics.others) {
+		for (const path of includedPathsInDiagnostics.unknowns) {
 			changes.push({
 				type: "unknown",
-				filename,
-				diagnostics: diagnosticsByFilename.get(filename) || [],
+				path,
+				diagnostics: diagnosticsByPath.map.get(path) || [],
+			});
+		}
+
+		if (includedPathsInDiagnostics.hasUndefined) {
+			changes.push({
+				type: "unknown",
+				path: undefined,
+				diagnostics: diagnosticsByPath.pathless,
 			});
 		}
 
@@ -594,7 +606,8 @@ export default class Linter {
 				);
 
 				// Update our diagnostics with the changes
-				for (const {filename, diagnostics} of changes) {
+				for (const {path, diagnostics} of changes) {
+					const filename = path === undefined ? undefined : path.join();
 					if (diagnostics.length === 0) {
 						diagnosticsByFilename.delete(filename);
 					} else {
@@ -640,7 +653,8 @@ export default class Linter {
 				runner = res.runner;
 
 				// Update our diagnostics with the changes
-				for (const {filename, diagnostics} of res.changes) {
+				for (const {path, diagnostics} of res.changes) {
+					const filename = path === undefined ? undefined : path.join();
 					if (diagnostics.length === 0) {
 						diagnosticsByFilename.delete(filename);
 					} else {

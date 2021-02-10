@@ -14,6 +14,7 @@ import {
 	convertPossibleNodeErrorToDiagnostic,
 } from "@internal/node";
 import {DiagnosticLocation} from "@internal/diagnostics";
+import { createUIDPath } from "@internal/path";
 
 export * from "./types";
 
@@ -153,7 +154,7 @@ export function getDiagnosticLocationFromErrorFrame(
 	};
 
 	return {
-		filename: frame.filename ?? "unknown",
+		path: frame.path ?? createUIDPath("unknown"),
 		start: pos,
 		end: pos,
 	};

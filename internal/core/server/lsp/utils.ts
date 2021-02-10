@@ -61,7 +61,7 @@ export function convertDiagnosticsToLSP(
 				nextItem.type === "frame"
 			) {
 				const abs = server.projectManager.getFilePathFromUidOrAbsolute(
-					nextItem.location.filename,
+					nextItem.location.path,
 				);
 				if (abs !== undefined) {
 					relatedInformation.push({

@@ -41,6 +41,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	createAbsoluteFilePath,
+	UnknownPathSet,
 } from "@internal/path";
 import {
 	concatMarkup,
@@ -89,8 +90,8 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	if (latestTestWorkerFrame === undefined) {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
-				frame.filename !== undefined &&
-				frame.filename.includes("TestWorkerFile")
+				frame.path !== undefined &&
+				frame.path.join().includes("TestWorkerFile")
 			);
 		});
 	}
@@ -296,7 +297,7 @@ export default class TestWorkerFile {
 					},
 					location: {
 						...res.syntaxError.location,
-						filename: this.path.join(),
+						path: this.path,
 					},
 					tags: {
 						...res.syntaxError,
@@ -316,7 +317,7 @@ export default class TestWorkerFile {
 		if (this.foundTests.size === 0 && !this.hasDiagnostics) {
 			await this.emitDiagnostic({
 				location: {
-					filename: this.path.join(),
+					path: this.path,
 				},
 				description: descriptions.TESTS.UNDECLARED,
 			});
@@ -421,10 +422,10 @@ export default class TestWorkerFile {
 				description: {
 					category: "tests/failure",
 				},
-				filename: this.path.join(),
+				path: this.path,
 				cleanFrames,
 				stackAdviceOptions: {
-					importantFilenames: [this.path.join()],
+					importantPaths: new UnknownPathSet([this.path]),
 				},
 			},
 		);
@@ -639,7 +640,7 @@ export default class TestWorkerFile {
 			await this.emitDiagnostic({
 				description: descriptions.TESTS.LOGS(advice),
 				location: {
-					filename: this.path.join(),
+					path: this.path,
 				},
 			});
 		}

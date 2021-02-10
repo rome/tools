@@ -31,7 +31,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
-import {UnknownPath, createUnknownPath} from "@internal/path";
+import {UnknownPath, createUnknownPath, AnyPath} from "@internal/path";
 import {
 	Number0,
 	Number1,
@@ -96,7 +96,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 		// Input information
 		this.path = path === undefined ? undefined : createUnknownPath(path);
-		this.filename = this.path === undefined ? undefined : this.path.join();
 		this.integrity = integrity;
 		this.input = input;
 		this.sourceText = sourceText ?? this.input;
@@ -112,7 +111,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.tokenizing = false;
 
 		this.indexTracker = new PositionTracker({
-			filename: this.filename,
+			path: this.path,
 			input: this.input,
 			offsetPosition,
 			getPosition: this.getPosition.bind(this),
@@ -128,7 +127,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private tokenizing: boolean;
 	private eofToken: EOFToken;
 	public path: undefined | UnknownPath;
-	public filename: undefined | string;
 	public input: string;
 	public language: DiagnosticLanguage;
 	public integrity: undefined | DiagnosticIntegrity;
@@ -191,15 +189,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			throw new Error("Path expected but none was passed to this Parser");
 		} else {
 			return path;
-		}
-	}
-
-	public getFilenameAssert(): string {
-		const {filename} = this;
-		if (filename === undefined) {
-			throw new Error("Filename expected but none was passed to this Parser");
-		} else {
-			return filename;
 		}
 	}
 
@@ -426,16 +415,16 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getIndexFromPosition(
 		pos: Position,
-		filename: undefined | string,
+		path: undefined | AnyPath,
 	): Number0 {
-		return this.indexTracker.getIndexFromPosition(pos, filename);
+		return this.indexTracker.getIndexFromPosition(pos, path);
 	}
 
 	public createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
 		const {currentToken} = this;
 		let {description} = opts;
 		const location = this.getDiagnosticLocation(opts);
-		const start = this.getIndexFromPosition(location.start, location.filename);
+		const start = this.getIndexFromPosition(location.start, location.path);
 
 		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
 		if (description === undefined) {
@@ -537,7 +526,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			integrity: this.integrity,
 			start,
 			end,
-			filename: this.filename,
+			path: this.path,
 		};
 	}
 
@@ -660,12 +649,12 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getInputStartIndex(node: undefined | NodeBase): Number0 {
 		const loc = this.getLoc(node);
-		return this.getIndexFromPosition(loc.start, loc.filename);
+		return this.getIndexFromPosition(loc.start, loc.path);
 	}
 
 	public getInputEndIndex(node: undefined | NodeBase): Number0 {
 		const loc = this.getLoc(node);
-		return this.getIndexFromPosition(loc.end, loc.filename);
+		return this.getIndexFromPosition(loc.end, loc.path);
 	}
 
 	public getLoc(node: undefined | NodeBase): SourceLocation {
@@ -730,7 +719,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public finishLocAt(start: Position, end: Position): SourceLocation {
 		return {
-			filename: this.filename,
+			path: this.path,
 			start,
 			end,
 		};
@@ -784,7 +773,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			corrupt: this.state.corrupt,
 			integrity: this.integrity,
 			diagnostics: this.getDiagnostics(),
-			filename: this.getFilenameAssert(),
+			path: this.getPathAssert(),
 			comments: this.state.comments,
 		};
 	}

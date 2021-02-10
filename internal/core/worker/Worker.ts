@@ -28,6 +28,8 @@ import {
 	UnknownPathMap,
 	createAbsoluteFilePath,
 	createUnknownPath,
+	UIDPath,
+	AnyPath,
 } from "@internal/path";
 import {
 	FSReadStream,
@@ -357,7 +359,7 @@ export default class Worker {
 			switch (value.type) {
 				case "RESOLVED": {
 					this.moduleSignatureCache.set(
-						createUnknownPath(value.graph.filename),
+						value.graph.path,
 						value.graph,
 					);
 					return value.graph;
@@ -370,19 +372,17 @@ export default class Worker {
 					return resolveGraph(value.key);
 
 				case "USE_CACHED": {
-					return this.moduleSignatureCache.assert(
-						createUnknownPath(value.filename),
-					);
+					return this.moduleSignatureCache.assert(value.path);
 				}
 			}
 		};
 
 		return {
 			getExportTypes: async (
-				origin: string,
+				origin: AnyPath,
 				relative: string,
 			): Promise<undefined | ModuleSignature> => {
-				return resolveGraph(`${origin}:${relative}`);
+				return resolveGraph(`${origin.join()}:${relative}`);
 			},
 			libs,
 		};
@@ -573,7 +573,7 @@ export default class Worker {
 	private async evict(
 		{real, uid}: {
 			real: AbsoluteFilePath;
-			uid: string;
+			uid: UIDPath;
 		},
 	) {
 		this.logger.info(markup`Evicted ${real}`);

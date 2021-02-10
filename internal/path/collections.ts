@@ -329,3 +329,13 @@ export type AnyPathSet =
 	| URLPathSet
 	| UIDPathSet
 	| UnknownPathSet;
+
+export function isPathSet(val: unknown): val is AnyPathSet {
+	return val instanceof AbsoluteFilePathSet || val instanceof RelativeFilePathSet || val instanceof URLPathSet || val instanceof UIDPathSet || val instanceof UnknownPathSet;
+}
+
+export type AnyPathMap<Value> = AbsoluteFilePathMap<Value> | RelativeFilePathMap<Value> | URLPathMap<Value> | UIDPathMap<Value> | UnknownPathMap<Value>;
+
+export function isPathMap(val: unknown): val is AnyPathMap<unknown> {
+	return val instanceof AbsoluteFilePathMap || val instanceof RelativeFilePathMap || val instanceof URLPathMap || val instanceof UIDPathMap || val instanceof UnknownPathMap;
+}

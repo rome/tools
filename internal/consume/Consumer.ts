@@ -81,8 +81,6 @@ function isComputedPart(part: ConsumeKey): boolean {
 export default class Consumer {
 	constructor(opts: ConsumerOptions) {
 		this.path = opts.filePath;
-		this.filename = this.path === undefined ? undefined : this.path.join();
-
 		this.value = opts.value;
 		this.parent = opts.parent;
 		this.keyPath = opts.objectPath;
@@ -100,7 +98,6 @@ export default class Consumer {
 	}
 
 	public path: undefined | UnknownPath;
-	public filename: undefined | string;
 
 	private declared: boolean;
 	private handleUnexpected: undefined | ConsumerHandleUnexpected;
@@ -233,13 +230,13 @@ export default class Consumer {
 			location.end === undefined
 		) {
 			return {
-				filename: this.filename,
+				path: this.path,
 				start: UNKNOWN_POSITION,
 				end: UNKNOWN_POSITION,
 			};
 		} else {
 			return {
-				filename: location.filename,
+				path: location.path,
 				start: location.start,
 				end: location.end,
 			};
@@ -300,7 +297,7 @@ export default class Consumer {
 	public wasInSource(): boolean {
 		const loc = this.getDiagnosticLocation();
 		return (
-			loc.filename !== undefined &&
+			loc.path !== undefined &&
 			(loc.start !== undefined || loc.end !== undefined)
 		);
 	}
@@ -382,7 +379,7 @@ export default class Consumer {
 	): DiagnosticsError {
 		const {target = "value"} = opts;
 
-		const {filename} = this;
+		const {path} = this;
 		let location = this.getDiagnosticLocation(target);
 		const fromSource = this.wasInSource();
 
@@ -416,7 +413,7 @@ export default class Consumer {
 
 			// If consumer is undefined and we have no filename then we were not able to find a location,
 			// in this case, just throw a normal error
-			if (consumer === undefined && filename === undefined) {
+			if (consumer === undefined && path === undefined) {
 				throw new Error(readMarkup(message));
 			}
 
@@ -447,7 +444,7 @@ export default class Consumer {
 			},
 			location: {
 				...location,
-				filename: this.filename,
+				path: this.path,
 			},
 		};
 

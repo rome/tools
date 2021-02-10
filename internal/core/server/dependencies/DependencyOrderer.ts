@@ -149,7 +149,7 @@ export default class DependencyOrderer {
 				path,
 			),
 			location: {
-				filename: node.path.join(),
+				path: node.path,
 				integrity: node.getIntegrity(),
 				start: imp.loc === undefined ? undefined : imp.loc.start,
 				end: imp.loc === undefined ? undefined : imp.loc.end,

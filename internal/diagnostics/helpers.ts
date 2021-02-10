@@ -153,17 +153,17 @@ export function buildDuplicateLocationAdvice(
 export function diagnosticLocationToMarkupFilelink(
 	loc: DiagnosticLocation,
 ): StaticMarkup {
-	const {start, filename} = loc;
+	const {start, path} = loc;
 
-	if (filename === undefined) {
+	if (path === undefined) {
 		return markup`unknown`;
 	}
 
 	if (start === undefined) {
-		return markup`<filelink target="${filename}" />`;
+		return markup`<filelink target="${path.join()}" />`;
 	}
 
-	return markup`<filelink target="${filename}" line="${String(start.line)}" column="${String(
+	return markup`<filelink target="${path.join()}" line="${String(start.line)}" column="${String(
 		start.column,
 	)}" />`;
 }

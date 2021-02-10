@@ -381,7 +381,7 @@ function formatObject(
 			obj.end,
 		)}`;
 		if (obj.filename !== undefined) {
-			inner = markup`<token type="string">${obj.filename}</token> ${inner}`;
+			inner = markup`<token type="string">${obj.path}</token> ${inner}`;
 		}
 		if (obj.identifierName !== undefined) {
 			inner = markup`${inner} (${escapeJSString(obj.identifierName)})`;

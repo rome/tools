@@ -217,7 +217,7 @@ export async function normalizeProjectConfig(
 
 		consumer.handleThrownDiagnostics(() => {
 			config.version = parseSemverRange({
-				path: consumer.filename,
+				path: consumer.path,
 				input: version.asString(),
 				offsetPosition: version.getLocation("inner-value").start,
 			});

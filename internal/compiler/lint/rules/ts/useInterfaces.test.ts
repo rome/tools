@@ -1,3 +1,4 @@
+import { createUnknownPath } from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
 
@@ -7,7 +8,7 @@ test(
 		await testLint(
 			t,
 			{
-				filename: "file.ts",
+				path: createUnknownPath("file.ts"),
 				category: "lint/ts/useInterfaces",
 			},
 		);

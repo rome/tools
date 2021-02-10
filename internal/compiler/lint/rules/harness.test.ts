@@ -3,6 +3,7 @@ import {tests} from "./tests";
 import {testLint} from "../utils/testing";
 import {DiagnosticCategory} from "@internal/diagnostics";
 import {dedent} from "@internal/string-utils";
+import { createUnknownPath } from "@internal/path";
 
 for (const name in tests) {
 	test(
@@ -25,7 +26,7 @@ for (const name in tests) {
 								valid: valid ? valid.map((str) => dedent(str)) : [],
 								category: `lint/${name}` as DiagnosticCategory,
 								snapshotFilename: `${name}.test.md`,
-								filename,
+								path: createUnknownPath(filename),
 							},
 						);
 					}
@@ -38,7 +39,7 @@ for (const name in tests) {
 							valid: valid ? valid.map((str) => dedent(str)) : [],
 							category: `lint/${name}` as DiagnosticCategory,
 							snapshotFilename: `${name}.test.md`,
-							filename,
+							path: createUnknownPath(filename),
 						},
 					);
 				}

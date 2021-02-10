@@ -25,6 +25,7 @@ import {appendAdviceToDiagnostic, diagnosticLocationToMarkupFilelink, joinCatego
 import {RequiredProps} from "@internal/typescript-helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
 import {createSingleDiagnosticError, DiagnosticsError, getDiagnosticsFromError, isUserDiagnosticError} from "./errors";
+import { AnyPath, equalPaths, UnknownPathSet } from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -181,7 +182,7 @@ export type DeriveErrorDiagnosticOptions = {
 	tags?: Omit<DiagnosticTags, "internal"> & {
 		internal?: false;
 	};
-	filename?: string;
+	path?: AnyPath;
 	cleanRelativeError?: Error;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
@@ -228,9 +229,9 @@ export function deriveDiagnosticFromErrorStructure(
 	struct: Partial<StructuredError>,
 	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
-	const {filename} = opts;
+	const {path} = opts;
 
-	let targetFilename: undefined | string = filename;
+	let targetPath: undefined | AnyPath = path;
 	let targetLoc = undefined;
 
 	let {frames = [], message = "Unknown error"} = struct;
@@ -246,7 +247,7 @@ export function deriveDiagnosticFromErrorStructure(
 		frameLoop: for (let i = 0; i < frames.length; i++) {
 			const frame = frames[i];
 			for (const refFrame of refFrames) {
-				if (frame.filename === refFrame.filename && frame.lineNumber === refFrame.lineNumber) {
+				if (equalPaths(frame.path, refFrame.path) && frame.lineNumber === refFrame.lineNumber) {
 					frames = frames.slice(0, i - 1);
 					break frameLoop;
 				}
@@ -256,11 +257,11 @@ export function deriveDiagnosticFromErrorStructure(
 
 	// Point the target to the closest frame with a filename
 	for (const frame of frames) {
-		if (frame.filename === undefined) {
+		if (frame.path === undefined) {
 			continue;
 		}
 
-		targetFilename = frame.filename;
+		targetPath = frame.path;
 		targetLoc = getDiagnosticLocationFromErrorFrame(frame);
 		break;
 	}
@@ -280,7 +281,7 @@ export function deriveDiagnosticFromErrorStructure(
 			advice: [...advice, ...(opts.description?.advice || [])],
 		},
 		location: {
-			filename: targetFilename,
+			path: targetPath,
 			start: targetLoc === undefined ? undefined : targetLoc.start,
 			end: targetLoc === undefined ? undefined : targetLoc.end,
 		},
@@ -301,12 +302,12 @@ export function deriveDiagnosticFromError(
 
 export type DeriveErrorStackAdviceOptions = {
 	title?: StaticMarkup;
-	importantFilenames?: string[];
+	importantPaths?: UnknownPathSet;
 };
 
 export function getErrorStackAdvice(
 	error: Partial<StructuredError>,
-	{title, importantFilenames}: DeriveErrorStackAdviceOptions = {},
+	{title, importantPaths}: DeriveErrorStackAdviceOptions = {},
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];
 	const {frames = [], stack} = error;
@@ -359,7 +360,7 @@ export function getErrorStackAdvice(
 				typeName,
 				functionName,
 				methodName,
-				filename,
+				path,
 				lineNumber,
 				columnNumber,
 				isEval,
@@ -400,7 +401,7 @@ export function getErrorStackAdvice(
 				prefix,
 				object,
 				property,
-				filename,
+				path,
 				line: lineNumber,
 				column: columnNumber,
 			};
@@ -410,7 +411,7 @@ export function getErrorStackAdvice(
 			type: "stacktrace",
 			title,
 			frames: adviceFrames,
-			importantFilenames,
+			importantPaths,
 		});
 	}
 

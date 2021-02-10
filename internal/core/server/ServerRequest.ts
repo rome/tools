@@ -78,6 +78,7 @@ import {
 	UnknownPath,
 	createUnknownPath,
 	createAbsoluteFilePath,
+	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
@@ -705,7 +706,7 @@ export default class ServerRequest {
 				line: ob1Number1,
 				column: ob1Coerce0(cwd.length),
 			},
-			filename: "cwd",
+			path: createUIDPath("cwd"),
 		};
 	}
 
@@ -847,7 +848,7 @@ export default class ServerRequest {
 							{
 								type: "log",
 								category: "info",
-								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
+								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <emphasis>${ref.uid}</emphasis>`,
 							},
 						],
 					},

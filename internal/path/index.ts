@@ -257,6 +257,10 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 		return this.parsed.absoluteType === "url";
 	}
 
+	public isUID(): boolean {
+		return this.parsed.absoluteType === "uid";
+	}
+
 	public isAbsolute(): boolean {
 		return (
 			this.parsed.absoluteTarget !== undefined &&
@@ -333,6 +337,10 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 		return this.segments;
 	}
 
+	public hasSegment(name: string): boolean {
+		return this.segments.includes(name);
+	}
+
 	public getUnique(): Super {
 		const memoUnique = this.memo.unique;
 		if (memoUnique !== undefined) {
@@ -341,6 +349,7 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 
 		// If we don't satisfy the below conditions then we're already unique
 		if (
+			this.isUID() ||
 			!(this.isRoot() || this.isExplicitRelative() || this.isExplicitDirectory())
 		) {
 			return this._assert();
@@ -389,6 +398,12 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 
 		const segments = [...this.segments];
 
+		// Add back UID protocol that is stripped
+		if (this.isUID()) {
+			segments.unshift("");
+			segments.unshift("uid:");
+		}
+
 		if (this.isExplicitDirectory()) {
 			segments.push("");
 		}
@@ -411,7 +426,11 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 		return filename;
 	}
 
-	public equal(otherRaw: CreationArg): boolean {
+	public equal(otherRaw: undefined | CreationArg): boolean {
+		if (otherRaw === undefined) {
+			return false;
+		}
+		
 		// @ts-ignore
 		if (otherRaw === this) {
 			return true;
@@ -685,6 +704,10 @@ export class UIDPath extends BasePath<UIDPath> {
 		return new UIDPath(parsed, opts);
 	}
 
+	public isUID(): boolean {
+		return true;
+	}
+
 	public assertUID(): UIDPath {
 		return this;
 	}
@@ -767,7 +790,7 @@ type ParsedPath = {
 	explicitDirectory: boolean;
 };
 
-type PathTypeHint = "absolute" | "relative" | "url" | "auto";
+type PathTypeHint = "absolute" | "relative" | "url" | "uid" | "auto";
 
 function parsePathSegments(
 	segments: PathSegments,
@@ -797,6 +820,17 @@ function parsePathSegments(
 					"absolute",
 				);
 
+			// Explicit `uid://foo`
+			case "uid":
+				return {
+					hint: "uid",
+					absoluteType: "uid",
+					absoluteTarget: undefined,
+					explicitDirectory: false,
+					explicitRelative: false,
+					segments: segments.slice(2),
+				};
+
 			default: {
 				const absoluteSegments = segments.slice(0, 3);
 				return {
@@ -811,6 +845,18 @@ function parsePathSegments(
 				};
 			}
 		}
+	}
+
+	// UIDs do not have any special segment handling
+	if (hint === "uid") {
+		return {
+			hint: "uid",
+			absoluteType: "uid",
+			absoluteTarget: undefined,
+			explicitDirectory: false,
+			explicitRelative: false,
+			segments,
+		};
 	}
 
 	// Explode home directory
@@ -946,7 +992,7 @@ export function createAbsoluteFilePath(filename: CreationArg): AbsoluteFilePath 
 }
 
 export function createUIDPath(filename: CreationArg): UIDPath {
-	return createUnknownPath(filename, "auto").assertUID();
+	return createUnknownPath(filename, "uid").assertUID();
 }
 
 export function createUnknownPath(
@@ -1013,4 +1059,20 @@ export function maybeCreateUIDPath(
 	} else {
 		return undefined;
 	}
+}
+
+export function equalPaths(a: undefined | AnyPath, b: undefined | AnyPath): boolean {
+	if (a === b) {
+		return true;
+	}
+
+	if (a !== undefined && b !== undefined) {
+		return a.equal(b);
+	}
+
+	return false;
+}
+
+export function isPath(val: unknown): val is AnyPath {
+	return val instanceof RelativeFilePath || val instanceof AbsoluteFilePath || val instanceof UnknownPath || val instanceof URLPath || val instanceof UIDPath;
 }

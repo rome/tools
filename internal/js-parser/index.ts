@@ -39,8 +39,8 @@ export function tokenizeJS(userOptions: JSParserUserOptions): PublicToken[] {
 	for (const token of parser.state.tokens) {
 		tokens.push({
 			type: token.type.label,
-			start: parser.getIndexFromPosition(token.loc.start, token.loc.filename),
-			end: parser.getIndexFromPosition(token.loc.end, token.loc.filename),
+			start: parser.getIndexFromPosition(token.loc.start, token.loc.path),
+			end: parser.getIndexFromPosition(token.loc.end, token.loc.path),
 		});
 	}
 

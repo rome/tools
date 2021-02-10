@@ -341,12 +341,9 @@ function printFrame(
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	const {reporter} = opts;
-	const {marker, start, end, filename} = item.location;
+	const {marker, start, end} = item.location;
 	let {sourceText} = item.location;
-	const path =
-		filename === undefined
-			? createUnknownPath("unknown")
-			: opts.printer.createFilePath(filename);
+	const path = item.location.path === undefined ? createUnknownPath("unknown") : opts.printer.normalizePath(item.location.path);
 
 	let lines: ToLines = [];
 	if (sourceText !== undefined) {
@@ -360,24 +357,26 @@ function printFrame(
 			),
 			highlight: opts.printer.shouldHighlight(),
 		});
-	} else if (filename !== undefined) {
+	} else if (path !== undefined) {
 		const source = opts.fileSources.get(path);
-		if (source !== undefined) {
+		if (source === undefined) {
+			if (
+				path.isAbsolute() &&
+				opts.missingFileSources.has(path.assertAbsolute())
+			) {
+				return printLog(
+					{
+						type: "log",
+						category: "warn",
+						text: markup`File ${path} does not exist`,
+					},
+					opts,
+				);
+			}
+		} else {
 			lines = source.lines;
 			sourceText = source.sourceText;
 		}
-	} else if (
-		path.isAbsolute() &&
-		opts.missingFileSources.has(path.assertAbsolute())
-	) {
-		return printLog(
-			{
-				type: "log",
-				category: "warn",
-				text: markup`File ${path} does not exist`,
-			},
-			opts,
-		);
 	}
 
 	if (sourceText === undefined) {
@@ -424,7 +423,7 @@ function printStacktrace(
 		frames,
 		(reporter, frame) => {
 			const {
-				filename,
+				path,
 				object,
 				suffix,
 				property,
@@ -460,9 +459,9 @@ function printStacktrace(
 			}
 
 			// Add source
-			if (filename !== undefined && line !== undefined && column !== undefined) {
+			if (path !== undefined && line !== undefined && column !== undefined) {
 				const header = diagnosticLocationToMarkupFilelink({
-					filename,
+					path,
 					language,
 					start: {
 						line,
@@ -482,15 +481,15 @@ function printStacktrace(
 			// A code frame will always be displayed if it's been marked as important on the stackframe advice or if it
 			// refers to the diagnostic
 			const isImportantStackFrame =
-				filename !== undefined &&
-				(filename === diagnostic.location.filename ||
-				(item.importantFilenames !== undefined &&
-				item.importantFilenames.includes(filename)));
+			path !== undefined &&
+				(path.equal(diagnostic.location.path) ||
+				(item.importantPaths !== undefined &&
+				item.importantPaths.has(path)));
 			const shouldShowCodeFrame = isImportantStackFrame || shownCodeFrames < 2;
 
 			if (
 				shouldShowCodeFrame &&
-				filename !== undefined &&
+				path !== undefined &&
 				line !== undefined &&
 				column !== undefined
 			) {
@@ -503,7 +502,7 @@ function printStacktrace(
 					{
 						type: "frame",
 						location: {
-							filename,
+							path,
 							language,
 							sourceTypeJS: "module",
 							start: pos,

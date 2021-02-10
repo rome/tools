@@ -111,7 +111,7 @@ export default class Utils {
 		} else {
 			data.set(
 				"origin",
-				`${String(originLoc.filename)}:${String(originLoc.start.line)}:${String(
+				`${originLoc.path?.join()}:${String(originLoc.start.line)}:${String(
 					originLoc.start.column,
 				)}`,
 			);

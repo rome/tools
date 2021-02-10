@@ -252,12 +252,12 @@ export default class Server {
 						}
 						return undefined;
 					},
-					normalizePosition: (filename, line, column) => {
-						const path = this.projectManager.getFilePathFromUid(filename);
-						if (path === undefined) {
-							return {filename, line, column};
+					normalizePosition: (path, line, column) => {
+						const normalPath = this.projectManager.maybeGetFilePathFromUid(path);
+						if (normalPath === undefined) {
+							return {path, line, column};
 						} else {
-							return {filename: path.join(), line, column};
+							return {path: normalPath, line, column};
 						}
 					},
 				},
