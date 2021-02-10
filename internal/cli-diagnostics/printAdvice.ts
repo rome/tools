@@ -343,7 +343,10 @@ function printFrame(
 	const {reporter} = opts;
 	const {marker, start, end} = item.location;
 	let {sourceText} = item.location;
-	const path = item.location.path === undefined ? createUnknownPath("unknown") : opts.printer.normalizePath(item.location.path);
+	const path =
+		item.location.path === undefined
+			? createUnknownPath("unknown")
+			: opts.printer.normalizePath(item.location.path);
 
 	let lines: ToLines = [];
 	if (sourceText !== undefined) {
@@ -481,10 +484,9 @@ function printStacktrace(
 			// A code frame will always be displayed if it's been marked as important on the stackframe advice or if it
 			// refers to the diagnostic
 			const isImportantStackFrame =
-			path !== undefined &&
+				path !== undefined &&
 				(path.equal(diagnostic.location.path) ||
-				(item.importantPaths !== undefined &&
-				item.importantPaths.has(path)));
+				(item.importantPaths !== undefined && item.importantPaths.has(path)));
 			const shouldShowCodeFrame = isImportantStackFrame || shownCodeFrames < 2;
 
 			if (

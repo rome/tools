@@ -14,7 +14,7 @@ import {
 	NodeBaseWithComments,
 	RootBase,
 } from "@internal/ast";
-import { createUnknownPath } from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {createBuilder} from "../../utils";
 
 export interface JSRoot extends NodeBaseWithComments,

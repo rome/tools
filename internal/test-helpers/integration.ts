@@ -13,11 +13,11 @@ import {
 	AbsoluteFilePathMap,
 	RelativeFilePath,
 	TEMP_PATH,
+	UIDPath,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-	createUnknownPath,
 	createUIDPath,
-	UIDPath,
+	createUnknownPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
 import {

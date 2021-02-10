@@ -8,7 +8,11 @@
 import {SPDXLicenseDefinition} from "./types";
 import data from "./data";
 
-export {SPDXLicenseDefinition, SPDXLicenseParserOptions, SPDXLicenseParserExceptions} from "./types";
+export {
+	SPDXLicenseDefinition,
+	SPDXLicenseParserExceptions,
+	SPDXLicenseParserOptions,
+} from "./types";
 
 const idToLicense: Map<string, SPDXLicenseDefinition> = new Map();
 const licenseNames: string[] = [];
@@ -21,7 +25,9 @@ export {licenseNames};
 
 export {ExpressionNode as SPDXExpressionNode} from "./types";
 
-export function getSPDXLicense(licenseId: string): undefined | SPDXLicenseDefinition {
+export function getSPDXLicense(
+	licenseId: string,
+): undefined | SPDXLicenseDefinition {
 	return idToLicense.get(licenseId.toLowerCase());
 }
 

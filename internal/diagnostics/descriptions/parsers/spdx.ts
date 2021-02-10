@@ -2,7 +2,7 @@ import {createDiagnosticsCategory} from "../index";
 import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../../helpers";
 import {SPDXLicenseParserExceptions} from "@internal/codec-spdx-license";
-import { DiagnosticAdvice } from "@internal/diagnostics/types";
+import {DiagnosticAdvice} from "@internal/diagnostics/types";
 
 // @internal/codec-spdx-license
 
@@ -48,7 +48,7 @@ export const spdx = createDiagnosticsCategory({
 				command: `rome config push dependencies.exceptions.invalidLicenses.${id} "${exceptions.packageName}@${exceptions.packageVersion}"`,
 			});
 		}
-		
+
 		return {
 			message: markup`Unknown license <emphasis>${id}</emphasis>`,
 			advice,

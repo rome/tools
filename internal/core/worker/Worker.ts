@@ -7,13 +7,15 @@
 
 import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
 import {
-	WorkerPrefetchedModuleSignatures,
+	WorkerBuffer,
 	WorkerBufferPatch,
+	WorkerOptions,
 	WorkerParseOptions,
+	WorkerParseResult,
 	WorkerPartialManifest,
 	WorkerPartialManifests,
+	WorkerPrefetchedModuleSignatures,
 	WorkerProject,
-	WorkerBuffer,
 	WorkerProjects,
 } from "./types";
 import WorkerBridge from "../common/bridges/WorkerBridge";
@@ -25,11 +27,11 @@ import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
+	AnyPath,
+	UIDPath,
 	UnknownPathMap,
 	createAbsoluteFilePath,
 	createUnknownPath,
-	UIDPath,
-	AnyPath,
 } from "@internal/path";
 import {
 	FSReadStream,
@@ -50,7 +52,6 @@ import FatalErrorHandler from "../common/FatalErrorHandler";
 import {RSERObject} from "@internal/codec-binary-serial";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
-import { WorkerParseResult, WorkerOptions } from "./types";
 
 export default class Worker {
 	constructor(opts: WorkerOptions) {
@@ -358,10 +359,7 @@ export default class Worker {
 
 			switch (value.type) {
 				case "RESOLVED": {
-					this.moduleSignatureCache.set(
-						value.graph.path,
-						value.graph,
-					);
+					this.moduleSignatureCache.set(value.graph.path, value.graph);
 					return value.graph;
 				}
 
@@ -479,7 +477,9 @@ export default class Worker {
 		if (cacheEnabled) {
 			// Update the lastAccessed of the ast cache and return it, it will be evicted on
 			// any file change
-			const cachedResult: undefined | WorkerParseResult = this.astCache.get(path);
+			const cachedResult: undefined | WorkerParseResult = this.astCache.get(
+				path,
+			);
 			if (cachedResult !== undefined) {
 				let useCached = true;
 

@@ -31,7 +31,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
-import {UnknownPath, createUnknownPath, AnyPath} from "@internal/path";
+import {AnyPath, UnknownPath, createUnknownPath} from "@internal/path";
 import {
 	Number0,
 	Number1,
@@ -413,10 +413,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return this.indexTracker.getPositionFromIndex(index);
 	}
 
-	public getIndexFromPosition(
-		pos: Position,
-		path: undefined | AnyPath,
-	): Number0 {
+	public getIndexFromPosition(pos: Position, path: undefined | AnyPath): Number0 {
 		return this.indexTracker.getIndexFromPosition(pos, path);
 	}
 

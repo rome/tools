@@ -28,10 +28,7 @@ function createEmptyMemo<FilePath>(): FilePathMemo<FilePath> {
 
 type FilePathOrString = string | AnyPath;
 
-function toFilePath(
-	pathOrString: FilePathOrString,
-	hint: PathTypeHint,
-): AnyPath {
+function toFilePath(pathOrString: FilePathOrString, hint: PathTypeHint): AnyPath {
 	if (typeof pathOrString === "string") {
 		return createUnknownPath(pathOrString, hint);
 	} else {
@@ -430,7 +427,7 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 		if (otherRaw === undefined) {
 			return false;
 		}
-		
+
 		// @ts-ignore
 		if (otherRaw === this) {
 			return true;
@@ -697,10 +694,7 @@ export class UIDPath extends BasePath<UIDPath> {
 		return this;
 	}
 
-	protected _fork(
-		parsed: ParsedPath,
-		opts: FilePathMemo<UIDPath>,
-	): UIDPath {
+	protected _fork(parsed: ParsedPath, opts: FilePathMemo<UIDPath>): UIDPath {
 		return new UIDPath(parsed, opts);
 	}
 
@@ -779,7 +773,12 @@ function isWindowsDrive(first: string): boolean {
 	return first.length === 2 && first[1] === ":" && /[A-Z]/i.test(first[0]);
 }
 
-type ParsedPathAbsoluteType = "windows-drive" | "windows-unc" | "posix" | "url" | "uid";
+type ParsedPathAbsoluteType =
+	| "windows-drive"
+	| "windows-unc"
+	| "posix"
+	| "url"
+	| "uid";
 
 type ParsedPath = {
 	hint: PathTypeHint;
@@ -1061,7 +1060,10 @@ export function maybeCreateUIDPath(
 	}
 }
 
-export function equalPaths(a: undefined | AnyPath, b: undefined | AnyPath): boolean {
+export function equalPaths(
+	a: undefined | AnyPath,
+	b: undefined | AnyPath,
+): boolean {
 	if (a === b) {
 		return true;
 	}
@@ -1074,5 +1076,11 @@ export function equalPaths(a: undefined | AnyPath, b: undefined | AnyPath): bool
 }
 
 export function isPath(val: unknown): val is AnyPath {
-	return val instanceof RelativeFilePath || val instanceof AbsoluteFilePath || val instanceof UnknownPath || val instanceof URLPath || val instanceof UIDPath;
+	return (
+		val instanceof RelativeFilePath ||
+		val instanceof AbsoluteFilePath ||
+		val instanceof UnknownPath ||
+		val instanceof URLPath ||
+		val instanceof UIDPath
+	);
 }

@@ -9,7 +9,7 @@ import {descriptions} from "@internal/diagnostics";
 import {Scope} from "../../scopes";
 import E, {ErrorDefinition} from "./E";
 import {AnyNode} from "@internal/ast";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 export default class UnknownImportE extends E {
 	constructor(

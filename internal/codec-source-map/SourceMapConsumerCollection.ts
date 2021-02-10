@@ -8,7 +8,7 @@
 import SourceMapConsumer from "./SourceMapConsumer";
 import {Number0, Number1} from "@internal/ob1";
 import {ResolvedLocation} from "./types";
-import { AnyPath, UnknownPathMap } from "@internal/path";
+import {AnyPath, UnknownPathMap} from "@internal/path";
 
 export default class SourceMapConsumerCollection {
 	constructor() {

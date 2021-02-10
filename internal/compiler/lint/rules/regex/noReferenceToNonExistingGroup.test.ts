@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { createUnknownPath } from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
 

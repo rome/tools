@@ -1,18 +1,27 @@
-import { AnyRoot, ConstJSSourceType } from "@internal/ast";
-import { Manifest } from "@internal/codec-js-manifest";
-import { BundleCompileOptions, CompileResult, CompilerProject, LintCompilerOptions } from "@internal/compiler";
-import { DiagnosticIntegrity, Diagnostics, DiagnosticSuppressions } from "@internal/diagnostics";
-import { BridgeClient } from "@internal/events";
-import { FormatterOptions } from "@internal/formatter";
-import { ModuleSignature } from "@internal/js-analysis";
-import { Number0 } from "@internal/ob1";
-import { AbsoluteFilePath, AnyPath } from "@internal/path";
-import { Dict } from "@internal/typescript-helpers";
+import {AnyRoot, ConstJSSourceType} from "@internal/ast";
+import {Manifest} from "@internal/codec-js-manifest";
+import {
+	BundleCompileOptions,
+	CompileResult,
+	CompilerProject,
+	LintCompilerOptions,
+} from "@internal/compiler";
+import {
+	DiagnosticIntegrity,
+	DiagnosticSuppressions,
+	Diagnostics,
+} from "@internal/diagnostics";
+import {BridgeClient} from "@internal/events";
+import {FormatterOptions} from "@internal/formatter";
+import {ModuleSignature} from "@internal/js-analysis";
+import {Number0} from "@internal/ob1";
+import {AbsoluteFilePath, AnyPath} from "@internal/path";
+import {Dict} from "@internal/typescript-helpers";
 import WorkerBridge from "../common/bridges/WorkerBridge";
-import { AnalyzeDependencyResult } from "../common/types/analyzeDependencies";
-import { FileReference } from "../common/types/files";
-import { UserConfig } from "../common/userConfig";
-import { RecoverySaveFile } from "../server/fs/RecoveryStore";
+import {AnalyzeDependencyResult} from "../common/types/analyzeDependencies";
+import {FileReference} from "../common/types/files";
+import {UserConfig} from "../common/userConfig";
+import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 
 export type WorkerParseResult = {
 	ast: AnyRoot;
@@ -137,9 +146,9 @@ export type WorkerLintTimings = {
 	prettier: bigint;
 };
 
-export const EMPTY_LINT_TIMINGS: WorkerLintTimings ={
-  eslint: 0n,
-  prettier: 0n,
+export const EMPTY_LINT_TIMINGS: WorkerLintTimings = {
+	eslint: 0n,
+	prettier: 0n,
 };
 
 export type WorkerLintResult = {

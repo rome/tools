@@ -18,16 +18,17 @@ import {
 } from "@internal/diagnostics";
 import {ProjectDefinition} from "@internal/project";
 import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
-import {WorkerAnalyzeDependencyResult} from "@internal/core";
-import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import {
 	AnalyzeDependency,
 	AnalyzeExportLocal,
 	AnalyzeModuleType,
 	AnyAnalyzeExport,
 	Server,
+	WorkerAnalyzeDependencyResult,
 	getFileHandlerFromPath,
 } from "@internal/core";
+import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
+
 import {ExtensionHandler} from "../../common/file-handlers/types";
 
 import {FileReference} from "@internal/core/common/types/files";

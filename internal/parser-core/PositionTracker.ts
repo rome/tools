@@ -10,7 +10,7 @@ import {Position} from "./types";
 import {pretty} from "@internal/pretty-format";
 import {derivePositionKey} from "./utils";
 import {ExtendedMap} from "@internal/collections";
-import { AnyPath, equalPaths } from "@internal/path";
+import {AnyPath, equalPaths} from "@internal/path";
 
 type GetPosition = () => Position;
 
@@ -50,10 +50,7 @@ export default class PositionTracker {
 	private positionsToIndex: ExtendedMap<string, Number0>;
 	private getPosition: undefined | GetPosition;
 
-	public getIndexFromPosition(
-		pos: Position,
-		path: undefined | AnyPath,
-	): Number0 {
+	public getIndexFromPosition(pos: Position, path: undefined | AnyPath): Number0 {
 		if (!equalPaths(path, this.path)) {
 			throw new Error(
 				pretty`PositionTracker filename mismatch. DiagnosticLocation path ${path} is different than the filename we're tracking of ${this.path}. Position: ${pos}`,

@@ -21,11 +21,21 @@ import {
 	getErrorStructure,
 } from "@internal/v8";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {appendAdviceToDiagnostic, diagnosticLocationToMarkupFilelink, joinCategoryName, prependAdviceToDiagnostic} from "./helpers";
+import {
+	appendAdviceToDiagnostic,
+	diagnosticLocationToMarkupFilelink,
+	joinCategoryName,
+	prependAdviceToDiagnostic,
+} from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
-import {createSingleDiagnosticError, DiagnosticsError, getDiagnosticsFromError, isUserDiagnosticError} from "./errors";
-import { AnyPath, equalPaths, UnknownPathSet } from "@internal/path";
+import {
+	DiagnosticsError,
+	createSingleDiagnosticError,
+	getDiagnosticsFromError,
+	isUserDiagnosticError,
+} from "./errors";
+import {AnyPath, UnknownPathSet, equalPaths} from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -201,26 +211,35 @@ export function provideDiagnosticAdviceForError(
 			let diag = deriveDiagnosticFromError(error, opts);
 
 			if (opts.description.message !== undefined) {
-				diag = prependAdviceToDiagnostic(diag, [
-					{
-						type: "log",
-						category: "none",
-						text: markup`${getErrorStructure(error).message}`,
-					}
-				]);
+				diag = prependAdviceToDiagnostic(
+					diag,
+					[
+						{
+							type: "log",
+							category: "none",
+							text: markup`${getErrorStructure(error).message}`,
+						},
+					],
+				);
 			}
 
 			return createSingleDiagnosticError(diag);
 		} else {
-			return new DiagnosticsError(error.message, diagnostics.map(diag => {
-				return appendAdviceToDiagnostic(diag, [
-					{
-						type: "log",
-						category: "info",
-						text: markup`${getErrorStructure(error).message}`,
-					}
-				]);;
-			}));
+			return new DiagnosticsError(
+				error.message,
+				diagnostics.map((diag) => {
+					return appendAdviceToDiagnostic(
+						diag,
+						[
+							{
+								type: "log",
+								category: "info",
+								text: markup`${getErrorStructure(error).message}`,
+							},
+						],
+					);
+				}),
+			);
 		}
 	}
 }
@@ -247,7 +266,10 @@ export function deriveDiagnosticFromErrorStructure(
 		frameLoop: for (let i = 0; i < frames.length; i++) {
 			const frame = frames[i];
 			for (const refFrame of refFrames) {
-				if (equalPaths(frame.path, refFrame.path) && frame.lineNumber === refFrame.lineNumber) {
+				if (
+					equalPaths(frame.path, refFrame.path) &&
+					frame.lineNumber === refFrame.lineNumber
+				) {
 					frames = frames.slice(0, i - 1);
 					break frameLoop;
 				}

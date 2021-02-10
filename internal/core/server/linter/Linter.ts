@@ -35,19 +35,24 @@ import {markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
-import { EMPTY_LINT_TIMINGS, WorkerLintTimings } from "@internal/core/worker/types";
-import { ExtendedMap } from "@internal/collections";
-import { humanizeDuration } from "@internal/string-utils";
+import {
+	EMPTY_LINT_TIMINGS,
+	WorkerLintTimings,
+} from "@internal/core/worker/types";
+import {ExtendedMap} from "@internal/collections";
+import {humanizeDuration} from "@internal/string-utils";
 
-type LintWatchChange = {
-	type: "absolute";
-	path: AbsoluteFilePath;
-	diagnostics: Diagnostics;
-} | {
-	type: "unknown";
-	path: undefined | AnyPath;
-	diagnostics: Diagnostics;
-};
+type LintWatchChange =
+	| {
+			type: "absolute";
+			path: AbsoluteFilePath;
+			diagnostics: Diagnostics;
+		}
+	| {
+			type: "unknown";
+			path: undefined | AnyPath;
+			diagnostics: Diagnostics;
+		};
 
 type LintWatchChanges = LintWatchChange[];
 
@@ -136,7 +141,12 @@ function createDiagnosticsPrinter(
 		const timings = runner.getFinalTimings();
 		if (timings.slowest.eslint > 0n) {
 			const ms = Number(timings.slowest.eslint / 1000000n);
-			reporter.warn(markup`Spent <emphasis>${humanizeDuration(ms, {longform: true, allowMilliseconds: true})}</emphasis> running ESLint`);
+			reporter.warn(
+				markup`Spent <emphasis>${humanizeDuration(
+					ms,
+					{longform: true, allowMilliseconds: true},
+				)}</emphasis> running ESLint`,
+			);
 		}
 	});
 
@@ -162,7 +172,10 @@ class LintRunner {
 		this.events = events;
 		this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
-		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => EMPTY_LINT_TIMINGS);
+		this.timingsByWorker = new ExtendedMap(
+			"timingsByWorker",
+			() => EMPTY_LINT_TIMINGS,
+		);
 	}
 
 	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
@@ -179,9 +192,9 @@ class LintRunner {
 	private timingsByWorker: ExtendedMap<number, WorkerLintTimings>;
 
 	public getFinalTimings(): {
-		slowest: WorkerLintTimings,
-		total: WorkerLintTimings,
-	 } {
+		slowest: WorkerLintTimings;
+		total: WorkerLintTimings;
+	} {
 		let slowest: WorkerLintTimings = EMPTY_LINT_TIMINGS;
 		let total: WorkerLintTimings = EMPTY_LINT_TIMINGS;
 
@@ -291,10 +304,13 @@ class LintRunner {
 
 				const workerId = server.fileAllocator.getOwnerAssert(path).id;
 				const workerTimings = this.timingsByWorker.assert(workerId);
-				this.timingsByWorker.set(workerId, {
-					eslint: workerTimings.eslint + timingsNs.eslint,
-					prettier: workerTimings.prettier + timingsNs.prettier,
-				})
+				this.timingsByWorker.set(
+					workerId,
+					{
+						eslint: workerTimings.eslint + timingsNs.eslint,
+						prettier: workerTimings.prettier + timingsNs.prettier,
+					},
+				);
 
 				progress.popText(progressId);
 				progress.tick();

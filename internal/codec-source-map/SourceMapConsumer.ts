@@ -23,7 +23,7 @@ import {
 	ob1Number1,
 } from "@internal/ob1";
 import {Dict} from "@internal/typescript-helpers";
-import { AnyPath, createUnknownPath } from "@internal/path";
+import {AnyPath, createUnknownPath} from "@internal/path";
 
 export function getParsedMappingKey(line: Number1, column: Number0): string {
 	return `${String(line)}:${String(column)}`;
@@ -79,7 +79,7 @@ export default class SourceMapConsumer {
 		let cachedSegments: Dict<number[]> = {};
 		let value;
 
-		const sources: Array<AnyPath> = sourceMap.sources.map(source => {
+		const sources: AnyPath[] = sourceMap.sources.map((source) => {
 			return createUnknownPath(source);
 		});
 

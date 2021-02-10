@@ -10,9 +10,12 @@ import {
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {ob1Add, ob1Dec} from "@internal/ob1";
-import {isPlainObject, TaggedTemplateFunction} from "@internal/typescript-helpers";
-import { pretty } from "@internal/pretty-format";
-import { AnyPath } from "@internal/path";
+import {
+	TaggedTemplateFunction,
+	isPlainObject,
+} from "@internal/typescript-helpers";
+import {pretty} from "@internal/pretty-format";
+import {AnyPath} from "@internal/path";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -42,9 +45,10 @@ export function isntWhitespace(char: string): boolean {
 	return char !== "\n" && char !== " " && char !== "\t";
 }
 
-export function createParser<Types extends ParserCoreTypes, Impl extends ParserCoreImplementation<Types> = ParserCoreImplementation<Types>>(
-	impl: Impl,
-): ParserCoreFactory<Types, Impl> {
+export function createParser<
+	Types extends ParserCoreTypes,
+	Impl extends ParserCoreImplementation<Types> = ParserCoreImplementation<Types>
+>(impl: Impl): ParserCoreFactory<Types, Impl> {
 	return {
 		create: (
 			opts: Types["options"],
@@ -56,11 +60,16 @@ export function createParser<Types extends ParserCoreTypes, Impl extends ParserC
 	};
 }
 
-export function createParserTemplateFactory<Ret>(callback: (input: string) => Ret): TaggedTemplateFunction<Ret, string> {
-	const cache: Map<TemplateStringsArray, {
-		input: string;
-		value: Ret,
-	}> = new Map();
+export function createParserTemplateFactory<Ret>(
+	callback: (input: string) => Ret,
+): TaggedTemplateFunction<Ret, string> {
+	const cache: Map<
+		TemplateStringsArray,
+		{
+			input: string;
+			value: Ret;
+		}
+	> = new Map();
 
 	return (strs, ...subs) => {
 		let input = "";
@@ -74,7 +83,7 @@ export function createParserTemplateFactory<Ret>(callback: (input: string) => Re
 		}
 
 		const cached = cache.get(strs);
-		if (cached !== undefined && cached.input === input) {
+		if (cached?.input === input) {
 			return cached.value;
 		}
 

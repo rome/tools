@@ -5,7 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AssembledBundle, Server, ServerRequest} from "@internal/core";
+import {
+	AssembledBundle,
+	Server,
+	ServerRequest,
+	WorkerBundleCompileOptions,
+	WorkerCompileResult,
+} from "@internal/core";
 import {Reporter} from "@internal/cli-reporter";
 import {
 	BundleResult,
@@ -18,18 +24,15 @@ import BundleRequest, {BundleOptions} from "./BundleRequest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createUnknownPath,
 	UIDPath,
+	createUnknownPath,
 } from "@internal/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
 	convertManifestToJSON,
 } from "@internal/codec-js-manifest";
-import {
-	WorkerBundleCompileOptions,
-	WorkerCompileResult,
-} from "@internal/core";
+
 import {Dict} from "@internal/typescript-helpers";
 import {readFile} from "@internal/fs";
 import {flipPathPatterns} from "@internal/path-match";

@@ -11,7 +11,7 @@ import {AnyVisitors, TransformRequest} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
 import {Cache} from "@internal/compiler";
 import CompilerContext from "../lib/CompilerContext";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 type TransformResult = {
 	ast: AnyRoot;

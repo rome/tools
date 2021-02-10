@@ -4,8 +4,8 @@ import {
 	AnyPathSet,
 	RelativeFilePathMap,
 	UIDPathMap,
-	UnknownPathMap,
 	URLPathMap,
+	UnknownPathMap,
 } from "@internal/path";
 
 export type IntSize = 0 | 1 | 2 | 4 | 8;

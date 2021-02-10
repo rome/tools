@@ -552,7 +552,7 @@ export default class Server {
 			this.hadConnectedClient = true;
 			this.loggerStream.update();
 		}
-		
+
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection

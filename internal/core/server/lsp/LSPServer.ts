@@ -208,10 +208,7 @@ export default class LSPServer {
 					});
 					processor.addDiagnostics(diagnostics);
 
-					this.pathToDiagnostics.set(
-						path,
-						processor.getDiagnostics(),
-					);
+					this.pathToDiagnostics.set(path, processor.getDiagnostics());
 
 					this.transport.write({
 						method: "textDocument/publishDiagnostics",

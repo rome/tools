@@ -25,7 +25,10 @@ export type AnyParserCore = ParserCore<{
 	meta: Dict<any> | void;
 }>;
 
-export type ParserCoreFactory<Types extends ParserCoreTypes, Impl extends ParserCoreImplementation<Types>> = {
+export type ParserCoreFactory<
+	Types extends ParserCoreTypes,
+	Impl extends ParserCoreImplementation<Types>
+> = {
 	create(
 		opts: Types["options"],
 		meta: Types["meta"],

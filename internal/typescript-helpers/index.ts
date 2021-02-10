@@ -48,9 +48,7 @@ export interface Class<T, Args extends any[] = ClassConstructorParams<T>> {
 
 export type Dict<T> = Record<string, T>;
 
-export type DeepPartial<T> = {
-	[P in keyof T]?: DeepPartial<T[P]>;
-};
+export type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
 
 export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
 	[Key in Keys]-?: NonNullable<Obj[Key]>
@@ -62,7 +60,7 @@ export type OptionalProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
 
 export type TaggedTemplateFunction<Ret, Sub> = (
 	strs: TemplateStringsArray,
-	...substitutions: Array<Sub>
+	...substitutions: Sub[]
 ) => Ret;
 
 // Turn a type that contains interfaces into regular objects
@@ -72,7 +70,7 @@ export type InterfaceToObject<T> = T extends {}
 
 export type UnknownObject = Dict<unknown>;
 
-export type UnknownFunction = (...args: Array<unknown>) => unknown;
+export type UnknownFunction = (...args: unknown[]) => unknown;
 
 export function isPlainObject<T = UnknownObject>(
 	obj: unknown,

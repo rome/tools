@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WorkerParseOptions, WorkerProject, FileReference} from "@internal/core";
+import {FileReference, WorkerParseOptions, WorkerProject} from "@internal/core";
 import Worker from "../../worker/Worker";
 import {
 	DiagnosticIntegrity,
@@ -15,7 +15,7 @@ import {
 } from "@internal/diagnostics";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {UnknownPath} from "@internal/path";
-import { WorkerLintTimings } from "@internal/core/worker/types";
+import {WorkerLintTimings} from "@internal/core/worker/types";
 
 export interface ExtensionCustomLintResult {
 	mtimeNs: bigint;

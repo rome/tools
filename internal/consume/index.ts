@@ -48,14 +48,16 @@ export function consumeUnknown(
 			category,
 			categoryValue,
 			getDiagnosticLocation: (keys, target) => {
-				const res = markupToPlainText(prettyFormatEager(value, {insertLocator: keys}));
+				const res = markupToPlainText(
+					prettyFormatEager(value, {insertLocator: keys}),
+				);
 				const locator = res.locators.get("default");
 				return {
 					filename: "unknown",
 					start: locator?.start,
 					end: locator?.end,
 					sourceText: joinMarkupLines(res),
-				}
+				};
 			},
 		},
 		value,

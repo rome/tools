@@ -8,9 +8,7 @@
 import {Consumer} from "@internal/consume";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {
-	PartialProjectConfig,
-} from "./types";
+import {PartialProjectConfig} from "./types";
 import {
 	ESLINT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_FILENAMES,

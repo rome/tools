@@ -1,6 +1,6 @@
 import {
-	ExtensionHandlerMethodInfo,
 	ExtensionCustomLintResult,
+	ExtensionHandlerMethodInfo,
 	PartialExtensionHandler,
 } from "@internal/core/common/file-handlers/types";
 import {createUnknownPath} from "@internal/path";

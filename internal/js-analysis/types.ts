@@ -10,7 +10,7 @@ import {JSRoot} from "@internal/ast";
 import {HydrateData} from "./Evaluator";
 import {Dict} from "@internal/typescript-helpers";
 import {StaticMarkup} from "@internal/markup";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 export type CheckProvider = {
 	libs?: JSRoot[];

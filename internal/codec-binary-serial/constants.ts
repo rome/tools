@@ -7,20 +7,20 @@ import {
 	RelativeFilePath,
 	RelativeFilePathMap,
 	RelativeFilePathSet,
+	UIDPath,
+	UIDPathMap,
+	UIDPathSet,
 	URLPath,
+	URLPathMap,
+	URLPathSet,
 	UnknownPath,
 	UnknownPathMap,
 	UnknownPathSet,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
+	createUIDPath,
 	createURLPath,
 	createUnknownPath,
-	UIDPathSet,
-	URLPathMap,
-	UIDPathMap,
-	createUIDPath,
-	UIDPath,
-	URLPathSet,
 } from "@internal/path";
 import {
 	AnyRSERPathMap,
@@ -393,10 +393,7 @@ export function pathToCode(path: AnyPath): PATH_CODES {
 	}
 }
 
-export function pathFromCode(
-	code: PATH_CODES,
-	filename: string,
-): AnyPath {
+export function pathFromCode(code: PATH_CODES, filename: string): AnyPath {
 	switch (code) {
 		case PATH_CODES.RELATIVE:
 			return createRelativeFilePath(filename);

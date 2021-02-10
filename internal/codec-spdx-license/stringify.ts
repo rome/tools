@@ -10,10 +10,14 @@ export function stringifySPDXLicense(node: ExpressionNode): string {
 	// TODO parens
 	switch (node.type) {
 		case "Or":
-			return `${stringifySPDXLicense(node.left)} OR ${stringifySPDXLicense(node.right)}`;
+			return `${stringifySPDXLicense(node.left)} OR ${stringifySPDXLicense(
+				node.right,
+			)}`;
 
 		case "And":
-			return `${stringifySPDXLicense(node.left)} AND ${stringifySPDXLicense(node.right)}`;
+			return `${stringifySPDXLicense(node.left)} AND ${stringifySPDXLicense(
+				node.right,
+			)}`;
 
 		case "License": {
 			let str = node.id;

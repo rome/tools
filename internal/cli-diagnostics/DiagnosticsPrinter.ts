@@ -35,10 +35,10 @@ import {default as successBanner} from "./banners/success.json";
 import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
+	AnyPath,
 	CWD_PATH,
 	UnknownPathMap,
 	UnknownPathSet,
-	AnyPath,
 	equalPaths,
 } from "@internal/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@internal/ob1";
@@ -571,7 +571,7 @@ export default class DiagnosticsPrinter extends Error {
 			}
 		}
 
-		return {outdatedPaths: outdatedPaths};
+		return {outdatedPaths};
 	}
 
 	private printAuxiliaryDiagnostic(diag: Diagnostic) {
@@ -654,7 +654,9 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Check for outdated files
 		const outdatedAdvice: DiagnosticAdvice = [];
-		const {outdatedPaths: outdatedFiles} = this.getDiagnosticDependencyMeta(diag);
+		const {outdatedPaths: outdatedFiles} = this.getDiagnosticDependencyMeta(
+			diag,
+		);
 
 		// Check if this file doesn't even exist
 		if (path !== undefined) {
@@ -692,9 +694,7 @@ export default class DiagnosticsPrinter extends Error {
 
 				outdatedAdvice.push({
 					type: "list",
-					list: outdatedFilesArr.map((path) =>
-						markup`${path}`
-					),
+					list: outdatedFilesArr.map((path) => markup`${path}`),
 				});
 			}
 		}

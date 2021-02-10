@@ -13,16 +13,13 @@ import {
 	PROJECT_CONFIG_SENSITIVE_DIRECTORIES,
 	PROJECT_CONFIG_WARN_FILENAMES,
 	ProjectConfig,
+	ProjectConfigMeta,
 	ProjectDefinition,
 	createDefaultProjectConfig,
 	createMockProjectConfigMeta,
 	loadCompleteProjectConfig,
-	ProjectConfigMeta,
 } from "@internal/project";
-import {
-	WorkerPartialManifests,
-	WorkerProjects,
-} from "@internal/core";
+import {WorkerPartialManifests, WorkerProjects} from "@internal/core";
 import {WorkerContainer} from "../WorkerManager";
 import {
 	DiagnosticLocation,
@@ -39,12 +36,12 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyPath,
-	URLPath,
-	UnknownPathMap,
 	UIDPath,
 	UIDPathMap,
-	createUIDPath,
+	URLPath,
+	UnknownPathMap,
 	UnknownPathSet,
+	createUIDPath,
 } from "@internal/path";
 import {FileReference} from "../../common/types/files";
 import {
@@ -880,9 +877,7 @@ export default class ProjectManager {
 				rewatch = true;
 			}
 			if (rewatch) {
-				await this.server.memoryFs.watch(
-					syncProject.meta.projectDirectory,
-				);
+				await this.server.memoryFs.watch(syncProject.meta.projectDirectory);
 			}
 
 			return syncProject;

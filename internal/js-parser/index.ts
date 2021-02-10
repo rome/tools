@@ -14,7 +14,7 @@ import {
 import {PublicToken, Token} from "./tokenizer/index";
 import {types as tokTypes} from "./tokenizer/types";
 import "./tokenizer/context";
-import {jsParser, createMeta, parseRoot} from "./parser";
+import {createMeta, jsParser, parseRoot} from "./parser";
 
 export {default as CommentsConsumer} from "./CommentsConsumer";
 

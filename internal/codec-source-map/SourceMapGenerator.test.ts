@@ -6,7 +6,7 @@ import {
 	SourceMapGenerator,
 } from "@internal/codec-source-map/index";
 import {dedent} from "@internal/string-utils";
-import { createUnknownPath } from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 
 // TODO: This should NOT be shared amongst tests
 let generator: SourceMapGenerator;

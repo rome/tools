@@ -14,7 +14,7 @@ import {
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {Consumer, consumeUnknown} from "@internal/consume";
-import {Dict, DeepPartial} from "@internal/typescript-helpers";
+import {DeepPartial, Dict} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 
@@ -207,7 +207,9 @@ export type RawUserProjectConfig = DeepPartial<{
 	};
 }>;
 
-export function createMockProjectConfigMeta(projectDirectory: AbsoluteFilePath): ProjectConfigMeta {
+export function createMockProjectConfigMeta(
+	projectDirectory: AbsoluteFilePath,
+): ProjectConfigMeta {
 	return {
 		projectDirectory,
 		configPath: projectDirectory.append("package.json"),

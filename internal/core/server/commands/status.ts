@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ServerRequest} from "@internal/core";
-import {WorkerStatus} from "@internal/core";
+import {ServerRequest, WorkerStatus} from "@internal/core";
+
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
 import {markup} from "@internal/markup";

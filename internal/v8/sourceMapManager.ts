@@ -14,7 +14,7 @@ import {
 	getErrorStructure,
 	setErrorFrames,
 } from "./errors";
-import { maybeCreateUnknownPath } from "@internal/path";
+import {maybeCreateUnknownPath} from "@internal/path";
 
 let inited: boolean = false;
 

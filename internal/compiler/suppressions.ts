@@ -13,7 +13,7 @@ import {
 } from "@internal/diagnostics";
 import {ob1Coerce0, ob1Number1} from "@internal/ob1";
 import {addPositions} from "@internal/parser-core";
-import { equalPaths } from "@internal/path";
+import {equalPaths} from "@internal/path";
 import CompilerContext from "./lib/CompilerContext";
 import * as signals from "./signals";
 import {

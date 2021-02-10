@@ -5,8 +5,8 @@ import {
 	SourceMapConsumerCollection,
 } from "@internal/codec-source-map/index";
 import {ResolvedLocation} from "@internal/codec-source-map/types";
-import { AnyPath, createUnknownPath } from "@internal/path";
-import { SourceMap } from "@internal/codec-source-map";
+import {AnyPath, createUnknownPath} from "@internal/path";
+import {SourceMap} from "@internal/codec-source-map";
 
 /* Source test1
 	*	const world = "world";
@@ -81,13 +81,19 @@ test(
 
 		t.false(consumerCollection.hasAny());
 
-		consumerCollection.add(test1Path, SourceMapConsumer.fromJSON(jsonSourceMap1));
+		consumerCollection.add(
+			test1Path,
+			SourceMapConsumer.fromJSON(jsonSourceMap1),
+		);
 
 		t.true(consumerCollection.hasAny());
 		t.true(consumerCollection.has(test1Path));
 		t.false(consumerCollection.has(test2Path));
 
-		consumerCollection.add(test2Path, SourceMapConsumer.fromJSON(jsonSourceMap2));
+		consumerCollection.add(
+			test2Path,
+			SourceMapConsumer.fromJSON(jsonSourceMap2),
+		);
 
 		t.true(consumerCollection.has(test1Path));
 		t.true(consumerCollection.has(test2Path));
@@ -102,8 +108,14 @@ test(
 		const test2Path = createUnknownPath("test2");
 
 		const consumerCollection = new SourceMapConsumerCollection();
-		consumerCollection.add(test1Path, SourceMapConsumer.fromJSON(jsonSourceMap1));
-		consumerCollection.add(test2Path, SourceMapConsumer.fromJSON(jsonSourceMap2));
+		consumerCollection.add(
+			test1Path,
+			SourceMapConsumer.fromJSON(jsonSourceMap1),
+		);
+		consumerCollection.add(
+			test2Path,
+			SourceMapConsumer.fromJSON(jsonSourceMap2),
+		);
 
 		function approxAndExact(
 			t: TestHelper,
@@ -120,7 +132,7 @@ test(
 				),
 				expected,
 			);
-			
+
 			t.looksLike(
 				consumerCollection.exactOriginalPositionFor(
 					path,
@@ -131,60 +143,102 @@ test(
 			);
 		}
 
-		approxAndExact(t, test1Path, 2, 4, {
-			found: true,
-			source: createUnknownPath("js/test1.js"),
-			line: ob1Coerce1(2),
-			column: ob1Coerce0(6),
-			name: "world",
-		});
+		approxAndExact(
+			t,
+			test1Path,
+			2,
+			4,
+			{
+				found: true,
+				source: createUnknownPath("js/test1.js"),
+				line: ob1Coerce1(2),
+				column: ob1Coerce0(6),
+				name: "world",
+			},
+		);
 
-		approxAndExact(t, test1Path, 2, 23, {
-			found: true,
-			source: createUnknownPath("js/test1.js"),
-			line: ob1Coerce1(4),
-			column: ob1Coerce0(9),
-			name: "foo",
-		});
+		approxAndExact(
+			t,
+			test1Path,
+			2,
+			23,
+			{
+				found: true,
+				source: createUnknownPath("js/test1.js"),
+				line: ob1Coerce1(4),
+				column: ob1Coerce0(9),
+				name: "foo",
+			},
+		);
 
-		approxAndExact(t, test1Path, 2, 48, {
-			found: true,
-			source: createUnknownPath("js/test1.js"),
-			line: ob1Coerce1(8),
-			column: ob1Coerce0(9),
-			name: "hello",
-		});
+		approxAndExact(
+			t,
+			test1Path,
+			2,
+			48,
+			{
+				found: true,
+				source: createUnknownPath("js/test1.js"),
+				line: ob1Coerce1(8),
+				column: ob1Coerce0(9),
+				name: "hello",
+			},
+		);
 
-		approxAndExact(t, test2Path, 2, 4, {
-			found: true,
-			source: createUnknownPath("js/test2.js"),
-			line: ob1Coerce1(2),
-			column: ob1Coerce0(4),
-			name: "firstName",
-		});
+		approxAndExact(
+			t,
+			test2Path,
+			2,
+			4,
+			{
+				found: true,
+				source: createUnknownPath("js/test2.js"),
+				line: ob1Coerce1(2),
+				column: ob1Coerce0(4),
+				name: "firstName",
+			},
+		);
 
-		approxAndExact(t, test2Path, 2, 13, {
-			found: true,
-			source: createUnknownPath("js/test2.js"),
-			line: ob1Coerce1(3),
-			column: ob1Coerce0(6),
-			name: "lastname",
-		});
+		approxAndExact(
+			t,
+			test2Path,
+			2,
+			13,
+			{
+				found: true,
+				source: createUnknownPath("js/test2.js"),
+				line: ob1Coerce1(3),
+				column: ob1Coerce0(6),
+				name: "lastname",
+			},
+		);
 
-		approxAndExact(t, test2Path, 2, 30, {
-			found: true,
-			source: createUnknownPath("js/test2.js"),
-			line: ob1Coerce1(5),
-			column: ob1Coerce0(9),
-			name: "changeName",
-		});
+		approxAndExact(
+			t,
+			test2Path,
+			2,
+			30,
+			{
+				found: true,
+				source: createUnknownPath("js/test2.js"),
+				line: ob1Coerce1(5),
+				column: ob1Coerce0(9),
+				name: "changeName",
+			},
+		);
 
-		approxAndExact(t, test2Path, 2, 52, {
-			found: true,
-			source: createUnknownPath("js/test2.js"),
-			line: ob1Coerce1(9),
-			column: ob1Coerce0(9),
-			name: "fullName",
-		});
+		approxAndExact(
+			t,
+			test2Path,
+			2,
+			52,
+			{
+				found: true,
+				source: createUnknownPath("js/test2.js"),
+				line: ob1Coerce1(9),
+				column: ob1Coerce0(9),
+				name: "fullName",
+			},
+		);
 	},
 );

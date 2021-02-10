@@ -18,7 +18,7 @@ import {
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
 import {ob1Coerce1, ob1Number0} from "@internal/ob1";
-import { getRequire } from "../IntegrationLoader";
+import {getRequire} from "../IntegrationLoader";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;

@@ -1,7 +1,4 @@
-import {
-	jsonParser,
-	parseJSONExtra,
-} from "@internal/codec-config/json/parse";
+import {jsonParser, parseJSONExtra} from "@internal/codec-config/json/parse";
 import {TokenValues} from "@internal/parser-core";
 import {Tokens} from "./types";
 import {stringifyRootConsumer} from "./stringify";

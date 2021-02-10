@@ -1,7 +1,6 @@
-import { SemverVersionNode } from "@internal/codec-semver";
-import { CompilerProjects } from "@internal/compiler";
-import { ParserOptions } from "@internal/parser-core";
-import {ComplexNode} from "@internal/parser-core";
+import {SemverVersionNode} from "@internal/codec-semver";
+import {CompilerProjects} from "@internal/compiler";
+import {ComplexNode, ParserOptions} from "@internal/parser-core";
 
 export type SPDXLicenseParserOptions = ParserOptions & {
 	loose?: boolean;

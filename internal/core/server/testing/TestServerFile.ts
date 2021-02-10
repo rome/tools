@@ -8,7 +8,7 @@ import {BundleResult, FileReference, ServerRequest} from "@internal/core";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
 import {removeFile} from "@internal/fs";
-import { pretty } from "@internal/pretty-format";
+import {pretty} from "@internal/pretty-format";
 
 export default class TestServerFile {
 	constructor(
@@ -176,7 +176,7 @@ export default class TestServerFile {
 				throw new Error("Could not find inline snapshot location in source map");
 			}
 
-			if (!resolved.source.equal(path) && !resolved.source.equal(ref.uid)) {
+			if (!(resolved.source.equal(path) || resolved.source.equal(ref.uid))) {
 				throw new Error(
 					pretty`Inline snapshot update resolved to ${resolved.source} when it should be ${path}`,
 				);

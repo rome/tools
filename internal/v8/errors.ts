@@ -14,7 +14,7 @@ import {
 	convertPossibleNodeErrorToDiagnostic,
 } from "@internal/node";
 import {DiagnosticLocation} from "@internal/diagnostics";
-import { createUIDPath } from "@internal/path";
+import {createUIDPath} from "@internal/path";
 
 export * from "./types";
 

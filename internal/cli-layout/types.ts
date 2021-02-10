@@ -5,7 +5,7 @@ import {
 } from "@internal/markup";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {Number1} from "@internal/ob1";
-import { Position } from "@internal/parser-core";
+import {Position} from "@internal/parser-core";
 
 export type GridPointer = {
 	char: MarkupParsedChildren;

@@ -2,7 +2,7 @@ import {createDiagnosticsCategory} from "./index";
 import {AnyMarkups, StaticMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {SourceLocation} from "@internal/parser-core";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 // @internal/js-analysis
 export const typeCheck = createDiagnosticsCategory({

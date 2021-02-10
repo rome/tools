@@ -22,7 +22,7 @@ import {
 } from "@internal/markup";
 import {ob1Number0, ob1Number1} from "@internal/ob1";
 import {RequiredProps} from "@internal/typescript-helpers";
-import { AnyPath, UnknownPathMap, UnknownPathSet } from "@internal/path";
+import {AnyPath, UnknownPathMap, UnknownPathSet} from "@internal/path";
 
 type NormalizeOptionsRequiredPosition = RequiredProps<
 	MarkupFormatNormalizeOptions,
@@ -140,11 +140,7 @@ export default class DiagnosticsNormalizer {
 		let {marker, path, start, end, integrity} = location;
 		let origPath = path;
 
-		if (
-			path !== undefined &&
-			origPath !== undefined &&
-			sourceMaps !== undefined
-		) {
+		if (path !== undefined && origPath !== undefined && sourceMaps !== undefined) {
 			if (start !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
 					origPath,
@@ -285,7 +281,12 @@ export default class DiagnosticsNormalizer {
 			case "stacktrace":
 				return {
 					...item,
-					importantPaths: new UnknownPathSet(Array.from(item.importantPaths ?? [], (path) => this.normalizePath(path))),
+					importantPaths: new UnknownPathSet(
+						Array.from(
+							item.importantPaths ?? [],
+							(path) => this.normalizePath(path),
+						),
+					),
 					frames: item.frames.map((frame) => {
 						const {path, line, column} = frame;
 

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticAdvice, DiagnosticLocation, Diagnostic} from "./types";
+import {Diagnostic, DiagnosticAdvice, DiagnosticLocation} from "./types";
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import stringDiff from "@internal/string-diff";
 import {Position} from "@internal/parser-core";
@@ -193,28 +193,28 @@ export function joinCategoryName(
 	return human;
 }
 
-export function appendAdviceToDiagnostic(diag: Diagnostic, advice: DiagnosticAdvice): Diagnostic {
+export function appendAdviceToDiagnostic(
+	diag: Diagnostic,
+	advice: DiagnosticAdvice,
+): Diagnostic {
 	return {
 		...diag,
 		description: {
 			...diag.description,
-			advice: [
-				...(diag.description.advice || []),
-				...advice,
-			],
+			advice: [...(diag.description.advice || []), ...advice],
 		},
 	};
 }
 
-export function prependAdviceToDiagnostic(diag: Diagnostic, advice: DiagnosticAdvice): Diagnostic {
+export function prependAdviceToDiagnostic(
+	diag: Diagnostic,
+	advice: DiagnosticAdvice,
+): Diagnostic {
 	return {
 		...diag,
 		description: {
 			...diag.description,
-			advice: [
-				...advice,
-				...(diag.description.advice || []),
-			],
+			advice: [...advice, ...(diag.description.advice || [])],
 		},
 	};
 }

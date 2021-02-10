@@ -8,7 +8,7 @@
 import {SCOPE_PRIVATE_PREFIX} from "@internal/compiler";
 import {BundleCompileOptions} from "../../types";
 import CompilerContext from "../../lib/CompilerContext";
-import { createUIDPath, UIDPath } from "@internal/path";
+import {UIDPath, createUIDPath} from "@internal/path";
 
 export function getOptions(context: CompilerContext): BundleCompileOptions {
 	const opts = context.options.bundle;
@@ -25,7 +25,9 @@ export function getPrivateName(name: string, moduleId: UIDPath) {
 // This is necessary so we can take our module uids which are paths on the file system into a valid JS jsIdentifier name
 export function normalizeModuleId(id: UIDPath): UIDPath {
 	// TODO probably need more stuff in this
-	return createUIDPath(id.join().replace(/[\\\/@\-]/g, "$").replace(/[\-.]/g, "_"));
+	return createUIDPath(
+		id.join().replace(/[\\\/@\-]/g, "$").replace(/[\-.]/g, "_"),
+	);
 }
 
 export function getPrefixedName(

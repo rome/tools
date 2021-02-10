@@ -11,7 +11,7 @@ import {Cache} from "@internal/compiler";
 import {formatAST} from "@internal/formatter";
 import {CompileRequest} from "../types";
 import transform from "../methods/transform";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 export type CompileResult = {
 	mappings: Mappings;

@@ -21,8 +21,8 @@ import types from "./types/index";
 import evaluators from "./evaluators/index";
 import {ModuleSignatureType} from "./types";
 import {ExtendedMap} from "@internal/collections";
-import { AnyPath } from "@internal/path";
-import { pretty } from "@internal/pretty-format";
+import {AnyPath} from "@internal/path";
+import {pretty} from "@internal/pretty-format";
 
 export type HydrateTypeFactory = (id: unknown) => T;
 
@@ -115,10 +115,7 @@ export class ModuleSignatureManager {
 		// Resolve all exports
 		for (const def of graph.exports) {
 			if (def.type === "all") {
-				const manager = await this.getModuleSignature(
-					def.source,
-					graph.path,
-				);
+				const manager = await this.getModuleSignature(def.source, graph.path);
 				if (manager !== undefined) {
 					this.addAll(manager);
 				}

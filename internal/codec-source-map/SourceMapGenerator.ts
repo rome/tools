@@ -28,7 +28,7 @@ import {
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 type MaterializeCallback = VoidCallback;
 

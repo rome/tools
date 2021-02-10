@@ -40,8 +40,8 @@ import executeMain from "../common/utils/executeMain";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createAbsoluteFilePath,
 	UnknownPathSet,
+	createAbsoluteFilePath,
 } from "@internal/path";
 import {
 	concatMarkup,
@@ -90,8 +90,7 @@ export function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	if (latestTestWorkerFrame === undefined) {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
-				frame.path !== undefined &&
-				frame.path.join().includes("TestWorkerFile")
+				frame.path !== undefined && frame.path.join().includes("TestWorkerFile")
 			);
 		});
 	}

@@ -9,7 +9,7 @@ import {Profile, TraceEvent} from "./types";
 import sourceMapManager from "./sourceMapManager";
 import {urlToFilename} from "./utils";
 import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from "@internal/ob1";
-import { createUnknownPath } from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 
 export default class Trace {
 	constructor() {

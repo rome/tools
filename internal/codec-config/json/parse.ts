@@ -827,7 +827,7 @@ export function parseJSONExtra(
 		},
 		{diagnosticLanguage: type},
 	);
-	
+
 	const categoryValue = parser.options.consumeDiagnosticCategoryValue ?? "json";
 
 	let expectSyntaxError = false;

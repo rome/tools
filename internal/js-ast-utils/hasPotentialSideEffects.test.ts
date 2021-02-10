@@ -3,6 +3,7 @@ import {hasPotentialSideEffects} from "@internal/js-ast-utils/hasPotentialSideEf
 import Scope, {RootScope} from "@internal/compiler/scope/Scope";
 import {
 	AnyNode,
+	MOCK_PROGRAM,
 	jsArrayExpression,
 	jsAssignmentIdentifier,
 	jsBindingIdentifier,
@@ -22,7 +23,6 @@ import {
 	jsStringLiteral,
 	jsVariableDeclaration,
 	jsVariableDeclarator,
-	MOCK_PROGRAM,
 } from "@internal/ast";
 import {CompilerContext} from "@internal/compiler";
 

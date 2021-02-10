@@ -14,7 +14,7 @@ import Consumer from "./Consumer";
 import {UnknownPath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
-export type ConsumeProtectedFunction = (...args: Array<unknown>) => Consumer;
+export type ConsumeProtectedFunction = (...args: unknown[]) => Consumer;
 
 export type ConsumeKey = number | string;
 

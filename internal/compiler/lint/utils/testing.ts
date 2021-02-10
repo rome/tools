@@ -65,7 +65,9 @@ async function testLintExpect(
 		sourceText: input,
 	});
 
-	const uid = createUIDPath(`${category}/${expectValid ? "pass" : "reject"}/${index}/${path.join()}`);
+	const uid = createUIDPath(
+		`${category}/${expectValid ? "pass" : "reject"}/${index}/${path.join()}`,
+	);
 
 	const res = await performFileOperation(
 		{

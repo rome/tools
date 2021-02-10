@@ -16,8 +16,7 @@ import {
 	DiagnosticLocation,
 	Diagnostics,
 } from "@internal/diagnostics";
-import {Server} from "@internal/core";
-import {WorkerBufferPatch} from "@internal/core";
+import {Server, WorkerBufferPatch} from "@internal/core";
 
 export function convertPositionToLSP(pos: undefined | Position): LSPPosition {
 	if (pos === undefined) {

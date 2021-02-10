@@ -16,7 +16,7 @@ import GetPropT from "./types/GetPropT";
 import UnionT from "./types/UnionT";
 import OpenT from "./types/OpenT";
 import {Class} from "@internal/typescript-helpers";
-import { pretty } from "@internal/pretty-format";
+import {pretty} from "@internal/pretty-format";
 
 type BindingStatus = "declared" | "initialized";
 

@@ -270,10 +270,15 @@ function getExtraObjectProps(
 		} else {
 			let i = 0;
 			for (const val of obj) {
-				props.push(prettyFormat(val, {
-					...opts,
-					path: [...opts.path, i],
-				}));
+				props.push(
+					prettyFormat(
+						val,
+						{
+							...opts,
+							path: [...opts.path, i],
+						},
+					),
+				);
 				ignoreKeys[String(i++)] = val;
 			}
 		}
@@ -420,7 +425,7 @@ function formatObject(
 
 		const propOpts: FormatOptions = {
 			...nextOpts,
-			path: [...nextOpts.path, key]
+			path: [...nextOpts.path, key],
 		};
 
 		const prop = markup`${formatKey(key)}: ${prettyFormat(val, propOpts)}`;

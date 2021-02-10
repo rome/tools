@@ -49,7 +49,7 @@ import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 import WorkerCache, {createCacheEntryLoader} from "./WorkerCache";
-import {uncachedLint, uncachedFormat} from "./workerLint";
+import {uncachedFormat, uncachedLint} from "./workerLint";
 
 const analyzeDependenciesCacheLoader = createCacheEntryLoader<AnalyzeDependencyResult>(
 	"analyzeDependencies",

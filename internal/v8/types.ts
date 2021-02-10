@@ -11,7 +11,7 @@ import {JSONPropertyValue} from "@internal/codec-config";
 import inspector = require("inspector");
 
 import {InterfaceToObject} from "@internal/typescript-helpers";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;
 

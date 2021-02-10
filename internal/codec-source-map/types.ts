@@ -6,7 +6,7 @@
  */
 
 import {Number0, Number1} from "@internal/ob1";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 export type Mappings = Mapping[];
 

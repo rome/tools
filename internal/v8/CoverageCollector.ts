@@ -25,7 +25,7 @@ import {
 	ob1Number1,
 } from "@internal/ob1";
 import inspector = require("inspector");
-import { UnknownPathMap } from "@internal/path";
+import {UnknownPathMap} from "@internal/path";
 
 function createCoverageFileStats(
 	covered: number,

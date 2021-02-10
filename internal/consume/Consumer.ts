@@ -17,10 +17,10 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {
+	UnknownFunction,
 	UnknownObject,
 	VoidCallback,
 	isPlainObject,
-	UnknownFunction,
 } from "@internal/typescript-helpers";
 import {
 	JSONArray,
@@ -37,11 +37,11 @@ import {
 	ConsumePropertyNumberDefinition,
 	ConsumePropertyPrimitiveDefinition,
 	ConsumePropertyStringDefinition,
+	ConsumeProtectedFunction,
 	ConsumeSourceLocationRequestTarget,
 	ConsumerHandleUnexpected,
 	ConsumerOnDefinition,
 	ConsumerOptions,
-	ConsumeProtectedFunction,
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
@@ -65,7 +65,7 @@ import {
 	createUnknownPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
-import { consumeUnknown } from ".";
+import {consumeUnknown} from ".";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -965,7 +965,7 @@ export default class Consumer {
 			return fn as UnknownFunction;
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_FUNCTION);
-			
+
 			return () => {
 				return undefined;
 			};
@@ -982,7 +982,11 @@ export default class Consumer {
 			value = obj;
 		}
 
-		return consumeUnknown(value, this.context.category, this.context.categoryValue);
+		return consumeUnknown(
+			value,
+			this.context.category,
+			this.context.categoryValue,
+		);
 	}
 
 	public asWrappedFunction(def?: UnknownFunction): ConsumeProtectedFunction {
@@ -991,7 +995,11 @@ export default class Consumer {
 
 		return (...args) => {
 			const ret = fn.apply(context, args);
-			return consumeUnknown(ret, this.context.category, this.context.categoryValue);
+			return consumeUnknown(
+				ret,
+				this.context.category,
+				this.context.categoryValue,
+			);
 		};
 	}
 

@@ -9,14 +9,14 @@ import {
 	AbsoluteFilePath,
 	AnyPath,
 	RelativeFilePath,
+	UIDPath,
+	URLPath,
 	UnknownPath,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-	createUnknownPath,
-	createURLPath,
 	createUIDPath,
-	UIDPath,
-	URLPath,
+	createURLPath,
+	createUnknownPath,
 } from "./index";
 
 function concat<FilePath extends AnyPath>(
@@ -219,8 +219,7 @@ export class RelativeFilePathMap<Value>
 	}
 }
 
-export class URLPathMap<Value>
-	extends BasePathMap<URLPath, Value> {
+export class URLPathMap<Value> extends BasePathMap<URLPath, Value> {
 	public type: "url" = "url";
 
 	public createKey(str: string): URLPath {
@@ -232,8 +231,7 @@ export class URLPathMap<Value>
 	}
 }
 
-export class UIDPathMap<Value>
-	extends BasePathMap<UIDPath, Value> {
+export class UIDPathMap<Value> extends BasePathMap<UIDPath, Value> {
 	public type: "uid" = "uid";
 
 	public createKey(str: string): UIDPath {
@@ -283,8 +281,7 @@ export class RelativeFilePathSet
 	}
 }
 
-export class URLPathSet
-	extends BasePathSet<URLPath, URLPathMap<void>> {
+export class URLPathSet extends BasePathSet<URLPath, URLPathMap<void>> {
 	public type: "url" = "url";
 
 	createMap(): URLPathMap<void> {
@@ -296,9 +293,7 @@ export class URLPathSet
 	}
 }
 
-
-export class UIDPathSet
-	extends BasePathSet<UIDPath, UIDPathMap<void>> {
+export class UIDPathSet extends BasePathSet<UIDPath, UIDPathMap<void>> {
 	public type: "uid" = "uid";
 
 	createMap(): UIDPathMap<void> {
@@ -310,8 +305,7 @@ export class UIDPathSet
 	}
 }
 
-export class UnknownPathSet
-	extends BasePathSet<AnyPath, UnknownPathMap<void>> {
+export class UnknownPathSet extends BasePathSet<AnyPath, UnknownPathMap<void>> {
 	public type: "unknown" = "unknown";
 
 	createMap(): UnknownPathMap<void> {
@@ -331,11 +325,28 @@ export type AnyPathSet =
 	| UnknownPathSet;
 
 export function isPathSet(val: unknown): val is AnyPathSet {
-	return val instanceof AbsoluteFilePathSet || val instanceof RelativeFilePathSet || val instanceof URLPathSet || val instanceof UIDPathSet || val instanceof UnknownPathSet;
+	return (
+		val instanceof AbsoluteFilePathSet ||
+		val instanceof RelativeFilePathSet ||
+		val instanceof URLPathSet ||
+		val instanceof UIDPathSet ||
+		val instanceof UnknownPathSet
+	);
 }
 
-export type AnyPathMap<Value> = AbsoluteFilePathMap<Value> | RelativeFilePathMap<Value> | URLPathMap<Value> | UIDPathMap<Value> | UnknownPathMap<Value>;
+export type AnyPathMap<Value> =
+	| AbsoluteFilePathMap<Value>
+	| RelativeFilePathMap<Value>
+	| URLPathMap<Value>
+	| UIDPathMap<Value>
+	| UnknownPathMap<Value>;
 
 export function isPathMap(val: unknown): val is AnyPathMap<unknown> {
-	return val instanceof AbsoluteFilePathMap || val instanceof RelativeFilePathMap || val instanceof URLPathMap || val instanceof UIDPathMap || val instanceof UnknownPathMap;
+	return (
+		val instanceof AbsoluteFilePathMap ||
+		val instanceof RelativeFilePathMap ||
+		val instanceof URLPathMap ||
+		val instanceof UIDPathMap ||
+		val instanceof UnknownPathMap
+	);
 }

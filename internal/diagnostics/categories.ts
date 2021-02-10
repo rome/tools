@@ -353,7 +353,7 @@ const categoryNameMap: {[name in DiagnosticCategory]: true} = {
 	"compile/const-enums": true,
 	"compile/jsx": true,
 	"compile/nonnumeric-enum-values": true,
-	"eslint": true,
+	eslint: true,
 	"files/missingHandler": true,
 	"files/tooBig": true,
 	"flags/invalid": true,

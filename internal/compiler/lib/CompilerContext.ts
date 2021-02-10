@@ -32,7 +32,7 @@ import {
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
-import {AnyPath, equalPaths, UnknownPathSet} from "@internal/path";
+import {AnyPath, UnknownPathSet, equalPaths} from "@internal/path";
 import {
 	AnyVisitor,
 	CompilerProject,

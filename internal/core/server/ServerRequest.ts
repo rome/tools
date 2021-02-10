@@ -10,7 +10,21 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {BundlerConfig, FileReference, LAG_INTERVAL} from "@internal/core";
+import {
+	BundlerConfig,
+	FileReference,
+	LAG_INTERVAL,
+	WorkerAnalyzeDependencyResult,
+	WorkerBufferPatch,
+	WorkerCompileResult,
+	WorkerCompilerOptions,
+	WorkerFormatResult,
+	WorkerLintOptions,
+	WorkerLintResult,
+	WorkerParseOptions,
+	WorkerPrefetchedModuleSignatures,
+	WorkerUpdateInlineSnapshotResult,
+} from "@internal/core";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
@@ -56,18 +70,7 @@ import {
 } from "@internal/cli-flags";
 import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
-import {
-	WorkerPrefetchedModuleSignatures,
-	WorkerAnalyzeDependencyResult,
-	WorkerBufferPatch,
-	WorkerCompileResult,
-	WorkerCompilerOptions,
-	WorkerFormatResult,
-	WorkerLintOptions,
-	WorkerLintResult,
-	WorkerParseOptions,
-	WorkerUpdateInlineSnapshotResult,
-} from "@internal/core";
+
 import {ModuleSignature} from "@internal/js-analysis";
 import {
 	AbsoluteFilePath,
@@ -76,9 +79,9 @@ import {
 	AnyPath,
 	RelativeFilePath,
 	UnknownPath,
-	createUnknownPath,
 	createAbsoluteFilePath,
 	createUIDPath,
+	createUnknownPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";

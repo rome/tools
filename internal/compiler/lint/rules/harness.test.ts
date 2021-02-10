@@ -3,7 +3,7 @@ import {tests} from "./tests";
 import {testLint} from "../utils/testing";
 import {DiagnosticCategory} from "@internal/diagnostics";
 import {dedent} from "@internal/string-utils";
-import { createUnknownPath } from "@internal/path";
+import {createUnknownPath} from "@internal/path";
 
 for (const name in tests) {
 	test(

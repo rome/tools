@@ -19,12 +19,16 @@ const longSuffixes = {
 	h: "hour",
 };
 
-function format(key: keyof typeof shortSuffixes, num: string | number, longform: boolean): string {
+function format(
+	key: keyof typeof shortSuffixes,
+	num: string | number,
+	longform: boolean,
+): string {
 	const str = String(num);
 	if (longform) {
 		let suffix = longSuffixes[key];
 		if (str !== "1") {
-			suffix += `s`;
+			suffix += "s";
 		}
 		return `${str} ${suffix}`;
 	} else {
@@ -71,7 +75,11 @@ export function humanizeDuration(
 	}
 
 	if (allowMilliseconds) {
-		buf += format("s", (ms / 1_000 % 60).toFixed(secondFractionDigits), longform);
+		buf += format(
+			"s",
+			(ms / 1_000 % 60).toFixed(secondFractionDigits),
+			longform,
+		);
 	} else {
 		buf += format("s", s % 60, longform);
 	}

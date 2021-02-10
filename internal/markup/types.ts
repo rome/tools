@@ -10,7 +10,7 @@ import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {UserConfig} from "@internal/core";
 import {Number0, Number1} from "@internal/ob1";
 import {Consumer} from "@internal/consume";
-import { GridLocators } from "@internal/cli-layout";
+import {GridLocators} from "@internal/cli-layout";
 
 export type Tokens = BaseTokens & {
 	Text: StringToken<"Text">;

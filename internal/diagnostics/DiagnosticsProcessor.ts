@@ -24,7 +24,7 @@ import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
-import { equalPaths, UnknownPathMap, UnknownPathSet } from "@internal/path";
+import {UnknownPathMap, UnknownPathSet, equalPaths} from "@internal/path";
 
 type UniquePart =
 	| "filename"

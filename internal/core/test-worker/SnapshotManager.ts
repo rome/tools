@@ -14,7 +14,7 @@ import {exists, readFileText} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerFile from "./TestWorkerFile";
 import {descriptions} from "@internal/diagnostics";
-import {snapshotParser, parseSnapshot} from "./SnapshotParser";
+import {parseSnapshot, snapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/v8";
 import {Number0, Number1} from "@internal/ob1";
 import {prettyFormatToString} from "@internal/pretty-format";

@@ -11,9 +11,9 @@ import {
 	AbsoluteFilePath,
 	AnyPath,
 	RelativeFilePath,
+	UIDPath,
 	URLPath,
 	UnknownPath,
-	UIDPath,
 } from "@internal/path";
 import {UnknownNumber, isNumber, ob1Get} from "@internal/ob1";
 
@@ -93,12 +93,7 @@ export function filePathToMarkup(
 	);
 }
 
-type InterpolatedValue =
-	| undefined
-	| number
-	| bigint
-	| AnyPath
-	| UnknownNumber;
+type InterpolatedValue = undefined | number | bigint | AnyPath | UnknownNumber;
 
 const markupTemplateCache: WeakMap<TemplateStringsArray, AnyMarkup> = new WeakMap();
 

@@ -5,7 +5,7 @@ import {buildSuggestionAdvice} from "../helpers";
 import {DiagnosticCategory} from "../categories";
 import {ResolverQueryResponseNotFound} from "@internal/core/server/fs/Resolver";
 import {SourceLocation} from "@internal/parser-core";
-import { AnyPath } from "@internal/path";
+import {AnyPath} from "@internal/path";
 
 // @internal/path-match
 export const resolver = createDiagnosticsCategory({
@@ -68,7 +68,7 @@ export const resolver = createDiagnosticsCategory({
 							const {location, source} = formatExportedName(name);
 							let format = markup`${name}`;
 
-							if (location !== undefined && location.path !== undefined) {
+							if (location?.path !== undefined) {
 								if (location.start === undefined) {
 									format = markup`<filelink target="${location.path.join()}">${name}</filelink>`;
 								} else {

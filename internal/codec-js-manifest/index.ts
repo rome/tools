@@ -8,9 +8,9 @@
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
-	parseSPDXLicense,
 	SPDXExpressionNode,
 	SPDXLicenseParserOptions,
+	parseSPDXLicense,
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
@@ -27,7 +27,7 @@ import {
 	ManifestRepository,
 } from "./types";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
-import {normalizeName, manifestNameToString} from "./name";
+import {manifestNameToString, normalizeName} from "./name";
 import {descriptions} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
@@ -37,7 +37,7 @@ import {
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
-import {CompilerProjects } from "@internal/compiler";
+import {CompilerProjects} from "@internal/compiler";
 
 export * from "./types";
 
@@ -185,9 +185,9 @@ function normalizeLicense(
 	{name, version, loose, projects}: {
 		name: undefined | string;
 		version: undefined | SemverVersionNode;
-		loose: boolean,
-		projects: CompilerProjects,
-	}
+		loose: boolean;
+		projects: CompilerProjects;
+	},
 ): undefined | SPDXExpressionNode {
 	if (!consumer.has("license")) {
 		return undefined;
@@ -224,7 +224,7 @@ function normalizeLicense(
 		path: consumer.path,
 		input: licenseId,
 	};
-	
+
 	if (name !== undefined && version !== undefined) {
 		opts.exceptions = {
 			packageName: name,
@@ -664,7 +664,10 @@ export async function normalizeManifest(
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
-		license: normalizeLicense(consumer, {name: strName, version, loose, projects}),
+		license: normalizeLicense(
+			consumer,
+			{name: strName, version, loose, projects},
+		),
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),

@@ -11,6 +11,7 @@ import {
 	AnalyzeModuleType,
 	BundleBuddyStats,
 	ServerRequest,
+	WorkerAnalyzeDependencyResult,
 } from "@internal/core";
 import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
 import {ResolverOptions} from "../fs/Resolver";
@@ -19,7 +20,6 @@ import DependencyNode from "./DependencyNode";
 import {ReporterProgress} from "@internal/cli-reporter";
 import {Locker} from "../../../async/lockers";
 import {DependencyOrder} from "./DependencyOrderer";
-import {WorkerAnalyzeDependencyResult} from "@internal/core";
 
 import {
 	AbsoluteFilePath,

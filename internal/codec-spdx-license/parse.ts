@@ -17,7 +17,11 @@ import {
 import {getSPDXLicense, licenseNames} from "./index";
 import {descriptions} from "@internal/diagnostics";
 import {Number0} from "@internal/ob1";
-import {ExpressionNode, LicenseNode, SPDXLicenseParserOptions} from "@internal/codec-spdx-license/types";
+import {
+	ExpressionNode,
+	LicenseNode,
+	SPDXLicenseParserOptions,
+} from "@internal/codec-spdx-license/types";
 import {satisfiesSemver, stringifySemver} from "@internal/codec-semver";
 import stringify from "@internal/codec-semver/stringify";
 
@@ -149,7 +153,7 @@ function parseExpression(parser: SPDXParser): ExpressionNode {
 }
 
 function isLicenseValid(
-  parser: SPDXParser,
+	parser: SPDXParser,
 	id: string,
 ): {
 	inConfig: boolean;
@@ -167,9 +171,12 @@ function isLicenseValid(
 			const licenses = invalidLicenses.get(id);
 			if (licenses) {
 				for (const license of licenses) {
-					satisfiesVersion = satisfiesSemver(exceptions.packageVersion, license.range);
+					satisfiesVersion = satisfiesSemver(
+						exceptions.packageVersion,
+						license.range,
+					);
 					inConfig = license.name === exceptions.packageName && satisfiesVersion;
-					
+
 					// There's at least a version of the dependency that doesn't satisfy the criteria
 					// so exit the loop and communicate to the user
 					if (!satisfiesVersion) {
@@ -194,7 +201,7 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 	const nextToken = parser.getToken();
 	let possibleCorrectLicense;
 	let endToken = token;
-  
+
 	// Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
 	// In loose mode, just make it equivalent, otherwise, complain
 	if (licenseInfo === undefined && nextToken.type === "Word") {
@@ -204,7 +211,7 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 		if (possibleLicenseInfo !== undefined) {
 			if (parser.options.loose) {
 				endToken = nextToken;
-				
+
 				// Just allow it...
 				licenseInfo = possibleLicenseInfo;
 				parser.nextToken();
@@ -224,7 +231,7 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 
 	if (licenseInfo === undefined) {
 		const {inConfig, satisfiesVersion, packageVersionInConfig} = isLicenseValid(
-      parser,
+			parser,
 			possibleCorrectLicense || id,
 		);
 
@@ -237,13 +244,15 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 						id: possibleCorrectLicense || id,
 						packageVersionInConfig,
 						packageName: exceptions?.packageName ?? "unknown",
-						packageVersion: exceptions === undefined ? "unknown" : stringifySemver(exceptions.packageVersion),
+						packageVersion: exceptions === undefined
+							? "unknown"
+							: stringifySemver(exceptions.packageVersion),
 					}),
 					start: parser.getPositionFromIndex(token.start),
 					end: parser.getPositionFromIndex(endToken.end),
 				});
-      }
-      
+			}
+
 			throw parser.unexpected({
 				description: descriptions.SPDX.UNKNOWN_LICENSE({
 					id: possibleCorrectLicense || id,
@@ -253,10 +262,10 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 				start: parser.getPositionFromIndex(token.start),
 				end: parser.getPositionFromIndex(endToken.end),
 			});
-    }
-    
-    // License has an exception
-    licenseId = id;
+		}
+
+		// License has an exception
+		licenseId = id;
 	} else {
 		licenseId = licenseInfo.licenseId;
 	}

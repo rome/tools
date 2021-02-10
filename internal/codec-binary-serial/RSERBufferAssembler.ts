@@ -1,11 +1,11 @@
 import {
 	VALUE_CODES,
 	VERSION,
+	instanceToArrayBufferViewCode,
+	instanceToErrorCode,
 	pathMapToCode,
 	pathSetToCode,
 	pathToCode,
-	instanceToArrayBufferViewCode,
-	instanceToErrorCode,
 } from "./constants";
 import {
 	Position,
@@ -38,8 +38,8 @@ import {
 	UnknownPathMap,
 	UnknownPathSet,
 	isPath,
-	isPathSet,
 	isPathMap,
+	isPathSet,
 } from "@internal/path";
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
@@ -369,7 +369,7 @@ export default class RSERBufferAssembler {
 
 	private encodeSourceLocation(loc: SourceLocation) {
 		this.writeCode(VALUE_CODES.SOURCE_LOCATION);
-		
+
 		if (loc.path === undefined) {
 			this.encodeUndefined();
 		} else {

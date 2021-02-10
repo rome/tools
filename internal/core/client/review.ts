@@ -189,7 +189,9 @@ async function ask(
 
 	// Check if this diagnostic is now out of date
 	await printer.fetchFileSources([diag]);
-	const {outdatedPaths: outdatedFiles} = printer.getDiagnosticDependencyMeta(diag);
+	const {outdatedPaths: outdatedFiles} = printer.getDiagnosticDependencyMeta(
+		diag,
+	);
 	if (outdatedFiles.size > 0) {
 		const files = Array.from(
 			outdatedFiles,

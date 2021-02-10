@@ -21,7 +21,12 @@ import {
 	lineWrapValidator,
 	parseMarkup,
 } from "@internal/markup";
-import {GridLocators, GridOptions, GridOutputFormat, GridPointer} from "./types";
+import {
+	GridLocators,
+	GridOptions,
+	GridOutputFormat,
+	GridPointer,
+} from "./types";
 import {
 	Number1,
 	ob1Add,
@@ -1222,16 +1227,19 @@ export default class Grid {
 		const cursor = this.getCursor();
 
 		for (const [key, locator] of grid.locators) {
-			this.locators.set(key, {
-				start: {
-					line: ob1Add(cursor.line, locator.start.line),
-					column: ob1Add(locator.start.column, ob1Coerce1To0(cursor.column)),
+			this.locators.set(
+				key,
+				{
+					start: {
+						line: ob1Add(cursor.line, locator.start.line),
+						column: ob1Add(locator.start.column, ob1Coerce1To0(cursor.column)),
+					},
+					end: {
+						line: ob1Add(cursor.line, locator.end.line),
+						column: ob1Add(locator.end.column, ob1Coerce1To0(cursor.column)),
+					},
 				},
-				end: {
-					line: ob1Add(cursor.line, locator.end.line),
-					column: ob1Add(locator.end.column, ob1Coerce1To0(cursor.column)),
-				},
-			})
+			);
 		}
 
 		for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
@@ -1551,7 +1559,10 @@ export default class Grid {
 									sourceValue: singleInnerText,
 									value: formatApprox(
 										attributes,
-										humanizeDuration(Number(singleInnerText), {allowMilliseconds: true}),
+										humanizeDuration(
+											Number(singleInnerText),
+											{allowMilliseconds: true},
+										),
 									),
 								},
 							],

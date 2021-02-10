@@ -11,7 +11,12 @@ import {AssembledBundle, BundleRequestResult} from "../../common/types/bundler";
 import {DependencyOrder} from "../dependencies/DependencyOrderer";
 import {getPrefixedBundleNamespace} from "@internal/compiler";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
-import {AbsoluteFilePath, AbsoluteFilePathSet, createUnknownPath, UIDPath} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	UIDPath,
+	createUnknownPath,
+} from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -295,7 +300,10 @@ export default class BundleRequest {
 			const sourceMapComment = sourceMap.toComment();
 			assembled.push([0, sourceMapComment]);
 		} else {
-			assembled.push([0, `//# sourceMappingURL=${this.sourceMap.path.join()}.map`]);
+			assembled.push([
+				0,
+				`//# sourceMappingURL=${this.sourceMap.path.join()}.map`,
+			]);
 		}
 
 		return {
