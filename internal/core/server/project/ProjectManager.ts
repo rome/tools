@@ -39,8 +39,8 @@ import {
 	UIDPath,
 	UIDPathMap,
 	URLPath,
-	UnknownPathMap,
-	UnknownPathSet,
+	MixedPathMap,
+	MixedPathSet,
 	createUIDPath,
 } from "@internal/path";
 import {FileReference} from "../../common/types/files";
@@ -140,7 +140,7 @@ export default class ProjectManager {
 		// We maintain these maps so we can reverse any uids, and protect against collisions
 		this.uidToFilename = new UIDPathMap();
 		this.filenameToUid = new AbsoluteFilePathMap();
-		this.remoteToLocalPath = new UnknownPathMap();
+		this.remoteToLocalPath = new MixedPathMap();
 		this.localPathToRemote = new AbsoluteFilePathMap();
 	}
 
@@ -150,7 +150,7 @@ export default class ProjectManager {
 	private uidToFilename: UIDPathMap<AbsoluteFilePath>;
 	private filenameToUid: AbsoluteFilePathMap<UIDPath>;
 
-	private remoteToLocalPath: UnknownPathMap<AbsoluteFilePath>;
+	private remoteToLocalPath: MixedPathMap<AbsoluteFilePath>;
 	private localPathToRemote: AbsoluteFilePathMap<URLPath>;
 
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
@@ -252,10 +252,10 @@ export default class ProjectManager {
 		paths: Iterable<undefined | AnyPath>,
 	): {
 		absolutes: AbsoluteFilePathSet;
-		unknowns: UnknownPathSet;
+		unknowns: MixedPathSet;
 		hasUndefined: boolean;
 	} {
-		const unknowns = new UnknownPathSet();
+		const unknowns = new MixedPathSet();
 		const absolutes = new AbsoluteFilePathSet();
 		let hasUndefined = false;
 

@@ -40,7 +40,7 @@ import executeMain from "../common/utils/executeMain";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	UnknownPathSet,
+	MixedPathSet,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {
@@ -424,7 +424,7 @@ export default class TestWorkerFile {
 				path: this.path,
 				cleanFrames,
 				stackAdviceOptions: {
-					importantPaths: new UnknownPathSet([this.path]),
+					importantPaths: new MixedPathSet([this.path]),
 				},
 			},
 		);

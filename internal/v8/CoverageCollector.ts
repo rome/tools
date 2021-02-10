@@ -25,7 +25,7 @@ import {
 	ob1Number1,
 } from "@internal/ob1";
 import inspector = require("inspector");
-import {UnknownPathMap} from "@internal/path";
+import {MixedPathMap} from "@internal/path";
 
 function createCoverageFileStats(
 	covered: number,
@@ -209,7 +209,7 @@ export default class CoverageCollector {
 		}
 
 		// Assemble files
-		const rangesByFile: UnknownPathMap<CoverageLocationRange[]> = new UnknownPathMap();
+		const rangesByFile: MixedPathMap<CoverageLocationRange[]> = new MixedPathMap();
 		for (const loc of locs) {
 			let ranges = rangesByFile.get(loc.path);
 			if (ranges === undefined) {

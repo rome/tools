@@ -35,7 +35,7 @@ import {
 	getDiagnosticsFromError,
 	isUserDiagnosticError,
 } from "./errors";
-import {AnyPath, UnknownPathSet, equalPaths} from "@internal/path";
+import {AnyPath, MixedPathSet, equalPaths} from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -324,7 +324,7 @@ export function deriveDiagnosticFromError(
 
 export type DeriveErrorStackAdviceOptions = {
 	title?: StaticMarkup;
-	importantPaths?: UnknownPathSet;
+	importantPaths?: MixedPathSet;
 };
 
 export function getErrorStackAdvice(

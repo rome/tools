@@ -23,7 +23,7 @@ import {
 	validateFileCode,
 	validateValueCode,
 } from "./constants";
-import {AnyPath, AnyPathSet, isPath} from "@internal/path";
+import {AnyPath, PathSet, isPath} from "@internal/path";
 import {
 	ErrorFrames,
 	StructuredNodeSystemErrorProperties,
@@ -624,7 +624,7 @@ export default class RSERBufferParser {
 		return map;
 	}
 
-	private decodePathSet(): AnyPathSet {
+	private decodePathSet(): PathSet {
 		this.expectCode(VALUE_CODES.PATH_SET);
 
 		const code = this.decodePathCode();

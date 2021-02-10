@@ -34,7 +34,7 @@ function concat<FilePath extends AnyPath>(
 // to speed up the usage of FilePaths in these scenarios.
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
-abstract class BasePathMap<FilePath extends AnyPath, Value> {
+export abstract class BasePathMap<FilePath extends AnyPath, Value> {
 	constructor(entries?: [FilePath, Value][]) {
 		this.joinedToValue = new Map();
 		this.joinedToPath = new Map();
@@ -127,7 +127,7 @@ abstract class BasePathMap<FilePath extends AnyPath, Value> {
 
 abstract class BasePathSet<
 	Path extends AnyPath,
-	PathMap extends BasePathMap<Path, void>
+	PathMap extends BasePathMap<Path, void> = BasePathMap<Path, void>
 > {
 	constructor(entries?: Iterable<Path>) {
 		this.map = this.createMap();
@@ -243,20 +243,20 @@ export class UIDPathMap<Value> extends BasePathMap<UIDPath, Value> {
 	}
 }
 
-export class UnknownPathMap<Value> extends BasePathMap<AnyPath, Value> {
-	public type: "unknown" = "unknown";
+export class MixedPathMap<Value> extends BasePathMap<AnyPath, Value> {
+	public type: "mixed" = "mixed";
 
 	public createKey(str: string): UnknownPath {
 		return createUnknownPath(str);
 	}
 
-	public keysToSet(): UnknownPathSet {
-		return new UnknownPathSet(this.keys());
+	public keysToSet(): MixedPathSet {
+		return new MixedPathSet(this.keys());
 	}
 }
 
 export class AbsoluteFilePathSet
-	extends BasePathSet<AbsoluteFilePath, AbsoluteFilePathMap<void>> {
+	extends BasePathSet<AbsoluteFilePath> {
 	public type: "absolute" = "absolute";
 
 	createMap(): AbsoluteFilePathMap<void> {
@@ -269,7 +269,7 @@ export class AbsoluteFilePathSet
 }
 
 export class RelativeFilePathSet
-	extends BasePathSet<RelativeFilePath, RelativeFilePathMap<void>> {
+	extends BasePathSet<RelativeFilePath> {
 	public type: "relative" = "relative";
 
 	createMap(): RelativeFilePathMap<void> {
@@ -281,7 +281,7 @@ export class RelativeFilePathSet
 	}
 }
 
-export class URLPathSet extends BasePathSet<URLPath, URLPathMap<void>> {
+export class URLPathSet extends BasePathSet<URLPath> {
 	public type: "url" = "url";
 
 	createMap(): URLPathMap<void> {
@@ -293,7 +293,7 @@ export class URLPathSet extends BasePathSet<URLPath, URLPathMap<void>> {
 	}
 }
 
-export class UIDPathSet extends BasePathSet<UIDPath, UIDPathMap<void>> {
+export class UIDPathSet extends BasePathSet<UIDPath> {
 	public type: "uid" = "uid";
 
 	createMap(): UIDPathMap<void> {
@@ -305,48 +305,50 @@ export class UIDPathSet extends BasePathSet<UIDPath, UIDPathMap<void>> {
 	}
 }
 
-export class UnknownPathSet extends BasePathSet<AnyPath, UnknownPathMap<void>> {
-	public type: "unknown" = "unknown";
+export class MixedPathSet extends BasePathSet<AnyPath> {
+	public type: "mixed" = "mixed";
 
-	createMap(): UnknownPathMap<void> {
-		return new UnknownPathMap();
+	createMap(): MixedPathMap<void> {
+		return new MixedPathMap();
 	}
 
-	public concat(...items: Iterable<AnyPath>[]): UnknownPathSet {
-		return new UnknownPathSet(concat(items));
+	public concat(...items: Iterable<AnyPath>[]): MixedPathSet {
+		return new MixedPathSet(concat(items));
 	}
 }
 
-export type AnyPathSet =
+export type PathSet =
 	| AbsoluteFilePathSet
 	| RelativeFilePathSet
 	| URLPathSet
 	| UIDPathSet
-	| UnknownPathSet;
+	| MixedPathSet;
 
-export function isPathSet(val: unknown): val is AnyPathSet {
+export function isPathSet(val: unknown): val is PathSet {
 	return (
 		val instanceof AbsoluteFilePathSet ||
 		val instanceof RelativeFilePathSet ||
 		val instanceof URLPathSet ||
 		val instanceof UIDPathSet ||
-		val instanceof UnknownPathSet
+		val instanceof MixedPathSet
 	);
 }
 
-export type AnyPathMap<Value> =
+export type PathMap<Value> =
 	| AbsoluteFilePathMap<Value>
 	| RelativeFilePathMap<Value>
 	| URLPathMap<Value>
 	| UIDPathMap<Value>
-	| UnknownPathMap<Value>;
+	| MixedPathMap<Value>;
 
-export function isPathMap(val: unknown): val is AnyPathMap<unknown> {
+export function isPathMap(val: unknown): val is PathMap<unknown> {
 	return (
 		val instanceof AbsoluteFilePathMap ||
 		val instanceof RelativeFilePathMap ||
 		val instanceof URLPathMap ||
 		val instanceof UIDPathMap ||
-		val instanceof UnknownPathMap
+		val instanceof MixedPathMap
 	);
 }
+
+export type PathMapValue<Map> = Map extends BasePathMap<any, infer V> ? V : never;

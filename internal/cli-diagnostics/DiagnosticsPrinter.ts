@@ -37,8 +37,8 @@ import {
 	AbsoluteFilePath,
 	AnyPath,
 	CWD_PATH,
-	UnknownPathMap,
-	UnknownPathSet,
+	MixedPathMap,
+	MixedPathSet,
 	equalPaths,
 } from "@internal/path";
 import {Number0, Number1, ob1Get0, ob1Get1} from "@internal/ob1";
@@ -123,12 +123,12 @@ function hasFrame(loc: DiagnosticLocation): boolean {
 	return loc.start !== undefined || loc.end !== undefined;
 }
 
-export type DiagnosticsPrinterFileSources = UnknownPathMap<{
+export type DiagnosticsPrinterFileSources = MixedPathMap<{
 	sourceText: string;
 	lines: ToLines;
 }>;
 
-export type DiagnosticsPrinterFileHashes = UnknownPathMap<string>;
+export type DiagnosticsPrinterFileHashes = MixedPathMap<string>;
 
 export default class DiagnosticsPrinter extends Error {
 	constructor(opts: DiagnosticsPrinterOptions) {
@@ -155,9 +155,9 @@ export default class DiagnosticsPrinter extends Error {
 
 		this.defaultFooterEnabled = true;
 		this.hasTruncatedDiagnostics = false;
-		this.missingFileSources = new UnknownPathSet();
-		this.fileSources = new UnknownPathMap();
-		this.fileHashes = new UnknownPathMap();
+		this.missingFileSources = new MixedPathSet();
+		this.fileSources = new MixedPathMap();
+		this.fileHashes = new MixedPathMap();
 		this.dependenciesByDiagnostic = new Map();
 		this.onFooterPrintCallbacks = [];
 	}
@@ -175,7 +175,7 @@ export default class DiagnosticsPrinter extends Error {
 	private cwd: AbsoluteFilePath;
 	private fileHandler: Required<DiagnosticsFileHandler>;
 	private hasTruncatedDiagnostics: boolean;
-	private missingFileSources: UnknownPathSet;
+	private missingFileSources: MixedPathSet;
 	private fileSources: DiagnosticsPrinterFileSources;
 	private fileHashes: DiagnosticsPrinterFileHashes;
 	private dependenciesByDiagnostic: Map<Diagnostic, FileDependency[]>;
@@ -445,7 +445,7 @@ export default class DiagnosticsPrinter extends Error {
 			deps = [...deps, ...this.getDependenciesFromDiagnostic(diag)];
 		}
 
-		const depsMap: UnknownPathMap<FileDependency> = new UnknownPathMap();
+		const depsMap: MixedPathMap<FileDependency> = new MixedPathMap();
 
 		// Remove non-absolute filenames and normalize sourceType and language for conflicts
 		for (const dep of deps) {
@@ -552,9 +552,9 @@ export default class DiagnosticsPrinter extends Error {
 	public getDiagnosticDependencyMeta(
 		diag: Diagnostic,
 	): {
-		outdatedPaths: UnknownPathSet;
+		outdatedPaths: MixedPathSet;
 	} {
-		let outdatedPaths: UnknownPathSet = new UnknownPathSet();
+		let outdatedPaths: MixedPathSet = new MixedPathSet();
 
 		for (const {
 			path,

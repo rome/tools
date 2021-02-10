@@ -22,6 +22,12 @@ export type AsyncCallback<Return, Args extends unknown[] = []> = Args extends []
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 
+export type MapKey<T> = T extends Map<infer K, any> ? K : never;
+
+export type MapValue<T> = T extends Map<any, infer V> ? V : never;
+
+export type SetValue<T> = T extends Set<infer V> ? V : never;
+
 // rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables(I): future cleanup
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((
 	k: infer I,

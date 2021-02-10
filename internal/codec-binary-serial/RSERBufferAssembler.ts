@@ -21,22 +21,12 @@ import {
 	RSERObject,
 	RSERSet,
 	RSERValue,
-	RSERValueObject,
+	RSERValueObjects,
 } from "./types";
 import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
 import {
-	AbsoluteFilePath,
-	AbsoluteFilePathMap,
-	AbsoluteFilePathSet,
 	AnyPath,
-	AnyPathSet,
-	RelativeFilePath,
-	RelativeFilePathMap,
-	RelativeFilePathSet,
-	URLPath,
-	UnknownPath,
-	UnknownPathMap,
-	UnknownPathSet,
+	PathSet,
 	isPath,
 	isPathMap,
 	isPathSet,
@@ -210,7 +200,7 @@ export default class RSERBufferAssembler {
 		}
 	}
 
-	private encodePathSet(set: AnyPathSet) {
+	private encodePathSet(set: PathSet) {
 		this.writeCode(VALUE_CODES.PATH_SET);
 		this.writeByte(pathSetToCode(set));
 		this.encodeInt(set.size);
@@ -302,7 +292,7 @@ export default class RSERBufferAssembler {
 		return false;
 	}
 
-	private encodeObject(val: RSERValueObject) {
+	private encodeObject(val: RSERValueObjects) {
 		const isReference = this.encodePossibleReference(val);
 		if (isReference) {
 			return;

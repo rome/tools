@@ -14,13 +14,10 @@ export {default as RSERStream} from "./RSERStream";
 
 export {
 	AnyRSERPathMap as AnyRSERFilePathMap,
-	RSERAbsoluteFilePathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
-	RSERRelativeFilePathMap,
 	RSERSet,
-	RSERUnknownPathMap,
 	RSERValue,
 } from "./types";
 

@@ -22,7 +22,7 @@ import {
 } from "@internal/markup";
 import {ob1Number0, ob1Number1} from "@internal/ob1";
 import {RequiredProps} from "@internal/typescript-helpers";
-import {AnyPath, UnknownPathMap, UnknownPathSet} from "@internal/path";
+import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
 
 type NormalizeOptionsRequiredPosition = RequiredProps<
 	MarkupFormatNormalizeOptions,
@@ -42,13 +42,13 @@ export default class DiagnosticsNormalizer {
 		sourceMaps?: SourceMapConsumerCollection,
 	) {
 		this.sourceMaps = sourceMaps;
-		this.inlineSourceText = new UnknownPathMap();
+		this.inlineSourceText = new MixedPathMap();
 		this.hasMarkupOptions = markupOptions !== undefined;
 
 		this.hasOptions = normalizeOptions !== undefined;
 		this.options = normalizeOptions ?? {};
 
-		this.inlinedSourceTextFilenames = new UnknownPathSet();
+		this.inlinedSourceTextFilenames = new MixedPathSet();
 
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
@@ -61,8 +61,8 @@ export default class DiagnosticsNormalizer {
 	private markupOptions: NormalizeOptionsRequiredPosition;
 	private hasMarkupOptions: boolean;
 
-	private inlineSourceText: UnknownPathMap<string>;
-	private inlinedSourceTextFilenames: UnknownPathSet;
+	private inlineSourceText: MixedPathMap<string>;
+	private inlinedSourceTextFilenames: MixedPathSet;
 
 	private createMarkupOptions(
 		markupOptions: MarkupFormatNormalizeOptions = {},
@@ -281,7 +281,7 @@ export default class DiagnosticsNormalizer {
 			case "stacktrace":
 				return {
 					...item,
-					importantPaths: new UnknownPathSet(
+					importantPaths: new MixedPathSet(
 						Array.from(
 							item.importantPaths ?? [],
 							(path) => this.normalizePath(path),

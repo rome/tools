@@ -32,7 +32,7 @@ import {
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
-import {AnyPath, UnknownPathSet, equalPaths} from "@internal/path";
+import {AnyPath, MixedPathSet, equalPaths} from "@internal/path";
 import {
 	AnyVisitor,
 	CompilerProject,
@@ -112,7 +112,7 @@ export default class CompilerContext {
 		this.project = CompilerContext.normalizeProject(project);
 		this.options = options;
 		this.origin = origin;
-		this.cacheDependencies = new UnknownPathSet();
+		this.cacheDependencies = new MixedPathSet();
 		this.language = inferDiagnosticLanguageFromRootAST(ast);
 		this.sourceTypeJS = ast.type === "JSRoot" ? ast.sourceType : undefined;
 		this.rootScope = new RootScope(this, ast);
@@ -142,7 +142,7 @@ export default class CompilerContext {
 	private ast: AnyRoot;
 
 	public comments: CommentsConsumer;
-	private cacheDependencies: UnknownPathSet;
+	private cacheDependencies: MixedPathSet;
 	public records: Record[];
 
 	public diagnostics: DiagnosticsProcessor;

@@ -29,7 +29,7 @@ import {
 	AbsoluteFilePathMap,
 	AnyPath,
 	UIDPath,
-	UnknownPathMap,
+	MixedPathMap,
 	createAbsoluteFilePath,
 	createUnknownPath,
 } from "@internal/path";
@@ -62,7 +62,7 @@ export default class Worker {
 		this.partialManifests = new ExtendedMap("partialManifests");
 		this.projects = new Map();
 		this.astCache = new AbsoluteFilePathMap();
-		this.moduleSignatureCache = new UnknownPathMap();
+		this.moduleSignatureCache = new MixedPathMap();
 		this.buffers = new AbsoluteFilePathMap();
 		this.virtualModules = new VirtualModules();
 
@@ -131,7 +131,7 @@ export default class Worker {
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: WorkerProjects;
 	private astCache: AbsoluteFilePathMap<WorkerParseResult>;
-	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
+	private moduleSignatureCache: MixedPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
 	public getPartialManifest(id: number): WorkerPartialManifest {

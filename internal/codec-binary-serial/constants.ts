@@ -3,7 +3,7 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyPath,
-	AnyPathSet,
+	PathSet,
 	RelativeFilePath,
 	RelativeFilePathMap,
 	RelativeFilePathSet,
@@ -14,8 +14,8 @@ import {
 	URLPathMap,
 	URLPathSet,
 	UnknownPath,
-	UnknownPathMap,
-	UnknownPathSet,
+	MixedPathMap,
+	MixedPathSet,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
 	createUIDPath,
@@ -350,7 +350,7 @@ export function pathMapToCode(map: AnyRSERPathMap): PATH_CODES {
 		return PATH_CODES.RELATIVE;
 	} else if (map instanceof AbsoluteFilePathMap) {
 		return PATH_CODES.ABSOLUTE;
-	} else if (map instanceof UnknownPathMap) {
+	} else if (map instanceof MixedPathMap) {
 		return PATH_CODES.UNKNOWN;
 	} else if (map instanceof URLPathMap) {
 		return PATH_CODES.URL;
@@ -361,12 +361,12 @@ export function pathMapToCode(map: AnyRSERPathMap): PATH_CODES {
 	}
 }
 
-export function pathSetToCode(set: AnyPathSet): PATH_CODES {
+export function pathSetToCode(set: PathSet): PATH_CODES {
 	if (set instanceof RelativeFilePathSet) {
 		return PATH_CODES.RELATIVE;
 	} else if (set instanceof AbsoluteFilePathSet) {
 		return PATH_CODES.ABSOLUTE;
-	} else if (set instanceof UnknownPathSet) {
+	} else if (set instanceof MixedPathSet) {
 		return PATH_CODES.UNKNOWN;
 	} else if (set instanceof URLPathSet) {
 		return PATH_CODES.URL;
@@ -415,7 +415,7 @@ export function pathFromCode(code: PATH_CODES, filename: string): AnyPath {
 export function pathMapFromCode(code: PATH_CODES): AnyRSERPathMap {
 	switch (code) {
 		case PATH_CODES.UNKNOWN:
-			return new UnknownPathMap();
+			return new MixedPathMap();
 
 		case PATH_CODES.RELATIVE:
 			return new RelativeFilePathMap();
@@ -434,10 +434,10 @@ export function pathMapFromCode(code: PATH_CODES): AnyRSERPathMap {
 	}
 }
 
-export function pathSetFromCode(code: PATH_CODES): AnyPathSet {
+export function pathSetFromCode(code: PATH_CODES): PathSet {
 	switch (code) {
 		case PATH_CODES.UNKNOWN:
-			return new UnknownPathSet();
+			return new MixedPathSet();
 
 		case PATH_CODES.RELATIVE:
 			return new RelativeFilePathSet();

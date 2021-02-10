@@ -8,14 +8,14 @@
 import SourceMapConsumer from "./SourceMapConsumer";
 import {Number0, Number1} from "@internal/ob1";
 import {ResolvedLocation} from "./types";
-import {AnyPath, UnknownPathMap} from "@internal/path";
+import {AnyPath, MixedPathMap} from "@internal/path";
 
 export default class SourceMapConsumerCollection {
 	constructor() {
-		this.maps = new UnknownPathMap();
+		this.maps = new MixedPathMap();
 	}
 
-	private maps: UnknownPathMap<SourceMapConsumer>;
+	private maps: MixedPathMap<SourceMapConsumer>;
 
 	public hasAny(): boolean {
 		return this.maps.size > 0;

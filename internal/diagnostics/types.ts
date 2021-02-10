@@ -14,7 +14,7 @@ import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
-import {AnyPath, UnknownPath, UnknownPathSet} from "@internal/path";
+import {AnyPath, UnknownPath, MixedPathSet} from "@internal/path";
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
@@ -206,7 +206,7 @@ export type DiagnosticAdviceStacktrace = {
 	type: "stacktrace";
 	title?: StaticMarkup;
 	truncate?: boolean;
-	importantPaths?: UnknownPathSet;
+	importantPaths?: MixedPathSet;
 	frames: DiagnosticAdviceStackFrame[];
 };
 

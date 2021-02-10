@@ -83,6 +83,10 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 			ext: this.memo.ext,
 		};
 	}
+	
+	public toJSON(): string {
+		return this.join();
+	}
 
 	public toUnknown(): UnknownPath {
 		return new UnknownPath(this.parsed, this.getPortableMemo());

@@ -1,18 +1,22 @@
 import {
 	AbsoluteFilePathMap,
 	AnyPath,
-	AnyPathSet,
+	PathSet,
 	RelativeFilePathMap,
 	UIDPathMap,
 	URLPathMap,
-	UnknownPathMap,
+	MixedPathMap,
 } from "@internal/path";
 
 export type IntSize = 0 | 1 | 2 | 4 | 8;
 
 export type EqualShapeObjects<Value> = {[key in keyof Value]: Value[key]};
 
-export type RSERValue =
+// Value types
+
+export type RSERValueObjects = Extract<RSERValue, object>;
+
+export type RSERValue = 
 	| undefined
 	| void
 	| null
@@ -27,7 +31,7 @@ export type RSERValue =
 	| ArrayBuffer
 	| RSERArrayBufferView
 	| AnyPath
-	| AnyPathSet
+	| PathSet
 	| AnyRSERPathMap
 	| RSERMap
 	| RSERSet
@@ -35,11 +39,22 @@ export type RSERValue =
 	| RSERArray;
 
 export type AnyRSERPathMap =
-	| RSERAbsoluteFilePathMap
-	| RSERRelativeFilePathMap
-	| RSERUnknownPathMap
-	| RSERURLPathMap
-	| RSERUIDPathMap;
+	| MixedPathMap<RSERValue>
+	| AbsoluteFilePathMap<RSERValue>
+	| RelativeFilePathMap<RSERValue>
+	| URLPathMap<RSERValue>
+	| UIDPathMap<RSERValue>;
+
+export type RSERMap = Map<RSERValue, RSERValue>;
+export type RSERSet = Set<RSERValue>;
+
+export type RSERObject = {
+	[x: string]: RSERValue;
+};
+
+export type RSERArray = RSERValue[];
+
+// Boring
 
 export type RSERArrayBufferView =
 	| Int8Array
@@ -55,18 +70,3 @@ export type RSERArrayBufferView =
 	| BigUint64Array
 	| DataView;
 
-export type RSERUnknownPathMap = UnknownPathMap<RSERValue>;
-export type RSERAbsoluteFilePathMap = AbsoluteFilePathMap<RSERValue>;
-export type RSERRelativeFilePathMap = RelativeFilePathMap<RSERValue>;
-export type RSERURLPathMap = URLPathMap<RSERValue>;
-export type RSERUIDPathMap = UIDPathMap<RSERValue>;
-
-export type RSERMap = Map<RSERValue, RSERValue>;
-export type RSERSet = Set<RSERValue>;
-
-export type RSERObject = {
-	[x: string]: RSERValue;
-};
-export type RSERArray = RSERValue[];
-
-export type RSERValueObject = Extract<RSERValue, object>;

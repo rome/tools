@@ -22,7 +22,6 @@ export type Tokens = BaseTokens & {
 	Plus: SimpleToken<"Plus">;
 };
 
-//
 export type JSONValue =
 	| null
 	| string
@@ -38,3 +37,26 @@ export type JSONObject = {
 };
 
 export type JSONArray = JSONValue[];
+
+// JSON type that includes toJSON
+
+export type ToJSONValue =
+	| null
+	| string
+	| number
+	| boolean
+	| ToJSONObject
+	| ToJSONArray
+	| ToJSONObjectMethod;
+
+export type ToJSONPropertyValue = undefined | void | ToJSONValue;
+
+export type ToJSONObject = {
+	[x: string]: ToJSONPropertyValue;
+};
+
+export type ToJSONArray = ToJSONValue[];
+
+export type ToJSONObjectMethod = {
+	toJSON: () => JSONValue,
+};

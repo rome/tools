@@ -10,7 +10,7 @@ import {CheckProvider} from "../types";
 import {ModuleSignatureManager} from "../Evaluator";
 import Hub from "../Hub";
 import {CompilerProject} from "@internal/compiler";
-import {AnyPath, UnknownPathMap} from "@internal/path";
+import {AnyPath, MixedPathMap} from "@internal/path";
 
 export default async function buildGraph(
 	opts: {
@@ -39,7 +39,7 @@ export default async function buildGraph(
 	// fetch imports
 	if (connected) {
 		// create graphs
-		const graphsByPath: UnknownPathMap<undefined | ModuleSignatureManager> = new UnknownPathMap();
+		const graphsByPath: MixedPathMap<undefined | ModuleSignatureManager> = new MixedPathMap();
 		const graphsByKey: Map<string, undefined | ModuleSignatureManager> = new Map();
 
 		async function getModuleSignature(

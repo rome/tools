@@ -24,7 +24,7 @@ import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
-import {UnknownPathMap, UnknownPathSet, equalPaths} from "@internal/path";
+import {MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
 
 type UniquePart =
 	| "filename"
@@ -53,7 +53,7 @@ const DEFAULT_UNIQUE: UniqueRules = [
 ];
 
 type DiagnosticsByPath = {
-	map: UnknownPathMap<Diagnostics>;
+	map: MixedPathMap<Diagnostics>;
 	pathless: Diagnostics;
 };
 
@@ -75,7 +75,7 @@ export default class DiagnosticsProcessor {
 			this.sourceMaps,
 		);
 
-		this.ignoreDiagnosticsForDependentsOf = new UnknownPathSet();
+		this.ignoreDiagnosticsForDependentsOf = new MixedPathSet();
 
 		this.diagnostics = [];
 		this.cachedDiagnostics = undefined;
@@ -83,7 +83,7 @@ export default class DiagnosticsProcessor {
 
 	public normalizer: DiagnosticsNormalizer;
 
-	private ignoreDiagnosticsForDependentsOf: UnknownPathSet;
+	private ignoreDiagnosticsForDependentsOf: MixedPathSet;
 
 	private sourceMaps: SourceMapConsumerCollection;
 	private unique: UniqueRules;
@@ -363,7 +363,7 @@ export default class DiagnosticsProcessor {
 
 	public getDiagnosticsByPath(): DiagnosticsByPath {
 		const byPath: DiagnosticsByPath = {
-			map: new UnknownPathMap(),
+			map: new MixedPathMap(),
 			pathless: [],
 		};
 

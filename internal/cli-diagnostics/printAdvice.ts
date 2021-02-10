@@ -37,7 +37,7 @@ import {
 } from "@internal/markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {UnknownPathSet, createUnknownPath} from "@internal/path";
+import {MixedPathSet, createUnknownPath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
@@ -47,7 +47,7 @@ import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-ha
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;
 	flags: DiagnosticsPrinterFlags;
-	missingFileSources: UnknownPathSet;
+	missingFileSources: MixedPathSet;
 	fileSources: DiagnosticsPrinterFileSources;
 	reporter: Reporter;
 	diagnostic: Diagnostic;
