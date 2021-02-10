@@ -36,7 +36,12 @@ function buildJSHandler(
 			format: true,
 		},
 
-		async parse({integrity, sourceTypeJS, manifestPath, path, file, worker}) {
+		async parse({integrity, sourceTypeJS, manifestPath, path, file, project, worker}) {
+			let fileSyntax = syntax;
+			if (project.config.parser.jsxEverywhere) {
+				fileSyntax = [...fileSyntax, "jsx"];
+			}
+
 			const sourceText = await worker.readFileText(file);
 			const ast = parseJS({
 				input: sourceText,
@@ -44,7 +49,7 @@ function buildJSHandler(
 				manifestPath,
 				path,
 				sourceType: sourceTypeJS,
-				syntax,
+				syntax: fileSyntax,
 				allowReturnOutsideFunction: sourceTypeJS === "script",
 			});
 			return {

@@ -177,6 +177,7 @@ export async function normalizeProjectConfig(
 		presets: [],
 		format: {},
 		compiler: {},
+		parser: {},
 		bundler: {},
 		cache: {},
 		lint: {},
@@ -358,6 +359,13 @@ export async function normalizeProjectConfig(
 		}
 
 		format.enforceUsedProperties("format config property");
+	}
+
+	const parser = consumer.get("parser");
+	if (categoryExists(parser)) {
+		if (parser.has("jsxEverywhere")) {
+			config.parser.jsxEverywhere = parser.get("jsxEverywhere").asBoolean();
+		}
 	}
 
 	const tests = consumer.get("tests");
@@ -625,6 +633,10 @@ function mergePartialConfig<
 		compiler: {
 			...a.compiler,
 			...b.compiler,
+		},
+		parser: {
+			...a.parser,
+			...b.parser,
 		},
 		format: {
 			...a.format,

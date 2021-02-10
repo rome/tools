@@ -59,6 +59,9 @@ export type ProjectConfigObjects = {
 	bundler: {
 		externals: string[];
 	};
+	parser: {
+		jsxEverywhere: boolean;
+	};
 	format: Enableable & {
 		indentStyle: "tab" | "space";
 		indentSize: number;
@@ -183,6 +186,9 @@ export type RawUserProjectConfig = DeepPartial<{
 	tests: {
 		ignore: string[];
 	};
+	parser: {
+		jsxEverywhere: boolean;
+	};
 	develop: {
 		serveStatic: boolean;
 	};
@@ -240,6 +246,9 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			enabled: false,
 			// Maybe this needs to be cloned...?
 			libs: new AbsoluteFilePathSet(),
+		},
+		parser: {
+			jsxEverywhere: false,
 		},
 		dependencies: {
 			enabled: false,
