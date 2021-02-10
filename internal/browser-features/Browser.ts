@@ -75,8 +75,13 @@ export abstract class Browser {
 		return this.getVersionConsumer().get("g").asNumber();
 	}
 
+	/**
+	 * Returns release date in milliseconds
+	 */
 	public getRawReleaseDate(): number | undefined {
-		return this.getVersionConsumer().get("r").asNumberOrVoid();
+		return this.getVersionConsumer().get("r").asNumberOrVoid()
+			? this.getVersionConsumer().get("r").asNumber() * 1_000
+			: undefined;
 	}
 
 	public getReleaseDate(): Date | undefined {

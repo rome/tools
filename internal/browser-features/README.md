@@ -61,9 +61,9 @@ browser.getPrefix(); // => "moz" (for opera version <= 12.1 it's "o", later vers
 
 browser.getGlobalUsage(); // => 2.3738 (global usage of version 84 as of writing)
 
-browser.getRawReleaseDate(); // => 1607990400 (can be undefined)
+browser.getRawReleaseDate(); // => 1607990400000 (ms, can be undefined)
 
-browser.getReleaseDate(); // => Date Mon Jan 19 1970 15:39:50 GMT+0100 (Central European Standard Time) (as a date object, can be undefined)
+browser.getReleaseDate(); // => Date Tue Dec 15 2020 01:00:00 GMT+0100 (Central European Standard Time) (as a date object, can be undefined)
 
 browser.getVersions(); // => ["2", "3", "3.5", "3.6", "4", ..., "85", "86", "87"]
 
