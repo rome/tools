@@ -2,16 +2,23 @@ import {Consumer, consumeUnknown} from "@internal/consume";
 import {data, regions} from "@internal/browsers-db";
 
 export interface BrowserProps {
-	id: string,
-	version?: string,
+	id: string;
+	version?: string;
 }
+
+export type BrowserTypes = "desktop" | "mobile";
 
 export abstract class Browser {
 	private readonly id: string;
-	private readonly version?: string;
+	private readonly version: string | undefined;
+
+	private readonly cssFeatureCache = new Map<string, boolean>();
 
 	protected constructor({id, version}: BrowserProps) {
 		this.id = id;
+		if (version && !this.getVersions().includes(version)) {
+			throw new Error(`Browser "${id}" does not have a version "${version}"`);
+		}
 		this.version = version;
 	}
 
@@ -24,7 +31,9 @@ export abstract class Browser {
 	}
 
 	protected getVersionConsumer(): Consumer {
-		return this.getAgentConsumer().get("vs").asImplicitArray().find(value => value.get("v").asString() === this.getVersion())!;
+		return this.getAgentConsumer().get("vs").asImplicitArray().find((value) =>
+			value.get("v").asString() === this.getVersion()
+		)!;
 	}
 
 	public getId(): string {
@@ -43,8 +52,8 @@ export abstract class Browser {
 		return this.getAgentConsumer().get("a").asString();
 	}
 
-	public getType(): string {
-		return this.getAgentConsumer().get("t").asString();
+	public getType(): BrowserTypes {
+		return this.getAgentConsumer().get("t").asString() as BrowserTypes;
 	}
 
 	public getCurrentVersion(): string {
@@ -56,23 +65,30 @@ export abstract class Browser {
 	}
 
 	public getPrefix(): string {
-		return this.getVersionConsumer().get("p").asStringOrVoid() ?? this.getDefaultPrefix();
+		return (
+			this.getVersionConsumer().get("p").asStringOrVoid() ??
+			this.getDefaultPrefix()
+		);
 	}
 
 	public getGlobalUsage(): number {
 		return this.getVersionConsumer().get("g").asNumber();
 	}
 
-	public getRawReleaseDate(): number|undefined {
+	public getRawReleaseDate(): number | undefined {
 		return this.getVersionConsumer().get("r").asNumberOrVoid();
 	}
 
-	public getReleaseDate(): Date|undefined {
-		return this.getRawReleaseDate() !== undefined ? new Date(this.getRawReleaseDate()!) : undefined;
+	public getReleaseDate(): Date | undefined {
+		return this.getRawReleaseDate() !== undefined
+			? new Date(this.getRawReleaseDate()!)
+			: undefined;
 	}
 
 	public getVersions(): string[] {
-		return this.getAgentConsumer().get("vs").asImplicitArray().map(value => value.get("v").asString());
+		return this.getAgentConsumer().get("vs").asImplicitArray().map((value) =>
+			value.get("v").asString()
+		);
 	}
 
 	/**
@@ -81,7 +97,15 @@ export abstract class Browser {
 	 * @param feature check internal/browsers-db/README.md for more info
 	 */
 	public cssFeatureRequiresPrefix(feature: string): boolean {
-		return this.getDataConsumer().get("data").get(feature).get("s").get(this.getId()).get(this.getVersion()).asBoolean(false);
+		if (this.cssFeatureCache.has(feature)) {
+			return this.cssFeatureCache.get(feature)!;
+		}
+
+		const value = this.getDataConsumer().get("data").get(feature).get("s").get(
+			this.getId(),
+		).get(this.getVersion()).asBoolean(false);
+		this.cssFeatureCache.set(feature, value);
+		return value;
 	}
 
 	/**
@@ -89,7 +113,9 @@ export abstract class Browser {
 	 *
 	 * @param region check internal/browsers-db/README.md for more info
 	 */
-	public getRegionUsage(region: string): number|undefined {
-		return consumeUnknown(regions, "parse").get(region).get("data").get(this.getId()).get(this.getVersion()).asNumberOrVoid()
+	public getRegionUsage(region: string): number | undefined {
+		return consumeUnknown(regions, "parse").get(region).get("data").get(
+			this.getId(),
+		).get(this.getVersion()).asNumberOrVoid();
 	}
 }

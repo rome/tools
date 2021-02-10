@@ -1,10 +1,10 @@
 import {Browser, BrowserProps} from "@internal/browser-features/Browser";
 
 export default class FirefoxAndroid extends Browser {
-	constructor({version}: Pick<BrowserProps, "version">) {
+	constructor(props?: Pick<BrowserProps, "version">) {
 		super({
 			id: "and_ff",
-			version
-		})
+			version: props?.version,
+		});
 	}
 }
