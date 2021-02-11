@@ -3,7 +3,6 @@ import {main as ast} from "./generated-files/ast";
 import {main as lintRules} from "./generated-files/lint-rules";
 import {main as lintRulesDocs} from "./generated-files/lint-rules-docs";
 import {main as websiteIntro} from "./generated-files/website-intro";
-import {main as browsersDB} from "./generated-files/browsers-db";
 import {reporter, setForceGenerated} from "./_utils";
 import {parseCLIFlagsFromProcess} from "@internal/cli-flags";
 import child = require("child_process");
@@ -32,7 +31,6 @@ export async function main(args: string[]) {
 		ast,
 		websiteIntro,
 		lintRulesDocs,
-		browsersDB,
 	]) {
 		await callback();
 	}
