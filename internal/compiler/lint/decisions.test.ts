@@ -36,6 +36,6 @@ test(
 			ast: parseJS({input: sourceText}),
 		});
 		t.is(res.diagnostics.length, 1);
-		t.snapshot(res.src);
+		t.snapshot(res.formatted);
 	},
 );

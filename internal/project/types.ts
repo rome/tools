@@ -66,7 +66,10 @@ export type ProjectConfigObjects = {
 		indentStyle: "tab" | "space";
 		indentSize: number;
 	};
-	lint: {
+	check: {
+		dependencies: boolean;
+	};
+	lint: Enableable & {
 		globals: string[];
 		ignore: PathPatterns;
 		requireSuppressionExplanations: boolean;
@@ -172,7 +175,10 @@ export type RawUserProjectConfig = DeepPartial<{
 			};
 		};
 	};
-	lint: {
+	check: {
+		dependencies: boolean;
+	};
+	lint: Enableable & {
 		ignore: string[];
 		globals: string[];
 		disabledRules: string[];
@@ -247,6 +253,9 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			// Maybe this needs to be cloned...?
 			libs: new AbsoluteFilePathSet(),
 		},
+		check: {
+			dependencies: true,
+		},
 		parser: {
 			jsxEverywhere: false,
 		},
@@ -262,6 +271,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			indentSize: 1,
 		},
 		lint: {
+			enabled: true,
 			ignore: [],
 			globals: [],
 			requireSuppressionExplanations: true,

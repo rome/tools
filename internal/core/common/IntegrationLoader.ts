@@ -38,6 +38,7 @@ export function getRequire(path: AbsoluteFilePath): NodeRequire {
 
 type IntegrationLoaderNormalize<Value> = (
 	consumer: Consumer,
+	path: AbsoluteFilePath,
 	version: undefined | SemverVersionNode,
 ) => Value;
 
@@ -104,6 +105,7 @@ export default class IntegrationLoader<Value> {
 
 	public async load(
 		path: AbsoluteFilePath,
+		cwd: AbsoluteFilePath,
 	): Promise<IntegrationLoaderEntry<Value>> {
 		const existing = this.loaded.get(path);
 		if (existing !== undefined) {
@@ -156,7 +158,7 @@ export default class IntegrationLoader<Value> {
 		});
 
 		const consumer = consumeUnknown(value, "integration/load", this.name);
-		const module = this.normalize(consumer, version);
+		const module = this.normalize(consumer, cwd, version);
 
 		const entry: IntegrationLoaderEntry<Value> = {version, module};
 		this.loaded.set(path, entry);

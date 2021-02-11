@@ -6,10 +6,10 @@
  */
 
 import {ServerRequest} from "@internal/core";
-import Linter, {
+import Checker, {
 	LinterCompilerOptionsPerFile,
-	LinterOptions,
-} from "../linter/Linter";
+	CheckerOptions,
+} from "../checker/Checker";
 import {markup} from "@internal/markup";
 import {createServerCommand} from "../commands";
 import {
@@ -136,7 +136,7 @@ export default createServerCommand<Flags>({
 			}
 		}
 
-		const opts: LinterOptions = {
+		const opts: CheckerOptions = {
 			hasDecisions: flags.decisions.length > 0,
 			lintCompilerOptionsPerFile,
 			globalDecisions,
@@ -145,7 +145,7 @@ export default createServerCommand<Flags>({
 			suppressionExplanation: cachedSuppressionExplanation,
 			args,
 		};
-		const linter = new Linter(req, opts);
+		const linter = new Checker(req, opts);
 		if (req.query.requestFlags.watch) {
 			await linter.runWatch();
 		} else {

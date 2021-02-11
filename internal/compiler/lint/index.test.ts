@@ -121,7 +121,7 @@ test(
 				}),
 			),
 		);
-		t.is(res.src, code);
+		t.is(res.formatted, code);
 	},
 );
 
@@ -150,7 +150,7 @@ test(
 		);
 
 		t.true(
-			res.src.includes(
+			res.formatted.includes(
 				"rome-ignore lint/js/noVar lint/js/noUnusedVariables: suppressed via --review",
 			),
 		);

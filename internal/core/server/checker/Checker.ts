@@ -42,7 +42,7 @@ import {
 import {ExtendedMap} from "@internal/collections";
 import {humanizeDuration} from "@internal/string-utils";
 
-type LintWatchChange =
+type CheckWatchChange =
 	| {
 			type: "absolute";
 			path: AbsoluteFilePath;
@@ -54,11 +54,11 @@ type LintWatchChange =
 			diagnostics: Diagnostics;
 		};
 
-type LintWatchChanges = LintWatchChange[];
+type CheckWatchChanges = CheckWatchChange[];
 
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
-export type LinterOptions = {
+export type CheckerOptions = {
 	apply?: boolean;
 	args?: string[];
 	hasDecisions?: boolean;
@@ -77,15 +77,15 @@ type WatchEvents = {
 };
 
 type WatchResults = {
-	runner: LintRunner;
+	runner: CheckRunner;
 	evictedPaths: AbsoluteFilePathSet;
-	changes: LintWatchChanges;
+	changes: CheckWatchChanges;
 	savedCount: number;
 	totalCount: number;
 };
 
 function createDiagnosticsPrinter(
-	runner: LintRunner,
+	runner: CheckRunner,
 	request: ServerRequest,
 	processor: DiagnosticsProcessor,
 	totalCount: number,
@@ -153,9 +153,9 @@ function createDiagnosticsPrinter(
 	return printer;
 }
 
-class LintRunner {
+class CheckRunner {
 	constructor(
-		linter: Linter,
+		checker: Checker,
 		{
 			graph,
 			events,
@@ -164,11 +164,11 @@ class LintRunner {
 			graph: DependencyGraph;
 		},
 	) {
-		this.linter = linter;
-		this.server = linter.request.server;
+		this.checker = checker;
+		this.server = checker.request.server;
 		this.graph = graph;
-		this.request = linter.request;
-		this.options = linter.options;
+		this.request = checker.request;
+		this.options = checker.options;
 		this.events = events;
 		this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
@@ -183,12 +183,12 @@ class LintRunner {
 		diagnostics: Diagnostics;
 		suppressions: DiagnosticSuppressions;
 	}>;
-	private linter: Linter;
+	private checker: Checker;
 	private events: WatchEvents;
 	private server: Server;
 	private request: ServerRequest;
 	private graph: DependencyGraph;
-	private options: LinterOptions;
+	private options: CheckerOptions;
 	private timingsByWorker: ExtendedMap<number, WorkerLintTimings>;
 
 	public getFinalTimings(): {
@@ -238,8 +238,8 @@ class LintRunner {
 			globalDecisions = [],
 			hasDecisions,
 		} = this.options;
-		const shouldSave = this.linter.shouldSave();
-		const applySafeFixes = !this.linter.shouldOnlyFormat();
+		const shouldSave = this.checker.shouldSave();
+		const applySafeFixes = !this.checker.shouldOnlyFormat();
 
 		const queue = server.createWorkerQueue({
 			callback: async ({path}) => {
@@ -328,6 +328,13 @@ class LintRunner {
 		progress.end();
 	}
 
+	private filterCheckDependenciesEnabled(set: AbsoluteFilePathSet): Array<AbsoluteFilePath> {
+		return Array.from(set).filter(path => {
+			const project = this.server.projectManager.assertProjectExisting(path);
+			return project.config.check.dependencies;
+		});
+	}
+
 	private async runGraph(
 		event: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
@@ -353,7 +360,7 @@ class LintRunner {
 		});
 		await graph.seed({
 			allowFileNotFound: true,
-			paths: Array.from(evictedPaths),
+			paths: this.filterCheckDependenciesEnabled(evictedPaths),
 			diagnosticsProcessor: processor,
 			validate: false,
 			analyzeProgress: progress,
@@ -405,7 +412,7 @@ class LintRunner {
 			});
 
 			await graph.seed({
-				paths: Array.from(validatedDependencyPaths),
+				paths: this.filterCheckDependenciesEnabled(validatedDependencyPaths),
 				diagnosticsProcessor: processor,
 				validate: false,
 				analyzeProgress: progress,
@@ -427,18 +434,19 @@ class LintRunner {
 		{paths: evictedPaths}: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
 		validatedDependencyPaths: AbsoluteFilePathSet,
-	): LintWatchChanges {
+	): CheckWatchChanges {
 		const {server} = this;
-		const changes: LintWatchChanges = [];
+		const changes: CheckWatchChanges = [];
 
 		const updatedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet([
 			...validatedDependencyPaths,
 		]);
 
-		// Deleted paths wont show up in validatedDependencyPaths so we need to readd them
+		// Deleted paths or those with check.dependencies disabled wont show up in validatedDependencyPaths so we need to readd them
 		for (const path of evictedPaths) {
+			updatedPaths.add(path);
+
 			if (!server.memoryFs.exists(path)) {
-				updatedPaths.add(path);
 				this.clearCompilerDiagnosticsForPath(path);
 			}
 		}
@@ -537,14 +545,14 @@ class LintRunner {
 	}
 }
 
-export default class Linter {
-	constructor(req: ServerRequest, opts: LinterOptions) {
+export default class Checker {
+	constructor(req: ServerRequest, opts: CheckerOptions) {
 		this.request = req;
 		this.options = opts;
 	}
 
 	public request: ServerRequest;
-	public options: LinterOptions;
+	public options: CheckerOptions;
 
 	public shouldOnlyFormat(): boolean {
 		const {formatOnly} = this.options;
@@ -579,7 +587,7 @@ export default class Linter {
 			{shallow: true},
 		);
 
-		const runner = new LintRunner(this, {events, graph});
+		const runner = new CheckRunner(this, {events, graph});
 
 		const globber = await this.request.glob({
 			args: this.options.args,
@@ -587,7 +595,6 @@ export default class Linter {
 			verb: "linting",
 			configCategory: "lint",
 			extensions: LINTABLE_EXTENSIONS,
-			disabledDiagnosticCategory: "lint/disabled",
 		});
 
 		return globber.watch(async (event) => {
@@ -653,7 +660,7 @@ export default class Linter {
 
 		let savedCount = 0;
 		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-		let runner: undefined | LintRunner;
+		let runner: undefined | CheckRunner;
 
 		const watchEvent = await this.watch({
 			onRunStart: () => {},

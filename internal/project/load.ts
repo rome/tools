@@ -179,6 +179,7 @@ export async function normalizeProjectConfig(
 		compiler: {},
 		parser: {},
 		bundler: {},
+		check: {},
 		cache: {},
 		lint: {},
 		resolver: {},
@@ -311,6 +312,10 @@ export async function normalizeProjectConfig(
 
 	const lint = consumer.get("lint");
 	if (categoryExists(lint)) {
+		if (lint.has("enabled")) {
+			config.lint.enabled = lint.get("enabled").asBoolean();
+		}
+
 		if (lint.has("ignore")) {
 			config.lint.ignore = arrayOfPatterns(lint.get("ignore"));
 		}
@@ -365,6 +370,13 @@ export async function normalizeProjectConfig(
 	if (categoryExists(parser)) {
 		if (parser.has("jsxEverywhere")) {
 			config.parser.jsxEverywhere = parser.get("jsxEverywhere").asBoolean();
+		}
+	}
+
+	const check = consumer.get("check");
+	if (categoryExists(check)) {
+		if (check.has("dependencies")) {
+			config.check.dependencies = check.get("dependencies").asBoolean();
 		}
 	}
 
@@ -637,6 +649,10 @@ function mergePartialConfig<
 		parser: {
 			...a.parser,
 			...b.parser,
+		},
+		check: {
+			...a.check,
+			...b.check,
 		},
 		format: {
 			...a.format,

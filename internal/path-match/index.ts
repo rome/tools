@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PathPattern, PathPatterns} from "./types";
+import {PathPattern, PathPatternNode, PathPatterns} from "./types";
 import {parsePattern, parsePatternsFile} from "./parse";
 import match from "./match";
 import {AbsoluteFilePath, PathSegments} from "@internal/path";
@@ -50,15 +50,28 @@ export function matchPath(
 	}
 }
 
-function getGreater(pattern: PathPattern, num: number): number {
-	if (pattern.type === "PathPattern" && pattern.segments.length > num) {
-		return pattern.segments.length;
+function getGreater(pattern: PathPatternNode, matches: undefined | Matches): Matches {
+	if (matches === undefined || pattern.segments.length > matches.segments) {
+		return {
+			segments: pattern.segments.length,
+			pattern,
+		};
 	} else {
-		return num;
+		return matches;
 	}
 }
 
-type MatchPatternResult = "NO_MATCH" | "IMPLICIT_MATCH" | "EXPLICIT_MATCH";
+type MatchPatternResult = {
+	type: "NO_MATCH";
+} | {
+	type: "IMPLICIT_MATCH" | "EXPLICIT_MATCH";
+	pattern: PathPattern;
+};
+
+type Matches = {
+	segments: number;
+	pattern: PathPattern;
+};
 
 export function matchPathPatterns(
 	path: AbsoluteFilePath,
@@ -67,13 +80,11 @@ export function matchPathPatterns(
 ): MatchPatternResult {
 	// Bail out if there are no patterns
 	if (patterns.length === 0) {
-		return "NO_MATCH";
+		return {type: "NO_MATCH"};
 	}
 
-	let matches = 0;
-	let notMatches = 0;
-
-	let hasNegate = false;
+	let matches: undefined | Matches;
+	let negateMatches: undefined | Matches;
 
 	const pathSegments = path.getSegments();
 	const cwdSegs = cwd === undefined ? undefined : cwd.getSegments();
@@ -85,9 +96,8 @@ export function matchPathPatterns(
 		}
 
 		if (pattern.negate) {
-			hasNegate = true;
 			if (match(pathSegments, {...pattern, negate: false}, cwdSegs)) {
-				notMatches = getGreater(pattern, notMatches);
+				negateMatches = getGreater(pattern, negateMatches);
 			}
 		} else {
 			if (match(pathSegments, pattern, cwdSegs)) {
@@ -96,20 +106,22 @@ export function matchPathPatterns(
 		}
 	}
 
-	// If we have a negate pattern, then we need to match more segments than it in order to qualify as a match
-	if (hasNegate) {
-		if (notMatches > matches) {
-			return "NO_MATCH";
-		} else if (matches > notMatches) {
-			return "EXPLICIT_MATCH";
-		} else {
-			return "IMPLICIT_MATCH";
+	if (matches !== undefined) {
+		// If we have a negate pattern, then we need to match more segments than it in order to qualify as a match
+		if (negateMatches !== undefined) {
+			if (negateMatches.segments > matches.segments) {
+				return {type: "NO_MATCH"};
+			} else if (matches.segments > negateMatches.segments) {
+				return {type: "EXPLICIT_MATCH", pattern: matches.pattern};
+			} else {
+				return {type: "IMPLICIT_MATCH", pattern: matches.pattern};
+			}
+		}
+
+		if (matches.segments > 0) {
+			return {type: "EXPLICIT_MATCH", pattern: matches.pattern};
 		}
 	}
 
-	if (matches > 0) {
-		return "EXPLICIT_MATCH";
-	}
-
-	return "NO_MATCH";
+	return {type: "NO_MATCH"};
 }

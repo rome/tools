@@ -97,12 +97,12 @@ export class Globber {
 			const ignoreMatched = matchPathPatterns(path, ignore, cwd);
 
 			// Don't even recurse into explicit matches
-			if (ignoreMatched === "EXPLICIT_MATCH") {
+			if (ignoreMatched.type === "EXPLICIT_MATCH") {
 				continue;
 			}
 
 			// Add if a matching file
-			if (memoryFs.isFile(path) && ignoreMatched === "NO_MATCH") {
+			if (memoryFs.isFile(path) && ignoreMatched.type === "NO_MATCH") {
 				if (test !== undefined && !test(path)) {
 					continue;
 				}

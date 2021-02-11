@@ -63,7 +63,7 @@ export default class FileAllocator {
 				path,
 				project.config.files.maxSizeIgnore,
 				project.directory,
-			) === "NO_MATCH"
+			).type === "NO_MATCH"
 		) {
 			throw createSingleDiagnosticError({
 				description: descriptions.FILES.TOO_BIG(

@@ -20,7 +20,7 @@ import {
 } from "../types";
 import {ob1Coerce0, ob1Get0, ob1Get1, ob1Number1} from "@internal/ob1";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
-import {LinterCompilerOptionsPerFile} from "@internal/core/server/linter/Linter";
+import {LinterCompilerOptionsPerFile} from "@internal/core/server/checker/Checker";
 import {escapeSplit} from "@internal/string-utils";
 import {StaticMarkup} from "@internal/markup";
 import {parseCommentSuppressionLoneCategory} from "../suppressionsParser";

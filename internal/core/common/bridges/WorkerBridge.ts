@@ -7,34 +7,34 @@
 
 import {ModuleSignature} from "@internal/js-analysis";
 import {AnyRoot} from "@internal/ast";
-import {TransformStageName} from "@internal/compiler";
+import {
+	TransformStageName,
+} from "@internal/compiler";
 import {Profile} from "@internal/v8";
 import {ProfilingStartData, ServerBridgeLog} from "./ServerBridge";
-import {DiagnosticsError} from "@internal/diagnostics";
+import {
+	DiagnosticsError,
+} from "@internal/diagnostics";
 import {BridgeErrorResponseDetails, createBridge} from "@internal/events";
 import {FileReference} from "../types/files";
 import {InlineSnapshotUpdates} from "@internal/core/test-worker/SnapshotManager";
-import {
-	AbsoluteFilePath,
-	UIDPath,
-	createAbsoluteFilePath,
-} from "@internal/path";
+import {AbsoluteFilePath, createAbsoluteFilePath, UIDPath} from "@internal/path";
 import {createBridgeEventDeclaration} from "@internal/events/createBridge";
 import {FileNotFound} from "@internal/fs";
 import {
-	WorkerAnalyzeDependencyResult,
 	WorkerBuffer,
-	WorkerBufferPatch,
-	WorkerCompileResult,
-	WorkerCompilerOptions,
-	WorkerFormatOptions,
-	WorkerFormatResult,
-	WorkerLintOptions,
-	WorkerLintResult,
-	WorkerParseOptions,
-	WorkerPartialManifests,
 	WorkerProjects,
+	WorkerPartialManifests,
+	WorkerCompilerOptions,
+	WorkerAnalyzeDependencyResult,
+	WorkerCompileResult,
+	WorkerLintOptions,
+	WorkerFormatOptions,
+	WorkerParseOptions,
 	WorkerStatus,
+	WorkerFormatResult,
+	WorkerLintResult,
+	WorkerBufferPatch,
 	WorkerUpdateInlineSnapshotResult,
 } from "@internal/core";
 

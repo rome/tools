@@ -254,7 +254,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return this.tokenizeWithState(index, state);
 	}
 
-	// Get the current token
 	public getToken(): TokenValues<Types["tokens"]> {
 		const {currentToken} = this;
 		if (currentToken === SOF_TOKEN) {
@@ -262,6 +261,14 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		} else {
 			return currentToken;
 		}
+	}
+
+	public getCurrentToken(): TokenValues<Types["tokens"]> {
+		return this.currentToken;
+	}
+
+	public getPreviousToken(): TokenValues<Types["tokens"]> {
+		return this.prevToken;
 	}
 
 	public save(): ParserSnapshot<Types> {

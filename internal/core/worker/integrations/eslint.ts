@@ -10,9 +10,9 @@ import Worker from "../Worker";
 const eslintLoader = new IntegrationLoader({
 	name: "eslint",
 	range: "^7.0.0",
-	normalize: (consumer) => {
+	normalize: (consumer, cwd) => {
 		const Factory = consumer.get("ESLint").asFunction();
-		const eslint = Reflect.construct(Factory, [{fix: true}]);
+		const eslint = Reflect.construct(Factory, [{cwd: cwd.join(), globInputPaths: false, fix: true, rulePaths: ["/Users/sebmck/Scratch/TypeScript/scripts/eslint/built/rules"]}]);
 		return consumer.setValue(eslint);
 	},
 });
@@ -35,50 +35,55 @@ export async function maybeRunESLint(
 		return undefined;
 	}
 
-	const content = await worker.readFileText(ref);
 	const start = process.hrtime.bigint();
 
 	const diagnostics: Diagnostics = [];
 
-	console.log("before", project.configPath.join());
-	const loader = await eslintLoader.load(project.configPath);
-	console.log("after");
-
-	const results = await eslintLoader.wrap(async () => {
-		const lintText = loader.module.get("lintText").asWrappedFunction();
-		return await lintText(content, {filePath: ref.real.join()}).asPromise();
+	const loader = await eslintLoader.load(project.configPath, project.directory);
+	
+	const ignored = await eslintLoader.wrap(async () => {
+		const isPathIgnored = loader.module.get("isPathIgnored").asWrappedFunction();
+		return (await isPathIgnored(ref.real.join()).asPromise()).asBoolean();
 	});
 
-	const result = results.getIndex(0);
-
-	for (const message of result.get("messages").asIterable()) {
-		const start: Position = {
-			line: message.get("line").asOneIndexedNumber(),
-			column: ob1Coerce1To0(message.get("column").asOneIndexedNumber()),
-		};
-		let end: Position = start;
-
-		if (message.has("endLine") && message.has("endColumn")) {
-			end = {
-				line: message.get("endLine").asOneIndexedNumber(),
-				column: ob1Coerce1To0(message.get("endColumn").asOneIndexedNumber()),
-			};
-		}
-
-		diagnostics.push({
-			description: {
-				message: markup`${message.get("message").asString()}`,
-				advice: [],
-				category: "eslint",
-				categoryValue: message.get("ruleId").asStringOrVoid(),
-			},
-			location: {
-				path: ref.uid,
-				start,
-				end,
-			},
+	if (!ignored) {
+		const content = await worker.readFileText(ref);
+		
+		const results = await eslintLoader.wrap(async () => {
+			const lintText = loader.module.get("lintText").asWrappedFunction();
+			return await lintText(content, {filePath: ref.real.join()}).asPromise();
 		});
-		console.log(message.asAny());
+
+		const result = results.getIndex(0);
+
+		for (const message of result.get("messages").asIterable()) {
+			const start: Position = {
+				line: message.get("line").asOneIndexedNumber(),
+				column: ob1Coerce1To0(message.get("column").asOneIndexedNumber()),
+			};
+			let end: Position = start;
+
+			if (message.has("endLine") && message.has("endColumn")) {
+				end = {
+					line: message.get("endLine").asOneIndexedNumber(),
+					column: ob1Coerce1To0(message.get("endColumn").asOneIndexedNumber()),
+				};
+			}
+
+			diagnostics.push({
+				description: {
+					message: markup`${message.get("message").asString()}`,
+					advice: [],
+					category: "eslint",
+					categoryValue: message.get("ruleId").asStringOrVoid(),
+				},
+				location: {
+					path: ref.uid,
+					start,
+					end,
+				},
+			});
+		}
 	}
 
 	const end = process.hrtime.bigint();

@@ -123,7 +123,6 @@ type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> 
 	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
-	disabledDiagnosticCategory?: DiagnosticCategory;
 	advice?: DiagnosticAdvice;
 	verb?: string;
 	noun?: string;

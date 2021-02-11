@@ -36,30 +36,42 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 		const char = parser.getInputCharOnly(index);
 		const nextChar = parser.getInputCharOnly(index, 1);
 
-		if (char === "*") {
-			if (nextChar === "*") {
-				return parser.finishToken("DoubleStar", ob1Add(index, 2));
-			} else {
-				return parser.finishToken("Star");
+		switch (char) {
+			case "*": {
+				if (nextChar === "*") {
+					return parser.finishToken("DoubleStar", ob1Add(index, 2));
+				} else {
+					return parser.finishToken("Star");
+				}
 			}
-		} else if (index === ob1Number0 && char === "!") {
-			return parser.finishToken("Exclamation");
-		} else if (
-			char === "#" &&
-			parser.getPositionFromIndex(index).column === ob1Number0
-		) {
-			const [value, end] = parser.readInputFrom(index, isntNewline);
-			return parser.finishValueToken("Comment", value, end);
-		}
 
-		if (char === "\n") {
-			return parser.finishToken("EOL");
-		}
-
-		if (char === "/") {
-			return parser.finishToken("Separator");
-		} else if (char === "\\" && nextChar === "\\") {
-			return parser.finishToken("Separator", ob1Add(index, 2));
+			case "\n":
+				return parser.finishToken("EOL");
+	
+			case "/":
+				return parser.finishToken("Separator");
+		
+			case "!": {
+				if (index === ob1Number0 || parser.getCurrentToken().type === "EOL") {
+					return parser.finishToken("Exclamation");
+				}
+				break;
+			}
+			
+			case "#": {
+				if (parser.getPositionFromIndex(index).column === ob1Number0) {
+					const [value, end] = parser.readInputFrom(index, isntNewline);
+					return parser.finishValueToken("Comment", value, end);
+				}
+				break;
+			}
+	
+			case "\\": {
+				if (nextChar === "\\") {
+					return parser.finishToken("Separator", ob1Add(index, 2));
+				}
+				break;
+			}
 		}
 
 		const [value, end] = parser.readInputFrom(
@@ -296,6 +308,7 @@ export function parsePatternsFile(opts: ParserOptions): PathPattern[] {
 
 	while (true) {
 		eatEOL(parser);
+
 		if (parser.matchToken("EOF")) {
 			break;
 		}

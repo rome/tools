@@ -30,7 +30,7 @@ function format(
 		if (str !== "1") {
 			suffix += "s";
 		}
-		return `${str} ${suffix}`;
+		return `${str} ${suffix} `;
 	} else {
 		return `${str}${shortSuffixes[key]}`;
 	}
@@ -82,6 +82,10 @@ export function humanizeDuration(
 		);
 	} else {
 		buf += format("s", s % 60, longform);
+	}
+
+	if (longform) {
+		buf = buf.trimRight();
 	}
 
 	return buf;

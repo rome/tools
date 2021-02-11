@@ -1,5 +1,5 @@
-import {lint} from "@internal/compiler";
-import {catchDiagnostics, descriptions} from "@internal/diagnostics";
+import {lint, LintResult} from "@internal/compiler";
+import {catchDiagnostics, descriptions, Diagnostics} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {
 	EMPTY_LINT_TIMINGS,
@@ -181,46 +181,69 @@ export async function uncachedLint(
 export async function compilerLint(
 	{worker, ref, options, parseOptions}: Param<WorkerLintOptions>,
 ): Promise<ExtensionLintResult> {
-	const {ast, mtimeNs, sourceText, project, astModifiedFromSource} = await worker.parse(
-		ref,
-		parseOptions,
-	);
+	const project = worker.getProject(ref.project);
+	let sourceText: string;
+	let mtimeNs: bigint;
+	let astModifiedFromSource: boolean = false;
+	let res: LintResult;
+	let diagnostics: Diagnostics = [];
 
-	const res = await lint({
-		applySafeFixes: options.applySafeFixes,
-		suppressionExplanation: options.suppressionExplanation,
-		ref,
-		options: {
-			lint: options.compilerOptions,
-		},
-		ast,
-		project,
-		sourceText,
-	});
-
-	// Extract lint diagnostics
-	let {diagnostics} = res;
-
-	// Only enable typechecking if enabled in .romeconfig
-	let typeCheckingEnabled = project.config.typeCheck.enabled;
-	if (project.config.typeCheck.libs.has(ref.real)) {
-		// don't typecheck lib files
-		typeCheckingEnabled = false;
-	}
-
-	// Run type checking if necessary
-	if (typeCheckingEnabled && ast.type === "JSRoot") {
-		const typeCheckProvider = await worker.getTypeCheckProvider(
-			ref.project,
-			options.prefetchedModuleSignatures,
+	// If lint and format are disabled then we could just be a glorified ESLint runner and there's no point running the compiler
+	if (project.config.lint.enabled || project.config.format.enabled) {
+		const parsed = await worker.parse(
+			ref,
 			parseOptions,
 		);
-		const typeDiagnostics = await jsAnalysis.check({
+
+		const {ast} = parsed;
+		({mtimeNs, sourceText, astModifiedFromSource} = parsed);
+		
+		res = await lint({
+			applySafeFixes: options.applySafeFixes,
+			suppressionExplanation: options.suppressionExplanation,
+			ref,
+			options: {
+				lint: options.compilerOptions,
+			},
 			ast,
-			provider: typeCheckProvider,
 			project,
+			sourceText,
 		});
-		diagnostics = [...diagnostics, ...typeDiagnostics];
+
+		diagnostics = res.diagnostics;
+
+		// Only enable typechecking if enabled in .romeconfig
+		let typeCheckingEnabled = project.config.typeCheck.enabled;
+		if (project.config.typeCheck.libs.has(ref.real)) {
+			// don't typecheck lib files
+			typeCheckingEnabled = false;
+		}
+
+		// Run type checking if necessary
+		if (typeCheckingEnabled && ast.type === "JSRoot") {
+			const typeCheckProvider = await worker.getTypeCheckProvider(
+				ref.project,
+				options.prefetchedModuleSignatures,
+				parseOptions,
+			);
+			const typeDiagnostics = await jsAnalysis.check({
+				ast,
+				provider: typeCheckProvider,
+				project,
+			});
+			diagnostics = [...diagnostics, ...typeDiagnostics];
+		}
+	} else {
+		sourceText = await worker.readFileText(ref);
+
+		const cacheFile = await worker.cache.getFile(ref);
+		({mtimeNs} = await cacheFile.getStats());
+
+		res = {
+			diagnostics: [],
+			suppressions: [],
+			formatted: sourceText,
+		};
 	}
 
 	let timingsNs: WorkerLintTimings = EMPTY_LINT_TIMINGS;
@@ -241,7 +264,7 @@ export async function compilerLint(
 			suppressions: res.suppressions,
 			diagnostics,
 			sourceText,
-			formatted: res.src,
+			formatted: res.formatted,
 			mtimeNs,
 		},
 		{astModifiedFromSource},

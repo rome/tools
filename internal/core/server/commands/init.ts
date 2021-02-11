@@ -17,7 +17,7 @@ import {
 	rjson,
 } from "@internal/codec-config";
 import {getFileHandlerFromPath} from "@internal/core/common/file-handlers";
-import Linter from "../linter/Linter";
+import Checker from "../checker/Checker";
 import {PROJECT_CONFIG_DIRECTORY} from "@internal/project";
 import {AbsoluteFilePathMap} from "@internal/path";
 import {getVCSClient} from "@internal/vcs";
@@ -243,7 +243,7 @@ export default createServerCommand<Flags>({
 					return flags.apply;
 				},
 				async callback() {
-					const linter = new Linter(
+					const linter = new Checker(
 						req,
 						{
 							apply: true,

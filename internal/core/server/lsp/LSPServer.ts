@@ -18,7 +18,7 @@ import {
 	PartialServerQueryRequest,
 	ServerQueryResponse,
 } from "@internal/core/common/bridges/ServerBridge";
-import Linter from "../linter/Linter";
+import Checker from "../checker/Checker";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "../ServerRequest";
 import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@internal/core/common/types/client";
 import {JSONPropertyValue} from "@internal/codec-config";
@@ -177,7 +177,7 @@ export default class LSPServer {
 	}
 
 	private async watchProject(path: AbsoluteFilePath, req: ServerRequest) {
-		const linter = new Linter(
+		const linter = new Checker(
 			req,
 			{
 				apply: false,
