@@ -15,7 +15,7 @@ import {
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
-import {AnyPath} from "@internal/path";
+import {AnyPath, isPath} from "@internal/path";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -240,7 +240,7 @@ export function isSourceLocation(val: unknown): val is SourceLocation {
 	// Make sure there's no other sneaky keys
 	for (const key in val) {
 		if (
-			key !== "filename" &&
+			key !== "path" &&
 			key !== "identifierName" &&
 			key !== "start" &&
 			key !== "end"
@@ -251,7 +251,7 @@ export function isSourceLocation(val: unknown): val is SourceLocation {
 
 	// Verify types
 	return (
-		(typeof val.filename === "string" || typeof val.filename === "undefined") &&
+		(isPath(val) || typeof val.filename === "undefined") &&
 		(typeof val.identifierName === "string" ||
 		typeof val.identifierName === "undefined") &&
 		isPosition(val.start) &&

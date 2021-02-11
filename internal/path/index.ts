@@ -65,7 +65,7 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 	// Actually meant to be CUSTOM_PRETTY_FORMAT from "@internal/pretty-format" but it causes a module cycle
 	public [Symbol.for("custom-pretty-format")](): string {
 		// @ts-ignore
-		return `${this.constructor.displayName}: ${this.join()}`;
+		return `${this.constructor.displayName}<${this.join()}>`;
 	}
 
 	protected abstract _assert(): Super
@@ -548,6 +548,10 @@ export class RelativeFilePath extends BasePath<RelativeFilePath> {
 		return new RelativeFilePath(parsed, opts);
 	}
 
+	public isRelative(): boolean {
+		return true;
+	}
+
 	public assertRelative(): RelativeFilePath {
 		return this;
 	}
@@ -568,6 +572,10 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		opts: FilePathMemo<AbsoluteFilePath>,
 	): AbsoluteFilePath {
 		return new AbsoluteFilePath(parsed, opts);
+	}
+
+	public isAbsolute(): boolean {
+		return true;
 	}
 
 	public assertAbsolute(): AbsoluteFilePath {

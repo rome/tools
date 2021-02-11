@@ -385,8 +385,8 @@ function formatObject(
 		let inner = markup`${formatPositionValue(obj.start)}<dim>-</dim>${formatPositionValue(
 			obj.end,
 		)}`;
-		if (obj.filename !== undefined) {
-			inner = markup`<token type="string">${obj.path}</token> ${inner}`;
+		if (obj.path !== undefined) {
+			inner = markup`<token type="string">${obj.path.join()}</token> ${inner}`;
 		}
 		if (obj.identifierName !== undefined) {
 			inner = markup`${inner} (${escapeJSString(obj.identifierName)})`;

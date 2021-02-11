@@ -316,6 +316,10 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeObject(val: RSERValueObjects) {
+		if (isPath(val)) {
+			return this.encodePath(val);
+		}
+
 		const isReference = this.encodePossibleReference(val);
 		if (isReference) {
 			return;
@@ -343,10 +347,6 @@ export default class RSERBufferAssembler {
 
 		if (val instanceof RegExp) {
 			return this.encodeRegExp(val);
-		}
-
-		if (isPath(val)) {
-			return this.encodePath(val);
 		}
 
 		if (isPathMap(val)) {

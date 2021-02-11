@@ -638,6 +638,8 @@ export default class RSERBufferParser {
 				return this.decodeUndefined();
 
 			case VALUE_CODES.PATH:
+			case VALUE_CODES.REFERENCE:
+			case VALUE_CODES.DECLARE_REFERENCE:
 				return this.decodePath();
 
 			default:
