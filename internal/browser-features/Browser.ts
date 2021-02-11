@@ -124,3 +124,156 @@ export abstract class Browser {
 		).get(this.getVersion()).asNumberOrVoid();
 	}
 }
+
+export class AndroidBrowser extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "android",
+			version: props?.version,
+		});
+	}
+}
+
+export class BaiduBrowser extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "baidu",
+			version: props?.version,
+		});
+	}
+}
+
+export class BlackberryBrowser extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "bb",
+			version: props?.version,
+		});
+	}
+}
+
+export class Chrome extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "chrome",
+			version: props?.version,
+		});
+	}
+}
+
+export class ChromeAndroid extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "and_chr",
+			version: props?.version,
+		});
+	}
+}
+
+export class Edge extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "edge",
+			version: props?.version,
+		});
+	}
+}
+
+export class Firefox extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "firefox",
+			version: props?.version,
+		});
+	}
+}
+
+export class FirefoxAndroid extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "and_ff",
+			version: props?.version,
+		});
+	}
+}
+
+export class KaiOSBrowser extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "kaios",
+			version: props?.version,
+		});
+	}
+}
+
+export class Opera extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "opera",
+			version: props?.version,
+		});
+	}
+}
+
+export class OperaMini extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "op_mini",
+			version: props?.version,
+		});
+	}
+}
+
+export class OperaMobile extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "op_mob",
+			version: props?.version,
+		});
+	}
+}
+
+export class QQBrowser extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "and_qq",
+			version: props?.version,
+		});
+	}
+}
+
+export class Safari extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "safari",
+			version: props?.version,
+		});
+	}
+}
+
+export class SafariIOS extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "ios_saf",
+			version: props?.version,
+		});
+	}
+}
+
+export class SamsungInternet extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "samsung",
+			version: props?.version,
+		});
+	}
+}
+
+export class UCBrowserAndroid extends Browser {
+	constructor(props?: Pick<BrowserProps, "version">) {
+		super({
+			id: "and_uc",
+			version: props?.version,
+		});
+	}
+}

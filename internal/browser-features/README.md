@@ -5,8 +5,7 @@ Nice implementations for `browsers-db`.
 ## Usage
 ```ts
 import {getBrowser} from "@internal/browser-features";
-import Firefox from "@internal/browser-features/browsers/Firefox";
-import Chrome from "@internal/browser-features/browsers/Chrome";
+import {Chrome, Firefox} from "@internal/browser-features/Browser";
 
 // Get an instance of a browser implementation
 

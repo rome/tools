@@ -1,23 +1,25 @@
-import {Browser} from "@internal/browser-features/Browser";
+import {
+	AndroidBrowser,
+	BaiduBrowser,
+	BlackberryBrowser,
+	Browser,
+	Chrome,
+	ChromeAndroid,
+	Edge,
+	Firefox,
+	FirefoxAndroid,
+	KaiOSBrowser,
+	Opera,
+	OperaMini,
+	OperaMobile,
+	QQBrowser,
+	Safari,
+	SafariIOS,
+	SamsungInternet,
+	UCBrowserAndroid
+} from "@internal/browser-features/Browser";
 import {data} from "@internal/browsers-db";
 import {consumeUnknown} from "@internal/consume";
-import AndroidBrowser from "@internal/browser-features/browsers/AndroidBrowser";
-import BaiduBrowser from "@internal/browser-features/browsers/BaiduBrowser";
-import BlackberryBrowser from "@internal/browser-features/browsers/BlackberryBrowser";
-import Chrome from "@internal/browser-features/browsers/Chrome";
-import ChromeAndroid from "@internal/browser-features/browsers/ChromeAndroid";
-import Edge from "@internal/browser-features/browsers/Edge";
-import Firefox from "@internal/browser-features/browsers/Firefox";
-import FirefoxAndroid from "@internal/browser-features/browsers/FirefoxAndroid";
-import KaiOSBrowser from "@internal/browser-features/browsers/KaiOSBrowser";
-import Opera from "@internal/browser-features/browsers/Opera";
-import OperaMini from "@internal/browser-features/browsers/OperaMini";
-import OperaMobile from "@internal/browser-features/browsers/OperaMobile";
-import QQBrowser from "@internal/browser-features/browsers/QQBrowser";
-import Safari from "@internal/browser-features/browsers/Safari";
-import SafariIOS from "@internal/browser-features/browsers/SafariIOS";
-import SamsungInternet from "@internal/browser-features/browsers/SamsungInternet";
-import UCBrowserAndroid from "@internal/browser-features/browsers/UCBrowserAndroid";
 
 interface GetBrowserOptions {
 	name: BrowserIds | string;
