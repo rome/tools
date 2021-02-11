@@ -15,9 +15,9 @@ import {
 	TEMP_PATH,
 	UIDPath,
 	createAbsoluteFilePath,
+	createAnyPath,
 	createRelativeFilePath,
 	createUIDPath,
-	createAnyPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
 import {

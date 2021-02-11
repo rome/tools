@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/dynamic-import/invalid-lone-import/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-2:0
+	path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/dynamic-import/invalid-lone-import/input.js 1:0-1:8
@@ -34,11 +34,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/dynamic-import/invalid-lone-import/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:8
+				path: UIDPath<experimental/dynamic-import/invalid-lone-import/input.js>
 				start: Position 1:7
 			}
 			description: Object {

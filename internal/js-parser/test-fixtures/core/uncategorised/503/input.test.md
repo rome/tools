@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/503/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/503/input.js 1:0-1:76
+	path: UIDPath<core/uncategorised/503/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Octal literal in strict mode"}
 			}
 			location: Object {
-				filename: "core/uncategorised/503/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:69
+				path: UIDPath<core/uncategorised/503/input.js>
 				start: Position 1:69
 			}
 		}

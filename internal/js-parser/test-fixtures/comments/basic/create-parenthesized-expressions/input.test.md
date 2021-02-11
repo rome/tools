@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/create-parenthesized-expressions/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/basic/create-parenthesized-expressions/input.js 1:0-13:0
+	path: UIDPath<comments/basic/create-parenthesized-expressions/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

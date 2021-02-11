@@ -8,9 +8,9 @@
 CSSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "invalid/selector5/input.css"
 	integrity: undefined
 	loc: SourceLocation invalid/selector5/input.css 1:0-3:1
+	path: RelativeFilePath<invalid/selector5/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation invalid/selector5/input.css 1:0-3:1
@@ -69,11 +69,11 @@ CSSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "invalid/selector5/input.css"
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
 				end: Position 1:9
+				path: RelativeFilePath<invalid/selector5/input.css>
 				start: Position 1:9
 			}
 			description: Object {

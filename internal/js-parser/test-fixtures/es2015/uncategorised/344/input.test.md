@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/344/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5
+	path: UIDPath<es2015/uncategorised/344/input.js>
 	body: Array [
 		JSExpressionStatement {
 			expression: JSSuper {loc: SourceLocation es2015/uncategorised/344/input.js 1:0-1:5}
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/344/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:0
+				path: UIDPath<es2015/uncategorised/344/input.js>
 				start: Position 1:0
 			}
 		}

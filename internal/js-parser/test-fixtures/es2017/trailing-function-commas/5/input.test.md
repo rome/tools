@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/trailing-function-commas/5/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/trailing-function-commas/5/input.js 1:0-1:7
+	path: UIDPath<es2017/trailing-function-commas/5/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2017/trailing-function-commas/5/input.js 1:0-1:7
@@ -40,11 +40,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2017/trailing-function-commas/5/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<es2017/trailing-function-commas/5/input.js>
 				start: Position 1:4
 			}
 			description: Object {

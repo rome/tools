@@ -2,6 +2,7 @@ import {test} from "rome";
 import {isInTypeAnnotation} from "@internal/js-ast-utils/isInTypeAnnotation";
 import {
 	AnyNode,
+	MOCK_JS_ROOT,
 	MOCK_PARENT,
 	jsArrayExpression,
 	jsCommentLine,
@@ -11,7 +12,6 @@ import {
 	tsNullKeywordTypeAnnotation,
 	tsThisType,
 	tsTypeAssertion,
-	MOCK_JS_ROOT,
 } from "@internal/ast";
 import {CompilerContext, Path} from "@internal/compiler";
 

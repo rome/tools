@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-properties/await-in-private-property-in-async/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-properties/await-in-private-property-in-async/input.js 1:0-7:0
+	path: UIDPath<experimental/class-private-properties/await-in-private-property-in-async/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

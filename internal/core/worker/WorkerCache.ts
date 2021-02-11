@@ -12,7 +12,7 @@ import {Consumer, consumeUnknown} from "@internal/consume";
 import {sha256} from "@internal/string-utils";
 import {DiagnosticIntegrity} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
-import { ToJSONObject } from "@internal/codec-config/json/types";
+import {ToJSONObject} from "@internal/codec-config/json/types";
 
 // This can be shared across multiple machines safely
 export type PortableCacheMetadata = {

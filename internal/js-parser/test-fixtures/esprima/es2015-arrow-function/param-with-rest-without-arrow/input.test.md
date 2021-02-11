@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<esprima/es2015-arrow-function/param-with-rest-without-arrow/input.js>
 				start: Position 1:4
 			}
 		}

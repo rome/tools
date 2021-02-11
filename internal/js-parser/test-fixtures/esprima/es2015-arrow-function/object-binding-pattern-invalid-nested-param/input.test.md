@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Binding member expression"}
 			}
 			location: Object {
-				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:28
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js>
 				start: Position 1:24
 			}
 		}

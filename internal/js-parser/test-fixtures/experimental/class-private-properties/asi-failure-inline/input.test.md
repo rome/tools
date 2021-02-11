@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/asi-failure-inline/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-properties/asi-failure-inline/input.js 1:0-4:0
+	path: UIDPath<experimental/class-private-properties/asi-failure-inline/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "experimental/class-private-properties/asi-failure-inline/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:4
+				path: UIDPath<experimental/class-private-properties/asi-failure-inline/input.js>
 				start: Position 2:5
 			}
 		}

@@ -57,12 +57,12 @@ import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
+	AnyPath,
 	RelativeFilePath,
 	URLPath,
 	createAbsoluteFilePath,
-	createURLPath,
 	createAnyPath,
-	AnyPath,
+	createURLPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";

@@ -8,9 +8,9 @@
 CSSRoot {
 	corrupt: false
 	diagnostics: Array []
-	filename: "comment/input.css"
 	integrity: undefined
 	loc: SourceLocation comment/input.css 1:0-11:1
+	path: RelativeFilePath<comment/input.css>
 	comments: Array [
 		CommentBlock {
 			id: "0"

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/for-of/bare-initializer/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/for-of/bare-initializer/input.js 1:0-3:0
+	path: UIDPath<es2015/for-of/bare-initializer/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Not a valid assignment target"}
 			}
 			location: Object {
-				filename: "es2015/for-of/bare-initializer/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:10
+				path: UIDPath<es2015/for-of/bare-initializer/input.js>
 				start: Position 2:5
 			}
 		}

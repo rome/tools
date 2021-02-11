@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/regression/11469/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/regression/11469/input.js 1:0-19:0
+	path: UIDPath<comments/regression/11469/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

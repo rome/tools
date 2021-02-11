@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/valid-assignment-pattern-1/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/categorized/valid-assignment-pattern-1/input.js 1:0-1:12
+	path: UIDPath<core/categorized/valid-assignment-pattern-1/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation core/categorized/valid-assignment-pattern-1/input.js 1:0-1:12

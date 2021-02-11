@@ -11,44 +11,44 @@ Object {
 			category: "parse"
 			categoryValue: "dog"
 			endLine: 2
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:23
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "dog"
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 4:15-1:23
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "cat"
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 4:26-1:34
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 8
-			filename: "unknown"
 			startLine: 8
 			loc: SourceLocation unknown 7:15-1:18
+			path: UIDPath<unknown>
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 1:31
+				path: UIDPath<unknown>
 				start: Position 1:26
 			}
 			description: Object {
@@ -65,11 +65,11 @@ Object {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 4:42
+				path: UIDPath<unknown>
 				start: Position 4:37
 			}
 			description: Object {
@@ -86,11 +86,11 @@ Object {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 7:26
+				path: UIDPath<unknown>
 				start: Position 7:21
 			}
 			description: Object {
@@ -123,11 +123,11 @@ Object {
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 1:15
+				path: UIDPath<unknown>
 				start: Position 1:3
 			}
 		}
@@ -140,11 +140,11 @@ Object {
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 4:15
+				path: UIDPath<unknown>
 				start: Position 4:3
 			}
 		}
@@ -157,11 +157,11 @@ Object {
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 7:16
+				path: UIDPath<unknown>
 				start: Position 7:3
 			}
 		}
@@ -174,11 +174,11 @@ Object {
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 10:20
+				path: UIDPath<unknown>
 				start: Position 10:3
 			}
 		}
@@ -191,11 +191,11 @@ Object {
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 13:22
+				path: UIDPath<unknown>
 				start: Position 13:3
 			}
 		}
@@ -208,11 +208,11 @@ Object {
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 16:21
+				path: UIDPath<unknown>
 				start: Position 16:3
 			}
 		}
@@ -225,11 +225,11 @@ Object {
 				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 19:23
+				path: UIDPath<unknown>
 				start: Position 19:3
 			}
 		}
@@ -246,17 +246,17 @@ Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 2
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:20
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 4:15-1:18
+			path: UIDPath<unknown>
 		}
 	]
 	diagnostics: Array [
@@ -269,11 +269,11 @@ Object {
 				message: RAW_MARKUP {value: "Suppression comments must have an explanation"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 1:3
+				path: UIDPath<unknown>
 				start: Position 1:3
 			}
 		}
@@ -286,11 +286,11 @@ Object {
 				message: RAW_MARKUP {value: "Suppression comments must have an explanation"}
 			}
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "text"
 				sourceText: undefined
 				end: Position 4:3
+				path: UIDPath<unknown>
 				start: Position 4:3
 			}
 		}
@@ -308,65 +308,65 @@ Object {
 			category: "parse"
 			categoryValue: "foo"
 			endLine: 2
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:23
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "dog"
 			endLine: 2
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:26-1:36
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "bar"
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 4:16-1:24
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "cat"
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 4:27-4:37
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "yes"
 			endLine: 10
-			filename: "unknown"
 			startLine: 10
 			loc: SourceLocation unknown 8:15-2:25
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "frog"
 			endLine: 10
-			filename: "unknown"
 			startLine: 10
 			loc: SourceLocation unknown 8:26-8:37
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "wow"
 			endLine: 16
-			filename: "unknown"
 			startLine: 16
 			loc: SourceLocation unknown 14:15-3:25
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "fish"
 			endLine: 16
-			filename: "unknown"
 			startLine: 16
 			loc: SourceLocation unknown 14:26-14:37
+			path: UIDPath<unknown>
 		}
 	]
 }
@@ -409,33 +409,33 @@ Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 6
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:20
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 3:17-3:22
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 4:17-4:22
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 9
-			filename: "unknown"
 			startLine: 9
 			loc: SourceLocation unknown 8:15-8:20
+			path: UIDPath<unknown>
 		}
 	]
 }
@@ -465,25 +465,25 @@ Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 5
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:20
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 4
-			filename: "unknown"
 			startLine: 4
 			loc: SourceLocation unknown 3:17-3:22
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 8
-			filename: "unknown"
 			startLine: 8
 			loc: SourceLocation unknown 7:15-7:20
+			path: UIDPath<unknown>
 		}
 	]
 }
@@ -513,17 +513,17 @@ Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 5
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:20
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 4
-			filename: "unknown"
 			startLine: 4
 			loc: SourceLocation unknown 3:17-3:22
+			path: UIDPath<unknown>
 		}
 	]
 }
@@ -553,33 +553,33 @@ Object {
 			category: "parse"
 			categoryValue: "foo"
 			endLine: 7
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:25
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "bar"
 			endLine: 6
-			filename: "unknown"
 			startLine: 6
 			loc: SourceLocation unknown 3:17-3:27
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "baz"
 			endLine: 6
-			filename: "unknown"
 			startLine: 6
 			loc: SourceLocation unknown 4:17-4:27
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: "foo"
 			endLine: 6
-			filename: "unknown"
 			startLine: 6
 			loc: SourceLocation unknown 5:17-5:27
+			path: UIDPath<unknown>
 		}
 	]
 }
@@ -595,33 +595,33 @@ Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 2
-			filename: "unknown"
 			startLine: 2
 			loc: SourceLocation unknown 1:15-1:20
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 5
-			filename: "unknown"
 			startLine: 5
 			loc: SourceLocation unknown 4:16-4:21
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 10
-			filename: "unknown"
 			startLine: 10
 			loc: SourceLocation unknown 8:15-8:20
+			path: UIDPath<unknown>
 		}
 		Object {
 			category: "parse"
 			categoryValue: undefined
 			endLine: 16
-			filename: "unknown"
 			startLine: 16
 			loc: SourceLocation unknown 14:15-14:20
+			path: UIDPath<unknown>
 		}
 	]
 }

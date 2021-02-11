@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/duplicate-named-export-builtin/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-4:0
+	path: UIDPath<es2015/modules/duplicate-named-export-builtin/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2015/modules/duplicate-named-export-builtin/input.js 1:0-1:19

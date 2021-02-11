@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/identifiers/invalid-escape-seq-null/input.js 1:0-2:0
+	path: UIDPath<es2015/identifiers/invalid-escape-seq-null/input.js>
 	body: Array [
 		JSExpressionStatement {
 			expression: JSNullLiteral {loc: SourceLocation es2015/identifiers/invalid-escape-seq-null/input.js 1:0-1:9}
@@ -28,11 +28,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/identifiers/invalid-escape-seq-null/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:3
+				path: UIDPath<es2015/identifiers/invalid-escape-seq-null/input.js>
 				start: Position 1:3
 			}
 			description: Object {

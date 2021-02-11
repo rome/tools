@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/types/literal-bigint/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/types/literal-bigint/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/literal-bigint/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unknown TS non array type start"}
 			}
 			location: Object {
-				filename: "typescript/types/literal-bigint/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<typescript/types/literal-bigint/input.ts>
 				start: Position 1:7
 			}
 		}

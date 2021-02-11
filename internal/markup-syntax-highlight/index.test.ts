@@ -115,7 +115,10 @@ function testCase(
 	};
 }
 
-function craftTestInput(input: string, language: DiagnosticLanguage): AnsiHighlightOptions {
+function craftTestInput(
+	input: string,
+	language: DiagnosticLanguage,
+): AnsiHighlightOptions {
 	return {
 		path: UNKNOWN_PATH,
 		input,

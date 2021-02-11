@@ -7,11 +7,7 @@
 
 import {Dict} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
-import {
-	AnyPath,
-	isPath,
-	URLPath,
-} from "@internal/path";
+import {AnyPath, URLPath, isPath} from "@internal/path";
 import {UnknownNumber, isNumber, ob1Get} from "@internal/ob1";
 
 type LazyMarkupPart = StaticMarkup | LazyMarkupFactory | LazyMarkup;

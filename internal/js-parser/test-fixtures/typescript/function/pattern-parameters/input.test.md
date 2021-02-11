@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/function/pattern-parameters/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/function/pattern-parameters/input.ts 1:0-2:0
+	path: UIDPath<typescript/function/pattern-parameters/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "A binding pattern parameter cannot be optional in an implementation signature."}
 			}
 			location: Object {
-				filename: "typescript/function/pattern-parameters/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:13
+				path: UIDPath<typescript/function/pattern-parameters/input.ts>
 				start: Position 1:11
 			}
 		}

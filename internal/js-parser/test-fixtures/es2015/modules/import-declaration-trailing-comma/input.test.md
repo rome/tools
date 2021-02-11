@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/import-declaration-trailing-comma/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/import-declaration-trailing-comma/input.js 1:0-6:0
+	path: UIDPath<es2015/modules/import-declaration-trailing-comma/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "1"

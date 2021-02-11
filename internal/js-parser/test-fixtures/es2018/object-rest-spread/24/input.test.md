@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2018/object-rest-spread/24/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2018/object-rest-spread/24/input.js 1:0-2:0
+	path: UIDPath<es2018/object-rest-spread/24/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2018/object-rest-spread/24/input.js 1:0-1:14
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid rest operator's argument"}
 			}
 			location: Object {
-				filename: "es2018/object-rest-spread/24/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<es2018/object-rest-spread/24/input.js>
 				start: Position 1:5
 			}
 		}

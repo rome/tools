@@ -18,7 +18,7 @@ import {
 } from "@internal/compiler";
 import {Consumer} from "@internal/consume";
 import {commandCategories} from "@internal/core/common/commands";
-import {createUIDPath, createAnyPath} from "@internal/path";
+import {createAnyPath, createUIDPath} from "@internal/path";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
 
 type Flags = {

@@ -10,12 +10,12 @@
 JSRoot {
 	corrupt: false
 	directives: Array []
-	filename: "typescript/types/read-only-4/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/types/read-only-4/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/read-only-4/input.ts>
 	syntax: Array ["ts"]
 	comments: Array [
 		CommentLine {
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
 			location: Object {
-				filename: "typescript/types/read-only-4/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:33
+				path: UIDPath<typescript/types/read-only-4/input.ts>
 				start: Position 1:20
 			}
 		}

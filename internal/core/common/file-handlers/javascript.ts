@@ -36,7 +36,9 @@ function buildJSHandler(
 			format: true,
 		},
 
-		async parse({integrity, sourceTypeJS, manifestPath, path, file, project, worker}) {
+		async parse(
+			{integrity, sourceTypeJS, manifestPath, path, file, project, worker},
+		) {
 			let fileSyntax = syntax;
 			if (project.config.parser.jsxEverywhere) {
 				fileSyntax = [...fileSyntax, "jsx"];

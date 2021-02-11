@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/326/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/326/input.js 1:0-1:13
+	path: UIDPath<es2015/uncategorised/326/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2015/uncategorised/326/input.js 1:0-1:13
@@ -45,11 +45,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/uncategorised/326/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:5
+				path: UIDPath<es2015/uncategorised/326/input.js>
 				start: Position 1:5
 			}
 			description: Object {

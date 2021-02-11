@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/dynamic-import/top-level/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/top-level/input.js 1:0-7:0
+	path: UIDPath<es2020/dynamic-import/top-level/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/dynamic-import/top-level/input.js 1:0-1:21

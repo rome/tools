@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/optional-chaining/class-contructor-call/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:0-1:12
+	path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2020/optional-chaining/class-contructor-call/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:10
+				path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
 				start: Position 1:10
 			}
 			description: Object {

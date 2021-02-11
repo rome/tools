@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/opts/allowAwaitOutsideFunction-false/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/opts/allowAwaitOutsideFunction-false/input.js 1:0-2:0
+	path: UIDPath<core/opts/allowAwaitOutsideFunction-false/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "core/opts/allowAwaitOutsideFunction-false/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:9
+				path: UIDPath<core/opts/allowAwaitOutsideFunction-false/input.js>
 				start: Position 1:4
 			}
 			description: Object {

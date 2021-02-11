@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/unterminated-string/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/errors/unterminated-string/input.jsx 1:0-2:1
+	path: UIDPath<jsx/errors/unterminated-string/input.jsx>
 	syntax: Array ["jsx"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unterminated string constant"}
 			}
 			location: Object {
-				filename: "jsx/errors/unterminated-string/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:0
+				path: UIDPath<jsx/errors/unterminated-string/input.jsx>
 				start: Position 2:0
 			}
 		}

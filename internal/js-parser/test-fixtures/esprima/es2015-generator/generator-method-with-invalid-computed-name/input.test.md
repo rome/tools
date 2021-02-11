@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js>
 				start: Position 1:4
 			}
 			description: Object {

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2020/dynamic-import/no-args/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-2:0
+	path: UIDPath<es2020/dynamic-import/no-args/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/dynamic-import/no-args/input.js 1:0-1:9
@@ -40,11 +40,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/no-args/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<es2020/dynamic-import/no-args/input.js>
 				start: Position 1:7
 			}
 		}

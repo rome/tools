@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/export/nested-same-name/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/export/nested-same-name/input.ts 1:0-5:0
+	path: UIDPath<typescript/export/nested-same-name/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExportLocalDeclaration {

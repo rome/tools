@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-01/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-01/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-arrow-function/object-binding-pattern-01/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-01/input.js>
 				start: Position 1:5
 			}
 			description: Object {

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-for-of/invalid-var-init/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-for-of/invalid-var-init/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/invalid-var-init/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "esprima/es2015-for-of/invalid-var-init/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:14
+				path: UIDPath<esprima/es2015-for-of/invalid-var-init/input.js>
 				start: Position 1:5
 			}
 		}

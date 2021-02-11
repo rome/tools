@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/statement-variable/complex-pattern-requires-init/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/statement-variable/complex-pattern-requires-init/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-variable/complex-pattern-requires-init/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "esprima/statement-variable/complex-pattern-requires-init/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<esprima/statement-variable/complex-pattern-requires-init/input.js>
 				start: Position 1:6
 			}
 		}

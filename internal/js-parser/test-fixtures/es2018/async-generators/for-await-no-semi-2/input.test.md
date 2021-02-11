@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2018/async-generators/for-await-no-semi-2/input.js 1:0-4:0
+	path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Can't have an await on a regular for loop"}
 			}
 			location: Object {
-				filename: "es2018/async-generators/for-await-no-semi-2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:11
+				path: UIDPath<es2018/async-generators/for-await-no-semi-2/input.js>
 				start: Position 2:11
 			}
 		}

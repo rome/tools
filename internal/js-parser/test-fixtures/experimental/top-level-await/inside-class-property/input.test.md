@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/top-level-await/inside-class-property/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/top-level-await/inside-class-property/input.js 1:0-4:0
+	path: UIDPath<experimental/top-level-await/inside-class-property/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"

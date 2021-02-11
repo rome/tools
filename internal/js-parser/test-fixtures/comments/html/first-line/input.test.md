@@ -12,7 +12,6 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/html/first-line/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
@@ -20,6 +19,7 @@ JSRoot {
 	syntax: Array []
 	trailingComments: Array []
 	loc: SourceLocation comments/html/first-line/input.js 1:0-2:0
+	path: UIDPath<comments/html/first-line/input.js>
 	innerComments: Array [
 		"0"
 		"1"

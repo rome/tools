@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-properties/undeclared-top-level/input.js 1:0-1:21
+	path: UIDPath<experimental/class-private-properties/undeclared-top-level/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected character #"}
 			}
 			location: Object {
-				filename: "experimental/class-private-properties/undeclared-top-level/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:15
+				path: UIDPath<experimental/class-private-properties/undeclared-top-level/input.js>
 				start: Position 1:15
 			}
 		}

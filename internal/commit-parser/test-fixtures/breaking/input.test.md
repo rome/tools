@@ -12,10 +12,10 @@ CommitRoot {
 	corrupt: false
 	custom: true
 	diagnostics: Array []
-	filename: "breaking/input.txt"
 	integrity: undefined
 	rawBody: "commit with a breaking change indicator"
 	scope: ""
 	loc: SourceLocation breaking/input.txt 1:0-1:47
+	path: RelativeFilePath<breaking/input.txt>
 }
 ```

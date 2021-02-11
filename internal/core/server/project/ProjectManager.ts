@@ -36,11 +36,11 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyPath,
+	MixedPathMap,
+	MixedPathSet,
 	UIDPath,
 	UIDPathMap,
 	URLPath,
-	MixedPathMap,
-	MixedPathSet,
 	createUIDPath,
 } from "@internal/path";
 import {FileReference} from "../../common/types/files";

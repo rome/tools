@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/logical-assignment-operator/mallet-no-plugin/input.js 1:0-2:0
+	path: UIDPath<experimental/logical-assignment-operator/mallet-no-plugin/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/logical-assignment-operator/mallet-no-plugin/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<experimental/logical-assignment-operator/mallet-no-plugin/input.js>
 				start: Position 1:4
 			}
 			description: Object {

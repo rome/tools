@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/modules/export-default-variable-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/export-default-variable-declaration/input.js 1:0-3:1
+	path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
 			}
 			location: Object {
-				filename: "es2015/modules/export-default-variable-declaration/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:14
+				path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
 				start: Position 1:15
 			}
 		}

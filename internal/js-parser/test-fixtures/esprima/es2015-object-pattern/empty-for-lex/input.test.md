@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-object-pattern/empty-for-lex/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-object-pattern/empty-for-lex/input.js>
 	body: Array [
 		JSForInStatement {
 			body: JSEmptyStatement {loc: SourceLocation esprima/es2015-object-pattern/empty-for-lex/input.js 1:17-1:18}

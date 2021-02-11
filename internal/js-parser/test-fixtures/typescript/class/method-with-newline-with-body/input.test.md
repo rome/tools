@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/method-with-newline-with-body/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/method-with-newline-with-body/input.ts 1:0-7:0
+	path: UIDPath<typescript/class/method-with-newline-with-body/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSClassDeclaration {

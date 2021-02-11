@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/optional-chaining/type-arguments/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/optional-chaining/type-arguments/input.ts 1:0-2:0
+	path: UIDPath<typescript/optional-chaining/type-arguments/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/363/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/363/input.js 1:0-2:0
+	path: UIDPath<es2015/uncategorised/363/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/363/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:20
+				path: UIDPath<es2015/uncategorised/363/input.js>
 				start: Position 1:15
 			}
 		}

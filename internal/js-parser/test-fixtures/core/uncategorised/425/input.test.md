@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/425/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/425/input.js 1:0-1:7
+	path: UIDPath<core/uncategorised/425/input.js>
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined
@@ -40,11 +40,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Missing catch or finally clause"}
 			}
 			location: Object {
-				filename: "core/uncategorised/425/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:0
+				path: UIDPath<core/uncategorised/425/input.js>
 				start: Position 1:0
 			}
 		}

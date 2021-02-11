@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/bigint/invalid-octal-legacy/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-2:0
+	path: UIDPath<es2020/bigint/invalid-octal-legacy/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/bigint/invalid-octal-legacy/input.js 1:0-1:7
@@ -37,11 +37,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "A bigint can't be an octal"}
 			}
 			location: Object {
-				filename: "es2020/bigint/invalid-octal-legacy/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<es2020/bigint/invalid-octal-legacy/input.js>
 				start: Position 1:6
 			}
 		}

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/for-of/invalid-escape-of/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-2:0
+	path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
 	body: Array [
 		JSForStatement {
 			loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-1:20
@@ -44,11 +44,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/for-of/invalid-escape-of/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:14
+				path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
 				start: Position 1:7
 			}
 			description: Object {

@@ -28,8 +28,8 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AnyPath,
-	UIDPath,
 	MixedPathMap,
+	UIDPath,
 	createAbsoluteFilePath,
 	createAnyPath,
 } from "@internal/path";

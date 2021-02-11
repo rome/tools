@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/extends-implements-empty/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/extends-implements-empty/input.ts 1:0-3:0
+	path: UIDPath<typescript/class/extends-implements-empty/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSClassDeclaration {
@@ -42,11 +42,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/class/extends-implements-empty/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:33
+				path: UIDPath<typescript/class/extends-implements-empty/input.ts>
 				start: Position 1:33
 			}
 			description: Object {

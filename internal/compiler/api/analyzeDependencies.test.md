@@ -24,12 +24,12 @@ Object {
 			tags: undefined
 			origins: Array [Object {category: "analyzeDependencies"}]
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "js"
 				marker: undefined
 				sourceTypeJS: "module"
 				end: Position 1:19
+				path: UIDPath<unknown>
 				start: Position 1:0
 			}
 			description: Object {
@@ -191,11 +191,11 @@ Object {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "unknown"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:25
+				path: UIDPath<unknown>
 				start: Position 1:0
 			}
 			description: Object {

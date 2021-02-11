@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/module-attributes/import-with-statement/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/module-attributes/import-with-statement/input.js 1:0-3:0
+	path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/import-with-statement/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:10
+				path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
 				start: Position 2:0
 			}
 		}

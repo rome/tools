@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/top-level-await/inside-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/top-level-await/inside-function/input.js 1:0-3:1
+	path: UIDPath<experimental/top-level-await/inside-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Can't use await outside of an async function"}
 			}
 			location: Object {
-				filename: "experimental/top-level-await/inside-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:7
+				path: UIDPath<experimental/top-level-await/inside-function/input.js>
 				start: Position 2:2
 			}
 		}

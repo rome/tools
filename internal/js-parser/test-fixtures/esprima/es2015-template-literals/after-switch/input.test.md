@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-template-literals/after-switch/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-template-literals/after-switch/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-template-literals/after-switch/input.js>
 	body: Array [
 		JSSwitchStatement {
 			cases: Array []
@@ -40,11 +40,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-template-literals/after-switch/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:8
+				path: UIDPath<esprima/es2015-template-literals/after-switch/input.js>
 				start: Position 1:7
 			}
 			description: Object {

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0023/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0023/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0023/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0023/input.js 1:0-1:3
@@ -45,11 +45,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0023/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:3
+				path: UIDPath<esprima/invalid-syntax/migrated_0023/input.js>
 				start: Position 1:3
 			}
 		}

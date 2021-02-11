@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/failure-name-constructor/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-properties/failure-name-constructor/input.js 1:0-4:0
+	path: UIDPath<experimental/class-private-properties/failure-name-constructor/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Classes may not have a private field named '#constructor'"}
 			}
 			location: Object {
-				filename: "experimental/class-private-properties/failure-name-constructor/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:14
+				path: UIDPath<experimental/class-private-properties/failure-name-constructor/input.js>
 				start: Position 2:2
 			}
 		}

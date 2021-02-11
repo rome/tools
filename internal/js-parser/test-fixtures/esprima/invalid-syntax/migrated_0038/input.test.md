@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0038/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0038/input.js 1:0-1:2
+	path: UIDPath<esprima/invalid-syntax/migrated_0038/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0038/input.js 1:0-1:2
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unterminated regular expression"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0038/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<esprima/invalid-syntax/migrated_0038/input.js>
 				start: Position 1:1
 			}
 		}

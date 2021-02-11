@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/escape-template/non-octal-nine/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/escape-template/non-octal-nine/input.js 1:0-2:0
+	path: UIDPath<core/escape-template/non-octal-nine/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation core/escape-template/non-octal-nine/input.js 1:0-1:5

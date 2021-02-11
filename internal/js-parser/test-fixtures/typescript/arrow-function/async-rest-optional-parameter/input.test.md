@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/async-rest-optional-parameter/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/arrow-function/async-rest-optional-parameter/input.ts 1:0-2:0
+	path: UIDPath<typescript/arrow-function/async-rest-optional-parameter/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

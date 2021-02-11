@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/xml-comment-in-script/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/xml-comment-in-script/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/xml-comment-in-script/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

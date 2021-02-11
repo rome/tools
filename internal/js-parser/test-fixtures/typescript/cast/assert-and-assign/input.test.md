@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/assert-and-assign/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/cast/assert-and-assign/input.ts 1:0-1:19
+	path: UIDPath<typescript/cast/assert-and-assign/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

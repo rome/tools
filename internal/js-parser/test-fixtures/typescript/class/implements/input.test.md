@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/implements/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/implements/input.ts 1:0-2:0
+	path: UIDPath<typescript/class/implements/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSClassDeclaration {

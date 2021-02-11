@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-for-of/for-of-object-pattern-const/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-for-of/for-of-object-pattern-const/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/for-of-object-pattern-const/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false

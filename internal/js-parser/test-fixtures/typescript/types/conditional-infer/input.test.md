@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/conditional-infer/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/types/conditional-infer/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/conditional-infer/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSTypeAlias {

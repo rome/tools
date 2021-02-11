@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-properties/no-ctor/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/no-ctor/input.js 1:0-4:0
+	path: UIDPath<experimental/class-properties/no-ctor/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Classes may not have a non-static field named 'constructor'"}
 			}
 			location: Object {
-				filename: "experimental/class-properties/no-ctor/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:13
+				path: UIDPath<experimental/class-properties/no-ctor/input.js>
 				start: Position 2:2
 			}
 		}

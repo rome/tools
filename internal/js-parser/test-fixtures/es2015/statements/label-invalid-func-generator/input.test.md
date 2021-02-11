@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/statements/label-invalid-func-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/statements/label-invalid-func-generator/input.js 1:0-2:0
+	path: UIDPath<es2015/statements/label-invalid-func-generator/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Generators can only be declared at the top level or inside a block"}
 			}
 			location: Object {
-				filename: "es2015/statements/label-invalid-func-generator/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:23
+				path: UIDPath<es2015/statements/label-invalid-func-generator/input.js>
 				start: Position 1:5
 			}
 		}

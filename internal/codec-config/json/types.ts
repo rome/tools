@@ -58,5 +58,5 @@ export type ToJSONObject = {
 export type ToJSONArray = ToJSONValue[];
 
 export type ToJSONObjectMethod = {
-	toJSON: () => JSONValue,
+	toJSON: () => JSONValue;
 };

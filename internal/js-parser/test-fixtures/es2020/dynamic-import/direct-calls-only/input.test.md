@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/dynamic-import/direct-calls-only/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/direct-calls-only/input.js 1:0-4:0
+	path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2020/dynamic-import/direct-calls-only/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:20
+				path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
 				start: Position 2:16
 			}
 			description: Object {

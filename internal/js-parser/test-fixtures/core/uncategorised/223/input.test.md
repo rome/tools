@@ -12,7 +12,6 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/223/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
@@ -20,6 +19,7 @@ JSRoot {
 	syntax: Array []
 	body: Array [JSEmptyStatement {loc: SourceLocation core/uncategorised/223/input.js 1:0-1:1}]
 	loc: SourceLocation core/uncategorised/223/input.js 1:0-1:1
+	path: UIDPath<core/uncategorised/223/input.js>
 }
 ```
 

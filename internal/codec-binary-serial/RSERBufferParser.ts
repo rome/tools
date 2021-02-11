@@ -24,7 +24,13 @@ import {
 	validateFileCode,
 	validateValueCode,
 } from "./constants";
-import {AnyPath, PathSet, isPath, MixedPathSet, MixedPathMap} from "@internal/path";
+import {
+	AnyPath,
+	MixedPathMap,
+	MixedPathSet,
+	PathSet,
+	isPath,
+} from "@internal/path";
 import {
 	ErrorFrames,
 	StructuredNodeSystemErrorProperties,
@@ -56,7 +62,7 @@ export default class RSERBufferParser {
 	private bytes: Uint8Array;
 	public readOffset: number;
 
-	private peekedCode: undefined | number
+	private peekedCode: undefined | number;
 	private peekedCodeOffset: undefined | number;
 
 	public getReadableSize(): number {
@@ -124,7 +130,10 @@ export default class RSERBufferParser {
 	}
 
 	private peekCode(): VALUE_CODES {
-		if (this.peekedCode !== undefined && this.peekedCodeOffset === this.readOffset) {
+		if (
+			this.peekedCode !== undefined &&
+			this.peekedCodeOffset === this.readOffset
+		) {
 			return this.peekedCode;
 		}
 

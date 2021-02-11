@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/optional-chaining/optional-tagged-template-literals/input.js 1:0-1:9
+	path: UIDPath<es2020/optional-chaining/optional-tagged-template-literals/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Tagged Template Literals are not allowed in optionalChain"}
 			}
 			location: Object {
-				filename: "es2020/optional-chaining/optional-tagged-template-literals/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<es2020/optional-chaining/optional-tagged-template-literals/input.js>
 				start: Position 1:4
 			}
 		}

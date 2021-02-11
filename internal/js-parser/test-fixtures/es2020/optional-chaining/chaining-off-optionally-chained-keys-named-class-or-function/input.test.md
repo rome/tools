@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-5:0
+	path: UIDPath<es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/optional-chaining/chaining-off-optionally-chained-keys-named-class-or-function/input.js 1:0-1:14

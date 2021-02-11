@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/394/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/394/input.js 1:0-5:0
+	path: UIDPath<es2015/uncategorised/394/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/394/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:2
+				path: UIDPath<es2015/uncategorised/394/input.js>
 				start: Position 2:1
 			}
 		}

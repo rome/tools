@@ -10,13 +10,13 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "core/uncategorised/550/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/550/input.js 1:0-3:0
+	path: UIDPath<core/uncategorised/550/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
@@ -33,11 +33,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: "core/uncategorised/550/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:12
+				path: UIDPath<core/uncategorised/550/input.js>
 				start: Position 2:12
 			}
 		}

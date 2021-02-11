@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/250/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/250/input.js 1:0-1:8
+	path: UIDPath<es2015/uncategorised/250/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2015/uncategorised/250/input.js 1:0-1:8
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/250/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<es2015/uncategorised/250/input.js>
 				start: Position 1:1
 			}
 		}

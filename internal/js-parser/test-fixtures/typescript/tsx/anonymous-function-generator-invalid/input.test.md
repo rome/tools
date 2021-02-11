@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/tsx/anonymous-function-generator-invalid/input.tsx 1:0-4:0
+	path: UIDPath<typescript/tsx/anonymous-function-generator-invalid/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"
@@ -25,11 +25,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/tsx/anonymous-function-generator-invalid/input.tsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:22
+				path: UIDPath<typescript/tsx/anonymous-function-generator-invalid/input.tsx>
 				start: Position 1:21
 			}
 			description: Object {

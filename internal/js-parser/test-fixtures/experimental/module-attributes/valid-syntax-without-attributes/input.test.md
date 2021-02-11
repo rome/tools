@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/module-attributes/valid-syntax-without-attributes/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/module-attributes/valid-syntax-without-attributes/input.js 1:0-2:0
+	path: UIDPath<experimental/module-attributes/valid-syntax-without-attributes/input.js>
 	body: Array [
 		JSImportDeclaration {
 			importKind: undefined

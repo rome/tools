@@ -1,11 +1,11 @@
 import {
 	AbsoluteFilePathMap,
 	AnyPath,
+	MixedPathMap,
 	PathSet,
 	RelativeFilePathMap,
 	UIDPathMap,
 	URLPathMap,
-	MixedPathMap,
 } from "@internal/path";
 
 export type IntSize = 0 | 1 | 2 | 4 | 8;
@@ -16,7 +16,7 @@ export type EqualShapeObjects<Value> = {[key in keyof Value]: Value[key]};
 
 export type RSERValueObjects = Extract<RSERValue, object>;
 
-export type RSERValue = 
+export type RSERValue =
 	| undefined
 	| void
 	| null
@@ -71,4 +71,3 @@ export type RSERArrayBufferView =
 	| BigInt64Array
 	| BigUint64Array
 	| DataView;
-

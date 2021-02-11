@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/cast/destructure-and-assign/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/cast/destructure-and-assign/input.ts 1:0-3:0
+	path: UIDPath<typescript/cast/destructure-and-assign/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
 			}
 			location: Object {
-				filename: "typescript/cast/destructure-and-assign/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:12
+				path: UIDPath<typescript/cast/destructure-and-assign/input.ts>
 				start: Position 1:1
 			}
 		}

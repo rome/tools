@@ -10,9 +10,9 @@
 HTMLRoot {
 	corrupt: false
 	diagnostics: Array []
-	filename: "smoke/input.html"
 	integrity: undefined
 	loc: SourceLocation smoke/input.html 1:0-19:6
+	path: UIDPath<smoke/input.html>
 	comments: Array [
 		CommentBlock {
 			id: "0"

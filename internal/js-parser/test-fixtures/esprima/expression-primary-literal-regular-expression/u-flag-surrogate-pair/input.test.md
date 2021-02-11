@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js 1:0-2:0
+	path: UIDPath<esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [
@@ -31,11 +31,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
-				filename: "esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js"
 				integrity: undefined
 				language: "regex"
 				sourceText: undefined
 				end: Position 1:29
+				path: UIDPath<esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js>
 				start: Position 1:16
 			}
 		}

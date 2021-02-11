@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/class-methods/disallow-duplicate-method-params/input.js 1:0-4:0
+	path: UIDPath<es2015/class-methods/disallow-duplicate-method-params/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/class-methods/disallow-duplicate-method-params/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:12
+				path: UIDPath<es2015/class-methods/disallow-duplicate-method-params/input.js>
 				start: Position 2:11
 			}
 			description: Object {

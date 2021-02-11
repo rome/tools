@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/async-named-properties/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/async-named-properties/input.ts 1:0-4:1
+	path: UIDPath<typescript/class/async-named-properties/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSClassDeclaration {

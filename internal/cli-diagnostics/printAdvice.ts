@@ -37,7 +37,7 @@ import {
 } from "@internal/markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {MixedPathSet, createUIDPath, UNKNOWN_PATH} from "@internal/path";
+import {MixedPathSet, UNKNOWN_PATH, createUIDPath} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";

@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/export-arrow/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/export-arrow/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: SourceLocation es2017/async-functions/export-arrow/input.js 1:0-1:38

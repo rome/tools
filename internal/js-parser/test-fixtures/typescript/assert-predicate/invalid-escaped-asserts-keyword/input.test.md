@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/assert-predicate/invalid-escaped-asserts-keyword/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/assert-predicate/invalid-escaped-asserts-keyword/input.ts 1:0-2:0
+	path: UIDPath<typescript/assert-predicate/invalid-escaped-asserts-keyword/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/assert-predicate/invalid-escaped-asserts-keyword/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:31
+				path: UIDPath<typescript/assert-predicate/invalid-escaped-asserts-keyword/input.ts>
 				start: Position 1:17
 			}
 			description: Object {

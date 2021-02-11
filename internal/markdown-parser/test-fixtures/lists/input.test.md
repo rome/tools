@@ -11,9 +11,9 @@ MarkdownRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "lists/input.md"
 	integrity: undefined
 	loc: SourceLocation lists/input.md 1:0-11:14
+	path: UIDPath<lists/input.md>
 	body: Array [
 		MarkdownListBlock {
 			ordered: false

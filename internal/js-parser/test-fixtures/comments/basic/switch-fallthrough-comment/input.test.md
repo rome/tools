@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/switch-fallthrough-comment/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/basic/switch-fallthrough-comment/input.js 1:0-8:0
+	path: UIDPath<comments/basic/switch-fallthrough-comment/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

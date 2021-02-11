@@ -12,13 +12,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "core/uncategorised/101/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/101/input.js 1:0-1:14
+	path: UIDPath<core/uncategorised/101/input.js>
 	directives: Array [
 		JSDirective {
 			value: "Hello\\1World"

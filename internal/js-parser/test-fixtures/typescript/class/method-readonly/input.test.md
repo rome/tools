@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/class/method-readonly/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/method-readonly/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/method-readonly/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "typescript/class/method-readonly/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:14
+				path: UIDPath<typescript/class/method-readonly/input.ts>
 				start: Position 2:14
 			}
 		}

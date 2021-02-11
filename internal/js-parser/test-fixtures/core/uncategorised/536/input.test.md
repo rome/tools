@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/536/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/536/input.js 1:0-1:8
+	path: UIDPath<core/uncategorised/536/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation core/uncategorised/536/input.js 1:0-1:8
@@ -47,11 +47,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "A constant must have an initializer"}
 			}
 			location: Object {
-				filename: "core/uncategorised/536/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<core/uncategorised/536/input.js>
 				start: Position 1:6
 			}
 		}

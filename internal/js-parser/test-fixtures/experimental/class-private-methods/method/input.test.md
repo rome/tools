@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-methods/method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-methods/method/input.js 1:0-6:0
+	path: UIDPath<experimental/class-private-methods/method/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

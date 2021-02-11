@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/276/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
+	path: UIDPath<es2015/uncategorised/276/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2015/uncategorised/276/input.js 1:0-1:14
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/276/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<es2015/uncategorised/276/input.js>
 				start: Position 1:6
 			}
 		}

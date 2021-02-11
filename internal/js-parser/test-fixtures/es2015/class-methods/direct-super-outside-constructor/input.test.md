@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/class-methods/direct-super-outside-constructor/input.js 1:0-3:1
+	path: UIDPath<es2015/class-methods/direct-super-outside-constructor/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/class-methods/direct-super-outside-constructor/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:13
+				path: UIDPath<es2015/class-methods/direct-super-outside-constructor/input.js>
 				start: Position 2:8
 			}
 			description: Object {

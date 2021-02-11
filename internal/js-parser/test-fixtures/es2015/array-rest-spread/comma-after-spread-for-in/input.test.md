@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/array-rest-spread/comma-after-spread-for-in/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/array-rest-spread/comma-after-spread-for-in/input.js 1:0-2:0
+	path: UIDPath<es2015/array-rest-spread/comma-after-spread-for-in/input.js>
 	body: Array [
 		JSForInStatement {
 			body: JSEmptyStatement {loc: SourceLocation es2015/array-rest-spread/comma-after-spread-for-in/input.js 1:19-1:20}

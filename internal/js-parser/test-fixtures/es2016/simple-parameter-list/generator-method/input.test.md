@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2016/simple-parameter-list/generator-method/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2016/simple-parameter-list/generator-method/input.js 1:0-6:0
+	path: UIDPath<es2016/simple-parameter-list/generator-method/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
-				filename: "es2016/simple-parameter-list/generator-method/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:17
+				path: UIDPath<es2016/simple-parameter-list/generator-method/input.js>
 				start: Position 3:4
 			}
 		}

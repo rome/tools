@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/template-literal-invalid-escapes-tagged/31/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/31/input.js 1:0-1:25
+	path: UIDPath<experimental/template-literal-invalid-escapes-tagged/31/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/template-literal-invalid-escapes-tagged/31/input.js 1:0-1:25

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/numeric-separator/invalid-24/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:0-2:0
+	path: UIDPath<experimental/numeric-separator/invalid-24/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/numeric-separator/invalid-24/input.js 1:0-1:1
@@ -38,11 +38,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/numeric-separator/invalid-24/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:0
+				path: UIDPath<experimental/numeric-separator/invalid-24/input.js>
 				start: Position 1:0
 			}
 			description: Object {

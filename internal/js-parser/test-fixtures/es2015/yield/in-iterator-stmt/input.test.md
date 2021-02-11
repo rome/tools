@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/yield/in-iterator-stmt/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/in-iterator-stmt/input.js 1:0-4:0
+	path: UIDPath<es2015/yield/in-iterator-stmt/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/yield/in-iterator-stmt/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:15
+				path: UIDPath<es2015/yield/in-iterator-stmt/input.js>
 				start: Position 2:7
 			}
 			description: Object {

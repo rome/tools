@@ -11,13 +11,13 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/migrated_0031/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0031/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0031/input.js>
 	directives: Array [
 		JSDirective {
 			value: "Hello\nWorld"
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unterminated string constant"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0031/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<esprima/invalid-syntax/migrated_0031/input.js>
 				start: Position 1:6
 			}
 		}

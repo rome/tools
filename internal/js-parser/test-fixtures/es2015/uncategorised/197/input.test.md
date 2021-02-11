@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/uncategorised/197/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:26
+	path: UIDPath<es2015/uncategorised/197/input.js>
 	body: Array [
 		JSDoWhileStatement {
 			loc: SourceLocation es2015/uncategorised/197/input.js 1:0-1:19

@@ -12,10 +12,10 @@ import {
 	UIDPath,
 	URLPath,
 	createAbsoluteFilePath,
+	createAnyPath,
 	createRelativeFilePath,
 	createUIDPath,
 	createURLPath,
-	createAnyPath,
 } from "./index";
 
 function concat<FilePath extends AnyPath>(
@@ -254,8 +254,7 @@ export class MixedPathMap<Value> extends BasePathMap<AnyPath, Value> {
 	}
 }
 
-export class AbsoluteFilePathSet
-	extends BasePathSet<AbsoluteFilePath> {
+export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath> {
 	public type: "absolute" = "absolute";
 
 	createMap(): AbsoluteFilePathMap<void> {
@@ -267,8 +266,7 @@ export class AbsoluteFilePathSet
 	}
 }
 
-export class RelativeFilePathSet
-	extends BasePathSet<RelativeFilePath> {
+export class RelativeFilePathSet extends BasePathSet<RelativeFilePath> {
 	public type: "relative" = "relative";
 
 	createMap(): RelativeFilePathMap<void> {
@@ -350,4 +348,6 @@ export function isPathMap(val: unknown): val is PathMap<unknown> {
 	);
 }
 
-export type PathMapValue<Map> = Map extends BasePathMap<any, infer V> ? V : never;
+export type PathMapValue<Map> = Map extends BasePathMap<any, infer V>
+	? V
+	: never;

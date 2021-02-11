@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/object-property-trailing-comma/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/basic/object-property-trailing-comma/input.js 1:0-6:0
+	path: UIDPath<comments/basic/object-property-trailing-comma/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

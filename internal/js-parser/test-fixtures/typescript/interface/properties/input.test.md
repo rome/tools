@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/properties/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/interface/properties/input.ts 1:0-6:0
+	path: UIDPath<typescript/interface/properties/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSInterfaceDeclaration {

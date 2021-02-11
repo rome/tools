@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-module-specifier/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-module-specifier/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Export from only allows strings"}
 			}
 			location: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-module-specifier/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:21
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-module-specifier/input.js>
 				start: Position 1:18
 			}
 		}

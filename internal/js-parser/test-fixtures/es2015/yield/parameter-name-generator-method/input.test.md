@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/parameter-name-generator-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/parameter-name-generator-method/input.js 1:0-1:24
+	path: UIDPath<es2015/yield/parameter-name-generator-method/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Can not use 'yield' as identifier inside a generator"}
 			}
 			location: Object {
-				filename: "es2015/yield/parameter-name-generator-method/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:16
+				path: UIDPath<es2015/yield/parameter-name-generator-method/input.js>
 				start: Position 1:11
 			}
 		}

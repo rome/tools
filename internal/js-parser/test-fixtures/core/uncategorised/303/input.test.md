@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/303/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/303/input.js 1:0-2:4
+	path: UIDPath<core/uncategorised/303/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []

@@ -7,8 +7,8 @@
 
 import {
 	createAbsoluteFilePath,
-	createRelativeFilePath,
 	createAnyPath,
+	createRelativeFilePath,
 } from "@internal/path";
 import {test} from "rome";
 

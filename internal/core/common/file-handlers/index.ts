@@ -45,10 +45,7 @@ export function inferDiagnosticLanguageFromFilename(
 		return existing;
 	}
 	if (filename !== undefined) {
-		const {handler} = getFileHandlerFromPath(
-			createAnyPath(filename),
-			undefined,
-		);
+		const {handler} = getFileHandlerFromPath(createAnyPath(filename), undefined);
 		if (handler !== undefined) {
 			return handler.language;
 		}

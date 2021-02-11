@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/array-rest-spread/with-object/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-2:0
+	path: UIDPath<es2015/array-rest-spread/with-object/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2015/array-rest-spread/with-object/input.js 1:0-1:31

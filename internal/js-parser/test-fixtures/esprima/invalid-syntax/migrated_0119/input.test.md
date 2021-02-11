@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0119/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0119/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0119/input.js>
 	body: Array [
 		JSContinueStatement {
 			label: undefined
@@ -42,11 +42,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0119/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:10
+				path: UIDPath<esprima/invalid-syntax/migrated_0119/input.js>
 				start: Position 1:9
 			}
 		}

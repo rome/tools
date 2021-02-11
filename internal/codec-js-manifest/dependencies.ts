@@ -12,7 +12,7 @@ import {
 	stringifySemver,
 } from "@internal/codec-semver";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
-import {createAnyPath, AnyPath} from "@internal/path";
+import {AnyPath, createAnyPath} from "@internal/path";
 import {manifestNameToString, normalizeName} from "./name";
 import {ob1Add} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";

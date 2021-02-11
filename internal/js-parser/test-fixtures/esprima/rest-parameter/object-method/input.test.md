@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/rest-parameter/object-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/rest-parameter/object-method/input.js 1:0-2:0
+	path: UIDPath<esprima/rest-parameter/object-method/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/rest-parameter/object-method/input.js 1:0-1:31

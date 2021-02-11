@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/surrounding-throw-comments/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/basic/surrounding-throw-comments/input.js 1:0-6:0
+	path: UIDPath<comments/basic/surrounding-throw-comments/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"

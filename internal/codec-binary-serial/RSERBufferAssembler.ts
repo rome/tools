@@ -26,12 +26,12 @@ import {
 import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
 import {
 	AnyPath,
+	MixedPathMap,
+	MixedPathSet,
 	PathSet,
 	isPath,
 	isPathMap,
 	isPathSet,
-	MixedPathMap,
-	MixedPathSet,
 } from "@internal/path";
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
@@ -232,7 +232,7 @@ export default class RSERBufferAssembler {
 		if (this.encodePossibleReference(path)) {
 			return;
 		}
-		
+
 		this.writeCode(VALUE_CODES.PATH);
 		this.writeByte(pathToCode(path));
 		this.encodeStringValue(path.join());

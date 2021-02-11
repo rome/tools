@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/538/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/538/input.js 1:0-2:1
+	path: UIDPath<core/uncategorised/538/input.js>
 	body: Array [
 		JSEmptyStatement {
 			leadingComments: Array ["0"]

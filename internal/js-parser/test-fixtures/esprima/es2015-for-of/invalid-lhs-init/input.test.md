@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-for-of/invalid-lhs-init/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false
@@ -37,11 +37,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-for-of/invalid-lhs-init/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:9
+				path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
 				start: Position 1:5
 			}
 			description: Object {

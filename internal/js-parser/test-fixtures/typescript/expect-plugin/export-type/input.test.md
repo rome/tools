@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/expect-plugin/export-type/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation typescript/expect-plugin/export-type/input.js 1:0-2:0
+	path: UIDPath<typescript/expect-plugin/export-type/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "type"

@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/invalid-escape-async-static-class-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/invalid-escape-async-static-class-method/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/invalid-escape-async-static-class-method/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2017/async-functions/invalid-escape-async-static-class-method/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:17
+				path: UIDPath<es2017/async-functions/invalid-escape-async-static-class-method/input.js>
 				start: Position 1:17
 			}
 			description: Object {

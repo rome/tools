@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "esprima/expression-primary-object/migrated_0032/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/expression-primary-object/migrated_0032/input.js 1:0-1:43
+	path: UIDPath<esprima/expression-primary-object/migrated_0032/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"

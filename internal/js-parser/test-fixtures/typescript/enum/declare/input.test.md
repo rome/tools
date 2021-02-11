@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/enum/declare/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/enum/declare/input.ts 1:0-1:17
+	path: UIDPath<typescript/enum/declare/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSEnumDeclaration {

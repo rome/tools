@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/opts/allowUndeclaredExports/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation core/opts/allowUndeclaredExports/input.js 1:0-1:15
+	path: UIDPath<core/opts/allowUndeclaredExports/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined

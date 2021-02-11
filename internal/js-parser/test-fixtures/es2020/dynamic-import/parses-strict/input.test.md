@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "es2020/dynamic-import/parses-strict/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/parses-strict/input.js 1:0-4:0
+	path: UIDPath<es2020/dynamic-import/parses-strict/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"

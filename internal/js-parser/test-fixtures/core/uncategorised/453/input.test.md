@@ -11,13 +11,13 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "core/uncategorised/453/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/453/input.js 1:0-1:4
+	path: UIDPath<core/uncategorised/453/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\"
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
-				filename: "core/uncategorised/453/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:3
+				path: UIDPath<core/uncategorised/453/input.js>
 				start: Position 1:3
 			}
 		}

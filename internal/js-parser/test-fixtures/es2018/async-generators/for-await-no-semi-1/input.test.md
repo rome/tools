@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2018/async-generators/for-await-no-semi-1/input.js 1:0-4:0
+	path: UIDPath<es2018/async-generators/for-await-no-semi-1/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "es2018/async-generators/for-await-no-semi-1/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:14
+				path: UIDPath<es2018/async-generators/for-await-no-semi-1/input.js>
 				start: Position 2:13
 			}
 		}

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/regression/invalid-octal-strict-directive-function/input.js 1:0-33:0
+	path: UIDPath<core/regression/invalid-octal-strict-directive-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Octal literal in strict mode"}
 			}
 			location: Object {
-				filename: "core/regression/invalid-octal-strict-directive-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:4
+				path: UIDPath<core/regression/invalid-octal-strict-directive-function/input.js>
 				start: Position 2:4
 			}
 		}

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/expect-plugin/export-interface/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation typescript/expect-plugin/export-interface/input.js 1:0-2:0
+	path: UIDPath<typescript/expect-plugin/export-interface/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "type"
@@ -42,11 +42,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/expect-plugin/export-interface/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<typescript/expect-plugin/export-interface/input.js>
 				start: Position 1:7
 			}
 			description: Object {

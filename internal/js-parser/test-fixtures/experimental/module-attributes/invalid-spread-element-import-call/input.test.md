@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/module-attributes/invalid-spread-element-import-call/input.js 1:0-2:0
+	path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/invalid-spread-element-import-call/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:20
+				path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
 				start: Position 1:19
 			}
 		}

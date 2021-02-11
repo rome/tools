@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/label-kind-switch/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/categorized/label-kind-switch/input.js 1:0-4:1
+	path: UIDPath<core/categorized/label-kind-switch/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []

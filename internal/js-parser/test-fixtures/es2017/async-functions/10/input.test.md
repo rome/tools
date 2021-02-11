@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/async-functions/10/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/10/input.js 1:0-2:13
+	path: UIDPath<es2017/async-functions/10/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/10/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:3
+				path: UIDPath<es2017/async-functions/10/input.js>
 				start: Position 2:4
 			}
 		}

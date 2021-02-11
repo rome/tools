@@ -10,13 +10,13 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "es2015/for-in/strict-initializer/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/for-in/strict-initializer/input.js 1:0-2:22
+	path: UIDPath<es2015/for-in/strict-initializer/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
@@ -33,11 +33,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Loop variable declaration may not have an initializer"}
 			}
 			location: Object {
-				filename: "es2015/for-in/strict-initializer/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:14
+				path: UIDPath<es2015/for-in/strict-initializer/input.js>
 				start: Position 2:5
 			}
 		}

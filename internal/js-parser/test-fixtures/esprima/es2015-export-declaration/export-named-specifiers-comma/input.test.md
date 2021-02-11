@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/export-named-specifiers-comma/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 1:0-4:0
+	path: UIDPath<esprima/es2015-export-declaration/export-named-specifiers-comma/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation esprima/es2015-export-declaration/export-named-specifiers-comma/input.js 1:0-1:8

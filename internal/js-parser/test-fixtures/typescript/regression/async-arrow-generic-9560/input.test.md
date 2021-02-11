@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/regression/async-arrow-generic-9560/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/regression/async-arrow-generic-9560/input.ts 1:0-8:1
+	path: UIDPath<typescript/regression/async-arrow-generic-9560/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSClassDeclaration {

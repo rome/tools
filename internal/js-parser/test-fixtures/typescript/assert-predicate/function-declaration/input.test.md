@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/assert-predicate/function-declaration/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/assert-predicate/function-declaration/input.ts 1:0-4:0
+	path: UIDPath<typescript/assert-predicate/function-declaration/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "typescript/assert-predicate/function-declaration/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:43
+				path: UIDPath<typescript/assert-predicate/function-declaration/input.ts>
 				start: Position 3:44
 			}
 		}

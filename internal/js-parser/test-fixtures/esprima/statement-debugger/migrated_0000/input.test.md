@@ -12,7 +12,6 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-debugger/migrated_0000/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
@@ -20,6 +19,7 @@ JSRoot {
 	syntax: Array []
 	body: Array [JSDebuggerStatement {loc: SourceLocation esprima/statement-debugger/migrated_0000/input.js 1:0-1:9}]
 	loc: SourceLocation esprima/statement-debugger/migrated_0000/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-debugger/migrated_0000/input.js>
 }
 ```
 

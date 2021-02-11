@@ -14,13 +14,11 @@ Array [
 		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 			value: Object {target: "C:\\Users\\sebmck\\file.ts"}
 			declared: false
-			filename: undefined
 			forceDiagnosticTarget: undefined
 			forkCache: Map [
 				target => ___R$project$rome$$internal$consume$Consumer_ts$default {
 					value: "C:\\Users\\sebmck\\file.ts"
 					declared: false
-					filename: undefined
 					forceDiagnosticTarget: undefined
 					forkCache: Map []
 					handleUnexpected: undefined
@@ -34,6 +32,7 @@ Array [
 					context: Object {
 						category: "parse"
 						categoryValue: "romemarkup"
+						getDiagnosticLocation: Function getDiagnosticLocation
 					}
 				}
 			]
@@ -48,6 +47,7 @@ Array [
 			context: Object {
 				category: "parse"
 				categoryValue: "romemarkup"
+				getDiagnosticLocation: Function getDiagnosticLocation
 			}
 		}
 	}
@@ -69,7 +69,6 @@ Array [
 		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 			value: Object {}
 			declared: false
-			filename: undefined
 			forceDiagnosticTarget: undefined
 			forkCache: Map []
 			handleUnexpected: undefined
@@ -83,6 +82,7 @@ Array [
 			context: Object {
 				category: "parse"
 				categoryValue: "romemarkup"
+				getDiagnosticLocation: Function getDiagnosticLocation
 			}
 		}
 	}
@@ -102,7 +102,6 @@ Array [
 		attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 			value: Object {}
 			declared: false
-			filename: undefined
 			forceDiagnosticTarget: undefined
 			forkCache: Map []
 			handleUnexpected: undefined
@@ -116,6 +115,7 @@ Array [
 			context: Object {
 				category: "parse"
 				categoryValue: "romemarkup"
+				getDiagnosticLocation: Function getDiagnosticLocation
 			}
 		}
 		children: Array [
@@ -130,7 +130,6 @@ Array [
 				attributes: ___R$project$rome$$internal$consume$Consumer_ts$default {
 					value: Object {}
 					declared: false
-					filename: undefined
 					forceDiagnosticTarget: undefined
 					forkCache: Map []
 					handleUnexpected: undefined
@@ -144,6 +143,7 @@ Array [
 					context: Object {
 						category: "parse"
 						categoryValue: "romemarkup"
+						getDiagnosticLocation: Function getDiagnosticLocation
 					}
 				}
 			}

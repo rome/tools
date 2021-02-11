@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-yield/invalid-yield-generator-member-expression/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-generator-member-expression/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-generator-member-expression/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:28
+				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-member-expression/input.js>
 				start: Position 1:28
 			}
 		}

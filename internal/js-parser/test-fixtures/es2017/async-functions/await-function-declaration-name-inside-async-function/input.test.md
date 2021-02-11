@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/await-function-declaration-name-inside-async-function/input.js 1:0-3:1
+	path: UIDPath<es2017/async-functions/await-function-declaration-name-inside-async-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Can not use 'await' as identifier inside an async function"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/await-function-declaration-name-inside-async-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:16
+				path: UIDPath<es2017/async-functions/await-function-declaration-name-inside-async-function/input.js>
 				start: Position 2:11
 			}
 		}

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/in-global-scope/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:8
+	path: UIDPath<es2015/yield/in-global-scope/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2015/yield/in-global-scope/input.js 1:0-1:5
@@ -45,11 +45,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/yield/in-global-scope/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:5
+				path: UIDPath<es2015/yield/in-global-scope/input.js>
 				start: Position 1:6
 			}
 		}

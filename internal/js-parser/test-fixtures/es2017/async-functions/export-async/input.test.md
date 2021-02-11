@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/export-async/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/export-async/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/export-async/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined
@@ -43,11 +43,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Started with `export async` so we expected to receive an async function but no function keyword was found"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/export-async/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:13
+				path: UIDPath<es2017/async-functions/export-async/input.js>
 				start: Position 1:12
 			}
 		}

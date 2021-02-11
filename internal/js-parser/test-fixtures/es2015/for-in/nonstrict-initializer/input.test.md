@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/for-in/nonstrict-initializer/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:0-7:0
+	path: UIDPath<es2015/for-in/nonstrict-initializer/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2015/for-in/nonstrict-initializer/input.js 1:2-1:18

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/dynamic-import/invalid-new/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-2:0
+	path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/dynamic-import/invalid-new/input.js 1:0-1:18
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/invalid-new/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:17
+				path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
 				start: Position 1:10
 			}
 		}

@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:17
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-after-named-after-default/input.js>
 				start: Position 1:17
 			}
 			description: Object {

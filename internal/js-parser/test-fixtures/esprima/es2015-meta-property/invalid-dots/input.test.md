@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-meta-property/invalid-dots/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-meta-property/invalid-dots/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "esprima/es2015-meta-property/invalid-dots/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:29
+				path: UIDPath<esprima/es2015-meta-property/invalid-dots/input.js>
 				start: Position 1:29
 			}
 		}

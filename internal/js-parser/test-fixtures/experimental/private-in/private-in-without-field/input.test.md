@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/private-in/private-in-without-field/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/private-in/private-in-without-field/input.js 1:0-6:0
+	path: UIDPath<experimental/private-in/private-in-without-field/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/private-in/private-in-without-field/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:10
+				path: UIDPath<experimental/private-in/private-in-without-field/input.js>
 				start: Position 3:4
 			}
 			description: Object {

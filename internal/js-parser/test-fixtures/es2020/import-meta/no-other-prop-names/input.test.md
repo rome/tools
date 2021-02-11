@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/import-meta/no-other-prop-names/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-2:0
+	path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/import-meta/no-other-prop-names/input.js 1:0-1:15
@@ -38,11 +38,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2020/import-meta/no-other-prop-names/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:14
+				path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
 				start: Position 1:7
 			}
 			description: Object {

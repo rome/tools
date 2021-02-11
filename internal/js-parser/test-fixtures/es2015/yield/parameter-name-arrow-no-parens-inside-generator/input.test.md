@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js 1:0-3:1
+	path: UIDPath<es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:7
+				path: UIDPath<es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js>
 				start: Position 2:8
 			}
 		}

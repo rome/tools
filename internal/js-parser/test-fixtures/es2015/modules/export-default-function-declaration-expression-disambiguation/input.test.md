@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/export-default-function-declaration-expression-disambiguation/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:0-3:0
+	path: UIDPath<es2015/modules/export-default-function-declaration-expression-disambiguation/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: SourceLocation es2015/modules/export-default-function-declaration-expression-disambiguation/input.js 1:0-1:29

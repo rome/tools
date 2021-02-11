@@ -38,11 +38,7 @@ function toFilePath(pathOrString: FilePathOrString, hint: PathTypeHint): AnyPath
 
 export * from "./collections";
 
-export type AnyPath =
-	| AbsoluteFilePath
-	| RelativeFilePath
-	| URLPath
-	| UIDPath;
+export type AnyPath = AbsoluteFilePath | RelativeFilePath | URLPath | UIDPath;
 
 export type PathSegments = string[];
 
@@ -82,7 +78,7 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 			ext: this.memo.ext,
 		};
 	}
-	
+
 	public toJSON(): string {
 		return this.join();
 	}
@@ -631,7 +627,9 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		);
 	}
 
-	public relative(otherRaw: FilePathOrString): AbsoluteFilePath | RelativeFilePath {
+	public relative(
+		otherRaw: FilePathOrString,
+	): AbsoluteFilePath | RelativeFilePath {
 		const other = this.resolve(toFilePath(otherRaw, "relative"));
 
 		if (other.equal(this)) {
@@ -810,7 +808,7 @@ function parsePathSegments(
 					absoluteTarget: undefined,
 					explicitDirectory: false,
 					explicitRelative: false,
-					segments
+					segments,
 				};
 
 			default: {

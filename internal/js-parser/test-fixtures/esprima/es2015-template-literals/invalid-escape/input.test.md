@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-template-literals/invalid-escape/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-template-literals/invalid-escape/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/es2015-template-literals/invalid-escape/input.js 1:0-1:5
@@ -45,11 +45,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "esprima/es2015-template-literals/invalid-escape/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:2
+				path: UIDPath<esprima/es2015-template-literals/invalid-escape/input.js>
 				start: Position 1:2
 			}
 		}

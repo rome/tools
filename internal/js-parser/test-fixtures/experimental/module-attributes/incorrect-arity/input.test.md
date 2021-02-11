@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/module-attributes/incorrect-arity/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/module-attributes/incorrect-arity/input.js 1:0-3:0
+	path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/incorrect-arity/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
 				start: Position 1:7
 			}
 		}

@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/automatic-semicolon-insertion/migrated_0003/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/automatic-semicolon-insertion/migrated_0003/input.js 1:0-3:0
+	path: UIDPath<esprima/automatic-semicolon-insertion/migrated_0003/input.js>
 	body: Array [
 		JSBlockStatement {
 			directives: Array []

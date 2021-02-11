@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/multiple-assert-and-assign/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/cast/multiple-assert-and-assign/input.ts 1:0-1:26
+	path: UIDPath<typescript/cast/multiple-assert-and-assign/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

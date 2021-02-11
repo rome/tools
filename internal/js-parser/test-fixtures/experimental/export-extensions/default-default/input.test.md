@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/export-extensions/default-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:26
+	path: UIDPath<experimental/export-extensions/default-default/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: SourceLocation experimental/export-extensions/default-default/input.js 1:0-1:19
@@ -44,11 +44,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/export-extensions/default-default/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:19
+				path: UIDPath<experimental/export-extensions/default-default/input.js>
 				start: Position 1:20
 			}
 		}

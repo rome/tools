@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/numeric-separator/invalid-non-octal-decimal-int/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5
+	path: UIDPath<experimental/numeric-separator/invalid-non-octal-decimal-int/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/numeric-separator/invalid-non-octal-decimal-int/input.js 1:0-1:5

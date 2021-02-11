@@ -244,9 +244,7 @@ class LintRunner {
 		const queue = server.createWorkerQueue({
 			callback: async ({path}) => {
 				const filename = path.join();
-				const progressId = progress.pushText(
-					markup`${path}`,
-				);
+				const progressId = progress.pushText(markup`${path}`);
 
 				let compilerOptions = lintCompilerOptionsPerFile[filename];
 

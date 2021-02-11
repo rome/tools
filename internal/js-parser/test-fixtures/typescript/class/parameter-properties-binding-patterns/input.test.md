@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/parameter-properties-binding-patterns/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "A parameter property may not be declared using a binding pattern."}
 			}
 			location: Object {
-				filename: "typescript/class/parameter-properties-binding-patterns/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:16
+				path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
 				start: Position 2:16
 			}
 		}

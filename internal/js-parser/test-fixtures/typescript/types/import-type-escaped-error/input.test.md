@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/types/import-type-escaped-error/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/types/import-type-escaped-error/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/types/import-type-escaped-error/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:16
+				path: UIDPath<typescript/types/import-type-escaped-error/input.ts>
 				start: Position 1:17
 			}
 			description: Object {

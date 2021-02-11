@@ -8,9 +8,9 @@
 CSSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "invalid/selector1/input.css"
 	integrity: undefined
 	loc: SourceLocation invalid/selector1/input.css 1:0-3:1
+	path: RelativeFilePath<invalid/selector1/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation invalid/selector1/input.css 1:0-3:1
@@ -37,11 +37,11 @@ CSSRoot {
 				message: RAW_MARKUP {value: "Expected a selector"}
 			}
 			location: Object {
-				filename: "invalid/selector1/input.css"
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
 				end: Position 1:0
+				path: RelativeFilePath<invalid/selector1/input.css>
 				start: Position 1:0
 			}
 		}

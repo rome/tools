@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/regression/less-than-edge-case/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/regression/less-than-edge-case/input.tsx 1:0-3:1
+	path: UIDPath<typescript/regression/less-than-edge-case/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"

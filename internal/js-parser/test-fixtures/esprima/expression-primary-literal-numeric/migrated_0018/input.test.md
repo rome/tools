@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/expression-primary-literal-numeric/migrated_0018/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0018/input.js 1:0-1:2
+	path: UIDPath<esprima/expression-primary-literal-numeric/migrated_0018/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/expression-primary-literal-numeric/migrated_0018/input.js 1:0-1:2

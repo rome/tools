@@ -11,12 +11,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/generic-tsx/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/arrow-function/generic-tsx/input.tsx 1:0-3:0
+	path: UIDPath<typescript/arrow-function/generic-tsx/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/categorized/invalid-fn-decl-inside-loop/input.js 1:0-1:26
+	path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "In non-strict mode code, functions can only be declared at top level, inside a block, or as the body of an if statement"}
 			}
 			location: Object {
-				filename: "core/categorized/invalid-fn-decl-inside-loop/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:9
+				path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
 				start: Position 1:10
 			}
 		}

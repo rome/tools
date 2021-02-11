@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/export-ns-from/ns/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2020/export-ns-from/ns/input.js 1:0-2:0
+	path: UIDPath<es2020/export-ns-from/ns/input.js>
 	body: Array [
 		JSExportExternalDeclaration {
 			exportKind: undefined

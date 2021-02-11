@@ -11,9 +11,9 @@ HTMLRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "cdata/input.html"
 	integrity: undefined
 	loc: SourceLocation cdata/input.html 1:0-6:7
+	path: UIDPath<cdata/input.html>
 	body: Array [
 		HTMLElement {
 			name: HTMLIdentifier {

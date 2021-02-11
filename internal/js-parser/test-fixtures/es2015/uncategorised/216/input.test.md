@@ -11,13 +11,13 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "es2015/uncategorised/216/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/216/input.js 1:0-1:12
+	path: UIDPath<es2015/uncategorised/216/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\u{110000}"
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Code point out of bounds"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/216/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:3
+				path: UIDPath<es2015/uncategorised/216/input.js>
 				start: Position 1:3
 			}
 		}

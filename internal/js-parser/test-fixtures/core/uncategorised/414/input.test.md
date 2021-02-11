@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/uncategorised/414/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/414/input.js 1:0-1:6
+	path: UIDPath<core/uncategorised/414/input.js>
 	body: Array [
 		JSThrowStatement {
 			loc: SourceLocation core/uncategorised/414/input.js 1:0-1:6
@@ -31,11 +31,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "core/uncategorised/414/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:5
+				path: UIDPath<core/uncategorised/414/input.js>
 				start: Position 1:5
 			}
 			description: Object {

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/524/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/524/input.js 1:0-2:3
+	path: UIDPath<core/uncategorised/524/input.js>
 	body: Array [
 		JSThrowStatement {
 			loc: SourceLocation core/uncategorised/524/input.js 1:0-2:3
@@ -38,11 +38,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Illegal newline after throw"}
 			}
 			location: Object {
-				filename: "core/uncategorised/524/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:5
+				path: UIDPath<core/uncategorised/524/input.js>
 				start: Position 1:5
 			}
 		}

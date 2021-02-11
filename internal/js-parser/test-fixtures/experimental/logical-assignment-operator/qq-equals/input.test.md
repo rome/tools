@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/logical-assignment-operator/qq-equals/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 1:0-3:0
+	path: UIDPath<experimental/logical-assignment-operator/qq-equals/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/logical-assignment-operator/qq-equals/input.js 1:0-1:8

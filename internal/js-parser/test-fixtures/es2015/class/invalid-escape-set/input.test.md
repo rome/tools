@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class/invalid-escape-set/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/class/invalid-escape-set/input.js 1:0-2:0
+	path: UIDPath<es2015/class/invalid-escape-set/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/class/invalid-escape-set/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:12
+				path: UIDPath<es2015/class/invalid-escape-set/input.js>
 				start: Position 1:12
 			}
 			description: Object {

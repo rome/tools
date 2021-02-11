@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js>
 				start: Position 1:6
 			}
 		}

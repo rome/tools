@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/class-properties/asi-failure-computed/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/asi-failure-computed/input.js 1:0-5:0
+	path: UIDPath<experimental/class-properties/asi-failure-computed/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/class-properties/asi-failure-computed/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:8
+				path: UIDPath<experimental/class-properties/asi-failure-computed/input.js>
 				start: Position 3:9
 			}
 		}

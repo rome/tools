@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/optional-chaining/optional-constructor/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:10
+	path: UIDPath<es2020/optional-chaining/optional-constructor/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/optional-chaining/optional-constructor/input.js 1:0-1:10
@@ -43,11 +43,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
 			}
 			location: Object {
-				filename: "es2020/optional-chaining/optional-constructor/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<es2020/optional-chaining/optional-constructor/input.js>
 				start: Position 1:7
 			}
 		}

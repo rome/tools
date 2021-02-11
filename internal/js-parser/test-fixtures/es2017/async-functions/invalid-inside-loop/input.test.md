@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/invalid-inside-loop/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/invalid-inside-loop/input.js 1:0-1:32
+	path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Async functions can only be declared at the top level or inside a block"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/invalid-inside-loop/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:9
+				path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
 				start: Position 1:10
 			}
 		}

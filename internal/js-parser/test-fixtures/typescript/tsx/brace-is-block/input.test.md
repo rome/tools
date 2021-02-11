@@ -11,12 +11,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/tsx/brace-is-block/input.tsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/tsx/brace-is-block/input.tsx 1:0-4:0
+	path: UIDPath<typescript/tsx/brace-is-block/input.tsx>
 	syntax: Array [
 		"ts"
 		"jsx"

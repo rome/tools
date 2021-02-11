@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/function/overloads/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/function/overloads/input.ts 1:0-3:0
+	path: UIDPath<typescript/function/overloads/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExportLocalDeclaration {

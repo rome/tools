@@ -11,13 +11,13 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/migrated_0216/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0216/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0216/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\1"
@@ -38,11 +38,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Octal literal in strict mode"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0216/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:2
+				path: UIDPath<esprima/invalid-syntax/migrated_0216/input.js>
 				start: Position 1:2
 			}
 		}

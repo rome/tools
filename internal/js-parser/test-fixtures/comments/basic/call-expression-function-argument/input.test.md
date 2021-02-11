@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/call-expression-function-argument/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/basic/call-expression-function-argument/input.js 1:0-7:0
+	path: UIDPath<comments/basic/call-expression-function-argument/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

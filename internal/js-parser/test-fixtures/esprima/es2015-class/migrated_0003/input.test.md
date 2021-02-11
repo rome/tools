@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-class/migrated_0003/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-class/migrated_0003/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-class/migrated_0003/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
