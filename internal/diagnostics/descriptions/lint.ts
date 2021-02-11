@@ -17,6 +17,96 @@ import {buildSuggestionAdvice} from "../helpers";
 import {addEmphasis, createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	A11_Y_NO_NONINTERACTIVE_TABINDEX: {
+		category: "lint/a11y/noNoninteractiveTabindex",
+		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Adding non-interactive elements to the keyboard navigation flow can confuse users.`,
+			},
+		],
+	},
+	A11_Y_NO_SVG_WITHOUT_TITLE: {
+		category: "lint/a11y/noSvgWithoutTitle",
+		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
+			},
+		],
+	},
+	A11_Y_USE_ARIA_PROPTYPES: (
+		attributeName: string,
+		values?: Array<string | boolean>,
+	) => {
+		let advice: DiagnosticAdvice = [];
+		if (values) {
+			advice.push({
+				type: "log",
+				category: "info",
+				text: markup`The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
+					(str, value) => {
+						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
+						return str;
+					},
+					[] as string[],
+				).join(", ")}`,
+			});
+		}
+		return {
+			category: "lint/a11y/useAriaProptypes",
+			message: markup`The value of the ARIA attribute <emphasis>${attributeName}</emphasis> is not correct.`,
+			advice,
+		};
+	},
+	A11_Y_USE_MEDIA_CAPTION: {
+		category: "lint/a11y/useMediaCaption",
+		message: markup`Provide a <emphasis>track</emphasis> for captions when using <emphasis>audio</emphasis> or <emphasis>video</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Captions support users with hearing-impairments. They should be a transcription or translation of the dialogue, sound effects, musical cues, and other relevant audio information.`,
+			},
+		],
+	},
+	A11_Y_NO_ARIA_UNSUPPORTED_ELEMENTS: {
+		category: "lint/a11y/noAriaUnsupportedElements",
+		message: markup`Avoid the <emphasis>role</emphasis> attribute and <emphasis>aria-*</emphasis> attributes when using <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Using roles on elements that do not support them can cause issues with screen readers.`,
+			},
+		],
+	},
+	A11_Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
+		category: "lint/a11y/noNoninteractiveElementToInteractiveRole",
+		message: markup`The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Replace <emphasis>${element}</emphasis> with a div or a span.`,
+			},
+		],
+	}),
+	A11_Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
+		category: "lint/a11y/noDistractingElements",
+		message: markup`Avoid using deprecated ${element} elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Deprecated ${element} are difficult to read and distract attention away from page content, especially for users with visual impairments.`,
+			},
+		],
+	}),
 	JS_NO_SINGLE_CHAR_REGEX_ALTERNATIVES: {
 		category: "lint/js/noSingleCharRegexAlternatives",
 		message: markup`No single character alternations in regular expressions. Use a character class instead.`,
@@ -117,42 +207,7 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_ARIA_PROPTYPES: (
-		attributeName: string,
-		values?: Array<string | boolean>,
-	) => {
-		let advice: DiagnosticAdvice = [];
-		if (values) {
-			advice.push({
-				type: "log",
-				category: "info",
-				text: markup`The supported values for the <emphasis>${attributeName}</emphasis> attribute are: ${values.reduce(
-					(str, value) => {
-						str.push(typeof value === "boolean" ? String(value) : `"${value}"`);
-						return str;
-					},
-					[] as string[],
-				).join(", ")}`,
-			});
-		}
-		return {
-			category: "lint/jsx-a11y/useAriaProptypes",
-			message: markup`The value of the ARIA attribute <emphasis>${attributeName}</emphasis> is not correct.`,
-			advice,
-		};
-	},
 
-	JSX_A11Y_NO_NONINTERACTIVE_ELEMENT_TO_INTERACTIVE_ROLE: (element: string) => ({
-		category: "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole",
-		message: markup`The HTML element <emphasis>${element}</emphasis> is non-interactive and should not have an interactive role.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Replace <emphasis>${element}</emphasis> with a div or a span.`,
-			},
-		],
-	}),
 	JSX_USE_PASCAL_CASE: (oldName: string, newName: string) => ({
 		category: "lint/jsx/usePascalCase",
 		message: markup`Switch <emphasis>${oldName}</emphasis> to <emphasis>${newName}</emphasis>.`,
@@ -201,17 +256,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_NO_NONINTERACTIVE_TABINDEX: {
-		category: "lint/jsx-a11y/noNoninteractiveTabindex",
-		message: markup`Do not use <emphasis>tabIndex</emphasis> on an element that is not interactive.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Adding non-interactive elements to the keyboard navigation flow can confuse users.`,
-			},
-		],
-	},
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
 		category: "lint/jsx-a11y/useAriaProps",
 		message: markup`<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
@@ -322,17 +366,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
-	JSX_A11Y_MEDIA_HAS_CAPTION: {
-		category: "lint/jsx-a11y/useMediaCaption",
-		message: markup`Provide a <emphasis>track</emphasis> for captions when using <emphasis>audio</emphasis> or <emphasis>video</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Captions support users with hearing-impairments. They should be a transcription or translation of the dialogue, sound effects, musical cues, and other relevant audio information.`,
-			},
-		],
-	},
 	REACT_NO_WILL_UPDATE_SET_STATE: {
 		category: "lint/react/noWillUpdateSetState",
 		message: markup`Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentWillUpdate</emphasis> method.`,
@@ -341,17 +374,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Updating state immediately before a scheduled render causes a second render that can cause visual layout thrashing.`,
-			},
-		],
-	},
-	JSX_A11Y_ARIA_UNSUPPORTED_ELEMENTS: {
-		category: "lint/jsx-a11y/noAriaUnsupportedElements",
-		message: markup`Avoid the <emphasis>role</emphasis> attribute and <emphasis>aria-*</emphasis> attributes when using <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Using roles on elements that do not support them can cause issues with screen readers.`,
 			},
 		],
 	},
@@ -379,28 +401,6 @@ export const lint = createDiagnosticsCategory({
 				type: "log",
 				category: "info",
 				text: markup`Meaningful alternative text on elements helps users relying on screen readers to understand content's purpose within a page.`,
-			},
-		],
-	},
-	JSX_A11Y_SVG_TITLE_IS_EMPTY: {
-		category: "lint/jsx-a11y/noSvgWithoutTitle",
-		message: markup`Alternative text <emphasis>title</emphasis> element cannot be empty`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
-			},
-		],
-	},
-	JSX_A11Y_SVG_HAS_TITLE: {
-		category: "lint/jsx-a11y/noSvgWithoutTitle",
-		message: markup`Provide <emphasis>title</emphasis> when using <emphasis>svg</emphasis>`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`For accessibility purposes, <emphasis>SVGs</emphasis> should have an alternative text, provided via <emphasis>title</emphasis> element.`,
 			},
 		],
 	},
@@ -470,17 +470,6 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
-	JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
-		category: "lint/jsx-a11y/noDistractingElements",
-		message: markup`Avoid using deprecated ${element} elements.`,
-		advice: [
-			{
-				type: "log",
-				category: "info",
-				text: markup`Deprecated ${element} are difficult to read and distract attention away from page content, especially for users with visual impairments.`,
-			},
-		],
-	}),
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: "lint/jsx-a11y/noOnChange",
 		message: markup`Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.`,

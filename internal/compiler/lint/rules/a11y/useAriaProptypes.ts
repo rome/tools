@@ -80,15 +80,36 @@ function isCorrectValue(
 	}
 }
 
+const ARIA_PREFIX = "aria-";
+
 export default createVisitor({
-	name: "jsx-a11y/useAriaProptypes",
+	name: "a11y/useAriaProptypes",
 	enter(path) {
 		const {node} = path;
-
-		if (node.type === "JSXAttribute") {
+		if (node.type === "HTMLAttribute") {
+			if (node.name.name.startsWith(ARIA_PREFIX)) {
+				if (node.value) {
+					const ariaAttribute = ariaPropsMap.get(node.name.name as ARIAProperty);
+					if (ariaAttribute) {
+						if (
+							node.value.value === "" ||
+							!isCorrectValue(ariaAttribute, node.value.value)
+						) {
+							path.context.addNodeDiagnostic(
+								node,
+								descriptions.LINT.A11_Y_USE_ARIA_PROPTYPES(
+									node.name.name,
+									ariaAttribute.values,
+								),
+							);
+						}
+					}
+				}
+			}
+		} else if (node.type === "JSXAttribute") {
 			if (
 				node.name.type === "JSXIdentifier" &&
-				node.name.name.indexOf("aria-") === 0
+				node.name.name.startsWith(ARIA_PREFIX)
 			) {
 				if (node.value) {
 					const ariaAttribute = ariaPropsMap.get(node.name.name as ARIAProperty);
@@ -100,7 +121,7 @@ export default createVisitor({
 							) {
 								path.context.addNodeDiagnostic(
 									node,
-									descriptions.LINT.JSX_A11Y_ARIA_PROPTYPES(
+									descriptions.LINT.A11_Y_USE_ARIA_PROPTYPES(
 										node.name.name,
 										ariaAttribute.values,
 									),
@@ -118,7 +139,7 @@ export default createVisitor({
 								if (!isCorrectValue(ariaAttribute, expression.value)) {
 									path.context.addNodeDiagnostic(
 										node,
-										descriptions.LINT.JSX_A11Y_ARIA_PROPTYPES(
+										descriptions.LINT.A11_Y_USE_ARIA_PROPTYPES(
 											node.name.name,
 											ariaAttribute.values,
 										),
@@ -128,7 +149,7 @@ export default createVisitor({
 								if (isEmptyTemplateLiteral(expression)) {
 									path.context.addNodeDiagnostic(
 										node,
-										descriptions.LINT.JSX_A11Y_ARIA_PROPTYPES(
+										descriptions.LINT.A11_Y_USE_ARIA_PROPTYPES(
 											node.name.name,
 											ariaAttribute.values,
 										),

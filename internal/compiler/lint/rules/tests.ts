@@ -8,11 +8,25 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:17d9900af78cbe2dca1840e3a49194934efb403e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:62ad21b6efdfcda32aa6185b623728dc0e5b14eb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// @ts-ignore
+import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
+// @ts-ignore
+import noDistractingElements from "./a11y/noDistractingElements.test.rjson";
+// @ts-ignore
+import noNoninteractiveElementToInteractiveRole from "./a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
+// @ts-ignore
+import noNoninteractiveTabindex from "./a11y/noNoninteractiveTabindex.test.rjson";
+// @ts-ignore
+import noSvgWithoutTitle from "./a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
 import useAltText from "./a11y/useAltText.test.rjson";
 // @ts-ignore
+import useAriaProptypes from "./a11y/useAriaProptypes.test.rjson";
+// @ts-ignore
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
+// @ts-ignore
+import useMediaCaption from "./a11y/useMediaCaption.test.rjson";
 // @ts-ignore
 import useValidLang from "./a11y/useValidLang.test.rjson";
 // @ts-ignore
@@ -114,17 +128,9 @@ import useWhile from "./js/useWhile.test.rjson";
 // @ts-ignore
 import noAccessKey from "./jsx-a11y/noAccessKey.test.rjson";
 // @ts-ignore
-import noAriaUnsupportedElements from "./jsx-a11y/noAriaUnsupportedElements.test.rjson";
-// @ts-ignore
 import noAutofocus from "./jsx-a11y/noAutofocus.test.rjson";
 // @ts-ignore
-import noDistractingElements from "./jsx-a11y/noDistractingElements.test.rjson";
-// @ts-ignore
 import noHeaderScope from "./jsx-a11y/noHeaderScope.test.rjson";
-// @ts-ignore
-import noNoninteractiveElementToInteractiveRole from "./jsx-a11y/noNoninteractiveElementToInteractiveRole.test.rjson";
-// @ts-ignore
-import noNoninteractiveTabindex from "./jsx-a11y/noNoninteractiveTabindex.test.rjson";
 // @ts-ignore
 import noOnChange from "./jsx-a11y/noOnChange.test.rjson";
 // @ts-ignore
@@ -134,8 +140,6 @@ import noRedundantAlt from "./jsx-a11y/noRedundantAlt.test.rjson";
 // @ts-ignore
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles.test.rjson";
 // @ts-ignore
-import noSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle.test.rjson";
-// @ts-ignore
 import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
 import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
@@ -144,8 +148,6 @@ import useAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
 // @ts-ignore
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole.test.rjson";
 // @ts-ignore
-import useAriaProptypes from "./jsx-a11y/useAriaProptypes.test.rjson";
-// @ts-ignore
 import useHeadingContent from "./jsx-a11y/useHeadingContent.test.rjson";
 // @ts-ignore
 import useIframeTitle from "./jsx-a11y/useIframeTitle.test.rjson";
@@ -153,8 +155,6 @@ import useIframeTitle from "./jsx-a11y/useIframeTitle.test.rjson";
 import useKeyWithClickEvents from "./jsx-a11y/useKeyWithClickEvents.test.rjson";
 // @ts-ignore
 import useKeyWithMouseEvents from "./jsx-a11y/useKeyWithMouseEvents.test.rjson";
-// @ts-ignore
-import useMediaCaption from "./jsx-a11y/useMediaCaption.test.rjson";
 // @ts-ignore
 import useValidAnchor from "./jsx-a11y/useValidAnchor.test.rjson";
 // @ts-ignore
@@ -231,8 +231,15 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
+	"a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
+	"a11y/noDistractingElements": noDistractingElements,
+	"a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
+	"a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,
+	"a11y/noSvgWithoutTitle": noSvgWithoutTitle,
 	"a11y/useAltText": useAltText,
+	"a11y/useAriaProptypes": useAriaProptypes,
 	"a11y/useHtmlLang": useHtmlLang,
+	"a11y/useMediaCaption": useMediaCaption,
 	"a11y/useValidLang": useValidLang,
 	"html/useClosingNonVoid": useClosingNonVoid,
 	"js/noArguments": noArguments,
@@ -283,27 +290,20 @@ export const tests: Tests = {
 	"js/useTemplate": useTemplate,
 	"js/useWhile": useWhile,
 	"jsx-a11y/noAccessKey": noAccessKey,
-	"jsx-a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
 	"jsx-a11y/noAutofocus": noAutofocus,
-	"jsx-a11y/noDistractingElements": noDistractingElements,
 	"jsx-a11y/noHeaderScope": noHeaderScope,
-	"jsx-a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
-	"jsx-a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,
 	"jsx-a11y/noOnChange": noOnChange,
 	"jsx-a11y/noPositiveTabindex": noPositiveTabindex,
 	"jsx-a11y/noRedundantAlt": noRedundantAlt,
 	"jsx-a11y/noRedundantRoles": noRedundantRoles,
-	"jsx-a11y/noSvgWithoutTitle": noSvgWithoutTitle,
 	"jsx-a11y/noTargetBlank": noTargetBlank,
 	"jsx-a11y/useAnchorContent": useAnchorContent,
 	"jsx-a11y/useAriaProps": useAriaProps,
 	"jsx-a11y/useAriaPropsForRole": useAriaPropsForRole,
-	"jsx-a11y/useAriaProptypes": useAriaProptypes,
 	"jsx-a11y/useHeadingContent": useHeadingContent,
 	"jsx-a11y/useIframeTitle": useIframeTitle,
 	"jsx-a11y/useKeyWithClickEvents": useKeyWithClickEvents,
 	"jsx-a11y/useKeyWithMouseEvents": useKeyWithMouseEvents,
-	"jsx-a11y/useMediaCaption": useMediaCaption,
 	"jsx-a11y/useValidAnchor": useValidAnchor,
 	"jsx/noCommentText": noCommentText,
 	"jsx/noDuplicateProps": noDuplicateProps,

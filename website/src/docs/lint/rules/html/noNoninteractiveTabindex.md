@@ -1,15 +1,15 @@
 ---
-title: Lint Rule jsx-a11y/noNoninteractiveTabindex
+title: Lint Rule a11y/noNoninteractiveTabindex
 layout: layouts/rule.liquid
 description: "`tabIndex` should only be declared on interactive elements"
 eslint-rule: https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-noninteractive-tabindex.md
 eleventyNavigation:
-	key: lint-rules/jsx-a11y/noNoninteractiveTabindex
+	key: lint-rules/a11y/noNoninteractiveTabindex
 	parent: lint-rules
-	title: jsx-a11y/noNoninteractiveTabindex
+	title: a11y/noNoninteractiveTabindex
 ---
 
-# jsx-a11y/noNoninteractiveTabindex
+# a11y/noNoninteractiveTabindex
 
 <!-- GENERATED:START(hash:28e7716442ffc9de2a99e6c150eb01cd17683ae1,id:description) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. -->
 "`tabIndex` should only be declared on interactive elements"
