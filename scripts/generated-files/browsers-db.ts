@@ -1,4 +1,4 @@
-import {INTERNAL, modifyGeneratedFile, reporter} from "../_utils";
+import {INTERNAL, modifyGeneratedFile, reporter, writeFile} from "../_utils";
 import https = require("https");
 import {version as currentVersion} from "@internal/browsers-db";
 import {Consumer, consumeUnknown} from "@internal/consume";
@@ -367,18 +367,7 @@ async function updateData() {
 		data: generateDataData(rawData),
 	};
 
-	await modifyGeneratedFile(
-		{
-			path: browsersDbFolder.append("data.rjson"),
-			scriptName: "generated-files/browsers-db",
-		},
-		async () => {
-			return {
-				lines: [JSON.stringify(mapToObject(data))],
-				hash: JSON.stringify(mapToObject(data)),
-			};
-		},
-	);
+	await writeFile(browsersDbFolder.append("data.json"), JSON.stringify(mapToObject(data)));
 
 	progress.end();
 }
@@ -495,18 +484,7 @@ async function updateRegions() {
 		progress.tick();
 	}
 
-	await modifyGeneratedFile(
-		{
-			path: browsersDbFolder.append("regions.rjson"),
-			scriptName: "generated-files/browsers-db",
-		},
-		async () => {
-			return {
-				lines: [JSON.stringify(mapToObject(regionsUsage))],
-				hash: JSON.stringify(mapToObject(regionsUsage)),
-			};
-		},
-	);
+	await writeFile(browsersDbFolder.append("regions.json"), JSON.stringify(mapToObject(regionsUsage)));
 
 	progress.end();
 }
