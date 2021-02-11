@@ -32,4 +32,4 @@ export function getSPDXLicense(
 }
 
 export {stringifySPDXLicense} from "./stringify";
-export {parseSPDXLicense, SPDXLicenseParseResult} from "./parse";
+export {SPDXLicenseParseResult, parseSPDXLicense} from "./parse";

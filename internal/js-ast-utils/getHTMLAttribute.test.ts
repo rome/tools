@@ -14,7 +14,6 @@ test(
 	(t) => {
 		const element = htmlElement.assert(
 			parseHTML({
-				path: "unknown",
 				input: dedent`
 					<input type="image" name="foo" title=""  />
 				`,

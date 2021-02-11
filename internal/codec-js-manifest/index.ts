@@ -8,9 +8,9 @@
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
+	SPDXLicenseParseResult,
 	SPDXLicenseParserOptions,
 	parseSPDXLicense,
-	SPDXLicenseParseResult,
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {

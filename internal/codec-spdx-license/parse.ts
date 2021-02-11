@@ -15,7 +15,7 @@ import {
 	isDigit,
 } from "@internal/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
-import {descriptions, Diagnostics} from "@internal/diagnostics";
+import {Diagnostics, descriptions} from "@internal/diagnostics";
 import {Number0} from "@internal/ob1";
 import {
 	ExpressionNode,
@@ -188,7 +188,7 @@ function isLicenseValid(
 				if (license.name !== exceptions.packageName) {
 					continue;
 				}
-				
+
 				satisfiesVersion = satisfiesSemver(
 					exceptions.packageVersion,
 					license.range,
@@ -272,7 +272,7 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 			possibleCorrectLicense || id,
 		);
 
-		if (!satisfiesVersion && !inConfig) {
+		if (!(satisfiesVersion || inConfig)) {
 			const {exceptions} = parser.options;
 
 			if (satisfiesVersion) {
@@ -333,7 +333,9 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 	};
 }
 
-export function parseSPDXLicense(opts: SPDXLicenseParserOptions): SPDXLicenseParseResult {
+export function parseSPDXLicense(
+	opts: SPDXLicenseParserOptions,
+): SPDXLicenseParseResult {
 	const parser = spdxLicenseParser.create(opts);
 	const expr = parseExpression(parser);
 	parser.finalize();
