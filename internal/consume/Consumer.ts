@@ -63,6 +63,7 @@ import {
 	createAbsoluteFilePath,
 	createAnyPath,
 	createURLPath,
+	isPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";
@@ -1147,6 +1148,13 @@ export default class Consumer {
 			"path",
 		);
 
+		// Allow path instances
+		const value = this.getValue(def);
+		if (isPath(value)) {
+			return value;
+		}
+
+		// Otherwise expect a string
 		return createAnyPath(this.asString(def));
 	}
 
