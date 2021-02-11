@@ -15,7 +15,7 @@ import {
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import {default as ParserCore} from "./ParserCore";
-import {Dict, RequiredProps} from "@internal/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyParserCore = ParserCore<{
@@ -71,7 +71,7 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 		getIndex: (parser: ParserCore<Types>) => Number0;
 		getLastEndPosition: (parser: ParserCore<Types>) => Position;
 	};
-	parseTemplate?: (opts: ParserOptionsWithRequiredPath) => unknown;
+	parseTemplate?: (opts: ParserOptions) => unknown;
 };
 
 export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = [
@@ -162,14 +162,12 @@ export const UNKNOWN_POSITION: Position = {
 };
 
 export type ParserOptions = {
-	path?: string | AnyPath;
+	path?: AnyPath;
 	integrity?: DiagnosticIntegrity;
 	input?: string;
 	sourceText?: string;
 	offsetPosition?: Position;
 };
-
-export type ParserOptionsWithRequiredPath = RequiredProps<ParserOptions, "path">;
 
 export type ParserUnexpectedOptions = {
 	description?: DiagnosticDescriptionOptional;

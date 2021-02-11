@@ -4,7 +4,6 @@ import {dedent} from "@internal/string-utils";
 
 function helper(input: string) {
 	return parseJS({
-		path: "unknown",
 		input,
 	});
 }

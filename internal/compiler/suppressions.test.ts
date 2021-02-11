@@ -20,7 +20,6 @@ function extractSuppressionsFromSource(
 } {
 	const ast = parseJS({
 		sourceType: "script",
-		path: "unknown",
 		input: sourceText,
 	});
 	const context = new CompilerContext({ast});

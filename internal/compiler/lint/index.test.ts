@@ -13,7 +13,6 @@ function createLintTransformOptions(
 		suppressionExplanation: "",
 		sourceText,
 		ast: parseJS({
-			path: "unknown",
 			input: sourceText,
 		}),
 		options: {},
@@ -32,7 +31,6 @@ function createLintTransformSuppressions(
 		suppressionExplanation: "test suppression",
 		sourceText,
 		ast: parseJS({
-			path: "unknown",
 			input: sourceText,
 		}),
 		options: {

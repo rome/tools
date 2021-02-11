@@ -1,7 +1,7 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
 import {humanizeNumber} from "@internal/string-utils";
-import {AnyPath, createUnknownPath} from "@internal/path";
+import {AnyPath, createAnyPath} from "@internal/path";
 import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {StaticMarkup} from "./escape";
 
@@ -40,7 +40,7 @@ export function buildFileLink(
 	line: undefined | string;
 	column: undefined | string;
 } {
-	let path: AnyPath = createUnknownPath(attributes.get("target").asString(""));
+	let path: AnyPath = createAnyPath(attributes.get("target").asString(""));
 	let line = attributes.get("line").asNumberOrVoid();
 	let column = attributes.get("column").asNumberOrVoid();
 

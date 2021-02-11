@@ -13,7 +13,6 @@ test(
 	"verify reference returned by getTSQualifiedBaseFromEntityName",
 	async (t) => {
 		const js = parseJS({
-			path: "unknown",
 			input: dedent`
 				import A = B.C;
 				E;

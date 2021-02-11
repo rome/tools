@@ -7,14 +7,12 @@ test(
 	"root node should be returned",
 	async (t) => {
 		const jsNode = parseJS({
-			path: "unknown",
 			input: "function test() { return true; }",
 		});
 
 		t.is(assertRoot(jsNode), jsNode);
 
 		const cssNode = parseCSS({
-			path: "unknown",
 			input: "div { color: red; }",
 		});
 
@@ -26,7 +24,6 @@ test(
 	"non-root node should throw error",
 	async (t) => {
 		const jsNode = parseJS({
-			path: "unknown",
 			input: "function test() { return true; }",
 		});
 

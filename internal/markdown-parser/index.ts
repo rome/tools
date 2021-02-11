@@ -1,6 +1,6 @@
 import {
 	ParserCore,
-	ParserOptionsWithRequiredPath,
+	ParserOptions,
 	createParser,
 	isDigit,
 	isntLineBreak,
@@ -364,7 +364,7 @@ function parseBlock(
 	}
 }
 
-export function parseMarkdown(opts: ParserOptionsWithRequiredPath): MarkdownRoot {
+export function parseMarkdown(opts: ParserOptions): MarkdownRoot {
 	const parser = markdownParser.create(opts);
 	const start = parser.getPosition();
 	const body: AnyMarkdownNode[] = [];
@@ -424,7 +424,7 @@ function consumeCode(parser: MarkdownParser, index: Number0) {
 	return undefined;
 }
 
-export function tokenizeMarkdown(opts: ParserOptionsWithRequiredPath) {
+export function tokenizeMarkdown(opts: ParserOptions) {
 	return markdownParser.create(opts).getAllTokens();
 }
 

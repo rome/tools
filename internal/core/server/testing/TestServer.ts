@@ -67,7 +67,7 @@ function grammarNumberTests(num: number): StaticMarkup {
 }
 
 function getProgressTestRefText(ref: TestRef) {
-	return markup`<filelink target="${ref.path.join()}" />: ${ref.testName}`;
+	return markup`${ref.path}: ${ref.testName}`;
 }
 
 function findAvailablePort(): Promise<number> {

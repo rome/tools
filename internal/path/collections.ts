@@ -11,12 +11,11 @@ import {
 	RelativeFilePath,
 	UIDPath,
 	URLPath,
-	UnknownPath,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
 	createUIDPath,
 	createURLPath,
-	createUnknownPath,
+	createAnyPath,
 } from "./index";
 
 function concat<FilePath extends AnyPath>(
@@ -246,8 +245,8 @@ export class UIDPathMap<Value> extends BasePathMap<UIDPath, Value> {
 export class MixedPathMap<Value> extends BasePathMap<AnyPath, Value> {
 	public type: "mixed" = "mixed";
 
-	public createKey(str: string): UnknownPath {
-		return createUnknownPath(str);
+	public createKey(str: string): AnyPath {
+		return createAnyPath(str);
 	}
 
 	public keysToSet(): MixedPathSet {

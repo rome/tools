@@ -14,7 +14,7 @@ import {
 	getErrorStructure,
 	setErrorFrames,
 } from "./errors";
-import {maybeCreateUnknownPath} from "@internal/path";
+import {maybeCreateAnyPath} from "@internal/path";
 
 let inited: boolean = false;
 
@@ -134,7 +134,7 @@ function addErrorFrames(err: ErrorWithFrames, frames: NodeJS.CallSite[]): void {
 			// TODO frameApi.isAsync
 			isAsync: false,
 			resolvedLocation: true,
-			path: maybeCreateUnknownPath(noNull(filename)),
+			path: maybeCreateAnyPath(noNull(filename)),
 			lineNumber: lineNumber == null ? undefined : ob1Coerce1(lineNumber),
 			// Rome expects 0-indexed columns, V8 provides 1-indexed
 			columnNumber: columnNumber == null

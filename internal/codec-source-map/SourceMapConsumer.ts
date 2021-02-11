@@ -23,7 +23,7 @@ import {
 	ob1Number1,
 } from "@internal/ob1";
 import {Dict} from "@internal/typescript-helpers";
-import {AnyPath, createUnknownPath} from "@internal/path";
+import {AnyPath, createAnyPath} from "@internal/path";
 
 export function getParsedMappingKey(line: Number1, column: Number0): string {
 	return `${String(line)}:${String(column)}`;
@@ -49,7 +49,7 @@ export default class SourceMapConsumer {
 
 	public static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
 		return new SourceMapConsumer(
-			createUnknownPath(sourceMap.file),
+			createAnyPath(sourceMap.file),
 			() => SourceMapConsumer.parseMappings(sourceMap),
 		);
 	}
@@ -80,7 +80,7 @@ export default class SourceMapConsumer {
 		let value;
 
 		const sources: AnyPath[] = sourceMap.sources.map((source) => {
-			return createUnknownPath(source);
+			return createAnyPath(source);
 		});
 
 		while (index < length) {

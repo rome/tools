@@ -19,7 +19,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {orderBySimilarity} from "@internal/string-utils";
-import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {AbsoluteFilePath, createAnyPath} from "@internal/path";
 import {PLATFORMS, Server} from "@internal/core";
 import {StaticMarkups, markup} from "@internal/markup";
 import {ExtendedMap} from "@internal/collections";
@@ -103,7 +103,7 @@ export default function resolverSuggest(
 
 			if (resolved.type === "FOUND") {
 				validPlatforms.push(
-					markup`<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
+					markup`<emphasis>${PLATFORM}</emphasis> at <emphasis>${resolved.ref.uid}</emphasis>`,
 				);
 			}
 		}
@@ -135,7 +135,7 @@ export default function resolverSuggest(
 			advice.push({
 				type: "log",
 				category: "info",
-				text: markup`Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
+				text: markup`Found while resolving <emphasis>${query.source}</emphasis> from <emphasis>${query.origin}</emphasis>`,
 			});
 
 			const origPointer = origQuerySource.location;
@@ -311,7 +311,7 @@ function tryPathSuggestions(
 			const ratings = orderBySimilarity(
 				path.getExtensionlessBasename(),
 				entries.map((target) => {
-					return createUnknownPath(target).getExtensionlessBasename();
+					return createAnyPath(target).getExtensionlessBasename();
 				}),
 				{
 					minRating: MIN_SIMILARITY,
@@ -323,7 +323,7 @@ function tryPathSuggestions(
 					server,
 					resolver,
 					suggestions,
-					path: createUnknownPath(rating.target).append(...segments.slice(1)).assertAbsolute(),
+					path: createAnyPath(rating.target).append(...segments.slice(1)).assertAbsolute(),
 				});
 			}
 		}

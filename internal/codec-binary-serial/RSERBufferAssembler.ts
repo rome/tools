@@ -30,6 +30,8 @@ import {
 	isPath,
 	isPathMap,
 	isPathSet,
+	MixedPathMap,
+	MixedPathSet,
 } from "@internal/path";
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
@@ -191,25 +193,46 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodePathMap(map: AnyRSERPathMap) {
-		this.writeCode(VALUE_CODES.PATH_MAP);
-		this.writeByte(pathMapToCode(map));
-		this.encodeInt(map.size);
-		for (const [path, value] of map) {
-			this.encodeStringValue(path.join());
-			this.encodeValue(value);
+		if (map instanceof MixedPathMap) {
+			this.writeCode(VALUE_CODES.MIXED_PATH_MAP);
+			this.encodeInt(map.size);
+			for (const [path, value] of map) {
+				this.encodePath(path);
+				this.encodeValue(value);
+			}
+		} else {
+			this.writeCode(VALUE_CODES.PATH_MAP);
+			this.writeByte(pathMapToCode(map));
+			this.encodeInt(map.size);
+			for (const [path, value] of map) {
+				this.encodeStringValue(path.join());
+				this.encodeValue(value);
+			}
 		}
 	}
 
 	private encodePathSet(set: PathSet) {
-		this.writeCode(VALUE_CODES.PATH_SET);
-		this.writeByte(pathSetToCode(set));
-		this.encodeInt(set.size);
-		for (const path of set) {
-			this.encodeStringValue(path.join());
+		if (set instanceof MixedPathSet) {
+			this.writeCode(VALUE_CODES.MIXED_PATH_SET);
+			this.encodeInt(set.size);
+			for (const path of set) {
+				this.encodePath(path);
+			}
+		} else {
+			this.writeCode(VALUE_CODES.PATH_SET);
+			this.writeByte(pathSetToCode(set));
+			this.encodeInt(set.size);
+			for (const path of set) {
+				this.encodeStringValue(path.join());
+			}
 		}
 	}
 
 	private encodePath(path: AnyPath) {
+		if (this.encodePossibleReference(path)) {
+			return;
+		}
+		
 		this.writeCode(VALUE_CODES.PATH);
 		this.writeByte(pathToCode(path));
 		this.encodeStringValue(path.join());

@@ -14,7 +14,7 @@ import {
 	Diagnostics,
 } from "@internal/diagnostics";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
-import {UnknownPath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {WorkerLintTimings} from "@internal/core/worker/types";
 
 export interface ExtensionCustomLintResult {
@@ -41,7 +41,7 @@ export type ExtensionHandlerMethodInfo = {
 export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
 	sourceTypeJS: ConstJSSourceType;
 	manifestPath: undefined | string;
-	path: UnknownPath;
+	path: AnyPath;
 };
 
 export type ExtensionHandlerParseResult = {

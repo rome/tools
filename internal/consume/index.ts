@@ -18,7 +18,7 @@ const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 	value: undefined,
 	handleUnexpectedDiagnostic: undefined,
 	onDefinition: undefined,
-	filePath: undefined,
+	path: undefined,
 	objectPath: [],
 	parent: undefined,
 };

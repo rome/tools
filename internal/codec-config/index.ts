@@ -6,7 +6,6 @@ import {
 	PartialConfigHandler,
 } from "@internal/codec-config/types";
 import {RequiredProps} from "@internal/typescript-helpers";
-import {createUnknownPath} from "@internal/path";
 import {
 	json as _json,
 	json5 as _json5,
@@ -50,9 +49,7 @@ function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 			return {
 				type,
 				consumer: consume({
-					filePath: opts.path === undefined
-						? undefined
-						: createUnknownPath(opts.path),
+					path: opts.path,
 					context,
 					objectPath: [],
 					value,
@@ -86,7 +83,7 @@ function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 export function consumeConfig(
 	opts: RequiredProps<ConfigParserOptions, "path">,
 ): ConsumeConfigResult {
-	const path = createUnknownPath(opts.path);
+	const {path} = opts;
 
 	for (const handler of CONFIG_HANDLERS) {
 		for (const ext of handler.extensions) {

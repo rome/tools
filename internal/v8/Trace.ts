@@ -9,7 +9,7 @@ import {Profile, TraceEvent} from "./types";
 import sourceMapManager from "./sourceMapManager";
 import {urlToFilename} from "./utils";
 import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from "@internal/ob1";
-import {createUnknownPath} from "@internal/path";
+import {createAnyPath} from "@internal/path";
 
 export default class Trace {
 	constructor() {
@@ -34,7 +34,7 @@ export default class Trace {
 
 			// Call frame line numbers are 0-index while Rome is 1-indexed
 			const resolved = sourceMapManager.approxOriginalPositionFor(
-				createUnknownPath(urlToFilename(callFrame.url)),
+				createAnyPath(urlToFilename(callFrame.url)),
 				ob1Coerce0To1(ob1Coerce0(callFrame.lineNumber)),
 				ob1Coerce0(callFrame.columnNumber),
 			);

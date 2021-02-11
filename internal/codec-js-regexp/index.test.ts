@@ -5,7 +5,6 @@ test(
 	"verify the parser recognizes nodes correctly",
 	async (t) => {
 		const node1 = parseRegExp({
-			path: "unknown",
 			// Should be a JSRegExpCharSet containing a JSRegExpCharacter for a, b and c
 			input: "[abc]" +
 			// Should be a JSRegExpNonWordCharacter
@@ -19,7 +18,6 @@ test(
 		);
 
 		const node2 = parseRegExp({
-			path: "unknown",
 			// Should be a JSRegExpCharacter for f
 			input: "f" +
 			// Should be a JSRegExpQuantified with a min and max of 2
@@ -35,7 +33,6 @@ test(
 		);
 
 		const node3 = parseRegExp({
-			path: "unknown",
 			input: "look" +
 			// Should be a JSRegExpGroupNonCapture of kind positive-lookahead
 			"(?=ahead)",

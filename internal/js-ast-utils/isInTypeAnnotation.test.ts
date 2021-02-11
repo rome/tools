@@ -5,34 +5,21 @@ import {
 	MOCK_PARENT,
 	jsArrayExpression,
 	jsCommentLine,
-	jsRoot,
 	tsArrayType,
 	tsAsExpression,
 	tsNonNullExpression,
 	tsNullKeywordTypeAnnotation,
 	tsThisType,
 	tsTypeAssertion,
+	MOCK_JS_ROOT,
 } from "@internal/ast";
 import {CompilerContext, Path} from "@internal/compiler";
-import {createUnknownPath} from "@internal/path";
 
 function helper(node: AnyNode) {
 	let path = new Path(
 		MOCK_PARENT,
 		new CompilerContext({
-			ast: jsRoot.create({
-				body: [],
-				comments: [],
-				corrupt: false,
-				diagnostics: [],
-				directives: [],
-				path: createUnknownPath("unknown"),
-				hasHoistedVars: false,
-				interpreter: undefined,
-				sourceType: "script",
-				syntax: [],
-				integrity: undefined,
-			}),
+			ast: MOCK_JS_ROOT,
 		}),
 		{},
 	);

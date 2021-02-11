@@ -12,7 +12,6 @@ test(
 	"verify import specifiers",
 	async (t) => {
 		const imports = parseJS({
-			path: "unknown",
 			input: dedent`
 				import {foo} from "bar";
 				import Hello from "world";

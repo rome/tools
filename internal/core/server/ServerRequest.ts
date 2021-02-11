@@ -78,10 +78,9 @@ import {
 	AbsoluteFilePathSet,
 	AnyPath,
 	RelativeFilePath,
-	UnknownPath,
 	createAbsoluteFilePath,
 	createUIDPath,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
@@ -120,8 +119,8 @@ type WrapRequestDiagnosticOpts = {
 };
 
 type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
-	args?: Array<UnknownPath | string>;
-	tryAlternateArg?: (path: UnknownPath) => undefined | UnknownPath;
+	args?: Array<AnyPath | string>;
+	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
 	disabledDiagnosticCategory?: DiagnosticCategory;
@@ -490,7 +489,7 @@ export default class ServerRequest {
 		return await this.server.resolver.resolveEntryAssertPath(
 			{
 				...this.getResolverOptionsFromFlags(),
-				source: createUnknownPath(arg),
+				source: createAnyPath(arg),
 			},
 			{location: this.getDiagnosticLocationFromFlags({type: "arg", key: index})},
 		);
@@ -559,12 +558,14 @@ export default class ServerRequest {
 	}
 
 	private maybeReadMemoryFile(path: RelativeFilePath): undefined | string {
-		switch (path.join()) {
-			case "argv":
-				return this.getDiagnosticLocationFromFlags("none").sourceText;
+		if (path.isUID()) {
+			switch (path.getBasename()) {
+				case "argv":
+					return this.getDiagnosticLocationFromFlags("none").sourceText;
 
-			case "cwd":
-				return this.client.flags.cwd.join();
+				case "cwd":
+					return this.client.flags.cwd.join();
+			}
 		}
 		return undefined;
 	}
@@ -1167,7 +1168,7 @@ export default class ServerRequest {
 		}
 
 		for (let i = 0; i < rawArgs.length; i++) {
-			const path = createUnknownPath(rawArgs[i]);
+			const path = createAnyPath(rawArgs[i]);
 			let abs: AbsoluteFilePath;
 
 			if (path.isAbsolute()) {

@@ -11,7 +11,7 @@ import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
-import {AnyPath, createUnknownPath} from "@internal/path";
+import {AnyPath, createAnyPath} from "@internal/path";
 
 export default class ImportT extends T {
 	constructor(
@@ -74,7 +74,7 @@ export default class ImportT extends T {
 			{
 				importedName: String(data.importedName),
 				source: String(data.source),
-				originPath: createUnknownPath(String(data.originPath)),
+				originPath: createAnyPath(String(data.originPath)),
 			},
 		);
 	}

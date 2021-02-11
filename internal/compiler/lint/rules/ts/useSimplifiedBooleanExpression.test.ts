@@ -1,4 +1,4 @@
-import {createUnknownPath} from "@internal/path";
+import {createRelativeFilePath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
 
@@ -19,7 +19,7 @@ test(
 					"function foo(x: boolean | number) { return x === true; }",
 					"function foo(x: boolean | undefined) { return false === x; }",
 				],
-				path: createUnknownPath("file.ts"),
+				path: createRelativeFilePath("file.ts"),
 				category: "lint/ts/useSimplifiedBooleanExpression",
 			},
 		);

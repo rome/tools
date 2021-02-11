@@ -30,7 +30,7 @@ type FilePathOrString = string | AnyPath;
 
 function toFilePath(pathOrString: FilePathOrString, hint: PathTypeHint): AnyPath {
 	if (typeof pathOrString === "string") {
-		return createUnknownPath(pathOrString, hint);
+		return createAnyPath(pathOrString, hint);
 	} else {
 		return pathOrString;
 	}
@@ -39,7 +39,6 @@ function toFilePath(pathOrString: FilePathOrString, hint: PathTypeHint): AnyPath
 export * from "./collections";
 
 export type AnyPath =
-	| UnknownPath
 	| AbsoluteFilePath
 	| RelativeFilePath
 	| URLPath
@@ -86,10 +85,6 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 	
 	public toJSON(): string {
 		return this.join();
-	}
-
-	public toUnknown(): UnknownPath {
-		return new UnknownPath(this.parsed, this.getPortableMemo());
 	}
 
 	public addExtension(ext: string, clearExt: boolean = false): Super {
@@ -245,32 +240,25 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 		return false;
 	}
 
-	public isWindows(): boolean {
+	private isWindows(): boolean {
 		const {absoluteType} = this.parsed;
 		return absoluteType === "windows-drive" || absoluteType === "windows-unc";
 	}
 
-	public isPosix(): boolean {
-		return !this.isWindows();
-	}
-
 	public isURL(): boolean {
-		return this.parsed.absoluteType === "url";
+		return false;
 	}
 
 	public isUID(): boolean {
-		return this.parsed.absoluteType === "uid";
+		return false;
 	}
 
 	public isAbsolute(): boolean {
-		return (
-			this.parsed.absoluteTarget !== undefined &&
-			this.parsed.absoluteType !== "url"
-		);
+		return false;
 	}
 
 	public isRelative(): boolean {
-		return !this.isAbsolute();
+		return false;
 	}
 
 	public isRelativeTo(otherRaw: FilePathOrString): boolean {
@@ -399,12 +387,6 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 
 		const segments = [...this.segments];
 
-		// Add back UID protocol that is stripped
-		if (this.isUID()) {
-			segments.unshift("");
-			segments.unshift("uid:");
-		}
-
 		if (this.isExplicitDirectory()) {
 			segments.push("");
 		}
@@ -442,7 +424,7 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 			return true;
 		}
 
-		const other = createUnknownPath(otherRaw);
+		const other = createAnyPath(otherRaw);
 
 		// Fast path for memoized strings
 		if (this.join() === other.join()) {
@@ -548,21 +530,6 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 	}
 }
 
-export class UnknownPath extends BasePath<UnknownPath> {
-	protected static displayName = "UnknownPath";
-
-	protected _fork(
-		parsed: ParsedPath,
-		opts: FilePathMemo<UnknownPath>,
-	): UnknownPath {
-		return new UnknownPath(parsed, opts);
-	}
-
-	protected _assert(): UnknownPath {
-		return this;
-	}
-}
-
 export class RelativeFilePath extends BasePath<RelativeFilePath> {
 	protected static displayName = "RelativeFilePath";
 
@@ -656,7 +623,7 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		);
 	}
 
-	public relative(otherRaw: FilePathOrString): AnyPath {
+	public relative(otherRaw: FilePathOrString): AbsoluteFilePath | RelativeFilePath {
 		const other = this.resolve(toFilePath(otherRaw, "relative"));
 
 		if (other.equal(this)) {
@@ -683,7 +650,7 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		}
 		finalSegments = finalSegments.concat(relative);
 
-		return new UnknownPath(
+		return new RelativeFilePath(
 			parsePathSegments(finalSegments, "relative"),
 			createEmptyMemo(),
 		);
@@ -708,6 +675,10 @@ export class UIDPath extends BasePath<UIDPath> {
 
 	public assertUID(): UIDPath {
 		return this;
+	}
+
+	public format(): string {
+		return this.segments.slice(2).join("/");
 	}
 }
 
@@ -831,7 +802,7 @@ function parsePathSegments(
 					absoluteTarget: undefined,
 					explicitDirectory: false,
 					explicitRelative: false,
-					segments: segments.slice(2),
+					segments
 				};
 
 			default: {
@@ -974,43 +945,64 @@ function normalizeSegments(
 
 type CreationArg = AnyPath | string;
 
-export function createFilePathFromSegments(
+function createPathFromParsed(parsed: ParsedPath): AnyPath {
+	switch (parsed.absoluteType) {
+		case "windows-drive":
+		case "windows-unc":
+		case "posix": {
+			if (parsed.absoluteTarget !== undefined) {
+				return new AbsoluteFilePath(parsed, createEmptyMemo());
+			}
+			break;
+		}
+
+		case "url":
+			return new URLPath(parsed, createEmptyMemo());
+
+		case "uid":
+			return new UIDPath(parsed, createEmptyMemo());
+	}
+
+	return new RelativeFilePath(parsed, createEmptyMemo());
+}
+
+export function createPathFromSegments(
 	segments: string[],
 	hint: PathTypeHint,
-): UnknownPath {
+): AnyPath {
 	const parsed = parsePathSegments(segments, hint);
-	return new UnknownPath(parsed, createEmptyMemo());
+	return createPathFromParsed(parsed);
 }
 
 export function createRelativeFilePath(filename: CreationArg): RelativeFilePath {
-	return createUnknownPath(filename, "relative").assertRelative();
+	return createAnyPath(filename, "relative").assertRelative();
 }
 
 export function createURLPath(filename: CreationArg): URLPath {
-	return createUnknownPath(filename, "auto").assertURL();
+	return createAnyPath(filename, "auto").assertURL();
 }
 
 export function createAbsoluteFilePath(filename: CreationArg): AbsoluteFilePath {
-	return createUnknownPath(filename, "absolute").assertAbsolute();
+	return createAnyPath(filename, "absolute").assertAbsolute();
 }
 
 export function createUIDPath(filename: CreationArg): UIDPath {
-	return createUnknownPath(filename, "uid").assertUID();
+	return createAnyPath(filename, "uid").assertUID();
 }
 
-export function createUnknownPath(
-	filename: CreationArg,
+export function createAnyPath(
+	param: CreationArg,
 	hint: PathTypeHint = "auto",
-): UnknownPath {
+): AnyPath {
 	// Allows using the create methods above to be used in places where strings are more ergonomic (eg. in third-party code)
-	if (filename instanceof BasePath) {
-		return filename.toUnknown();
+	if (isPath(param)) {
+		return param;
 	}
 
 	// Might be better to do a manual loop to detect escaped slashes or some other weirdness
-	const segments = filename.split(/[\\\/]/g);
+	const segments = param.split(/[\\\/]/g);
 	const parsed = parsePathSegments(segments, hint);
-	return new UnknownPath(parsed, createEmptyMemo());
+	return createPathFromParsed(parsed);
 }
 
 // These are some utility methods so you can pass in `undefined | string`
@@ -1044,11 +1036,11 @@ export function maybeCreateAbsoluteFilePath(
 	}
 }
 
-export function maybeCreateUnknownPath(
+export function maybeCreateAnyPath(
 	filename: undefined | CreationArg,
-): undefined | UnknownPath {
+): undefined | AnyPath {
 	if (filename !== undefined) {
-		return createUnknownPath(filename, "auto");
+		return createAnyPath(filename, "auto");
 	} else {
 		return undefined;
 	}
@@ -1083,8 +1075,9 @@ export function isPath(val: unknown): val is AnyPath {
 	return (
 		val instanceof RelativeFilePath ||
 		val instanceof AbsoluteFilePath ||
-		val instanceof UnknownPath ||
 		val instanceof URLPath ||
 		val instanceof UIDPath
 	);
 }
+
+export const UNKNOWN_PATH = createUIDPath("unknown");

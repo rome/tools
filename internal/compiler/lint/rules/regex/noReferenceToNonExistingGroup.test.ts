@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {createUnknownPath} from "@internal/path";
+import {createRelativeFilePath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
 
@@ -42,7 +42,7 @@ test(
 					// matches \77  (char code 63) followed by '7'
 				],
 				category: "lint/regex/noReferenceToNonExistingGroup",
-				path: createUnknownPath("file.ts"),
+				path: createRelativeFilePath("file.ts"),
 			},
 		);
 	},

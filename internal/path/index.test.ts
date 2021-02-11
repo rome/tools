@@ -8,7 +8,7 @@
 import {
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {test} from "rome";
 
@@ -98,7 +98,7 @@ for (let i = 0; i < segmentTests.length; i++) {
 	test(
 		`segments: ${i}: ${loc}`,
 		(t) => {
-			t.looksLike(createUnknownPath(loc).parsed.segments, expectedSegments);
+			t.looksLike(createAnyPath(loc).parsed.segments, expectedSegments);
 		},
 	);
 }

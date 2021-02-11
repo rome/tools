@@ -1,6 +1,6 @@
 import {TestHelper, test} from "rome";
 import "@internal/core";
-import {createUnknownPath} from "@internal/path";
+import {UNKNOWN_PATH} from "@internal/path";
 import {DiagnosticLanguage} from "@internal/diagnostics";
 import {
 	AnsiHighlightOptions,
@@ -115,12 +115,12 @@ function testCase(
 	};
 }
 
-function craftTestInput(input: string, language: DiagnosticLanguage) {
-	return (<AnsiHighlightOptions>{
-		path: createUnknownPath("/unknown"),
+function craftTestInput(input: string, language: DiagnosticLanguage): AnsiHighlightOptions {
+	return {
+		path: UNKNOWN_PATH,
 		input,
 		sourceTypeJS: undefined,
 		language,
 		highlight: true,
-	});
+	};
 }

@@ -31,7 +31,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
-import {AnyPath, UnknownPath, createUnknownPath} from "@internal/path";
+import {AnyPath, UNKNOWN_PATH} from "@internal/path";
 import {
 	Number0,
 	Number1,
@@ -95,7 +95,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			this.language;
 
 		// Input information
-		this.path = path === undefined ? undefined : createUnknownPath(path);
+		this.path = path ?? UNKNOWN_PATH;
 		this.integrity = integrity;
 		this.input = input;
 		this.sourceText = sourceText ?? this.input;
@@ -126,7 +126,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;
 	private eofToken: EOFToken;
-	public path: undefined | UnknownPath;
+	public path: AnyPath;
 	public input: string;
 	public language: DiagnosticLanguage;
 	public integrity: undefined | DiagnosticIntegrity;
@@ -181,15 +181,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			diagnostics: [],
 			diagnosticFilters: [],
 		};
-	}
-
-	public getPathAssert(): UnknownPath {
-		const {path} = this;
-		if (path === undefined) {
-			throw new Error("Path expected but none was passed to this Parser");
-		} else {
-			return path;
-		}
 	}
 
 	// Run the tokenizer over all tokens
@@ -770,7 +761,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			corrupt: this.state.corrupt,
 			integrity: this.integrity,
 			diagnostics: this.getDiagnostics(),
-			path: this.getPathAssert(),
+			path: this.path,
 			comments: this.state.comments,
 		};
 	}

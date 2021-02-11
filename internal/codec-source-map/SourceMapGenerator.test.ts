@@ -6,7 +6,7 @@ import {
 	SourceMapGenerator,
 } from "@internal/codec-source-map/index";
 import {dedent} from "@internal/string-utils";
-import {createUnknownPath} from "@internal/path";
+import {createRelativeFilePath, createAnyPath} from "@internal/path";
 
 // TODO: This should NOT be shared amongst tests
 let generator: SourceMapGenerator;
@@ -24,7 +24,7 @@ test(
 		): Mapping {
 			return {
 				name,
-				source: createUnknownPath(source),
+				source: createAnyPath(source),
 				original: {
 					line: ob1Coerce1(originalLine),
 					column: ob1Coerce0(originalColumn),
@@ -38,7 +38,7 @@ test(
 		}
 
 		generator = new SourceMapGenerator({
-			path: createUnknownPath("bundle.js"),
+			path: createRelativeFilePath("bundle.js"),
 			sourceRoot: "..",
 		});
 

@@ -465,7 +465,7 @@ export default class TestWorkerFile {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Error occured while executing test file <filelink emphasis target="${this.path.join()}" />`,
+					text: markup`Error occured while executing test file <emphasis>${this.path}</emphasis> />`,
 				});
 				break;
 			}

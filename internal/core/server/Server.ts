@@ -57,7 +57,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {AbsoluteFilePath, createUIDPath, createAnyPath} from "@internal/path";
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -241,7 +241,7 @@ export default class Server {
 				markupOptions: {
 					userConfig: this.userConfig,
 					humanizeFilename: (filename) => {
-						const path = createUnknownPath(filename);
+						const path = createAnyPath(filename);
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
 								path.assertAbsolute(),
@@ -901,7 +901,7 @@ export default class Server {
 			// A type-safe wrapper for retrieving command flags
 			// TODO perhaps present this as JSON or something if this isn't a request from the CLI?
 			const flagsConsumer = consume({
-				filePath: createUnknownPath("argv"),
+				path: createUIDPath("argv"),
 				parent: undefined,
 				value: query.commandFlags,
 				onDefinition(def) {

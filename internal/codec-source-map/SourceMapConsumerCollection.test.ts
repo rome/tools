@@ -5,7 +5,7 @@ import {
 	SourceMapConsumerCollection,
 } from "@internal/codec-source-map/index";
 import {ResolvedLocation} from "@internal/codec-source-map/types";
-import {AnyPath, createUnknownPath} from "@internal/path";
+import {AnyPath, createRelativeFilePath} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 
 /* Source test1
@@ -75,8 +75,8 @@ const jsonSourceMap2: SourceMap = {
 test(
 	"Verify hasAny, add, has are correct",
 	async (t) => {
-		const test1Path = createUnknownPath("test1");
-		const test2Path = createUnknownPath("test2");
+		const test1Path = createRelativeFilePath("test1");
+		const test2Path = createRelativeFilePath("test2");
 		const consumerCollection = new SourceMapConsumerCollection();
 
 		t.false(consumerCollection.hasAny());
@@ -97,15 +97,17 @@ test(
 
 		t.true(consumerCollection.has(test1Path));
 		t.true(consumerCollection.has(test2Path));
-		t.false(consumerCollection.has(createUnknownPath("other")));
+		t.false(consumerCollection.has(createRelativeFilePath("other")));
 	},
 );
 
 test(
 	"Should return the position of the targeted anchor in the sources files",
 	async (t) => {
-		const test1Path = createUnknownPath("test1");
-		const test2Path = createUnknownPath("test2");
+		const test1Path = createRelativeFilePath("test1");
+		const test2Path = createRelativeFilePath("test2");
+		const test1JSPath = createRelativeFilePath("js/test1.js");
+		const test2JSPath = createRelativeFilePath("js/test2.js");
 
 		const consumerCollection = new SourceMapConsumerCollection();
 		consumerCollection.add(
@@ -150,7 +152,7 @@ test(
 			4,
 			{
 				found: true,
-				source: createUnknownPath("js/test1.js"),
+				source: test1JSPath,
 				line: ob1Coerce1(2),
 				column: ob1Coerce0(6),
 				name: "world",
@@ -164,7 +166,7 @@ test(
 			23,
 			{
 				found: true,
-				source: createUnknownPath("js/test1.js"),
+				source: test1JSPath,
 				line: ob1Coerce1(4),
 				column: ob1Coerce0(9),
 				name: "foo",
@@ -178,7 +180,7 @@ test(
 			48,
 			{
 				found: true,
-				source: createUnknownPath("js/test1.js"),
+				source: test1JSPath,
 				line: ob1Coerce1(8),
 				column: ob1Coerce0(9),
 				name: "hello",
@@ -192,7 +194,7 @@ test(
 			4,
 			{
 				found: true,
-				source: createUnknownPath("js/test2.js"),
+				source: test2JSPath,
 				line: ob1Coerce1(2),
 				column: ob1Coerce0(4),
 				name: "firstName",
@@ -206,7 +208,7 @@ test(
 			13,
 			{
 				found: true,
-				source: createUnknownPath("js/test2.js"),
+				source: test2JSPath,
 				line: ob1Coerce1(3),
 				column: ob1Coerce0(6),
 				name: "lastname",
@@ -220,7 +222,7 @@ test(
 			30,
 			{
 				found: true,
-				source: createUnknownPath("js/test2.js"),
+				source: test2JSPath,
 				line: ob1Coerce1(5),
 				column: ob1Coerce0(9),
 				name: "changeName",
@@ -234,7 +236,7 @@ test(
 			52,
 			{
 				found: true,
-				source: createUnknownPath("js/test2.js"),
+				source: test2JSPath,
 				line: ob1Coerce1(9),
 				column: ob1Coerce0(9),
 				name: "fullName",

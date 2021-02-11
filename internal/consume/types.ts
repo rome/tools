@@ -11,7 +11,7 @@ import {
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import Consumer from "./Consumer";
-import {UnknownPath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
 export type ConsumeProtectedFunction = (...args: unknown[]) => Consumer;
@@ -86,7 +86,7 @@ export type ConsumerOptions = {
 	handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
 	onDefinition?: ConsumerOnDefinition;
 	propertyMetadata?: ConsumePropertyMetadata;
-	filePath?: UnknownPath;
+	path?: AnyPath;
 	objectPath: ConsumePath;
 	context: ConsumeContext;
 	value: unknown;

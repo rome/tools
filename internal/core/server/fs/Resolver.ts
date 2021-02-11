@@ -20,7 +20,7 @@ import {
 	AnyPath,
 	RelativeFilePath,
 	URLPath,
-	createFilePathFromSegments,
+	createPathFromSegments,
 	createRelativeFilePath,
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
@@ -778,7 +778,7 @@ export default class Resolver {
 			if (manifestDef.manifest.exports !== true) {
 				const alias = getExportsAlias({
 					manifest: manifestDef.manifest,
-					relative: createFilePathFromSegments(moduleNameParts, "relative").assertRelative(),
+					relative: createPathFromSegments(moduleNameParts, "relative").assertRelative(),
 					platform: query.platform,
 				});
 

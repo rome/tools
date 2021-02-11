@@ -6,7 +6,7 @@
  */
 
 import {ConstJSProgramSyntax, ConstJSSourceType} from "@internal/ast";
-import {ParserOptionsWithRequiredPath} from "@internal/parser-core";
+import { ParserOptions } from "@internal/parser-core";
 
 type UserOptionsBase = {
 	syntax?: ConstJSProgramSyntax[];
@@ -16,10 +16,10 @@ type UserOptionsBase = {
 	manifestPath?: undefined | string;
 };
 
-export type JSParserUserOptions = ParserOptionsWithRequiredPath &
+export type JSParserUserOptions = ParserOptions &
 	UserOptionsBase;
 
-export type JSParserOptions = ParserOptionsWithRequiredPath &
+export type JSParserOptions = ParserOptions &
 	Required<UserOptionsBase>;
 
 const DEFAULT_USER_OPTIONS: Required<UserOptionsBase> = {

@@ -3,7 +3,7 @@ import {hasPotentialSideEffects} from "@internal/js-ast-utils/hasPotentialSideEf
 import Scope, {RootScope} from "@internal/compiler/scope/Scope";
 import {
 	AnyNode,
-	MOCK_PROGRAM,
+	MOCK_JS_ROOT,
 	jsArrayExpression,
 	jsAssignmentIdentifier,
 	jsBindingIdentifier,
@@ -86,9 +86,9 @@ test(
 			parentScope: undefined,
 			rootScope: new RootScope(
 				new CompilerContext({
-					ast: MOCK_PROGRAM,
+					ast: MOCK_JS_ROOT,
 				}),
-				MOCK_PROGRAM,
+				MOCK_JS_ROOT,
 			),
 		});
 

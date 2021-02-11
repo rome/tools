@@ -9,13 +9,12 @@ import analyzeDependencies from "./analyzeDependencies";
 import {test} from "rome";
 import {parseJS} from "@internal/js-parser";
 import {ConstJSSourceType} from "@internal/ast";
-import {createUnknownPath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 
 async function testAnalyzeDeps(input: string, sourceType: ConstJSSourceType) {
 	return await analyzeDependencies({
 		options: {},
-		ast: parseJS({input, sourceType, path: createUnknownPath("unknown")}),
+		ast: parseJS({input, sourceType}),
 		sourceText: input,
 	});
 }

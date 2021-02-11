@@ -25,7 +25,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	UIDPath,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {
 	JSONManifest,
@@ -88,7 +88,7 @@ export default class Bundler {
 			...this.config.resolver,
 			allowPartial: false,
 			origin: cwd,
-			source: createUnknownPath(unresolvedEntry),
+			source: createAnyPath(unresolvedEntry),
 		});
 
 		const {server} = this;
@@ -99,7 +99,7 @@ export default class Bundler {
 			...this.config.resolver,
 			origin: cwd,
 			requestedType: "package",
-			source: createUnknownPath(unresolvedEntry),
+			source: createAnyPath(unresolvedEntry),
 		});
 		const manifestRoot: undefined | AbsoluteFilePath =
 			manifestRootResolved.type === "FOUND"
@@ -435,7 +435,7 @@ export default class Bundler {
 					{
 						...this.config.resolver,
 						origin: manifestDef.directory,
-						source: createUnknownPath(relative).toExplicitRelative(),
+						source: createAnyPath(relative).toExplicitRelative(),
 					},
 					{
 						location,

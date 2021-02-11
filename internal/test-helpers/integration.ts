@@ -17,7 +17,7 @@ import {
 	createAbsoluteFilePath,
 	createRelativeFilePath,
 	createUIDPath,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
 import {
@@ -130,7 +130,7 @@ export function findFixtureInput(
 			return {
 				input,
 				handler: getFileHandlerFromPathAssert(
-					createUnknownPath(`input.${ext}`),
+					createAnyPath(`input.${ext}`),
 					projectConfig,
 				).handler,
 			};

@@ -8,12 +8,9 @@
 import {Dict} from "@internal/typescript-helpers";
 import {MarkupTagName} from "./types";
 import {
-	AbsoluteFilePath,
 	AnyPath,
-	RelativeFilePath,
-	UIDPath,
+	isPath,
 	URLPath,
-	UnknownPath,
 } from "@internal/path";
 import {UnknownNumber, isNumber, ob1Get} from "@internal/ob1";
 
@@ -138,13 +135,7 @@ export function markup(
 			parts.push(toRawMarkup("<dim>undefined</dim>"));
 		} else if (isNumber(value)) {
 			parts.push(toRawMarkup(`<number>${String(ob1Get(value))}</number>`));
-		} else if (
-			value instanceof RelativeFilePath ||
-			value instanceof AbsoluteFilePath ||
-			value instanceof URLPath ||
-			value instanceof UIDPath ||
-			value instanceof UnknownPath
-		) {
+		} else if (isPath(value)) {
 			parts.push(filePathToMarkup(value));
 		} else {
 			parts.push(value);

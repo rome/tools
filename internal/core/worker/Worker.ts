@@ -31,7 +31,7 @@ import {
 	UIDPath,
 	MixedPathMap,
 	createAbsoluteFilePath,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {
 	FSReadStream,
@@ -516,7 +516,7 @@ export default class Worker {
 
 		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
 			sourceTypeJS,
-			path: createUnknownPath(uid),
+			path: createAnyPath(uid),
 			manifestPath,
 			integrity,
 			mtimeNs,

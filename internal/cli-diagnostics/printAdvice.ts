@@ -37,7 +37,7 @@ import {
 } from "@internal/markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
-import {MixedPathSet, createUnknownPath} from "@internal/path";
+import {MixedPathSet, createUIDPath, UNKNOWN_PATH} from "@internal/path";
 import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
@@ -314,7 +314,7 @@ function printCode(
 		truncateLines: MAX_CODE_LINES,
 		lines: toLines({
 			input: code,
-			path: createUnknownPath("inline"),
+			path: createUIDPath("inline"),
 			sourceTypeJS: item.sourceTypeJS,
 			language: item.language,
 			highlight: opts.printer.shouldHighlight(),
@@ -345,7 +345,7 @@ function printFrame(
 	let {sourceText} = item.location;
 	const path =
 		item.location.path === undefined
-			? createUnknownPath("unknown")
+			? UNKNOWN_PATH
 			: opts.printer.normalizePath(item.location.path);
 
 	let lines: ToLines = [];

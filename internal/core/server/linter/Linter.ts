@@ -245,7 +245,7 @@ class LintRunner {
 			callback: async ({path}) => {
 				const filename = path.join();
 				const progressId = progress.pushText(
-					markup`<filelink target="${filename}" />`,
+					markup`${path}`,
 				);
 
 				let compilerOptions = lintCompilerOptionsPerFile[filename];

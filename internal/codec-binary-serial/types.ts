@@ -39,11 +39,13 @@ export type RSERValue =
 	| RSERArray;
 
 export type AnyRSERPathMap =
-	| MixedPathMap<RSERValue>
+	| RSERMixedPathMap
 	| AbsoluteFilePathMap<RSERValue>
 	| RelativeFilePathMap<RSERValue>
 	| URLPathMap<RSERValue>
 	| UIDPathMap<RSERValue>;
+
+export type RSERMixedPathMap = MixedPathMap<RSERValue>;
 
 export type RSERMap = Map<RSERValue, RSERValue>;
 export type RSERSet = Set<RSERValue>;

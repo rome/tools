@@ -2,7 +2,7 @@ import {test} from "rome";
 import {
 	BaseTokens,
 	ParserCore,
-	ParserOptionsWithRequiredPath,
+	ParserOptions,
 	SimpleToken,
 	TokenValues,
 	ValueToken,
@@ -13,7 +13,7 @@ import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import {isNewline} from "@internal/css-parser/utils";
-import {createUnknownPath} from "@internal/path";
+import {createRelativeFilePath} from "@internal/path";
 
 type TestTokens = BaseTokens & {
 	Comment: ValueToken<"Comment", string>;
@@ -25,7 +25,7 @@ type TestTokens = BaseTokens & {
 type TestParserTypes = {
 	tokens: TestTokens;
 	state: {};
-	options: Omit<ParserOptionsWithRequiredPath, "ignoreWhitespaceTokens">;
+	options: Omit<ParserOptions, "ignoreWhitespaceTokens">;
 	meta: void;
 };
 
@@ -136,7 +136,7 @@ test(
 				parsed,
 				corrupt: parser.state.corrupt,
 				diagnostics: parser.getDiagnostics(),
-				path: parser.getPathAssert(),
+				path: parser.path,
 				comments: parser.state.comments,
 			};
 		}
@@ -149,16 +149,16 @@ test(
 
 				// Comment
 			`,
-			path: createUnknownPath("0.test"),
+			path: createRelativeFilePath("0.test"),
 		});
 
 		const parser1 = testParser.create({
-			path: createUnknownPath("1.test"),
+			path: createRelativeFilePath("1.test"),
 			input: "a", // Invalid
 		});
 
 		const parser2 = testParser.create({
-			path: createUnknownPath("2.test"),
+			path: createRelativeFilePath("2.test"),
 			input: `"i'm an unterminated string`,
 		});
 

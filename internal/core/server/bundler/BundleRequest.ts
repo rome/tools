@@ -15,7 +15,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
 	UIDPath,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
@@ -65,14 +65,14 @@ export default class BundleRequest {
 			origins: [
 				{
 					category: "bundler",
-					message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
+					message: `Requested bundle for ${this.resolvedEntryUid}`,
 				},
 			],
 		});
 		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
 		this.sourceMap = new SourceMapGenerator({
-			path: createUnknownPath(this.resolvedEntry.getBasename()),
+			path: createAnyPath(this.resolvedEntry.getBasename()),
 		});
 
 		this.assets = new Map();

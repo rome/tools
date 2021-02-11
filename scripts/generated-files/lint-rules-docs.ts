@@ -5,7 +5,7 @@ import {highlightCode} from "@internal/markup-syntax-highlight";
 import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
 import {concatMarkup, joinMarkupLines, markup} from "@internal/markup";
 import {markupToHtml} from "@internal/cli-layout";
-import {createUnknownPath} from "@internal/path";
+import {createAnyPath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {tests} from "@internal/compiler/lint/rules/tests";
 import {ob1Coerce1} from "@internal/ob1";
@@ -20,7 +20,7 @@ function pre(inner: string): string {
 }
 
 function highlightPre(filename: string, code: string): string {
-	const path = createUnknownPath(filename);
+	const path = createAnyPath(filename);
 	return pre(
 		joinMarkupLines(
 			markupToHtml(
@@ -88,7 +88,7 @@ async function run(
 				markupOptions: {
 					normalizePosition() {
 						return {
-							path: createUnknownPath(filename),
+							path: createAnyPath(filename),
 						};
 					},
 				},

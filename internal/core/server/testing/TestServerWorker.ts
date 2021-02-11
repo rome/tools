@@ -17,7 +17,7 @@ import {ReporterProgress} from "@internal/cli-reporter";
 import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {ansiEscapes} from "@internal/cli-layout";
 import {FilePathLocker} from "@internal/async/lockers";
@@ -200,7 +200,7 @@ export default class TestServerWorker {
 			const loc = callFrame.get("location");
 
 			const resolved = this.runner.sourceMaps.assertApproxOriginalPositionFor(
-				createUnknownPath(urlToFilename(callFrame.get("url").asString())),
+				createAnyPath(urlToFilename(callFrame.get("url").asString())),
 				ob1Coerce0To1(loc.get("lineNumber").asZeroIndexedNumber()),
 				loc.get("columnNumber").asZeroIndexedNumber(),
 			);

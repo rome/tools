@@ -3,7 +3,6 @@ import {
 	ComplexToken,
 	NumberToken,
 	ParserCore,
-	ParserOptionsWithRequiredPath,
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
@@ -20,9 +19,10 @@ import {
 	CSSString,
 	CSSWhitespace,
 } from "@internal/ast";
+import { ParserOptions } from "@internal/parser-core";
 
 export interface CSSParserOptions extends Omit<
-	ParserOptionsWithRequiredPath,
+	ParserOptions,
 	"ignoreWhitespaceTokens"
 > {}
 
