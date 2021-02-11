@@ -1,9 +1,0 @@
-filename: "file.tsx"
-invalid: [
-	"<blink />"
-	"<marquee />"
-]
-valid: [
-	"<div />"
-	"<Marquee />"
-]

@@ -1,0 +1,38 @@
+[
+	{
+		filename: "file.tsx"
+		invalid: [
+			"<div tabIndex=\"0\" ></div>"
+			"<div role=\"article\" tabIndex=\"0\" ></div>"
+			"<article tabIndex={0} />"
+	]
+		valid: [
+			"<button tabIndex=\"0\" ></button>"
+			"<span role=\"button\" tabIndex=\"0\" ></span>"
+			"<span role=\"article\" tabIndex=\"-1\" ></span>"
+			"<MyButton tabIndex={0} />"
+			"<article tabIndex=\"-1\"></article>"
+			"<div tabIndex=\"-1\" ></div>"
+			"<article tabIndex={-1}></article>"
+			"<div tabIndex={-1} ></div>"
+			"<div></div>"
+			"<button tabIndex=\"-1\"></button>"
+	]
+}
+	{
+		filename: "file.html"
+		invalid: [
+			"<div tabindex=\"0\" ></div>"
+			"<div role=\"article\" tabindex=\"0\" ></div>"
+	]
+		valid: [
+			"<button tabindex=\"0\" ></button>"
+			"<span role=\"button\" tabindex=\"0\" ></span>"
+			"<span role=\"article\" tabindex=\"-1\" ></span>"
+			"<article tabindex=\"-1\"></article>"
+			"<div tabindex=\"-1\" ></div>"
+			"<div></div>"
+			"<button tabindex=\"-1\"></button>"
+	]
+}
+]

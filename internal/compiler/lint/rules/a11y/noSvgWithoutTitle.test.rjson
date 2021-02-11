@@ -1,0 +1,64 @@
+[
+	{
+		filename: "file.tsx"
+		invalid: [
+			"<svg>foo</svg>"
+			"<svg>
+        <title></title>
+        <circle />
+    </svg>"
+	]
+		valid: [
+			"<svg>
+		<rect />
+		<rect />
+		<g>
+			<circle />
+			<circle />
+			<g>
+				<title>
+					Pass
+				</title>
+				<circle />
+				<circle />
+			</g>
+		</g>
+	</svg>"
+			"<svg>
+        <title>Pass</title>
+        <circle />
+    </svg>"
+	]
+}
+	{
+		filename: "file.html"
+		invalid: [
+			"<svg>foo</svg>"
+			"<svg>
+        <title></title>
+        <circle />
+    </svg>"
+	]
+		valid: [
+			"<svg>
+		<rect />
+		<rect />
+		<g>
+			<circle />
+			<circle />
+			<g>
+				<title>
+					Pass
+				</title>
+				<circle />
+				<circle />
+			</g>
+		</g>
+	</svg>"
+			"<svg>
+        <title>Pass</title>
+        <circle />
+    </svg>"
+	]
+}
+]

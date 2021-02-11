@@ -101,10 +101,17 @@ export type DiagnosticCategoryPrefix =
 	| "typeCheck"
 	| "v8";
 
-/* GENERATED:START(hash:acbcb392f902b761e16385ab8608212f8d544de1,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:65248b89544465d372d5a5b78469b1c2a6239793,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 export type DiagnosticLintCategory =
+	| "lint/a11y/noAriaUnsupportedElements"
+	| "lint/a11y/noDistractingElements"
+	| "lint/a11y/noNoninteractiveElementToInteractiveRole"
+	| "lint/a11y/noNoninteractiveTabindex"
+	| "lint/a11y/noSvgWithoutTitle"
 	| "lint/a11y/useAltText"
+	| "lint/a11y/useAriaProptypes"
 	| "lint/a11y/useHtmlLang"
+	| "lint/a11y/useMediaCaption"
 	| "lint/a11y/useValidLang"
 	| "lint/html/useClosingNonVoid"
 	| "lint/js/noArguments"
@@ -156,27 +163,20 @@ export type DiagnosticLintCategory =
 	| "lint/js/useTemplate"
 	| "lint/js/useWhile"
 	| "lint/jsx-a11y/noAccessKey"
-	| "lint/jsx-a11y/noAriaUnsupportedElements"
 	| "lint/jsx-a11y/noAutofocus"
-	| "lint/jsx-a11y/noDistractingElements"
 	| "lint/jsx-a11y/noHeaderScope"
-	| "lint/jsx-a11y/noNoninteractiveElementToInteractiveRole"
-	| "lint/jsx-a11y/noNoninteractiveTabindex"
 	| "lint/jsx-a11y/noOnChange"
 	| "lint/jsx-a11y/noPositiveTabindex"
 	| "lint/jsx-a11y/noRedundantAlt"
 	| "lint/jsx-a11y/noRedundantRoles"
-	| "lint/jsx-a11y/noSvgWithoutTitle"
 	| "lint/jsx-a11y/noTargetBlank"
 	| "lint/jsx-a11y/useAnchorContent"
 	| "lint/jsx-a11y/useAriaProps"
 	| "lint/jsx-a11y/useAriaPropsForRole"
-	| "lint/jsx-a11y/useAriaProptypes"
 	| "lint/jsx-a11y/useHeadingContent"
 	| "lint/jsx-a11y/useIframeTitle"
 	| "lint/jsx-a11y/useKeyWithClickEvents"
 	| "lint/jsx-a11y/useKeyWithMouseEvents"
-	| "lint/jsx-a11y/useMediaCaption"
 	| "lint/jsx-a11y/useValidAnchor"
 	| "lint/jsx/noCommentText"
 	| "lint/jsx/noDuplicateProps"
@@ -219,8 +219,15 @@ export type DiagnosticLintCategory =
 	| "lint/ts/useInterfaces"
 	| "lint/ts/useSimplifiedBooleanExpression";
 const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
+	"lint/a11y/noAriaUnsupportedElements": true,
+	"lint/a11y/noDistractingElements": true,
+	"lint/a11y/noNoninteractiveElementToInteractiveRole": true,
+	"lint/a11y/noNoninteractiveTabindex": true,
+	"lint/a11y/noSvgWithoutTitle": true,
 	"lint/a11y/useAltText": true,
+	"lint/a11y/useAriaProptypes": true,
 	"lint/a11y/useHtmlLang": true,
+	"lint/a11y/useMediaCaption": true,
 	"lint/a11y/useValidLang": true,
 	"lint/html/useClosingNonVoid": true,
 	"lint/js/noArguments": true,
@@ -272,27 +279,20 @@ const lintCategoryNameMap: {[name in DiagnosticLintCategory]: true} = {
 	"lint/js/useTemplate": true,
 	"lint/js/useWhile": true,
 	"lint/jsx-a11y/noAccessKey": true,
-	"lint/jsx-a11y/noAriaUnsupportedElements": true,
 	"lint/jsx-a11y/noAutofocus": true,
-	"lint/jsx-a11y/noDistractingElements": true,
 	"lint/jsx-a11y/noHeaderScope": true,
-	"lint/jsx-a11y/noNoninteractiveElementToInteractiveRole": true,
-	"lint/jsx-a11y/noNoninteractiveTabindex": true,
 	"lint/jsx-a11y/noOnChange": true,
 	"lint/jsx-a11y/noPositiveTabindex": true,
 	"lint/jsx-a11y/noRedundantAlt": true,
 	"lint/jsx-a11y/noRedundantRoles": true,
-	"lint/jsx-a11y/noSvgWithoutTitle": true,
 	"lint/jsx-a11y/noTargetBlank": true,
 	"lint/jsx-a11y/useAnchorContent": true,
 	"lint/jsx-a11y/useAriaProps": true,
 	"lint/jsx-a11y/useAriaPropsForRole": true,
-	"lint/jsx-a11y/useAriaProptypes": true,
 	"lint/jsx-a11y/useHeadingContent": true,
 	"lint/jsx-a11y/useIframeTitle": true,
 	"lint/jsx-a11y/useKeyWithClickEvents": true,
 	"lint/jsx-a11y/useKeyWithMouseEvents": true,
-	"lint/jsx-a11y/useMediaCaption": true,
 	"lint/jsx-a11y/useValidAnchor": true,
 	"lint/jsx/noCommentText": true,
 	"lint/jsx/noDuplicateProps": true,

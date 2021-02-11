@@ -1,7 +1,0 @@
-filename: "file.tsx"
-invalid: [
-	"<h1 role='checkbox'></h1>"
-]
-valid: [
-	"<h1 role='article'></h1>"
-]
