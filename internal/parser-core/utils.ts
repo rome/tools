@@ -15,7 +15,7 @@ import {
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
-import {AnyPath, isPath} from "@internal/path";
+import {AnyPath, isPath, UNKNOWN_PATH} from "@internal/path";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -186,7 +186,8 @@ export function extractSourceLocationRangeFromNodes(
 		return undefined;
 	}
 
-	let path: undefined | AnyPath = undefined;
+	let path: AnyPath = UNKNOWN_PATH;
+	let hasPath = false;
 	let start: undefined | Position = undefined;
 	let end: undefined | Position = undefined;
 
@@ -204,8 +205,9 @@ export function extractSourceLocationRangeFromNodes(
 			end = loc.end;
 		}
 
-		if (path === undefined) {
+		if (!hasPath) {
 			path = loc.path;
+			hasPath = true;
 		} else if (path !== loc.path) {
 			throw new Error(
 				pretty`Mixed filenames in node, expected ${path} but got ${loc.path}`,

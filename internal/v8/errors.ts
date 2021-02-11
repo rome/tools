@@ -14,7 +14,7 @@ import {
 	convertPossibleNodeErrorToDiagnostic,
 } from "@internal/node";
 import {DiagnosticLocation} from "@internal/diagnostics";
-import {createUIDPath} from "@internal/path";
+import {createUIDPath, UNKNOWN_PATH} from "@internal/path";
 
 export * from "./types";
 
@@ -145,7 +145,9 @@ export function getDiagnosticLocationFromErrorFrame(
 	frame: undefined | ErrorFrame,
 ): DiagnosticLocation {
 	if (frame === undefined) {
-		return {};
+		return {
+			path: UNKNOWN_PATH,
+		};
 	}
 
 	const pos: Position = {

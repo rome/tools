@@ -187,7 +187,9 @@ export const toml: PartialConfigHandler = {
 				category: "parse",
 				categoryValue: "toml",
 				normalizeKey: (key) => key,
-				getDiagnosticLocation: () => ({}),
+				getDiagnosticLocation: () => ({
+					path: parser.path,
+				}),
 				getOriginalValue: () => undefined,
 			},
 			// TODO comments

@@ -35,7 +35,7 @@ import {
 	getDiagnosticsFromError,
 	isUserDiagnosticError,
 } from "./errors";
-import {AnyPath, MixedPathSet, equalPaths} from "@internal/path";
+import {AnyPath, MixedPathSet, equalPaths, UNKNOWN_PATH} from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -248,9 +248,7 @@ export function deriveDiagnosticFromErrorStructure(
 	struct: Partial<StructuredError>,
 	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
-	const {path} = opts;
-
-	let targetPath: undefined | AnyPath = path;
+	let targetPath: AnyPath = opts.path ?? UNKNOWN_PATH;
 	let targetLoc = undefined;
 
 	let {frames = [], message = "Unknown error"} = struct;

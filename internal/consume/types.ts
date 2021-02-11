@@ -86,7 +86,7 @@ export type ConsumerOptions = {
 	handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
 	onDefinition?: ConsumerOnDefinition;
 	propertyMetadata?: ConsumePropertyMetadata;
-	path?: AnyPath;
+	path: AnyPath;
 	objectPath: ConsumePath;
 	context: ConsumeContext;
 	value: unknown;

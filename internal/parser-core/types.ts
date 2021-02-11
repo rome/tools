@@ -145,7 +145,7 @@ export type BaseTokens = {
 
 //# Other types
 export type SourceLocation = {
-	path?: AnyPath;
+	path: AnyPath;
 	identifierName?: string;
 	start: Position;
 	end: Position;

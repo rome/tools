@@ -12,13 +12,14 @@ import {DiagnosticCategory} from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
 import {markupToPlainText} from "@internal/cli-layout";
 import {joinMarkupLines} from "@internal/markup";
+import { UNKNOWN_PATH } from "@internal/path";
 
 const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 	propertyMetadata: undefined,
 	value: undefined,
 	handleUnexpectedDiagnostic: undefined,
 	onDefinition: undefined,
-	path: undefined,
+	path: UNKNOWN_PATH,
 	objectPath: [],
 	parent: undefined,
 };
@@ -53,7 +54,7 @@ export function consumeUnknown(
 				);
 				const locator = res.locators.get("default");
 				return {
-					filename: "unknown",
+					path: UNKNOWN_PATH,
 					start: locator?.start,
 					end: locator?.end,
 					sourceText: joinMarkupLines(res),

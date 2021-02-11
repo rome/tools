@@ -439,7 +439,7 @@ export default class RSERBufferParser {
 	private decodeSourceLocation(): SourceLocation {
 		this.expectCode(VALUE_CODES.SOURCE_LOCATION);
 		return {
-			path: this.decodePathOrVoid(),
+			path: this.decodePath(),
 			identifierName: this.decodeStringOrVoid(),
 			start: this.decodePositionValue(),
 			end: this.decodePositionValue(),
@@ -638,24 +638,6 @@ export default class RSERBufferParser {
 		const code = this.decodePathCode();
 		const str = this.readString();
 		return pathFromCode(code, str);
-	}
-
-	private decodePathOrVoid(): undefined | AnyPath {
-		const code = this.peekCode();
-		switch (code) {
-			case VALUE_CODES.UNDEFINED:
-				return this.decodeUndefined();
-
-			case VALUE_CODES.PATH:
-			case VALUE_CODES.REFERENCE:
-			case VALUE_CODES.DECLARE_REFERENCE:
-				return this.decodePath();
-
-			default:
-				throw this.unexpected(
-					`Expected path or undefined but got ${formatCode(code)}`,
-				);
-		}
 	}
 
 	private decodePathMap(): AnyRSERPathMap {

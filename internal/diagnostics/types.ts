@@ -45,7 +45,7 @@ export type DiagnosticLocation = {
 	marker?: StaticMarkup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
-	path?: AnyPath;
+	path: AnyPath;
 	start?: Position;
 	end?: Position;
 };

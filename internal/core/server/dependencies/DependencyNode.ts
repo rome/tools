@@ -279,6 +279,7 @@ export default class DependencyNode {
 	): Diagnostic {
 		const location: DiagnosticLocation = {
 			...resolved.loc,
+			path: this.path,
 			integrity: this.getIntegrity(),
 		};
 

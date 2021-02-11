@@ -97,7 +97,7 @@ export default class Consumer {
 		this.handleUnexpected = opts.handleUnexpectedDiagnostic;
 	}
 
-	public path: undefined | AnyPath;
+	public path: AnyPath;
 
 	private declared: boolean;
 	private handleUnexpected: undefined | ConsumerHandleUnexpected;
@@ -214,7 +214,9 @@ export default class Consumer {
 
 		const getDiagnosticLocation = this.context.getDiagnosticLocation;
 		if (getDiagnosticLocation === undefined) {
-			return {};
+			return {
+				path: this.path,
+			};
 		} else {
 			return getDiagnosticLocation(this.keyPath, target);
 		}

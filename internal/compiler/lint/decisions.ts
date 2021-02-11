@@ -41,7 +41,7 @@ function validateAction(
 
 export function deriveDecisionPositionKey(
 	action: LintCompilerOptionsDecisionAction,
-	loc: undefined | DiagnosticLocation,
+	loc: undefined | Partial<DiagnosticLocation>,
 ): undefined | string {
 	if (loc === undefined) {
 		return undefined;
