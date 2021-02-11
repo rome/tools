@@ -15,7 +15,7 @@ import {
 } from "@internal/diagnostics";
 import {AnyRoot, ConstJSSourceType} from "@internal/ast";
 import {AnyPath} from "@internal/path";
-import {WorkerLintTimings} from "@internal/core/worker/types";
+import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 
 export interface ExtensionCustomLintResult {
 	mtimeNs: bigint;
@@ -26,7 +26,7 @@ export interface ExtensionCustomLintResult {
 }
 
 export interface ExtensionLintResult extends ExtensionCustomLintResult {
-	timingsNs: WorkerLintTimings;
+	timingsNs: WorkerIntegrationTimings;
 }
 
 export type ExtensionHandlerMethodInfo = {

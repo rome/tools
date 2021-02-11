@@ -2,12 +2,11 @@ import {lint, LintResult} from "@internal/compiler";
 import {catchDiagnostics, descriptions, Diagnostics} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {
-	EMPTY_LINT_TIMINGS,
 	WorkerFormatOptions,
 	WorkerFormatResult,
 	WorkerLintOptions,
 	WorkerLintResult,
-	WorkerLintTimings,
+	WorkerIntegrationTimings,
 	WorkerParseOptions,
 } from "./types";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers";
@@ -22,7 +21,7 @@ import {formatAST} from "@internal/formatter";
 import {maybeRunESLint} from "./integrations/eslint";
 
 const EMPTY_LINT_RESULT: WorkerLintResult = {
-	timingsNs: EMPTY_LINT_TIMINGS,
+	timingsNs: new Map(),
 	save: undefined,
 	diagnostics: [],
 	suppressions: [],
@@ -73,7 +72,7 @@ async function lintOrFormat(
 		diagnostics: result.diagnostics,
 		formatted: result.formatted,
 		suppressions: result.suppressions,
-		timingsNs: EMPTY_LINT_TIMINGS,
+		timingsNs: new Map(),
 	};
 }
 
@@ -246,14 +245,15 @@ export async function compilerLint(
 		};
 	}
 
-	let timingsNs: WorkerLintTimings = EMPTY_LINT_TIMINGS;
+	let timingsNs: WorkerIntegrationTimings = new Map();
 
 	const eslintResult = await maybeRunESLint({worker, ref, project});
 	if (eslintResult !== undefined) {
-		timingsNs = {
-			...timingsNs,
-			eslint: eslintResult.timingNs,
-		};
+		timingsNs.set("eslint", {
+			type: "official",
+			displayName: "ESLint",
+			took: eslintResult.timingNs,
+		});
 
 		diagnostics = [...diagnostics, ...eslintResult.diagnostics];
 	}

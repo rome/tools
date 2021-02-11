@@ -14,6 +14,7 @@ import {
 import {BridgeClient} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";
 import {ModuleSignature} from "@internal/js-analysis";
+import { StaticMarkup } from "@internal/markup";
 import {Number0} from "@internal/ob1";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
@@ -141,21 +142,19 @@ export type WorkerFormatResult = {
 	suppressions: DiagnosticSuppressions;
 };
 
-export type WorkerLintTimings = {
-	eslint: bigint;
-	prettier: bigint;
+export type WorkerIntegrationTiming = {
+	type: "official" | "plugin";
+	displayName: StaticMarkup;
+	took: bigint;
 };
 
-export const EMPTY_LINT_TIMINGS: WorkerLintTimings = {
-	eslint: 0n,
-	prettier: 0n,
-};
+export type WorkerIntegrationTimings = Map<string, WorkerIntegrationTiming>;
 
 export type WorkerLintResult = {
 	save: undefined | RecoverySaveFile;
 	diagnostics: Diagnostics;
 	suppressions: DiagnosticSuppressions;
-	timingsNs: WorkerLintTimings;
+	timingsNs: WorkerIntegrationTimings;
 };
 
 export type WorkerBufferPosition = {

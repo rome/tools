@@ -36,8 +36,7 @@ import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
 import {
-	EMPTY_LINT_TIMINGS,
-	WorkerLintTimings,
+	WorkerIntegrationTimings,
 } from "@internal/core/worker/types";
 import {ExtendedMap} from "@internal/collections";
 import {humanizeDuration} from "@internal/string-utils";
@@ -138,15 +137,17 @@ function createDiagnosticsPrinter(
 			}
 		}
 
-		const timings = runner.getFinalTimings();
-		if (timings.slowest.eslint > 0n) {
-			const ms = Number(timings.slowest.eslint / 1000000n);
-			reporter.warn(
-				markup`Spent <emphasis>${humanizeDuration(
-					ms,
-					{longform: true, allowMilliseconds: true},
-				)}</emphasis> running ESLint`,
-			);
+		const timings = runner.processIntegrationTimings();
+		for (const timing of timings.total.values()) {
+			if (timing.took > 0n) {
+				const ms = Number(timing.took / 1000000n);
+				reporter.warn(
+					markup`Spent <emphasis>${humanizeDuration(
+						ms,
+						{longform: true, allowMilliseconds: true},
+					)}</emphasis> running ${timing.displayName}`,
+				);
+			}
 		}
 	});
 
@@ -174,7 +175,7 @@ class CheckRunner {
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
 		this.timingsByWorker = new ExtendedMap(
 			"timingsByWorker",
-			() => EMPTY_LINT_TIMINGS,
+			() => new Map(),
 		);
 	}
 
@@ -189,31 +190,32 @@ class CheckRunner {
 	private request: ServerRequest;
 	private graph: DependencyGraph;
 	private options: CheckerOptions;
-	private timingsByWorker: ExtendedMap<number, WorkerLintTimings>;
+	private timingsByWorker: ExtendedMap<number, WorkerIntegrationTimings>;
 
-	public getFinalTimings(): {
-		slowest: WorkerLintTimings;
-		total: WorkerLintTimings;
+	public processIntegrationTimings(): {
+		slowest: WorkerIntegrationTimings;
+		total: WorkerIntegrationTimings;
 	} {
-		let slowest: WorkerLintTimings = EMPTY_LINT_TIMINGS;
-		let total: WorkerLintTimings = EMPTY_LINT_TIMINGS;
+		let slowest: WorkerIntegrationTimings = new Map();
+		let total: WorkerIntegrationTimings = new Map();
 
 		for (const timings of this.timingsByWorker.values()) {
-			total.eslint += timings.eslint;
-			total.prettier += timings.prettier;
+			for (let [key, timing] of timings) {
+				const existingTotal = total.get(key);
 
-			if (timings.eslint > slowest.eslint) {
-				slowest = {
-					...slowest,
-					eslint: timings.eslint,
-				};
-			}
+				if (existingTotal === undefined) {
+					total.set(key, timing);
+				} else {
+					total.set(key, {
+						...existingTotal,
+						took: existingTotal.took + timing.took,
+					});
+				}
 
-			if (timings.prettier > slowest.prettier) {
-				slowest = {
-					...slowest,
-					prettier: timings.prettier,
-				};
+				const existingSlowest = slowest.get(key);
+				if (existingSlowest === undefined || existingSlowest.took > timing.took) {
+					slowest.set(key, timing);
+				}
 			}
 		}
 
@@ -300,15 +302,20 @@ class CheckRunner {
 					this.request.queueSaveFile(path, save);
 				}
 
+				// Update timings
 				const workerId = server.fileAllocator.getOwnerAssert(path).id;
 				const workerTimings = this.timingsByWorker.assert(workerId);
-				this.timingsByWorker.set(
-					workerId,
-					{
-						eslint: workerTimings.eslint + timingsNs.eslint,
-						prettier: workerTimings.prettier + timingsNs.prettier,
-					},
-				);
+				for (let [key, timing] of timingsNs) {
+					const existing = workerTimings.get(key);
+					if (existing === undefined) {
+						workerTimings.set(key, timing);
+					} else {
+						workerTimings.set(key, {
+							...existing,
+							took: existing.took + timing.took,
+						});
+					}
+				}
 
 				progress.popText(progressId);
 				progress.tick();
