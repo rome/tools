@@ -48,18 +48,18 @@ type BrowserIds =
  * Key should be the following format: `${BrowserIds}:${version: string}`
  */
 const browserCache = new Map<string, Browser>();
-const aliases = loadAliases();
+let aliases: Map<string, BrowserIds>;
 
 function loadAliases(): Map<string, BrowserIds> {
-	const consumer = consumeUnknown(data, "parse").get("agents");
+	const agents = consumeUnknown(data, "parse").get("agents");
 	const abbr = new Map<string, BrowserIds>();
-	for (const key in consumer.asUnknownObject()) {
+	for (const key in agents.asUnknownObject()) {
 		abbr.set(
-			consumer.get(key).get("a").asString().toLowerCase(),
+			agents.get(key).get("a").asString().toLowerCase(),
 			key as BrowserIds,
 		);
 		abbr.set(
-			consumer.get(key).get("b").asString().toLowerCase(),
+			agents.get(key).get("b").asString().toLowerCase(),
 			key as BrowserIds,
 		);
 	}
@@ -69,6 +69,8 @@ function loadAliases(): Map<string, BrowserIds> {
 export function getBrowser(
 	{name, version}: GetBrowserOptions,
 ): Browser | undefined {
+	if (!aliases) aliases = loadAliases();
+
 	const id = aliases.get(name.toLowerCase()) ?? name.toLowerCase();
 
 	if (browserCache.has(`${id}:${version ?? "current"}`)) {

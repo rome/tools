@@ -33,7 +33,7 @@ browser = getBrowser({
 });
 // Same as new Firefox({version: "72"});
 
-// If the either the browser or the version doesn't exist, getBrowser() returns undefined
+// If either the browser or the version doesn't exist, getBrowser() returns undefined
 browser = getBrowser({
 	name: "TotallyNotABrowser",
 	version: "MyAwesomeFakeVersion"
