@@ -348,6 +348,7 @@ export function isPathMap(val: unknown): val is PathMap<unknown> {
 	);
 }
 
-export type PathMapValue<Map> = Map extends BasePathMap<any, infer V>
+// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
+export type PathMapValue<T> = T extends BasePathMap<AnyPath, infer V>
 	? V
 	: never;

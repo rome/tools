@@ -35,7 +35,7 @@ import {
 	getDiagnosticsFromError,
 	isUserDiagnosticError,
 } from "./errors";
-import {AnyPath, MixedPathSet, equalPaths, UNKNOWN_PATH} from "@internal/path";
+import {AnyPath, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {

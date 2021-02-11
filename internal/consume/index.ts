@@ -12,7 +12,7 @@ import {DiagnosticCategory} from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
 import {markupToPlainText} from "@internal/cli-layout";
 import {joinMarkupLines} from "@internal/markup";
-import { UNKNOWN_PATH } from "@internal/path";
+import {UNKNOWN_PATH} from "@internal/path";
 
 const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 	propertyMetadata: undefined,
@@ -48,7 +48,8 @@ export function consumeUnknown(
 		context: {
 			category,
 			categoryValue,
-			getDiagnosticLocation: (keys, target) => {
+			getDiagnosticLocation: (keys) => {
+				// TODO support `target` param
 				const res = markupToPlainText(
 					prettyFormatEager(value, {insertLocator: keys}),
 				);

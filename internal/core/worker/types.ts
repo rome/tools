@@ -14,7 +14,7 @@ import {
 import {BridgeClient} from "@internal/events";
 import {FormatterOptions} from "@internal/formatter";
 import {ModuleSignature} from "@internal/js-analysis";
-import { StaticMarkup } from "@internal/markup";
+import {StaticMarkup} from "@internal/markup";
 import {Number0} from "@internal/ob1";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";

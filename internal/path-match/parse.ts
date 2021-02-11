@@ -47,17 +47,17 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 
 			case "\n":
 				return parser.finishToken("EOL");
-	
+
 			case "/":
 				return parser.finishToken("Separator");
-		
+
 			case "!": {
 				if (index === ob1Number0 || parser.getCurrentToken().type === "EOL") {
 					return parser.finishToken("Exclamation");
 				}
 				break;
 			}
-			
+
 			case "#": {
 				if (parser.getPositionFromIndex(index).column === ob1Number0) {
 					const [value, end] = parser.readInputFrom(index, isntNewline);
@@ -65,7 +65,7 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 				}
 				break;
 			}
-	
+
 			case "\\": {
 				if (nextChar === "\\") {
 					return parser.finishToken("Separator", ob1Add(index, 2));

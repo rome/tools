@@ -975,13 +975,17 @@ export default class Consumer {
 	}
 
 	public async asPromise(def?: PromiseLike<unknown>): Promise<Consumer> {
-		const obj = this.asOriginalUnknownObject();
-		let value;
+		let value: unknown;
 
-		if (typeof obj.then === "function") {
-			value = await obj;
+		if (this.isObject()) {
+			const obj = this.asOriginalUnknownObject();
+			if (typeof obj.then === "function") {
+				value = await obj;
+			} else {
+				value = obj;
+			}
 		} else {
-			value = obj;
+			value = this.getValue(def);
 		}
 
 		return consumeUnknown(

@@ -24,10 +24,10 @@ Array [
 					handleUnexpected: undefined
 					hasHandledUnexpected: false
 					onDefinition: undefined
-					path: undefined
 					usedNames: Set ["target"]
 					keyPath: Array ["target"]
 					parent: Circular ___R$project$rome$$internal$consume$Consumer_ts$default 2
+					path: UIDPath<unknown>
 					propertyMetadata: Object {getDiagnosticLocation: Function getDiagnosticLocation}
 					context: Object {
 						category: "parse"
@@ -41,9 +41,9 @@ Array [
 			keyPath: Array []
 			onDefinition: undefined
 			parent: undefined
-			path: undefined
 			propertyMetadata: undefined
 			usedNames: Set ["target"]
+			path: UIDPath<unknown>
 			context: Object {
 				category: "parse"
 				categoryValue: "romemarkup"
@@ -76,9 +76,9 @@ Array [
 			keyPath: Array []
 			onDefinition: undefined
 			parent: undefined
-			path: undefined
 			propertyMetadata: undefined
 			usedNames: Set []
+			path: UIDPath<unknown>
 			context: Object {
 				category: "parse"
 				categoryValue: "romemarkup"
@@ -109,9 +109,9 @@ Array [
 			keyPath: Array []
 			onDefinition: undefined
 			parent: undefined
-			path: undefined
 			propertyMetadata: undefined
 			usedNames: Set []
+			path: UIDPath<unknown>
 			context: Object {
 				category: "parse"
 				categoryValue: "romemarkup"
@@ -137,9 +137,9 @@ Array [
 					keyPath: Array []
 					onDefinition: undefined
 					parent: undefined
-					path: undefined
 					propertyMetadata: undefined
 					usedNames: Set []
+					path: UIDPath<unknown>
 					context: Object {
 						category: "parse"
 						categoryValue: "romemarkup"

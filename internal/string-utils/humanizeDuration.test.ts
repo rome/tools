@@ -33,23 +33,23 @@ test(
 		t.inlineSnapshot(humanizeDuration(100_000_000, opts), "27h46m40.00s");
 
 		const longOpts = {longform: true};
-		t.inlineSnapshot(humanizeDuration(1, longOpts), "0.00 seconds");
-		t.inlineSnapshot(humanizeDuration(10, longOpts), "0.01 seconds");
-		t.inlineSnapshot(humanizeDuration(100, longOpts), "0.10 seconds");
+		t.inlineSnapshot(humanizeDuration(1, longOpts), "0.00 seconds ");
+		t.inlineSnapshot(humanizeDuration(10, longOpts), "0.01 seconds ");
+		t.inlineSnapshot(humanizeDuration(100, longOpts), "0.10 seconds ");
 		t.inlineSnapshot(humanizeDuration(1_000, longOpts), "1 second");
 		t.inlineSnapshot(humanizeDuration(10_000, longOpts), "10 seconds");
-		t.inlineSnapshot(humanizeDuration(100_000, longOpts), "1 minute40 seconds");
+		t.inlineSnapshot(humanizeDuration(100_000, longOpts), "1 minute 40 seconds");
 		t.inlineSnapshot(
 			humanizeDuration(1_000_000, longOpts),
-			"16 minutes40 seconds",
+			"16 minutes 40 seconds",
 		);
 		t.inlineSnapshot(
 			humanizeDuration(10_000_000, longOpts),
-			"2 hours46 minutes40 seconds",
+			"2 hours 46 minutes 40 seconds",
 		);
 		t.inlineSnapshot(
 			humanizeDuration(100_000_000, longOpts),
-			"27 hours46 minutes40 seconds",
+			"27 hours 46 minutes 40 seconds",
 		);
 	},
 );

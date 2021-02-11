@@ -35,9 +35,7 @@ import {markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
-import {
-	WorkerIntegrationTimings,
-} from "@internal/core/worker/types";
+import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 import {ExtendedMap} from "@internal/collections";
 import {humanizeDuration} from "@internal/string-utils";
 
@@ -173,10 +171,7 @@ class CheckRunner {
 		this.events = events;
 		this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
-		this.timingsByWorker = new ExtendedMap(
-			"timingsByWorker",
-			() => new Map(),
-		);
+		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => new Map());
 	}
 
 	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
@@ -206,10 +201,13 @@ class CheckRunner {
 				if (existingTotal === undefined) {
 					total.set(key, timing);
 				} else {
-					total.set(key, {
-						...existingTotal,
-						took: existingTotal.took + timing.took,
-					});
+					total.set(
+						key,
+						{
+							...existingTotal,
+							took: existingTotal.took + timing.took,
+						},
+					);
 				}
 
 				const existingSlowest = slowest.get(key);
@@ -310,10 +308,13 @@ class CheckRunner {
 					if (existing === undefined) {
 						workerTimings.set(key, timing);
 					} else {
-						workerTimings.set(key, {
-							...existing,
-							took: existing.took + timing.took,
-						});
+						workerTimings.set(
+							key,
+							{
+								...existing,
+								took: existing.took + timing.took,
+							},
+						);
 					}
 				}
 
@@ -335,8 +336,10 @@ class CheckRunner {
 		progress.end();
 	}
 
-	private filterCheckDependenciesEnabled(set: AbsoluteFilePathSet): Array<AbsoluteFilePath> {
-		return Array.from(set).filter(path => {
+	private filterCheckDependenciesEnabled(
+		set: AbsoluteFilePathSet,
+	): AbsoluteFilePath[] {
+		return Array.from(set).filter((path) => {
 			const project = this.server.projectManager.assertProjectExisting(path);
 			return project.config.check.dependencies;
 		});
@@ -624,7 +627,7 @@ export default class Checker {
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
-			onChanges: async ({evictedPaths, changes, totalCount, savedCount, runner}) => {
+			onChanges: async ({changes, totalCount, savedCount, runner}) => {
 				const printer = createDiagnosticsPrinter(
 					runner,
 					request,

@@ -9,14 +9,17 @@ import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import url = require("url");
 
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
-import { AnyPath, UNKNOWN_PATH } from "@internal/path";
+import {AnyPath, UNKNOWN_PATH} from "@internal/path";
 
 export type ConsumableUrl = {
 	href: Consumer;
 	query: Consumer;
 };
 
-export function consumeUrl(rawUrl: string, path: AnyPath = UNKNOWN_PATH): ConsumableUrl {
+export function consumeUrl(
+	rawUrl: string,
+	path: AnyPath = UNKNOWN_PATH,
+): ConsumableUrl {
 	const parts = url.parse(rawUrl, true);
 
 	const query = consumeUnknown({...parts.query}, "parse", "urlquery");

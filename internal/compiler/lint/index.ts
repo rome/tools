@@ -107,7 +107,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		},
 		frozen: true,
 	});
-	
+
 	if (shouldLint) {
 		// Run lints (could be with the autofixed AST)
 		const newAst = context.reduceRoot(visitors);
@@ -118,10 +118,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 
 	const result: LintResult = {
 		suppressions: context.suppressions,
-		diagnostics: [
-			...ast.diagnostics,
-			...context.diagnostics.getDiagnostics(),
-		],
+		diagnostics: [...ast.diagnostics, ...context.diagnostics.getDiagnostics()],
 		formatted: formattedCode,
 	};
 	lintCache.set(query, result);

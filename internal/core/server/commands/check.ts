@@ -7,8 +7,8 @@
 
 import {ServerRequest} from "@internal/core";
 import Checker, {
-	LinterCompilerOptionsPerFile,
 	CheckerOptions,
+	LinterCompilerOptionsPerFile,
 } from "../checker/Checker";
 import {markup} from "@internal/markup";
 import {createServerCommand} from "../commands";

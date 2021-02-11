@@ -50,7 +50,10 @@ export function matchPath(
 	}
 }
 
-function getGreater(pattern: PathPatternNode, matches: undefined | Matches): Matches {
+function getGreater(
+	pattern: PathPatternNode,
+	matches: undefined | Matches,
+): Matches {
 	if (matches === undefined || pattern.segments.length > matches.segments) {
 		return {
 			segments: pattern.segments.length,
@@ -61,12 +64,14 @@ function getGreater(pattern: PathPatternNode, matches: undefined | Matches): Mat
 	}
 }
 
-type MatchPatternResult = {
-	type: "NO_MATCH";
-} | {
-	type: "IMPLICIT_MATCH" | "EXPLICIT_MATCH";
-	pattern: PathPattern;
-};
+type MatchPatternResult =
+	| {
+			type: "NO_MATCH";
+		}
+	| {
+			type: "IMPLICIT_MATCH" | "EXPLICIT_MATCH";
+			pattern: PathPattern;
+		};
 
 type Matches = {
 	segments: number;

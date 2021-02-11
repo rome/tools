@@ -1,12 +1,16 @@
-import {lint, LintResult} from "@internal/compiler";
-import {catchDiagnostics, descriptions, Diagnostics} from "@internal/diagnostics";
+import {LintResult, lint} from "@internal/compiler";
+import {
+	Diagnostics,
+	catchDiagnostics,
+	descriptions,
+} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {
 	WorkerFormatOptions,
 	WorkerFormatResult,
+	WorkerIntegrationTimings,
 	WorkerLintOptions,
 	WorkerLintResult,
-	WorkerIntegrationTimings,
 	WorkerParseOptions,
 } from "./types";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers";
@@ -189,14 +193,11 @@ export async function compilerLint(
 
 	// If lint and format are disabled then we could just be a glorified ESLint runner and there's no point running the compiler
 	if (project.config.lint.enabled || project.config.format.enabled) {
-		const parsed = await worker.parse(
-			ref,
-			parseOptions,
-		);
+		const parsed = await worker.parse(ref, parseOptions);
 
 		const {ast} = parsed;
 		({mtimeNs, sourceText, astModifiedFromSource} = parsed);
-		
+
 		res = await lint({
 			applySafeFixes: options.applySafeFixes,
 			suppressionExplanation: options.suppressionExplanation,
@@ -249,11 +250,14 @@ export async function compilerLint(
 
 	const eslintResult = await maybeRunESLint({worker, ref, project});
 	if (eslintResult !== undefined) {
-		timingsNs.set("eslint", {
-			type: "official",
-			displayName: "ESLint",
-			took: eslintResult.timingNs,
-		});
+		timingsNs.set(
+			"eslint",
+			{
+				type: "official",
+				displayName: "ESLint",
+				took: eslintResult.timingNs,
+			},
+		);
 
 		diagnostics = [...diagnostics, ...eslintResult.diagnostics];
 	}

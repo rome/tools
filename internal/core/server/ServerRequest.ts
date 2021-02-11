@@ -79,8 +79,8 @@ import {
 	AnyPath,
 	RelativeFilePath,
 	createAbsoluteFilePath,
-	createUIDPath,
 	createAnyPath,
+	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
@@ -1233,7 +1233,9 @@ export default class ServerRequest {
 
 				onSearchNoMatch: async (path) => {
 					if (!opts.ignoreArgumentMisses) {
-						const location = argToLocation.get(path) ?? this.getDiagnosticLocationFromFlags("none");
+						const location =
+							argToLocation.get(path) ??
+							this.getDiagnosticLocationFromFlags("none");
 						await this.server.projectManager.assertProject(path, location);
 						await globUnmatched(this, opts, path, location);
 					}

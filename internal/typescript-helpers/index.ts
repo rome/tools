@@ -22,10 +22,13 @@ export type AsyncCallback<Return, Args extends unknown[] = []> = Args extends []
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 
-export type MapKey<T> = T extends Map<infer K, any> ? K : never;
+// rome-ignore lint/js/noUndeclaredVariables(K): don't yet support scope tracking `infer`
+export type MapKey<T> = T extends Map<infer K, unknown> ? K : never;
 
-export type MapValue<T> = T extends Map<any, infer V> ? V : never;
+// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
+export type MapValue<T> = T extends Map<unknown, infer V> ? V : never;
 
+// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
 export type SetValue<T> = T extends Set<infer V> ? V : never;
 
 // rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables(I): future cleanup

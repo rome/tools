@@ -15,7 +15,7 @@ import {
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
-import {AnyPath, isPath, UNKNOWN_PATH} from "@internal/path";
+import {AnyPath, UNKNOWN_PATH, isPath} from "@internal/path";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -48,7 +48,7 @@ export function isntWhitespace(char: string): boolean {
 export function createParser<
 	Types extends ParserCoreTypes,
 	Impl extends ParserCoreImplementation<Types> = ParserCoreImplementation<Types>
->(impl: Impl): ParserCoreFactory<Types, Impl> {
+>(impl: Impl): ParserCoreFactory<Types> {
 	return {
 		create: (
 			opts: Types["options"],
@@ -205,13 +205,15 @@ export function extractSourceLocationRangeFromNodes(
 			end = loc.end;
 		}
 
-		if (!hasPath) {
+		if (hasPath) {
+			if (path !== loc.path) {
+				throw new Error(
+					pretty`Mixed filenames in node, expected ${path} but got ${loc.path}`,
+				);
+			}
+		} else {
 			path = loc.path;
 			hasPath = true;
-		} else if (path !== loc.path) {
-			throw new Error(
-				pretty`Mixed filenames in node, expected ${path} but got ${loc.path}`,
-			);
 		}
 	}
 

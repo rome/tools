@@ -16,7 +16,7 @@ import {
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
-import {createAbsoluteFilePath, UNKNOWN_PATH} from "@internal/path";
+import {UNKNOWN_PATH, createAbsoluteFilePath} from "@internal/path";
 import {lstatSync} from "@internal/fs";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {

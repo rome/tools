@@ -12,7 +12,19 @@ const eslintLoader = new IntegrationLoader({
 	range: "^7.0.0",
 	normalize: (consumer, cwd) => {
 		const Factory = consumer.get("ESLint").asFunction();
-		const eslint = Reflect.construct(Factory, [{cwd: cwd.join(), globInputPaths: false, fix: true, rulePaths: ["/Users/sebmck/Scratch/TypeScript/scripts/eslint/built/rules"]}]);
+		const eslint = Reflect.construct(
+			Factory,
+			[
+				{
+					cwd: cwd.join(),
+					globInputPaths: false,
+					fix: true,
+					rulePaths: [
+						"/Users/sebmck/Scratch/TypeScript/scripts/eslint/built/rules",
+					],
+				},
+			],
+		);
 		return consumer.setValue(eslint);
 	},
 });
@@ -40,7 +52,7 @@ export async function maybeRunESLint(
 	const diagnostics: Diagnostics = [];
 
 	const loader = await eslintLoader.load(project.configPath, project.directory);
-	
+
 	const ignored = await eslintLoader.wrap(async () => {
 		const isPathIgnored = loader.module.get("isPathIgnored").asWrappedFunction();
 		return (await isPathIgnored(ref.real.join()).asPromise()).asBoolean();
@@ -48,7 +60,7 @@ export async function maybeRunESLint(
 
 	if (!ignored) {
 		const content = await worker.readFileText(ref);
-		
+
 		const results = await eslintLoader.wrap(async () => {
 			const lintText = loader.module.get("lintText").asWrappedFunction();
 			return await lintText(content, {filePath: ref.real.join()}).asPromise();
