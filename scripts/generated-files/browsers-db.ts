@@ -367,7 +367,10 @@ async function updateData() {
 		data: generateDataData(rawData),
 	};
 
-	await writeFile(browsersDbFolder.append("data.json"), JSON.stringify(mapToObject(data)));
+	await writeFile(
+		browsersDbFolder.append("data.json"),
+		JSON.stringify(mapToObject(data)),
+	);
 
 	progress.end();
 }
@@ -484,7 +487,10 @@ async function updateRegions() {
 		progress.tick();
 	}
 
-	await writeFile(browsersDbFolder.append("regions.json"), JSON.stringify(mapToObject(regionsUsage)));
+	await writeFile(
+		browsersDbFolder.append("regions.json"),
+		JSON.stringify(mapToObject(regionsUsage)),
+	);
 
 	progress.end();
 }
