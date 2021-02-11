@@ -74,7 +74,7 @@ export default createVisitor({
 
 				// Get the export default id
 				const id = declaration.id;
-				if (id !== undefined && context.path !== undefined) {
+				if (id !== undefined) {
 					const type =
 						declaration.type === "JSFunctionDeclaration" ? "function" : "class";
 					const basename = filenameToId(context.path, type === "class");

@@ -615,9 +615,7 @@ export async function normalizeManifest(
 	consumer: Consumer,
 	projects: CompilerProjects,
 ): Promise<Manifest> {
-	const loose =
-		consumer.path !== undefined &&
-		consumer.path.getSegments().includes("node_modules");
+	const loose = consumer.path.hasSegment("node_modules");
 
 	// Check for typos. Ignore them in loose mode.
 	if (!loose) {

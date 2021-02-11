@@ -14,7 +14,9 @@ import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
-import {AnyPath, MixedPathSet} from "@internal/path";
+import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
+
+export type DiagnosticsPathMap = MixedPathMap<Diagnostics>;
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;

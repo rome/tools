@@ -382,12 +382,7 @@ export default class RSERBufferAssembler {
 
 	private encodeSourceLocation(loc: SourceLocation) {
 		this.writeCode(VALUE_CODES.SOURCE_LOCATION);
-
-		if (loc.path === undefined) {
-			this.encodeUndefined();
-		} else {
-			this.encodePath(loc.path);
-		}
+		this.encodePath(loc.path);
 
 		// We don't use encodeValue here as we want to allow identifierName to use our reference table
 		if (loc.identifierName === undefined) {

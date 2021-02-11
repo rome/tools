@@ -178,7 +178,7 @@ async function ask(
 		wrapErrors: true,
 	});
 	diag = printer.processor.addDiagnosticAssert(diag);
-	await printer.print();
+	await printer.print({showFooter: false});
 
 	const answer = await reporter.radio(
 		markup`How do you want to resolve this?`,

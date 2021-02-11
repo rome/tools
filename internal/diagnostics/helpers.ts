@@ -155,10 +155,6 @@ export function diagnosticLocationToMarkupFilelink(
 ): StaticMarkup {
 	const {start, path} = loc;
 
-	if (path === undefined) {
-		return markup`unknown`;
-	}
-
 	if (start === undefined) {
 		return markup`<filelink target="${path.join()}" />`;
 	}

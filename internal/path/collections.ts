@@ -166,6 +166,13 @@ abstract class BasePathSet<
 		return this.map.has(path);
 	}
 
+	public addSet(set: BasePathSet<Path, PathMap>): this {
+		for (const path of set) {
+			this.add(path);
+		}
+		return this;
+	}
+
 	public add(path: Path): this {
 		this.map.set(path);
 		this._updateSize();

@@ -12,6 +12,7 @@ import {
 	DiagnosticSuppression,
 	DiagnosticSuppressions,
 	Diagnostics,
+	DiagnosticsPathMap,
 } from "./types";
 import {addOriginsToDiagnostics} from "./derive";
 import {DiagnosticsError} from "./errors";
@@ -25,6 +26,7 @@ import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
 import {MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
+import {Event} from "@internal/events";
 
 type UniquePart =
 	| "filename"
@@ -52,11 +54,6 @@ const DEFAULT_UNIQUE: UniqueRules = [
 	["label", "category", "filename", "message", "start.line", "start.column"],
 ];
 
-type DiagnosticsByPath = {
-	map: MixedPathMap<Diagnostics>;
-	pathless: Diagnostics;
-};
-
 export default class DiagnosticsProcessor {
 	constructor(options: DiagnosticsProcessorOptions = {}) {
 		this.filters = [];
@@ -79,9 +76,14 @@ export default class DiagnosticsProcessor {
 
 		this.diagnostics = [];
 		this.cachedDiagnostics = undefined;
+
+		this.newDiagnosticEvent = new Event({
+			name: "newDiagnosticEvent",
+		});
 	}
 
 	public normalizer: DiagnosticsNormalizer;
+	public newDiagnosticEvent: Event<Diagnostic>;
 
 	private ignoreDiagnosticsForDependentsOf: MixedPathSet;
 
@@ -341,6 +343,7 @@ export default class DiagnosticsProcessor {
 			}
 
 			this.diagnostics.push(diag);
+			this.newDiagnosticEvent.send(diag);
 			added.push(diag);
 
 			for (const key of keys) {
@@ -361,24 +364,16 @@ export default class DiagnosticsProcessor {
 		return added;
 	}
 
-	public getDiagnosticsByPath(): DiagnosticsByPath {
-		const byPath: DiagnosticsByPath = {
-			map: new MixedPathMap(),
-			pathless: [],
-		};
+	public getDiagnosticsByPath(): DiagnosticsPathMap {
+		const byPath: DiagnosticsPathMap = new MixedPathMap();
 
 		for (const diag of this.getDiagnostics()) {
 			const {path} = diag.location;
 
-			if (path === undefined) {
-				byPath.pathless.push(diag);
-				continue;
-			}
-
-			let pathDiagnostics = byPath.map.get(path);
+			let pathDiagnostics = byPath.get(path);
 			if (pathDiagnostics === undefined) {
 				pathDiagnostics = [];
-				byPath.map.set(path, pathDiagnostics);
+				byPath.set(path, pathDiagnostics);
 			}
 			pathDiagnostics.push(diag);
 		}

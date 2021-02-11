@@ -33,6 +33,7 @@ export type DiagnosticsFileHandler = {
 export type DiagnosticsPrinterOptions = {
 	processor: DiagnosticsProcessor;
 	reporter: Reporter;
+	streaming?: boolean;
 	wrapErrors?: boolean;
 	cwd?: AbsoluteFilePath;
 	flags?: DiagnosticsPrinterFlags;

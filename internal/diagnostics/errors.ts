@@ -72,7 +72,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 			wrapErrors: true,
 		});
 		for (const diag of this.diagnostics) {
-			printer.printDiagnostic(diag);
+			printer.printDiagnostic(diag, reporter);
 		}
 		message += stream.read();
 		insideDiagnosticsErrorSerial = false;

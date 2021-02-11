@@ -511,7 +511,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		}
 
 		let sourceText;
-		if (this.path === undefined) {
+		if (this.options.path === undefined || this.options.includeSourceTextInDiagnostics) {
 			sourceText = this.sourceText;
 		}
 

@@ -282,19 +282,19 @@ export default class ServerRequest {
 		this.files.set(path, opts);
 	}
 
-	public async flushFiles(): Promise<number> {
+	public async flushFiles(): Promise<AbsoluteFilePathSet> {
 		const {files} = this;
 		const {server} = this;
 		const {logger} = server;
 
 		if (files.size === 0) {
 			this.logger.info(markup`No files to write`);
-			return 0;
+			return new AbsoluteFilePathSet();
 		} else if (this.query.noFileWrites) {
 			this.logger.info(
 				markup`Writing no files due to noFileWrites flag being set`,
 			);
-			return 0;
+			return new AbsoluteFilePathSet();
 		}
 
 		this.files = new AbsoluteFilePathMap();
@@ -348,7 +348,7 @@ export default class ServerRequest {
 		await this.server.recoveryStore.commit(this);
 		this.logger.info(markup`Flushed ${totalFiles} files`);
 
-		return totalFiles;
+		return files.keysToSet();
 	}
 
 	public updateRequestFlags(flags: Partial<ClientRequestFlags>) {
@@ -582,6 +582,7 @@ export default class ServerRequest {
 
 	public createDiagnosticsPrinter(
 		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
+		opts: Partial<Omit<DiagnosticsPrinterOptions, "processor">> = {}
 	): DiagnosticsPrinter {
 		processor.unshiftOrigin({
 			category: "server",
@@ -589,12 +590,20 @@ export default class ServerRequest {
 		});
 
 		return new DiagnosticsPrinter({
-			processor,
+			streaming: true,
 			reporter: this.reporter,
 			cwd: this.client.flags.cwd,
 			wrapErrors: true,
-			flags: this.getDiagnosticsPrinterFlags(),
-			fileHandlers: this.createDiagnosticsPrinterFileHandlers(),
+			...opts,
+			flags: {
+				...this.getDiagnosticsPrinterFlags(),
+				...opts.flags,
+			},
+			fileHandlers: [
+				...this.createDiagnosticsPrinterFileHandlers(),
+				...(opts.fileHandlers || []),
+			],
+			processor,
 		});
 	}
 
@@ -1301,12 +1310,10 @@ export default class ServerRequest {
 		}
 
 		if (shouldPrint) {
-			await printer.print();
-
-			// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
-			if (!(rawErr instanceof ServerRequestInvalid)) {
-				await printer.footer();
-			}
+			await printer.print({
+				// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
+				showFooter: !(rawErr instanceof ServerRequestInvalid)
+			});
 		}
 
 		const diagnostics = printer.processor.getDiagnostics();

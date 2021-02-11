@@ -68,7 +68,7 @@ export const resolver = createDiagnosticsCategory({
 							const {location, source} = formatExportedName(name);
 							let format = markup`${name}`;
 
-							if (location?.path !== undefined) {
+							if (location !== undefined) {
 								if (location.start === undefined) {
 									format = markup`<filelink target="${location.path.join()}">${name}</filelink>`;
 								} else {

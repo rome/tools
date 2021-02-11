@@ -953,6 +953,8 @@ export default class Server {
 
 				await Promise.race(promises);
 
+				let foo;
+
 				// Only the command promise should have won the race with a resolve
 				const data = await commandPromise;
 				return {

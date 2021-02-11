@@ -19,7 +19,6 @@ import {
 import {
 	MarkupRGB,
 	StaticMarkup,
-	joinMarkupLines,
 	markup,
 } from "@internal/markup";
 import {Reporter} from "@internal/cli-reporter";
@@ -28,7 +27,7 @@ import {
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
 } from "./types";
-import {formatAnsiRGB, markupToPlainText} from "@internal/cli-layout";
+import {formatAnsiRGB} from "@internal/cli-layout";
 import {ToLines, concatFileHandlers, toLines} from "./utils";
 import {printAdvice} from "./printAdvice";
 import {default as successBanner} from "./banners/success.json";
@@ -46,6 +45,7 @@ import {createReadStream, exists, lstat} from "@internal/fs";
 import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 import {sha256} from "@internal/string-utils";
+import { GlobalLock } from "@internal/async";
 
 type RawBanner = {
 	palettes: MarkupRGB[];
@@ -153,6 +153,10 @@ export default class DiagnosticsPrinter extends Error {
 		this.filteredCount = 0;
 		this.truncatedCount = 0;
 
+		this.printLock = new GlobalLock();
+		this.seenDiagnostics = new Set();
+		this.streaming = opts.streaming ?? false;
+
 		this.defaultFooterEnabled = true;
 		this.hasTruncatedDiagnostics = false;
 		this.missingFileSources = new MixedPathSet();
@@ -160,12 +164,25 @@ export default class DiagnosticsPrinter extends Error {
 		this.fileHashes = new MixedPathMap();
 		this.dependenciesByDiagnostic = new Map();
 		this.onFooterPrintCallbacks = [];
+
+		if (this.streaming) {
+			if (this.processor.hasDiagnostics()) {
+				this.printBody(this.processor.getDiagnostics());
+
+				this.processor.newDiagnosticEvent.subscribe((diag) => {
+					this.printBody([diag]);
+				});
+			}
+		}
 	}
 
 	public processor: DiagnosticsProcessor;
 	public flags: DiagnosticsPrinterFlags;
 	public defaultFooterEnabled: boolean;
 
+	private streaming: boolean;
+	private seenDiagnostics: Set<Diagnostic>;
+	private printLock: GlobalLock;
 	private options: DiagnosticsPrinterOptions;
 	private reporter: Reporter;
 	private onFooterPrintCallbacks: {
@@ -500,15 +517,17 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	public async print() {
-		await this.wrapError(
-			"root",
-			async () => {
-				const filteredDiagnostics = this.filterDiagnostics();
-				await this.fetchFileSources(filteredDiagnostics);
-				await this.printDiagnostics(filteredDiagnostics);
-			},
-		);
+	public async printBody(diagnostics: Diagnostics) {
+		await this.printLock.wrap(async () => {
+			await this.wrapError(
+				"root",
+				async () => {
+					const filteredDiagnostics = this.filterDiagnostics(diagnostics);
+					await this.fetchFileSources(filteredDiagnostics);
+					await this.printDiagnostics(filteredDiagnostics);
+				},
+			);
+		});
 	}
 
 	private async wrapError(reason: string, callback: () => Promise<void>) {
@@ -532,8 +551,9 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	private async printDiagnostics(diagnostics: Diagnostics) {
-		const {reporter} = this;
-		const restoreRedirect = reporter.redirectOutToErr(true);
+		const reporter = this.reporter.fork({
+			shouldRedirectOutToErr: true,
+		});
 
 		for (const diag of diagnostics) {
 			this.printAuxiliaryDiagnostic(diag);
@@ -542,11 +562,11 @@ export default class DiagnosticsPrinter extends Error {
 		for (const diag of diagnostics) {
 			await this.wrapError(
 				"printDiagnostic",
-				async () => this.printDiagnostic(diag),
+				async () => this.printDiagnostic(diag, reporter),
 			);
 		}
 
-		reporter.redirectOutToErr(restoreRedirect);
+		reporter.teardown();
 	}
 
 	public getDiagnosticDependencyMeta(
@@ -602,17 +622,14 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				let log = `::error ${parts.join(",")}::${joinMarkupLines(
-					markupToPlainText(message),
-				)}`;
+				let log = `::error ${parts.join(",")}::${markupToJoinedPlainText(message)}`;
 				this.reporter.logRaw(log);
 				break;
 			}
 		}
 	}
 
-	public printDiagnostic(diag: Diagnostic) {
-		const {reporter} = this;
+	public printDiagnostic(diag: Diagnostic, reporter: Reporter) {
 		const {start, end, path} = diag.location;
 		let advice = [...diag.description.advice];
 
@@ -758,11 +775,16 @@ export default class DiagnosticsPrinter extends Error {
 		});
 	}
 
-	private filterDiagnostics(): Diagnostics {
-		const diagnostics = this.processor.getDiagnostics();
+	private filterDiagnostics(diagnostics: Diagnostics): Diagnostics {
 		const filteredDiagnostics: Diagnostics = [];
 
 		for (const diag of diagnostics) {
+			if (this.seenDiagnostics.has(diag)) {
+				continue;
+			} else {
+				this.seenDiagnostics.add(diag);
+			}
+
 			this.problemCount++;
 
 			if (this.shouldIgnore(diag)) {
@@ -796,7 +818,7 @@ export default class DiagnosticsPrinter extends Error {
 					// Include a more specific "X problems found" for each command
 					const hasProblems = printer.hasProblems();
 					if (hasProblems) {
-						printer.defaultFooter();
+						printer.printDefaultFooter();
 					}
 
 					for (const {callback} of onFooterPrintCallbacks) {
@@ -822,7 +844,7 @@ export default class DiagnosticsPrinter extends Error {
 		this.defaultFooterEnabled = false;
 	}
 
-	public defaultFooter() {
+	public printDefaultFooter() {
 		const {reporter} = this;
 		if (!this.defaultFooterEnabled) {
 			return;
@@ -846,7 +868,9 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	public async footer() {
+	private async printFooter() {
+		await this.printLock.wait();
+		
 		await this.wrapError(
 			"footer",
 			async () => {
@@ -894,7 +918,7 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				this.defaultFooter();
+				this.printDefaultFooter();
 
 				for (const {callback, after} of this.onFooterPrintCallbacks) {
 					if (after) {
@@ -903,6 +927,14 @@ export default class DiagnosticsPrinter extends Error {
 				}
 			},
 		);
+	}
+	
+	public async print({showFooter = true}: {showFooter?: boolean} = {}): Promise<void> {
+		await this.printBody(this.processor.getDiagnostics());
+
+		if (showFooter) {
+			await this.printFooter();
+		}
 	}
 
 	private showBanner(banner: RawBanner) {

@@ -164,6 +164,7 @@ export type ParserOptions = {
 	input?: string;
 	sourceText?: string;
 	offsetPosition?: Position;
+	includeSourceTextInDiagnostics?: boolean;
 };
 
 export type ParserUnexpectedOptions = {

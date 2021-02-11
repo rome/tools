@@ -69,6 +69,7 @@ import {
 import highlightShell from "@internal/markup-syntax-highlight/highlightShell";
 
 export type ReporterOptions = {
+	shouldRedirectOutToErr?: boolean;
 	streams?: ReporterStreamAttached[];
 	stdin?: NodeJS.ReadStream;
 	markupOptions?: MarkupFormatOptions;
@@ -106,7 +107,7 @@ export default class Reporter implements ReporterNamespace {
 		this.indentLevel = 0;
 		this.markupOptions =
 			opts.markupOptions === undefined ? {} : opts.markupOptions;
-		this.shouldRedirectOutToErr = false;
+		this.shouldRedirectOutToErr = opts.shouldRedirectOutToErr ?? false;
 		this.stdin = opts.stdin;
 		this.wrapperFactory = opts.wrapperFactory;
 		this.streamHandles = new Set();

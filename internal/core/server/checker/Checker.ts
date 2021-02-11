@@ -18,6 +18,7 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyPath,
+	MixedPathMap,
 } from "@internal/path";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -47,7 +48,7 @@ type CheckWatchChange =
 		}
 	| {
 			type: "unknown";
-			path: undefined | AnyPath;
+			path: AnyPath;
 			diagnostics: Diagnostics;
 		};
 
@@ -77,80 +78,9 @@ type WatchResults = {
 	runner: CheckRunner;
 	evictedPaths: AbsoluteFilePathSet;
 	changes: CheckWatchChanges;
-	savedCount: number;
+	savedPaths: AbsoluteFilePathSet;
 	totalCount: number;
 };
-
-function createDiagnosticsPrinter(
-	runner: CheckRunner,
-	request: ServerRequest,
-	processor: DiagnosticsProcessor,
-	totalCount: number,
-	savedCount: number,
-): DiagnosticsPrinter {
-	const printer = request.createDiagnosticsPrinter(processor);
-
-	printer.onFooterPrint(async (reporter, isError) => {
-		if (isError) {
-			let hasPendingFixes = false;
-
-			for (const {tags} of processor.getDiagnostics()) {
-				if (tags?.fixable) {
-					hasPendingFixes = true;
-				}
-			}
-
-			if (hasPendingFixes) {
-				reporter.info(
-					markup`Fixes available. To apply safe fixes and formatting run`,
-				);
-				reporter.command("rome check --apply");
-				reporter.info(markup`To choose fix suggestions run`);
-				reporter.command("rome check --review");
-				reporter.br();
-			}
-		}
-
-		if (savedCount > 0) {
-			reporter.success(
-				markup`<number emphasis>${String(savedCount)}</number> <grammarNumber plural="files" singular="file">${String(
-					savedCount,
-				)}</grammarNumber> updated`,
-			);
-			reporter.info(
-				markup`You can revert these changes with the <code>rome recover pop</code> command`,
-			);
-			reporter.br();
-		}
-
-		if (!isError) {
-			if (totalCount === 0) {
-				reporter.warn(markup`No files linted`);
-			} else {
-				reporter.info(
-					markup`<number emphasis>${String(totalCount)}</number> <grammarNumber plural="files" singular="file">${String(
-						totalCount,
-					)}</grammarNumber> linted`,
-				);
-			}
-		}
-
-		const timings = runner.processIntegrationTimings();
-		for (const timing of timings.total.values()) {
-			if (timing.took > 0n) {
-				const ms = Number(timing.took / 1000000n);
-				reporter.warn(
-					markup`Spent <emphasis>${humanizeDuration(
-						ms,
-						{longform: true, allowMilliseconds: true},
-					)}</emphasis> running ${timing.displayName}`,
-				);
-			}
-		}
-	});
-
-	return printer;
-}
 
 class CheckRunner {
 	constructor(
@@ -174,13 +104,14 @@ class CheckRunner {
 		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => new Map());
 	}
 
+	public events: WatchEvents;
+
 	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
 	private compilerDiagnosticsCache: AbsoluteFilePathMap<{
 		diagnostics: Diagnostics;
 		suppressions: DiagnosticSuppressions;
 	}>;
 	private checker: Checker;
-	private events: WatchEvents;
 	private server: Server;
 	private request: ServerRequest;
 	private graph: DependencyGraph;
@@ -465,7 +396,7 @@ class CheckRunner {
 
 		// In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
 		const includedPathsInDiagnostics = server.projectManager.categorizePaths(
-			diagnosticsByPath.map.keys(),
+			diagnosticsByPath.keys(),
 		);
 		for (const path of includedPathsInDiagnostics.absolutes) {
 			updatedPaths.add(path);
@@ -488,8 +419,8 @@ class CheckRunner {
 		for (const path of updatedPaths) {
 			// Could have been a UID that we turned into an absolute path so turn it back
 			const diagnostics = [
-				...(diagnosticsByPath.map.get(path) || []),
-				...(diagnosticsByPath.map.get(
+				...(diagnosticsByPath.get(path) || []),
+				...(diagnosticsByPath.get(
 					this.server.projectManager.getUid(path, true),
 				) || []),
 			];
@@ -508,15 +439,7 @@ class CheckRunner {
 			changes.push({
 				type: "unknown",
 				path,
-				diagnostics: diagnosticsByPath.map.get(path) || [],
-			});
-		}
-
-		if (includedPathsInDiagnostics.hasUndefined) {
-			changes.push({
-				type: "unknown",
-				path: undefined,
-				diagnostics: diagnosticsByPath.pathless,
+				diagnostics: diagnosticsByPath.get(path) || [],
 			});
 		}
 
@@ -543,12 +466,12 @@ class CheckRunner {
 		);
 
 		// Flush saved files
-		const savedCount = await this.request.flushFiles();
+		const savedPaths = await this.request.flushFiles();
 
 		return {
 			evictedPaths: event.paths,
 			changes,
-			savedCount,
+			savedPaths,
 			totalCount: event.paths.size,
 			runner: this,
 		};
@@ -590,15 +513,93 @@ export default class Checker {
 		return processor;
 	}
 
-	public async watch(events: WatchEvents): Promise<EventSubscription> {
+	private createDiagnosticsPrinter({runner, getStats, streaming}: {
+		streaming: boolean;
+		runner: CheckRunner,
+		getStats: () => {
+			totalCount: number,
+			savedCount: number,
+		},
+	}): DiagnosticsPrinter {
+		const {request} = this;
+		const processor = this.createDiagnosticsProcessor();
+		const printer = request.createDiagnosticsPrinter(processor, {streaming});
+
+		printer.onFooterPrint(async (reporter, isError) => {
+			if (isError) {
+				let hasPendingFixes = false;
+
+				for (const {tags} of processor.getDiagnostics()) {
+					if (tags?.fixable) {
+						hasPendingFixes = true;
+					}
+				}
+
+				if (hasPendingFixes) {
+					reporter.info(
+						markup`Fixes available. To apply safe fixes and formatting run`,
+					);
+					reporter.command("rome check --apply");
+					reporter.info(markup`To choose fix suggestions run`);
+					reporter.command("rome check --review");
+					reporter.br();
+				}
+			}
+
+			const {savedCount, totalCount} = getStats();
+
+			if (savedCount > 0) {
+				reporter.success(
+					markup`<number emphasis>${String(savedCount)}</number> <grammarNumber plural="files" singular="file">${String(
+						savedCount,
+					)}</grammarNumber> updated`,
+				);
+				reporter.info(
+					markup`You can revert these changes with the <code>rome recover pop</code> command`,
+				);
+				reporter.br();
+			}
+
+			if (!isError) {
+				if (totalCount === 0) {
+					reporter.warn(markup`No files linted`);
+				} else {
+					reporter.info(
+						markup`<number emphasis>${String(totalCount)}</number> <grammarNumber plural="files" singular="file">${String(
+							totalCount,
+						)}</grammarNumber> linted`,
+					);
+				}
+			}
+
+			const timings = runner.processIntegrationTimings();
+			for (const timing of timings.total.values()) {
+				if (timing.took > 0n) {
+					const ms = Number(timing.took / 1000000n);
+					reporter.warn(
+						markup`Spent <emphasis>${humanizeDuration(
+							ms,
+							{longform: true, allowMilliseconds: true},
+						)}</emphasis> running ${timing.displayName}`,
+					);
+				}
+			}
+		});
+
+		return printer;
+	}
+
+	public createRunner(events: WatchEvents): CheckRunner {
 		const graph = new DependencyGraph(
 			this.request,
 			this.request.getResolverOptionsFromFlags(),
 			{shallow: true},
 		);
 
-		const runner = new CheckRunner(this, {events, graph});
+		return new CheckRunner(this, {events, graph});
+	}
 
+	public async watch(runner: CheckRunner): Promise<EventSubscription> {
 		const globber = await this.request.glob({
 			args: this.options.args,
 			noun: "lint",
@@ -610,7 +611,7 @@ export default class Checker {
 		return globber.watch(async (event) => {
 			const processor = this.createDiagnosticsProcessor();
 			const result = await runner.run(event, processor);
-			await events.onChanges(result);
+			await runner.events.onChanges(result);
 		});
 	}
 
@@ -620,21 +621,22 @@ export default class Checker {
 
 		const diagnosticsByFilename: Map<undefined | string, Diagnostics> = new Map();
 
-		await this.watch({
+		const runner = this.createRunner({
 			onRunStart: () => {
 				reporter.clearScreen();
 			},
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
-			onChanges: async ({changes, totalCount, savedCount, runner}) => {
-				const printer = createDiagnosticsPrinter(
+			onChanges: async ({changes, totalCount, savedPaths, runner}) => {
+				const printer = this.createDiagnosticsPrinter({
+					streaming: true,
 					runner,
-					request,
-					this.createDiagnosticsProcessor(),
-					totalCount,
-					savedCount,
-				);
+					getStats: () => ({
+						totalCount,
+						savedCount: savedPaths.size,
+					}),
+				});
 
 				// Update our diagnostics with the changes
 				for (const {path, diagnostics} of changes) {
@@ -653,10 +655,9 @@ export default class Checker {
 
 				reporter.clearScreen();
 				await printer.print();
-				await printer.footer();
 			},
 		});
-
+		await this.watch(runner);
 		await request.endEvent.wait();
 	}
 
@@ -666,50 +667,60 @@ export default class Checker {
 	}> {
 		const {request} = this;
 		const {reporter} = request;
-		const diagnosticsByFilename: Map<undefined | string, Diagnostics> = new Map();
 
-		let savedCount = 0;
+		const streamingDiagnosticsByPath: MixedPathMap<Diagnostics> = new MixedPathMap();
+
+		let savedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-		let runner: undefined | CheckRunner;
 
-		const watchEvent = await this.watch({
+		// If we aren't saving then we can print diagnostics as we receive them.
+		// When we are saving, we may have diagnostics that eventually get cleared once we fix or format a file
+		const streaming = !this.shouldSave();
+
+		const runner = this.createRunner({
 			onRunStart: () => {},
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
 			onChanges: (res) => {
 				// Update counts
-				savedCount += res.savedCount;
+				savedPaths.addSet(res.savedPaths);
 				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
-				runner = res.runner;
 
 				// Update our diagnostics with the changes
 				for (const {path, diagnostics} of res.changes) {
-					const filename = path === undefined ? undefined : path.join();
-					if (diagnostics.length === 0) {
-						diagnosticsByFilename.delete(filename);
+					if (streaming) {
+						if (diagnostics.length === 0) {
+							streamingDiagnosticsByPath.delete(path);
+						} else {
+							streamingDiagnosticsByPath.set(path, diagnostics);
+						}
 					} else {
-						diagnosticsByFilename.set(filename, diagnostics);
+						printer.processor.addDiagnostics(diagnostics);
 					}
 				}
 			},
 		});
 
+		const printer = this.createDiagnosticsPrinter({
+			streaming,
+			runner,
+			getStats: () => ({
+				totalCount: paths.size,
+				savedCount: savedPaths.size,
+			}),
+		});
+
+		const watchEvent = await this.watch(runner);
 		await watchEvent.unsubscribe();
 
-		const printer = createDiagnosticsPrinter(
-			runner!,
-			request,
-			this.createDiagnosticsProcessor(),
-			paths.size,
-			savedCount,
-		);
-
-		for (const diagnostics of diagnosticsByFilename.values()) {
-			printer.processor.addDiagnostics(diagnostics);
+		if (streaming) {
+			for (const diagnostics of streamingDiagnosticsByPath.values()) {
+				printer.processor.addDiagnostics(diagnostics);
+			}
 		}
 
-		return {printer, savedCount};
+		return {printer, savedCount: savedPaths.size};
 	}
 
 	public async throwSingle() {

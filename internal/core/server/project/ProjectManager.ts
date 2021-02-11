@@ -249,22 +249,15 @@ export default class ProjectManager {
 	}
 
 	public categorizePaths(
-		paths: Iterable<undefined | AnyPath>,
+		paths: Iterable<AnyPath>,
 	): {
 		absolutes: AbsoluteFilePathSet;
 		unknowns: MixedPathSet;
-		hasUndefined: boolean;
 	} {
 		const unknowns = new MixedPathSet();
 		const absolutes = new AbsoluteFilePathSet();
-		let hasUndefined = false;
 
 		for (const path of paths) {
-			if (path === undefined) {
-				hasUndefined = true;
-				continue;
-			}
-
 			const absolute = this.getFilePathFromUidOrAbsolute(path);
 			if (absolute === undefined) {
 				unknowns.add(path);
@@ -273,7 +266,7 @@ export default class ProjectManager {
 			}
 		}
 
-		return {absolutes, unknowns, hasUndefined};
+		return {absolutes, unknowns};
 	}
 
 	private setUid(path: AbsoluteFilePath, uid: UIDPath) {

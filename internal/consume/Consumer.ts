@@ -299,10 +299,7 @@ export default class Consumer {
 
 	public wasInSource(): boolean {
 		const loc = this.getDiagnosticLocation();
-		return (
-			loc.path !== undefined &&
-			(loc.start !== undefined || loc.end !== undefined)
-		);
+		return loc.start !== undefined || loc.end !== undefined;
 	}
 
 	public getKeyPathString(path: ConsumePath = this.keyPath): string {

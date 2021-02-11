@@ -177,7 +177,7 @@ export default class LSPServer {
 	}
 
 	private async watchProject(path: AbsoluteFilePath, req: ServerRequest) {
-		const linter = new Checker(
+		const checker = new Checker(
 			req,
 			{
 				apply: false,
@@ -187,7 +187,7 @@ export default class LSPServer {
 			},
 		);
 
-		const subscription = await linter.watch({
+		const runner = await checker.createRunner({
 			onRunStart: () => {},
 			createProgress: () => {
 				return this.createProgress();
@@ -223,6 +223,8 @@ export default class LSPServer {
 				}
 			},
 		});
+
+		const subscription = await checker.watch(runner);
 
 		req.endEvent.subscribe(() => {
 			subscription.unsubscribe();

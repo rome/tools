@@ -41,10 +41,9 @@ export async function printDiagnostics(
 	const printer = new DiagnosticsPrinter(printerOptions);
 	printer.processor.addDiagnostics(diagnostics);
 	printer.processor.addSuppressions(suppressions);
-	await printer.print();
-	if (!(excludeFooter && printer.hasProblems())) {
-		await printer.footer();
-	}
+	await printer.print({
+		showFooter: !(excludeFooter && printer.hasProblems()),
+	});
 	return printer;
 }
 
