@@ -1,6 +1,6 @@
 import {test} from "rome";
 import {getBrowser} from "@internal/browser-features/index";
-import Chrome from "@internal/browser-features/browsers/Chrome";
+import {Chrome} from "@internal/browser-features/Browser";
 
 test(
 	"test browser querying",

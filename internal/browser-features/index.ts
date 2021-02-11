@@ -16,7 +16,7 @@ import {
 	Safari,
 	SafariIOS,
 	SamsungInternet,
-	UCBrowserAndroid
+	UCBrowserAndroid,
 } from "@internal/browser-features/Browser";
 import {data} from "@internal/browsers-db";
 import {consumeUnknown} from "@internal/consume";
@@ -71,7 +71,9 @@ function loadAliases(): Map<string, BrowserIds> {
 export function getBrowser(
 	{name, version}: GetBrowserOptions,
 ): Browser | undefined {
-	if (!aliases) aliases = loadAliases();
+	if (!aliases) {
+		aliases = loadAliases();
+	}
 
 	const id = aliases.get(name.toLowerCase()) ?? name.toLowerCase();
 
