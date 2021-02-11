@@ -27,37 +27,11 @@ import {
 	Position,
 	SourceLocation,
 	createParser,
-	isAlpha,
 	isDigit,
 } from "@internal/parser-core";
 import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from "@internal/ob1";
 import {isEscaped} from "@internal/string-utils";
-
-// Words can't start with a digit
-function isWordStartChar(char: string): boolean {
-	return isAlpha(char) || char === "_" || char === "$";
-}
-
-// But a digit can appear inside of a word
-function isWordChar(char: string): boolean {
-	return isWordStartChar(char) || isDigit(char);
-}
-
-// Check if an input string is a valid word, this is used by the stringifier to
-// determine if a property key should be quoted
-export function isValidWord(word: string): boolean {
-	if (word.length === 0 || !isWordStartChar(word[0])) {
-		return false;
-	}
-
-	for (const char of word) {
-		if (!isWordChar(char)) {
-			return false;
-		}
-	}
-
-	return true;
-}
+import {isWordChar, isWordStartChar} from "@internal/codec-config/util";
 
 // Check if a character is a part of a string, returning false for a newline or unescaped quote char
 function isJSONStringValueChar(

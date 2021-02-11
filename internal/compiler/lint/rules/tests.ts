@@ -8,7 +8,9 @@ type Test = {
 
 type Tests = Dict<Test | (Test[]) | (Test[][])>;
 
-/* GENERATED:START(hash:78aa0051db9297a41a2d2402844728b255bb3b75,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:17d9900af78cbe2dca1840e3a49194934efb403e,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+// @ts-ignore
+import useAltText from "./a11y/useAltText.test.rjson";
 // @ts-ignore
 import useHtmlLang from "./a11y/useHtmlLang.test.rjson";
 // @ts-ignore
@@ -136,8 +138,6 @@ import noSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle.test.rjson";
 // @ts-ignore
 import noTargetBlank from "./jsx-a11y/noTargetBlank.test.rjson";
 // @ts-ignore
-import useAltText from "./jsx-a11y/useAltText.test.rjson";
-// @ts-ignore
 import useAnchorContent from "./jsx-a11y/useAnchorContent.test.rjson";
 // @ts-ignore
 import useAriaProps from "./jsx-a11y/useAriaProps.test.rjson";
@@ -231,6 +231,7 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
+	"a11y/useAltText": useAltText,
 	"a11y/useHtmlLang": useHtmlLang,
 	"a11y/useValidLang": useValidLang,
 	"html/useClosingNonVoid": useClosingNonVoid,
@@ -294,7 +295,6 @@ export const tests: Tests = {
 	"jsx-a11y/noRedundantRoles": noRedundantRoles,
 	"jsx-a11y/noSvgWithoutTitle": noSvgWithoutTitle,
 	"jsx-a11y/noTargetBlank": noTargetBlank,
-	"jsx-a11y/useAltText": useAltText,
 	"jsx-a11y/useAnchorContent": useAnchorContent,
 	"jsx-a11y/useAriaProps": useAriaProps,
 	"jsx-a11y/useAriaPropsForRole": useAriaPropsForRole,

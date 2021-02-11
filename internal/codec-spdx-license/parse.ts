@@ -15,7 +15,7 @@ import {
 	isDigit,
 } from "@internal/parser-core";
 import {getSPDXLicense, licenseNames} from "./index";
-import {descriptions} from "@internal/diagnostics";
+import {descriptions, Diagnostics} from "@internal/diagnostics";
 import {Number0} from "@internal/ob1";
 import {
 	ExpressionNode,
@@ -37,7 +37,13 @@ type Tokens = BaseTokens & {
 };
 
 function isWordChar(char: string) {
-	return isAlpha(char) || isDigit(char) || char === "-" || char === ".";
+	return (
+		isAlpha(char) ||
+		isDigit(char) ||
+		char === "-" ||
+		char === "." ||
+		char === "/"
+	);
 }
 
 type SPDXParserTypes = {
@@ -48,6 +54,11 @@ type SPDXParserTypes = {
 };
 
 type SPDXParser = ParserCore<SPDXParserTypes>;
+
+export interface SPDXLicenseParseResult {
+	license: ExpressionNode;
+	diagnostics: Diagnostics;
+}
 
 const spdxLicenseParser = createParser<SPDXParserTypes>({
 	diagnosticLanguage: "spdxlicense",
@@ -169,20 +180,26 @@ function isLicenseValid(
 		for (const project of exceptions.projects) {
 			const {invalidLicenses} = project.config.dependencies.exceptions;
 			const licenses = invalidLicenses.get(id);
-			if (licenses) {
-				for (const license of licenses) {
-					satisfiesVersion = satisfiesSemver(
-						exceptions.packageVersion,
-						license.range,
-					);
-					inConfig = license.name === exceptions.packageName && satisfiesVersion;
+			if (licenses === undefined) {
+				continue;
+			}
 
-					// There's at least a version of the dependency that doesn't satisfy the criteria
-					// so exit the loop and communicate to the user
-					if (!satisfiesVersion) {
-						packageVersionInConfig = stringify(license.range);
-						break;
-					}
+			for (const license of licenses) {
+				if (license.name !== exceptions.packageName) {
+					continue;
+				}
+				
+				satisfiesVersion = satisfiesSemver(
+					exceptions.packageVersion,
+					license.range,
+				);
+				inConfig = true;
+
+				// There's at least a version of the dependency that doesn't satisfy the criteria
+				// so exit the loop and communicate to the user
+				if (!satisfiesVersion) {
+					packageVersionInConfig = stringify(license.range);
+					break;
 				}
 			}
 		}
@@ -193,19 +210,39 @@ function isLicenseValid(
 
 function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 	const startPos = parser.getPosition();
-	parser.nextToken();
+	const nextToken = parser.nextToken();
 
 	// Validate id
 	const id = token.value;
-	let licenseInfo = getSPDXLicense(id);
-	const nextToken = parser.getToken();
+	let licenseInfo;
+
+	// Retrieve the license info only if the next token is not a word
+	if (nextToken.type !== "Word") {
+		licenseInfo = getSPDXLicense(id);
+	}
+
+	// If next token is a word,
 	let possibleCorrectLicense;
 	let endToken = token;
+	if (licenseInfo === undefined && nextToken.type === "Word") {
+		const words: string[] = [id, nextToken.value];
+		while (parser.matchToken("Word")) {
+			const token = parser.nextToken();
+			if (token.type === "Word") {
+				words.push(token.value);
+			}
+		}
+		possibleCorrectLicense = words.join(" ");
+		licenseInfo = getSPDXLicense(possibleCorrectLicense);
+	}
 
 	// Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
 	// In loose mode, just make it equivalent, otherwise, complain
 	if (licenseInfo === undefined && nextToken.type === "Word") {
-		possibleCorrectLicense = `${id}-${nextToken.value}`;
+		if (!possibleCorrectLicense) {
+			possibleCorrectLicense = `${id}-${nextToken.value}`;
+		}
+
 		const possibleLicenseInfo = getSPDXLicense(possibleCorrectLicense);
 
 		if (possibleLicenseInfo !== undefined) {
@@ -216,7 +253,7 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 				licenseInfo = possibleLicenseInfo;
 				parser.nextToken();
 			} else {
-				throw parser.unexpected({
+				parser.unexpectedDiagnostic({
 					description: descriptions.SPDX.VALID_LICENSE_WITH_MISSING_DASH(
 						possibleCorrectLicense,
 					),
@@ -235,11 +272,21 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 			possibleCorrectLicense || id,
 		);
 
-		if (!inConfig) {
-			if (!satisfiesVersion) {
-				const {exceptions} = parser.options;
+		if (!satisfiesVersion && !inConfig) {
+			const {exceptions} = parser.options;
 
-				throw parser.unexpected({
+			if (satisfiesVersion) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.SPDX.UNKNOWN_LICENSE({
+						id: possibleCorrectLicense || id,
+						knownLicenses: licenseNames,
+						exceptions,
+					}),
+					start: parser.getPositionFromIndex(token.start),
+					end: parser.getPositionFromIndex(endToken.end),
+				});
+			} else {
+				parser.unexpectedDiagnostic({
 					description: descriptions.SPDX.UNKNOWN_LICENSE_PRESENT_UNSATISFIED_EXCEPTION({
 						id: possibleCorrectLicense || id,
 						packageVersionInConfig,
@@ -252,16 +299,6 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 					end: parser.getPositionFromIndex(endToken.end),
 				});
 			}
-
-			throw parser.unexpected({
-				description: descriptions.SPDX.UNKNOWN_LICENSE({
-					id: possibleCorrectLicense || id,
-					knownLicenses: licenseNames,
-					exceptions: parser.options.exceptions,
-				}),
-				start: parser.getPositionFromIndex(token.start),
-				end: parser.getPositionFromIndex(endToken.end),
-			});
 		}
 
 		// License has an exception
@@ -296,9 +333,12 @@ function parseLicense(parser: SPDXParser, token: Tokens["Word"]): LicenseNode {
 	};
 }
 
-export function parseSPDXLicense(opts: SPDXLicenseParserOptions): ExpressionNode {
+export function parseSPDXLicense(opts: SPDXLicenseParserOptions): SPDXLicenseParseResult {
 	const parser = spdxLicenseParser.create(opts);
 	const expr = parseExpression(parser);
 	parser.finalize();
-	return expr;
+	return {
+		license: expr,
+		diagnostics: parser.getDiagnostics(),
+	};
 }

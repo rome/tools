@@ -38,14 +38,14 @@ export const spdx = createDiagnosticsCategory({
 
 		if (exceptions !== undefined) {
 			advice.push({
-				type: "log",
-				category: "info",
-				text: markup`To automatically add an exception for this license, run:`,
-			});
-
-			advice.push({
-				type: "command",
-				command: `rome config push dependencies.exceptions.invalidLicenses.${id} "${exceptions.packageName}@${exceptions.packageVersion}"`,
+				type: "action",
+				command: "config set",
+				noun: markup`Add this license to the exceptions`,
+				instruction: markup`To automatically add an exception for this license, run:`,
+				args: [
+					`dependencies.exceptions.invalidLicenses.${id}`,
+					`${exceptions.packageName}@${exceptions.packageVersion}`,
+				],
 			});
 		}
 
@@ -71,8 +71,14 @@ export const spdx = createDiagnosticsCategory({
 				text: markup`To automatically update the exception for this license, run:`,
 			},
 			{
-				type: "command",
-				command: `rome config set dependencies.exceptions.invalidLicenses.${id} "${packageName}@${packageVersion}"`,
+				type: "action",
+				instruction: markup`To automatically add an exception for this license, run:`,
+				noun: markup`Fix invalid licenses`,
+				command: "config push",
+				args: [
+					`dependencies.exceptions.invalidLicenses.${id}`,
+					`${packageName}@${packageVersion}`,
+				],
 			},
 		],
 	}),

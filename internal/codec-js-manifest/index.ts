@@ -8,9 +8,9 @@
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
 import {
-	SPDXExpressionNode,
 	SPDXLicenseParserOptions,
 	parseSPDXLicense,
+	SPDXLicenseParseResult,
 } from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
@@ -168,18 +168,6 @@ function extractLicenseFromObjectConsumer(
 	return [value, prop];
 }
 
-// These are all licenses I found that are wrong, we should eventually remove this as we update those deps
-const INVALID_IGNORE_LICENSES = [
-	"UNLICENSED",
-	"none",
-	"Facebook Platform License",
-	"BSD",
-	"MIT/X11",
-	"Public Domain",
-	"MIT License",
-	"BSD-like",
-];
-
 function normalizeLicense(
 	consumer: Consumer,
 	{name, version, loose, projects}: {
@@ -188,7 +176,7 @@ function normalizeLicense(
 		loose: boolean;
 		projects: CompilerProjects;
 	},
-): undefined | SPDXExpressionNode {
+): undefined | SPDXLicenseParseResult {
 	if (!consumer.has("license")) {
 		return undefined;
 	}
@@ -211,11 +199,6 @@ function normalizeLicense(
 
 	// Allow referring to a custom license
 	if (licenseId.startsWith("SEE LICENSE IN ")) {
-		return undefined;
-	}
-
-	// Not valid licenses...
-	if (INVALID_IGNORE_LICENSES.includes(licenseId)) {
 		return undefined;
 	}
 
@@ -659,15 +642,17 @@ export async function normalizeManifest(
 
 	const strName = name === undefined ? undefined : manifestNameToString(name);
 
+	const parsedLicense = normalizeLicense(
+		consumer,
+		{name: strName, version, loose, projects},
+	);
+
 	return {
 		name,
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
-		license: normalizeLicense(
-			consumer,
-			{name: strName, version, loose, projects},
-		),
+		license: parsedLicense?.license,
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),
@@ -702,5 +687,8 @@ export async function normalizeManifest(
 		contributors: normalizePeople(consumer.get("contributors"), loose),
 		maintainers: normalizePeople(consumer.get("maintainers"), loose),
 		raw: consumer.asJSONObject(),
+		diagnostics: {
+			license: parsedLicense?.diagnostics,
+		},
 	};
 }

@@ -10,6 +10,7 @@ import {
 import {
 	CSSBlock,
 	CSSComma,
+	CSSCustomProperty,
 	CSSDimension,
 	CSSFunction,
 	CSSHash,
@@ -18,6 +19,7 @@ import {
 	CSSPercentage,
 	CSSRaw,
 	CSSString,
+	CSSVarFunction,
 	CSSWhitespace,
 } from "@internal/ast";
 
@@ -75,6 +77,7 @@ export type AnyCSSToken = Tokens[keyof Tokens];
 
 export type AnyCSSValue =
 	| CSSFunction
+	| CSSVarFunction
 	| CSSBlock
 	| CSSDimension
 	| CSSPercentage
@@ -84,6 +87,7 @@ export type AnyCSSValue =
 	| CSSWhitespace
 	| CSSString
 	| CSSComma
+	| CSSCustomProperty
 	| CSSRaw;
 
 export type CSSParserTypes = {

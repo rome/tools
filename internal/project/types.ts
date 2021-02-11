@@ -50,6 +50,8 @@ type Enableable = {
 	enabled: boolean;
 };
 
+export type IndentStyle = "tab" | "space";
+
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
 	presets: ProjectConfigPresetNames[];
@@ -63,7 +65,7 @@ export type ProjectConfigObjects = {
 		jsxEverywhere: boolean;
 	};
 	format: Enableable & {
-		indentStyle: "tab" | "space";
+		indentStyle: IndentStyle;
 		indentSize: number;
 	};
 	check: {

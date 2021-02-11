@@ -1,4 +1,5 @@
-/* GENERATED:START(hash:b6a27a9bf0dff1f3d68c6b9f0bfd3997f14fad8b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:15d4f1ab01246fab4345c0b960f01cf97b99fb86,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+import useAltText from "./a11y/useAltText";
 import useHtmlLang from "./a11y/useHtmlLang";
 import useValidLang from "./a11y/useValidLang";
 import useClosingNonVoid from "./html/useClosingNonVoid";
@@ -63,7 +64,6 @@ import noRedundantAlt from "./jsx-a11y/noRedundantAlt";
 import noRedundantRoles from "./jsx-a11y/noRedundantRoles";
 import noSvgWithoutTitle from "./jsx-a11y/noSvgWithoutTitle";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
-import useAltText from "./jsx-a11y/useAltText";
 import useAnchorContent from "./jsx-a11y/useAnchorContent";
 import useAriaProps from "./jsx-a11y/useAriaProps";
 import useAriaPropsForRole from "./jsx-a11y/useAriaPropsForRole";
@@ -117,6 +117,7 @@ import useSimplifiedBooleanExpression from "./ts/useSimplifiedBooleanExpression"
 import {AnyVisitor} from "@internal/compiler";
 
 export const lintTransforms: Map<LintRuleName, AnyVisitor> = new Map();
+lintTransforms.set("a11y/useAltText", useAltText);
 lintTransforms.set("a11y/useHtmlLang", useHtmlLang);
 lintTransforms.set("a11y/useValidLang", useValidLang);
 lintTransforms.set("html/useClosingNonVoid", useClosingNonVoid);
@@ -196,7 +197,6 @@ lintTransforms.set("jsx-a11y/noRedundantAlt", noRedundantAlt);
 lintTransforms.set("jsx-a11y/noRedundantRoles", noRedundantRoles);
 lintTransforms.set("jsx-a11y/noSvgWithoutTitle", noSvgWithoutTitle);
 lintTransforms.set("jsx-a11y/noTargetBlank", noTargetBlank);
-lintTransforms.set("jsx-a11y/useAltText", useAltText);
 lintTransforms.set("jsx-a11y/useAnchorContent", useAnchorContent);
 lintTransforms.set("jsx-a11y/useAriaProps", useAriaProps);
 lintTransforms.set("jsx-a11y/useAriaPropsForRole", useAriaPropsForRole);
@@ -270,6 +270,7 @@ lintTransforms.set(
 );
 
 export const lintRuleNames: LintRuleName[] = [
+	"a11y/useAltText",
 	"a11y/useHtmlLang",
 	"a11y/useValidLang",
 	"html/useClosingNonVoid",
@@ -334,7 +335,6 @@ export const lintRuleNames: LintRuleName[] = [
 	"jsx-a11y/noRedundantRoles",
 	"jsx-a11y/noSvgWithoutTitle",
 	"jsx-a11y/noTargetBlank",
-	"jsx-a11y/useAltText",
 	"jsx-a11y/useAnchorContent",
 	"jsx-a11y/useAriaProps",
 	"jsx-a11y/useAriaPropsForRole",
@@ -388,6 +388,7 @@ export const lintRuleNames: LintRuleName[] = [
 ];
 
 export type LintRuleName =
+	| "a11y/useAltText"
 	| "a11y/useHtmlLang"
 	| "a11y/useValidLang"
 	| "html/useClosingNonVoid"
@@ -452,7 +453,6 @@ export type LintRuleName =
 	| "jsx-a11y/noRedundantRoles"
 	| "jsx-a11y/noSvgWithoutTitle"
 	| "jsx-a11y/noTargetBlank"
-	| "jsx-a11y/useAltText"
 	| "jsx-a11y/useAnchorContent"
 	| "jsx-a11y/useAriaProps"
 	| "jsx-a11y/useAriaPropsForRole"

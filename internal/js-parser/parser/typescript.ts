@@ -787,7 +787,7 @@ export function tryTSParseIndexSignature(
 
 	const typeAnnotation = tryTSParseTypeAnnotation(parser);
 
-	semicolon(parser);
+	parseTSTypeMemberSemicolon(parser);
 	return parser.finishNode(
 		start,
 		{

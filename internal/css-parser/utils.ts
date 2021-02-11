@@ -103,3 +103,7 @@ export function isValidEscape(char1: string, char2?: string): boolean {
 export function isWhitespace(char: string): boolean {
 	return isNewline(char) || char === Symbols.Space || char === Symbols.Tab;
 }
+
+export function isCustomProperty(value: string): boolean {
+	return value.startsWith("--");
+}

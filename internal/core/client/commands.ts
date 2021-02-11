@@ -12,6 +12,8 @@ import run from "./commands/run";
 import restart from "./commands/restart";
 import status from "./commands/status";
 import lsp from "./commands/lsp";
+import init from "./commands/init";
+import autoConfig from "./commands/autoConfig";
 
 //
 import {UnknownObject} from "@internal/typescript-helpers";
@@ -40,3 +42,5 @@ localCommands.set("run", run);
 localCommands.set("restart", restart);
 localCommands.set("status", status);
 localCommands.set("lsp", lsp);
+localCommands.set("init", init);
+localCommands.set("auto-config", autoConfig);

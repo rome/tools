@@ -11,6 +11,8 @@ export type VoidCallback<Args extends unknown[] = []> = Args extends []
 	? ((arg?: VoidReturn) => VoidReturn)
 	: ((...args: Args) => VoidReturn);
 
+export type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
+
 export type AsyncVoidCallback<Args extends unknown[] = []> = AsyncCallback<
 	VoidReturn,
 	Args
@@ -56,8 +58,6 @@ export interface Class<T, Args extends any[] = ClassConstructorParams<T>> {
 }
 
 export type Dict<T> = Record<string, T>;
-
-export type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
 
 export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
 	[Key in Keys]-?: NonNullable<Obj[Key]>

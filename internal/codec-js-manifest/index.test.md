@@ -35,6 +35,7 @@ Object {
 	repository: undefined
 	scripts: Map []
 	version: undefined
+	diagnostics: Object {license: undefined}
 	raw: Object {
 		name: "test-name"
 		exports: Object {node: Object {"./foo": "./bar"}}
@@ -75,6 +76,7 @@ Object {
 	repository: undefined
 	scripts: Map []
 	version: undefined
+	diagnostics: Object {license: undefined}
 	raw: Object {
 		name: "test-name"
 		exports: Object {"./foo": "./bar"}
@@ -115,6 +117,7 @@ Object {
 	repository: undefined
 	scripts: Map []
 	version: undefined
+	diagnostics: Object {license: undefined}
 	raw: Object {
 		name: "test-name"
 		exports: Object {"./foo": Object {node: "./bar"}}
