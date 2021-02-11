@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/let/let-with-linebreak-obj-dstrk/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 1:0-3:0
+	path: UIDPath<es2015/let/let-with-linebreak-obj-dstrk/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2015/let/let-with-linebreak-obj-dstrk/input.js 1:0-2:21

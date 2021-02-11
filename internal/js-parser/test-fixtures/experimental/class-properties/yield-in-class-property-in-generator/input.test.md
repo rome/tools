@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-properties/yield-in-class-property-in-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/yield-in-class-property-in-generator/input.js 1:0-7:0
+	path: UIDPath<experimental/class-properties/yield-in-class-property-in-generator/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

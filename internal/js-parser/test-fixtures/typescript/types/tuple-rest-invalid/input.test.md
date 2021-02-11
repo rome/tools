@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/types/tuple-rest-invalid/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/types/tuple-rest-invalid/input.ts 1:0-2:0
+	path: UIDPath<typescript/types/tuple-rest-invalid/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "typescript/types/tuple-rest-invalid/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:19
+				path: UIDPath<typescript/types/tuple-rest-invalid/input.ts>
 				start: Position 1:19
 			}
 		}

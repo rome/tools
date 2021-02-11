@@ -70,7 +70,7 @@ type MarkupParserTypes = {
 
 type MarkupParser = ParserCore<MarkupParserTypes>;
 
-const createStringMarkupParser = createParser<MarkupParserTypes>({
+const stringMarkupParser = createParser<MarkupParserTypes>({
 	diagnosticLanguage: "romemarkup",
 	getInitialState: () => ({inTagHead: false}),
 	tokenizeWithState(parser, index, state) {
@@ -434,7 +434,7 @@ export function parseMarkup(
 
 	if (children === undefined) {
 		children = [];
-		const parser = createStringMarkupParser({...opts, input});
+		const parser = stringMarkupParser.create({...opts, input});
 		while (!parser.matchToken("EOF")) {
 			const child = parseChild(parser, undefined);
 			if (child !== undefined) {

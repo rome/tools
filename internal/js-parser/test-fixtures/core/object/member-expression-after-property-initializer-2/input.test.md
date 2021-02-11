@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/object/member-expression-after-property-initializer-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/object/member-expression-after-property-initializer-2/input.js 1:0-1:24
+	path: UIDPath<core/object/member-expression-after-property-initializer-2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "core/object/member-expression-after-property-initializer-2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:5
+				path: UIDPath<core/object/member-expression-after-property-initializer-2/input.js>
 				start: Position 1:4
 			}
 			description: Object {

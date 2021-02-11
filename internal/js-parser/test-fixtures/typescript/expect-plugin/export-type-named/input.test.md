@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/expect-plugin/export-type-named/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-3:0
+	path: UIDPath<typescript/expect-plugin/export-type-named/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation typescript/expect-plugin/export-type-named/input.js 1:0-1:8

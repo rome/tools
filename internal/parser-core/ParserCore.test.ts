@@ -2,7 +2,7 @@ import {test} from "rome";
 import {
 	BaseTokens,
 	ParserCore,
-	ParserOptionsWithRequiredPath,
+	ParserOptions,
 	SimpleToken,
 	TokenValues,
 	ValueToken,
@@ -13,7 +13,7 @@ import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import {isNewline} from "@internal/css-parser/utils";
-import {createUnknownPath} from "@internal/path";
+import {createRelativeFilePath} from "@internal/path";
 
 type TestTokens = BaseTokens & {
 	Comment: ValueToken<"Comment", string>;
@@ -25,7 +25,7 @@ type TestTokens = BaseTokens & {
 type TestParserTypes = {
 	tokens: TestTokens;
 	state: {};
-	options: Omit<ParserOptionsWithRequiredPath, "ignoreWhitespaceTokens">;
+	options: Omit<ParserOptions, "ignoreWhitespaceTokens">;
 	meta: void;
 };
 
@@ -33,7 +33,7 @@ test(
 	"test parsing",
 	(t) => {
 		// Simple testing parser
-		const createTestParser = createParser<TestParserTypes>({
+		const testParser = createParser<TestParserTypes>({
 			diagnosticLanguage: "unknown",
 			ignoreWhitespaceTokens: true,
 
@@ -96,7 +96,7 @@ test(
 		});
 
 		// Testing helper
-		function testParser(parser: ParserCore<TestParserTypes>): object {
+		function runParserTests(parser: ParserCore<TestParserTypes>): object {
 			const parsed: object[] = [];
 
 			while (!parser.matchToken("EOF")) {
@@ -136,12 +136,12 @@ test(
 				parsed,
 				corrupt: parser.state.corrupt,
 				diagnostics: parser.getDiagnostics(),
-				filename: parser.getFilenameAssert(),
+				path: parser.path,
 				comments: parser.state.comments,
 			};
 		}
 
-		const parser = createTestParser({
+		const parser = testParser.create({
 			input: dedent`
 				"im a string"
 
@@ -149,21 +149,21 @@ test(
 
 				// Comment
 			`,
-			path: createUnknownPath("0.test"),
+			path: createRelativeFilePath("0.test"),
 		});
 
-		const parser1 = createTestParser({
-			path: createUnknownPath("1.test"),
+		const parser1 = testParser.create({
+			path: createRelativeFilePath("1.test"),
 			input: "a", // Invalid
 		});
 
-		const parser2 = createTestParser({
-			path: createUnknownPath("2.test"),
+		const parser2 = testParser.create({
+			path: createRelativeFilePath("2.test"),
 			input: `"i'm an unterminated string`,
 		});
 
-		t.snapshot(testParser(parser));
-		t.snapshot(testParser(parser1));
-		t.snapshot(testParser(parser2));
+		t.snapshot(runParserTests(parser));
+		t.snapshot(runParserTests(parser1));
+		t.snapshot(runParserTests(parser2));
 	},
 );

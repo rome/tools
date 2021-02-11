@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/import-meta/valid-in-module/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-6:0
+	path: UIDPath<es2020/import-meta/valid-in-module/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2020/import-meta/valid-in-module/input.js 1:0-1:22

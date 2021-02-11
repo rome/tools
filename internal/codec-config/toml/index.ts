@@ -32,7 +32,7 @@ function allowedCharacterForKey(char: string) {
 	return char !== undefined && /^[A-Za-z0-9_\-]+$/.test(char);
 }
 
-const createTomlParser = createParser<TOMLParserTypes>({
+const tomlParser = createParser<TOMLParserTypes>({
 	diagnosticLanguage: "toml",
 	ignoreWhitespaceTokens: true,
 	getInitialState: () => ({
@@ -174,7 +174,7 @@ export const toml: PartialConfigHandler = {
 	jsonSuperset: false,
 
 	parseExtra(opts: ParserOptions): ConfigParserResult {
-		const parser = createTomlParser(opts);
+		const parser = tomlParser.create(opts);
 
 		const root = parseObject(parser);
 
@@ -188,7 +188,9 @@ export const toml: PartialConfigHandler = {
 				category: "parse",
 				categoryValue: "toml",
 				normalizeKey: (key) => key,
-				getDiagnosticLocation: () => ({}),
+				getDiagnosticLocation: () => ({
+					path: parser.path,
+				}),
 				getOriginalValue: () => undefined,
 			},
 			// TODO comments
@@ -197,7 +199,7 @@ export const toml: PartialConfigHandler = {
 	},
 
 	tokenize(opts: ConfigParserOptions): TokenBase[] {
-		return createTomlParser(opts).getAllTokens();
+		return tomlParser.create(opts).getAllTokens();
 	},
 
 	stringifyFromConsumer(opts: PartialConsumeConfigResult): string {

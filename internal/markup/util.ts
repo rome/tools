@@ -1,7 +1,7 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {MarkupFormatOptions, MarkupParsedAttributes} from "./types";
 import {humanizeNumber} from "@internal/string-utils";
-import {createUnknownPath} from "@internal/path";
+import {AnyPath, createAnyPath} from "@internal/path";
 import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {StaticMarkup} from "./escape";
 
@@ -18,17 +18,17 @@ export function isSingleEscaped(markup: StaticMarkup): markup is [string] {
 }
 
 export function humanizeMarkupFilename(
-	filename: string,
+	path: AnyPath,
 	opts: MarkupFormatOptions = {},
 ): string {
 	if (opts.humanizeFilename !== undefined) {
-		const override = opts.humanizeFilename(filename);
+		const override = opts.humanizeFilename(path);
 		if (override !== undefined) {
 			return override;
 		}
 	}
 
-	return createUnknownPath(filename).format(opts.cwd);
+	return path.format(opts.cwd);
 }
 
 export function buildFileLink(
@@ -36,22 +36,22 @@ export function buildFileLink(
 	opts: MarkupFormatOptions,
 ): {
 	text: string;
-	filename: string;
+	path: AnyPath;
 	line: undefined | string;
 	column: undefined | string;
 } {
-	let filename = attributes.get("target").asString("");
+	let path: AnyPath = createAnyPath(attributes.get("target").asString(""));
 	let line = attributes.get("line").asNumberOrVoid();
 	let column = attributes.get("column").asNumberOrVoid();
 
 	if (opts.normalizePosition !== undefined) {
 		const pos = opts.normalizePosition(
-			filename,
+			path,
 			line === undefined ? undefined : ob1Coerce1(line),
 			column === undefined ? undefined : ob1Coerce0(column),
 		);
 		if (pos !== undefined) {
-			filename = pos.filename;
+			path = pos.path;
 			if (pos.line !== undefined) {
 				line = ob1Get1(pos.line);
 			}
@@ -61,7 +61,7 @@ export function buildFileLink(
 		}
 	}
 
-	let text = humanizeMarkupFilename(filename, opts);
+	let text = humanizeMarkupFilename(path, opts);
 
 	if (line !== undefined) {
 		text += `:${line}`;
@@ -73,7 +73,7 @@ export function buildFileLink(
 	}
 
 	return {
-		filename,
+		path,
 		text,
 		line: line === undefined ? undefined : String(line),
 		column: column === undefined ? undefined : String(column),

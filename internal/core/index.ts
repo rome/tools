@@ -26,12 +26,13 @@ export * from "./common/types/bundler";
 export * from "./common/types/client";
 export * from "./common/types/files";
 export * from "./common/types/analyzeDependencies";
+export * from "./worker/types";
 
 export {default as Server} from "./server/Server";
 export {serverCommands} from "./server/commands";
 export {default as ServerRequest} from "./server/ServerRequest";
 
-export {WorkerOptions, default as Worker} from "./worker/Worker";
+export {default as Worker} from "./worker/Worker";
 
 export {default as TestAPI} from "./test-worker/TestAPI";
 export {default as TestWorker} from "./test-worker/TestWorker";

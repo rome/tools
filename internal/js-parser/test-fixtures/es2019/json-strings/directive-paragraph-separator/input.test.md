@@ -11,13 +11,13 @@ JSRoot {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "es2019/json-strings/directive-paragraph-separator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2019/json-strings/directive-paragraph-separator/input.js 1:0-4:0
+	path: UIDPath<es2019/json-strings/directive-paragraph-separator/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

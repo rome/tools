@@ -2,10 +2,10 @@ import {test} from "rome";
 import {isInTypeAnnotation} from "@internal/js-ast-utils/isInTypeAnnotation";
 import {
 	AnyNode,
+	MOCK_JS_ROOT,
 	MOCK_PARENT,
 	jsArrayExpression,
 	jsCommentLine,
-	jsRoot,
 	tsArrayType,
 	tsAsExpression,
 	tsNonNullExpression,
@@ -19,19 +19,7 @@ function helper(node: AnyNode) {
 	let path = new Path(
 		MOCK_PARENT,
 		new CompilerContext({
-			ast: jsRoot.create({
-				body: [],
-				comments: [],
-				corrupt: false,
-				diagnostics: [],
-				directives: [],
-				filename: "",
-				hasHoistedVars: false,
-				interpreter: undefined,
-				sourceType: "script",
-				syntax: [],
-				integrity: undefined,
-			}),
+			ast: MOCK_JS_ROOT,
 		}),
 		{},
 	);

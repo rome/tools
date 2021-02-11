@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/84/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/84/input.js 1:0-1:8
+	path: UIDPath<es2015/uncategorised/84/input.js>
 	body: Array [
 		JSExportAllDeclaration {
 			exportKind: undefined
@@ -38,11 +38,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected `from` for an export node"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/84/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:8
+				path: UIDPath<es2015/uncategorised/84/input.js>
 				start: Position 1:8
 			}
 		}

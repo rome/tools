@@ -14,7 +14,6 @@ import {
 	PartialProjectConfig,
 	ProjectConfig,
 	ProjectConfigMeta,
-	ProjectConfigMetaHard,
 	ProjectConfigObjects,
 	ProjectConfigTarget,
 	createDefaultProjectConfig,
@@ -41,7 +40,7 @@ import {sha256} from "@internal/string-utils";
 
 type NormalizedPartial = {
 	partial: PartialProjectConfig;
-	meta: ProjectConfigMetaHard;
+	meta: ProjectConfigMeta;
 };
 
 function categoryExists(consumer: Consumer): boolean {
@@ -178,7 +177,9 @@ export async function normalizeProjectConfig(
 		presets: [],
 		format: {},
 		compiler: {},
+		parser: {},
 		bundler: {},
+		check: {},
 		cache: {},
 		lint: {},
 		resolver: {},
@@ -191,6 +192,8 @@ export async function normalizeProjectConfig(
 		targets: new Map(),
 		integrations: {
 			eslint: {},
+			typescriptChecker: {},
+			prettier: {},
 		},
 	};
 
@@ -198,7 +201,7 @@ export async function normalizeProjectConfig(
 		config.name = inferredName;
 	}
 
-	const meta: ProjectConfigMetaHard = {
+	const meta: ProjectConfigMeta = {
 		projectDirectory,
 		configPath,
 		consumer,
@@ -216,7 +219,7 @@ export async function normalizeProjectConfig(
 
 		consumer.handleThrownDiagnostics(() => {
 			config.version = parseSemverRange({
-				path: consumer.filename,
+				path: consumer.path,
 				input: version.asString(),
 				offsetPosition: version.getLocation("inner-value").start,
 			});
@@ -232,11 +235,13 @@ export async function normalizeProjectConfig(
 	const cache = consumer.get("cache");
 	if (categoryExists(cache)) {
 		// TODO
+		cache.enforceUsedProperties("cache config property");
 	}
 
 	const resolver = consumer.get("resolver");
 	if (categoryExists(resolver)) {
 		// TODO
+		resolver.enforceUsedProperties("resolver config property");
 	}
 
 	const bundler = consumer.get("bundler");
@@ -244,6 +249,8 @@ export async function normalizeProjectConfig(
 		if (bundler.has("externals")) {
 			config.bundler.externals = arrayOfStrings(bundler.get("externals"));
 		}
+
+		bundler.enforceUsedProperties("bundler config property");
 	}
 
 	const typeChecking = consumer.get("typeChecking");
@@ -263,6 +270,8 @@ export async function normalizeProjectConfig(
 				libs.files,
 			);
 		}
+
+		typeChecking.enforceUsedProperties("typeChecking config property");
 	}
 
 	const dependencies = consumer.get("dependencies");
@@ -297,10 +306,16 @@ export async function normalizeProjectConfig(
 				};
 			}
 		}
+
+		dependencies.enforceUsedProperties("dependencies config property");
 	}
 
 	const lint = consumer.get("lint");
 	if (categoryExists(lint)) {
+		if (lint.has("enabled")) {
+			config.lint.enabled = lint.get("enabled").asBoolean();
+		}
+
 		if (lint.has("ignore")) {
 			config.lint.ignore = arrayOfPatterns(lint.get("ignore"));
 		}
@@ -320,6 +335,8 @@ export async function normalizeProjectConfig(
 				"requireSuppressionExplanations",
 			).asBoolean();
 		}
+
+		lint.enforceUsedProperties("lint config property");
 	}
 
 	const format = consumer.get("format");
@@ -345,6 +362,22 @@ export async function normalizeProjectConfig(
 				max: 10,
 			});
 		}
+
+		format.enforceUsedProperties("format config property");
+	}
+
+	const parser = consumer.get("parser");
+	if (categoryExists(parser)) {
+		if (parser.has("jsxEverywhere")) {
+			config.parser.jsxEverywhere = parser.get("jsxEverywhere").asBoolean();
+		}
+	}
+
+	const check = consumer.get("check");
+	if (categoryExists(check)) {
+		if (check.has("dependencies")) {
+			config.check.dependencies = check.get("dependencies").asBoolean();
+		}
 	}
 
 	const tests = consumer.get("tests");
@@ -352,6 +385,8 @@ export async function normalizeProjectConfig(
 		if (tests.has("ignore")) {
 			config.tests.ignore = arrayOfPatterns(tests.get("ignore"));
 		}
+
+		tests.enforceUsedProperties("tests config property");
 	}
 
 	const develop = consumer.get("develop");
@@ -359,6 +394,8 @@ export async function normalizeProjectConfig(
 		if (develop.has("serveStatic")) {
 			config.develop.serveStatic = develop.get("serveStatic").asBoolean();
 		}
+
+		develop.enforceUsedProperties("develop config property");
 	}
 
 	const files = consumer.get("files");
@@ -382,6 +419,8 @@ export async function normalizeProjectConfig(
 				item,
 			) => item.asString());
 		}
+
+		files.enforceUsedProperties("files config property");
 	}
 
 	const vcs = consumer.get("vcs");
@@ -389,11 +428,13 @@ export async function normalizeProjectConfig(
 		if (vcs.has("root")) {
 			config.vcs.root = projectDirectory.resolve(vcs.get("root").asString());
 		}
+		vcs.enforceUsedProperties("vcs config property");
 	}
 
 	const compiler = consumer.get("compiler");
 	if (categoryExists(compiler)) {
 		// TODO
+		compiler.enforceUsedProperties("compiler config property");
 	}
 
 	const targets = consumer.get("targets");
@@ -404,7 +445,7 @@ export async function normalizeProjectConfig(
 					item.asString()
 				),
 			};
-			object.enforceUsedProperties("config target property");
+			object.enforceUsedProperties("target config property");
 			config.targets.set(name, target);
 		}
 	}
@@ -417,6 +458,7 @@ export async function normalizeProjectConfig(
 				config.integrations.eslint.enabled = eslint.get("enabled").asBoolean();
 			}
 		}
+		eslint.enforceUsedProperties("eslint config property");
 	}
 
 	meta.configDependencies = meta.configDependencies.concat(
@@ -604,6 +646,14 @@ function mergePartialConfig<
 			...a.compiler,
 			...b.compiler,
 		},
+		parser: {
+			...a.parser,
+			...b.parser,
+		},
+		check: {
+			...a.check,
+			...b.check,
+		},
 		format: {
 			...a.format,
 			...b.format,
@@ -651,6 +701,14 @@ function mergePartialConfig<
 			eslint: {
 				...a.integrations.eslint,
 				...b.integrations.eslint,
+			},
+			typescriptChecker: {
+				...a.integrations.typescriptChecker,
+				...b.integrations.typescriptChecker,
+			},
+			prettier: {
+				...a.integrations.prettier,
+				...b.integrations.prettier,
 			},
 		},
 	};

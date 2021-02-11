@@ -2,7 +2,6 @@ import {createServerCommand} from "@internal/core/server/commands";
 import {markup} from "@internal/markup";
 import {commandCategories} from "@internal/core/common/commands";
 import {ServerRequest} from "@internal/core";
-import Linter from "@internal/core/server/linter/Linter";
 import {getVCSClient} from "@internal/vcs";
 import {
 	Diagnostics,
@@ -10,6 +9,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {UnknownObject} from "@internal/typescript-helpers";
+import Checker from "../checker/Checker";
 
 interface Flags extends UnknownObject {
 	checkVSC: boolean;
@@ -81,13 +81,13 @@ export default createServerCommand<Flags>({
 				{
 					message: markup`Generating lint config and apply formatting`,
 					async callback() {
-						const linter = new Linter(
+						const checker = new Checker(
 							req,
 							{
 								apply: true,
 							},
 						);
-						const {printer, savedCount} = await linter.runSingle();
+						const {printer, savedCount} = await checker.runSingle();
 						result.lint = {
 							diagnostics: printer.processor.getDiagnostics(),
 							savedCount,

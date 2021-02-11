@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/dynamic-import/inside-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/inside-function/input.js 1:0-4:0
+	path: UIDPath<es2020/dynamic-import/inside-function/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {

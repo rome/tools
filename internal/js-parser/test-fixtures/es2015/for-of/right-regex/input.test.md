@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/for-of/right-regex/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/for-of/right-regex/input.js 1:0-3:26
+	path: UIDPath<es2015/for-of/right-regex/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false

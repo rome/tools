@@ -38,6 +38,7 @@ export function renderGrid(
 		const width = Math.max(...lines.map((line) => splitChars(line).length));
 
 		return {
+			locators: new Map(),
 			width,
 			lines,
 		};
@@ -51,6 +52,7 @@ export function renderGrid(
 	});
 	grid.drawChildren(grid.parse(safe, undefined), []);
 	return {
+		locators: grid.locators,
 		width: ob1Get1(grid.getWidth()),
 		lines: grid.getLines(format),
 	};

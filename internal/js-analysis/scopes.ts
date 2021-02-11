@@ -16,6 +16,7 @@ import GetPropT from "./types/GetPropT";
 import UnionT from "./types/UnionT";
 import OpenT from "./types/OpenT";
 import {Class} from "@internal/typescript-helpers";
+import {pretty} from "@internal/pretty-format";
 
 type BindingStatus = "declared" | "initialized";
 
@@ -78,9 +79,7 @@ export class Scope {
 		let initial = this.getBinding(paths[0]);
 		if (initial === undefined) {
 			throw new Error(
-				`Expected "${paths[0]}" binding, found ${JSON.stringify(
-					this.getBindingNames(),
-				)} ${this.evaluator.filename}`,
+				pretty`Expected ${paths[0]} binding, found ${this.getBindingNames()} ${this.evaluator.path}`,
 			);
 		}
 

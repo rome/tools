@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0097/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0097/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0097/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0097/input.js 1:0-1:7
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Parenthesized expression didnt contain anything"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0097/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<esprima/invalid-syntax/migrated_0097/input.js>
 				start: Position 1:1
 			}
 		}

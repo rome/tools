@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0164/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0164/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0164/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0164/input.js 1:0-1:2
@@ -37,11 +37,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0164/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<esprima/invalid-syntax/migrated_0164/input.js>
 				start: Position 1:1
 			}
 		}

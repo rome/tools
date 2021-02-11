@@ -11,12 +11,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/fragment-5/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/basic/fragment-5/input.jsx 1:0-8:0
+	path: UIDPath<jsx/basic/fragment-5/input.jsx>
 	syntax: Array ["jsx"]
 	comments: Array [
 		CommentLine {

@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/yield-as-identifier/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-2:0
+	path: UIDPath<es2015/yield/yield-as-identifier/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2015/yield/yield-as-identifier/input.js 1:0-1:13

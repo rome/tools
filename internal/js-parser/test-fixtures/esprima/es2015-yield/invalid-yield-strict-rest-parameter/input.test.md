@@ -10,13 +10,13 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
@@ -27,11 +27,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:33
+				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-rest-parameter/input.js>
 				start: Position 1:28
 			}
 			description: Object {

@@ -16,7 +16,7 @@ import {
 	getErrorStackAdvice,
 } from "@internal/diagnostics";
 import {prettyFormatEager} from "@internal/pretty-format";
-import {createAbsoluteFilePath} from "@internal/path";
+import {UNKNOWN_PATH, createAbsoluteFilePath} from "@internal/path";
 import {lstatSync} from "@internal/fs";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {
@@ -93,7 +93,9 @@ export function convertPossibleNodeErrorToDiagnostic(
 
 	let {message, advice = []} = getMessageFromNodeError(err);
 	const struct = getErrorStructure(err, 0, false);
-	let location: DiagnosticLocation = {};
+	let location: DiagnosticLocation = {
+		path: UNKNOWN_PATH,
+	};
 
 	if (err.path !== undefined && struct.frames.length === 0) {
 		// If we are an fs error with no frames then recommend adding the envvar so the @internal/fs module will

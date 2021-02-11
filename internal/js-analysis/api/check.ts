@@ -91,7 +91,7 @@ function resolveGraph(hub: Hub): Diagnostics {
 					advice.push({
 						type: "frame",
 						location: {
-							filename: originLoc.filename,
+							path: originLoc.path,
 							start: originLoc.start,
 							end: originLoc.end,
 							marker,

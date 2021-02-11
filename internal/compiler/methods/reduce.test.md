@@ -12,10 +12,10 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	sourceType: "script"
 	syntax: Array []
+	path: UIDPath<unknown>
 	body: Array [
 		JSIfStatement {
 			test: JSReferenceIdentifier {name: "foo"}
@@ -47,10 +47,10 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	sourceType: "script"
 	syntax: Array []
+	path: UIDPath<unknown>
 	body: Array [
 		JSForStatement {
 			init: JSReferenceIdentifier {name: "condition"}
@@ -82,10 +82,10 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	sourceType: "script"
 	syntax: Array []
+	path: UIDPath<unknown>
 	body: Array [
 		JSIfStatement {
 			test: JSReferenceIdentifier {name: "foo"}
@@ -117,10 +117,10 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	sourceType: "script"
 	syntax: Array []
+	path: UIDPath<unknown>
 	body: Array [
 		JSForStatement {
 			body: JSBlockStatement {

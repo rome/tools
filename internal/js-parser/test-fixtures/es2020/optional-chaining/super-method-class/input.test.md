@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/optional-chaining/super-method-class/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/optional-chaining/super-method-class/input.js 1:0-6:0
+	path: UIDPath<es2020/optional-chaining/super-method-class/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

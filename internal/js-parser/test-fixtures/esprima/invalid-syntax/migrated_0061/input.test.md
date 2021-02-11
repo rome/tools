@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0061/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0061/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0061/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0061/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:10
+				path: UIDPath<esprima/invalid-syntax/migrated_0061/input.js>
 				start: Position 2:0
 			}
 		}

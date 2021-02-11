@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/352/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/352/input.js 1:0-1:2
+	path: UIDPath<core/uncategorised/352/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation core/uncategorised/352/input.js 1:0-1:1
@@ -45,11 +45,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Identifier directly after number"}
 			}
 			location: Object {
-				filename: "core/uncategorised/352/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<core/uncategorised/352/input.js>
 				start: Position 1:1
 			}
 		}

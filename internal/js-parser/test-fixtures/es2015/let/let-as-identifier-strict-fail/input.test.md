@@ -10,13 +10,13 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/let/let-as-identifier-strict-fail/input.js 1:0-3:0
+	path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
@@ -45,11 +45,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/let/let-as-identifier-strict-fail/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:3
+				path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
 				start: Position 2:0
 			}
 			description: Object {

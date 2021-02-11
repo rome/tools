@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/object/invalid-property-initializer/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/object/invalid-property-initializer/input.js 1:0-5:0
+	path: UIDPath<core/object/invalid-property-initializer/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "core/object/invalid-property-initializer/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:7
+				path: UIDPath<core/object/invalid-property-initializer/input.js>
 				start: Position 2:6
 			}
 			description: Object {

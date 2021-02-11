@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0150/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0150/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0150/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0150/input.js 1:2-2:0
@@ -45,11 +45,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unterminated comment"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0150/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:0
+				path: UIDPath<esprima/invalid-syntax/migrated_0150/input.js>
 				start: Position 1:0
 			}
 		}

@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/invalid-newline-after-params/input.js 1:0-3:0
+	path: UIDPath<es2017/async-functions/invalid-newline-after-params/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2017/async-functions/invalid-newline-after-params/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:9
+				path: UIDPath<es2017/async-functions/invalid-newline-after-params/input.js>
 				start: Position 2:0
 			}
 			description: Object {

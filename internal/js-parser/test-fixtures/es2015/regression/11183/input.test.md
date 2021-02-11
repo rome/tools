@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/regression/11183/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/regression/11183/input.js 1:0-6:0
+	path: UIDPath<es2015/regression/11183/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: "es2015/regression/11183/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:2
+				path: UIDPath<es2015/regression/11183/input.js>
 				start: Position 2:2
 			}
 		}

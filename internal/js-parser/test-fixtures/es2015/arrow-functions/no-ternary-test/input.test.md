@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/arrow-functions/no-ternary-test/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/arrow-functions/no-ternary-test/input.js 1:0-1:17
+	path: UIDPath<es2015/arrow-functions/no-ternary-test/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "es2015/arrow-functions/no-ternary-test/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:8
+				path: UIDPath<es2015/arrow-functions/no-ternary-test/input.js>
 				start: Position 1:9
 			}
 		}

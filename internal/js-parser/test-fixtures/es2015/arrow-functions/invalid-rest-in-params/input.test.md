@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/arrow-functions/invalid-rest-in-params/input.js 1:0-6:0
+	path: UIDPath<es2015/arrow-functions/invalid-rest-in-params/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "es2015/arrow-functions/invalid-rest-in-params/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:13
+				path: UIDPath<es2015/arrow-functions/invalid-rest-in-params/input.js>
 				start: Position 3:4
 			}
 		}

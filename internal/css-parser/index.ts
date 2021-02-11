@@ -41,7 +41,7 @@ import {
 import {parseSelectors} from "./parser/selectors";
 import {matchToken, nextToken, readToken} from "./tokenizer";
 
-export const createCSSParser = createParser<CSSParserTypes>({
+export const cssParser = createParser<CSSParserTypes>({
 	diagnosticLanguage: "css",
 	ignoreWhitespaceTokens: false,
 	tokenize(parser: CSSParser, index: Number0): AnyCSSToken {
@@ -617,11 +617,11 @@ function consumeURLToken(
 }
 
 export function tokenizeCSS(opts: CSSParserOptions): TokenValues<Tokens>[] {
-	return createCSSParser(opts).getAllTokens();
+	return cssParser.create(opts).getAllTokens();
 }
 
 export function parseCSS(opts: CSSParserOptions): CSSRoot {
-	const parser = createCSSParser(opts);
+	const parser = cssParser.create(opts);
 	const start = parser.getPosition();
 	const rules = parseRules(parser, true);
 

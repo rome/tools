@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:23
+				path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
 				start: Position 2:0
 			}
 			description: Object {

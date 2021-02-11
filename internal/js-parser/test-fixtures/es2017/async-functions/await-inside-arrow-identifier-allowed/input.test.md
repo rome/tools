@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/await-inside-arrow-identifier-allowed/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15
+	path: UIDPath<es2017/async-functions/await-inside-arrow-identifier-allowed/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2017/async-functions/await-inside-arrow-identifier-allowed/input.js 1:0-1:15

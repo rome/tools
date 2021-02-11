@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-1:22
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -47,13 +47,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-1:46
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -91,13 +91,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-1:50
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -145,7 +145,6 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
@@ -154,6 +153,7 @@ JSRoot {
 	trailingComments: Array []
 	innerComments: Array ["0"]
 	loc: SourceLocation unknown 1:0-1:6
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -171,13 +171,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-1:28
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -221,13 +221,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-1:54
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -308,13 +308,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-1:20
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"
@@ -359,13 +359,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-4:2
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentLine {
 			id: "0"
@@ -403,13 +403,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "unknown"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation unknown 1:0-5:1
+	path: UIDPath<unknown>
 	comments: Array [
 		CommentBlock {
 			id: "0"

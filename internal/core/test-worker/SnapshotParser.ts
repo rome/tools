@@ -84,7 +84,7 @@ type SnapshotParserTypes = {
 
 type SnapshotParser = ParserCore<SnapshotParserTypes>;
 
-export const createSnapshotParser = createParser<SnapshotParserTypes>({
+export const snapshotParser = createParser<SnapshotParserTypes>({
 	diagnosticLanguage: "markdown",
 	ignoreWhitespaceTokens: true,
 

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/349/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/349/input.js 1:0-1:34
+	path: UIDPath<es2015/uncategorised/349/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Redefinition of __proto__ property"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/349/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:28
+				path: UIDPath<es2015/uncategorised/349/input.js>
 				start: Position 1:19
 			}
 		}

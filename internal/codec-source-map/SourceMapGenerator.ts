@@ -28,17 +28,18 @@ import {
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";
+import {AnyPath} from "@internal/path";
 
 type MaterializeCallback = VoidCallback;
 
 export default class SourceMapGenerator {
 	constructor(
 		args: {
-			file: string;
+			path: AnyPath;
 			sourceRoot?: string;
 		},
 	) {
-		this.file = args.file;
+		this.path = args.path;
 		this.sourceRoot = args.sourceRoot;
 
 		this.sourcesContents = new ExtendedMap("sourcesContents");
@@ -49,7 +50,7 @@ export default class SourceMapGenerator {
 		this.materializeCallbacks = [];
 	}
 
-	public file: string;
+	public path: AnyPath;
 	private materializeCallbacks: MaterializeCallback[];
 	private sourceRoot: undefined | string;
 	private sources: ArraySet;
@@ -100,7 +101,7 @@ export default class SourceMapGenerator {
 		}
 
 		if (source !== undefined) {
-			this.sources.add(source);
+			this.sources.add(source.join());
 		}
 
 		if (name !== undefined) {
@@ -179,7 +180,7 @@ export default class SourceMapGenerator {
 			previousGeneratedColumn = mapping.generated.column;
 
 			if (mapping.source !== undefined) {
-				const sourceIdx = this.sources.indexOf(mapping.source);
+				const sourceIdx = this.sources.indexOf(mapping.source.join());
 				next += base64.encodeVLQ(sourceIdx - previousSource);
 				previousSource = sourceIdx;
 
@@ -243,7 +244,7 @@ export default class SourceMapGenerator {
 		const sources = this.sources.toArray();
 		this.map = {
 			version: 3,
-			file: this.file,
+			file: this.path.join(),
 			names: this.names.toArray(),
 			mappings: this.serializeMappings(),
 			sourceRoot: this.sourceRoot,
@@ -262,7 +263,7 @@ export default class SourceMapGenerator {
 
 	public toConsumer(): SourceMapConsumer {
 		return new SourceMapConsumer(
-			this.file,
+			this.path,
 			() => {
 				const parsedMappings: ParsedMappings = new Map();
 

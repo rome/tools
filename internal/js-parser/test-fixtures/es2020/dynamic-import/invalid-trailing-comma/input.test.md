@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:0-1:15
+	path: UIDPath<es2020/dynamic-import/invalid-trailing-comma/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/dynamic-import/invalid-trailing-comma/input.js 1:0-1:15
@@ -40,11 +40,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/invalid-trailing-comma/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:13
+				path: UIDPath<es2020/dynamic-import/invalid-trailing-comma/input.js>
 				start: Position 1:12
 			}
 		}

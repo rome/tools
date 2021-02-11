@@ -12,13 +12,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "es2015/uncategorised/2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/2/input.js 1:0-1:27
+	path: UIDPath<es2015/uncategorised/2/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\u{20BB7}\\u{91CE}\\u{5BB6}"

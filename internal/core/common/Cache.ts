@@ -11,7 +11,7 @@ import {
 	writeFile,
 } from "@internal/fs";
 import {AnyMarkups, markup} from "@internal/markup";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import FatalErrorHandler from "./FatalErrorHandler";
 import {UserConfig} from "./userConfig";
 
@@ -65,7 +65,7 @@ export default class Cache {
 		return this.directoryPath;
 	}
 
-	public async remove(uid: string, path: AbsoluteFilePath) {
+	public async remove(uid: UIDPath, path: AbsoluteFilePath) {
 		const directory = this.getCacheDirectory(uid);
 		path;
 
@@ -76,11 +76,11 @@ export default class Cache {
 		}
 	}
 
-	protected getCacheDirectory(uid: string): AbsoluteFilePath {
-		return this.directoryPath.append(uid);
+	protected getCacheDirectory(uid: UIDPath): AbsoluteFilePath {
+		return this.directoryPath.append(uid.join());
 	}
 
-	public getCacheFilename(uid: string, name: string): AbsoluteFilePath {
+	public getCacheFilename(uid: UIDPath, name: string): AbsoluteFilePath {
 		return this.getCacheDirectory(uid).append(`${name}.bin`);
 	}
 

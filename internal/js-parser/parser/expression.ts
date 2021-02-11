@@ -556,7 +556,7 @@ export function forwardNoArrowParamsConversionAt<T>(
 ): T {
 	if (
 		parser.state.noArrowParamsConversionAt.includes(
-			parser.getIndexFromPosition(start, parser.filename),
+			parser.getIndexFromPosition(start, parser.path),
 		)
 	) {
 		let result: T;
@@ -886,7 +886,7 @@ export function parseSubscripts(
 		base.type === "JSReferenceIdentifier" &&
 		base.name === "async" &&
 		parser.state.noArrowAt.includes(
-			parser.getIndexFromPosition(startPos, parser.filename),
+			parser.getIndexFromPosition(startPos, parser.path),
 		)
 	) {
 		const argsStart = parser.getPosition();
@@ -3450,7 +3450,7 @@ export function checkFunctionNameAndParams(
 		}
 	}
 
-	const startIndex = parser.getIndexFromPosition(start, parser.filename);
+	const startIndex = parser.getIndexFromPosition(start, parser.path);
 	if (
 		isArrowFunction &&
 		!force &&
@@ -4005,7 +4005,7 @@ function parseRegExpLiteral(parser: JSParser): JSRegExpLiteral {
 			line: start.line,
 			column: ob1Inc(start.column),
 		},
-		path: parser.filename,
+		path: parser.path,
 		input: pattern,
 		unicode: flags.has("u"),
 	});

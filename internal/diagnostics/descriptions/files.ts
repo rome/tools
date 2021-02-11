@@ -1,10 +1,10 @@
 import {createDiagnosticsCategory} from "./index";
 import {markup} from "@internal/markup";
-import {AbsoluteFilePath, AnyFilePath} from "@internal/path";
+import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {DiagnosticAdvice} from "../types";
 
 export const files = createDiagnosticsCategory({
-	NO_FILE_HANDLER: (path: AnyFilePath) => {
+	NO_FILE_HANDLER: (path: AnyPath) => {
 		let advice: DiagnosticAdvice = [];
 
 		if (path.hasAnyExtensions()) {

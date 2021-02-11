@@ -11,9 +11,9 @@ MarkdownRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "reference/input.md"
 	integrity: undefined
 	loc: SourceLocation reference/input.md 1:0-14:0
+	path: UIDPath<reference/input.md>
 	body: Array [
 		MarkdownReferenceInline {
 			value: ""

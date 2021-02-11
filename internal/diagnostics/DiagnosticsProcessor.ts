@@ -24,7 +24,7 @@ import {matchesSuppression} from "@internal/compiler";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
 import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
-import {ExtendedMap} from "@internal/collections";
+import {MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
 
 type UniquePart =
 	| "filename"
@@ -52,7 +52,10 @@ const DEFAULT_UNIQUE: UniqueRules = [
 	["label", "category", "filename", "message", "start.line", "start.column"],
 ];
 
-type DiagnosticsByFilename = ExtendedMap<undefined | string, Diagnostics>;
+type DiagnosticsByPath = {
+	map: MixedPathMap<Diagnostics>;
+	pathless: Diagnostics;
+};
 
 export default class DiagnosticsProcessor {
 	constructor(options: DiagnosticsProcessorOptions = {}) {
@@ -72,7 +75,7 @@ export default class DiagnosticsProcessor {
 			this.sourceMaps,
 		);
 
-		this.ignoreDiagnosticsForDependentsOf = new Set();
+		this.ignoreDiagnosticsForDependentsOf = new MixedPathSet();
 
 		this.diagnostics = [];
 		this.cachedDiagnostics = undefined;
@@ -80,7 +83,7 @@ export default class DiagnosticsProcessor {
 
 	public normalizer: DiagnosticsNormalizer;
 
-	private ignoreDiagnosticsForDependentsOf: Set<string>;
+	private ignoreDiagnosticsForDependentsOf: MixedPathSet;
 
 	private sourceMaps: SourceMapConsumerCollection;
 	private unique: UniqueRules;
@@ -180,8 +183,8 @@ export default class DiagnosticsProcessor {
 			}
 
 			if (
-				filter.filename !== undefined &&
-				filter.filename !== diag.location.filename
+				filter.path !== undefined &&
+				!equalPaths(filter.path, diag.location.path)
 			) {
 				continue;
 			}
@@ -244,7 +247,7 @@ export default class DiagnosticsProcessor {
 			}
 
 			if (rule.includes("filename")) {
-				parts.push(`filename:${String(diag.location.filename)}`);
+				parts.push(`filename:${String(diag.location.path?.join())}`);
 			}
 
 			if (rule.includes("message")) {
@@ -331,9 +334,9 @@ export default class DiagnosticsProcessor {
 					diag.description.category,
 				)
 			) {
-				const {filename} = diag.location;
-				if (filename !== undefined) {
-					this.ignoreDiagnosticsForDependentsOf.add(filename);
+				const {path} = diag.location;
+				if (path !== undefined) {
+					this.ignoreDiagnosticsForDependentsOf.add(path);
 				}
 			}
 
@@ -358,20 +361,29 @@ export default class DiagnosticsProcessor {
 		return added;
 	}
 
-	public getDiagnosticsByFilename(): DiagnosticsByFilename {
-		const byFilename: DiagnosticsByFilename = new ExtendedMap(
-			"diagnosticsByFilename",
-			() => [],
-		);
+	public getDiagnosticsByPath(): DiagnosticsByPath {
+		const byPath: DiagnosticsByPath = {
+			map: new MixedPathMap(),
+			pathless: [],
+		};
 
 		for (const diag of this.getDiagnostics()) {
-			const {filename} = diag.location;
+			const {path} = diag.location;
 
-			const filenameDiagnostics = byFilename.assert(filename);
-			filenameDiagnostics.push(diag);
+			if (path === undefined) {
+				byPath.pathless.push(diag);
+				continue;
+			}
+
+			let pathDiagnostics = byPath.map.get(path);
+			if (pathDiagnostics === undefined) {
+				pathDiagnostics = [];
+				byPath.map.set(path, pathDiagnostics);
+			}
+			pathDiagnostics.push(diag);
 		}
 
-		return byFilename;
+		return byPath;
 	}
 
 	public getDiagnostics(): Diagnostics {
@@ -388,7 +400,7 @@ export default class DiagnosticsProcessor {
 			// Ignore diagnostics that are dependents of a file with a prioritized diagnostic category
 			if (diag.dependencies !== undefined) {
 				for (const dep of diag.dependencies) {
-					if (this.ignoreDiagnosticsForDependentsOf.has(dep.filename)) {
+					if (this.ignoreDiagnosticsForDependentsOf.has(dep.path)) {
 						ignore = true;
 						break;
 					}

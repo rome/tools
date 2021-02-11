@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/optional-async-error/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation typescript/class/optional-async-error/input.js 1:0-4:1
+	path: UIDPath<typescript/class/optional-async-error/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/class/optional-async-error/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:9
+				path: UIDPath<typescript/class/optional-async-error/input.js>
 				start: Position 3:9
 			}
 			description: Object {

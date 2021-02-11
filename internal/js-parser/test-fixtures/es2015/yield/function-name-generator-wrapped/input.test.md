@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/function-name-generator-wrapped/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/function-name-generator-wrapped/input.js 1:0-4:0
+	path: UIDPath<es2015/yield/function-name-generator-wrapped/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {

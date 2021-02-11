@@ -45,7 +45,7 @@ export default createVisitor({
 				}
 
 				const source = jsStringLiteral.create({
-					value: moduleId,
+					value: moduleId.join(),
 				});
 
 				const specifiers = getImportSpecifiers(bodyNode);

@@ -5,7 +5,7 @@ import RSERStream from "./RSERStream";
 import fs = require("fs");
 import {markup} from "@internal/markup";
 import {provideDiagnosticAdviceForError} from "@internal/diagnostics";
-import {createUnknownPath} from "@internal/path";
+import {createAbsoluteFilePath} from "@internal/path";
 
 export {default as RSERBufferObserver} from "./RSERBufferAssembler";
 export {default as RSERBufferParser} from "./RSERBufferParser";
@@ -13,14 +13,11 @@ export {default as RSERBufferWriter} from "./RSERBufferWriter";
 export {default as RSERStream} from "./RSERStream";
 
 export {
-	AnyRSERFilePathMap,
-	RSERAbsoluteFilePathMap,
+	AnyRSERPathMap as AnyRSERFilePathMap,
 	RSERArray,
 	RSERMap,
 	RSERObject,
-	RSERRelativeFilePathMap,
 	RSERSet,
-	RSERUnknownPathMap,
 	RSERValue,
 } from "./types";
 
@@ -80,7 +77,7 @@ export function decodeSingleMessageRSERStream(
 					err,
 					{
 						description: {
-							message: markup`An error occured while decoding binary file ${createUnknownPath(
+							message: markup`An error occured while decoding binary file ${createAbsoluteFilePath(
 								String(readStream.path),
 							)}`,
 							category: "parse",

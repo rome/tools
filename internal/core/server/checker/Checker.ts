@@ -17,6 +17,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	AnyPath,
 } from "@internal/path";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -34,16 +35,27 @@ import {markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
+import {WorkerIntegrationTimings} from "@internal/core/worker/types";
+import {ExtendedMap} from "@internal/collections";
+import {humanizeDuration} from "@internal/string-utils";
 
-type LintWatchChanges = {
-	type: "absolute" | "unknown";
-	filename: undefined | string;
-	diagnostics: Diagnostics;
-}[];
+type CheckWatchChange =
+	| {
+			type: "absolute";
+			path: AbsoluteFilePath;
+			diagnostics: Diagnostics;
+		}
+	| {
+			type: "unknown";
+			path: undefined | AnyPath;
+			diagnostics: Diagnostics;
+		};
+
+type CheckWatchChanges = CheckWatchChange[];
 
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
-export type LinterOptions = {
+export type CheckerOptions = {
 	apply?: boolean;
 	args?: string[];
 	hasDecisions?: boolean;
@@ -62,14 +74,15 @@ type WatchEvents = {
 };
 
 type WatchResults = {
-	runner: LintRunner;
+	runner: CheckRunner;
 	evictedPaths: AbsoluteFilePathSet;
-	changes: LintWatchChanges;
+	changes: CheckWatchChanges;
 	savedCount: number;
 	totalCount: number;
 };
 
 function createDiagnosticsPrinter(
+	runner: CheckRunner,
 	request: ServerRequest,
 	processor: DiagnosticsProcessor,
 	totalCount: number,
@@ -121,14 +134,27 @@ function createDiagnosticsPrinter(
 				);
 			}
 		}
+
+		const timings = runner.processIntegrationTimings();
+		for (const timing of timings.total.values()) {
+			if (timing.took > 0n) {
+				const ms = Number(timing.took / 1000000n);
+				reporter.warn(
+					markup`Spent <emphasis>${humanizeDuration(
+						ms,
+						{longform: true, allowMilliseconds: true},
+					)}</emphasis> running ${timing.displayName}`,
+				);
+			}
+		}
 	});
 
 	return printer;
 }
 
-class LintRunner {
+class CheckRunner {
 	constructor(
-		linter: Linter,
+		checker: Checker,
 		{
 			graph,
 			events,
@@ -137,14 +163,15 @@ class LintRunner {
 			graph: DependencyGraph;
 		},
 	) {
-		this.linter = linter;
-		this.server = linter.request.server;
+		this.checker = checker;
+		this.server = checker.request.server;
 		this.graph = graph;
-		this.request = linter.request;
-		this.options = linter.options;
+		this.request = checker.request;
+		this.options = checker.options;
 		this.events = events;
 		this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
+		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => new Map());
 	}
 
 	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
@@ -152,12 +179,46 @@ class LintRunner {
 		diagnostics: Diagnostics;
 		suppressions: DiagnosticSuppressions;
 	}>;
-	private linter: Linter;
+	private checker: Checker;
 	private events: WatchEvents;
 	private server: Server;
 	private request: ServerRequest;
 	private graph: DependencyGraph;
-	private options: LinterOptions;
+	private options: CheckerOptions;
+	private timingsByWorker: ExtendedMap<number, WorkerIntegrationTimings>;
+
+	public processIntegrationTimings(): {
+		slowest: WorkerIntegrationTimings;
+		total: WorkerIntegrationTimings;
+	} {
+		let slowest: WorkerIntegrationTimings = new Map();
+		let total: WorkerIntegrationTimings = new Map();
+
+		for (const timings of this.timingsByWorker.values()) {
+			for (let [key, timing] of timings) {
+				const existingTotal = total.get(key);
+
+				if (existingTotal === undefined) {
+					total.set(key, timing);
+				} else {
+					total.set(
+						key,
+						{
+							...existingTotal,
+							took: existingTotal.took + timing.took,
+						},
+					);
+				}
+
+				const existingSlowest = slowest.get(key);
+				if (existingSlowest === undefined || existingSlowest.took > timing.took) {
+					slowest.set(key, timing);
+				}
+			}
+		}
+
+		return {slowest, total};
+	}
 
 	public hasCompilerDiagnostics(path: AbsoluteFilePath): boolean {
 		return this.compilerDiagnosticsCache.has(path);
@@ -177,15 +238,13 @@ class LintRunner {
 			globalDecisions = [],
 			hasDecisions,
 		} = this.options;
-		const shouldSave = this.linter.shouldSave();
-		const applySafeFixes = !this.linter.shouldOnlyFormat();
+		const shouldSave = this.checker.shouldSave();
+		const applySafeFixes = !this.checker.shouldOnlyFormat();
 
 		const queue = server.createWorkerQueue({
 			callback: async ({path}) => {
 				const filename = path.join();
-				const progressId = progress.pushText(
-					markup`<filelink target="${filename}" />`,
-				);
+				const progressId = progress.pushText(markup`${path}`);
 
 				let compilerOptions = lintCompilerOptionsPerFile[filename];
 
@@ -232,12 +291,31 @@ class LintRunner {
 					diagnostics,
 					suppressions,
 					save,
+					timingsNs,
 				} = res.value;
 				processor.addSuppressions(suppressions);
 				processor.addDiagnostics(diagnostics);
 				this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
 				if (save !== undefined) {
 					this.request.queueSaveFile(path, save);
+				}
+
+				// Update timings
+				const workerId = server.fileAllocator.getOwnerAssert(path).id;
+				const workerTimings = this.timingsByWorker.assert(workerId);
+				for (let [key, timing] of timingsNs) {
+					const existing = workerTimings.get(key);
+					if (existing === undefined) {
+						workerTimings.set(key, timing);
+					} else {
+						workerTimings.set(
+							key,
+							{
+								...existing,
+								took: existing.took + timing.took,
+							},
+						);
+					}
 				}
 
 				progress.popText(progressId);
@@ -256,6 +334,15 @@ class LintRunner {
 
 		await queue.spin();
 		progress.end();
+	}
+
+	private filterCheckDependenciesEnabled(
+		set: AbsoluteFilePathSet,
+	): AbsoluteFilePath[] {
+		return Array.from(set).filter((path) => {
+			const project = this.server.projectManager.assertProjectExisting(path);
+			return project.config.check.dependencies;
+		});
 	}
 
 	private async runGraph(
@@ -283,7 +370,7 @@ class LintRunner {
 		});
 		await graph.seed({
 			allowFileNotFound: true,
-			paths: Array.from(evictedPaths),
+			paths: this.filterCheckDependenciesEnabled(evictedPaths),
 			diagnosticsProcessor: processor,
 			validate: false,
 			analyzeProgress: progress,
@@ -335,7 +422,7 @@ class LintRunner {
 			});
 
 			await graph.seed({
-				paths: Array.from(validatedDependencyPaths),
+				paths: this.filterCheckDependenciesEnabled(validatedDependencyPaths),
 				diagnosticsProcessor: processor,
 				validate: false,
 				analyzeProgress: progress,
@@ -357,29 +444,30 @@ class LintRunner {
 		{paths: evictedPaths}: WatchFilesEvent,
 		processor: DiagnosticsProcessor,
 		validatedDependencyPaths: AbsoluteFilePathSet,
-	): LintWatchChanges {
+	): CheckWatchChanges {
 		const {server} = this;
-		const changes: LintWatchChanges = [];
+		const changes: CheckWatchChanges = [];
 
 		const updatedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet([
 			...validatedDependencyPaths,
 		]);
 
-		// Deleted paths wont show up in validatedDependencyPaths so we need to readd them
+		// Deleted paths or those with check.dependencies disabled wont show up in validatedDependencyPaths so we need to readd them
 		for (const path of evictedPaths) {
+			updatedPaths.add(path);
+
 			if (!server.memoryFs.exists(path)) {
-				updatedPaths.add(path);
 				this.clearCompilerDiagnosticsForPath(path);
 			}
 		}
 
-		const diagnosticsByFilename = processor.getDiagnosticsByFilename();
+		const diagnosticsByPath = processor.getDiagnosticsByPath();
 
 		// In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
-		const includedFilenamesInDiagnostics = server.projectManager.normalizeFilenamesToFilePaths(
-			diagnosticsByFilename.keys(),
+		const includedPathsInDiagnostics = server.projectManager.categorizePaths(
+			diagnosticsByPath.map.keys(),
 		);
-		for (const path of includedFilenamesInDiagnostics.absolutes) {
+		for (const path of includedPathsInDiagnostics.absolutes) {
 			updatedPaths.add(path);
 		}
 
@@ -398,20 +486,17 @@ class LintRunner {
 
 		// We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
 		for (const path of updatedPaths) {
-			const filename = path.join();
-			let diagnostics = [...(diagnosticsByFilename.get(filename) || [])];
-
 			// Could have been a UID that we turned into an absolute path so turn it back
-			diagnostics = [
-				...diagnostics,
-				...(diagnosticsByFilename.get(
+			const diagnostics = [
+				...(diagnosticsByPath.map.get(path) || []),
+				...(diagnosticsByPath.map.get(
 					this.server.projectManager.getUid(path, true),
 				) || []),
 			];
 
 			changes.push({
 				type: "absolute",
-				filename,
+				path,
 				diagnostics,
 			});
 		}
@@ -419,11 +504,19 @@ class LintRunner {
 		// We can produce diagnostics that don't actually point at a file. For LSP we will just throw these away,
 		// otherwise inside of Rome we can display them.
 		// These filenames may be relative or undefined
-		for (const filename of includedFilenamesInDiagnostics.others) {
+		for (const path of includedPathsInDiagnostics.unknowns) {
 			changes.push({
 				type: "unknown",
-				filename,
-				diagnostics: diagnosticsByFilename.get(filename) || [],
+				path,
+				diagnostics: diagnosticsByPath.map.get(path) || [],
+			});
+		}
+
+		if (includedPathsInDiagnostics.hasUndefined) {
+			changes.push({
+				type: "unknown",
+				path: undefined,
+				diagnostics: diagnosticsByPath.pathless,
 			});
 		}
 
@@ -462,14 +555,14 @@ class LintRunner {
 	}
 }
 
-export default class Linter {
-	constructor(req: ServerRequest, opts: LinterOptions) {
+export default class Checker {
+	constructor(req: ServerRequest, opts: CheckerOptions) {
 		this.request = req;
 		this.options = opts;
 	}
 
 	public request: ServerRequest;
-	public options: LinterOptions;
+	public options: CheckerOptions;
 
 	public shouldOnlyFormat(): boolean {
 		const {formatOnly} = this.options;
@@ -482,10 +575,7 @@ export default class Linter {
 		return apply || hasDecisions || this.shouldOnlyFormat();
 	}
 
-	private createDiagnosticsProcessor(
-		evictedPaths: AbsoluteFilePathSet,
-		runner?: LintRunner,
-	): DiagnosticsProcessor {
+	private createDiagnosticsProcessor(): DiagnosticsProcessor {
 		const processor = this.request.createDiagnosticsProcessor({
 			origins: [
 				{
@@ -497,22 +587,6 @@ export default class Linter {
 
 		processor.addAllowedUnusedSuppressionPrefix("bundler");
 
-		// Only display files that aren't absolute, are in the changed paths, or have had previous compiler diagnostics
-		// This hides errors that have been lint ignored but may have been produced by dependency analysis
-		processor.addFilter({
-			test: (diag) => {
-				const absolute = this.request.server.projectManager.getFilePathFromUidOrAbsolute(
-					diag.location.filename,
-				);
-				return (
-					diag.description.category === "parse" ||
-					absolute === undefined ||
-					evictedPaths.has(absolute) ||
-					(runner !== undefined && runner.hasCompilerDiagnostics(absolute))
-				);
-			},
-		});
-
 		return processor;
 	}
 
@@ -523,7 +597,7 @@ export default class Linter {
 			{shallow: true},
 		);
 
-		const runner = new LintRunner(this, {events, graph});
+		const runner = new CheckRunner(this, {events, graph});
 
 		const globber = await this.request.glob({
 			args: this.options.args,
@@ -531,11 +605,10 @@ export default class Linter {
 			verb: "linting",
 			configCategory: "lint",
 			extensions: LINTABLE_EXTENSIONS,
-			disabledDiagnosticCategory: "lint/disabled",
 		});
 
 		return globber.watch(async (event) => {
-			const processor = this.createDiagnosticsProcessor(event.paths, runner);
+			const processor = this.createDiagnosticsProcessor();
 			const result = await runner.run(event, processor);
 			await events.onChanges(result);
 		});
@@ -554,16 +627,18 @@ export default class Linter {
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
-			onChanges: async ({evictedPaths, changes, totalCount, savedCount, runner}) => {
+			onChanges: async ({changes, totalCount, savedCount, runner}) => {
 				const printer = createDiagnosticsPrinter(
+					runner,
 					request,
-					this.createDiagnosticsProcessor(evictedPaths, runner),
+					this.createDiagnosticsProcessor(),
 					totalCount,
 					savedCount,
 				);
 
 				// Update our diagnostics with the changes
-				for (const {filename, diagnostics} of changes) {
+				for (const {path, diagnostics} of changes) {
+					const filename = path === undefined ? undefined : path.join();
 					if (diagnostics.length === 0) {
 						diagnosticsByFilename.delete(filename);
 					} else {
@@ -595,6 +670,7 @@ export default class Linter {
 
 		let savedCount = 0;
 		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
+		let runner: undefined | CheckRunner;
 
 		const watchEvent = await this.watch({
 			onRunStart: () => {},
@@ -605,9 +681,11 @@ export default class Linter {
 				// Update counts
 				savedCount += res.savedCount;
 				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
+				runner = res.runner;
 
 				// Update our diagnostics with the changes
-				for (const {filename, diagnostics} of res.changes) {
+				for (const {path, diagnostics} of res.changes) {
+					const filename = path === undefined ? undefined : path.join();
 					if (diagnostics.length === 0) {
 						diagnosticsByFilename.delete(filename);
 					} else {
@@ -620,8 +698,9 @@ export default class Linter {
 		await watchEvent.unsubscribe();
 
 		const printer = createDiagnosticsPrinter(
+			runner!,
 			request,
-			this.createDiagnosticsProcessor(paths),
+			this.createDiagnosticsProcessor(),
 			paths.size,
 			savedCount,
 		);

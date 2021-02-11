@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0069/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0069/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0069/input.js>
 	body: Array [
 		JSBlockStatement {
 			body: Array []
@@ -29,11 +29,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0069/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:0
+				path: UIDPath<esprima/invalid-syntax/migrated_0069/input.js>
 				start: Position 1:0
 			}
 			description: Object {

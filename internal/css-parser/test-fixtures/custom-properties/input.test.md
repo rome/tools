@@ -9,9 +9,9 @@ CSSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "custom-properties/input.css"
 	integrity: undefined
 	loc: SourceLocation custom-properties/input.css 1:0-6:1
+	path: RelativeFilePath<custom-properties/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation custom-properties/input.css 1:0-6:1

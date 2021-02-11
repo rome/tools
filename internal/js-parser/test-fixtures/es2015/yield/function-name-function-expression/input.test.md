@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/function-name-function-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:0-1:20
+	path: UIDPath<es2015/yield/function-name-function-expression/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2015/yield/function-name-function-expression/input.js 1:0-1:20

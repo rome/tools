@@ -57,7 +57,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath, createUnknownPath} from "@internal/path";
+import {AbsoluteFilePath, createAnyPath, createUIDPath} from "@internal/path";
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -214,6 +214,7 @@ export default class Server {
 		this.connectedLSPServers = new Set();
 		this.connectedClients = new Set();
 
+		this.hadConnectedClient = false;
 		this.clientIdCounter = 0;
 
 		this.logInitBuffer = [];
@@ -240,7 +241,7 @@ export default class Server {
 				markupOptions: {
 					userConfig: this.userConfig,
 					humanizeFilename: (filename) => {
-						const path = createUnknownPath(filename);
+						const path = createAnyPath(filename);
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
 								path.assertAbsolute(),
@@ -251,12 +252,12 @@ export default class Server {
 						}
 						return undefined;
 					},
-					normalizePosition: (filename, line, column) => {
-						const path = this.projectManager.getFilePathFromUid(filename);
-						if (path === undefined) {
-							return {filename, line, column};
+					normalizePosition: (path, line, column) => {
+						const normalPath = this.projectManager.maybeGetFilePathFromUid(path);
+						if (normalPath === undefined) {
+							return {path, line, column};
 						} else {
-							return {filename: path.join(), line, column};
+							return {path: normalPath, line, column};
 						}
 					},
 				},
@@ -277,7 +278,7 @@ export default class Server {
 			},
 			() => {
 				return (
-					this.clientIdCounter === 0 ||
+					!this.hadConnectedClient ||
 					this.connectedClientsListeningForLogs.size > 0
 				);
 			},
@@ -335,6 +336,7 @@ export default class Server {
 	private requestRunningCounter: number;
 	private terminateWhenIdle: boolean;
 	private clientIdCounter: number;
+	private hadConnectedClient: boolean;
 	private profiling: undefined | ProfilingStartData;
 
 	private connectedClients: Set<ServerClient>;
@@ -546,6 +548,11 @@ export default class Server {
 	public async attachToBridge(
 		bridge: BridgeServer<typeof ServerBridge>,
 	): Promise<ServerClient> {
+		if (!this.hadConnectedClient) {
+			this.hadConnectedClient = true;
+			this.loggerStream.update();
+		}
+
 		let profiler: undefined | Profiler;
 
 		// If we aren't a dedicated process then we should only expect a single connection
@@ -894,7 +901,7 @@ export default class Server {
 			// A type-safe wrapper for retrieving command flags
 			// TODO perhaps present this as JSON or something if this isn't a request from the CLI?
 			const flagsConsumer = consume({
-				filePath: createUnknownPath("argv"),
+				path: createUIDPath("argv"),
 				parent: undefined,
 				value: query.commandFlags,
 				onDefinition(def) {

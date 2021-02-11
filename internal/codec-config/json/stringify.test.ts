@@ -9,13 +9,13 @@ import "@internal/core";
 import {rjson} from "@internal/codec-config";
 import {test} from "rome";
 import {ParserOptions} from "@internal/parser-core";
-import {createUnknownPath} from "@internal/path";
+import {createRelativeFilePath} from "@internal/path";
 import {Dict} from "@internal/typescript-helpers";
 
 function consumeExtJSON(opts: ParserOptions) {
 	return rjson.consume({
 		...opts,
-		path: createUnknownPath("input.rjson"),
+		path: createRelativeFilePath("input.rjson"),
 	});
 }
 

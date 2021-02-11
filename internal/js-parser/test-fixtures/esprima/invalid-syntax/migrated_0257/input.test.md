@@ -10,13 +10,13 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/migrated_0257/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0257/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0257/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
@@ -49,11 +49,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0257/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:15
+				path: UIDPath<esprima/invalid-syntax/migrated_0257/input.js>
 				start: Position 1:16
 			}
 		}

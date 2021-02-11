@@ -7,7 +7,11 @@
 
 import {Consumer} from "@internal/consume";
 import {SemverVersionNode, parseSemverVersion} from "@internal/codec-semver";
-import {SpdxLicenseParser} from "@internal/codec-spdx-license";
+import {
+	SPDXLicenseParseResult,
+	SPDXLicenseParserOptions,
+	parseSPDXLicense,
+} from "@internal/codec-spdx-license";
 import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
 	MBoolean,
@@ -23,19 +27,17 @@ import {
 	ManifestRepository,
 } from "./types";
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
-import {normalizeName} from "./name";
+import {manifestNameToString, normalizeName} from "./name";
 import {descriptions} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	RelativeFilePathMap,
-	UnknownPath,
 	createRelativeFilePath,
 } from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {normalizeCompatManifest} from "@internal/codec-js-manifest/compat";
-import {ProjectDefinition} from "@internal/project";
-import {SpdxLicenseParse} from "@internal/codec-spdx-license/SpdxLicenseParser";
+import {CompilerProjects} from "@internal/compiler";
 
 export * from "./types";
 
@@ -168,9 +170,13 @@ function extractLicenseFromObjectConsumer(
 
 function normalizeLicense(
 	consumer: Consumer,
-	loose: boolean,
-	projects: ProjectDefinition[],
-): undefined | SpdxLicenseParse {
+	{name, version, loose, projects}: {
+		name: undefined | string;
+		version: undefined | SemverVersionNode;
+		loose: boolean;
+		projects: CompilerProjects;
+	},
+): undefined | SPDXLicenseParseResult {
 	if (!consumer.has("license")) {
 		return undefined;
 	}
@@ -196,28 +202,25 @@ function normalizeLicense(
 		return undefined;
 	}
 
-	// Parse as a SPDX expression
-	const spdxLisenceCode = new SpdxLicenseParser({
-		packageVersion: consumer.get("version").asString(),
-		packageName: consumer.get("name").asString(),
-		projects,
-	});
-	return tryParseWithOptionalOffsetPosition<
-		{
-			loose: boolean;
-			path: UnknownPath | undefined;
-			input: string;
-		},
-		SpdxLicenseParse
-	>(
-		{
-			loose,
-			path: consumer.path,
-			input: licenseId,
-		},
+	const opts: SPDXLicenseParserOptions = {
+		loose,
+		path: consumer.path,
+		input: licenseId,
+	};
+
+	if (name !== undefined && version !== undefined) {
+		opts.exceptions = {
+			packageName: name,
+			packageVersion: version,
+			projects,
+		};
+	}
+
+	return tryParseWithOptionalOffsetPosition(
+		opts,
 		{
 			getOffsetPosition: () => licenseProp.getLocation("inner-value").start,
-			parse: (opts) => spdxLisenceCode.parse(opts),
+			parse: (opts) => parseSPDXLicense(opts),
 		},
 	);
 }
@@ -415,6 +418,7 @@ function normalizeRepo(
 }
 
 function normalizeExports(consumer: Consumer): boolean | ManifestExports {
+	return true;
 	const unknown = consumer.asUnknown();
 
 	// "exports": false
@@ -609,7 +613,7 @@ function checkDependencyKeyTypo(key: string, prop: Consumer) {
 export async function normalizeManifest(
 	path: AbsoluteFilePath,
 	consumer: Consumer,
-	projects: ProjectDefinition[],
+	projects: CompilerProjects,
 ): Promise<Manifest> {
 	const loose =
 		consumer.path !== undefined &&
@@ -635,14 +639,20 @@ export async function normalizeManifest(
 	if (loose) {
 		normalizeCompatManifest(consumer, name, version);
 	}
-	const license = normalizeLicense(consumer, loose, projects);
+
+	const strName = name === undefined ? undefined : manifestNameToString(name);
+
+	const parsedLicense = normalizeLicense(
+		consumer,
+		{name: strName, version, loose, projects},
+	);
 
 	return {
 		name,
 		version,
 		private: normalizeBoolean(consumer, "private") === true,
 		description: normalizeString(consumer, "description"),
-		license: license?.license,
+		license: parsedLicense?.license,
 		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
 		scripts: normalizeStringMap(consumer, "scripts", loose),
@@ -678,7 +688,7 @@ export async function normalizeManifest(
 		maintainers: normalizePeople(consumer.get("maintainers"), loose),
 		raw: consumer.asJSONObject(),
 		diagnostics: {
-			license: license?.diagnostics,
+			license: parsedLicense?.diagnostics,
 		},
 	};
 }

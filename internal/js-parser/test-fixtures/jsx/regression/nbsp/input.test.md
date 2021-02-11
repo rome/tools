@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/regression/nbsp/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/regression/nbsp/input.jsx 1:0-2:0
+	path: UIDPath<jsx/regression/nbsp/input.jsx>
 	syntax: Array ["jsx"]
 	body: Array [
 		JSExpressionStatement {

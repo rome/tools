@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/categorized/malformed-switch/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/categorized/malformed-switch/input.js 1:0-3:1
+	path: UIDPath<core/categorized/malformed-switch/input.js>
 	body: Array [
 		JSSwitchStatement {
 			cases: Array []
@@ -38,11 +38,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Statement outside of a case or default block"}
 			}
 			location: Object {
-				filename: "core/categorized/malformed-switch/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:12
+				path: UIDPath<core/categorized/malformed-switch/input.js>
 				start: Position 2:2
 			}
 		}

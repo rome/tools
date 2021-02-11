@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/regex-after-block/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/categorized/regex-after-block/input.js 1:0-4:5
+	path: UIDPath<core/categorized/regex-after-block/input.js>
 	body: Array [
 		JSIfStatement {
 			alternate: undefined

@@ -10,7 +10,7 @@ function createReduceTest(
 	visitor: Omit<AnyVisitor, "name">,
 ): (t: TestHelper) => void {
 	return (t) => {
-		const oldAst = parseJS({input, path: "unknown"});
+		const oldAst = parseJS({input});
 		const context = new CompilerContext({
 			ast: oldAst,
 		});

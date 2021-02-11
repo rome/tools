@@ -17,6 +17,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {
+	UnknownFunction,
 	UnknownObject,
 	VoidCallback,
 	isPlainObject,
@@ -36,6 +37,7 @@ import {
 	ConsumePropertyNumberDefinition,
 	ConsumePropertyPrimitiveDefinition,
 	ConsumePropertyStringDefinition,
+	ConsumeProtectedFunction,
 	ConsumeSourceLocationRequestTarget,
 	ConsumerHandleUnexpected,
 	ConsumerOnDefinition,
@@ -55,14 +57,16 @@ import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
+	AnyPath,
 	RelativeFilePath,
 	URLPath,
-	UnknownPath,
 	createAbsoluteFilePath,
+	createAnyPath,
 	createURLPath,
-	createUnknownPath,
+	isPath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
+import {consumeUnknown} from ".";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
@@ -77,9 +81,7 @@ function isComputedPart(part: ConsumeKey): boolean {
 
 export default class Consumer {
 	constructor(opts: ConsumerOptions) {
-		this.path = opts.filePath;
-		this.filename = this.path === undefined ? undefined : this.path.join();
-
+		this.path = opts.path;
 		this.value = opts.value;
 		this.parent = opts.parent;
 		this.keyPath = opts.objectPath;
@@ -96,8 +98,7 @@ export default class Consumer {
 		this.handleUnexpected = opts.handleUnexpectedDiagnostic;
 	}
 
-	public path: undefined | UnknownPath;
-	public filename: undefined | string;
+	public path: AnyPath;
 
 	private declared: boolean;
 	private handleUnexpected: undefined | ConsumerHandleUnexpected;
@@ -214,7 +215,9 @@ export default class Consumer {
 
 		const getDiagnosticLocation = this.context.getDiagnosticLocation;
 		if (getDiagnosticLocation === undefined) {
-			return {};
+			return {
+				path: this.path,
+			};
 		} else {
 			return getDiagnosticLocation(this.keyPath, target);
 		}
@@ -230,13 +233,13 @@ export default class Consumer {
 			location.end === undefined
 		) {
 			return {
-				filename: this.filename,
+				path: this.path,
 				start: UNKNOWN_POSITION,
 				end: UNKNOWN_POSITION,
 			};
 		} else {
 			return {
-				filename: location.filename,
+				path: location.path,
 				start: location.start,
 				end: location.end,
 			};
@@ -297,7 +300,7 @@ export default class Consumer {
 	public wasInSource(): boolean {
 		const loc = this.getDiagnosticLocation();
 		return (
-			loc.filename !== undefined &&
+			loc.path !== undefined &&
 			(loc.start !== undefined || loc.end !== undefined)
 		);
 	}
@@ -321,7 +324,7 @@ export default class Consumer {
 
 			// If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
 			// We allow a computed part at the beginning of a path
-			if (isComputedPart(part) && i > 0) {
+			if (isComputedPart(part)) {
 				const inner =
 					typeof part === "number"
 						? String(part)
@@ -379,7 +382,7 @@ export default class Consumer {
 	): DiagnosticsError {
 		const {target = "value"} = opts;
 
-		const {filename} = this;
+		const {path} = this;
 		let location = this.getDiagnosticLocation(target);
 		const fromSource = this.wasInSource();
 
@@ -413,7 +416,7 @@ export default class Consumer {
 
 			// If consumer is undefined and we have no filename then we were not able to find a location,
 			// in this case, just throw a normal error
-			if (consumer === undefined && filename === undefined) {
+			if (consumer === undefined && path === undefined) {
 				throw new Error(readMarkup(message));
 			}
 
@@ -444,7 +447,7 @@ export default class Consumer {
 			},
 			location: {
 				...location,
-				filename: this.filename,
+				path: this.path,
 			},
 		};
 
@@ -485,7 +488,7 @@ export default class Consumer {
 			usedNames: this.usedNames,
 			onDefinition: this.onDefinition,
 			handleUnexpectedDiagnostic: this.handleUnexpected,
-			filePath: this.path,
+			path: this.path,
 			context: this.context,
 			value: this.value,
 			parent: this.parent,
@@ -564,6 +567,14 @@ export default class Consumer {
 		}
 
 		return value;
+	}
+
+	public getParentValue(def?: unknown): unknown {
+		if (this.parent === undefined) {
+			return def;
+		} else {
+			return this.parent.getValue();
+		}
 	}
 
 	public getValue(def?: unknown): unknown {
@@ -944,6 +955,61 @@ export default class Consumer {
 		}
 	}
 
+	public asFunction(def?: UnknownFunction): UnknownFunction {
+		this.declareDefinition({
+			type: "function",
+			default: def,
+			required: def === undefined,
+		});
+
+		const fn = this.getValue(def);
+
+		if (typeof fn === "function") {
+			return fn as UnknownFunction;
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FUNCTION);
+
+			return () => {
+				return undefined;
+			};
+		}
+	}
+
+	public async asPromise(def?: PromiseLike<unknown>): Promise<Consumer> {
+		let value: unknown;
+
+		if (this.isObject()) {
+			const obj = this.asOriginalUnknownObject();
+			if (typeof obj.then === "function") {
+				value = await obj;
+			} else {
+				value = obj;
+			}
+		} else {
+			value = this.getValue(def);
+		}
+
+		return consumeUnknown(
+			value,
+			this.context.category,
+			this.context.categoryValue,
+		);
+	}
+
+	public asWrappedFunction(def?: UnknownFunction): ConsumeProtectedFunction {
+		const fn = this.asFunction(def);
+		const context = this.getParentValue();
+
+		return (...args) => {
+			const ret = fn.apply(context, args);
+			return consumeUnknown(
+				ret,
+				this.context.category,
+				this.context.categoryValue,
+			);
+		};
+	}
+
 	public asString(def?: string): string {
 		this.declareDefinition({
 			type: "string",
@@ -1042,7 +1108,7 @@ export default class Consumer {
 		return BigInt("0");
 	}
 
-	private _declareOptionalFilePath() {
+	private _declareOptionalPath() {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1054,7 +1120,7 @@ export default class Consumer {
 	}
 
 	public asURLPath(def?: string): URLPath {
-		const path = this.asUnknownPath(def);
+		const path = this.asAnyPath(def);
 		if (path.isURL()) {
 			return path.assertURL();
 		} else {
@@ -1067,12 +1133,12 @@ export default class Consumer {
 		if (this.exists()) {
 			return this.asURLPath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
 
-	public asUnknownPath(def?: string): UnknownPath {
+	public asAnyPath(def?: string): AnyPath {
 		this.declareDefinition(
 			{
 				type: "string",
@@ -1082,14 +1148,21 @@ export default class Consumer {
 			"path",
 		);
 
-		return createUnknownPath(this.asString(def));
+		// Allow path instances
+		const value = this.getValue(def);
+		if (isPath(value)) {
+			return value;
+		}
+
+		// Otherwise expect a string
+		return createAnyPath(this.asString(def));
 	}
 
-	public asUnknownPathOrVoid(): undefined | UnknownPath {
+	public asAnyPathOrVoid(): undefined | AnyPath {
 		if (this.exists()) {
-			return this.asUnknownPath();
+			return this.asAnyPath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
@@ -1098,7 +1171,7 @@ export default class Consumer {
 		def?: string,
 		cwd?: AbsoluteFilePath,
 	): AbsoluteFilePath {
-		const path = this.asUnknownPath(def);
+		const path = this.asAnyPath(def);
 		if (path.isAbsolute()) {
 			return path.assertAbsolute();
 		} else if (cwd !== undefined && path.isRelative()) {
@@ -1115,13 +1188,13 @@ export default class Consumer {
 		if (this.exists()) {
 			return this.asAbsoluteFilePath(undefined, cwd);
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
 
 	public asRelativeFilePath(def?: string): RelativeFilePath {
-		const path = this.asUnknownPath(def);
+		const path = this.asAnyPath(def);
 		if (path.isRelative()) {
 			return path.assertRelative();
 		} else {
@@ -1134,7 +1207,7 @@ export default class Consumer {
 		if (this.exists()) {
 			return this.asRelativeFilePath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}
@@ -1154,7 +1227,7 @@ export default class Consumer {
 		if (this.exists()) {
 			return this.asExplicitRelativeFilePath();
 		} else {
-			this._declareOptionalFilePath();
+			this._declareOptionalPath();
 			return undefined;
 		}
 	}

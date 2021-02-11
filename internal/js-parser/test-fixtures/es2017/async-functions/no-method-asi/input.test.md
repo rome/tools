@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/no-method-asi/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/no-method-asi/input.js 1:0-4:1
+	path: UIDPath<es2017/async-functions/no-method-asi/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

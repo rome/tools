@@ -1,5 +1,5 @@
 import {VERSION} from "@internal/core";
-import {AbsoluteFilePath, AbsoluteFilePathMap} from "@internal/path";
+import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
 import {FSStats, createReadStream, exists, lstat} from "@internal/fs";
 import Cache from "../common/Cache";
 import Worker from "./Worker";
@@ -9,10 +9,10 @@ import {
 } from "@internal/codec-binary-serial";
 import {FileReference} from "../common/types/files";
 import {Consumer, consumeUnknown} from "@internal/consume";
-import {JSONObject} from "@internal/codec-config";
 import {sha256} from "@internal/string-utils";
 import {DiagnosticIntegrity} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
+import {ToJSONObject} from "@internal/codec-config/json/types";
 
 // This can be shared across multiple machines safely
 export type PortableCacheMetadata = {
@@ -74,7 +74,7 @@ const localMetaLoader = createCacheEntryLoader<LocalCacheMetadata>(
 	},
 );
 
-type CacheKeyParts = Array<string | JSONObject>;
+type CacheKeyParts = Array<string | ToJSONObject>;
 
 function serializeCacheKey(rawParts: CacheKeyParts): string {
 	const parts: string[] = [];
@@ -387,7 +387,7 @@ export default class WorkerCache extends Cache {
 	private worker: Worker;
 	private loadedFiles: AbsoluteFilePathMap<CacheFile>;
 
-	public async remove(uid: string, path: AbsoluteFilePath) {
+	public async remove(uid: UIDPath, path: AbsoluteFilePath) {
 		this.loadedFiles.delete(path);
 		await super.remove(uid, path);
 	}

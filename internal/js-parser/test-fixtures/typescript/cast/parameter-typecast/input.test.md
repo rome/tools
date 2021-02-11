@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/cast/parameter-typecast/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/cast/parameter-typecast/input.ts 1:0-2:0
+	path: UIDPath<typescript/cast/parameter-typecast/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {
@@ -41,11 +41,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
 			}
 			location: Object {
-				filename: "typescript/cast/parameter-typecast/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:9
+				path: UIDPath<typescript/cast/parameter-typecast/input.ts>
 				start: Position 1:5
 			}
 		}

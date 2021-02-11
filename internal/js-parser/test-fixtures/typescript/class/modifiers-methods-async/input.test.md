@@ -11,12 +11,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/modifiers-methods-async/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/modifiers-methods-async/input.ts 1:0-12:0
+	path: UIDPath<typescript/class/modifiers-methods-async/input.ts>
 	syntax: Array ["ts"]
 	comments: Array [
 		CommentLine {

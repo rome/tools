@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-properties/new-target-invalid/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/new-target-invalid/input.js 1:0-2:0
+	path: UIDPath<experimental/class-properties/new-target-invalid/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "experimental/class-properties/new-target-invalid/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:18
+				path: UIDPath<experimental/class-properties/new-target-invalid/input.js>
 				start: Position 1:8
 			}
 		}

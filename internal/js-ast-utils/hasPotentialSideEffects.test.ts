@@ -3,6 +3,7 @@ import {hasPotentialSideEffects} from "@internal/js-ast-utils/hasPotentialSideEf
 import Scope, {RootScope} from "@internal/compiler/scope/Scope";
 import {
 	AnyNode,
+	MOCK_JS_ROOT,
 	jsArrayExpression,
 	jsAssignmentIdentifier,
 	jsBindingIdentifier,
@@ -17,7 +18,6 @@ import {
 	jsNullLiteral,
 	jsNumericLiteral,
 	jsReferenceIdentifier,
-	jsRoot,
 	jsSpreadProperty,
 	jsStaticPropertyKey,
 	jsStringLiteral,
@@ -86,33 +86,9 @@ test(
 			parentScope: undefined,
 			rootScope: new RootScope(
 				new CompilerContext({
-					ast: jsRoot.create({
-						body: [],
-						comments: [],
-						corrupt: false,
-						diagnostics: [],
-						directives: [],
-						filename: "",
-						hasHoistedVars: false,
-						interpreter: undefined,
-						integrity: undefined,
-						sourceType: "script",
-						syntax: [],
-					}),
+					ast: MOCK_JS_ROOT,
 				}),
-				jsRoot.create({
-					body: [],
-					comments: [],
-					corrupt: false,
-					diagnostics: [],
-					directives: [],
-					filename: "",
-					hasHoistedVars: false,
-					interpreter: undefined,
-					integrity: undefined,
-					sourceType: "script",
-					syntax: [],
-				}),
+				MOCK_JS_ROOT,
 			),
 		});
 

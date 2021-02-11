@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/bigint/invalid-non-octal-decimal-int/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4
+	path: UIDPath<es2020/bigint/invalid-non-octal-decimal-int/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/bigint/invalid-non-octal-decimal-int/input.js 1:0-1:4

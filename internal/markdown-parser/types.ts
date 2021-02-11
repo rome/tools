@@ -3,7 +3,6 @@ import {
 	ComplexToken,
 	NumberToken,
 	ParserOptions,
-	ParserOptionsWithRequiredPath,
 	SimpleToken,
 	StringToken,
 } from "@internal/parser-core";
@@ -21,7 +20,7 @@ export interface MarkdownParserOptions extends Omit<
 export type MarkdownParserTypes = {
 	tokens: Tokens;
 	state: MarkdownParserState;
-	options: ParserOptionsWithRequiredPath;
+	options: ParserOptions;
 	meta: void;
 };
 

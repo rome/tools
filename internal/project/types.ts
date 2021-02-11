@@ -13,8 +13,8 @@ import {
 	TEMP_PATH,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {Consumer} from "@internal/consume";
-import {Dict, RequiredProps} from "@internal/typescript-helpers";
+import {Consumer, consumeUnknown} from "@internal/consume";
+import {DeepPartial, Dict} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
 
@@ -46,6 +46,10 @@ export type DependenciesExceptions = {
 
 export type ProjectConfigPresetNames = "electron" | "cypress" | "jest";
 
+type Enableable = {
+	enabled: boolean;
+};
+
 export type IndentStyle = "tab" | "space";
 
 // Project config objects to categorize settings
@@ -57,19 +61,23 @@ export type ProjectConfigObjects = {
 	bundler: {
 		externals: string[];
 	};
-	format: {
-		enabled: boolean;
+	parser: {
+		jsxEverywhere: boolean;
+	};
+	format: Enableable & {
 		indentStyle: IndentStyle;
 		indentSize: number;
 	};
-	lint: {
+	check: {
+		dependencies: boolean;
+	};
+	lint: Enableable & {
 		globals: string[];
 		ignore: PathPatterns;
 		requireSuppressionExplanations: boolean;
 		disabledRules: LintRuleName[];
 	};
-	typeCheck: {
-		enabled: boolean;
+	typeCheck: Enableable & {
 		libs: AbsoluteFilePathSet;
 	};
 	tests: {
@@ -87,17 +95,16 @@ export type ProjectConfigObjects = {
 		maxSize: number;
 		vendorPath: AbsoluteFilePath;
 	};
-	dependencies: {
-		enabled: boolean;
+	dependencies: Enableable & {
 		exceptions: DependenciesExceptions;
 	};
 	targets: Map<string, ProjectConfigTarget>;
 };
 
 export type ProjectConfigIntegrations = {
-	eslint: {
-		enabled: boolean;
-	};
+	eslint: Enableable;
+	typescriptChecker: Enableable;
+	prettier: Enableable;
 };
 
 export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
@@ -132,19 +139,14 @@ type PartialProjectValue<Type> = Type extends Map<string, any>
 	: Partial<Type>;
 
 export type ProjectConfigMeta = {
-	projectDirectory: undefined | AbsoluteFilePath;
-	configPath: undefined | AbsoluteFilePath;
+	projectDirectory: AbsoluteFilePath;
+	configPath: AbsoluteFilePath;
 	configCacheKeys: Dict<string>;
 	configDependencies: AbsoluteFilePathSet;
-	consumer: undefined | Consumer;
+	consumer: Consumer;
 	configSourceSubKey: undefined | string;
 	consumersChain: Consumer[];
 };
-
-export type ProjectConfigMetaHard = RequiredProps<
-	ProjectConfigMeta,
-	"consumer" | "projectDirectory" | "configPath"
->;
 
 // Final project config
 export type ProjectConfig = ProjectConfigBase &
@@ -154,74 +156,80 @@ export type ProjectConfig = ProjectConfigBase &
 
 // The actual type that we allow users to specify their configuration
 // Types are deliberately wider than they need to be to more accurately represent how they will be provided. ie. `string` rather than string literals
-export type RawUserProjectConfig = {
-	name?: string;
-	version?: string;
-	root?: boolean;
-	extends?: boolean;
-	cache?: {};
-	resolver?: {};
-	compiler?: {};
-	bundler?: {
-		externals?: string[];
+export type RawUserProjectConfig = DeepPartial<{
+	name: string;
+	version: string;
+	root: boolean;
+	extends: boolean;
+	cache: {};
+	resolver: {};
+	compiler: {};
+	bundler: {
+		externals: string[];
 	};
-	typeChecking?: {
-		enabled?: boolean;
-		libs?: string[];
+	typeChecking: Enableable & {
+		libs: string[];
 	};
-	dependencies?: {
-		enabled?: boolean;
-		exceptions?: {
-			invalidLicenses?: {
+	dependencies: Enableable & {
+		exceptions: {
+			invalidLicenses: {
 				[key: string]: string[];
 			};
 		};
 	};
-	lint?: {
-		ignore?: string[];
-		globals?: string[];
-		disabledRules?: string[];
-		requireSuppressionExplanations?: boolean;
+	check: {
+		dependencies: boolean;
+	};
+	lint: Enableable & {
+		ignore: string[];
+		globals: string[];
+		disabledRules: string[];
+		requireSuppressionExplanations: boolean;
 	};
 	format: {
-		enabled?: boolean;
-		indentStyle?: string;
-		indentSize?: number;
+		enabled: boolean;
+		indentStyle: string;
+		indentSize: number;
 	};
-	tests?: {
-		ignore?: string[];
+	tests: {
+		ignore: string[];
 	};
-	develop?: {
-		serveStatic?: boolean;
+	parser: {
+		jsxEverywhere: boolean;
 	};
-	files?: {
-		vendorPath?: string;
-		maxSize?: number;
-		maxSizeIgnore?: string[];
-		assetExtensions?: string[];
+	develop: {
+		serveStatic: boolean;
 	};
-	vcs?: {
-		root?: string;
+	files: {
+		vendorPath: string;
+		maxSize: number;
+		maxSizeIgnore: string[];
+		assetExtensions: string[];
 	};
-	targets?: {
+	vcs: {
+		root: string;
+	};
+	targets: {
 		[key: string]: {
-			constraints?: string[];
+			constraints: string[];
 		};
 	};
-	integrations?: {
-		eslint?: {
-			enabled?: boolean;
-		};
+	integrations: {
+		eslint: Enableable;
+		typescriptChecker: Enableable;
+		prettier: Enableable;
 	};
-};
+}>;
 
-export function createDefaultProjectConfigMeta(): ProjectConfigMeta {
+export function createMockProjectConfigMeta(
+	projectDirectory: AbsoluteFilePath,
+): ProjectConfigMeta {
 	return {
-		projectDirectory: undefined,
-		configPath: undefined,
+		projectDirectory,
+		configPath: projectDirectory.append("package.json"),
 		configCacheKeys: {},
 		configDependencies: new AbsoluteFilePathSet(),
-		consumer: undefined,
+		consumer: consumeUnknown({}, "parse", "json"),
 		configSourceSubKey: undefined,
 		consumersChain: [],
 	};
@@ -247,6 +255,12 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			// Maybe this needs to be cloned...?
 			libs: new AbsoluteFilePathSet(),
 		},
+		check: {
+			dependencies: true,
+		},
+		parser: {
+			jsxEverywhere: false,
+		},
 		dependencies: {
 			enabled: false,
 			exceptions: {
@@ -259,6 +273,7 @@ export function createDefaultProjectConfig(): ProjectConfig {
 			indentSize: 1,
 		},
 		lint: {
+			enabled: true,
 			ignore: [],
 			globals: [],
 			requireSuppressionExplanations: true,
@@ -279,6 +294,12 @@ export function createDefaultProjectConfig(): ProjectConfig {
 		targets: new Map(),
 		integrations: {
 			eslint: {
+				enabled: false,
+			},
+			typescriptChecker: {
+				enabled: false,
+			},
+			prettier: {
 				enabled: false,
 			},
 		},

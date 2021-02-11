@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/interpreter-directive/interpreter-directive-object/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:0-4:0
+	path: UIDPath<comments/interpreter-directive/interpreter-directive-object/input.js>
 	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
 		loc: SourceLocation comments/interpreter-directive/interpreter-directive-object/input.js 1:1-1:25

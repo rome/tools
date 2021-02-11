@@ -63,7 +63,7 @@ export default class FileAllocator {
 				path,
 				project.config.files.maxSizeIgnore,
 				project.directory,
-			) === "NO_MATCH"
+			).type === "NO_MATCH"
 		) {
 			throw createSingleDiagnosticError({
 				description: descriptions.FILES.TOO_BIG(
@@ -73,13 +73,13 @@ export default class FileAllocator {
 					maxSize,
 				),
 				location: {
-					filename: path.join(),
+					path,
 				},
 			});
 		}
 	}
 
-	private getOwnerAssert(path: AbsoluteFilePath): WorkerContainer {
+	public getOwnerAssert(path: AbsoluteFilePath): WorkerContainer {
 		const {workerManager} = this.server;
 		const workerId = this.getOwnerId(path);
 		if (workerId === undefined) {

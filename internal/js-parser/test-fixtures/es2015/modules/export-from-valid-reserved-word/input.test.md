@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/export-from-valid-reserved-word/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/export-from-valid-reserved-word/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/export-from-valid-reserved-word/input.js>
 	body: Array [
 		JSExportExternalDeclaration {
 			defaultSpecifier: undefined

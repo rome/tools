@@ -11,13 +11,13 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "core/uncategorised/360/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/360/input.js 1:0-1:13
+	path: UIDPath<core/uncategorised/360/input.js>
 	directives: Array [
 		JSDirective {
 			value: "Hello\nWorld"
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unterminated string constant"}
 			}
 			location: Object {
-				filename: "core/uncategorised/360/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<core/uncategorised/360/input.js>
 				start: Position 1:6
 			}
 		}

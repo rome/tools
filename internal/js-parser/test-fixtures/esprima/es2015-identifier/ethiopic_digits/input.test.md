@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-identifier/ethiopic_digits/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-identifier/ethiopic_digits/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-identifier/ethiopic_digits/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation esprima/es2015-identifier/ethiopic_digits/input.js 1:0-1:14

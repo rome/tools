@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-properties/super-inside-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/super-inside-arrow-function/input.js 1:0-4:0
+	path: UIDPath<experimental/class-properties/super-inside-arrow-function/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

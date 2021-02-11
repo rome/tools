@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/function-sent/disabled-function-keyword-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/function-sent/disabled-function-keyword-declaration/input.js 1:0-4:0
+	path: UIDPath<experimental/function-sent/disabled-function-keyword-declaration/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/function-sent/disabled-function-keyword-declaration/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:17
+				path: UIDPath<experimental/function-sent/disabled-function-keyword-declaration/input.js>
 				start: Position 2:18
 			}
 		}

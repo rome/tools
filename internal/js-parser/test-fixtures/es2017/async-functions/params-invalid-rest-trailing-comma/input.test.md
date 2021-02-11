@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/params-invalid-rest-trailing-comma/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/params-invalid-rest-trailing-comma/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/params-invalid-rest-trailing-comma/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:12
+				path: UIDPath<es2017/async-functions/params-invalid-rest-trailing-comma/input.js>
 				start: Position 1:12
 			}
 		}

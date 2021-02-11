@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticAdvice, DiagnosticLocation} from "./types";
+import {Diagnostic, DiagnosticAdvice, DiagnosticLocation} from "./types";
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import stringDiff from "@internal/string-diff";
 import {Position} from "@internal/parser-core";
@@ -153,17 +153,17 @@ export function buildDuplicateLocationAdvice(
 export function diagnosticLocationToMarkupFilelink(
 	loc: DiagnosticLocation,
 ): StaticMarkup {
-	const {start, filename} = loc;
+	const {start, path} = loc;
 
-	if (filename === undefined) {
+	if (path === undefined) {
 		return markup`unknown`;
 	}
 
 	if (start === undefined) {
-		return markup`<filelink target="${filename}" />`;
+		return markup`<filelink target="${path.join()}" />`;
 	}
 
-	return markup`<filelink target="${filename}" line="${String(start.line)}" column="${String(
+	return markup`<filelink target="${path.join()}" line="${String(start.line)}" column="${String(
 		start.column,
 	)}" />`;
 }
@@ -191,4 +191,30 @@ export function joinCategoryName(
 		human = `${human}(${escapeCategoryValue(categoryValue)})`;
 	}
 	return human;
+}
+
+export function appendAdviceToDiagnostic(
+	diag: Diagnostic,
+	advice: DiagnosticAdvice,
+): Diagnostic {
+	return {
+		...diag,
+		description: {
+			...diag.description,
+			advice: [...(diag.description.advice || []), ...advice],
+		},
+	};
+}
+
+export function prependAdviceToDiagnostic(
+	diag: Diagnostic,
+	advice: DiagnosticAdvice,
+): Diagnostic {
+	return {
+		...diag,
+		description: {
+			...diag.description,
+			advice: [...advice, ...(diag.description.advice || [])],
+		},
+	};
 }

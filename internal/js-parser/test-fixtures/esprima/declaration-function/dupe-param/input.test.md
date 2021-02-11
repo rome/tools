@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/declaration-function/dupe-param/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/declaration-function/dupe-param/input.js 1:0-2:0
+	path: UIDPath<esprima/declaration-function/dupe-param/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/declaration-function/dupe-param/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:15
+				path: UIDPath<esprima/declaration-function/dupe-param/input.js>
 				start: Position 1:14
 			}
 			description: Object {

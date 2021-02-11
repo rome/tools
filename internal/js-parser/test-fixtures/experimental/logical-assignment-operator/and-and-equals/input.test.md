@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/logical-assignment-operator/and-and-equals/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/logical-assignment-operator/and-and-equals/input.js 1:0-3:0
+	path: UIDPath<experimental/logical-assignment-operator/and-and-equals/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/logical-assignment-operator/and-and-equals/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<experimental/logical-assignment-operator/and-and-equals/input.js>
 				start: Position 1:4
 			}
 			description: Object {

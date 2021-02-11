@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/object/async-method-linebreak/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/object/async-method-linebreak/input.js 1:0-5:0
+	path: UIDPath<es2015/object/async-method-linebreak/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}
 			}
 			location: Object {
-				filename: "es2015/object/async-method-linebreak/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:9
+				path: UIDPath<es2015/object/async-method-linebreak/input.js>
 				start: Position 3:4
 			}
 		}

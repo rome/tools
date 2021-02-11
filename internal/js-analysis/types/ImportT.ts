@@ -11,6 +11,7 @@ import {HydrateData} from "../Evaluator";
 import {Scope} from "../scopes";
 import T from "./T";
 import {StaticMarkup, markup} from "@internal/markup";
+import {AnyPath, createAnyPath} from "@internal/path";
 
 export default class ImportT extends T {
 	constructor(
@@ -18,14 +19,14 @@ export default class ImportT extends T {
 		originNode: undefined | AnyNode,
 		opts: {
 			importedName: undefined | string;
-			relative?: string;
+			originPath?: AnyPath;
 			source: string;
 		},
 	) {
 		super(scope, originNode);
 		this.importedName = opts.importedName;
-		this.relative =
-			opts.relative === undefined ? scope.evaluator.filename : opts.relative;
+		this.originPath =
+			opts.originPath === undefined ? scope.evaluator.path : opts.originPath;
 		this.source = opts.source;
 		this.absolute = undefined;
 		this.resolvedType = undefined;
@@ -33,7 +34,7 @@ export default class ImportT extends T {
 			this,
 			{
 				importedName: this.importedName,
-				relative: this.relative,
+				originPath: this.originPath,
 				source: this.source,
 			},
 		);
@@ -41,12 +42,12 @@ export default class ImportT extends T {
 
 	public static type = "ImportT";
 	private importedName: undefined | string;
-	private absolute: undefined | string;
+	private absolute: undefined | AnyPath;
 	private resolvedType: undefined | T;
-	private relative: string;
+	private originPath: AnyPath;
 	private source: string;
 
-	public setAbsolute(absolute: undefined | string) {
+	public setAbsolute(absolute: undefined | AnyPath) {
 		this.absolute = absolute;
 	}
 
@@ -57,7 +58,7 @@ export default class ImportT extends T {
 	public serialize(): HydrateData {
 		return {
 			importedName: this.importedName,
-			relative: this.relative,
+			originPath: this.originPath.join(),
 			source: this.source,
 		};
 	}
@@ -73,7 +74,7 @@ export default class ImportT extends T {
 			{
 				importedName: String(data.importedName),
 				source: String(data.source),
-				relative: String(data.relative),
+				originPath: createAnyPath(String(data.originPath)),
 			},
 		);
 	}
@@ -83,7 +84,7 @@ export default class ImportT extends T {
 		if (this.resolvedType !== undefined) {
 			object = builder.humanize(this.resolvedType);
 		} else if (this.absolute === undefined) {
-			object = markup`$Exports<"${this.source}", "${this.relative}">`;
+			object = markup`$Exports<"${this.source}", "${this.originPath}">`;
 		} else {
 			object = markup`$Exports<"${this.absolute}">`;
 		}

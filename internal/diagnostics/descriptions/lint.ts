@@ -127,26 +127,34 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/jsx/useSelfClosingElements",
 		message: markup`JSX elements without children should be marked as self-closing. In JSX, it is valid for any element to be self-closing.`,
 	},
-	JS_NO_SHOUTY_CONSTANTS: (constantLocation: DiagnosticLocation = {}) => ({
-		category: "lint/js/noShoutyConstants",
-		message: markup`Redundant constant reference`,
-		advice: [
+	JS_NO_SHOUTY_CONSTANTS: (constantLocation: undefined | DiagnosticLocation) => {
+		const advice: DiagnosticAdvice = [
 			{
 				type: "log",
 				category: "info",
 				text: markup`You should avoid declaring constants with a string that's the same value as the variable name. It introduces a level of unnecessary indirection when it's only two additional characters to inline.`,
 			},
-			{
+		];
+
+		if (constantLocation !== undefined) {
+			advice.push({
 				type: "log",
 				category: "info",
 				text: markup`This constant is declared here`,
-			},
-			{
+			});
+
+			advice.push({
 				type: "frame",
 				location: constantLocation,
-			},
-		],
-	}),
+			});
+		}
+
+		return {
+			category: "lint/js/noShoutyConstants",
+			message: markup`Redundant constant reference`,
+			advice,
+		};
+	},
 	JS_NO_UNUSED_TEMPLATE_LITERAL: {
 		category: "lint/js/noUnusedTemplateLiteral",
 		message: markup`Do not use template literals if interpolation and special-character handling are not needed.`,

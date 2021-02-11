@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/export-extensions/default-from-identifier-parenthesized/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/export-extensions/default-from-identifier-parenthesized/input.js 1:0-2:0
+	path: UIDPath<experimental/export-extensions/default-from-identifier-parenthesized/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: SourceLocation experimental/export-extensions/default-from-identifier-parenthesized/input.js 1:0-1:22

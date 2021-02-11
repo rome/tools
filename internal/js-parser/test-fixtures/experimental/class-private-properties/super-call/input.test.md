@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/super-call/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-properties/super-call/input.js 1:0-7:1
+	path: UIDPath<experimental/class-private-properties/super-call/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/class-private-properties/super-call/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 4:18
+				path: UIDPath<experimental/class-private-properties/super-call/input.js>
 				start: Position 4:13
 			}
 			description: Object {

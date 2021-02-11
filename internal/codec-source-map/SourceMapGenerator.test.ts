@@ -6,7 +6,9 @@ import {
 	SourceMapGenerator,
 } from "@internal/codec-source-map/index";
 import {dedent} from "@internal/string-utils";
+import {createAnyPath, createRelativeFilePath} from "@internal/path";
 
+// TODO: This should NOT be shared amongst tests
 let generator: SourceMapGenerator;
 
 test(
@@ -22,7 +24,7 @@ test(
 		): Mapping {
 			return {
 				name,
-				source,
+				source: createAnyPath(source),
 				original: {
 					line: ob1Coerce1(originalLine),
 					column: ob1Coerce0(originalColumn),
@@ -36,7 +38,7 @@ test(
 		}
 
 		generator = new SourceMapGenerator({
-			file: "bundle.js",
+			path: createRelativeFilePath("bundle.js"),
 			sourceRoot: "..",
 		});
 

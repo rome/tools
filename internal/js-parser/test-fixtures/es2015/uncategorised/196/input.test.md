@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/196/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/196/input.js 1:0-1:33
+	path: UIDPath<es2015/uncategorised/196/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [
@@ -31,11 +31,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/196/input.js"
 				integrity: undefined
 				language: "regex"
 				sourceText: undefined
 				end: Position 1:21
+				path: UIDPath<es2015/uncategorised/196/input.js>
 				start: Position 1:8
 			}
 		}

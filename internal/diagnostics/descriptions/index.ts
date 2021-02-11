@@ -21,6 +21,7 @@ import {analyzeDependencies} from "./analyzeDependencies";
 import {stringMarkup} from "./parsers/stringMarkup";
 import {pathMatch} from "./parsers/pathMatch";
 import {tests} from "./tests";
+import {integrations} from "./integrations";
 import {suppressions} from "./suppressions";
 import {snapshots} from "./snapshots";
 import {bundler} from "./bundler";
@@ -159,6 +160,7 @@ export const descriptions = {
 	ANALYZE_DEPENDENCIES: analyzeDependencies,
 	STRING_MARKUP: stringMarkup,
 	PATH_MATCH: pathMatch,
+	INTEGRATIONS: integrations,
 	TESTS: tests,
 	SUPPRESSIONS: suppressions,
 	SNAPSHOTS: snapshots,

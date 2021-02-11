@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-array-pattern/tailing-hold/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-array-pattern/tailing-hold/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-array-pattern/tailing-hold/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation esprima/es2015-array-pattern/tailing-hold/input.js 1:0-1:11

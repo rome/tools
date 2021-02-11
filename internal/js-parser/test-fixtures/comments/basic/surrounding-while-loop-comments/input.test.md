@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/surrounding-while-loop-comments/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation comments/basic/surrounding-while-loop-comments/input.js 1:0-2:0
+	path: UIDPath<comments/basic/surrounding-while-loop-comments/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"

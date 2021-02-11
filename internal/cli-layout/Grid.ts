@@ -21,11 +21,17 @@ import {
 	lineWrapValidator,
 	parseMarkup,
 } from "@internal/markup";
-import {GridOptions, GridOutputFormat, GridPointer} from "./types";
+import {
+	GridLocators,
+	GridOptions,
+	GridOutputFormat,
+	GridPointer,
+} from "./types";
 import {
 	Number1,
 	ob1Add,
 	ob1Coerce1,
+	ob1Coerce1To0,
 	ob1Dec,
 	ob1Get,
 	ob1Get1,
@@ -151,6 +157,8 @@ export default class Grid {
 			sourceColumn: ob1Number1,
 		};
 
+		this.locators = new Map();
+
 		const {lineWrapMode = "word-break"} = opts.view;
 		this.lineWrapMode = lineWrapMode;
 		this.width = ob1Number1;
@@ -181,6 +189,7 @@ export default class Grid {
 	private indentColumns: Columns;
 	private tabSize: number;
 
+	public locators: GridLocators;
 	public features: TerminalFeatures;
 	private lineWrapMode: MarkupLineWrapMode;
 	public options: GridOptions;
@@ -265,6 +274,8 @@ export default class Grid {
 				columns: newColumns,
 			};
 		});
+
+		// TODO Update locators
 	}
 
 	private doesOverflowViewport(column: Number1): boolean {
@@ -729,6 +740,14 @@ export default class Grid {
 			// Add last line
 			this.setRange(end.line, ob1Coerce1(1), end.column, ancestry);
 		}
+	}
+
+	private drawLocatorTag(tag: MarkupParsedTag, ancestry: Ancestry) {
+		const id = tag.attributes.get("id").asString("default");
+		const start = cursorToPosition(this.getCursor());
+		this.drawChildren(tag.children, ancestry);
+		const end = cursorToPosition(this.getCursor());
+		this.locators.set(id, {start, end});
 	}
 
 	private drawListTag(tag: MarkupParsedTag, ancestry: Ancestry) {
@@ -1207,6 +1226,22 @@ export default class Grid {
 		const lines = grid.getTrimmedLines();
 		const cursor = this.getCursor();
 
+		for (const [key, locator] of grid.locators) {
+			this.locators.set(
+				key,
+				{
+					start: {
+						line: ob1Add(cursor.line, locator.start.line),
+						column: ob1Add(locator.start.column, ob1Coerce1To0(cursor.column)),
+					},
+					end: {
+						line: ob1Add(cursor.line, locator.end.line),
+						column: ob1Add(locator.end.column, ob1Coerce1To0(cursor.column)),
+					},
+				},
+			);
+		}
+
 		for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
 			const {columns, ranges} = lines[lineIndex];
 
@@ -1245,6 +1280,11 @@ export default class Grid {
 		}
 
 		switch (tag.name) {
+			case "locator": {
+				this.drawLocatorTag(tag, subAncestry);
+				break;
+			}
+
 			case "ol":
 			case "ul": {
 				this.drawListTag(tag, subAncestry);
@@ -1519,7 +1559,10 @@ export default class Grid {
 									sourceValue: singleInnerText,
 									value: formatApprox(
 										attributes,
-										humanizeDuration(Number(singleInnerText), true),
+										humanizeDuration(
+											Number(singleInnerText),
+											{allowMilliseconds: true},
+										),
 									),
 								},
 							],
@@ -1603,3 +1646,10 @@ hooks.set(
 		},
 	},
 );
+
+function cursorToPosition(cursor: Cursor): Position {
+	return {
+		line: cursor.line,
+		column: ob1Coerce1To0(cursor.column),
+	};
+}

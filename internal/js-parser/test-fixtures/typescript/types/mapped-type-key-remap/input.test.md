@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/mapped-type-key-remap/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/types/mapped-type-key-remap/input.ts 1:0-4:0
+	path: UIDPath<typescript/types/mapped-type-key-remap/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSTypeAlias {

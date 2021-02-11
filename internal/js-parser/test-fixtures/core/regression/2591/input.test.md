@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/regression/2591/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/regression/2591/input.js 1:0-5:0
+	path: UIDPath<core/regression/2591/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {

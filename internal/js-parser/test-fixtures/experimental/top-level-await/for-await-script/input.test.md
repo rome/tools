@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/top-level-await/for-await-script/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/top-level-await/for-await-script/input.js 1:0-1:25
+	path: UIDPath<experimental/top-level-await/for-await-script/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/top-level-await/for-await-script/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:9
+				path: UIDPath<experimental/top-level-await/for-await-script/input.js>
 				start: Position 1:4
 			}
 			description: Object {

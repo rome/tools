@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/import/export-named-import-require/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/import/export-named-import-require/input.ts 1:0-3:0
+	path: UIDPath<typescript/import/export-named-import-require/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSImportEqualsDeclaration {

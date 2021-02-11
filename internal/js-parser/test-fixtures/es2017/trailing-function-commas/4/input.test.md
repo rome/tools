@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/trailing-function-commas/4/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14
+	path: UIDPath<es2017/trailing-function-commas/4/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2017/trailing-function-commas/4/input.js 1:0-1:14

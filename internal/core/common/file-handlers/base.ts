@@ -1,9 +1,9 @@
 import {
+	ExtensionCustomLintResult,
 	ExtensionHandlerMethodInfo,
-	ExtensionLintResult,
 	PartialExtensionHandler,
 } from "@internal/core/common/file-handlers/types";
-import {createUnknownPath} from "@internal/path";
+import {createAnyPath} from "@internal/path";
 import {consumeConfig, json, stringifyConfig} from "@internal/codec-config";
 import {parseJS} from "@internal/js-parser";
 
@@ -18,12 +18,12 @@ export const configHandler: PartialExtensionHandler = {
 
 	async customFormat(
 		info: ExtensionHandlerMethodInfo,
-	): Promise<ExtensionLintResult> {
+	): Promise<ExtensionCustomLintResult> {
 		const {file, integrity, mtimeNs, worker} = info;
 		const {uid} = file;
 
 		const sourceText = await worker.readFileText(file);
-		const path = createUnknownPath(uid);
+		const path = createAnyPath(uid);
 
 		let formatted: string = sourceText;
 
@@ -58,7 +58,7 @@ export const configHandler: PartialExtensionHandler = {
 
 		// Parse the JSON to make sure it's valid
 		const obj = consumeConfig({
-			path: createUnknownPath(file.uid),
+			path: createAnyPath(file.uid),
 			input: src,
 		}).consumer.asUnknown();
 

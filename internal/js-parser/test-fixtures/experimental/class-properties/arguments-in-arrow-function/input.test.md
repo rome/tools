@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/arguments-in-arrow-function/input.js 1:0-5:1
+	path: UIDPath<experimental/class-properties/arguments-in-arrow-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
-				filename: "experimental/class-properties/arguments-in-arrow-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:25
+				path: UIDPath<experimental/class-properties/arguments-in-arrow-function/input.js>
 				start: Position 3:16
 			}
 		}

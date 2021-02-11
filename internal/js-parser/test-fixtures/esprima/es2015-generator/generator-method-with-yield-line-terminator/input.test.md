@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:0-5:0
+	path: UIDPath<esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/es2015-generator/generator-method-with-yield-line-terminator/input.js 1:0-4:4

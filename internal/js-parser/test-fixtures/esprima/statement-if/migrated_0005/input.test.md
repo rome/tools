@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-if/migrated_0005/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/statement-if/migrated_0005/input.js 1:0-3:0
+	path: UIDPath<esprima/statement-if/migrated_0005/input.js>
 	body: Array [
 		JSIfStatement {
 			alternate: JSEmptyStatement {loc: SourceLocation esprima/statement-if/migrated_0005/input.js 2:6-2:7}

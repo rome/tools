@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/yield/parameter-name-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/parameter-name-function/input.js 1:0-1:21
+	path: UIDPath<es2015/yield/parameter-name-function/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {

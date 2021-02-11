@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/await-inside-parameters/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/await-inside-parameters/input.js 1:0-1:33
+	path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/await-inside-parameters/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:27
+				path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
 				start: Position 1:28
 			}
 		}

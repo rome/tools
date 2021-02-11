@@ -13,7 +13,7 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 }
 ```
 
@@ -25,7 +25,7 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	loc: SourceLocation 1:0-1:6
+	loc: SourceLocation unknown 1:0-1:6
 	prerelease: Array ["prerelease"]
 }
 ```
@@ -38,7 +38,7 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	loc: SourceLocation 1:0-1:10
+	loc: SourceLocation unknown 1:0-1:10
 	prerelease: Array [
 		"pre"
 		2
@@ -54,7 +54,7 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	loc: SourceLocation 1:0-1:18
+	loc: SourceLocation unknown 1:0-1:18
 	prerelease: Array [
 		"pre"
 		2
@@ -75,7 +75,7 @@ AbsoluteVersion {
 	patch: 3
 	prerelease: Array []
 	build: Array ["build"]
-	loc: SourceLocation 1:0-1:6
+	loc: SourceLocation unknown 1:0-1:6
 }
 ```
 
@@ -87,7 +87,7 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	build: Array ["build"]
-	loc: SourceLocation 1:0-1:17
+	loc: SourceLocation unknown 1:0-1:17
 	prerelease: Array ["prerelease"]
 }
 ```
@@ -100,7 +100,7 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	build: Array ["build"]
-	loc: SourceLocation 1:0-1:12
+	loc: SourceLocation unknown 1:0-1:12
 	prerelease: Array [
 		"pre"
 		2
@@ -116,7 +116,7 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	build: Array ["build"]
-	loc: SourceLocation 1:0-1:22
+	loc: SourceLocation unknown 1:0-1:22
 	prerelease: Array [
 		"pre"
 		2
@@ -135,7 +135,7 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	loc: SourceLocation 1:0-1:34
+	loc: SourceLocation unknown 1:0-1:34
 	build: Array [
 		"build"
 		2
@@ -162,7 +162,7 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	build: Array ["45build"]
-	loc: SourceLocation 1:0-1:20
+	loc: SourceLocation unknown 1:0-1:20
 	prerelease: Array [
 		"45pre"
 		"42yes"
@@ -174,15 +174,15 @@ AbsoluteVersion {
 
 ```javascript
 VersionRange {
-	left: Wildcard {loc: SourceLocation 1:0-1:1}
-	loc: SourceLocation 1:0-1:8
+	left: Wildcard {loc: SourceLocation unknown 1:0-1:1}
+	loc: SourceLocation unknown 1:0-1:8
 	right: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 2
 		patch: 3
 		prerelease: Array []
-		loc: SourceLocation 1:4-1:8
+		loc: SourceLocation unknown 1:4-1:8
 	}
 }
 ```
@@ -196,20 +196,20 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:5
+	loc: SourceLocation unknown 1:0-1:5
 }
 ```
 
 ### `12`
 
 ```javascript
-Wildcard {loc: SourceLocation 1:0-1:0}
+Wildcard {loc: SourceLocation unknown 1:0-1:0}
 ```
 
 ### `13`
 
 ```javascript
-Wildcard {loc: SourceLocation 1:0-1:0}
+Wildcard {loc: SourceLocation unknown 1:0-1:0}
 ```
 
 ### `14`
@@ -220,7 +220,7 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	loc: SourceLocation 1:0-1:5
+	loc: SourceLocation unknown 1:0-1:5
 	prerelease: Array ["prerelease"]
 }
 ```
@@ -229,30 +229,30 @@ AbsoluteVersion {
 
 ```javascript
 LogicalOr {
-	loc: SourceLocation 1:0-1:78
+	loc: SourceLocation unknown 1:0-1:78
 	left: Comparator {
 		operator: "^"
-		loc: SourceLocation 1:0-1:6
+		loc: SourceLocation unknown 1:0-1:6
 		version: AbsoluteVersion {
 			build: Array []
 			major: 4
 			minor: 0
 			patch: 0
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:6
+			loc: SourceLocation unknown 1:1-1:6
 		}
 	}
 	right: LogicalOr {
-		loc: SourceLocation 1:10-1:78
+		loc: SourceLocation unknown 1:10-1:78
 		left: Comparator {
 			operator: "^"
-			loc: SourceLocation 1:10-1:23
+			loc: SourceLocation unknown 1:10-1:23
 			version: AbsoluteVersion {
 				build: Array []
 				major: 4
 				minor: 0
 				patch: 0
-				loc: SourceLocation 1:11-1:23
+				loc: SourceLocation unknown 1:11-1:23
 				prerelease: Array [
 					"beta"
 					"*"
@@ -260,44 +260,44 @@ LogicalOr {
 			}
 		}
 		right: LogicalOr {
-			loc: SourceLocation 1:27-1:78
+			loc: SourceLocation unknown 1:27-1:78
 			left: Comparator {
 				operator: "^"
-				loc: SourceLocation 1:27-1:33
+				loc: SourceLocation unknown 1:27-1:33
 				version: AbsoluteVersion {
 					build: Array []
 					major: 3
 					minor: 8
 					patch: 1
 					prerelease: Array []
-					loc: SourceLocation 1:28-1:33
+					loc: SourceLocation unknown 1:28-1:33
 				}
 			}
 			right: LogicalOr {
-				loc: SourceLocation 1:37-1:78
+				loc: SourceLocation unknown 1:37-1:78
 				left: Comparator {
 					operator: "^"
-					loc: SourceLocation 1:37-1:43
+					loc: SourceLocation unknown 1:37-1:43
 					version: AbsoluteVersion {
 						build: Array []
 						major: 3
 						minor: 0
 						patch: 0
 						prerelease: Array []
-						loc: SourceLocation 1:38-1:43
+						loc: SourceLocation unknown 1:38-1:43
 					}
 				}
 				right: LogicalOr {
-					loc: SourceLocation 1:47-1:78
+					loc: SourceLocation unknown 1:47-1:78
 					left: Comparator {
 						operator: "^"
-						loc: SourceLocation 1:47-1:58
+						loc: SourceLocation unknown 1:47-1:58
 						version: AbsoluteVersion {
 							build: Array []
 							major: 3
 							minor: 0
 							patch: 0
-							loc: SourceLocation 1:48-1:58
+							loc: SourceLocation unknown 1:48-1:58
 							prerelease: Array [
 								"rc"
 								0
@@ -305,29 +305,29 @@ LogicalOr {
 						}
 					}
 					right: LogicalOr {
-						loc: SourceLocation 1:62-1:78
+						loc: SourceLocation unknown 1:62-1:78
 						left: Comparator {
 							operator: "^"
-							loc: SourceLocation 1:62-1:68
+							loc: SourceLocation unknown 1:62-1:68
 							version: AbsoluteVersion {
 								build: Array []
 								major: 2
 								minor: 1
 								patch: 0
 								prerelease: Array []
-								loc: SourceLocation 1:63-1:68
+								loc: SourceLocation unknown 1:63-1:68
 							}
 						}
 						right: Comparator {
 							operator: "^"
-							loc: SourceLocation 1:72-1:78
+							loc: SourceLocation unknown 1:72-1:78
 							version: AbsoluteVersion {
 								build: Array []
 								major: 1
 								minor: 13
 								patch: 1
 								prerelease: Array []
-								loc: SourceLocation 1:73-1:78
+								loc: SourceLocation unknown 1:73-1:78
 							}
 						}
 					}
@@ -347,7 +347,7 @@ WildcardVersion {
 	minor: undefined
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:0
+	loc: SourceLocation unknown 1:0-1:0
 }
 ```
 
@@ -360,7 +360,7 @@ WildcardVersion {
 	minor: 2
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:2
+	loc: SourceLocation unknown 1:0-1:2
 }
 ```
 
@@ -373,7 +373,7 @@ WildcardVersion {
 	minor: undefined
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:2
+	loc: SourceLocation unknown 1:0-1:2
 }
 ```
 
@@ -386,7 +386,7 @@ WildcardVersion {
 	minor: undefined
 	patch: 3
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 }
 ```
 
@@ -399,7 +399,7 @@ WildcardVersion {
 	minor: 2
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 }
 ```
 
@@ -412,7 +412,7 @@ WildcardVersion {
 	minor: undefined
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:2
+	loc: SourceLocation unknown 1:0-1:2
 }
 ```
 
@@ -425,7 +425,7 @@ WildcardVersion {
 	minor: undefined
 	patch: 3
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 }
 ```
 
@@ -438,7 +438,7 @@ WildcardVersion {
 	minor: 2
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 }
 ```
 
@@ -451,7 +451,7 @@ WildcardVersion {
 	minor: undefined
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:2
+	loc: SourceLocation unknown 1:0-1:2
 }
 ```
 
@@ -464,7 +464,7 @@ WildcardVersion {
 	minor: undefined
 	patch: 3
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 }
 ```
 
@@ -477,7 +477,7 @@ WildcardVersion {
 	minor: 2
 	patch: undefined
 	prerelease: Array []
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 }
 ```
 
@@ -485,14 +485,14 @@ WildcardVersion {
 
 ```javascript
 VersionRange {
-	loc: SourceLocation 1:0-1:12
+	loc: SourceLocation unknown 1:0-1:12
 	left: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 2
 		patch: 3
 		prerelease: Array []
-		loc: SourceLocation 1:0-1:5
+		loc: SourceLocation unknown 1:0-1:5
 	}
 	right: AbsoluteVersion {
 		build: Array []
@@ -500,7 +500,7 @@ VersionRange {
 		minor: 2
 		patch: 4
 		prerelease: Array []
-		loc: SourceLocation 1:8-1:12
+		loc: SourceLocation unknown 1:8-1:12
 	}
 }
 ```
@@ -509,14 +509,14 @@ VersionRange {
 
 ```javascript
 LogicalOr {
-	loc: SourceLocation 1:0-1:7
+	loc: SourceLocation unknown 1:0-1:7
 	left: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: 2
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:0-1:3
+		loc: SourceLocation unknown 1:0-1:3
 	}
 	right: WildcardVersion {
 		build: Array []
@@ -524,7 +524,7 @@ LogicalOr {
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:7-1:7
+		loc: SourceLocation unknown 1:7-1:7
 	}
 }
 ```
@@ -533,24 +533,24 @@ LogicalOr {
 
 ```javascript
 LogicalOr {
-	loc: SourceLocation 1:0-1:10
+	loc: SourceLocation unknown 1:0-1:10
 	left: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:0-1:1
+		loc: SourceLocation unknown 1:0-1:1
 	}
 	right: LogicalOr {
-		loc: SourceLocation 1:5-1:10
+		loc: SourceLocation unknown 1:5-1:10
 		left: WildcardVersion {
 			build: Array []
 			major: 2
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:5-1:6
+			loc: SourceLocation unknown 1:5-1:6
 		}
 		right: WildcardVersion {
 			build: Array []
@@ -558,7 +558,7 @@ LogicalOr {
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:10-1:10
+			loc: SourceLocation unknown 1:10-1:10
 		}
 	}
 }
@@ -569,14 +569,14 @@ LogicalOr {
 ```javascript
 Comparator {
 	operator: ">="
-	loc: SourceLocation 1:0-1:6
+	loc: SourceLocation unknown 1:0-1:6
 	version: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: 5
 		prerelease: Array []
-		loc: SourceLocation 1:2-1:6
+		loc: SourceLocation unknown 1:2-1:6
 	}
 }
 ```
@@ -585,29 +585,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:14
+	loc: SourceLocation unknown 1:0-1:14
 	left: Comparator {
 		operator: ">="
-		loc: SourceLocation 1:0-1:7
+		loc: SourceLocation unknown 1:0-1:7
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:2-1:7
+			loc: SourceLocation unknown 1:2-1:7
 		}
 	}
 	right: Comparator {
 		operator: ">="
-		loc: SourceLocation 1:8-1:14
+		loc: SourceLocation unknown 1:8-1:14
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:10-1:14
+			loc: SourceLocation unknown 1:10-1:14
 		}
 	}
 }
@@ -618,14 +618,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<="
-	loc: SourceLocation 1:0-1:6
+	loc: SourceLocation unknown 1:0-1:6
 	version: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: 5
 		prerelease: Array []
-		loc: SourceLocation 1:2-1:6
+		loc: SourceLocation unknown 1:2-1:6
 	}
 }
 ```
@@ -634,29 +634,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:14
+	loc: SourceLocation unknown 1:0-1:14
 	left: Comparator {
 		operator: "<="
-		loc: SourceLocation 1:0-1:7
+		loc: SourceLocation unknown 1:0-1:7
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:2-1:7
+			loc: SourceLocation unknown 1:2-1:7
 		}
 	}
 	right: Comparator {
 		operator: "<="
-		loc: SourceLocation 1:8-1:14
+		loc: SourceLocation unknown 1:8-1:14
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:10-1:14
+			loc: SourceLocation unknown 1:10-1:14
 		}
 	}
 }
@@ -667,14 +667,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">"
-	loc: SourceLocation 1:0-1:5
+	loc: SourceLocation unknown 1:0-1:5
 	version: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: 5
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:5
+		loc: SourceLocation unknown 1:1-1:5
 	}
 }
 ```
@@ -683,29 +683,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:12
+	loc: SourceLocation unknown 1:0-1:12
 	left: Comparator {
 		operator: ">"
-		loc: SourceLocation 1:0-1:6
+		loc: SourceLocation unknown 1:0-1:6
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:6
+			loc: SourceLocation unknown 1:1-1:6
 		}
 	}
 	right: Comparator {
 		operator: ">"
-		loc: SourceLocation 1:7-1:12
+		loc: SourceLocation unknown 1:7-1:12
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:8-1:12
+			loc: SourceLocation unknown 1:8-1:12
 		}
 	}
 }
@@ -716,14 +716,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<"
-	loc: SourceLocation 1:0-1:5
+	loc: SourceLocation unknown 1:0-1:5
 	version: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: 5
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:5
+		loc: SourceLocation unknown 1:1-1:5
 	}
 }
 ```
@@ -732,29 +732,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:12
+	loc: SourceLocation unknown 1:0-1:12
 	left: Comparator {
 		operator: "<"
-		loc: SourceLocation 1:0-1:6
+		loc: SourceLocation unknown 1:0-1:6
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:6
+			loc: SourceLocation unknown 1:1-1:6
 		}
 	}
 	right: Comparator {
 		operator: "<"
-		loc: SourceLocation 1:7-1:12
+		loc: SourceLocation unknown 1:7-1:12
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:8-1:12
+			loc: SourceLocation unknown 1:8-1:12
 		}
 	}
 }
@@ -765,14 +765,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "^"
-	loc: SourceLocation 1:0-1:5
+	loc: SourceLocation unknown 1:0-1:5
 	version: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: 5
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:5
+		loc: SourceLocation unknown 1:1-1:5
 	}
 }
 ```
@@ -781,29 +781,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:12
+	loc: SourceLocation unknown 1:0-1:12
 	left: Comparator {
 		operator: "^"
-		loc: SourceLocation 1:0-1:6
+		loc: SourceLocation unknown 1:0-1:6
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:6
+			loc: SourceLocation unknown 1:1-1:6
 		}
 	}
 	right: Comparator {
 		operator: "^"
-		loc: SourceLocation 1:7-1:12
+		loc: SourceLocation unknown 1:7-1:12
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:8-1:12
+			loc: SourceLocation unknown 1:8-1:12
 		}
 	}
 }
@@ -814,14 +814,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "~"
-	loc: SourceLocation 1:0-1:5
+	loc: SourceLocation unknown 1:0-1:5
 	version: AbsoluteVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: 5
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:5
+		loc: SourceLocation unknown 1:1-1:5
 	}
 }
 ```
@@ -830,29 +830,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:12
+	loc: SourceLocation unknown 1:0-1:12
 	left: Comparator {
 		operator: "~"
-		loc: SourceLocation 1:0-1:6
+		loc: SourceLocation unknown 1:0-1:6
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:6
+			loc: SourceLocation unknown 1:1-1:6
 		}
 	}
 	right: Comparator {
 		operator: "~"
-		loc: SourceLocation 1:7-1:12
+		loc: SourceLocation unknown 1:7-1:12
 		version: AbsoluteVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: 5
 			prerelease: Array []
-			loc: SourceLocation 1:8-1:12
+			loc: SourceLocation unknown 1:8-1:12
 		}
 	}
 }
@@ -863,14 +863,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">="
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:2-1:4
+		loc: SourceLocation unknown 1:2-1:4
 	}
 }
 ```
@@ -879,29 +879,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:10
+	loc: SourceLocation unknown 1:0-1:10
 	left: Comparator {
 		operator: ">="
-		loc: SourceLocation 1:0-1:5
+		loc: SourceLocation unknown 1:0-1:5
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:2-1:5
+			loc: SourceLocation unknown 1:2-1:5
 		}
 	}
 	right: Comparator {
 		operator: ">="
-		loc: SourceLocation 1:6-1:10
+		loc: SourceLocation unknown 1:6-1:10
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:8-1:10
+			loc: SourceLocation unknown 1:8-1:10
 		}
 	}
 }
@@ -912,14 +912,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<="
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:2-1:4
+		loc: SourceLocation unknown 1:2-1:4
 	}
 }
 ```
@@ -928,29 +928,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:10
+	loc: SourceLocation unknown 1:0-1:10
 	left: Comparator {
 		operator: "<="
-		loc: SourceLocation 1:0-1:5
+		loc: SourceLocation unknown 1:0-1:5
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:2-1:5
+			loc: SourceLocation unknown 1:2-1:5
 		}
 	}
 	right: Comparator {
 		operator: "<="
-		loc: SourceLocation 1:6-1:10
+		loc: SourceLocation unknown 1:6-1:10
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:8-1:10
+			loc: SourceLocation unknown 1:8-1:10
 		}
 	}
 }
@@ -961,14 +961,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">"
-	loc: SourceLocation 1:0-1:3
+	loc: SourceLocation unknown 1:0-1:3
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:3
+		loc: SourceLocation unknown 1:1-1:3
 	}
 }
 ```
@@ -977,29 +977,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:8
+	loc: SourceLocation unknown 1:0-1:8
 	left: Comparator {
 		operator: ">"
-		loc: SourceLocation 1:0-1:4
+		loc: SourceLocation unknown 1:0-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:4
+			loc: SourceLocation unknown 1:1-1:4
 		}
 	}
 	right: Comparator {
 		operator: ">"
-		loc: SourceLocation 1:5-1:8
+		loc: SourceLocation unknown 1:5-1:8
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:6-1:8
+			loc: SourceLocation unknown 1:6-1:8
 		}
 	}
 }
@@ -1010,14 +1010,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<"
-	loc: SourceLocation 1:0-1:3
+	loc: SourceLocation unknown 1:0-1:3
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:3
+		loc: SourceLocation unknown 1:1-1:3
 	}
 }
 ```
@@ -1026,29 +1026,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:8
+	loc: SourceLocation unknown 1:0-1:8
 	left: Comparator {
 		operator: "<"
-		loc: SourceLocation 1:0-1:4
+		loc: SourceLocation unknown 1:0-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:4
+			loc: SourceLocation unknown 1:1-1:4
 		}
 	}
 	right: Comparator {
 		operator: "<"
-		loc: SourceLocation 1:5-1:8
+		loc: SourceLocation unknown 1:5-1:8
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:6-1:8
+			loc: SourceLocation unknown 1:6-1:8
 		}
 	}
 }
@@ -1059,14 +1059,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "^"
-	loc: SourceLocation 1:0-1:3
+	loc: SourceLocation unknown 1:0-1:3
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:3
+		loc: SourceLocation unknown 1:1-1:3
 	}
 }
 ```
@@ -1075,29 +1075,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:8
+	loc: SourceLocation unknown 1:0-1:8
 	left: Comparator {
 		operator: "^"
-		loc: SourceLocation 1:0-1:4
+		loc: SourceLocation unknown 1:0-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:4
+			loc: SourceLocation unknown 1:1-1:4
 		}
 	}
 	right: Comparator {
 		operator: "^"
-		loc: SourceLocation 1:5-1:8
+		loc: SourceLocation unknown 1:5-1:8
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:6-1:8
+			loc: SourceLocation unknown 1:6-1:8
 		}
 	}
 }
@@ -1108,14 +1108,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "~"
-	loc: SourceLocation 1:0-1:3
+	loc: SourceLocation unknown 1:0-1:3
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: 4
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:3
+		loc: SourceLocation unknown 1:1-1:3
 	}
 }
 ```
@@ -1124,29 +1124,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:8
+	loc: SourceLocation unknown 1:0-1:8
 	left: Comparator {
 		operator: "~"
-		loc: SourceLocation 1:0-1:4
+		loc: SourceLocation unknown 1:0-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:4
+			loc: SourceLocation unknown 1:1-1:4
 		}
 	}
 	right: Comparator {
 		operator: "~"
-		loc: SourceLocation 1:5-1:8
+		loc: SourceLocation unknown 1:5-1:8
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: 4
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:6-1:8
+			loc: SourceLocation unknown 1:6-1:8
 		}
 	}
 }
@@ -1157,14 +1157,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">="
-	loc: SourceLocation 1:0-1:2
+	loc: SourceLocation unknown 1:0-1:2
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:2-1:2
+		loc: SourceLocation unknown 1:2-1:2
 	}
 }
 ```
@@ -1173,29 +1173,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:6
+	loc: SourceLocation unknown 1:0-1:6
 	left: Comparator {
 		operator: ">="
-		loc: SourceLocation 1:0-1:3
+		loc: SourceLocation unknown 1:0-1:3
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:2-1:3
+			loc: SourceLocation unknown 1:2-1:3
 		}
 	}
 	right: Comparator {
 		operator: ">="
-		loc: SourceLocation 1:4-1:6
+		loc: SourceLocation unknown 1:4-1:6
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:6-1:6
+			loc: SourceLocation unknown 1:6-1:6
 		}
 	}
 }
@@ -1206,14 +1206,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<="
-	loc: SourceLocation 1:0-1:2
+	loc: SourceLocation unknown 1:0-1:2
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:2-1:2
+		loc: SourceLocation unknown 1:2-1:2
 	}
 }
 ```
@@ -1222,29 +1222,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:6
+	loc: SourceLocation unknown 1:0-1:6
 	left: Comparator {
 		operator: "<="
-		loc: SourceLocation 1:0-1:3
+		loc: SourceLocation unknown 1:0-1:3
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:2-1:3
+			loc: SourceLocation unknown 1:2-1:3
 		}
 	}
 	right: Comparator {
 		operator: "<="
-		loc: SourceLocation 1:4-1:6
+		loc: SourceLocation unknown 1:4-1:6
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:6-1:6
+			loc: SourceLocation unknown 1:6-1:6
 		}
 	}
 }
@@ -1255,14 +1255,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: ">"
-	loc: SourceLocation 1:0-1:1
+	loc: SourceLocation unknown 1:0-1:1
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:1
+		loc: SourceLocation unknown 1:1-1:1
 	}
 }
 ```
@@ -1271,29 +1271,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 	left: Comparator {
 		operator: ">"
-		loc: SourceLocation 1:0-1:2
+		loc: SourceLocation unknown 1:0-1:2
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:2
+			loc: SourceLocation unknown 1:1-1:2
 		}
 	}
 	right: Comparator {
 		operator: ">"
-		loc: SourceLocation 1:3-1:4
+		loc: SourceLocation unknown 1:3-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:4-1:4
+			loc: SourceLocation unknown 1:4-1:4
 		}
 	}
 }
@@ -1304,14 +1304,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "<"
-	loc: SourceLocation 1:0-1:1
+	loc: SourceLocation unknown 1:0-1:1
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:1
+		loc: SourceLocation unknown 1:1-1:1
 	}
 }
 ```
@@ -1320,29 +1320,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 	left: Comparator {
 		operator: "<"
-		loc: SourceLocation 1:0-1:2
+		loc: SourceLocation unknown 1:0-1:2
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:2
+			loc: SourceLocation unknown 1:1-1:2
 		}
 	}
 	right: Comparator {
 		operator: "<"
-		loc: SourceLocation 1:3-1:4
+		loc: SourceLocation unknown 1:3-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:4-1:4
+			loc: SourceLocation unknown 1:4-1:4
 		}
 	}
 }
@@ -1353,14 +1353,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "^"
-	loc: SourceLocation 1:0-1:1
+	loc: SourceLocation unknown 1:0-1:1
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:1
+		loc: SourceLocation unknown 1:1-1:1
 	}
 }
 ```
@@ -1369,29 +1369,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 	left: Comparator {
 		operator: "^"
-		loc: SourceLocation 1:0-1:2
+		loc: SourceLocation unknown 1:0-1:2
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:2
+			loc: SourceLocation unknown 1:1-1:2
 		}
 	}
 	right: Comparator {
 		operator: "^"
-		loc: SourceLocation 1:3-1:4
+		loc: SourceLocation unknown 1:3-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:4-1:4
+			loc: SourceLocation unknown 1:4-1:4
 		}
 	}
 }
@@ -1402,14 +1402,14 @@ LogicalAnd {
 ```javascript
 Comparator {
 	operator: "~"
-	loc: SourceLocation 1:0-1:1
+	loc: SourceLocation unknown 1:0-1:1
 	version: WildcardVersion {
 		build: Array []
 		major: 1
 		minor: undefined
 		patch: undefined
 		prerelease: Array []
-		loc: SourceLocation 1:1-1:1
+		loc: SourceLocation unknown 1:1-1:1
 	}
 }
 ```
@@ -1418,29 +1418,29 @@ Comparator {
 
 ```javascript
 LogicalAnd {
-	loc: SourceLocation 1:0-1:4
+	loc: SourceLocation unknown 1:0-1:4
 	left: Comparator {
 		operator: "~"
-		loc: SourceLocation 1:0-1:2
+		loc: SourceLocation unknown 1:0-1:2
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:1-1:2
+			loc: SourceLocation unknown 1:1-1:2
 		}
 	}
 	right: Comparator {
 		operator: "~"
-		loc: SourceLocation 1:3-1:4
+		loc: SourceLocation unknown 1:3-1:4
 		version: WildcardVersion {
 			build: Array []
 			major: 1
 			minor: undefined
 			patch: undefined
 			prerelease: Array []
-			loc: SourceLocation 1:4-1:4
+			loc: SourceLocation unknown 1:4-1:4
 		}
 	}
 }

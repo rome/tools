@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/template-literal-invalid-escapes-untagged/61/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
+	path: UIDPath<experimental/template-literal-invalid-escapes-untagged/61/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/template-literal-invalid-escapes-untagged/61/input.js 1:0-1:10
@@ -45,11 +45,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "experimental/template-literal-invalid-escapes-untagged/61/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:2
+				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/61/input.js>
 				start: Position 1:2
 			}
 		}

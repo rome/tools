@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/interface/export-abstract-interface/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/interface/export-abstract-interface/input.ts 1:0-4:0
+	path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "typescript/interface/export-abstract-interface/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:15
+				path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
 				start: Position 1:16
 			}
 		}

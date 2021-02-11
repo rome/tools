@@ -31,7 +31,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
-import {UnknownPath, createUnknownPath} from "@internal/path";
+import {AnyPath, UNKNOWN_PATH} from "@internal/path";
 import {
 	Number0,
 	Number1,
@@ -95,8 +95,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			this.language;
 
 		// Input information
-		this.path = path === undefined ? undefined : createUnknownPath(path);
-		this.filename = this.path === undefined ? undefined : this.path.join();
+		this.path = path ?? UNKNOWN_PATH;
 		this.integrity = integrity;
 		this.input = input;
 		this.sourceText = sourceText ?? this.input;
@@ -112,7 +111,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.tokenizing = false;
 
 		this.indexTracker = new PositionTracker({
-			filename: this.filename,
+			path: this.path,
 			input: this.input,
 			offsetPosition,
 			getPosition: this.getPosition.bind(this),
@@ -127,8 +126,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	private impl: ParserCoreImplementation<Types>;
 	private tokenizing: boolean;
 	private eofToken: EOFToken;
-	public path: undefined | UnknownPath;
-	public filename: undefined | string;
+	public path: AnyPath;
 	public input: string;
 	public language: DiagnosticLanguage;
 	public integrity: undefined | DiagnosticIntegrity;
@@ -183,24 +181,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			diagnostics: [],
 			diagnosticFilters: [],
 		};
-	}
-
-	public getPathAssert(): UnknownPath {
-		const {path} = this;
-		if (path === undefined) {
-			throw new Error("Path expected but none was passed to this Parser");
-		} else {
-			return path;
-		}
-	}
-
-	public getFilenameAssert(): string {
-		const {filename} = this;
-		if (filename === undefined) {
-			throw new Error("Filename expected but none was passed to this Parser");
-		} else {
-			return filename;
-		}
 	}
 
 	// Run the tokenizer over all tokens
@@ -274,7 +254,6 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return this.tokenizeWithState(index, state);
 	}
 
-	// Get the current token
 	public getToken(): TokenValues<Types["tokens"]> {
 		const {currentToken} = this;
 		if (currentToken === SOF_TOKEN) {
@@ -282,6 +261,14 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		} else {
 			return currentToken;
 		}
+	}
+
+	public getCurrentToken(): TokenValues<Types["tokens"]> {
+		return this.currentToken;
+	}
+
+	public getPreviousToken(): TokenValues<Types["tokens"]> {
+		return this.prevToken;
 	}
 
 	public save(): ParserSnapshot<Types> {
@@ -424,18 +411,15 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		return this.indexTracker.getPositionFromIndex(index);
 	}
 
-	public getIndexFromPosition(
-		pos: Position,
-		filename: undefined | string,
-	): Number0 {
-		return this.indexTracker.getIndexFromPosition(pos, filename);
+	public getIndexFromPosition(pos: Position, path: undefined | AnyPath): Number0 {
+		return this.indexTracker.getIndexFromPosition(pos, path);
 	}
 
 	public createDiagnostic(opts: ParserUnexpectedOptions = {}): Diagnostic {
 		const {currentToken} = this;
 		let {description} = opts;
 		const location = this.getDiagnosticLocation(opts);
-		const start = this.getIndexFromPosition(location.start, location.filename);
+		const start = this.getIndexFromPosition(location.start, location.path);
 
 		// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
 		if (description === undefined) {
@@ -537,7 +521,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			integrity: this.integrity,
 			start,
 			end,
-			filename: this.filename,
+			path: this.path,
 		};
 	}
 
@@ -660,12 +644,12 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public getInputStartIndex(node: undefined | NodeBase): Number0 {
 		const loc = this.getLoc(node);
-		return this.getIndexFromPosition(loc.start, loc.filename);
+		return this.getIndexFromPosition(loc.start, loc.path);
 	}
 
 	public getInputEndIndex(node: undefined | NodeBase): Number0 {
 		const loc = this.getLoc(node);
-		return this.getIndexFromPosition(loc.end, loc.filename);
+		return this.getIndexFromPosition(loc.end, loc.path);
 	}
 
 	public getLoc(node: undefined | NodeBase): SourceLocation {
@@ -730,7 +714,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 
 	public finishLocAt(start: Position, end: Position): SourceLocation {
 		return {
-			filename: this.filename,
+			path: this.path,
 			start,
 			end,
 		};
@@ -784,7 +768,7 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 			corrupt: this.state.corrupt,
 			integrity: this.integrity,
 			diagnostics: this.getDiagnostics(),
-			filename: this.getFilenameAssert(),
+			path: this.path,
 			comments: this.state.comments,
 		};
 	}

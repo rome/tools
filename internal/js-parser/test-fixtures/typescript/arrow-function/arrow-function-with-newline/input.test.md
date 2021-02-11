@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/arrow-function/arrow-function-with-newline/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/arrow-function/arrow-function-with-newline/input.ts 1:0-3:0
+	path: UIDPath<typescript/arrow-function/arrow-function-with-newline/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

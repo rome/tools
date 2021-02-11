@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/nonentity-decimal/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/basic/nonentity-decimal/input.jsx 1:0-1:15
+	path: UIDPath<jsx/basic/nonentity-decimal/input.jsx>
 	syntax: Array ["jsx"]
 	body: Array [
 		JSExpressionStatement {

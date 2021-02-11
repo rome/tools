@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/escape-keyword/used-as-property/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/escape-keyword/used-as-property/input.js 1:0-4:0
+	path: UIDPath<core/escape-keyword/used-as-property/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "core/escape-keyword/used-as-property/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:4
+				path: UIDPath<core/escape-keyword/used-as-property/input.js>
 				start: Position 2:4
 			}
 			description: Object {

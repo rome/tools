@@ -2,7 +2,6 @@ import {
 	ParserCore,
 	ParserCoreTokenizeState,
 	ParserOptions,
-	ParserOptionsWithRequiredPath,
 	createParser,
 	isAlpha,
 	isDigit,
@@ -63,7 +62,7 @@ type HTMLParserTypes = {
 
 type HTMLParser = ParserCore<HTMLParserTypes>;
 
-const createHTMLParser = createParser<HTMLParserTypes>({
+const htmlParser = createParser<HTMLParserTypes>({
 	ignoreWhitespaceTokens: true,
 	diagnosticLanguage: "html",
 	getInitialState: () => ({inTagHead: false}),
@@ -602,8 +601,8 @@ function consumeCDATA(
 	return [false, undefined, undefined];
 }
 
-export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {
-	const parser = createHTMLParser(opts);
+export function parseHTML(opts: ParserOptions): HTMLRoot {
+	const parser = htmlParser.create(opts);
 	const start = parser.getPosition();
 	const body: AnyHTMLChildNode[] = [];
 
@@ -625,8 +624,8 @@ export function parseHTML(opts: ParserOptionsWithRequiredPath): HTMLRoot {
 	);
 }
 
-export function tokenizeHTML(opts: ParserOptionsWithRequiredPath) {
-	return createHTMLParser(opts).getAllTokens();
+export function tokenizeHTML(opts: ParserOptions) {
+	return htmlParser.create(opts).getAllTokens();
 }
 
 export * from "./xhtmlEntities";

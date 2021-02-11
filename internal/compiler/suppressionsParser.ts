@@ -85,7 +85,7 @@ function isCategoryNameChar(char: string): boolean {
 	return char !== "(" && isntWhitespace(char) && char !== ":";
 }
 
-const createSuppressionCommentParser = createParser<ParserTypes>({
+const suppressionCommentParser = createParser<ParserTypes>({
 	diagnosticCategoryValue: "suppressions",
 	diagnosticLanguage: "text",
 	ignoreWhitespaceTokens: true,
@@ -259,7 +259,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 		return EMPTY_EXTRACTIONS;
 	}
 
-	const parser: SuppressionCommentParser = createSuppressionCommentParser(
+	const parser: SuppressionCommentParser = suppressionCommentParser.create(
 		opts,
 		{
 			searching: true,
@@ -363,7 +363,7 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 							});
 						} else {
 							suppressions.push({
-								filename: parser.getFilenameAssert(),
+								path: parser.path,
 								category: categoryToken.value,
 								categoryValue,
 								loc,
@@ -405,7 +405,7 @@ export function parseCommentSuppressionLoneCategory(
 	category: DiagnosticCategory;
 	categoryValue: undefined | string;
 } {
-	const parser = createSuppressionCommentParser(
+	const parser = suppressionCommentParser.create(
 		opts,
 		{
 			searching: false,

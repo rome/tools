@@ -14,17 +14,18 @@ import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
+import {AnyPath, MixedPathSet} from "@internal/path";
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
 	message?: StaticMarkup;
-	filename?: string;
+	path?: AnyPath;
 	start?: Position;
 	line?: Number1;
 };
 
 export type DiagnosticSuppression = {
-	filename: string;
+	path: AnyPath;
 	category: DiagnosticCategory;
 	categoryValue: undefined | string;
 	startLine: Number1;
@@ -44,7 +45,7 @@ export type DiagnosticLocation = {
 	marker?: StaticMarkup;
 	language?: DiagnosticLanguage;
 	sourceTypeJS?: DiagnosticSourceType;
-	filename?: string;
+	path: AnyPath;
 	start?: Position;
 	end?: Position;
 };
@@ -98,7 +99,7 @@ export type Diagnostic = {
 export type Diagnostics = Diagnostic[];
 
 export type DiagnosticDependency = {
-	filename: string;
+	path: AnyPath;
 	integrity?: DiagnosticIntegrity;
 };
 
@@ -205,7 +206,7 @@ export type DiagnosticAdviceStacktrace = {
 	type: "stacktrace";
 	title?: StaticMarkup;
 	truncate?: boolean;
-	importantFilenames?: string[];
+	importantPaths?: MixedPathSet;
 	frames: DiagnosticAdviceStackFrame[];
 };
 
@@ -216,7 +217,7 @@ export type DiagnosticAdviceStackFrame = {
 	suffix?: string;
 	object?: string;
 	property?: string;
-	filename?: string;
+	path?: AnyPath;
 	line?: Number1;
 	column?: Number0;
 	language: undefined | DiagnosticLanguage;

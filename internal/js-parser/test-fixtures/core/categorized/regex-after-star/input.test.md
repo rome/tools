@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/regex-after-star/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-2:0
+	path: UIDPath<core/categorized/regex-after-star/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation core/categorized/regex-after-star/input.js 1:0-1:7

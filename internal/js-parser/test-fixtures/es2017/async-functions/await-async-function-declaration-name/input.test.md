@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/await-async-function-declaration-name/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/await-async-function-declaration-name/input.js 1:0-1:25
+	path: UIDPath<es2017/async-functions/await-async-function-declaration-name/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {

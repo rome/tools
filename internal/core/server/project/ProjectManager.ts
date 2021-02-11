@@ -15,15 +15,11 @@ import {
 	ProjectConfig,
 	ProjectConfigMeta,
 	ProjectDefinition,
-	assertHardMeta,
 	createDefaultProjectConfig,
-	createDefaultProjectConfigMeta,
+	createMockProjectConfigMeta,
 	loadCompleteProjectConfig,
 } from "@internal/project";
-import {
-	WorkerPartialManifests,
-	WorkerProjects,
-} from "../../common/bridges/WorkerBridge";
+import {WorkerPartialManifests, WorkerProjects} from "@internal/core";
 import {WorkerContainer} from "../WorkerManager";
 import {
 	DiagnosticLocation,
@@ -39,10 +35,13 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
+	AnyPath,
+	MixedPathMap,
+	MixedPathSet,
+	UIDPath,
+	UIDPathMap,
 	URLPath,
-	UnknownPathMap,
-	createAbsoluteFilePath,
+	createUIDPath,
 } from "@internal/path";
 import {FileReference} from "../../common/types/files";
 import {
@@ -94,7 +93,7 @@ function cleanUidParts(parts: string[]): string {
 }
 
 // If a UID has a relative path that's just index.js, index.ts etc then omit it
-function cleanRelativeUidPath(relative: AnyFilePath): undefined | string {
+function cleanRelativeUidPath(relative: AnyPath): undefined | string {
 	return relative.join();
 
 	const segments = relative.getSegments();
@@ -139,19 +138,19 @@ export default class ProjectManager {
 		this.projects = new ExtendedMap("projects");
 
 		// We maintain these maps so we can reverse any uids, and protect against collisions
-		this.uidToFilename = new Map();
+		this.uidToFilename = new UIDPathMap();
 		this.filenameToUid = new AbsoluteFilePathMap();
-		this.remoteToLocalPath = new UnknownPathMap();
+		this.remoteToLocalPath = new MixedPathMap();
 		this.localPathToRemote = new AbsoluteFilePathMap();
 	}
 
 	private server: Server;
 	private logger: ReporterNamespace;
 
-	private uidToFilename: Map<string, AbsoluteFilePath>;
-	private filenameToUid: AbsoluteFilePathMap<string>;
+	private uidToFilename: UIDPathMap<AbsoluteFilePath>;
+	private filenameToUid: AbsoluteFilePathMap<UIDPath>;
 
-	private remoteToLocalPath: UnknownPathMap<AbsoluteFilePath>;
+	private remoteToLocalPath: MixedPathMap<AbsoluteFilePath>;
 	private localPathToRemote: AbsoluteFilePathMap<URLPath>;
 
 	// Lock to prevent race conditions that result in the same project being loaded multiple times at once
@@ -179,7 +178,7 @@ export default class ProjectManager {
 		await this.declareProject({
 			isPartial: false,
 			projectDirectory: defaultVendorPath,
-			meta: createDefaultProjectConfigMeta(),
+			meta: createMockProjectConfigMeta(defaultVendorPath),
 			config: vendorProjectConfig,
 		});
 		await this.server.memoryFs.watch(defaultVendorPath);
@@ -198,22 +197,20 @@ export default class ProjectManager {
 		await this.declareProject({
 			isPartial: false,
 			projectDirectory,
-			meta: createDefaultProjectConfigMeta(),
+			meta: createMockProjectConfigMeta(projectDirectory),
 			config: projectConfig,
 		});
 	}
 
 	private handleDeleted(paths: AbsoluteFilePath[]) {
 		for (const path of paths) {
-			const filename = path.join();
-
 			this.projectConfigDependenciesToIds.delete(path);
 
 			// Remove uids
 			const uid = this.filenameToUid.get(path);
 			this.filenameToUid.delete(path);
 			if (uid !== undefined) {
-				this.uidToFilename.delete(filename);
+				this.uidToFilename.delete(uid);
 			}
 		}
 	}
@@ -222,23 +219,28 @@ export default class ProjectManager {
 		return this.localPathToRemote.get(path);
 	}
 
-	public getFilePathFromUid(uid: string): undefined | AbsoluteFilePath {
-		return this.uidToFilename.get(uid);
+	public maybeGetFilePathFromUid(path: AnyPath): undefined | AbsoluteFilePath {
+		if (path.isUID()) {
+			return this.uidToFilename.get(path.assertUID());
+		} else {
+			return undefined;
+		}
 	}
 
 	public getFilePathFromUidOrAbsolute(
-		uid: undefined | string,
+		path: undefined | AnyPath,
 	): undefined | AbsoluteFilePath {
-		if (uid === undefined) {
+		if (path === undefined) {
 			return undefined;
 		}
 
-		const uidToPath = this.getFilePathFromUid(uid);
-		if (uidToPath !== undefined) {
-			return uidToPath;
+		if (path.isUID()) {
+			const uidToPath = this.maybeGetFilePathFromUid(path.assertUID());
+			if (uidToPath !== undefined) {
+				return uidToPath;
+			}
 		}
 
-		const path = createAbsoluteFilePath(uid);
 		if (path.isAbsolute()) {
 			return path.assertAbsolute();
 		}
@@ -246,34 +248,35 @@ export default class ProjectManager {
 		return undefined;
 	}
 
-	public normalizeFilenamesToFilePaths(
-		filenames: Iterable<undefined | string>,
+	public categorizePaths(
+		paths: Iterable<undefined | AnyPath>,
 	): {
 		absolutes: AbsoluteFilePathSet;
-		others: Set<undefined | string>;
+		unknowns: MixedPathSet;
+		hasUndefined: boolean;
 	} {
-		const others: Set<undefined | string> = new Set();
+		const unknowns = new MixedPathSet();
 		const absolutes = new AbsoluteFilePathSet();
+		let hasUndefined = false;
 
-		for (const filename of filenames) {
-			if (filename === undefined) {
-				others.add(undefined);
+		for (const path of paths) {
+			if (path === undefined) {
+				hasUndefined = true;
 				continue;
 			}
 
-			const absolute = this.getFilePathFromUidOrAbsolute(filename);
+			const absolute = this.getFilePathFromUidOrAbsolute(path);
 			if (absolute === undefined) {
-				// Relative path
-				others.add(filename);
+				unknowns.add(path);
 			} else {
 				absolutes.add(absolute);
 			}
 		}
 
-		return {absolutes, others};
+		return {absolutes, unknowns, hasUndefined};
 	}
 
-	private setUid(path: AbsoluteFilePath, uid: string) {
+	private setUid(path: AbsoluteFilePath, uid: UIDPath) {
 		const filename = path.join();
 
 		// Verify we didn't already generate this uid for another file
@@ -288,18 +291,12 @@ export default class ProjectManager {
 		this.filenameToUid.set(path, uid);
 	}
 
-	public getUid(path: AbsoluteFilePath, allowMissing: boolean = false): string {
+	public getUid(path: AbsoluteFilePath, allowMissing: boolean = false): UIDPath {
 		// We maintain a map of file paths to UIDs
 		// We clear the UID when a path is deleted.
 		// If getUid is called on a file that doesn't exist then we'll populate it and it will exist forever.
 		if (!(this.server.memoryFs.exists(path) || allowMissing)) {
 			throw new FileNotFound(path);
-		}
-
-		// Allow passing in a UID
-		const filename = path.join();
-		if (this.uidToFilename.has(filename)) {
-			return filename;
 		}
 
 		// Check if we've already calculated and saved a UID
@@ -341,7 +338,7 @@ export default class ProjectManager {
 			parts.push(relative);
 		}
 
-		const uid = cleanUidParts(parts);
+		const uid = createUIDPath(cleanUidParts(parts));
 		if (this.server.memoryFs.exists(path) || !allowMissing) {
 			this.setUid(path, uid);
 		}
@@ -511,7 +508,7 @@ export default class ProjectManager {
 		def: ProjectDefinition,
 		test: (consumer: Consumer) => undefined | false | Consumer,
 	): ProjectConfigSource {
-		const meta = assertHardMeta(def.meta);
+		const {meta} = def;
 
 		for (const consumer of meta.consumersChain) {
 			const value = test(consumer);
@@ -727,6 +724,7 @@ export default class ProjectManager {
 				project.id,
 				{
 					configCacheKeys: project.meta.configCacheKeys,
+					configPath: project.meta.configPath,
 					config: project.config,
 					directory: project.directory,
 				},
@@ -879,9 +877,7 @@ export default class ProjectManager {
 				rewatch = true;
 			}
 			if (rewatch) {
-				await this.server.memoryFs.watch(
-					assertHardMeta(syncProject.meta).projectDirectory,
-				);
+				await this.server.memoryFs.watch(syncProject.meta.projectDirectory);
 			}
 
 			return syncProject;
@@ -977,7 +973,7 @@ export default class ProjectManager {
 					projectFolder,
 				),
 				location: {
-					filename: configPath.join(),
+					path: configPath,
 				},
 			});
 			return true;
@@ -997,7 +993,7 @@ export default class ProjectManager {
 					PROJECT_CONFIG_FILENAMES,
 				),
 				location: {
-					filename: path.join(),
+					path,
 				},
 			});
 		}
@@ -1011,7 +1007,7 @@ export default class ProjectManager {
 					path.getBasename(),
 				),
 				location: {
-					filename: path.join(),
+					path,
 				},
 			});
 		}

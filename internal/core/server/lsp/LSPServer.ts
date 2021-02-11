@@ -18,7 +18,7 @@ import {
 	PartialServerQueryRequest,
 	ServerQueryResponse,
 } from "@internal/core/common/bridges/ServerBridge";
-import Linter from "../linter/Linter";
+import Checker from "../checker/Checker";
 import ServerRequest, {EMPTY_SUCCESS_RESPONSE} from "../ServerRequest";
 import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@internal/core/common/types/client";
 import {JSONPropertyValue} from "@internal/codec-config";
@@ -177,7 +177,7 @@ export default class LSPServer {
 	}
 
 	private async watchProject(path: AbsoluteFilePath, req: ServerRequest) {
-		const linter = new Linter(
+		const linter = new Checker(
 			req,
 			{
 				apply: false,
@@ -193,11 +193,13 @@ export default class LSPServer {
 				return this.createProgress();
 			},
 			onChanges: ({changes}) => {
-				for (const {type, filename, diagnostics} of changes) {
-					if (filename === undefined || type !== "absolute") {
+				for (let change of changes) {
+					if (change.type !== "absolute") {
 						// Can only display absolute path diagnostics
 						continue;
 					}
+
+					const {path, diagnostics} = change;
 
 					// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
 					const processor = this.request.createDiagnosticsProcessor();
@@ -206,15 +208,12 @@ export default class LSPServer {
 					});
 					processor.addDiagnostics(diagnostics);
 
-					this.pathToDiagnostics.set(
-						createAbsoluteFilePath(filename),
-						processor.getDiagnostics(),
-					);
+					this.pathToDiagnostics.set(path, processor.getDiagnostics());
 
 					this.transport.write({
 						method: "textDocument/publishDiagnostics",
 						params: {
-							uri: `file://${filename}`,
+							uri: `file://${path.join()}`,
 							diagnostics: convertDiagnosticsToLSP(
 								processor.getDiagnostics(),
 								this.server,

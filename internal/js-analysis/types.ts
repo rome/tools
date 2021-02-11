@@ -10,11 +10,12 @@ import {JSRoot} from "@internal/ast";
 import {HydrateData} from "./Evaluator";
 import {Dict} from "@internal/typescript-helpers";
 import {StaticMarkup} from "@internal/markup";
+import {AnyPath} from "@internal/path";
 
 export type CheckProvider = {
 	libs?: JSRoot[];
 	getExportTypes: (
-		origin: string,
+		origin: AnyPath,
 		relative: string,
 	) => Promise<undefined | ModuleSignature>;
 };
@@ -40,7 +41,7 @@ export type ModuleSignatureExport =
 		};
 
 export type ModuleSignature = {
-	filename: string;
+	path: AnyPath;
 	exports: ModuleSignatureExport[];
 	types: Dict<ModuleSignatureType>;
 };

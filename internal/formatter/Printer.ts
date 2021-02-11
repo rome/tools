@@ -281,7 +281,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 							column: token.loc[token.prop].column,
 						},
 						name: token.loc.identifierName,
-						source: token.loc.filename,
+						source: token.loc.path,
 					});
 					break;
 				}

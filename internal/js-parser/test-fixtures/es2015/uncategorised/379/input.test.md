@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/379/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/379/input.js 1:0-2:0
+	path: UIDPath<es2015/uncategorised/379/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {
@@ -39,11 +39,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/uncategorised/379/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:10
+				path: UIDPath<es2015/uncategorised/379/input.js>
 				start: Position 1:6
 			}
 			description: Object {

@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/cast/arrow-async-parameter-as/input.ts 1:0-1:21
+	path: UIDPath<typescript/cast/arrow-async-parameter-as/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected type cast in parameter position"}
 			}
 			location: Object {
-				filename: "typescript/cast/arrow-async-parameter-as/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:13
+				path: UIDPath<typescript/cast/arrow-async-parameter-as/input.ts>
 				start: Position 1:7
 			}
 		}

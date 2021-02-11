@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/555/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/555/input.js 1:0-7:0
+	path: UIDPath<core/uncategorised/555/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: "core/uncategorised/555/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:13
+				path: UIDPath<core/uncategorised/555/input.js>
 				start: Position 3:13
 			}
 		}

@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2019/optional-catch-binding/no-binding-finally/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-10:0
+	path: UIDPath<es2019/optional-catch-binding/no-binding-finally/input.js>
 	body: Array [
 		JSTryStatement {
 			loc: SourceLocation es2019/optional-catch-binding/no-binding-finally/input.js 1:0-9:1

@@ -2,7 +2,7 @@ import {test} from "rome";
 import {renameBindings} from "@internal/js-ast-utils/renameBindings";
 import {CompilerContext, Path} from "@internal/compiler";
 import {
-	MOCK_PROGRAM,
+	MOCK_JS_ROOT,
 	jsAssignmentExpression,
 	jsExpressionStatement,
 	jsIdentifier,
@@ -39,7 +39,7 @@ test(
 		map.set("foo", "hello");
 
 		const context = new CompilerContext({
-			ast: MOCK_PROGRAM,
+			ast: MOCK_JS_ROOT,
 		});
 
 		const path = new Path(js, context, {});

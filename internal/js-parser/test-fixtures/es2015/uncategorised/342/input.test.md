@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/uncategorised/342/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/342/input.js 1:0-1:31
+	path: UIDPath<es2015/uncategorised/342/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/uncategorised/342/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:23
+				path: UIDPath<es2015/uncategorised/342/input.js>
 				start: Position 1:22
 			}
 			description: Object {

@@ -11,9 +11,9 @@ MarkdownRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "headings/input.md"
 	integrity: undefined
 	loc: SourceLocation headings/input.md 1:0-7:32
+	path: UIDPath<headings/input.md>
 	body: Array [
 		MarkdownHeadingBlock {
 			value: "Title"

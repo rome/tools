@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/private-fields/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/private-fields/input.ts 1:0-8:0
+	path: UIDPath<typescript/class/private-fields/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "typescript/class/private-fields/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 5:4
+				path: UIDPath<typescript/class/private-fields/input.ts>
 				start: Position 5:4
 			}
 		}

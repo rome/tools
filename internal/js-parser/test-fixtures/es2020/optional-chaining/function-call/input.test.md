@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2020/optional-chaining/function-call/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-9:10
+	path: UIDPath<es2020/optional-chaining/function-call/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/optional-chaining/function-call/input.js 1:0-1:8

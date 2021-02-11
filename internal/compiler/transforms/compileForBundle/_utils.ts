@@ -8,6 +8,7 @@
 import {SCOPE_PRIVATE_PREFIX} from "@internal/compiler";
 import {BundleCompileOptions} from "../../types";
 import CompilerContext from "../../lib/CompilerContext";
+import {UIDPath, createUIDPath} from "@internal/path";
 
 export function getOptions(context: CompilerContext): BundleCompileOptions {
 	const opts = context.options.bundle;
@@ -17,22 +18,24 @@ export function getOptions(context: CompilerContext): BundleCompileOptions {
 	return opts;
 }
 
-export function getPrivateName(name: string, moduleId: string) {
+export function getPrivateName(name: string, moduleId: UIDPath) {
 	return `${SCOPE_PRIVATE_PREFIX}$priv$${normalizeModuleId(moduleId)}$${name}`;
 }
 
 // This is necessary so we can take our module uids which are paths on the file system into a valid JS jsIdentifier name
-export function normalizeModuleId(id: string): string {
+export function normalizeModuleId(id: UIDPath): UIDPath {
 	// TODO probably need more stuff in this
-	return id.replace(/[\\\/@\-]/g, "$").replace(/[\-.]/g, "_");
+	return createUIDPath(
+		id.join().replace(/[\\\/@\-]/g, "$").replace(/[\-.]/g, "_"),
+	);
 }
 
 export function getPrefixedName(
 	name: string,
-	moduleId: string,
+	moduleId: UIDPath,
 	opts: BundleCompileOptions,
 ) {
-	const forwarded = opts.resolvedImports[`${moduleId}:${name}`];
+	const forwarded = opts.resolvedImports[`${moduleId.join()}:${name}`];
 	if (forwarded !== undefined) {
 		moduleId = forwarded.id;
 		name = forwarded.name;
@@ -41,13 +44,13 @@ export function getPrefixedName(
 	return `${getPrefixedNamespace(normalizeModuleId(moduleId))}$${name}`;
 }
 
-export function getPrefixedNamespace(moduleId: string) {
+export function getPrefixedNamespace(moduleId: UIDPath) {
 	return `${SCOPE_PRIVATE_PREFIX}${normalizeModuleId(moduleId)}`;
 }
 
 export function getModuleId(
 	source: string,
 	opts: BundleCompileOptions,
-): undefined | string {
+): undefined | UIDPath {
 	return opts.relativeSourcesToModuleId[source];
 }

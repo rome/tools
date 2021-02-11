@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/private-fields-modifier-protected/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/private-fields-modifier-protected/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/private-fields-modifier-protected/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSClassDeclaration {

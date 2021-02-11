@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2016/exponentiation-operator/14/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-2:0
+	path: UIDPath<es2016/exponentiation-operator/14/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2016/exponentiation-operator/14/input.js 1:0-1:8
@@ -40,11 +40,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2016/exponentiation-operator/14/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:3
+				path: UIDPath<es2016/exponentiation-operator/14/input.js>
 				start: Position 1:3
 			}
 			description: Object {

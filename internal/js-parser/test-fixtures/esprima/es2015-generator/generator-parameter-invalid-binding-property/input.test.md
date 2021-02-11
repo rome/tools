@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-generator/generator-parameter-invalid-binding-property/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-generator/generator-parameter-invalid-binding-property/input.js 1:0-4:0
+	path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-property/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
-				filename: "esprima/es2015-generator/generator-parameter-invalid-binding-property/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:13
+				path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-binding-property/input.js>
 				start: Position 2:13
 			}
 		}

@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/top-level-await/export-default/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23
+	path: UIDPath<experimental/top-level-await/export-default/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: SourceLocation experimental/top-level-await/export-default/input.js 1:0-1:23

@@ -10,7 +10,21 @@ import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {BundlerConfig, FileReference, LAG_INTERVAL} from "@internal/core";
+import {
+	BundlerConfig,
+	FileReference,
+	LAG_INTERVAL,
+	WorkerAnalyzeDependencyResult,
+	WorkerBufferPatch,
+	WorkerCompileResult,
+	WorkerCompilerOptions,
+	WorkerFormatResult,
+	WorkerLintOptions,
+	WorkerLintResult,
+	WorkerParseOptions,
+	WorkerPrefetchedModuleSignatures,
+	WorkerUpdateInlineSnapshotResult,
+} from "@internal/core";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
@@ -36,7 +50,6 @@ import {
 } from "@internal/cli-diagnostics";
 import {ProjectDefinition} from "@internal/project";
 import {ResolverOptions} from "./fs/Resolver";
-
 import ServerBridge, {
 	ServerQueryRequest,
 	ServerQueryResponse,
@@ -57,28 +70,17 @@ import {
 } from "@internal/cli-flags";
 import {AnyRoot} from "@internal/ast";
 import {TransformStageName} from "@internal/compiler";
-import WorkerBridge, {
-	PrefetchedModuleSignatures,
-	WorkerAnalyzeDependencyResult,
-	WorkerBufferPatch,
-	WorkerCompileResult,
-	WorkerCompilerOptions,
-	WorkerFormatResult,
-	WorkerLintOptions,
-	WorkerLintResult,
-	WorkerParseOptions,
-	WorkerUpdateInlineSnapshotResult,
-} from "../common/bridges/WorkerBridge";
+
 import {ModuleSignature} from "@internal/js-analysis";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	AnyFilePath,
+	AnyPath,
 	RelativeFilePath,
-	UnknownPath,
 	createAbsoluteFilePath,
-	createUnknownPath,
+	createAnyPath,
+	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
@@ -89,6 +91,7 @@ import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
+import WorkerBridge from "../common/bridges/WorkerBridge";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -116,11 +119,10 @@ type WrapRequestDiagnosticOpts = {
 };
 
 type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
-	args?: Array<UnknownPath | string>;
-	tryAlternateArg?: (path: UnknownPath) => undefined | UnknownPath;
+	args?: Array<AnyPath | string>;
+	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
-	disabledDiagnosticCategory?: DiagnosticCategory;
 	advice?: DiagnosticAdvice;
 	verb?: string;
 	noun?: string;
@@ -486,7 +488,7 @@ export default class ServerRequest {
 		return await this.server.resolver.resolveEntryAssertPath(
 			{
 				...this.getResolverOptionsFromFlags(),
-				source: createUnknownPath(arg),
+				source: createAnyPath(arg),
 			},
 			{location: this.getDiagnosticLocationFromFlags({type: "arg", key: index})},
 		);
@@ -555,12 +557,14 @@ export default class ServerRequest {
 	}
 
 	private maybeReadMemoryFile(path: RelativeFilePath): undefined | string {
-		switch (path.join()) {
-			case "argv":
-				return this.getDiagnosticLocationFromFlags("none").sourceText;
+		if (path.isUID()) {
+			switch (path.getBasename()) {
+				case "argv":
+					return this.getDiagnosticLocationFromFlags("none").sourceText;
 
-			case "cwd":
-				return this.client.flags.cwd.join();
+				case "cwd":
+					return this.client.flags.cwd.join();
+			}
 		}
 		return undefined;
 	}
@@ -705,7 +709,7 @@ export default class ServerRequest {
 				line: ob1Number1,
 				column: ob1Coerce0(cwd.length),
 			},
-			filename: "cwd",
+			path: createUIDPath("cwd"),
 		};
 	}
 
@@ -847,7 +851,7 @@ export default class ServerRequest {
 							{
 								type: "log",
 								category: "info",
-								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
+								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <emphasis>${ref.uid}</emphasis>`,
 							},
 						],
 					},
@@ -1068,12 +1072,12 @@ export default class ServerRequest {
 
 	private async maybePrefetchModuleSignatures(
 		path: AbsoluteFilePath,
-	): Promise<PrefetchedModuleSignatures> {
+	): Promise<WorkerPrefetchedModuleSignatures> {
 		this.checkCancelled();
 
 		const {projectManager} = this.server;
 
-		const prefetchedModuleSignatures: PrefetchedModuleSignatures = {};
+		const prefetchedModuleSignatures: WorkerPrefetchedModuleSignatures = {};
 		const project = await projectManager.assertProject(path);
 		if (!project.config.typeCheck.enabled) {
 			return prefetchedModuleSignatures;
@@ -1156,14 +1160,14 @@ export default class ServerRequest {
 		const argToLocation: AbsoluteFilePathMap<DiagnosticLocation> = new AbsoluteFilePathMap();
 		const args: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-		let rawArgs: Array<string | AnyFilePath> = opts.args ?? this.query.args;
+		let rawArgs: Array<string | AnyPath> = opts.args ?? this.query.args;
 		if (rawArgs.length === 0) {
 			rawArgs = [cwd];
 			argToLocation.set(cwd, this.getDiagnosticLocationForClientCwd());
 		}
 
 		for (let i = 0; i < rawArgs.length; i++) {
-			const path = createUnknownPath(rawArgs[i]);
+			const path = createAnyPath(rawArgs[i]);
 			let abs: AbsoluteFilePath;
 
 			if (path.isAbsolute()) {
@@ -1229,7 +1233,9 @@ export default class ServerRequest {
 
 				onSearchNoMatch: async (path) => {
 					if (!opts.ignoreArgumentMisses) {
-						const location = argToLocation.get(path) ?? {};
+						const location =
+							argToLocation.get(path) ??
+							this.getDiagnosticLocationFromFlags("none");
 						await this.server.projectManager.assertProject(path, location);
 						await globUnmatched(this, opts, path, location);
 					}

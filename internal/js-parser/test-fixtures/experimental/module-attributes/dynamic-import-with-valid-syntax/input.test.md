@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/module-attributes/dynamic-import-with-valid-syntax/input.js 1:0-2:0
+	path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Trailing comma is disallowed inside import(...) arguments"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/dynamic-import-with-valid-syntax/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:18
+				path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
 				start: Position 1:17
 			}
 		}

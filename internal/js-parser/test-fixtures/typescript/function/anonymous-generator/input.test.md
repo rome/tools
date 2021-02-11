@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/function/anonymous-generator/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/function/anonymous-generator/input.ts 1:0-4:0
+	path: UIDPath<typescript/function/anonymous-generator/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSVariableDeclarationStatement {

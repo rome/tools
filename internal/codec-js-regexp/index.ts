@@ -147,7 +147,7 @@ type RegExpParserTypes = {
 };
 type RegExpParser = ParserCore<RegExpParserTypes>;
 
-const createRegExpParser = createParser<RegExpParserTypes>({
+const regExpParser = createParser<RegExpParserTypes>({
 	diagnosticLanguage: "regex",
 
 	tokenize(parser, index) {
@@ -1161,7 +1161,7 @@ export function parseRegExp(
 	expression: AnyJSRegExpExpression;
 	diagnostics: Diagnostics;
 } {
-	const parser = createRegExpParser(opts);
+	const parser = regExpParser.create(opts);
 	return {
 		expression: parseExpression(parser),
 		diagnostics: parser.getDiagnostics(),

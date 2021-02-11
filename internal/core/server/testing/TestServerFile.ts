@@ -8,6 +8,7 @@ import {BundleResult, FileReference, ServerRequest} from "@internal/core";
 import TestServer from "@internal/core/server/testing/TestServer";
 import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
 import {removeFile} from "@internal/fs";
+import {pretty} from "@internal/pretty-format";
 
 export default class TestServerFile {
 	constructor(
@@ -111,7 +112,7 @@ export default class TestServerFile {
 			});
 
 			const location: DiagnosticLocation = {
-				filename: path.join(),
+				path,
 			};
 
 			if (runner.options.freezeSnapshots) {
@@ -163,12 +164,10 @@ export default class TestServerFile {
 			return;
 		}
 
-		const filename = path.join();
-
 		// Resolve source maps. These will originally be pointed to the compiled source.
 		inlineSnapshotUpdates = inlineSnapshotUpdates.map((update) => {
 			const resolved = runner.sourceMaps.assertApproxOriginalPositionFor(
-				filename,
+				path,
 				update.line,
 				update.column,
 			);
@@ -177,9 +176,9 @@ export default class TestServerFile {
 				throw new Error("Could not find inline snapshot location in source map");
 			}
 
-			if (resolved.source !== filename && resolved.source !== ref.uid) {
+			if (!(resolved.source.equal(path) || resolved.source.equal(ref.uid))) {
 				throw new Error(
-					`Inline snapshot update resolved to ${resolved.source} when it should be ${filename}`,
+					pretty`Inline snapshot update resolved to ${resolved.source} when it should be ${path}`,
 				);
 			}
 

@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/export/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/interface/export/input.ts 1:0-3:0
+	path: UIDPath<typescript/interface/export/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExportLocalDeclaration {

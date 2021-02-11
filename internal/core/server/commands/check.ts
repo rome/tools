@@ -6,10 +6,10 @@
  */
 
 import {ServerRequest} from "@internal/core";
-import Linter, {
+import Checker, {
+	CheckerOptions,
 	LinterCompilerOptionsPerFile,
-	LinterOptions,
-} from "../linter/Linter";
+} from "../checker/Checker";
 import {markup} from "@internal/markup";
 import {createServerCommand} from "../commands";
 import {
@@ -18,7 +18,7 @@ import {
 } from "@internal/compiler";
 import {Consumer} from "@internal/consume";
 import {commandCategories} from "@internal/core/common/commands";
-import {createUnknownPath} from "@internal/path";
+import {createAnyPath, createUIDPath} from "@internal/path";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
 
 type Flags = {
@@ -80,7 +80,7 @@ export default createServerCommand<Flags>({
 		const {decisions} = flags;
 		if (decisions !== undefined) {
 			({lintCompilerOptionsPerFile, globalDecisions} = parseDecisionStrings({
-				filename: "argv",
+				path: createUIDPath("argv"),
 				decisions: decisions.map((value, i) => {
 					return {
 						value,
@@ -114,7 +114,7 @@ export default createServerCommand<Flags>({
 
 			// Only include lintable files
 			args = args.filter((arg) => {
-				const path = createUnknownPath(arg);
+				const path = createAnyPath(arg);
 
 				for (const ext of LINTABLE_EXTENSIONS) {
 					if (path.hasEndExtension(ext)) {
@@ -136,7 +136,7 @@ export default createServerCommand<Flags>({
 			}
 		}
 
-		const opts: LinterOptions = {
+		const opts: CheckerOptions = {
 			hasDecisions: flags.decisions.length > 0,
 			lintCompilerOptionsPerFile,
 			globalDecisions,
@@ -145,7 +145,7 @@ export default createServerCommand<Flags>({
 			suppressionExplanation: cachedSuppressionExplanation,
 			args,
 		};
-		const linter = new Linter(req, opts);
+		const linter = new Checker(req, opts);
 		if (req.query.requestFlags.watch) {
 			await linter.runWatch();
 		} else {

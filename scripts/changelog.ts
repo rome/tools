@@ -1,7 +1,7 @@
 import {markup} from "@internal/markup";
 import {parseCommit} from "@internal/commit-parser";
 import {readFileTextMeta} from "@internal/fs";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, createUIDPath} from "@internal/path";
 import {PUBLIC_PACKAGES, ROOT, reporter, writeFile} from "./_utils";
 import {dedent} from "@internal/string-utils";
 import {json} from "@internal/codec-config";
@@ -257,7 +257,7 @@ function parseCommitLog(
 				if (config[key] === "%B") {
 					const ast = parseCommit({
 						input: values[index],
-						path: "commit",
+						path: createUIDPath(`commit/${index}`),
 					});
 					newCommit.meta = {
 						breaking: ast.breaking,

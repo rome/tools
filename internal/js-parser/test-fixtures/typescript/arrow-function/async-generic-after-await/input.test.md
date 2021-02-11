@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/arrow-function/async-generic-after-await/input.ts 1:0-5:0
+	path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "typescript/arrow-function/async-generic-after-await/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:13
+				path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
 				start: Position 3:14
 			}
 		}

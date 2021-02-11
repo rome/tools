@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/numeric-separator/invalid-100/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/numeric-separator/invalid-100/input.js 1:0-2:0
+	path: UIDPath<experimental/numeric-separator/invalid-100/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/numeric-separator/invalid-100/input.js 1:0-1:4
@@ -38,11 +38,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid or unexpected int token"}
 			}
 			location: Object {
-				filename: "experimental/numeric-separator/invalid-100/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<experimental/numeric-separator/invalid-100/input.js>
 				start: Position 1:1
 			}
 		}

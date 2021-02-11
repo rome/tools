@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/364/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
+	path: UIDPath<core/uncategorised/364/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation core/uncategorised/364/input.js 1:0-1:2
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unterminated regular expression"}
 			}
 			location: Object {
-				filename: "core/uncategorised/364/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<core/uncategorised/364/input.js>
 				start: Position 1:1
 			}
 		}

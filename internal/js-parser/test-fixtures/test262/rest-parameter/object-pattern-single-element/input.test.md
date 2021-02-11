@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "test262/rest-parameter/object-pattern-single-element/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation test262/rest-parameter/object-pattern-single-element/input.js 1:0-2:0
+	path: UIDPath<test262/rest-parameter/object-pattern-single-element/input.js>
 	body: Array [
 		JSFunctionDeclaration {
 			id: JSBindingIdentifier {

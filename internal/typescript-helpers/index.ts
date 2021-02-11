@@ -24,6 +24,15 @@ export type AsyncCallback<Return, Args extends unknown[] = []> = Args extends []
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 
+// rome-ignore lint/js/noUndeclaredVariables(K): don't yet support scope tracking `infer`
+export type MapKey<T> = T extends Map<infer K, unknown> ? K : never;
+
+// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
+export type MapValue<T> = T extends Map<unknown, infer V> ? V : never;
+
+// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
+export type SetValue<T> = T extends Set<infer V> ? V : never;
+
 // rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables(I): future cleanup
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((
 	k: infer I,
@@ -58,12 +67,19 @@ export type OptionalProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
 	[Key in Keys]?: Obj[Key]
 };
 
+export type TaggedTemplateFunction<Ret, Sub> = (
+	strs: TemplateStringsArray,
+	...substitutions: Sub[]
+) => Ret;
+
 // Turn a type that contains interfaces into regular objects
 export type InterfaceToObject<T> = T extends {}
 	? {[K in keyof T]: InterfaceToObject<T[K]>}
 	: T;
 
 export type UnknownObject = Dict<unknown>;
+
+export type UnknownFunction = (...args: unknown[]) => unknown;
 
 export function isPlainObject<T = UnknownObject>(
 	obj: unknown,

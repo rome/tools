@@ -11,12 +11,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/parameter-properties/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/parameter-properties/input.ts 1:0-12:0
+	path: UIDPath<typescript/class/parameter-properties/input.ts>
 	syntax: Array ["ts"]
 	comments: Array [
 		CommentLine {

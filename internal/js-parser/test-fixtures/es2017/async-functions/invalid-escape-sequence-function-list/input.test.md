@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/invalid-escape-sequence-function-list/input.js 1:0-2:0
+	path: UIDPath<es2017/async-functions/invalid-escape-sequence-function-list/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2017/async-functions/invalid-escape-sequence-function-list/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:20
+				path: UIDPath<es2017/async-functions/invalid-escape-sequence-function-list/input.js>
 				start: Position 1:12
 			}
 			description: Object {

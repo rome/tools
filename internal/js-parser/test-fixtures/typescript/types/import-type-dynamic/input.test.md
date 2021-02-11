@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/types/import-type-dynamic/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/types/import-type-dynamic/input.ts 1:0-4:0
+	path: UIDPath<typescript/types/import-type-dynamic/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSVariableDeclarationStatement {

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/meta-properties/invalid-arrow-function/input.js 1:0-4:0
+	path: UIDPath<es2015/meta-properties/invalid-arrow-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "es2015/meta-properties/invalid-arrow-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:12
+				path: UIDPath<es2015/meta-properties/invalid-arrow-function/input.js>
 				start: Position 2:2
 			}
 		}

@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/need-parentheses/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/cast/need-parentheses/input.ts 1:0-4:0
+	path: UIDPath<typescript/cast/need-parentheses/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

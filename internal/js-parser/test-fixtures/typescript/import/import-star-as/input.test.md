@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/import/import-star-as/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/import/import-star-as/input.ts 1:0-2:0
+	path: UIDPath<typescript/import/import-star-as/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSImportDeclaration {

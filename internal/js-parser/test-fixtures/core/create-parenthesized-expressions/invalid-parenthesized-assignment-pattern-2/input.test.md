@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js 1:0-1:22
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-2/input.js 1:0-1:22

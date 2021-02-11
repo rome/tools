@@ -12,7 +12,6 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/uncategorised/57/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
@@ -21,6 +20,7 @@ JSRoot {
 	trailingComments: Array []
 	innerComments: Array ["0"]
 	loc: SourceLocation core/uncategorised/57/input.js 1:0-2:0
+	path: UIDPath<core/uncategorised/57/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

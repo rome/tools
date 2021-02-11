@@ -1,5 +1,6 @@
 import {default as ParserCore} from "./ParserCore";
 import {
+	ParserCoreFactory,
 	ParserCoreImplementation,
 	ParserCoreOverrides,
 	ParserCoreTypes,
@@ -9,7 +10,12 @@ import {
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
 import {ob1Add, ob1Dec} from "@internal/ob1";
-import {isPlainObject} from "@internal/typescript-helpers";
+import {
+	TaggedTemplateFunction,
+	isPlainObject,
+} from "@internal/typescript-helpers";
+import {pretty} from "@internal/pretty-format";
+import {AnyPath, UNKNOWN_PATH, isPath} from "@internal/path";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -39,19 +45,51 @@ export function isntWhitespace(char: string): boolean {
 	return char !== "\n" && char !== " " && char !== "\t";
 }
 
-export function createParser<Types extends ParserCoreTypes>(
-	impl: ParserCoreImplementation<Types>,
-): (
-	opts: Types["options"],
-	meta: Types["meta"],
-	overrides?: ParserCoreOverrides,
-) => ParserCore<Types> {
-	return (
-		opts: Types["options"],
-		meta: Types["meta"],
-		overrides?: ParserCoreOverrides,
-	) => {
-		return new ParserCore(impl, opts, meta, overrides);
+export function createParser<
+	Types extends ParserCoreTypes,
+	Impl extends ParserCoreImplementation<Types> = ParserCoreImplementation<Types>
+>(impl: Impl): ParserCoreFactory<Types> {
+	return {
+		create: (
+			opts: Types["options"],
+			meta: Types["meta"],
+			overrides?: ParserCoreOverrides,
+		) => {
+			return new ParserCore(impl, opts, meta, overrides);
+		},
+	};
+}
+
+export function createParserTemplateFactory<Ret>(
+	callback: (input: string) => Ret,
+): TaggedTemplateFunction<Ret, string> {
+	const cache: Map<
+		TemplateStringsArray,
+		{
+			input: string;
+			value: Ret;
+		}
+	> = new Map();
+
+	return (strs, ...subs) => {
+		let input = "";
+		for (let i = 0; i < strs.length; i++) {
+			input += strs[i];
+
+			const sub = subs[i];
+			if (sub) {
+				input += sub;
+			}
+		}
+
+		const cached = cache.get(strs);
+		if (cached?.input === input) {
+			return cached.value;
+		}
+
+		const value = callback(input);
+		cache.set(strs, {input, value});
+		return value;
 	};
 }
 
@@ -148,7 +186,8 @@ export function extractSourceLocationRangeFromNodes(
 		return undefined;
 	}
 
-	let filename: undefined | string = undefined;
+	let path: AnyPath = UNKNOWN_PATH;
+	let hasPath = false;
 	let start: undefined | Position = undefined;
 	let end: undefined | Position = undefined;
 
@@ -166,12 +205,15 @@ export function extractSourceLocationRangeFromNodes(
 			end = loc.end;
 		}
 
-		if (filename === undefined) {
-			filename = loc.filename;
-		} else if (filename !== loc.filename) {
-			throw new Error(
-				`Mixed filenames in node, expected ${filename} but got ${loc.filename}`,
-			);
+		if (hasPath) {
+			if (path !== loc.path) {
+				throw new Error(
+					pretty`Mixed filenames in node, expected ${path} but got ${loc.path}`,
+				);
+			}
+		} else {
+			path = loc.path;
+			hasPath = true;
 		}
 	}
 
@@ -180,7 +222,7 @@ export function extractSourceLocationRangeFromNodes(
 	}
 
 	return {
-		filename,
+		path,
 		start,
 		end,
 	};
@@ -202,7 +244,7 @@ export function isSourceLocation(val: unknown): val is SourceLocation {
 	// Make sure there's no other sneaky keys
 	for (const key in val) {
 		if (
-			key !== "filename" &&
+			key !== "path" &&
 			key !== "identifierName" &&
 			key !== "start" &&
 			key !== "end"
@@ -213,7 +255,7 @@ export function isSourceLocation(val: unknown): val is SourceLocation {
 
 	// Verify types
 	return (
-		(typeof val.filename === "string" || typeof val.filename === "undefined") &&
+		(isPath(val) || typeof val.filename === "undefined") &&
 		(typeof val.identifierName === "string" ||
 		typeof val.identifierName === "undefined") &&
 		isPosition(val.start) &&

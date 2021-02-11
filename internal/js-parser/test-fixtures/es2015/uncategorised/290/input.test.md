@@ -10,13 +10,13 @@
 JSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "es2015/uncategorised/290/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/290/input.js 1:0-1:27
+	path: UIDPath<es2015/uncategorised/290/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"
@@ -33,11 +33,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/290/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:23
+				path: UIDPath<es2015/uncategorised/290/input.js>
 				start: Position 1:23
 			}
 		}

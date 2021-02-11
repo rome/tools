@@ -1,6 +1,6 @@
 import {test} from "rome";
 import {applyWorkerBufferPatch} from "./applyWorkerBufferPatch";
-import {WorkerBufferPatch} from "@internal/core/common/bridges/WorkerBridge";
+import {WorkerBufferPatch} from "@internal/core";
 import {ob1Coerce0} from "@internal/ob1";
 import {dedent} from "@internal/string-utils";
 

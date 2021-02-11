@@ -12,13 +12,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "esprima/expression-primary-literal-string/migrated_0003/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/expression-primary-literal-string/migrated_0003/input.js 1:0-1:6
+	path: UIDPath<esprima/expression-primary-literal-string/migrated_0003/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\x61"

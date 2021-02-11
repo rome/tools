@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/adjacent-tags/input.jsx"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/errors/adjacent-tags/input.jsx 1:0-1:38
+	path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
 	syntax: Array ["jsx"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment \\<>...\\</>?"}
 			}
 			location: Object {
-				filename: "jsx/errors/adjacent-tags/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:22
+				path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
 				start: Position 1:22
 			}
 		}

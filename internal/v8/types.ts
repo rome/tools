@@ -11,6 +11,7 @@ import {JSONPropertyValue} from "@internal/codec-config";
 import inspector = require("inspector");
 
 import {InterfaceToObject} from "@internal/typescript-helpers";
+import {AnyPath} from "@internal/path";
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;
 
@@ -43,7 +44,7 @@ export type CoverageRangeWithMetadata = inspector.Profiler.CoverageRange & {
 export type LocationRangeKind = "branch" | "function" | "expression";
 
 export type CoverageLocationRange = {
-	filename: string;
+	path: AnyPath;
 	kind: LocationRangeKind;
 	count: number;
 	start: Position;
@@ -58,7 +59,7 @@ export type CoverageFileStats = {
 };
 
 export type CoverageFile = {
-	filename: string;
+	path: AnyPath;
 	lines: CoverageFileStats;
 	branches: CoverageFileStats;
 	functions: CoverageFileStats;
@@ -68,7 +69,7 @@ export type ErrorFrame = {
 	typeName: undefined | string;
 	functionName: undefined | string;
 	methodName: undefined | string;
-	filename: undefined | string;
+	path: undefined | AnyPath;
 	lineNumber: undefined | Number1;
 	columnNumber: undefined | Number0;
 	isTopLevel: boolean;

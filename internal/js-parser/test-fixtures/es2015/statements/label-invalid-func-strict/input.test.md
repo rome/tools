@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/statements/label-invalid-func-strict/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/statements/label-invalid-func-strict/input.js 1:0-2:0
+	path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "In strict mode code, functions can only be declared at top level or inside a block"}
 			}
 			location: Object {
-				filename: "es2015/statements/label-invalid-func-strict/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:34
+				path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
 				start: Position 1:35
 			}
 		}

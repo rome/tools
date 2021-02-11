@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2015/uncategorised/263/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/263/input.js 1:0-1:13
+	path: UIDPath<es2015/uncategorised/263/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Class name is required"}
 			}
 			location: Object {
-				filename: "es2015/uncategorised/263/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:5
+				path: UIDPath<es2015/uncategorised/263/input.js>
 				start: Position 1:6
 			}
 		}

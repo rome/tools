@@ -53,7 +53,7 @@ export function compareByGeneratedPositionsInflated(
 		return cmp;
 	}
 
-	cmp = strcmp(mappingA.source, mappingB.source);
+	cmp = strcmp(mappingA.source?.join(), mappingB.source?.join());
 	if (cmp !== 0) {
 		return cmp;
 	}

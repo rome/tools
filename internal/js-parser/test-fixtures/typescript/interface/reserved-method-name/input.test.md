@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/reserved-method-name/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/interface/reserved-method-name/input.ts 1:0-4:0
+	path: UIDPath<typescript/interface/reserved-method-name/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSInterfaceDeclaration {

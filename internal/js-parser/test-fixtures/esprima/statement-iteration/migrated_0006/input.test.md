@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-iteration/migrated_0006/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-iteration/migrated_0006/input.js>
 	body: Array [
 		JSWhileStatement {
 			loc: SourceLocation esprima/statement-iteration/migrated_0006/input.js 1:0-1:26

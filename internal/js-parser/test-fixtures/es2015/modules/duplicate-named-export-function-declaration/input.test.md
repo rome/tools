@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:0-3:0
+	path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/modules/duplicate-named-export-function-declaration/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:24
+				path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
 				start: Position 2:7
 			}
 			description: Object {

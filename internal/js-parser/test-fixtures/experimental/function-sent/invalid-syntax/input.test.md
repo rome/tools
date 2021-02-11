@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/function-sent/invalid-syntax/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/function-sent/invalid-syntax/input.js 1:0-4:0
+	path: UIDPath<experimental/function-sent/invalid-syntax/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: "experimental/function-sent/invalid-syntax/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:22
+				path: UIDPath<experimental/function-sent/invalid-syntax/input.js>
 				start: Position 2:21
 			}
 		}

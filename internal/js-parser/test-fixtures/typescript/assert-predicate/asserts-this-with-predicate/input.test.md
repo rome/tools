@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/assert-predicate/asserts-this-with-predicate/input.ts 1:0-5:0
+	path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/assert-predicate/asserts-this-with-predicate/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:26
+				path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
 				start: Position 2:24
 			}
 			description: Object {

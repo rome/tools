@@ -14,7 +14,7 @@ import {exists, readFileText} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
 import TestWorkerFile from "./TestWorkerFile";
 import {descriptions} from "@internal/diagnostics";
-import {createSnapshotParser, parseSnapshot} from "./SnapshotParser";
+import {parseSnapshot, snapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/v8";
 import {Number0, Number1} from "@internal/ob1";
 import {prettyFormatToString} from "@internal/pretty-format";
@@ -220,7 +220,7 @@ export default class SnapshotManager {
 				}
 
 				const content = await readFileText(path);
-				const parser = createSnapshotParser({
+				const parser = snapshotParser.create({
 					path,
 					input: content,
 				});

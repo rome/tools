@@ -8,7 +8,7 @@
 import {
 	AnyNode,
 	AnyNodes,
-	MOCK_PROGRAM,
+	MOCK_JS_ROOT,
 	NodeBaseWithComments,
 } from "@internal/ast";
 import {AnyVisitors, CompilerContext, Path, signals} from "@internal/compiler";
@@ -51,7 +51,7 @@ const removeLocTransform: AnyVisitors = [
 
 export function removeLoc(ast: AnyNode): AnyNodes {
 	const context = new CompilerContext({
-		ast: MOCK_PROGRAM,
+		ast: MOCK_JS_ROOT,
 	});
 	return context.reduce(ast, removeLocTransform);
 }

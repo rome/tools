@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/function-sent/enabled-function-keyword-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/function-sent/enabled-function-keyword-expression/input.js 1:0-4:0
+	path: UIDPath<experimental/function-sent/enabled-function-keyword-expression/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/function-sent/enabled-function-keyword-expression/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:20
+				path: UIDPath<experimental/function-sent/enabled-function-keyword-expression/input.js>
 				start: Position 2:19
 			}
 			description: Object {

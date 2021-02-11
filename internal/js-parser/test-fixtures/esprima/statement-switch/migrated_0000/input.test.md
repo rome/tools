@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-switch/migrated_0000/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/statement-switch/migrated_0000/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-switch/migrated_0000/input.js>
 	body: Array [
 		JSSwitchStatement {
 			cases: Array []

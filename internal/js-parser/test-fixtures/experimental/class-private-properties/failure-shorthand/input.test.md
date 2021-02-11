@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/class-private-properties/failure-shorthand/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-properties/failure-shorthand/input.js 1:0-7:0
+	path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/class-private-properties/failure-shorthand/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 4:10
+				path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
 				start: Position 4:11
 			}
 			description: Object {

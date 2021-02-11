@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2016/exponentiation-operator/5/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:0-1:13
+	path: UIDPath<es2016/exponentiation-operator/5/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2016/exponentiation-operator/5/input.js 1:0-1:13

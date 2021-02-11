@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/function/annotated/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/function/annotated/input.ts 1:0-2:0
+	path: UIDPath<typescript/function/annotated/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSFunctionDeclaration {

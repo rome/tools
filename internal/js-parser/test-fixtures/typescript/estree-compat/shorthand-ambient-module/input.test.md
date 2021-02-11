@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/estree-compat/shorthand-ambient-module/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/estree-compat/shorthand-ambient-module/input.ts 1:0-1:32
+	path: UIDPath<typescript/estree-compat/shorthand-ambient-module/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSModuleDeclaration {

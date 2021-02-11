@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2020/import-meta/not-assignable/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-2:0
+	path: UIDPath<es2020/import-meta/not-assignable/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/import-meta/not-assignable/input.js 1:0-1:19
@@ -39,11 +39,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2020/import-meta/not-assignable/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:11
+				path: UIDPath<es2020/import-meta/not-assignable/input.js>
 				start: Position 1:0
 			}
 			description: Object {

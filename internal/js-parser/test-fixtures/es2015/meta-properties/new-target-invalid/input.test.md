@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/meta-properties/new-target-invalid/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
+	path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2015/meta-properties/new-target-invalid/input.js 1:0-1:10
@@ -44,11 +44,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: "es2015/meta-properties/new-target-invalid/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:10
+				path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
 				start: Position 1:0
 			}
 		}

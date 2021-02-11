@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig} from "@internal/project";
-import {AnyFilePath, UnknownPath, createUnknownPath} from "@internal/path";
+import {AnyPath, createAnyPath} from "@internal/path";
 import {ExtensionHandler, PartialExtensionHandler} from "./types";
 import {
 	cjsHandler,
@@ -38,17 +38,14 @@ export type GetFileHandlerResult = {
 };
 
 export function inferDiagnosticLanguageFromFilename(
-	filename: undefined | UnknownPath | string,
+	filename: undefined | AnyPath | string,
 	existing?: DiagnosticLanguage,
 ): DiagnosticLanguage {
 	if (existing !== undefined && existing !== "unknown") {
 		return existing;
 	}
 	if (filename !== undefined) {
-		const {handler} = getFileHandlerFromPath(
-			createUnknownPath(filename),
-			undefined,
-		);
+		const {handler} = getFileHandlerFromPath(createAnyPath(filename), undefined);
 		if (handler !== undefined) {
 			return handler.language;
 		}
@@ -68,7 +65,7 @@ export function getFileHandlerExtensions(
 }
 
 export function getFileHandlerFromPath(
-	path: AnyFilePath,
+	path: AnyPath,
 	projectConfig: undefined | ProjectConfig,
 ): GetFileHandlerResult {
 	const basename = path.getBasename();
@@ -94,7 +91,7 @@ export function getFileHandlerFromPath(
 }
 
 export function getFileHandlerFromPathAssert(
-	path: AnyFilePath,
+	path: AnyPath,
 	projectConfig: undefined | ProjectConfig,
 ): Required<GetFileHandlerResult> {
 	const {handler, ext} = getFileHandlerFromPath(path, projectConfig);
@@ -103,7 +100,7 @@ export function getFileHandlerFromPathAssert(
 		throw createSingleDiagnosticError({
 			description: descriptions.FILES.NO_FILE_HANDLER(path),
 			location: {
-				filename: path.join(),
+				path,
 			},
 		});
 	} else {

@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2018/object-rest-spread/expression-rest-not-last-invalid/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-2:0
+	path: UIDPath<es2018/object-rest-spread/expression-rest-not-last-invalid/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2018/object-rest-spread/expression-rest-not-last-invalid/input.js 1:0-1:19

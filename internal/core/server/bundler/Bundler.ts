@@ -5,7 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AssembledBundle, Server, ServerRequest} from "@internal/core";
+import {
+	AssembledBundle,
+	Server,
+	ServerRequest,
+	WorkerBundleCompileOptions,
+	WorkerCompileResult,
+} from "@internal/core";
 import {Reporter} from "@internal/cli-reporter";
 import {
 	BundleResult,
@@ -18,17 +24,15 @@ import BundleRequest, {BundleOptions} from "./BundleRequest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createUnknownPath,
+	UIDPath,
+	createAnyPath,
 } from "@internal/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
 	convertManifestToJSON,
 } from "@internal/codec-js-manifest";
-import {
-	WorkerBundleCompileOptions,
-	WorkerCompileResult,
-} from "../../common/bridges/WorkerBridge";
+
 import {Dict} from "@internal/typescript-helpers";
 import {readFile} from "@internal/fs";
 import {flipPathPatterns} from "@internal/path-match";
@@ -84,7 +88,7 @@ export default class Bundler {
 			...this.config.resolver,
 			allowPartial: false,
 			origin: cwd,
-			source: createUnknownPath(unresolvedEntry),
+			source: createAnyPath(unresolvedEntry),
 		});
 
 		const {server} = this;
@@ -95,7 +99,7 @@ export default class Bundler {
 			...this.config.resolver,
 			origin: cwd,
 			requestedType: "package",
-			source: createUnknownPath(unresolvedEntry),
+			source: createAnyPath(unresolvedEntry),
 		});
 		const manifestRoot: undefined | AbsoluteFilePath =
 			manifestRootResolved.type === "FOUND"
@@ -153,7 +157,7 @@ export default class Bundler {
 		const mod = graph.getNode(path);
 
 		// Build a map of relative module sources to module id
-		const relativeSourcesToModuleId: Dict<string> = {};
+		const relativeSourcesToModuleId: Dict<UIDPath> = {};
 		for (const [relative, absolute] of mod.relativeToAbsolutePath) {
 			const moduleId = graph.getNode(absolute).uid;
 			relativeSourcesToModuleId[relative] = moduleId;
@@ -431,7 +435,7 @@ export default class Bundler {
 					{
 						...this.config.resolver,
 						origin: manifestDef.directory,
-						source: createUnknownPath(relative).toExplicitRelative(),
+						source: createAnyPath(relative).toExplicitRelative(),
 					},
 					{
 						location,

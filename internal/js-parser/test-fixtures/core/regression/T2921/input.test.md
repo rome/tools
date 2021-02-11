@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "core/regression/T2921/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/regression/T2921/input.js 1:0-2:0
+	path: UIDPath<core/regression/T2921/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "core/regression/T2921/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<core/regression/T2921/input.js>
 				start: Position 1:4
 			}
 			description: Object {

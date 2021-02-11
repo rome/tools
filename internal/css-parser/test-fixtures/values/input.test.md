@@ -9,9 +9,9 @@ CSSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "values/input.css"
 	integrity: undefined
 	loc: SourceLocation values/input.css 1:0-19:1
+	path: RelativeFilePath<values/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation values/input.css 1:0-3:1

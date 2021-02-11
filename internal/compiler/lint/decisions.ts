@@ -19,8 +19,8 @@ import {
 	LintCompilerOptionsDecisionAction,
 } from "../types";
 import {ob1Coerce0, ob1Get0, ob1Get1, ob1Number1} from "@internal/ob1";
-import {AbsoluteFilePath} from "@internal/path";
-import {LinterCompilerOptionsPerFile} from "@internal/core/server/linter/Linter";
+import {AbsoluteFilePath, AnyPath} from "@internal/path";
+import {LinterCompilerOptionsPerFile} from "@internal/core/server/checker/Checker";
 import {escapeSplit} from "@internal/string-utils";
 import {StaticMarkup} from "@internal/markup";
 import {parseCommentSuppressionLoneCategory} from "../suppressionsParser";
@@ -41,7 +41,7 @@ function validateAction(
 
 export function deriveDecisionPositionKey(
 	action: LintCompilerOptionsDecisionAction,
-	loc: undefined | DiagnosticLocation,
+	loc: undefined | Partial<DiagnosticLocation>,
 ): undefined | string {
 	if (loc === undefined) {
 		return undefined;
@@ -67,8 +67,8 @@ function addPartPositionOffset(pos: Position, part: string): Position {
 }
 
 export function parseDecisionStrings(
-	{decisions, cwd, filename, unexpected}: {
-		filename: string;
+	{decisions, cwd, path, unexpected}: {
+		path: AnyPath;
 		decisions: {
 			start: Position;
 			value: string;
@@ -97,7 +97,7 @@ export function parseDecisionStrings(
 
 		const {category, categoryValue} = parseCommentSuppressionLoneCategory({
 			input: rawCategory,
-			path: filename,
+			path,
 			offsetPosition: start,
 		});
 		globalDecisions.push({category, categoryValue, action});
@@ -117,7 +117,7 @@ export function parseDecisionStrings(
 
 		const {category, categoryValue} = parseCommentSuppressionLoneCategory({
 			input: rawCategory,
-			path: filename,
+			path,
 			offsetPosition: addPartPositionOffset(start, action),
 		});
 		const resolvedFilename = cwd.resolve(rawFilename).join();

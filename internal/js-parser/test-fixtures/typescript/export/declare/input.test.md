@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/export/declare/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/export/declare/input.ts 1:0-9:0
+	path: UIDPath<typescript/export/declare/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/export/declare/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:25
+				path: UIDPath<typescript/export/declare/input.ts>
 				start: Position 2:24
 			}
 			description: Object {

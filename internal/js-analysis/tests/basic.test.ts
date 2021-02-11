@@ -9,13 +9,11 @@ import {Diagnostics} from "@internal/diagnostics";
 import {test} from "rome";
 import {check} from "@internal/js-analysis";
 import {parseJS} from "@internal/js-parser";
-import {createUnknownPath} from "@internal/path";
 
 async function testCheck(code: string): Promise<Diagnostics> {
 	const ast = parseJS({
 		input: code,
 		sourceType: "module",
-		path: createUnknownPath("unknown"),
 	});
 
 	return check({

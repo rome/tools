@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/variable-declarator/definite-assignment-not-allowed/input.ts 1:0-1:13
+	path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
 			}
 			location: Object {
-				filename: "typescript/variable-declarator/definite-assignment-not-allowed/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
 				start: Position 1:6
 			}
 		}

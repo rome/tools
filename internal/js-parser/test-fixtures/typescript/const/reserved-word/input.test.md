@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/const/reserved-word/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/const/reserved-word/input.ts 1:0-1:15
+	path: UIDPath<typescript/const/reserved-word/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unknown TS non array type start"}
 			}
 			location: Object {
-				filename: "typescript/const/reserved-word/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:8
+				path: UIDPath<typescript/const/reserved-word/input.ts>
 				start: Position 1:9
 			}
 		}

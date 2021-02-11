@@ -11,13 +11,13 @@ JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false
-	filename: "esprima/invalid-syntax/GH-1106-00/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/GH-1106-00/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/GH-1106-00/input.js>
 	directives: Array [
 		JSDirective {
 			value: "\\x"
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Bad character escape sequence"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/GH-1106-00/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:3
+				path: UIDPath<esprima/invalid-syntax/GH-1106-00/input.js>
 				start: Position 1:3
 			}
 		}

@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js 1:0-3:1
+	path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
-				filename: "es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:12
+				path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js>
 				start: Position 2:12
 			}
 		}

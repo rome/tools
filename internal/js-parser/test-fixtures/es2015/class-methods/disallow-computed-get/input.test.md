@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class-methods/disallow-computed-get/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/class-methods/disallow-computed-get/input.js 1:0-4:0
+	path: UIDPath<es2015/class-methods/disallow-computed-get/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "es2015/class-methods/disallow-computed-get/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:9
+				path: UIDPath<es2015/class-methods/disallow-computed-get/input.js>
 				start: Position 2:10
 			}
 		}

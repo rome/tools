@@ -13,9 +13,11 @@ import {
 	AbsoluteFilePathMap,
 	RelativeFilePath,
 	TEMP_PATH,
+	UIDPath,
 	createAbsoluteFilePath,
+	createAnyPath,
 	createRelativeFilePath,
-	createUnknownPath,
+	createUIDPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
 import {
@@ -111,7 +113,7 @@ type IntegrationWorkerFileRefOptions = {
 	real?: string | AbsoluteFilePath;
 	project?: number;
 	once?: boolean;
-	uid: string;
+	uid: string | UIDPath;
 };
 
 export function findFixtureInput(
@@ -128,7 +130,7 @@ export function findFixtureInput(
 			return {
 				input,
 				handler: getFileHandlerFromPathAssert(
-					createUnknownPath(`input.${ext}`),
+					createAnyPath(`input.${ext}`),
 					projectConfig,
 				).handler,
 			};
@@ -187,7 +189,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 			project,
 			manifest: undefined,
 			remote: false,
-			uid,
+			uid: createUIDPath(uid),
 			relative,
 			real,
 		};
@@ -227,6 +229,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 					{
 						config,
 						configCacheKeys: {},
+						configPath: createAbsoluteFilePath(`/project-${id}/package.json`),
 						directory: createAbsoluteFilePath(`/project-${id}`),
 					},
 				],
@@ -280,7 +283,7 @@ export async function declareParserTests() {
 
 		// Inline diagnostics
 		const processor = new DiagnosticsProcessor();
-		processor.normalizer.setInlineSourceText(ast.filename, inputContent);
+		processor.normalizer.setInlineSourceText(ast.path, inputContent);
 		processor.addDiagnostics(ast.diagnostics);
 		const diagnostics = processor.getDiagnostics();
 

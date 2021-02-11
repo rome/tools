@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/class/expression-generic/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/expression-generic/input.ts 1:0-3:0
+	path: UIDPath<typescript/class/expression-generic/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

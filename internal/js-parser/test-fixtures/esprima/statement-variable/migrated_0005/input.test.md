@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/statement-variable/migrated_0005/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/statement-variable/migrated_0005/input.js 1:0-2:0
+	path: UIDPath<esprima/statement-variable/migrated_0005/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation esprima/statement-variable/migrated_0005/input.js 1:0-1:34

@@ -6,7 +6,7 @@
  */
 
 import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from "@internal/ob1";
-import {AnyFilePath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {
 	DiagnosticCategory,
 	DiagnosticDescriptionOptional,
@@ -15,7 +15,7 @@ import {
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import {default as ParserCore} from "./ParserCore";
-import {Dict, RequiredProps} from "@internal/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 // rome-ignore lint/ts/noExplicitAny: future cleanup
 export type AnyParserCore = ParserCore<{
@@ -24,6 +24,14 @@ export type AnyParserCore = ParserCore<{
 	options: ParserOptions & Dict<any>;
 	meta: Dict<any> | void;
 }>;
+
+export type ParserCoreFactory<Types extends ParserCoreTypes> = {
+	create(
+		opts: Types["options"],
+		meta: Types["meta"],
+		overrides?: ParserCoreOverrides,
+	): ParserCore<Types>;
+};
 
 export type ParserCoreTypes = {
 	tokens: BaseTokens;
@@ -60,6 +68,7 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 		getIndex: (parser: ParserCore<Types>) => Number0;
 		getLastEndPosition: (parser: ParserCore<Types>) => Position;
 	};
+	parseTemplate?: (opts: ParserOptions) => unknown;
 };
 
 export type ParserCoreTokenizeState<Types extends ParserCoreTypes> = [
@@ -133,7 +142,7 @@ export type BaseTokens = {
 
 //# Other types
 export type SourceLocation = {
-	filename?: string;
+	path: AnyPath;
 	identifierName?: string;
 	start: Position;
 	end: Position;
@@ -150,14 +159,12 @@ export const UNKNOWN_POSITION: Position = {
 };
 
 export type ParserOptions = {
-	path?: string | AnyFilePath;
+	path?: AnyPath;
 	integrity?: DiagnosticIntegrity;
 	input?: string;
 	sourceText?: string;
 	offsetPosition?: Position;
 };
-
-export type ParserOptionsWithRequiredPath = RequiredProps<ParserOptions, "path">;
 
 export type ParserUnexpectedOptions = {
 	description?: DiagnosticDescriptionOptional;

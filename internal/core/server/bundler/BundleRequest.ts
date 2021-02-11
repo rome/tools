@@ -11,7 +11,12 @@ import {AssembledBundle, BundleRequestResult} from "../../common/types/bundler";
 import {DependencyOrder} from "../dependencies/DependencyOrderer";
 import {getPrefixedBundleNamespace} from "@internal/compiler";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
-import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	UIDPath,
+	createAnyPath,
+} from "@internal/path";
 import {Reporter} from "@internal/cli-reporter";
 import {markup} from "@internal/markup";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -60,14 +65,14 @@ export default class BundleRequest {
 			origins: [
 				{
 					category: "bundler",
-					message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
+					message: `Requested bundle for ${this.resolvedEntryUid}`,
 				},
 			],
 		});
 		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
 		this.sourceMap = new SourceMapGenerator({
-			file: this.resolvedEntry.getBasename(),
+			path: createAnyPath(this.resolvedEntry.getBasename()),
 		});
 
 		this.assets = new Map();
@@ -83,7 +88,7 @@ export default class BundleRequest {
 	private reporter: Reporter;
 	private bundler: Bundler;
 	private resolvedEntry: AbsoluteFilePath;
-	private resolvedEntryUid: string;
+	private resolvedEntryUid: UIDPath;
 	private assets: Map<string, Buffer>;
 
 	public async stepAnalyze(): Promise<DependencyOrder> {
@@ -262,7 +267,7 @@ export default class BundleRequest {
 		// Add on files
 		for (const path of order.files) {
 			const node = this.graph.getNode(path);
-			const uid = this.server.projectManager.getUid(path);
+			const uid = this.server.projectManager.getUid(path).join();
 
 			for (const path of node.getAbsoluteDependencies()) {
 				declareCJS(this.graph.getNode(path));
@@ -295,7 +300,10 @@ export default class BundleRequest {
 			const sourceMapComment = sourceMap.toComment();
 			assembled.push([0, sourceMapComment]);
 		} else {
-			assembled.push([0, `//# sourceMappingURL=${this.sourceMap.file}.map`]);
+			assembled.push([
+				0,
+				`//# sourceMappingURL=${this.sourceMap.path.join()}.map`,
+			]);
 		}
 
 		return {

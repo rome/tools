@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, RelativeFilePath} from "@internal/path";
+import {AbsoluteFilePath, RelativeFilePath, UIDPath} from "@internal/path";
 
 export type FileReference = {
 	project: number;
 	manifest: undefined | number;
-	uid: string;
+	uid: UIDPath;
 	relative: RelativeFilePath;
 	real: AbsoluteFilePath;
 	remote: boolean;

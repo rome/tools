@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/regression/octal-float-fail/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/regression/octal-float-fail/input.js 1:0-2:0
+	path: UIDPath<core/regression/octal-float-fail/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation core/regression/octal-float-fail/input.js 1:0-1:2
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "core/regression/octal-float-fail/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:2
+				path: UIDPath<core/regression/octal-float-fail/input.js>
 				start: Position 1:2
 			}
 		}

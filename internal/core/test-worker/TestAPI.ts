@@ -825,7 +825,7 @@ export default class TestAPI implements TestHelper {
 				advice.push({
 					type: "log",
 					category: "info",
-					text: markup`Run <code>rome test <filelink target="${this.path.join()}" /> --update-snapshots</code> to update this snapshot`,
+					text: markup`Run <code>rome test ${this.path} --update-snapshots</code> to update this snapshot`,
 				});
 
 				await this.emitDiagnostic(

@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:0-1:16
+	path: UIDPath<es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2016/simple-parameter-list/async-arrow-function-after-binary-operator/input.js 1:0-1:16

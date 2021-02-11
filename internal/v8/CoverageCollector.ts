@@ -25,6 +25,7 @@ import {
 	ob1Number1,
 } from "@internal/ob1";
 import inspector = require("inspector");
+import {MixedPathMap} from "@internal/path";
 
 function createCoverageFileStats(
 	covered: number,
@@ -189,7 +190,7 @@ export default class CoverageCollector {
 
 				const loc: CoverageLocationRange = {
 					kind,
-					filename: sourceStart.source,
+					path: sourceStart.source,
 					count,
 					start: {
 						line: sourceStart.line,
@@ -208,18 +209,18 @@ export default class CoverageCollector {
 		}
 
 		// Assemble files
-		const rangesByFile: Map<string, CoverageLocationRange[]> = new Map();
+		const rangesByFile: MixedPathMap<CoverageLocationRange[]> = new MixedPathMap();
 		for (const loc of locs) {
-			let ranges = rangesByFile.get(loc.filename);
+			let ranges = rangesByFile.get(loc.path);
 			if (ranges === undefined) {
 				ranges = [];
-				rangesByFile.set(loc.filename, ranges);
+				rangesByFile.set(loc.path, ranges);
 			}
 			ranges.push(loc);
 		}
 
 		const files: CoverageFile[] = [];
-		for (const [filename, ranges] of rangesByFile) {
+		for (const [path, ranges] of rangesByFile) {
 			const coveredLines: Set<Number1> = new Set();
 			const uncoveredLines: Set<Number1> = new Set();
 
@@ -278,7 +279,7 @@ export default class CoverageCollector {
 			}
 
 			files.push({
-				filename,
+				path,
 				lines: createCoverageFileStats(coveredLines.size, uncoveredLines.size),
 				branches: createCoverageFileStats(
 					coveredBranches.size,

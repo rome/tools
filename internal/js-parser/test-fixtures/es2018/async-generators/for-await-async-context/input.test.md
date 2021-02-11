@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "es2018/async-generators/for-await-async-context/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2018/async-generators/for-await-async-context/input.js 1:0-4:0
+	path: UIDPath<es2018/async-generators/for-await-async-context/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2018/async-generators/for-await-async-context/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:11
+				path: UIDPath<es2018/async-generators/for-await-async-context/input.js>
 				start: Position 2:6
 			}
 			description: Object {

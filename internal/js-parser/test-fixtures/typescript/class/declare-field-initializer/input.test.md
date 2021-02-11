@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/class/declare-field-initializer/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/class/declare-field-initializer/input.ts 1:0-4:0
+	path: UIDPath<typescript/class/declare-field-initializer/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unknown class property start"}
 			}
 			location: Object {
-				filename: "typescript/class/declare-field-initializer/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:9
+				path: UIDPath<typescript/class/declare-field-initializer/input.ts>
 				start: Position 2:10
 			}
 		}

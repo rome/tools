@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-properties/super-inside-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/super-inside-function/input.js 1:0-6:0
+	path: UIDPath<experimental/class-properties/super-inside-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "experimental/class-properties/super-inside-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:23
+				path: UIDPath<experimental/class-properties/super-inside-function/input.js>
 				start: Position 3:4
 			}
 		}

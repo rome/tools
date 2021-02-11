@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "comments/basic/export-default-anonymous-class/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation comments/basic/export-default-anonymous-class/input.js 1:0-11:0
+	path: UIDPath<comments/basic/export-default-anonymous-class/input.js>
 	comments: Array [
 		CommentBlock {
 			id: "0"

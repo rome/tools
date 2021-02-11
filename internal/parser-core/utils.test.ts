@@ -83,7 +83,6 @@ test(
 		);
 
 		const js = parseJS({
-			path: "unknown",
 			input: dedent`
 				const foo = bar;
 

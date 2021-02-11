@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js 1:0-3:1
+	path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: "es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:20
+				path: UIDPath<es2015/yield/parameter-default-inside-arrow-inside-generator-2/input.js>
 				start: Position 2:20
 			}
 		}

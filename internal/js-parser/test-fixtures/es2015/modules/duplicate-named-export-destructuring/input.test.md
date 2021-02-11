@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/modules/duplicate-named-export-destructuring/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/duplicate-named-export-destructuring/input.js 1:0-13:0
+	path: UIDPath<es2015/modules/duplicate-named-export-destructuring/input.js>
 	body: Array [
 		JSExportLocalDeclaration {
 			exportKind: "value"

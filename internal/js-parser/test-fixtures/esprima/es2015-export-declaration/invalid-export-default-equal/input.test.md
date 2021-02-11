@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
 	body: Array [
 		JSExportDefaultDeclaration {
 			loc: SourceLocation esprima/es2015-export-declaration/invalid-export-default-equal/input.js 1:0-1:16
@@ -39,11 +39,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "esprima/es2015-export-declaration/invalid-export-default-equal/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:14
+				path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
 				start: Position 1:15
 			}
 			description: Object {

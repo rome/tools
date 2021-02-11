@@ -11,8 +11,10 @@ import {
 	DiagnosticLocation,
 } from "@internal/diagnostics";
 import Consumer from "./Consumer";
-import {UnknownPath} from "@internal/path";
+import {AnyPath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
+
+export type ConsumeProtectedFunction = (...args: unknown[]) => Consumer;
 
 export type ConsumeKey = number | string;
 
@@ -52,7 +54,7 @@ type ConsumePropertyDefinitionBase = {
 };
 
 export type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase & {
-	type: "boolean" | "bigint" | "date" | "array" | "object";
+	type: "boolean" | "bigint" | "date" | "array" | "object" | "function";
 };
 
 export type ConsumePropertyStringDefinition = ConsumePropertyDefinitionBase & {
@@ -84,7 +86,7 @@ export type ConsumerOptions = {
 	handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
 	onDefinition?: ConsumerOnDefinition;
 	propertyMetadata?: ConsumePropertyMetadata;
-	filePath?: UnknownPath;
+	path: AnyPath;
 	objectPath: ConsumePath;
 	context: ConsumeContext;
 	value: unknown;

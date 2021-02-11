@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/meta-properties/new-invalid-prop/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/meta-properties/new-invalid-prop/input.js 1:0-3:1
+	path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/meta-properties/new-invalid-prop/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:10
+				path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
 				start: Position 2:6
 			}
 			description: Object {

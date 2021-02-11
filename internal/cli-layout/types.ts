@@ -5,6 +5,7 @@ import {
 } from "@internal/markup";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {Number1} from "@internal/ob1";
+import {Position} from "@internal/parser-core";
 
 export type GridPointer = {
 	char: MarkupParsedChildren;
@@ -32,3 +33,10 @@ export type GridOptions = UserGridOptions & {
 };
 
 export type GridOutputFormat = "ansi" | "html" | "none";
+
+export type GridLocator = {
+	start: Position;
+	end: Position;
+};
+
+export type GridLocators = Map<string, GridLocator>;

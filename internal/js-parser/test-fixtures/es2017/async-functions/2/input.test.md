@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2017/async-functions/2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/2/input.js 1:0-4:0
+	path: UIDPath<es2017/async-functions/2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "await* has been removed from the async functions proposal. Use Promise.all() instead."}
 			}
 			location: Object {
-				filename: "es2017/async-functions/2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:2
+				path: UIDPath<es2017/async-functions/2/input.js>
 				start: Position 2:2
 			}
 		}

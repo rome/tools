@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/numeric-separator/valid-12/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/numeric-separator/valid-12/input.js 1:0-1:6
+	path: UIDPath<experimental/numeric-separator/valid-12/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/numeric-separator/valid-12/input.js 1:0-1:6

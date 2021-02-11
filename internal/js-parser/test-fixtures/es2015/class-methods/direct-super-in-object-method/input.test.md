@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/class-methods/direct-super-in-object-method/input.js 1:0-8:0
+	path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: "es2015/class-methods/direct-super-in-object-method/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 4:12
+				path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
 				start: Position 4:13
 			}
 		}

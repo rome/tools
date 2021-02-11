@@ -13,6 +13,7 @@ import {
 } from "@internal/diagnostics";
 import {ob1Coerce0, ob1Number1} from "@internal/ob1";
 import {addPositions} from "@internal/parser-core";
+import {equalPaths} from "@internal/path";
 import CompilerContext from "./lib/CompilerContext";
 import * as signals from "./signals";
 import {
@@ -88,12 +89,12 @@ export function createSuppressionsVisitor(): AnyVisitor {
 export function matchesSuppression(
 	category: DiagnosticCategory,
 	categoryValue: undefined | string,
-	{filename, start, end}: DiagnosticLocation,
+	{path, start, end}: DiagnosticLocation,
 	suppression: DiagnosticSuppression,
 ): boolean {
 	return (
 		category === suppression.category &&
-		filename === suppression.filename &&
+		equalPaths(path, suppression.path) &&
 		start !== undefined &&
 		end !== undefined &&
 		start.line >= suppression.startLine &&

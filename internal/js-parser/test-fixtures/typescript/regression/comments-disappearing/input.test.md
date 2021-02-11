@@ -11,12 +11,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/regression/comments-disappearing/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/regression/comments-disappearing/input.ts 1:0-7:0
+	path: UIDPath<typescript/regression/comments-disappearing/input.ts>
 	syntax: Array ["ts"]
 	comments: Array [
 		CommentLine {

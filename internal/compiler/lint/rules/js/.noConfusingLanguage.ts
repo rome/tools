@@ -80,7 +80,7 @@ function check(
 
 	const lower = input.toLowerCase();
 	const tracker = new PositionTracker({
-		filename: loc.filename,
+		filename: loc.path,
 		input: lower,
 		offsetPosition: loc.start,
 	});

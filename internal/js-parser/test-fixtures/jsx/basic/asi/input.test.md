@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/asi/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/basic/asi/input.jsx 1:0-5:0
+	path: UIDPath<jsx/basic/asi/input.jsx>
 	syntax: Array ["jsx"]
 	body: Array [
 		JSFunctionDeclaration {

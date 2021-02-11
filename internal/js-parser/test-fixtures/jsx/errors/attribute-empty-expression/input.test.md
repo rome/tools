@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/attribute-empty-expression/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/errors/attribute-empty-expression/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/attribute-empty-expression/input.jsx>
 	syntax: Array ["jsx"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "JSX attribute cannot be an empty expression"}
 			}
 			location: Object {
-				filename: "jsx/errors/attribute-empty-expression/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:11
+				path: UIDPath<jsx/errors/attribute-empty-expression/input.jsx>
 				start: Position 1:9
 			}
 		}

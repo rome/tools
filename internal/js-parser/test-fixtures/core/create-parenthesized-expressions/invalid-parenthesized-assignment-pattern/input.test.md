@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js 1:0-2:0
+	path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
-				filename: "core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern/input.js>
 				start: Position 1:1
 			}
 		}

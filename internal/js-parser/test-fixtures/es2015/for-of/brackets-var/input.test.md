@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/for-of/brackets-var/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/for-of/brackets-var/input.js 1:0-2:0
+	path: UIDPath<es2015/for-of/brackets-var/input.js>
 	body: Array [
 		JSForOfStatement {
 			await: false

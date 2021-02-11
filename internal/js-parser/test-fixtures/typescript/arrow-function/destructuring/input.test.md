@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "typescript/arrow-function/destructuring/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/arrow-function/destructuring/input.ts 1:0-2:0
+	path: UIDPath<typescript/arrow-function/destructuring/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "typescript/arrow-function/destructuring/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:6
+				path: UIDPath<typescript/arrow-function/destructuring/input.ts>
 				start: Position 1:5
 			}
 			description: Object {

@@ -33,8 +33,12 @@ export function ansiFormatText(
 
 		case "filelink": {
 			if (features.hyperlinks) {
-				const {filename} = buildFileLink(attributes, grid.options);
-				return formatAnsi.hyperlink(value, `file://${filename}`);
+				const {path} = buildFileLink(attributes, grid.options);
+				if (path.isAbsolute()) {
+					return formatAnsi.hyperlink(value, `file://${path.join()}`);
+				} else {
+					return value;
+				}
 			} else {
 				return value;
 			}

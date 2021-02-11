@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
-				filename: "esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js>
 				start: Position 1:6
 			}
 		}

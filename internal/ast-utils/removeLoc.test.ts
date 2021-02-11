@@ -12,7 +12,6 @@ test(
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const jsNode: any = removeLoc(
 			parseJS({
-				path: "unknown",
 				input: "function foo() { return bar; }",
 			}),
 		);
@@ -20,7 +19,6 @@ test(
 		// rome-ignore lint/ts/noExplicitAny: future cleanup
 		const cssNode: any = removeLoc(
 			parseCSS({
-				path: "unknown",
 				input: dedent`
 					div {
 						background: red;

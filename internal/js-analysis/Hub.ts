@@ -31,7 +31,7 @@ export default class Hub {
 		});
 		this.utils = new Utils(this);
 		this.graph = new Graph();
-		this.evaluator = new Evaluator(this, ast.filename);
+		this.evaluator = new Evaluator(this, ast.path);
 		this.status = statuses.OPEN;
 	}
 

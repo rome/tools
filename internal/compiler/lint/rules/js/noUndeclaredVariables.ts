@@ -56,6 +56,7 @@ const TS_VARIABLES_SET = new Set([
 	"InstanceType",
 	"ThisType",
 	"NodeJS",
+	"NodeRequire",
 	"Iterable",
 	"IterableIterator",
 	"ArrayBufferView",

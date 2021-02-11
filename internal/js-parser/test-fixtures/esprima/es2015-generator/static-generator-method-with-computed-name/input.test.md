@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-generator/static-generator-method-with-computed-name/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-generator/static-generator-method-with-computed-name/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-generator/static-generator-method-with-computed-name/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

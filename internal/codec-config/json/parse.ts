@@ -105,7 +105,7 @@ type JSONParserTypes = {
 
 type JSONParser = ParserCore<JSONParserTypes>;
 
-export const createJSONParser = createParser<JSONParserTypes>({
+export const jsonParser = createParser<JSONParserTypes>({
 	diagnosticLanguage: "json",
 	ignoreWhitespaceTokens: true,
 	retainCarriageReturn: true,
@@ -794,13 +794,14 @@ export function parseJSONExtra(
 	opts: ParserOptions,
 	type: ConfigType,
 ): ConfigParserResult {
-	const parser = createJSONParser(
+	const parser = jsonParser.create(
 		opts,
 		{
 			type,
 		},
 		{diagnosticLanguage: type},
 	);
+
 	const categoryValue = parser.options.consumeDiagnosticCategoryValue ?? "json";
 
 	let expectSyntaxError = false;
@@ -889,7 +890,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 			if (info === undefined) {
 				return {
 					language: parser.language,
-					filename: parser.filename,
+					path: parser.path,
 				};
 			}
 
@@ -905,7 +906,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 			}
 
 			let loc: SourceLocation = {
-				filename: parser.filename,
+				path: parser.path,
 				start,
 				end,
 			};

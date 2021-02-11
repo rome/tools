@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/modules/import-invalid-keyword-flow/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation es2015/modules/import-invalid-keyword-flow/input.js 1:0-2:0
+	path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/modules/import-invalid-keyword-flow/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:16
+				path: UIDPath<es2015/modules/import-invalid-keyword-flow/input.js>
 				start: Position 1:9
 			}
 			description: Object {

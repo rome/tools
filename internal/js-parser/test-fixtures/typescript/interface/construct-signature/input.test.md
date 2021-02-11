@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/interface/construct-signature/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/interface/construct-signature/input.ts 1:0-4:0
+	path: UIDPath<typescript/interface/construct-signature/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		TSInterfaceDeclaration {

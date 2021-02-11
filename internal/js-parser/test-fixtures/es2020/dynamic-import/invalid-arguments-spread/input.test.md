@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2020/dynamic-import/invalid-arguments-spread/input.js 1:0-2:0
+	path: UIDPath<es2020/dynamic-import/invalid-arguments-spread/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2020/dynamic-import/invalid-arguments-spread/input.js 1:0-1:14
@@ -46,11 +46,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Spread is not allowed in import()"}
 			}
 			location: Object {
-				filename: "es2020/dynamic-import/invalid-arguments-spread/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:13
+				path: UIDPath<es2020/dynamic-import/invalid-arguments-spread/input.js>
 				start: Position 1:7
 			}
 		}

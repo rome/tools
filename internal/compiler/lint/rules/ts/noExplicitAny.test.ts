@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {createRelativeFilePath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
 
@@ -34,7 +35,7 @@ test(
 					"function greet(param: Array<string>): string { return param; };greet();",
 					"function greet(param: Array<string>): Array<string> { return param; };greet();",
 				],
-				filename: "file.ts",
+				path: createRelativeFilePath("file.ts"),
 				category: "lint/ts/noExplicitAny",
 			},
 		);

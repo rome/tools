@@ -1,21 +1,22 @@
 import {createDiagnosticsCategory} from "../index";
 import {markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../../helpers";
+import {SPDXLicenseParserExceptions} from "@internal/codec-spdx-license";
+import {DiagnosticAdvice} from "@internal/diagnostics/types";
 
 // @internal/codec-spdx-license
 
-type UnknownLicense = {
+type UnknownLicenseArg = {
 	id: string;
 	knownLicenses: string[];
-	packageName: string;
-	packageVersion: string;
+	exceptions?: SPDXLicenseParserExceptions;
 };
 
-type UnknowLicenseInVersion = {
+type UnknowLicensePresentUnsatisfiedExceptionArg = {
 	id: string;
 	packageVersionInConfig: string;
-	newPackageVersion: string;
 	packageName: string;
+	packageVersion: string;
 };
 
 export const spdx = createDiagnosticsCategory({
@@ -23,40 +24,46 @@ export const spdx = createDiagnosticsCategory({
 		{
 			id,
 			knownLicenses,
-			packageName,
-			packageVersion,
-		}: UnknownLicense,
-	) => ({
-		message: markup`Unknown license <emphasis>${id}</emphasis>`,
-		advice: [
+			exceptions,
+		}: UnknownLicenseArg,
+	) => {
+		const advice: DiagnosticAdvice = [
 			...buildSuggestionAdvice(id, knownLicenses, {ignoreCase: true}),
 			{
 				type: "log",
 				category: "info",
 				text: markup`The <emphasis>SPDX</emphasis> registry is used to ensure valid and legal licenses. See <hyperlink target="https://spdx.org/licenses/" /> for more information.`,
 			},
-			{
+		];
+
+		if (exceptions !== undefined) {
+			advice.push({
 				type: "action",
 				command: "config set",
 				noun: markup`Add this license to the exceptions`,
 				instruction: markup`To automatically add an exception for this license, run:`,
 				args: [
 					`dependencies.exceptions.invalidLicenses.${id}`,
-					`${packageName}@${packageVersion}`,
+					`${exceptions.packageName}@${exceptions.packageVersion}`,
 				],
-			},
-		],
-	}),
+			});
+		}
 
-	UNKNOWN_LICENSE_IN_VERSION: (
+		return {
+			message: markup`Unknown license <emphasis>${id}</emphasis>`,
+			advice,
+		};
+	},
+
+	UNKNOWN_LICENSE_PRESENT_UNSATISFIED_EXCEPTION: (
 		{
 			id,
-			packageName,
 			packageVersionInConfig,
-			newPackageVersion,
-		}: UnknowLicenseInVersion,
+			packageName,
+			packageVersion,
+		}: UnknowLicensePresentUnsatisfiedExceptionArg,
 	) => ({
-		message: markup`The dependency <emphasis>${packageName}@${newPackageVersion}</emphasis> doesn't satisfy the version inside your configuration file <emphasis>(${packageVersionInConfig})</emphasis>.`,
+		message: markup`The dependency <emphasis>${packageName}@${packageVersion}</emphasis> doesn't satisfy the version inside your configuration file <emphasis>(${packageVersionInConfig})</emphasis>.`,
 		advice: [
 			{
 				type: "log",
@@ -70,7 +77,7 @@ export const spdx = createDiagnosticsCategory({
 				command: "config push",
 				args: [
 					`dependencies.exceptions.invalidLicenses.${id}`,
-					`${packageName}@${newPackageVersion}`,
+					`${packageName}@${packageVersion}`,
 				],
 			},
 		],

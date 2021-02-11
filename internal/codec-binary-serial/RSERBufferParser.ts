@@ -1,29 +1,36 @@
 import {
-	AnyRSERFilePathMap,
+	AnyRSERPathMap,
 	IntSize,
 	RSERArray,
 	RSERArrayBufferView,
 	RSERMap,
+	RSERMixedPathMap,
 	RSERObject,
 	RSERSet,
 	RSERValue,
 } from "./types";
 import {
-	FILE_CODES,
+	TYPED_PATH_CODES,
 	VALUE_CODES,
 	VERSION,
 	arrayBufferViewCodeToInstance,
 	errorCodeToInstance,
-	filePathFromCode,
-	filePathMapFromCode,
-	filePathSetFromCode,
 	formatCode,
+	pathFromCode,
+	pathMapFromCode,
+	pathSetFromCode,
 	validateArrayBufferViewCode,
 	validateErrorCode,
 	validateFileCode,
 	validateValueCode,
 } from "./constants";
-import {AnyFilePath, AnyFilePathSet} from "@internal/path";
+import {
+	AnyPath,
+	MixedPathMap,
+	MixedPathSet,
+	PathSet,
+	isPath,
+} from "@internal/path";
 import {
 	ErrorFrames,
 	StructuredNodeSystemErrorProperties,
@@ -45,12 +52,18 @@ export default class RSERBufferParser {
 		this.bytes = new Uint8Array(view.buffer, view.byteOffset, view.byteLength);
 		this.readOffset = 0;
 		this.references = new ExtendedMap("references");
+
+		this.peekedCode = undefined;
+		this.peekedCodeOffset = undefined;
 	}
 
 	private references: ExtendedMap<number, RSERValue>;
 	private view: DataView;
 	private bytes: Uint8Array;
 	public readOffset: number;
+
+	private peekedCode: undefined | number;
+	private peekedCodeOffset: undefined | number;
 
 	public getReadableSize(): number {
 		return this.view.byteLength - this.readOffset;
@@ -117,7 +130,17 @@ export default class RSERBufferParser {
 	}
 
 	private peekCode(): VALUE_CODES {
-		return validateValueCode(this.peekInt(1));
+		if (
+			this.peekedCode !== undefined &&
+			this.peekedCodeOffset === this.readOffset
+		) {
+			return this.peekedCode;
+		}
+
+		const code = validateValueCode(this.peekInt(1));
+		this.peekedCode = code;
+		this.peekedCodeOffset = this.readOffset;
+		return code;
 	}
 
 	private readInt(bytes: 1): number
@@ -203,18 +226,36 @@ export default class RSERBufferParser {
 		return undefined;
 	}
 
+	private maybeDecodeReference(): undefined | RSERValue {
+		const code = this.peekCode();
+		if (code === VALUE_CODES.REFERENCE) {
+			return this.decodeReference();
+		} else if (code === VALUE_CODES.DECLARE_REFERENCE) {
+			return this.decodeDeclareReference();
+		} else {
+			return undefined;
+		}
+	}
+
 	public decodeDeclareReference(): RSERValue {
 		this.expectCode(VALUE_CODES.DECLARE_REFERENCE);
 		const id = this.decodeNumber();
 		const code = this.peekCode();
 
 		switch (code) {
-			case VALUE_CODES.FILE_PATH_MAP: {
+			case VALUE_CODES.PATH_MAP: {
 				this.readOffset++;
-				const code = this.decodeFilePathCode();
-				const map = filePathMapFromCode(code);
+				const code = this.decodePathCode();
+				const map = pathMapFromCode(code);
 				this.references.set(id, map);
-				return this.decodeFilePathMapValue(map);
+				return this.decodePathMapValue(map);
+			}
+
+			case VALUE_CODES.MIXED_PATH_MAP: {
+				this.readOffset++;
+				const map: RSERMixedPathMap = new MixedPathMap();
+				this.references.set(id, map);
+				return this.decodeMixedPathMapValue(map);
 			}
 
 			case VALUE_CODES.SET: {
@@ -278,8 +319,8 @@ export default class RSERBufferParser {
 	// These are values that can hold other values
 	private decodeReferentialValue(code: VALUE_CODES): undefined | RSERValue {
 		switch (code) {
-			case VALUE_CODES.FILE_PATH_MAP:
-				return this.decodeFilePathMap();
+			case VALUE_CODES.PATH_MAP:
+				return this.decodePathMap();
 
 			case VALUE_CODES.SET:
 				return this.decodeSet();
@@ -342,11 +383,17 @@ export default class RSERBufferParser {
 			case VALUE_CODES.NAN:
 				return this.decodeNaN();
 
-			case VALUE_CODES.FILE_PATH:
-				return this.decodeFilePath();
+			case VALUE_CODES.PATH:
+				return this.decodePath();
 
-			case VALUE_CODES.FILE_PATH_SET:
-				return this.decodeFilePathSet();
+			case VALUE_CODES.PATH_SET:
+				return this.decodePathSet();
+
+			case VALUE_CODES.MIXED_PATH_SET:
+				return this.decodeMixedPathSet();
+
+			case VALUE_CODES.MIXED_PATH_MAP:
+				return this.decodeMixedPathMap();
 
 			case VALUE_CODES.ERROR:
 				return this.decodeError();
@@ -392,7 +439,7 @@ export default class RSERBufferParser {
 	private decodeSourceLocation(): SourceLocation {
 		this.expectCode(VALUE_CODES.SOURCE_LOCATION);
 		return {
-			filename: this.decodeStringOrVoid(),
+			path: this.decodePath(),
 			identifierName: this.decodeStringOrVoid(),
 			start: this.decodePositionValue(),
 			end: this.decodePositionValue(),
@@ -571,25 +618,36 @@ export default class RSERBufferParser {
 		return new Date(time);
 	}
 
-	private decodeFilePathCode(): FILE_CODES {
+	private decodePathCode(): TYPED_PATH_CODES {
 		return validateFileCode(this.readInt(1));
 	}
 
-	private decodeFilePath(): AnyFilePath {
-		this.expectCode(VALUE_CODES.FILE_PATH);
-		const code = this.decodeFilePathCode();
+	private decodePath(): AnyPath {
+		const ref = this.maybeDecodeReference();
+		if (ref !== undefined) {
+			if (isPath(ref)) {
+				return ref;
+			} else {
+				throw this.unexpected(
+					`Expected path for reference but got a type of ${typeof ref}`,
+				);
+			}
+		}
+
+		this.expectCode(VALUE_CODES.PATH);
+		const code = this.decodePathCode();
 		const str = this.readString();
-		return filePathFromCode(code, str);
+		return pathFromCode(code, str);
 	}
 
-	private decodeFilePathMap(): AnyRSERFilePathMap {
-		this.expectCode(VALUE_CODES.FILE_PATH_MAP);
-		const code = this.decodeFilePathCode();
-		const map = filePathMapFromCode(code);
-		return this.decodeFilePathMapValue(map);
+	private decodePathMap(): AnyRSERPathMap {
+		this.expectCode(VALUE_CODES.PATH_MAP);
+		const code = this.decodePathCode();
+		const map = pathMapFromCode(code);
+		return this.decodePathMapValue(map);
 	}
 
-	private decodeFilePathMapValue(map: AnyRSERFilePathMap): AnyRSERFilePathMap {
+	private decodePathMapValue(map: AnyRSERPathMap): AnyRSERPathMap {
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {
 			const str = this.readString();
@@ -599,11 +657,39 @@ export default class RSERBufferParser {
 		return map;
 	}
 
-	private decodeFilePathSet(): AnyFilePathSet {
-		this.expectCode(VALUE_CODES.FILE_PATH_SET);
+	private decodeMixedPathSet(): MixedPathSet {
+		this.expectCode(VALUE_CODES.MIXED_PATH_SET);
+		const set = new MixedPathSet();
 
-		const code = this.decodeFilePathCode();
-		const set = filePathSetFromCode(code);
+		const size = this.decodeNumber();
+		for (let i = 0; i < size; ++i) {
+			set.add(this.decodePath());
+		}
+
+		return set;
+	}
+
+	private decodeMixedPathMap(): RSERMixedPathMap {
+		this.expectCode(VALUE_CODES.MIXED_PATH_MAP);
+		const map: RSERMixedPathMap = new MixedPathMap();
+		return this.decodeMixedPathMapValue(map);
+	}
+
+	private decodeMixedPathMapValue(map: RSERMixedPathMap): RSERMixedPathMap {
+		const size = this.decodeNumber();
+		for (let i = 0; i < size; ++i) {
+			const path = this.decodePath();
+			const value = this.decodeValue();
+			map.set(path, value);
+		}
+		return map;
+	}
+
+	private decodePathSet(): PathSet {
+		this.expectCode(VALUE_CODES.PATH_SET);
+
+		const code = this.decodePathCode();
+		const set = pathSetFromCode(code);
 
 		const size = this.decodeNumber();
 		for (let i = 0; i < size; ++i) {
@@ -663,22 +749,24 @@ export default class RSERBufferParser {
 	}
 
 	private decodeStringOrVoid(): string | undefined {
+		const ref = this.maybeDecodeReference();
+		if (ref !== undefined) {
+			if (typeof ref === "string") {
+				return ref;
+			} else {
+				throw this.unexpected(
+					`Expected string for reference but got a type of ${typeof ref}`,
+				);
+			}
+		}
+
 		const code = this.peekCode();
 		switch (code) {
 			case VALUE_CODES.UNDEFINED:
+				return this.decodeUndefined();
+
 			case VALUE_CODES.STRING:
-			case VALUE_CODES.REFERENCE:
-			case VALUE_CODES.DECLARE_REFERENCE: {
-				const value = this.decodeValue();
-
-				if (typeof value !== "string" && typeof value !== "undefined") {
-					throw this.unexpected(
-						`Expected string or undefined but got a type of ${typeof value}`,
-					);
-				}
-
-				return value;
-			}
+				return this.decodeString();
 
 			default:
 				throw this.unexpected(

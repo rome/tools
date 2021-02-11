@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-methods/async-generator/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-methods/async-generator/input.js 1:0-14:0
+	path: UIDPath<experimental/class-private-methods/async-generator/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

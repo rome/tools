@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "esprima/invalid-syntax/migrated_0140/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0140/input.js 1:0-2:0
+	path: UIDPath<esprima/invalid-syntax/migrated_0140/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0140/input.js 1:0-1:8
@@ -47,11 +47,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "A constant must have an initializer"}
 			}
 			location: Object {
-				filename: "esprima/invalid-syntax/migrated_0140/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:7
+				path: UIDPath<esprima/invalid-syntax/migrated_0140/input.js>
 				start: Position 1:6
 			}
 		}

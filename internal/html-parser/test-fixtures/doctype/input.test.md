@@ -11,9 +11,9 @@ HTMLRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "doctype/input.html"
 	integrity: undefined
 	loc: SourceLocation doctype/input.html 1:0-5:2
+	path: UIDPath<doctype/input.html>
 	body: Array [
 		HTMLDoctypeTag {
 			value: "html"

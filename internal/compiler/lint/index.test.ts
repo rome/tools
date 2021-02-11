@@ -13,7 +13,6 @@ function createLintTransformOptions(
 		suppressionExplanation: "",
 		sourceText,
 		ast: parseJS({
-			path: "unknown",
 			input: sourceText,
 		}),
 		options: {},
@@ -32,7 +31,6 @@ function createLintTransformSuppressions(
 		suppressionExplanation: "test suppression",
 		sourceText,
 		ast: parseJS({
-			path: "unknown",
 			input: sourceText,
 		}),
 		options: {
@@ -123,7 +121,7 @@ test(
 				}),
 			),
 		);
-		t.is(res.src, code);
+		t.is(res.formatted, code);
 	},
 );
 
@@ -152,7 +150,7 @@ test(
 		);
 
 		t.true(
-			res.src.includes(
+			res.formatted.includes(
 				"rome-ignore lint/js/noVar lint/js/noUnusedVariables: suppressed via --review",
 			),
 		);

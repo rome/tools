@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/wrong-closing-tag/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
 	syntax: Array ["jsx"]
 	body: Array [
 		JSExpressionStatement {
@@ -38,11 +38,11 @@ JSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "jsx/errors/wrong-closing-tag/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
 				start: Position 1:1
 			}
 			description: Object {

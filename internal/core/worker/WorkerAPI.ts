@@ -20,7 +20,6 @@ import {
 	TransformStageName,
 	analyzeDependencies,
 	compile,
-	lint,
 	signals,
 } from "@internal/compiler";
 import {
@@ -33,12 +32,10 @@ import {
 	WorkerLintResult,
 	WorkerParseOptions,
 	WorkerUpdateInlineSnapshotResult,
-} from "../common/bridges/WorkerBridge";
+} from "./types";
 import Logger from "../common/utils/Logger";
 import * as jsAnalysis from "@internal/js-analysis";
 import {ModuleSignature} from "@internal/js-analysis";
-import {ExtensionLintResult} from "../common/file-handlers/types";
-import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
 import {
 	AnalyzeDependencyResult,
 	UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
@@ -52,19 +49,7 @@ import {getNodeReferenceParts, valueToNode} from "@internal/js-ast-utils";
 import {markup} from "@internal/markup";
 import {RecoverySaveFile} from "../server/fs/RecoveryStore";
 import WorkerCache, {createCacheEntryLoader} from "./WorkerCache";
-
-// Some Windows git repos will automatically convert Unix line endings to Windows
-// This retains the line endings for the formatted code if they were present in the source
-function normalizeFormattedLineEndings(
-	sourceText: string,
-	formatted: string,
-): string {
-	if (sourceText.includes("\r")) {
-		return formatted.replace(/\n/g, "\r\n");
-	} else {
-		return formatted;
-	}
-}
+import {uncachedFormat, uncachedLint} from "./workerLint";
 
 const analyzeDependenciesCacheLoader = createCacheEntryLoader<AnalyzeDependencyResult>(
 	"analyzeDependencies",
@@ -97,7 +82,7 @@ export default class WorkerAPI {
 	private logger: Logger;
 	private cache: WorkerCache;
 
-	private interceptDiagnostics<T extends {
+	public interceptDiagnostics<T extends {
 		diagnostics: Diagnostics;
 	}>(
 		val: T,
@@ -446,79 +431,16 @@ export default class WorkerAPI {
 
 	public async format(
 		ref: FileReference,
-		formatOptions: WorkerFormatOptions,
+		options: WorkerFormatOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<undefined | WorkerFormatResult> {
-		const res = await this._format(ref, formatOptions, parseOptions);
-		if (res === undefined) {
-			return undefined;
-		} else {
-			return {
-				formatted: normalizeFormattedLineEndings(res.sourceText, res.formatted),
-				original: res.sourceText,
-				diagnostics: res.diagnostics,
-				suppressions: res.suppressions,
-			};
-		}
-	}
-
-	private async _format(
-		ref: FileReference,
-		formatOptions: WorkerFormatOptions,
-		parseOptions: WorkerParseOptions,
-	): Promise<undefined | ExtensionLintResult> {
-		const project = this.worker.getProject(ref.project);
-		this.logger.info(markup`Formatting: ${ref.real}`);
-
-		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
-
-		if (
-			!(formatOptions.forceFormat ||
-			(handler.capabilities.format && project.config.format.enabled))
-		) {
-			return;
-		}
-
-		const {customFormat} = handler;
-		if (customFormat !== undefined) {
-			const [integrity, stats] = await Promise.all([
-				this.cache.getIntegrity(ref),
-				this.cache.getFile(ref).then((file) => file.getStats()),
-			]);
-
-			return await customFormat({
-				integrity,
-				mtimeNs: stats.mtimeNs,
-				file: ref,
-				project,
-				worker: this.worker,
-				parseOptions,
-			});
-		}
-
-		const {ast, mtimeNs, sourceText, astModifiedFromSource} = await this.worker.parse(
+		const res = await uncachedFormat({
+			worker: this.worker,
 			ref,
+			options,
 			parseOptions,
-		);
-
-		const out = formatAST(
-			ast,
-			{
-				...formatOptions,
-				projectConfig: project.config,
-			},
-		);
-
-		return this.interceptDiagnostics(
-			{
-				mtimeNs,
-				formatted: out.code,
-				sourceText,
-				suppressions: [],
-				diagnostics: ast.diagnostics,
-			},
-			{astModifiedFromSource},
-		);
+		});
+		return res?.result;
 	}
 
 	public async lint(
@@ -541,180 +463,13 @@ export default class WorkerAPI {
 			return cached;
 		}
 
-		const res = await this.uncachedLint(ref, options, parseOptions);
+		const res = await uncachedLint({
+			worker: this.worker,
+			ref,
+			options,
+			parseOptions,
+		});
 		cacheEntry.update(res);
 		return res;
-	}
-
-	private async uncachedLint(
-		ref: FileReference,
-		options: WorkerLintOptions,
-		parseOptions: WorkerParseOptions,
-	): Promise<WorkerLintResult> {
-		const project = this.worker.getProject(ref.project);
-		this.logger.info(markup`Linting: ${ref.real}`);
-
-		// Get the extension handler
-		const {handler} = getFileHandlerFromPathAssert(ref.real, project.config);
-
-		if (!(handler.capabilities.lint || handler.capabilities.format)) {
-			return {
-				save: undefined,
-				diagnostics: [],
-				suppressions: [],
-			};
-		}
-
-		// Catch any diagnostics, in the case of syntax errors etc
-		const res = await catchDiagnostics(
-			() => {
-				if (handler.capabilities.lint) {
-					return this.compilerLint(ref, options, parseOptions);
-				} else {
-					return this._format(ref, {}, parseOptions);
-				}
-			},
-			{
-				category: "lint",
-				message: "Caught by WorkerAPI.lint",
-			},
-		);
-
-		// These are fatal diagnostics
-		if (res.diagnostics !== undefined) {
-			return {
-				save: undefined,
-				suppressions: [],
-				diagnostics: res.diagnostics,
-			};
-		}
-
-		// `format` could have return undefined
-		if (res.value === undefined) {
-			return {
-				save: undefined,
-				diagnostics: [],
-				suppressions: [],
-			};
-		}
-
-		// These are normal diagnostics returned from the linter
-		const {
-			sourceText,
-			diagnostics,
-			suppressions,
-			mtimeNs,
-		}: ExtensionLintResult = res.value;
-
-		const formatted = normalizeFormattedLineEndings(
-			sourceText,
-			res.value.formatted,
-		);
-
-		// If the file has pending fixes
-		const needsSave = project.config.format.enabled && formatted !== sourceText;
-
-		// Autofix if necessary
-		if (options.save && needsSave) {
-			return {
-				save: {
-					type: "WRITE",
-					mtimeNs,
-					content: formatted,
-				},
-				diagnostics,
-				suppressions,
-			};
-		}
-
-		// If there's no pending fix then no need for diagnostics
-		if (!needsSave) {
-			return {
-				save: undefined,
-				diagnostics,
-				suppressions,
-			};
-		}
-
-		// Add pending autofix diagnostic
-		return {
-			save: undefined,
-			suppressions,
-			diagnostics: [
-				...diagnostics,
-				{
-					tags: {fixable: true},
-					location: {
-						filename: ref.uid,
-					},
-					description: descriptions.LINT.PENDING_FIXES(
-						ref.relative.join(),
-						handler.language,
-						sourceText,
-						formatted,
-					),
-				},
-			],
-		};
-	}
-
-	private async compilerLint(
-		ref: FileReference,
-		options: WorkerLintOptions,
-		parseOptions: WorkerParseOptions,
-	): Promise<ExtensionLintResult> {
-		const {ast, mtimeNs, sourceText, project, astModifiedFromSource} = await this.worker.parse(
-			ref,
-			parseOptions,
-		);
-
-		// Run the compiler in lint-mode which is where all the rules are actually ran
-		const res = await lint({
-			applySafeFixes: options.applySafeFixes,
-			suppressionExplanation: options.suppressionExplanation,
-			ref,
-			options: {
-				lint: options.compilerOptions,
-			},
-			ast,
-			project,
-			sourceText,
-		});
-
-		// Extract lint diagnostics
-		let {diagnostics} = res;
-
-		// Only enable typechecking if enabled in .romeconfig
-		let typeCheckingEnabled = project.config.typeCheck.enabled;
-		if (project.config.typeCheck.libs.has(ref.real)) {
-			// don't typecheck lib files
-			typeCheckingEnabled = false;
-		}
-
-		// Run type checking if necessary
-		if (typeCheckingEnabled && ast.type === "JSRoot") {
-			const typeCheckProvider = await this.worker.getTypeCheckProvider(
-				ref.project,
-				options.prefetchedModuleSignatures,
-				parseOptions,
-			);
-			const typeDiagnostics = await jsAnalysis.check({
-				ast,
-				provider: typeCheckProvider,
-				project,
-			});
-			diagnostics = [...diagnostics, ...typeDiagnostics];
-		}
-
-		return this.interceptDiagnostics(
-			{
-				suppressions: res.suppressions,
-				diagnostics,
-				sourceText,
-				formatted: res.src,
-				mtimeNs,
-			},
-			{astModifiedFromSource},
-		);
 	}
 }

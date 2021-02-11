@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/function-sent/disabled-inside-function/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/function-sent/disabled-inside-function/input.js 1:0-4:0
+	path: UIDPath<experimental/function-sent/disabled-inside-function/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "experimental/function-sent/disabled-inside-function/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:18
+				path: UIDPath<experimental/function-sent/disabled-inside-function/input.js>
 				start: Position 2:17
 			}
 			description: Object {

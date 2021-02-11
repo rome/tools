@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "es2015/uncategorised/234/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/234/input.js 1:0-1:38
+	path: UIDPath<es2015/uncategorised/234/input.js>
 	directives: Array [
 		JSDirective {
 			value: "use strict"

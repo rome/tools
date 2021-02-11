@@ -21,10 +21,21 @@ import {
 	getErrorStructure,
 } from "@internal/v8";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
-import {diagnosticLocationToMarkupFilelink, joinCategoryName} from "./helpers";
+import {
+	appendAdviceToDiagnostic,
+	diagnosticLocationToMarkupFilelink,
+	joinCategoryName,
+	prependAdviceToDiagnostic,
+} from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
 import {StaticMarkup, isEmptyMarkup, markup} from "@internal/markup";
-import {createSingleDiagnosticError, isUserDiagnosticError} from "./errors";
+import {
+	DiagnosticsError,
+	createSingleDiagnosticError,
+	getDiagnosticsFromError,
+	isUserDiagnosticError,
+} from "./errors";
+import {AnyPath, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {
 	if (Array.isArray(val)) {
@@ -181,7 +192,8 @@ export type DeriveErrorDiagnosticOptions = {
 	tags?: Omit<DiagnosticTags, "internal"> & {
 		internal?: false;
 	};
-	filename?: string;
+	path?: AnyPath;
+	cleanRelativeError?: Error;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 	stackAdviceOptions?: DeriveErrorStackAdviceOptions;
 };
@@ -193,26 +205,42 @@ export function provideDiagnosticAdviceForError(
 	if (isUserDiagnosticError(error)) {
 		return error;
 	} else {
-		let diag = deriveDiagnosticFromError(error, opts);
+		let diagnostics = getDiagnosticsFromError(error);
 
-		if (opts.description.message !== undefined) {
-			diag = {
-				...diag,
-				description: {
-					...diag.description,
-					advice: [
+		if (diagnostics === undefined) {
+			let diag = deriveDiagnosticFromError(error, opts);
+
+			if (opts.description.message !== undefined) {
+				diag = prependAdviceToDiagnostic(
+					diag,
+					[
 						{
 							type: "log",
 							category: "none",
 							text: markup`${getErrorStructure(error).message}`,
 						},
-						...(diag.description.advice || []),
 					],
-				},
-			};
-		}
+				);
+			}
 
-		return createSingleDiagnosticError(diag);
+			return createSingleDiagnosticError(diag);
+		} else {
+			return new DiagnosticsError(
+				error.message,
+				diagnostics.map((diag) => {
+					return appendAdviceToDiagnostic(
+						diag,
+						[
+							{
+								type: "log",
+								category: "info",
+								text: markup`${getErrorStructure(error).message}`,
+							},
+						],
+					);
+				}),
+			);
+		}
 	}
 }
 
@@ -220,25 +248,40 @@ export function deriveDiagnosticFromErrorStructure(
 	struct: Partial<StructuredError>,
 	opts: DeriveErrorDiagnosticOptions,
 ): Diagnostic {
-	const {filename} = opts;
-
-	let targetFilename: undefined | string = filename;
+	let targetPath: AnyPath = opts.path ?? UNKNOWN_PATH;
 	let targetLoc = undefined;
 
 	let {frames = [], message = "Unknown error"} = struct;
 
-	const {cleanFrames} = opts;
-	if (cleanFrames !== undefined && frames) {
+	const {cleanFrames, cleanRelativeError} = opts;
+	if (cleanFrames !== undefined) {
 		frames = cleanFrames(frames);
+	}
+	if (cleanRelativeError !== undefined) {
+		// We consider the last two frames as possible candidates to allow for easy construction
+		const refFrames = getErrorStructure(cleanRelativeError).frames.slice(0, 2);
+
+		frameLoop: for (let i = 0; i < frames.length; i++) {
+			const frame = frames[i];
+			for (const refFrame of refFrames) {
+				if (
+					equalPaths(frame.path, refFrame.path) &&
+					frame.lineNumber === refFrame.lineNumber
+				) {
+					frames = frames.slice(0, i - 1);
+					break frameLoop;
+				}
+			}
+		}
 	}
 
 	// Point the target to the closest frame with a filename
 	for (const frame of frames) {
-		if (frame.filename === undefined) {
+		if (frame.path === undefined) {
 			continue;
 		}
 
-		targetFilename = frame.filename;
+		targetPath = frame.path;
 		targetLoc = getDiagnosticLocationFromErrorFrame(frame);
 		break;
 	}
@@ -258,7 +301,7 @@ export function deriveDiagnosticFromErrorStructure(
 			advice: [...advice, ...(opts.description?.advice || [])],
 		},
 		location: {
-			filename: targetFilename,
+			path: targetPath,
 			start: targetLoc === undefined ? undefined : targetLoc.start,
 			end: targetLoc === undefined ? undefined : targetLoc.end,
 		},
@@ -279,12 +322,12 @@ export function deriveDiagnosticFromError(
 
 export type DeriveErrorStackAdviceOptions = {
 	title?: StaticMarkup;
-	importantFilenames?: string[];
+	importantPaths?: MixedPathSet;
 };
 
 export function getErrorStackAdvice(
 	error: Partial<StructuredError>,
-	{title, importantFilenames}: DeriveErrorStackAdviceOptions = {},
+	{title, importantPaths}: DeriveErrorStackAdviceOptions = {},
 ): DiagnosticAdvice {
 	const advice: DiagnosticAdvice = [];
 	const {frames = [], stack} = error;
@@ -337,7 +380,7 @@ export function getErrorStackAdvice(
 				typeName,
 				functionName,
 				methodName,
-				filename,
+				path,
 				lineNumber,
 				columnNumber,
 				isEval,
@@ -378,7 +421,7 @@ export function getErrorStackAdvice(
 				prefix,
 				object,
 				property,
-				filename,
+				path,
 				line: lineNumber,
 				column: columnNumber,
 			};
@@ -388,7 +431,7 @@ export function getErrorStackAdvice(
 			type: "stacktrace",
 			title,
 			frames: adviceFrames,
-			importantFilenames,
+			importantPaths,
 		});
 	}
 

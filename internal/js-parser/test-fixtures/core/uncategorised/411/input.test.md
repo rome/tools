@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "core/uncategorised/411/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/uncategorised/411/input.js 1:0-2:0
+	path: UIDPath<core/uncategorised/411/input.js>
 	body: Array [
 		JSContinueStatement {
 			label: undefined
@@ -34,11 +34,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "No loop label found"}
 			}
 			location: Object {
-				filename: "core/uncategorised/411/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:0
+				path: UIDPath<core/uncategorised/411/input.js>
 				start: Position 1:0
 			}
 		}

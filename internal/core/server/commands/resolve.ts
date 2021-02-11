@@ -8,7 +8,7 @@
 import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {createUnknownPath} from "@internal/path";
+import {createAnyPath} from "@internal/path";
 import {markup} from "@internal/markup";
 
 export default createServerCommand({
@@ -43,7 +43,7 @@ export default createServerCommand({
 		const query = {
 			...req.getResolverOptionsFromFlags(),
 			origin,
-			source: createUnknownPath(relative),
+			source: createAnyPath(relative),
 		};
 
 		const resolved = await server.resolver.resolveEntryAssert(

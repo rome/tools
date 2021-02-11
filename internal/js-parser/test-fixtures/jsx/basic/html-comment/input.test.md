@@ -12,7 +12,6 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "jsx/basic/html-comment/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
@@ -20,6 +19,7 @@ JSRoot {
 	trailingComments: Array []
 	innerComments: Array ["0"]
 	loc: SourceLocation jsx/basic/html-comment/input.jsx 1:0-2:0
+	path: UIDPath<jsx/basic/html-comment/input.jsx>
 	syntax: Array ["jsx"]
 	comments: Array [
 		CommentLine {

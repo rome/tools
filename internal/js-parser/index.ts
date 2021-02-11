@@ -14,14 +14,14 @@ import {
 import {PublicToken, Token} from "./tokenizer/index";
 import {types as tokTypes} from "./tokenizer/types";
 import "./tokenizer/context";
-import {createJSParser, createMeta, parseRoot} from "./parser";
+import {createMeta, jsParser, parseRoot} from "./parser";
 
 export {default as CommentsConsumer} from "./CommentsConsumer";
 
 export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 	const options = normalizeOptions(userOptions);
 	const meta = createMeta(options);
-	const parser = createJSParser(options, meta);
+	const parser = jsParser.create(options, meta);
 	return parseRoot(parser);
 }
 
@@ -31,7 +31,7 @@ export function tokenizeJS(userOptions: JSParserUserOptions): PublicToken[] {
 		tokens: true,
 	};
 	const meta = createMeta(options);
-	const parser = createJSParser(options, meta);
+	const parser = jsParser.create(options, meta);
 	parseRoot(parser);
 
 	let tokens: PublicToken[] = [];
@@ -39,8 +39,8 @@ export function tokenizeJS(userOptions: JSParserUserOptions): PublicToken[] {
 	for (const token of parser.state.tokens) {
 		tokens.push({
 			type: token.type.label,
-			start: parser.getIndexFromPosition(token.loc.start, token.loc.filename),
-			end: parser.getIndexFromPosition(token.loc.end, token.loc.filename),
+			start: parser.getIndexFromPosition(token.loc.start, token.loc.path),
+			end: parser.getIndexFromPosition(token.loc.end, token.loc.path),
 		});
 	}
 

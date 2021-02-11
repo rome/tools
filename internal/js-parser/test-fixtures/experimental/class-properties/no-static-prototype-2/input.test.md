@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-properties/no-static-prototype-2/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-properties/no-static-prototype-2/input.js 1:0-5:0
+	path: UIDPath<experimental/class-properties/no-static-prototype-2/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
 			}
 			location: Object {
-				filename: "experimental/class-properties/no-static-prototype-2/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 2:18
+				path: UIDPath<experimental/class-properties/no-static-prototype-2/input.js>
 				start: Position 2:9
 			}
 		}

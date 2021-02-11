@@ -114,7 +114,7 @@ const EMPTY_POS: Position = {
 	column: ob1Number0,
 };
 
-export const createJSParser = createParser<JSParserTypes>({
+export const jsParser = createParser<JSParserTypes>({
 	diagnosticLanguage: "js",
 	getInitialState(): State {
 		return {
@@ -297,7 +297,7 @@ export function createToken(parser: JSParser, state: State): Token {
 	const token: Token = {
 		type: state.tokenType,
 		loc: {
-			filename: parser.filename,
+			path: parser.path,
 			start: state.startPos,
 			end: state.endPos,
 		},
@@ -470,8 +470,8 @@ export function canInsertSemicolon(parser: JSParser): boolean {
 export function hasPrecedingLineBreak(parser: JSParser): boolean {
 	return lineBreak.test(
 		parser.getRawInput(
-			parser.getIndexFromPosition(parser.state.lastEndPos, parser.filename),
-			parser.getIndexFromPosition(parser.state.startPos, parser.filename),
+			parser.getIndexFromPosition(parser.state.lastEndPos, parser.path),
+			parser.getIndexFromPosition(parser.state.startPos, parser.path),
 		),
 	);
 }
@@ -540,7 +540,7 @@ export function expectClosing(parser: JSParser, context: OpeningContext) {
 					context.name,
 					context.close.label,
 					{
-						filename: parser.filename,
+						path: parser.path,
 						start: currPos,
 						end: currPos,
 					},

@@ -23,6 +23,7 @@ import {
 	ob1Number1,
 } from "@internal/ob1";
 import {Dict} from "@internal/typescript-helpers";
+import {AnyPath, createAnyPath} from "@internal/path";
 
 export function getParsedMappingKey(line: Number1, column: Number0): string {
 	return `${String(line)}:${String(column)}`;
@@ -31,13 +32,13 @@ export function getParsedMappingKey(line: Number1, column: Number0): string {
 type GetMappings = () => ParsedMappings;
 
 export default class SourceMapConsumer {
-	constructor(file: string, getMappings: GetMappings) {
-		this.file = file;
+	constructor(path: AnyPath, getMappings: GetMappings) {
+		this.path = path;
 		this._getMappings = getMappings;
 		this.mappings = undefined;
 	}
 
-	private file: string;
+	private path: AnyPath;
 	private _getMappings: GetMappings;
 	private mappings: undefined | ParsedMappings;
 
@@ -48,17 +49,17 @@ export default class SourceMapConsumer {
 
 	public static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
 		return new SourceMapConsumer(
-			sourceMap.file,
+			createAnyPath(sourceMap.file),
 			() => SourceMapConsumer.parseMappings(sourceMap),
 		);
 	}
 
 	public static fromJSONLazy(
-		file: string,
+		path: AnyPath,
 		getSourceMap: () => SourceMap,
 	): SourceMapConsumer {
 		return new SourceMapConsumer(
-			file,
+			path,
 			() => SourceMapConsumer.parseMappings(getSourceMap()),
 		);
 	}
@@ -77,6 +78,10 @@ export default class SourceMapConsumer {
 		let index: number = 0;
 		let cachedSegments: Dict<number[]> = {};
 		let value;
+
+		const sources: AnyPath[] = sourceMap.sources.map((source) => {
+			return createAnyPath(source);
+		});
 
 		while (index < length) {
 			const char = rawStr[index];
@@ -140,7 +145,7 @@ export default class SourceMapConsumer {
 
 				if (segment.length > 1) {
 					// Original source
-					mapping.source = sourceMap.sources[previousSource + segment[1]];
+					mapping.source = sources[previousSource + segment[1]];
 					previousSource += segment[1];
 
 					// Original line
@@ -212,7 +217,7 @@ export default class SourceMapConsumer {
 			return undefined;
 		}
 
-		const source = mapping.source ?? this.file;
+		const source = mapping.source ?? this.path;
 		if (source === undefined) {
 			throw new Error("Mapping provided unknown source");
 		}

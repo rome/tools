@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/cast/arrow-in-parens-with-parens-node/input.ts"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/cast/arrow-in-parens-with-parens-node/input.ts 1:0-2:0
+	path: UIDPath<typescript/cast/arrow-in-parens-with-parens-node/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSVariableDeclarationStatement {

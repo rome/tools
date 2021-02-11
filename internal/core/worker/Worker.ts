@@ -6,26 +6,32 @@
  */
 
 import {ModuleSignature, TypeCheckProvider} from "@internal/js-analysis";
-import WorkerBridge, {
-	PrefetchedModuleSignatures,
+import {
+	WorkerBuffer,
 	WorkerBufferPatch,
+	WorkerOptions,
 	WorkerParseOptions,
+	WorkerParseResult,
 	WorkerPartialManifest,
 	WorkerPartialManifests,
+	WorkerPrefetchedModuleSignatures,
 	WorkerProject,
 	WorkerProjects,
-} from "../common/bridges/WorkerBridge";
-import {AnyRoot, ConstJSSourceType, JSRoot} from "@internal/ast";
+} from "./types";
+import WorkerBridge from "../common/bridges/WorkerBridge";
+import {ConstJSSourceType, JSRoot} from "@internal/ast";
 import Logger from "../common/utils/Logger";
 import {Profiler} from "@internal/v8";
 import {UserConfig} from "@internal/core";
-import {DiagnosticIntegrity, DiagnosticsError} from "@internal/diagnostics";
+import {DiagnosticsError} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	UnknownPathMap,
+	AnyPath,
+	MixedPathMap,
+	UIDPath,
 	createAbsoluteFilePath,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {
 	FSReadStream,
@@ -35,7 +41,6 @@ import {
 } from "@internal/fs";
 import {FileReference} from "../common/types/files";
 import {getFileHandlerFromPathAssert} from "../common/file-handlers/index";
-import {CompilerProject} from "@internal/compiler";
 import WorkerAPI from "./WorkerAPI";
 import {applyWorkerBufferPatch} from "./utils/applyWorkerBufferPatch";
 import VirtualModules from "../common/VirtualModules";
@@ -48,31 +53,6 @@ import {RSERObject} from "@internal/codec-binary-serial";
 import {ReporterConditionalStream} from "@internal/cli-reporter";
 import {DEFAULT_TERMINAL_FEATURES} from "@internal/cli-environment";
 
-export type ParseResult = {
-	ast: AnyRoot;
-	integrity: undefined | DiagnosticIntegrity;
-	mtimeNs: bigint;
-	project: CompilerProject;
-	path: AbsoluteFilePath;
-	lastAccessed: number;
-	sourceText: string;
-	astModifiedFromSource: boolean;
-};
-
-export type WorkerBuffer = {
-	content: string;
-	mtimeNs: bigint;
-};
-
-export type WorkerOptions = {
-	userConfig: UserConfig;
-	dedicated: boolean;
-	bridge: BridgeClient<typeof WorkerBridge>;
-	id: number;
-	cacheWriteDisabled: boolean;
-	cacheReadDisabled: boolean;
-};
-
 export default class Worker {
 	constructor(opts: WorkerOptions) {
 		this.bridge = opts.bridge;
@@ -82,7 +62,7 @@ export default class Worker {
 		this.partialManifests = new ExtendedMap("partialManifests");
 		this.projects = new Map();
 		this.astCache = new AbsoluteFilePathMap();
-		this.moduleSignatureCache = new UnknownPathMap();
+		this.moduleSignatureCache = new MixedPathMap();
 		this.buffers = new AbsoluteFilePathMap();
 		this.virtualModules = new VirtualModules();
 
@@ -142,16 +122,16 @@ export default class Worker {
 	public api: WorkerAPI;
 	public options: WorkerOptions;
 	public logger: Logger;
+	public cache: WorkerCache;
 	public fatalErrorHandler: FatalErrorHandler;
 	public virtualModules: VirtualModules;
 
 	private loggerStream: ReporterConditionalStream;
-	private cache: WorkerCache;
 	private bridge: BridgeClient<typeof WorkerBridge>;
 	private partialManifests: ExtendedMap<number, WorkerPartialManifest>;
 	private projects: WorkerProjects;
-	private astCache: AbsoluteFilePathMap<ParseResult>;
-	private moduleSignatureCache: UnknownPathMap<ModuleSignature>;
+	private astCache: AbsoluteFilePathMap<WorkerParseResult>;
+	private moduleSignatureCache: MixedPathMap<ModuleSignature>;
 	private buffers: AbsoluteFilePathMap<WorkerBuffer>;
 
 	public getPartialManifest(id: number): WorkerPartialManifest {
@@ -350,7 +330,7 @@ export default class Worker {
 
 	public async getTypeCheckProvider(
 		projectId: number,
-		prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
+		prefetchedModuleSignatures: WorkerPrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
 	): Promise<TypeCheckProvider> {
 		const libs: JSRoot[] = [];
@@ -379,10 +359,7 @@ export default class Worker {
 
 			switch (value.type) {
 				case "RESOLVED": {
-					this.moduleSignatureCache.set(
-						createUnknownPath(value.graph.filename),
-						value.graph,
-					);
+					this.moduleSignatureCache.set(value.graph.path, value.graph);
 					return value.graph;
 				}
 
@@ -393,19 +370,17 @@ export default class Worker {
 					return resolveGraph(value.key);
 
 				case "USE_CACHED": {
-					return this.moduleSignatureCache.assert(
-						createUnknownPath(value.filename),
-					);
+					return this.moduleSignatureCache.assert(value.path);
 				}
 			}
 		};
 
 		return {
 			getExportTypes: async (
-				origin: string,
+				origin: AnyPath,
 				relative: string,
 			): Promise<undefined | ModuleSignature> => {
-				return resolveGraph(`${origin}:${relative}`);
+				return resolveGraph(`${origin.join()}:${relative}`);
 			},
 			libs,
 		};
@@ -468,7 +443,7 @@ export default class Worker {
 	public async parse(
 		ref: FileReference,
 		options: WorkerParseOptions,
-	): Promise<ParseResult> {
+	): Promise<WorkerParseResult> {
 		const path = createAbsoluteFilePath(ref.real);
 
 		const {project: projectId, uid} = ref;
@@ -502,7 +477,9 @@ export default class Worker {
 		if (cacheEnabled) {
 			// Update the lastAccessed of the ast cache and return it, it will be evicted on
 			// any file change
-			const cachedResult: undefined | ParseResult = this.astCache.get(path);
+			const cachedResult: undefined | WorkerParseResult = this.astCache.get(
+				path,
+			);
 			if (cachedResult !== undefined) {
 				let useCached = true;
 
@@ -539,7 +516,7 @@ export default class Worker {
 
 		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
 			sourceTypeJS,
-			path: createUnknownPath(uid),
+			path: createAnyPath(uid),
 			manifestPath,
 			integrity,
 			mtimeNs,
@@ -565,7 +542,7 @@ export default class Worker {
 			);
 		}
 
-		const res: ParseResult = {
+		const res: WorkerParseResult = {
 			ast,
 			lastAccessed: Date.now(),
 			sourceText,
@@ -596,7 +573,7 @@ export default class Worker {
 	private async evict(
 		{real, uid}: {
 			real: AbsoluteFilePath;
-			uid: string;
+			uid: UIDPath;
 		},
 	) {
 		this.logger.info(markup`Evicted ${real}`);

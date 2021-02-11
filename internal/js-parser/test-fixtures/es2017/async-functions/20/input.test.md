@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2017/async-functions/20/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17
+	path: UIDPath<es2017/async-functions/20/input.js>
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2017/async-functions/20/input.js 1:0-1:17

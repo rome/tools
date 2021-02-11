@@ -6,7 +6,6 @@ test(
 	"should remove the location of the node",
 	async (t) => {
 		const node = parseJS({
-			path: "unknown",
 			input: "function foo() { return bar; }",
 		});
 

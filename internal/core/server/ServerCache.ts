@@ -48,6 +48,10 @@ export default class ServerCache extends Cache {
 	private server: Server;
 	private breakerPath: AbsoluteFilePath;
 
+	public getRootDirectory(): AbsoluteFilePath {
+		return this.server.userConfig.cacheDirectory;
+	}
+
 	public async init() {
 		const {memoryFs} = this.server;
 		await createDirectory(this.directoryPath);
@@ -95,6 +99,6 @@ export default class ServerCache extends Cache {
 	public async clear() {
 		this.pendingWrites.clear();
 		await this.server.fileAllocator.evictAll();
-		await removeDirectory(this.directoryPath);
+		await removeDirectory(this.getRootDirectory());
 	}
 }

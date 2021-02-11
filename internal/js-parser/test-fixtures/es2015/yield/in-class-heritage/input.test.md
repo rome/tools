@@ -11,22 +11,22 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/yield/in-class-heritage/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/yield/in-class-heritage/input.js 1:0-1:27
+	path: UIDPath<es2015/yield/in-class-heritage/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "es2015/yield/in-class-heritage/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:21
+				path: UIDPath<es2015/yield/in-class-heritage/input.js>
 				start: Position 1:16
 			}
 			description: Object {

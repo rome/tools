@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/type-arguments/whitespace/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/type-arguments/whitespace/input.ts 1:0-1:24
+	path: UIDPath<typescript/type-arguments/whitespace/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSFunctionDeclaration {

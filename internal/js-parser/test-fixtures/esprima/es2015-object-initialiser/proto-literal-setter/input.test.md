@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "esprima/es2015-object-initialiser/proto-literal-setter/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:0-2:0
+	path: UIDPath<esprima/es2015-object-initialiser/proto-literal-setter/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/es2015-object-initialiser/proto-literal-setter/input.js 1:0-1:43

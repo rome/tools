@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/class-methods/linebreaks/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/class-methods/linebreaks/input.js 1:0-42:1
+	path: UIDPath<es2015/class-methods/linebreaks/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

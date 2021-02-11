@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/errors/unicode-escape-in-identifier/input.jsx 1:0-1:23
+	path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
 	syntax: Array ["jsx"]
 	body: Array [
 		JSExpressionStatement {
@@ -44,11 +44,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
-				filename: "jsx/errors/unicode-escape-in-identifier/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:1
+				path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
 				start: Position 1:1
 			}
 		}

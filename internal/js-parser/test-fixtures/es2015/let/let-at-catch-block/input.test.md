@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "es2015/let/let-at-catch-block/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/let/let-at-catch-block/input.js 1:0-3:1
+	path: UIDPath<es2015/let/let-at-catch-block/input.js>
 	body: Array [
 		JSTryStatement {
 			finalizer: undefined

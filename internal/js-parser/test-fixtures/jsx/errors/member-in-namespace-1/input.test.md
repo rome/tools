@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "jsx/errors/member-in-namespace-1/input.jsx"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	loc: SourceLocation jsx/errors/member-in-namespace-1/input.jsx 1:0-2:0
+	path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
 	syntax: Array ["jsx"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Unknown JSX identifier token"}
 			}
 			location: Object {
-				filename: "jsx/errors/member-in-namespace-1/input.jsx"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:4
+				path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
 				start: Position 1:4
 			}
 		}

@@ -11,12 +11,12 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/type-arguments/new-false-positive-2/input.ts 1:0-2:0
+	path: UIDPath<typescript/type-arguments/new-false-positive-2/input.ts>
 	syntax: Array ["ts"]
 	diagnostics: Array [
 		Object {
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "In TypeScript, a new expression with type arguments must have parens"}
 			}
 			location: Object {
-				filename: "typescript/type-arguments/new-false-positive-2/input.ts"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:8
+				path: UIDPath<typescript/type-arguments/new-false-positive-2/input.ts>
 				start: Position 1:8
 			}
 		}

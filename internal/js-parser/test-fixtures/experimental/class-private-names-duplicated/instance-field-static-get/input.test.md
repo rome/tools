@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/class-private-names-duplicated/instance-field-static-get/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-names-duplicated/instance-field-static-get/input.js 1:0-4:1
+	path: UIDPath<experimental/class-private-names-duplicated/instance-field-static-get/input.js>
 	body: Array [
 		JSClassDeclaration {
 			id: JSBindingIdentifier {

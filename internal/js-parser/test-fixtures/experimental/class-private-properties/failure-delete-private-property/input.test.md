@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "experimental/class-private-properties/failure-delete-private-property/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/class-private-properties/failure-delete-private-property/input.js 1:0-7:0
+	path: UIDPath<experimental/class-private-properties/failure-delete-private-property/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Deleting a private field is not allowed"}
 			}
 			location: Object {
-				filename: "experimental/class-private-properties/failure-delete-private-property/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 4:18
+				path: UIDPath<experimental/class-private-properties/failure-delete-private-property/input.js>
 				start: Position 4:16
 			}
 		}

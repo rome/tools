@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: "es2015/class-methods/malformed-super-expression/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation es2015/class-methods/malformed-super-expression/input.js 1:0-5:1
+	path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Invalid super suffix operator"}
 			}
 			location: Object {
-				filename: "es2015/class-methods/malformed-super-expression/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 3:9
+				path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
 				start: Position 3:10
 			}
 		}

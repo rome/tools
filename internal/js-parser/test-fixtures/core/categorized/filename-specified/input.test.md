@@ -11,13 +11,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "core/categorized/filename-specified/input.js"
 	hasHoistedVars: true
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation core/categorized/filename-specified/input.js 1:0-3:0
+	path: UIDPath<core/categorized/filename-specified/input.js>
 	comments: Array [
 		CommentLine {
 			id: "0"

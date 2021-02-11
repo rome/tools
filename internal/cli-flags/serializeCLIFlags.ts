@@ -11,7 +11,7 @@ import {ConsumeSourceLocationRequestTarget} from "@internal/consume";
 import {Number0, ob1Coerce0, ob1Number0Neg1, ob1Number1} from "@internal/ob1";
 import {Dict, RequiredProps} from "@internal/typescript-helpers";
 import {FlagValue} from "./Parser";
-import {AbsoluteFilePath} from "@internal/path";
+import {AbsoluteFilePath, createUIDPath} from "@internal/path";
 
 export type SerializeCLILocation = RequiredProps<
 	DiagnosticLocation,
@@ -283,7 +283,7 @@ export function serializeCLIFlags(
 		language: "shell",
 		integrity: undefined,
 		sourceText: code.trimRight(),
-		filename: "argv",
+		path: createUIDPath("argv"),
 		start,
 		end,
 	};

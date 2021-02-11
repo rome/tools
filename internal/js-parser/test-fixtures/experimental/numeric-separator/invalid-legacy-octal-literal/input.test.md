@@ -12,13 +12,13 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "experimental/numeric-separator/invalid-legacy-octal-literal/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "script"
 	syntax: Array []
 	loc: SourceLocation experimental/numeric-separator/invalid-legacy-octal-literal/input.js 1:0-1:4
+	path: UIDPath<experimental/numeric-separator/invalid-legacy-octal-literal/input.js>
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/numeric-separator/invalid-legacy-octal-literal/input.js 1:0-1:4

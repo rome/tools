@@ -8,34 +8,12 @@
 import {Consumer} from "@internal/consume";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
 import {AbsoluteFilePath, AbsoluteFilePathSet} from "@internal/path";
-import {
-	PartialProjectConfig,
-	ProjectConfigMeta,
-	ProjectConfigMetaHard,
-} from "./types";
+import {PartialProjectConfig} from "./types";
 import {
 	ESLINT_CONFIG_FILENAMES,
 	PROJECT_CONFIG_FILENAMES,
 	VCS_IGNORE_FILENAMES,
 } from "./constants";
-
-export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
-	const {configPath, projectDirectory: directory, consumer} = meta;
-	if (
-		configPath === undefined ||
-		directory === undefined ||
-		consumer === undefined
-	) {
-		throw new Error("This is not a disk project");
-	}
-
-	return {
-		...meta,
-		configPath,
-		consumer,
-		projectDirectory: directory,
-	};
-}
 
 export function arrayOfStrings(consumer: Consumer): string[] {
 	if (consumer.exists()) {
@@ -49,7 +27,7 @@ export function arrayOfPatterns(consumer: Consumer): PathPatterns {
 	// TODO consumer.handleThrownDiagnostics
 	return consumer.asMappedArray((item) => {
 		return parsePathPattern({
-			path: consumer.filename,
+			path: consumer.path,
 			input: item.asString(),
 			offsetPosition: item.getLocation("inner-value").start,
 		});

@@ -11,6 +11,7 @@ import {
 	AnalyzeModuleType,
 	BundleBuddyStats,
 	ServerRequest,
+	WorkerAnalyzeDependencyResult,
 } from "@internal/core";
 import {DiagnosticsProcessor, catchDiagnostics} from "@internal/diagnostics";
 import {ResolverOptions} from "../fs/Resolver";
@@ -19,12 +20,11 @@ import DependencyNode from "./DependencyNode";
 import {ReporterProgress} from "@internal/cli-reporter";
 import {Locker} from "../../../async/lockers";
 import {DependencyOrder} from "./DependencyOrderer";
-import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
 
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createUnknownPath,
+	createAnyPath,
 } from "@internal/path";
 import {markup} from "@internal/markup";
 import FileNotFound, {MissingFileReturn} from "@internal/fs/FileNotFound";
@@ -126,10 +126,10 @@ export default class DependencyGraph {
 		const stats: BundleBuddyStats = [];
 
 		for (const node of this.nodes.values()) {
-			const source = node.uid;
+			const source = node.uid.join();
 
 			for (const absoluteTarget of node.relativeToAbsolutePath.values()) {
-				const target = this.getNode(absoluteTarget).uid;
+				const target = this.getNode(absoluteTarget).uid.join();
 				stats.push({
 					target,
 					source,
@@ -138,7 +138,7 @@ export default class DependencyGraph {
 		}
 
 		for (const absoluteEntry of entries) {
-			const source = this.getNode(absoluteEntry).uid;
+			const source = this.getNode(absoluteEntry).uid.join();
 			stats.push({
 				source,
 				target: undefined,
@@ -415,7 +415,7 @@ export default class DependencyGraph {
 							{
 								...this.resolverOpts,
 								origin,
-								source: createUnknownPath(source),
+								source: createAnyPath(source),
 							},
 							dep.loc === undefined
 								? undefined

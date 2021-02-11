@@ -12,12 +12,12 @@ JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: "typescript/module-namespace/namespace-new-line/input.ts"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	loc: SourceLocation typescript/module-namespace/namespace-new-line/input.ts 1:0-4:0
+	path: UIDPath<typescript/module-namespace/namespace-new-line/input.ts>
 	syntax: Array ["ts"]
 	body: Array [
 		JSExpressionStatement {

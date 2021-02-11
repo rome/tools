@@ -11,13 +11,13 @@ JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: "experimental/module-attributes/valid-syntax-with-attributes/input.js"
 	hasHoistedVars: false
 	integrity: undefined
 	interpreter: undefined
 	sourceType: "module"
 	syntax: Array []
 	loc: SourceLocation experimental/module-attributes/valid-syntax-with-attributes/input.js 1:0-2:0
+	path: UIDPath<experimental/module-attributes/valid-syntax-with-attributes/input.js>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -28,11 +28,11 @@ JSRoot {
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: "experimental/module-attributes/valid-syntax-with-attributes/input.js"
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
 				end: Position 1:26
+				path: UIDPath<experimental/module-attributes/valid-syntax-with-attributes/input.js>
 				start: Position 1:27
 			}
 		}
