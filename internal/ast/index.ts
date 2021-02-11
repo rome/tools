@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:79acf76f90f36aac8aa0f75805e5852709034779,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:d9ff91a2db64b84561a63535148e2bad95cf0953,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -28,6 +28,10 @@ export * from "./css/core/CSSFunction";
 export * from "./css/core/CSSHash";
 export * from "./css/core/CSSIdentifier";
 export * from "./css/selectors/CSSIdSelector";
+export * from "./css/keyframe/CSSKeyframe";
+export * from "./css/keyframe/CSSKeyframeBlock";
+export * from "./css/keyframe/CSSKeyframeName";
+export * from "./css/keyframe/CSSKeyframeSelector";
 export * from "./css/core/CSSNumber";
 export * from "./css/core/CSSPercentage";
 export * from "./css/selectors/CSSPseudoClassSelector";
@@ -293,6 +297,10 @@ export type AnyNode =
 	| n.CSSHash
 	| n.CSSIdentifier
 	| n.CSSIdSelector
+	| n.CSSKeyframe
+	| n.CSSKeyframeBlock
+	| n.CSSKeyframeName
+	| n.CSSKeyframeSelector
 	| n.CSSNumber
 	| n.CSSPercentage
 	| n.CSSPseudoClassSelector

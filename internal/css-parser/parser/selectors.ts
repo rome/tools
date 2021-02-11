@@ -18,7 +18,7 @@ import {AnyCSSPattern} from "@internal/ast/css/unions";
 import {CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
-import {parseFunction} from "../index";
+import {parseFunction} from "@internal/css-parser/parser/function";
 
 const ATTRIBUTE_SELECTOR_MATCHERS = ["~=", "|=", "^=", "$=", "*=", "="];
 

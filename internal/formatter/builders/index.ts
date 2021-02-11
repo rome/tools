@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:5b86cbb3c5b2995985507134c2e0e7f8c011bfc9,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:698a75a8e16b88f20358959c8eeb16f71f12c993,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -47,6 +47,14 @@ import CSSIdentifier from "./css/core/CSSIdentifier";
 builders.set("CSSIdentifier", CSSIdentifier);
 import CSSIdSelector from "./css/selectors/CSSIdSelector";
 builders.set("CSSIdSelector", CSSIdSelector);
+import CSSKeyframe from "./css/keyframe/CSSKeyframe";
+builders.set("CSSKeyframe", CSSKeyframe);
+import CSSKeyframeBlock from "./css/keyframe/CSSKeyframeBlock";
+builders.set("CSSKeyframeBlock", CSSKeyframeBlock);
+import CSSKeyframeName from "./css/keyframe/CSSKeyframeName";
+builders.set("CSSKeyframeName", CSSKeyframeName);
+import CSSKeyframeSelector from "./css/keyframe/CSSKeyframeSelector";
+builders.set("CSSKeyframeSelector", CSSKeyframeSelector);
 import CSSNumber from "./css/core/CSSNumber";
 builders.set("CSSNumber", CSSNumber);
 import CSSPercentage from "./css/core/CSSPercentage";
