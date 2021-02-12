@@ -9,6 +9,7 @@ import {
 } from "@internal/parser-core";
 import {
 	CSSBlock,
+	CSSCalcFunction,
 	CSSComma,
 	CSSCustomProperty,
 	CSSDimension,
@@ -19,6 +20,7 @@ import {
 	CSSPercentage,
 	CSSRaw,
 	CSSString,
+	CSSUrlFunction,
 	CSSVarFunction,
 	CSSWhitespace,
 } from "@internal/ast";
@@ -88,7 +90,11 @@ export type AnyCSSValue =
 	| CSSString
 	| CSSComma
 	| CSSCustomProperty
+	| CSSUrlFunction
+	| CSSCalcFunction
 	| CSSRaw;
+
+export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;
 
 export type CSSParserTypes = {
 	tokens: Tokens;

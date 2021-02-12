@@ -24,6 +24,8 @@
 	height: calc(1px, 2px, 3px);
 	background-color: rgb(0 128 255);
 	border: var(--foo,red, blue, calc( 10px   +1rem));
+
+	background: url("   something ");
 }
 
 ```
@@ -40,6 +42,8 @@
 	height: calc(1px, 2px, 3px);
 	background-color: rgb(0 128 255);
 	border: var(--foo, red, blue, calc(10px 1rem));
+
+	background: url("   something ");
 }
 
 ```

@@ -18,7 +18,7 @@ CSSRoot {
 				advice: Array []
 				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function"}
+				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function."}
 			}
 			location: Object {
 				integrity: undefined

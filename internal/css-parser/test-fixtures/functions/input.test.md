@@ -10,11 +10,11 @@ CSSRoot {
 	corrupt: false
 	diagnostics: Array []
 	integrity: undefined
-	loc: SourceLocation functions/input.css 1:0-5:1
+	loc: SourceLocation functions/input.css 1:0-8:1
 	path: RelativeFilePath<functions/input.css>
 	body: Array [
 		CSSRule {
-			loc: SourceLocation functions/input.css 1:0-5:1
+			loc: SourceLocation functions/input.css 1:0-8:1
 			prelude: Array [
 				CSSSelector {
 					loc: SourceLocation functions/input.css 1:0-1:7
@@ -87,9 +87,60 @@ CSSRoot {
 						important: false
 						loc: SourceLocation functions/input.css 4:1-4:29
 					}
+					CSSDeclaration {
+						name: "background"
+						value: Array [
+							CSSUrlFunction {
+								name: "url"
+								loc: SourceLocation functions/input.css 5:13-5:20
+								params: Array [
+									CSSString {
+										value: ""
+										loc: SourceLocation functions/input.css 5:17-5:19
+									}
+								]
+							}
+						]
+						important: false
+						loc: SourceLocation functions/input.css 5:1-5:20
+					}
+					CSSDeclaration {
+						name: "background"
+						value: Array [
+							CSSUrlFunction {
+								name: "url"
+								loc: SourceLocation functions/input.css 6:13-6:29
+								params: Array [
+									CSSString {
+										value: "something"
+										loc: SourceLocation functions/input.css 6:17-6:28
+									}
+								]
+							}
+						]
+						important: false
+						loc: SourceLocation functions/input.css 6:1-6:29
+					}
+					CSSDeclaration {
+						name: "background"
+						value: Array [
+							CSSUrlFunction {
+								name: "url"
+								loc: SourceLocation functions/input.css 7:13-7:31
+								params: Array [
+									CSSString {
+										value: "./something"
+										loc: SourceLocation functions/input.css 7:17-7:30
+									}
+								]
+							}
+						]
+						important: false
+						loc: SourceLocation functions/input.css 7:1-7:31
+					}
 				]
 				startingTokenValue: "{"
-				loc: SourceLocation functions/input.css 1:7-5:1
+				loc: SourceLocation functions/input.css 1:7-8:1
 			}
 		}
 	]

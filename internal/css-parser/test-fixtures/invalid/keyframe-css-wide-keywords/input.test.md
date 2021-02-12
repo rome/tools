@@ -75,7 +75,7 @@ CSSRoot {
 				message: Array [
 					RAW_MARKUP {value: "The identifier <emphasis>"}
 					"initial"
-					RAW_MARKUP {value: "</emphasis> can't be used here"}
+					RAW_MARKUP {value: "</emphasis> can't be used here."}
 				]
 				advice: Array [
 					log {
@@ -99,7 +99,7 @@ CSSRoot {
 									RAW_MARKUP {value: "</emphasis>, "}
 								]
 							]
-							RAW_MARKUP {value: " are CSS-wide keywords, so they are reserved"}
+							RAW_MARKUP {value: " are CSS-wide keywords, so they are reserved."}
 						]
 					}
 				]
