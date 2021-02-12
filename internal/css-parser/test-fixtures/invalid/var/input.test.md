@@ -24,7 +24,7 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Position 2:17
+				end: Position 2:18
 				path: RelativeFilePath<invalid/var/input.css>
 				start: Position 2:17
 			}

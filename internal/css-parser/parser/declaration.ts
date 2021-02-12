@@ -43,6 +43,7 @@ export function parseDeclarations(
 		}
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.INVALID_DECLARATION,
+			token: parser.getToken(),
 		});
 		while (!(matchToken(parser, "Semi") || matchToken(parser, "EOF"))) {
 			parseComponentValue(parser);
@@ -61,6 +62,7 @@ export function parseDeclaration(
 		if (currentToken.type !== "Ident") {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.INVALID_DECLARATION,
+				token: parser.getToken(),
 			});
 			return undefined;
 		}
@@ -87,6 +89,7 @@ export function parseDeclaration(
 		if (!matchToken(parser, "Colon")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.INVALID_DECLARATION,
+				token: parser.getToken(),
 			});
 			return undefined;
 		}

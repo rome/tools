@@ -9,9 +9,9 @@ CSSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: "keyframe/input.css"
 	integrity: undefined
 	loc: SourceLocation keyframe/input.css 1:0-18:1
+	path: RelativeFilePath<keyframe/input.css>
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"
@@ -102,7 +102,6 @@ CSSRoot {
 						loc: SourceLocation keyframe/input.css 6:8-6:8
 					}
 				]
-				startingTokenValue: "{"
 				loc: SourceLocation keyframe/input.css 1:10-7:1
 			}
 		}
@@ -119,7 +118,6 @@ CSSRoot {
 					loc: SourceLocation keyframe/input.css 9:11-9:16
 				}
 				value: Array []
-				startingTokenValue: "{"
 				loc: SourceLocation keyframe/input.css 9:10-11:1
 			}
 		}
@@ -136,7 +134,6 @@ CSSRoot {
 					loc: SourceLocation keyframe/input.css 13:11-13:20
 				}
 				value: Array []
-				startingTokenValue: "{"
 				loc: SourceLocation keyframe/input.css 13:10-15:1
 			}
 		}
@@ -153,7 +150,6 @@ CSSRoot {
 					loc: SourceLocation keyframe/input.css 17:11-17:14
 				}
 				value: Array []
-				startingTokenValue: "{"
 				loc: SourceLocation keyframe/input.css 17:10-18:1
 			}
 		}

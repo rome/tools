@@ -9,7 +9,6 @@ export interface CSSKeyframe extends NodeBaseWithComments {
 	readonly type: "CSSKeyframe";
 	readonly name: CSSKeyframeName;
 	readonly value: CSSKeyframeBlock[];
-	readonly startingTokenValue?: string;
 }
 
 export const cssKeyframe = createBuilder<CSSKeyframe>(

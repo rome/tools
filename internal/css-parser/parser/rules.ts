@@ -67,6 +67,7 @@ function parseRule(parser: CSSParser): CSSRule | undefined {
 	}
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.UNEXPECTED_TOKEN,
+		token: parser.getToken(),
 	});
 	return undefined;
 }
@@ -86,6 +87,7 @@ export function parseAtRule(parser: CSSParser): CSSAtRule {
 		if (matchToken(parser, "EOF")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_AT_RULE,
+				token: parser.getToken(),
 			});
 			break;
 		}

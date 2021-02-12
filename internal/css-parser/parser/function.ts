@@ -20,6 +20,7 @@ export function parseFunction(parser: CSSParser): CSSFunction | CSSVarFunction {
 		if (matchToken(parser, "EOF")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
+				token: parser.getToken(),
 			});
 			break;
 		}
@@ -29,6 +30,7 @@ export function parseFunction(parser: CSSParser): CSSFunction | CSSVarFunction {
 				if (parsedValue.type !== "CSSCustomProperty") {
 					parser.unexpectedDiagnostic({
 						description: descriptions.CSS_PARSER.INVALID_CUSTOM_PROPERTY,
+						token: parser.getToken(),
 					});
 				}
 				params.push(parsedValue);

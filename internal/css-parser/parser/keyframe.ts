@@ -10,12 +10,7 @@ import {
 } from "@internal/ast";
 import {matchToken, nextToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
-import {
-	CSS_WIDE_KEYWORDS,
-	getBlockEndTokenType,
-	getBlockStartTokenValue,
-	isCustomIdent,
-} from "@internal/css-parser/utils";
+import {CSS_WIDE_KEYWORDS, isCustomIdent} from "@internal/css-parser/utils";
 import {parseDeclarationBlock} from "@internal/css-parser/parser/declaration";
 
 const VALID_IDENTS = ["from", "to"];
@@ -31,7 +26,7 @@ function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 			description: descriptions.CSS_PARSER.MISSING_KEYFRAME_NAME,
 			token: parser.getToken(),
 		});
-		parser.nextToken();
+		nextToken(parser);
 		return undefined;
 	}
 	const start = parser.getPosition();
@@ -55,7 +50,7 @@ function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 				),
 				token: parser.getToken(),
 			});
-			parser.nextToken();
+			nextToken(parser);
 			return undefined;
 		}
 
@@ -67,7 +62,7 @@ function parseKeyframeName(parser: CSSParser): CSSKeyframeName | undefined {
 			},
 		);
 	}
-	parser.nextToken();
+	nextToken(parser);
 
 	return parser.finishNode(
 		start,
@@ -102,7 +97,7 @@ function parseKeyframeSelector(
 				),
 				token: parser.getToken(),
 			});
-			parser.nextToken();
+			nextToken(parser);
 			return undefined;
 		}
 		value = parser.finishNode(
@@ -117,12 +112,12 @@ function parseKeyframeSelector(
 			description: descriptions.CSS_PARSER.UNKNOW_KEYFRAME_SELECTOR_NAME,
 			token: parser.getToken(),
 		});
-		parser.nextToken();
+		nextToken(parser);
 		return undefined;
 	}
 
 	const start = parser.getPosition();
-	parser.nextToken();
+	nextToken(parser);
 	return parser.finishNode(
 		start,
 		{
@@ -132,14 +127,11 @@ function parseKeyframeSelector(
 	);
 }
 
-function parseKeyframeBlocks(
-	parser: CSSParser,
-	endingTokenType: keyof Tokens,
-): CSSKeyframeBlock[] | undefined {
+function parseKeyframeBlocks(parser: CSSParser): CSSKeyframeBlock[] | undefined {
 	const blocks: CSSKeyframeBlock[] = [];
 
 	while (!matchToken(parser, "EOF")) {
-		if (endingTokenType && matchToken(parser, endingTokenType)) {
+		if (matchToken(parser, "RightCurlyBracket")) {
 			nextToken(parser);
 			break;
 		}
@@ -158,7 +150,7 @@ function parseKeyframeBlocks(
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 				token: parser.getToken(),
 			});
-			parser.nextToken();
+			nextToken(parser);
 			return undefined;
 		}
 		const value = parseDeclarationBlock(parser);
@@ -174,7 +166,7 @@ function parseKeyframeBlocks(
 			blocks.push(block);
 		}
 
-		parser.nextToken();
+		nextToken(parser);
 	}
 
 	return blocks;
@@ -182,7 +174,7 @@ function parseKeyframeBlocks(
 
 export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 	const start = parser.getPosition();
-	parser.nextToken();
+	nextToken(parser);
 	const name = parseKeyframeName(parser);
 	if (!name) {
 		return undefined;
@@ -197,20 +189,13 @@ export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 			description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 			token: parser.getToken(),
 		});
-		parser.nextToken();
-		return undefined;
-	}
-	const startingToken = parser.getToken();
-	const startingTokenValue = getBlockStartTokenValue(parser, startingToken);
-	const endingTokenType = getBlockEndTokenType(parser, startingToken);
-
-	if (!endingTokenType) {
+		nextToken(parser);
 		return undefined;
 	}
 
 	nextToken(parser);
 
-	const value = parseKeyframeBlocks(parser, endingTokenType);
+	const value = parseKeyframeBlocks(parser);
 
 	if (!value) {
 		return undefined;
@@ -221,7 +206,6 @@ export function parseKeyframe(parser: CSSParser): CSSKeyframe | undefined {
 			type: "CSSKeyframe",
 			name,
 			value,
-			startingTokenValue,
 		},
 	);
 }

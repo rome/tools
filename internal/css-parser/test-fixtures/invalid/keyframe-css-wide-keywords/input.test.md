@@ -8,9 +8,9 @@
 CSSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "invalid/keyframe-css-wide-keywords/input.css"
 	integrity: undefined
 	loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-3:19
+	path: RelativeFilePath<invalid/keyframe-css-wide-keywords/input.css>
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"
@@ -62,11 +62,11 @@ CSSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "invalid/keyframe-css-wide-keywords/input.css"
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
 				end: Position 1:18
+				path: RelativeFilePath<invalid/keyframe-css-wide-keywords/input.css>
 				start: Position 1:11
 			}
 			description: Object {

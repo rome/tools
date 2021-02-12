@@ -55,6 +55,7 @@ export function parseSimpleBlock(parser: CSSParser): CSSBlock | undefined {
 		if (matchToken(parser, "EOF")) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_BLOCK,
+				token: parser.getToken(),
 			});
 			break;
 		}

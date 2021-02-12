@@ -8,9 +8,9 @@
 CSSRoot {
 	comments: Array []
 	corrupt: false
-	filename: "invalid/keyfram-number/input.css"
 	integrity: undefined
 	loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
+	path: RelativeFilePath<invalid/keyfram-number/input.css>
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"
@@ -25,7 +25,6 @@ CSSRoot {
 					loc: SourceLocation invalid/keyfram-number/input.css 1:11-1:14
 				}
 				value: Array []
-				startingTokenValue: "{"
 				loc: SourceLocation invalid/keyfram-number/input.css 1:10-5:1
 			}
 		}
@@ -34,11 +33,11 @@ CSSRoot {
 		Object {
 			origins: Array [Object {category: "parse"}]
 			location: Object {
-				filename: "invalid/keyfram-number/input.css"
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
 				end: Position 2:3
+				path: RelativeFilePath<invalid/keyfram-number/input.css>
 				start: Position 2:1
 			}
 			description: Object {
