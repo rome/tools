@@ -21,22 +21,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected keyword from"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
 				start: Position 1:9
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected keyword "}
-					"from"
-				]
 			}
 		}
 	]
@@ -88,11 +86,5 @@ JSRoot {
 
   ✖ Expected keyword from
 
-    import X fro\u006d 'x'
-             ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -26,13 +26,14 @@ JSRoot {
 			]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "regex"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "regex"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<esprima/expression-primary-literal-regular-expression/u-flag-valid-range/input.js>
@@ -216,11 +217,5 @@ JSRoot {
 
   ✖ Range values reversed. Start char code is greater than end char code
 
-    var x = /[\u{61}-b][\u0061-b][a-\u{62}][a-\u0062]\u{1ffff}/u;
-                   ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

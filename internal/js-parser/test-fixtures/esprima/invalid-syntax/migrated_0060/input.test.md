@@ -18,38 +18,6 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0060/input.js 1:0-2:0
 	path: UIDPath<esprima/invalid-syntax/migrated_0060/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<esprima/invalid-syntax/migrated_0060/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"object"
-				]
-				advice: Array [
-					log {
-						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
-					}
-					frame {location: SourceLocation esprima/invalid-syntax/migrated_0060/input.js 2:0-2:0}
-				]
-			}
-		}
-	]
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0060/input.js 1:0-1:9
@@ -83,6 +51,41 @@ JSRoot {
 			}
 		}
 	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				marker: undefined
+				sourceText: undefined
+				end: Position 1:4
+				path: UIDPath<esprima/invalid-syntax/migrated_0060/input.js>
+				start: Position 1:4
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed object"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
+					}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 2:0
+							path: UIDPath<esprima/invalid-syntax/migrated_0060/input.js>
+							start: Position 2:0
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```
 
@@ -96,10 +99,5 @@ JSRoot {
 
   ℹ We expected to find the closing character } here
 
-    1 + { t:t
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

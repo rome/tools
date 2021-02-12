@@ -33,13 +33,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Illegal newline after throw"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<core/uncategorised/524/input.js>
@@ -58,12 +59,5 @@ JSRoot {
 
   ✖ Illegal newline after throw
 
-  > 1 │ throw
-      │      ^
-    2 │ 10;
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

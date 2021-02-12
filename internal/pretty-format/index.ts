@@ -382,9 +382,9 @@ function formatObject(
 	}
 
 	if (isSourceLocation(obj)) {
-		let inner = markup`${formatPositionValue(obj.start)}<dim>-</dim>${formatPositionValue(
-			obj.end,
-		)} <token type="string">${obj.path.join()}</token>`;
+		let inner = markup`<token type="string">${obj.path.join()}</token> ${formatPositionValue(
+			obj.start,
+		)}<dim>-</dim>${formatPositionValue(obj.end)}`;
 		if (obj.identifierName !== undefined) {
 			inner = markup`${inner} (${escapeJSString(obj.identifierName)})`;
 		}

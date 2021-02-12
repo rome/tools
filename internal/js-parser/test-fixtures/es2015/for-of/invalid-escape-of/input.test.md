@@ -18,6 +18,26 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-2:0
 	path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected token, expected ;"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				marker: undefined
+				sourceText: undefined
+				end: Position 1:14
+				path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
+				start: Position 1:7
+			}
+		}
+	]
 	body: Array [
 		JSForStatement {
 			loc: SourceLocation es2015/for-of/invalid-escape-of/input.js 1:0-1:20
@@ -40,28 +60,6 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:14
-				path: UIDPath<es2015/for-of/invalid-escape-of/input.js>
-				start: Position 1:7
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					";"
-				]
-			}
-		}
-	]
 }
 ```
 
@@ -73,11 +71,5 @@ JSRoot {
 
   ✖ Unexpected token, expected ;
 
-    for (x \u006ff y) {}
-           ^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

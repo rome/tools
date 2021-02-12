@@ -8,18 +8,12 @@
 
 ```
 
- lint/regex/noEmptyCharacterClass/reject/1/file.ts:1:15 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint,regex,noEmptyCharacterClass/reject/1/file.ts:1:15 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
-    let foo = /^abc[]/;foo;
-                   ^
-
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,18 +29,12 @@ foo;
 
 ```
 
- lint/regex/noEmptyCharacterClass/reject/2/file.ts:1:14 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint,regex,noEmptyCharacterClass/reject/2/file.ts:1:14 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
-    let foo = /foo[]bar/;foo;
-                  ^^
-
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,18 +50,12 @@ foo;
 
 ```
 
- lint/regex/noEmptyCharacterClass/reject/3/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint,regex,noEmptyCharacterClass/reject/3/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
-    ;if (foo.match(/^abc[]/)) { foo; }
-                        ^
-
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -90,18 +72,12 @@ if (foo.match(/^abc/)) {
 
 ```
 
- lint/regex/noEmptyCharacterClass/reject/4/file.ts:1:11 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint,regex,noEmptyCharacterClass/reject/4/file.ts:1:11 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
-    let foo = /[]]/;foo;
-               ^^
-
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -117,18 +93,12 @@ foo;
 
 ```
 
- lint/regex/noEmptyCharacterClass/reject/5/file.ts:1:13 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint,regex,noEmptyCharacterClass/reject/5/file.ts:1:13 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
-    let foo = /\[[]/;foo;
-                 ^
-
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -144,18 +114,12 @@ foo;
 
 ```
 
- lint/regex/noEmptyCharacterClass/reject/6/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint,regex,noEmptyCharacterClass/reject/6/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
-    let foo = /\[\[\]a-z[]/;foo;
-                        ^
-
   ℹ Empty character classes are usually typos.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -170,7 +134,6 @@ foo;
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -185,7 +148,6 @@ foo;
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -200,7 +162,6 @@ regExp;
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -215,7 +176,6 @@ foo;
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -230,7 +190,6 @@ foo;
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -245,7 +204,6 @@ foo;
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -260,7 +218,6 @@ foo;
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -275,7 +232,6 @@ foo;
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -290,7 +246,6 @@ foo;
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -305,7 +260,6 @@ foo;
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -320,7 +274,6 @@ foo;
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -335,7 +288,6 @@ foo;
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 

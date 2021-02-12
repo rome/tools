@@ -8,22 +8,16 @@
 
 ```
 
- lint/js/noSingleCharRegexAlternatives/reject/1/filename.ts:1:1
+ lint,js,noSingleCharRegexAlternatives/reject/1/filename.ts:1:1
 lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No single character alternations in regular expressions. Use a character class instead.
-
-    /a|b/
-     ^^^
 
   ℹ Safe fix
 
   - a|b
   + [ab]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,22 +32,16 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 
 ```
 
- lint/js/noSingleCharRegexAlternatives/reject/2/filename.ts:1:1
+ lint,js,noSingleCharRegexAlternatives/reject/2/filename.ts:1:1
 lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No single character alternations in regular expressions. Use a character class instead.
-
-    /a|b|c/
-     ^^^^^
 
   ℹ Safe fix
 
   - a|b|c
   + [abc]
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -67,7 +55,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -81,7 +68,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -95,7 +81,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -109,7 +94,6 @@ lint/js/noSingleCharRegexAlternatives  FIXABLE  ━━━━━━━━━━�
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

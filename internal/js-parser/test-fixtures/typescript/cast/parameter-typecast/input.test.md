@@ -36,13 +36,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot async keyword."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<typescript/cast/parameter-typecast/input.ts>
@@ -62,11 +63,5 @@ JSRoot {
   ✖ Function parameter type annotation? Possibly forgot curlies around an object. Possibly forgot
     async keyword.
 
-    func(a: T);
-         ^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

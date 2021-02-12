@@ -24,25 +24,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:24
 				path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
 				start: Position 2:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "`"}
-					"foo"
-					RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "`foo` has already been exported. Exported identifiers must be unique."}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {location: SourceLocation es2015/modules/duplicate-named-export-function-declaration/input.js 1:9-1:12}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:12
+							path: UIDPath<es2015/modules/duplicate-named-export-function-declaration/input.js>
+							start: Position 1:9
+						}
+					}
 				]
 			}
 		}
@@ -109,12 +115,5 @@ JSRoot {
 
   ℹ Defined already here
 
-  > 1 │ export { foo };
-      │          ^^^
-    2 │ export function foo() {};
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

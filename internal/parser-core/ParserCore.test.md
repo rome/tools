@@ -99,13 +99,14 @@ Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "unknown"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid token"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "unknown"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: RelativeFilePath<1.test>
@@ -145,13 +146,14 @@ Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "unknown"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated string"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "unknown"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: RelativeFilePath<2.test>

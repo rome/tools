@@ -15,6 +15,7 @@ import {
 	DiagnosticAdviceAction,
 	DiagnosticLocation,
 	Diagnostics,
+	formatCategoryDescription,
 } from "@internal/diagnostics";
 import {Server, WorkerBufferPatch} from "@internal/core";
 
@@ -78,7 +79,7 @@ export function convertDiagnosticsToLSP(
 			severity: 1,
 			range: convertDiagnosticLocationToLSPRange(location),
 			message: markupToJoinedPlainText(description.message),
-			code: description.category,
+			code: formatCategoryDescription(description),
 			source: "rome",
 			relatedInformation,
 		});

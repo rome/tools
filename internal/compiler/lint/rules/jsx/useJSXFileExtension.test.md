@@ -8,19 +8,12 @@
 
 ```
 
- lint/jsx/useJSXFileExtension/reject/1/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx,useJSXFileExtension/reject/1/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
 
-    1 │ // @jsx
-  > 2 │ <div></div>
-      │ ^^^^^^^^^^^
-
   ℹ Change the test.js file extension to .jsx or .tsx.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -36,19 +29,12 @@
 
 ```
 
- lint/jsx/useJSXFileExtension/reject/2/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx,useJSXFileExtension/reject/2/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
 
-    1 │ // @jsx
-  > 2 │ <></>
-      │ ^^^^^
-
   ℹ Change the test.js file extension to .jsx or .tsx.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -63,19 +49,12 @@
 
 ```
 
- lint/jsx/useJSXFileExtension/reject/3/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx,useJSXFileExtension/reject/3/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
 
-    1 │ // @jsx
-  > 2 │ <Fragment></Fragment>
-      │ ^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Change the test.js file extension to .jsx or .tsx.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -90,19 +69,12 @@
 
 ```
 
- lint/jsx/useJSXFileExtension/reject/4/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx,useJSXFileExtension/reject/4/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
 
-    1 │ // @jsx
-  > 2 │ <React.Fragment></React.Fragment>
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Change the test.js file extension to .jsx or .tsx.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -116,7 +88,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -131,7 +102,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -146,7 +116,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -160,7 +129,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -174,7 +142,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -188,7 +155,6 @@
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -203,7 +169,6 @@
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -217,7 +182,6 @@
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -231,7 +195,6 @@
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 

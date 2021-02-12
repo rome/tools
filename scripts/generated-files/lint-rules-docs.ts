@@ -1,5 +1,11 @@
 import {createMockWorker} from "@internal/test-helpers";
-import {DiagnosticCategory, DiagnosticsProcessor} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticCategory,
+	DiagnosticsProcessor,
+	equalCategoryNames,
+	joinCategoryName,
+} from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {highlightCode} from "@internal/markup-syntax-highlight";
 import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
@@ -70,7 +76,7 @@ async function run(
 ) {
 	const diagnosticsHTML = await performFileOperation(
 		{
-			uid: `${category}/${i}/${filename}`,
+			uid: `${joinCategoryName(category)}/${i}/${filename}`,
 			sourceText: code,
 		},
 		async (ref) => {
@@ -97,8 +103,11 @@ async function run(
 			processor.addFilter({
 				test(diag) {
 					return (
-						diag.description.category === category ||
-						diag.description.category === "parse"
+						equalCategoryNames(diag.description.category, category) ||
+						equalCategoryNames(
+							diag.description.category,
+							DIAGNOSTIC_CATEGORIES.parse,
+						)
 					);
 				},
 			});
@@ -161,7 +170,8 @@ export async function main() {
 	}
 
 	for (const ruleName in tests) {
-		const rawCases = tests[ruleName];
+		const def = tests[ruleName];
+		const rawCases = def.cases;
 		const cases = Array.isArray(rawCases) ? rawCases : [rawCases];
 
 		await modifyGeneratedFile(
@@ -205,12 +215,7 @@ export async function main() {
 											lines.push("\n");
 										}
 										lines.push(
-											await run(
-												`lint/${ruleName}` as DiagnosticCategory,
-												i,
-												filename,
-												dedent(invalid[i]),
-											),
+											await run(def.category, i, filename, dedent(invalid[i])),
 										);
 									}
 								}
@@ -225,12 +230,7 @@ export async function main() {
 										lines.push("\n");
 									}
 									lines.push(
-										await run(
-											`lint/${ruleName}` as DiagnosticCategory,
-											i,
-											filename,
-											dedent(invalid[i]),
-										),
+										await run(def.category, i, filename, dedent(invalid[i])),
 									);
 								}
 							}

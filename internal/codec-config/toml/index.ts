@@ -8,8 +8,7 @@ import {
 	PartialConfigHandler,
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
-
-import {descriptions} from "@internal/diagnostics";
+import {DIAGNOSTIC_CATEGORIES, descriptions} from "@internal/diagnostics";
 import {Number0, ob1Inc} from "@internal/ob1";
 import convertToTomlFromConsumer from "@internal/codec-config/toml/convertToTomlFromConsumer";
 
@@ -185,7 +184,7 @@ export const toml: PartialConfigHandler = {
 			value: root,
 			// TODO position tracking
 			context: {
-				category: "parse",
+				category: DIAGNOSTIC_CATEGORIES.parse,
 				categoryValue: "toml",
 				normalizeKey: (key) => key,
 				getDiagnosticLocation: () => ({

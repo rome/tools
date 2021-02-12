@@ -16,13 +16,14 @@ CSSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid custom property found inside the \\\"var\\\" function"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "css"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:17
 				path: RelativeFilePath<invalid/var/input.css>

@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:38
 				path: UIDPath<esprima/invalid-syntax/migrated_0184/input.js>
@@ -91,11 +92,5 @@ JSRoot {
 
   ✖ 'with' in strict mode
 
-    (function () { 'use strict'; with (i); }())
-                                 ^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

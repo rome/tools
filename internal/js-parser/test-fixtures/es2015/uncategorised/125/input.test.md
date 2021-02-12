@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Duplicate constructor in the same class"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:40
 				path: UIDPath<es2015/uncategorised/125/input.js>
@@ -140,11 +141,5 @@ JSRoot {
 
   ✖ Duplicate constructor in the same class
 
-    class A { constructor() {} 'constructor'() {} }
-                               ^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

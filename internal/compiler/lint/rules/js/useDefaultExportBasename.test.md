@@ -8,20 +8,14 @@
 
 ```
 
- lint/js/useDefaultExportBasename/reject/1/foo.ts:1:24 lint/js/useDefaultExportBasename  FIXABLE  ━━
+ lint,js,useDefaultExportBasename/reject/1/foo.ts:1:24 lint/js/useDefaultExportBasename  FIXABLE  ━━
 
   ✖ The filename and the name of a default function should match.
-
-    export default function test() {}
-                            ^^^^
 
   ℹ The filename should be test.ts or the function name should be foo.
 
   ℹ Safe fix
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -36,20 +30,14 @@ export default function foo() {}
 
 ```
 
- lint/js/useDefaultExportBasename/reject/2/foo.ts:1:21 lint/js/useDefaultExportBasename  FIXABLE  ━━
+ lint,js,useDefaultExportBasename/reject/2/foo.ts:1:21 lint/js/useDefaultExportBasename  FIXABLE  ━━
 
   ✖ The filename and the name of a default class should match.
-
-    export default class Test {}
-                         ^^^^
 
   ℹ The filename should be Test.ts or the class name should be Foo.
 
   ℹ Safe fix
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -63,7 +51,6 @@ export default class Foo {}
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -77,7 +64,6 @@ export default function foo() {}
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -91,7 +77,6 @@ export default class Foo {}
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

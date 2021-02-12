@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Flow type cast expressions aren't allowed in TypeScript"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 3:31
 				path: UIDPath<typescript/assert-predicate/arrow-function/input.ts>
@@ -203,13 +204,5 @@ JSRoot {
 
   ✖ Flow type cast expressions aren't allowed in TypeScript
 
-    1 │ const assert1 = (value: unknown): asserts value is string => {}
-    2 │ const assert2 = (value: unknown): asserts value => {}
-  > 3 │ const assert3 = (value: unknown): asserts => {}
-      │                  ^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

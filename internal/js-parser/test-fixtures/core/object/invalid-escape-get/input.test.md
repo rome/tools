@@ -21,22 +21,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "get can't contain a unicode escape"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<core/object/invalid-escape-get/input.js>
 				start: Position 1:5
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"get"
-					RAW_MARKUP {value: " can't contain a unicode escape"}
-				]
 			}
 		}
 	]
@@ -88,11 +86,5 @@ JSRoot {
 
   ✖ get can't contain a unicode escape
 
-    ({ ge\u0074 x() {} })
-         ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

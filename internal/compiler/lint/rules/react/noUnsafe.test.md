@@ -8,21 +8,13 @@
 
 ```
 
- lint/react/noUnsafe/reject/1/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noUnsafe/reject/1/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The UNSAFE_componentWillMount method is unsafe for use in async rendering. Use the
     componentDidMount method instead.
 
-    1 │ class Hello extends React.Component {
-  > 2 │   UNSAFE_componentWillMount() {}
-      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ }
-
   ℹ See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -39,21 +31,13 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/noUnsafe/reject/2/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noUnsafe/reject/2/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The UNSAFE_componentWillReceiveProps method is unsafe for use in async rendering. Use the
     getDerivedStateFromProps method instead.
 
-    1 │ class Hello extends React.Component {
-  > 2 │   UNSAFE_componentWillReceiveProps() {}
-      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ }
-
   ℹ See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -70,21 +54,13 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/noUnsafe/reject/3/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noUnsafe/reject/3/file.tsx:2:1 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The UNSAFE_componentWillUpdate method is unsafe for use in async rendering. Use the
     componentDidUpdate method instead.
 
-    1 │ class Hello extends React.Component {
-  > 2 │   UNSAFE_componentWillUpdate() {}
-      │   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ }
-
   ℹ See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -100,7 +76,6 @@ class Hello extends React.Component {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -8,13 +8,10 @@
 
 ```
 
- lint/jsx/useSelfClosingElements/reject/1/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
+ lint,jsx,useSelfClosingElements/reject/1/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
 
   ✖ JSX elements without children should be marked as self-closing. In JSX, it is valid for any
     element to be self-closing.
-
-    <div></div>
-    ^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -22,9 +19,6 @@
     2   │ - </div>
       1 │ + <div·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -39,13 +33,10 @@
 
 ```
 
- lint/jsx/useSelfClosingElements/reject/2/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
+ lint,jsx,useSelfClosingElements/reject/2/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
 
   ✖ JSX elements without children should be marked as self-closing. In JSX, it is valid for any
     element to be self-closing.
-
-    <Component></Component>
-    ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -53,9 +44,6 @@
     2   │ - </Component>
       1 │ + <Component·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -70,13 +58,10 @@
 
 ```
 
- lint/jsx/useSelfClosingElements/reject/3/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
+ lint,jsx,useSelfClosingElements/reject/3/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
 
   ✖ JSX elements without children should be marked as self-closing. In JSX, it is valid for any
     element to be self-closing.
-
-    <Foo.bar></Foo.bar>
-    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -84,9 +69,6 @@
     2   │ - </Foo.bar>
       1 │ + <Foo.bar·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -100,7 +82,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -114,7 +95,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -130,7 +110,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -144,7 +123,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -160,7 +138,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -174,7 +151,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

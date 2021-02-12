@@ -21,22 +21,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "target can't contain a unicode escape"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-target/input.js>
 				start: Position 1:21
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"target"
-					RAW_MARKUP {value: " can't contain a unicode escape"}
-				]
 			}
 		}
 	]
@@ -91,11 +89,5 @@ JSRoot {
 
   ✖ target can't contain a unicode escape
 
-    function f() { new.ta\u0072get; }
-                         ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

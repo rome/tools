@@ -8,13 +8,10 @@
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/1/file.tsx:1 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/1/file.tsx:1 lint/react/noVoidElementsWithChildren
 FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ br is a void element tag and must not have children.
-
-    <br className={'dont-remove-class'}>invalid children</br>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -23,9 +20,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </br>
       1 │ + <br·className={"dont-remove-class"}·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,13 +34,10 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/2/file.tsx:1 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/2/file.tsx:1 lint/react/noVoidElementsWithChildren
 FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
-
-    <img>invalid children</img>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -55,9 +46,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </img>
       1 │ + <img·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,22 +60,16 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/3/file.tsx:1 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/3/file.tsx:1 lint/react/noVoidElementsWithChildren
 FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ hr is a void element tag and must not have children.
-
-    <hr children={'invalid children'} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - <hr·children={"invalid·children"}·/>
   + <hr·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -102,13 +84,10 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/4/file.tsx:1 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/4/file.tsx:1 lint/react/noVoidElementsWithChildren
 FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ area is a void element tag and must not have dangerouslySetInnerHTML.
-
-    <area dangerouslySetInnerHTML={{__html: ''}}></area>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -116,9 +95,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     2   │ - </area>
       1 │ + <area·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -133,14 +109,10 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/5/file.tsx:1 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/5/file.tsx:1 lint/react/noVoidElementsWithChildren
 FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children, or dangerouslySetInnerHTML.
-
-    <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid
-    children</img>
-    ^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -149,9 +121,6 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </img>
       1 │ + <img·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -166,21 +135,15 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/6/file.tsx:1:28 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/6/file.tsx:1:28 lint/react/noVoidElementsWithChildren
   FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
-
-    React.createElement('img', {children: 'child'})
-                                ^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - React.createElement("img",·{children:·"child"})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -195,21 +158,15 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/7/file.tsx:1:28 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/7/file.tsx:1:28 lint/react/noVoidElementsWithChildren
   FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
-
-    React.createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - React.createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -224,22 +181,16 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/8/file.tsx:1:20 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/8/file.tsx:1:20 lint/react/noVoidElementsWithChildren
   FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
-
-    React.createElement('img', {}, 'child')
-                        ^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - React.createElement("img",·{},·"child")
   + React.createElement("img",·{})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -254,21 +205,15 @@ React.createElement("img", {});
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/9/file.tsx:1:22 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/9/file.tsx:1:22 lint/react/noVoidElementsWithChildren
   FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
-
-    createElement('img', {children: 'child'})
-                          ^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - createElement("img",·{children:·"child"})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -283,21 +228,15 @@ React.createElement("img", {});
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/10/file.tsx:1:22 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/10/file.tsx:1:22 lint/react/noVoidElementsWithChildren
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have dangerouslySetInnerHTML.
-
-    createElement('img', {dangerouslySetInnerHTML: {__html: 'child'}})
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -312,22 +251,16 @@ React.createElement("img", {});
 
 ```
 
- lint/react/noVoidElementsWithChildren/reject/11/file.tsx:1:14 lint/react/noVoidElementsWithChildren
+ lint,react,noVoidElementsWithChildren/reject/11/file.tsx:1:14 lint/react/noVoidElementsWithChildren
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
-
-    createElement('img', {}, 'child')
-                  ^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - createElement("img",·{},·"child")
   + createElement("img",·{})
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -341,7 +274,6 @@ createElement("img", {});
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -357,7 +289,6 @@ createElement("img", {});
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -371,7 +302,6 @@ createElement("img", {});
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -385,7 +315,6 @@ createElement("img", {});
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -399,7 +328,6 @@ createElement("img", {});
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -413,7 +341,6 @@ React.createElement("img", {});
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -427,7 +354,6 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -441,7 +367,6 @@ React.createElement("div", {}, "child");
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -455,7 +380,6 @@ createElement("img", {});
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -469,7 +393,6 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 

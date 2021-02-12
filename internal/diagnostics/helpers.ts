@@ -5,12 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic, DiagnosticAdvice, DiagnosticLocation} from "./types";
+import {
+	Diagnostic,
+	DiagnosticAdvice,
+	DiagnosticCategoryDescription,
+	DiagnosticLocation,
+} from "./types";
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import stringDiff from "@internal/string-diff";
 import {Position} from "@internal/parser-core";
 import {ob1Get1} from "@internal/ob1";
 import {StaticMarkup, markup} from "@internal/markup";
+import {joinCategoryName} from "./categories";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
@@ -176,13 +182,10 @@ export function escapeCategoryValue(categoryValue: string): string {
 }
 
 // Join category
-export function joinCategoryName(
-	{category, categoryValue}: {
-		category: string;
-		categoryValue?: string;
-	},
+export function formatCategoryDescription(
+	{category, categoryValue}: DiagnosticCategoryDescription,
 ): string {
-	let human = category;
+	let human: string = joinCategoryName(category);
 	if (categoryValue !== undefined && categoryValue !== "") {
 		human = `${human}(${escapeCategoryValue(categoryValue)})`;
 	}

@@ -14,7 +14,13 @@ import {
 	MixedPathMap,
 	createAbsoluteFilePath,
 } from "@internal/path";
-import {Diagnostics, catchDiagnostics} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	Diagnostics,
+	catchDiagnostics,
+	formatCategoryDescription,
+	DiagnosticsProcessor,
+} from "@internal/diagnostics";
 import {
 	PartialServerQueryRequest,
 	ServerQueryResponse,
@@ -44,6 +50,10 @@ import {LSPCodeAction} from "./types";
 import {Event} from "@internal/events";
 import {CommandName} from "@internal/core/common/commands";
 
+type LSPProjectSession = {
+	request: ServerRequest;
+};
+
 export default class LSPServer {
 	constructor(request: ServerRequest) {
 		this.request = request;
@@ -51,10 +61,9 @@ export default class LSPServer {
 		this.client = request.client;
 
 		this.lintSessionsPending = new AbsoluteFilePathSet();
-		this.lintSessions = new AbsoluteFilePathMap();
+		this.projectSessions = new AbsoluteFilePathMap();
 		this.fileBuffers = new AbsoluteFilePathSet();
 		this.fileVersions = new AbsoluteFilePathMap();
-		this.pathToDiagnostics = new MixedPathMap();
 
 		this.watchProjectEvent = new Event({name: "watchProject"});
 
@@ -76,6 +85,8 @@ export default class LSPServer {
 		transport.errorEvent.subscribe((err) => {
 			request.server.fatalErrorHandler.handle(err);
 		});
+
+		this.diagnosticsProcessor = this.createDiagnosticsProcessor();
 	}
 
 	public transport: LSPTransport;
@@ -87,10 +98,19 @@ export default class LSPServer {
 	private fileBuffers: AbsoluteFilePathSet;
 	private fileVersions: AbsoluteFilePathMap<number>;
 	private lintSessionsPending: AbsoluteFilePathSet;
-	private lintSessions: AbsoluteFilePathMap<ServerRequest>;
-	private pathToDiagnostics: MixedPathMap<Diagnostics>;
+	private projectSessions: AbsoluteFilePathMap<LSPProjectSession>;
+	private diagnosticsProcessor: DiagnosticsProcessor;
 
 	public watchProjectEvent: Event<AbsoluteFilePath, void>;
+
+	private createDiagnosticsProcessor(): DiagnosticsProcessor {
+		// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
+		const processor = this.request.createDiagnosticsProcessor();
+		processor.addFilter({
+			category: DIAGNOSTIC_CATEGORIES["lint/pendingFixes"],
+		});
+		return processor;
+	}
 
 	private logMessage(path: AbsoluteFilePath, message: string) {
 		this.server.logger.info(markup`[LSPServer] ${message}`);
@@ -114,7 +134,7 @@ export default class LSPServer {
 		lines.push(`[Diagnostics - ${date.toTimeString()}] ${path.join()}`);
 		for (const diag of diagnostics) {
 			lines.push(
-				`  (${diag.description.category}) ${readMarkup(diag.description.message)}`,
+				`  (${formatCategoryDescription(diag.description)}) ${readMarkup(diag.description.message)}`,
 			);
 		}
 		this.logMessage(path, lines.join("\n"));
@@ -142,12 +162,12 @@ export default class LSPServer {
 
 	private unwatchProject(path: AbsoluteFilePath) {
 		// TODO maybe unset all buffers?
-		const req = this.lintSessions.get(path);
-		if (req !== undefined) {
+		const session = this.projectSessions.get(path);
+		if (session !== undefined) {
 			this.server.fatalErrorHandler.wrapPromise(
-				req.teardown(EMPTY_SUCCESS_RESPONSE),
+				session.request.teardown(EMPTY_SUCCESS_RESPONSE),
 			);
-			this.lintSessions.delete(path);
+			this.projectSessions.delete(path);
 		}
 	}
 
@@ -156,7 +176,7 @@ export default class LSPServer {
 	}
 
 	private async initProject(path: AbsoluteFilePath) {
-		if (this.lintSessions.has(path) || this.lintSessionsPending.has(path)) {
+		if (this.projectSessions.has(path) || this.lintSessionsPending.has(path)) {
 			return;
 		}
 
@@ -199,21 +219,15 @@ export default class LSPServer {
 					return;
 				}
 
-				// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
-				const processor = this.request.createDiagnosticsProcessor();
-				processor.addFilter({
-					category: "lint/pendingFixes",
-				});
-				processor.addDiagnostics(diagnostics);
-
-				this.pathToDiagnostics.set(path, processor.getDiagnostics());
+				this.diagnosticsProcessor.removePath(path);
+				this.diagnosticsProcessor.addDiagnostics(diagnostics);
 
 				this.transport.write({
 					method: "textDocument/publishDiagnostics",
 					params: {
 						uri: `file://${path.join()}`,
 						diagnostics: convertDiagnosticsToLSP(
-							processor.getDiagnostics(),
+							this.diagnosticsProcessor.getAllDiagnosticsForPath(path),
 							this.server,
 						),
 					},
@@ -228,7 +242,9 @@ export default class LSPServer {
 			subscription.unsubscribe();
 		});
 
-		this.lintSessions.set(path, req);
+		this.projectSessions.set(path, {
+			request: req,
+		});
 		this.lintSessionsPending.delete(path);
 
 		const date = new Date();
@@ -238,10 +254,10 @@ export default class LSPServer {
 
 	private async shutdown() {
 		// Unwatch projects
-		for (const path of this.lintSessions.keys()) {
+		for (const path of this.projectSessions.keys()) {
 			this.unwatchProject(path);
 		}
-		this.lintSessions.clear();
+		this.projectSessions.clear();
 
 		// Clear set buffers
 		for (const path of this.fileBuffers) {
@@ -310,8 +326,8 @@ export default class LSPServer {
 				const codeActions: LSPCodeAction[] = [];
 				const seenDecisions = new Set<string>();
 
-				const diagnostics = this.pathToDiagnostics.get(path);
-				if (diagnostics === undefined) {
+				const diagnostics = this.diagnosticsProcessor.getAllDiagnosticsForPath(path);
+				if (diagnostics.length === 0) {
 					return codeActions;
 				}
 
@@ -333,7 +349,7 @@ export default class LSPServer {
 						seenDecisions.add(decision);
 
 						codeActions.push({
-							title: `${readMarkup(advice.noun)}: ${diag.description.category}`,
+							title: `${readMarkup(advice.noun)}: ${formatCategoryDescription(diag.description)}`,
 							command: {
 								title: "Rome: Check",
 								command: "rome.check.decisions",

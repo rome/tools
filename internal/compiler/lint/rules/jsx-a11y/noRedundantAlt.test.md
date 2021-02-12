@@ -8,19 +8,13 @@
 
 ```
 
- lint/jsx-a11y/noRedundantAlt/reject/1/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noRedundantAlt/reject/1/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
-
-    <img src='src' alt='photo content' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@
 
 ```
 
- lint/jsx-a11y/noRedundantAlt/reject/2/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noRedundantAlt/reject/2/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
-
-    <img src='src' alt='picture content' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,19 +50,13 @@
 
 ```
 
- lint/jsx-a11y/noRedundantAlt/reject/3/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noRedundantAlt/reject/3/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
-
-    <img src='src' alt='image content' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -89,19 +71,13 @@
 
 ```
 
- lint/jsx-a11y/noRedundantAlt/reject/4/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noRedundantAlt/reject/4/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
-
-    <img src='src' alt='Photo content' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -116,19 +92,13 @@
 
 ```
 
- lint/jsx-a11y/noRedundantAlt/reject/5/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noRedundantAlt/reject/5/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
-
-    <img src='src' alt='Picture content' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -143,19 +113,13 @@
 
 ```
 
- lint/jsx-a11y/noRedundantAlt/reject/6/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noRedundantAlt/reject/6/file.tsx:1 lint/jsx-a11y/noRedundantAlt ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the words "image", "picture", or "photo" in img element alt text.
-
-    <img src='src' alt='Image content' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Screen readers announce img elements as "images", so it is not necessary to redeclare this in
     alternative text.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -169,7 +133,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -183,7 +146,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 

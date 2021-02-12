@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "await* has been removed from the async functions proposal. Use Promise.all() instead."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:2
 				path: UIDPath<es2017/async-functions/2/input.js>
@@ -88,13 +89,5 @@ JSRoot {
 
   ✖ await* has been removed from the async functions proposal. Use Promise.all() instead.
 
-    1 │ async function bar() {
-  > 2 │   await* foo();
-      │   ^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

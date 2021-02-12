@@ -3,6 +3,7 @@ import {LintRequest, LintResult, lint, lintRuleNames} from "@internal/compiler";
 import {ProjectConfig, createDefaultProjectConfig} from "@internal/project";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
+import {DIAGNOSTIC_CATEGORIES, equalCategoryNames} from "@internal/diagnostics";
 
 function createLintTransformOptions(
 	sourceText: string,
@@ -39,7 +40,7 @@ function createLintTransformSuppressions(
 				globalDecisions: [
 					{
 						action: "suppress",
-						category: "lint/js/noVar",
+						category: DIAGNOSTIC_CATEGORIES["lint/js/noVar"],
 						categoryValue: undefined,
 					},
 				],
@@ -56,7 +57,12 @@ test(
 	async (t) => {
 		function hasUndeclaredDiag(res: LintResult): boolean {
 			for (const diag of res.diagnostics) {
-				if (diag.description.category === "lint/js/noUndeclaredVariables") {
+				if (
+					equalCategoryNames(
+						diag.description.category,
+						DIAGNOSTIC_CATEGORIES["lint/js/noUndeclaredVariables"],
+					)
+				) {
 					return true;
 				}
 			}

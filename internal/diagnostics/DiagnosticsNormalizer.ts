@@ -7,9 +7,10 @@
 
 import {
 	Diagnostic,
+	DiagnosticAdvice,
 	DiagnosticAdviceItem,
 	DiagnosticDependencies,
-	DiagnosticIntegrity,
+	DiagnosticDescription,
 	DiagnosticLocation,
 	DiagnosticSuppression,
 	DiagnosticTags,
@@ -22,52 +23,70 @@ import {
 	normalizeMarkup,
 } from "@internal/markup";
 import {ob1Number0, ob1Number1} from "@internal/ob1";
-import {RequiredProps} from "@internal/typescript-helpers";
+import {mergeObjects} from "@internal/typescript-helpers";
 import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
 
-type NormalizeOptionsRequiredPosition = RequiredProps<
-	MarkupFormatNormalizeOptions,
-	"normalizePosition"
->;
-
 export type DiagnosticsNormalizerOptions = {
-	getIntegrity?: (path: AnyPath) => undefined | DiagnosticIntegrity;
 	tags?: DiagnosticTags;
 	label?: StaticMarkup;
 };
 
+function maybeMerge<T extends object>(a: T, b: Partial<T>): T {
+	for (let key in b) {
+		if (a[key] !== b[key]) {
+			return {
+				...a,
+				...b,
+			};
+		}
+	}
+
+	return a;
+}
+
+function maybeMap<T>(arr: Array<T>, callback: (item: T) => T): Array<T> {
+	let modified = false;
+
+	const normalized = arr.map((item) => {
+		const mapped = callback(item);
+		if (mapped !== item) {
+			modified = true;
+		}
+		return mapped;
+	});
+
+	return modified ? normalized : arr;
+}
+
 export default class DiagnosticsNormalizer {
 	constructor(
-		normalizeOptions?: DiagnosticsNormalizerOptions,
+		normalizeOptions: DiagnosticsNormalizerOptions = {},
 		markupOptions?: MarkupFormatNormalizeOptions,
 		sourceMaps?: SourceMapConsumerCollection,
 	) {
 		this.sourceMaps = sourceMaps;
 		this.inlineSourceText = new MixedPathMap();
-		this.hasMarkupOptions = markupOptions !== undefined;
-
-		this.hasOptions = normalizeOptions !== undefined;
-		this.options = normalizeOptions ?? {};
-
+		this.options = normalizeOptions;
 		this.inlinedSourceTextFilenames = new MixedPathSet();
-
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
 
 	private sourceMaps: undefined | SourceMapConsumerCollection;
 
 	private options: DiagnosticsNormalizerOptions;
-	private hasOptions: boolean;
-
-	private markupOptions: NormalizeOptionsRequiredPosition;
-	private hasMarkupOptions: boolean;
+	private markupOptions: MarkupFormatNormalizeOptions;
 
 	private inlineSourceText: MixedPathMap<string>;
 	private inlinedSourceTextFilenames: MixedPathSet;
 
+	public removePath(path: AnyPath) {
+		this.inlineSourceText.delete(path);
+		this.inlinedSourceTextFilenames.delete(path);
+	}
+
 	private createMarkupOptions(
 		markupOptions: MarkupFormatNormalizeOptions = {},
-	): NormalizeOptionsRequiredPosition {
+	): MarkupFormatNormalizeOptions {
 		const {sourceMaps} = this;
 
 		return {
@@ -120,7 +139,12 @@ export default class DiagnosticsNormalizer {
 			return path;
 		}
 
-		return normalizePosition(path, undefined, undefined).path;
+		let normalizedPath = normalizePosition(path, undefined, undefined).path;
+		if (normalizedPath.equal(path)) {
+			return path;
+		} else {
+			return normalizedPath;
+		}
 	}
 
 	private normalizePositionValue<T>(value: T): undefined | T {
@@ -133,8 +157,7 @@ export default class DiagnosticsNormalizer {
 
 	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
-		const {getIntegrity} = this.options;
-		if (sourceMaps === undefined && getIntegrity === undefined) {
+		if (sourceMaps === undefined) {
 			return location;
 		}
 
@@ -150,11 +173,10 @@ export default class DiagnosticsNormalizer {
 				);
 				if (resolved !== undefined) {
 					path = resolved.source;
-					start = {
-						...start,
+					start = mergeObjects(start, {
 						line: resolved.line,
 						column: resolved.column,
-					};
+					});
 				}
 			}
 
@@ -167,11 +189,10 @@ export default class DiagnosticsNormalizer {
 				if (resolved !== undefined) {
 					// TODO confirm this is the same as `start` if it resolved
 					path = resolved.source;
-					end = {
-						...end,
+					end = mergeObjects(end, {
 						line: resolved.line,
 						column: resolved.column,
-					};
+					});
 				}
 			}
 		}
@@ -204,23 +225,18 @@ export default class DiagnosticsNormalizer {
 			}
 		}
 
-		if (
-			integrity === undefined &&
-			getIntegrity !== undefined &&
-			normalizedPath !== undefined
-		) {
-			integrity = getIntegrity(normalizedPath);
-		}
+		marker = this.maybeNormalizeMarkup(marker);
+		start = this.normalizePositionValue(start);
+		end = this.normalizePositionValue(end);
 
-		return {
-			...location,
+		return maybeMerge(location, {
 			integrity,
 			sourceText,
 			path: normalizedPath,
-			marker: this.maybeNormalizeMarkup(marker),
-			start: this.normalizePositionValue(start),
-			end: this.normalizePositionValue(end),
-		};
+			marker,
+			start,
+			end,
+		});
 	}
 
 	private normalizeMarkup(markup: StaticMarkup): StaticMarkup {
@@ -236,40 +252,42 @@ export default class DiagnosticsNormalizer {
 	private normalizeDependencies(
 		deps: DiagnosticDependencies,
 	): DiagnosticDependencies {
-		return deps.map((dep) => {
-			return {
-				...dep,
+		return maybeMap(deps, (dep) => {
+			return maybeMerge(dep, {
 				path: this.normalizePath(dep.path),
-			};
+			});
 		});
 	}
 
-	private normalizeDiagnosticAdviceItem(
+	private normalizeAdvice(advice: DiagnosticAdvice): DiagnosticAdvice {
+		return maybeMap(advice, (item) => {
+			return this.normalizeAdviceItem(item);
+		});
+	}
+
+	private normalizeAdviceItem(
 		item: DiagnosticAdviceItem,
 	): DiagnosticAdviceItem {
 		const {sourceMaps} = this;
 
 		switch (item.type) {
 			case "frame":
-				return {
-					...item,
+				return maybeMerge(item, {
 					location: this.normalizeLocation(item.location),
-				};
+				});
 
 			case "list":
-				return {
-					...item,
-					list: item.list.map((markup) => this.normalizeMarkup(markup)),
-				};
+				return maybeMerge(item, {
+					list: maybeMap(item.list, (markup) => this.normalizeMarkup(markup)),
+				});
 
 			case "log":
-				return {
-					...item,
+				return maybeMerge(item, {
 					text: this.normalizeMarkup(item.text),
-				};
+				});
 
 			case "action":
-				if (this.markupOptions.stripPositions) {
+				if (this.markupOptions.stripPositions && item.commandFlags !== undefined && Object.keys(item.commandFlags).length > 0) {
 					return {
 						...item,
 						// Command flags could have position information
@@ -279,16 +297,24 @@ export default class DiagnosticsNormalizer {
 					return item;
 				}
 
-			case "stacktrace":
-				return {
-					...item,
-					importantPaths: new MixedPathSet(
-						Array.from(
-							item.importantPaths ?? [],
-							(path) => this.normalizePath(path),
-						),
-					),
-					frames: item.frames.map((frame) => {
+			case "stacktrace": {
+				let importantPaths: undefined | MixedPathSet = item.importantPaths;
+
+				if (importantPaths !== undefined) {
+					const existingPaths = Array.from(importantPaths);
+					const newPaths = maybeMap(
+						existingPaths,
+						(path) => this.normalizePath(path),
+					);
+
+					if (newPaths !== existingPaths) {
+						importantPaths = new MixedPathSet(newPaths);
+					}
+				}
+
+				return maybeMerge(item, {
+					importantPaths,
+					frames: maybeMap(item.frames, (frame) => {
 						const {path, line, column} = frame;
 
 						if (
@@ -297,12 +323,11 @@ export default class DiagnosticsNormalizer {
 							column === undefined ||
 							(sourceMaps !== undefined && !sourceMaps.has(path))
 						) {
-							return {
-								...frame,
-								start: this.normalizePositionValue(line),
+							return maybeMerge(frame, {
+								line: this.normalizePositionValue(line),
 								column: this.normalizePositionValue(column),
 								path: this.normalizePath(path),
-							};
+							});
 						}
 
 						if (sourceMaps !== undefined) {
@@ -312,38 +337,58 @@ export default class DiagnosticsNormalizer {
 								column,
 							);
 							if (resolved !== undefined) {
-								return {
-									...frame,
+								return maybeMerge(frame, {
 									path: this.normalizePath(resolved.source),
 									line: this.normalizePositionValue(resolved.line),
 									column: this.normalizePositionValue(resolved.column),
-								};
+								});
 							}
 						}
 
 						return frame;
 					}),
-				};
+				});
+			}
 		}
 
 		return item;
 	}
 
-	public normalizeSuppression(suppression: DiagnosticSuppression): DiagnosticSuppression {
-		const path = this.normalizePath(suppression.path);
-		if (path.equal(suppression.path)) {
-			return suppression;
-		} else {
-			return {
-				...suppression,
-				path,
-			};
-		}
+	public normalizeSuppression(
+		suppression: DiagnosticSuppression,
+	): DiagnosticSuppression {
+		return maybeMerge(suppression, {
+			path: this.normalizePath(suppression.path),
+		});
 	}
 
-	public hasNormalize(): boolean {
-		const {sourceMaps} = this;
-		return this.hasMarkupOptions || (sourceMaps !== undefined && sourceMaps.hasAny()) || this.inlineSourceText.size === 0 || this.hasOptions;
+	private hasNormalize(): boolean {
+		const {sourceMaps, markupOptions} = this;
+		if (sourceMaps !== undefined && sourceMaps.hasAny()) {
+			return true;
+		}
+
+		if (this.inlineSourceText.size > 0) {
+			return true;
+		}
+
+		if (markupOptions.stripFilelinkText || markupOptions.stripPositions) {
+			return true;
+		}
+
+		if (markupOptions.humanizeFilename !== undefined || markupOptions.normalizePosition !== undefined) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private normalizeDescription(description: DiagnosticDescription): DiagnosticDescription {
+		const advice = this.normalizeAdvice(description.advice);
+		return maybeMerge(description, {
+			message: this.normalizeMarkup(description.message),
+			advice,
+		});
 	}
 
 	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
@@ -352,19 +397,9 @@ export default class DiagnosticsNormalizer {
 			return diag;
 		}
 
-		const {description} = diag;
-
-		const advice = description.advice.map((item) => {
-			return this.normalizeDiagnosticAdviceItem(item);
-		});
-
 		let merge: Partial<Diagnostic> = {
 			location: this.normalizeLocation(diag.location),
-			description: {
-				...description,
-				message: this.normalizeMarkup(description.message),
-				advice,
-			},
+			description: this.normalizeDescription(diag.description),
 		};
 
 		if (diag.label !== undefined) {
@@ -377,10 +412,14 @@ export default class DiagnosticsNormalizer {
 
 		// Add on any specified tags
 		if (this.options.tags) {
-			merge.tags = {
-				...this.options.tags,
-				...diag.tags,
-			};
+			if (diag.tags === undefined) {
+				merge.tags = this.options.tags;
+			} else {
+				merge.tags = {
+					...this.options.tags,
+					...diag.tags,
+				};
+			}
 		}
 
 		// Add on any specified tags
@@ -389,11 +428,6 @@ export default class DiagnosticsNormalizer {
 			merge.label = diag.label ? markup`${label} (${diag.label})` : label;
 		}
 
-		diag = {
-			...diag,
-			...merge,
-		};
-
-		return diag;
+		return maybeMerge(diag, merge);
 	}
 }

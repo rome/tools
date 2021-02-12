@@ -8,19 +8,13 @@
 
 ```
 
- lint/react/noFindDOMNode/reject/1/file.tsx:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noFindDOMNode/reject/1/file.tsx:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the findDOMNode function.
-
-    findDOMNode(this).scrollIntoView()
-    ^^^^^^^^^^^
 
   ℹ React plans to deprecate the findDOMNode function entirely since it prevents internal
     optimizations. Use callback refs instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@ findDOMNode(this).scrollIntoView();
 
 ```
 
- lint/react/noFindDOMNode/reject/2/file.tsx:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noFindDOMNode/reject/2/file.tsx:1 lint/react/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the findDOMNode function.
-
-    ReactDOM.findDOMNode(this).scrollIntoView()
-    ^^^^^^^^^^^^^^^^^^^^
 
   ℹ React plans to deprecate the findDOMNode function entirely since it prevents internal
     optimizations. Use callback refs instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -61,7 +49,6 @@ ReactDOM.findDOMNode(this).scrollIntoView();
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 

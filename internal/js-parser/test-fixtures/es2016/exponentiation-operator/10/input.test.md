@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Illegal expression. Wrap left hand side or entire exponentiation in parentheses."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<es2016/exponentiation-operator/10/input.js>
@@ -72,11 +73,5 @@ JSRoot {
 
   ✖ Illegal expression. Wrap left hand side or entire exponentiation in parentheses.
 
-    -5 ** 6;
-     ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -24,19 +24,16 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
 				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "A "}
-					"interface declaration"
-					RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "A interface declaration is only valid inside of a TypeScript file"}
 				advice: Array [
 					log {
 						category: "info"
@@ -86,15 +83,7 @@ JSRoot {
 
   ✖ A interface declaration is only valid inside of a TypeScript file
 
-  > 1 │ interface I {
-      │ ^
-    2 │   #p: string
-    3 │ }
-
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

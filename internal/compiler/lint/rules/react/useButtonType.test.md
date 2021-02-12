@@ -8,19 +8,13 @@
 
 ```
 
- lint/react/useButtonType/reject/1/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useButtonType/reject/1/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
-
-    <button>child</button>
-    ^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
     application.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -37,19 +31,13 @@
 
 ```
 
- lint/react/useButtonType/reject/2/file.tsx:1:8 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useButtonType/reject/2/file.tsx:1:8 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
-
-    <button type='foo'>child</button>
-            ^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
     application.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -66,19 +54,13 @@
 
 ```
 
- lint/react/useButtonType/reject/3/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useButtonType/reject/3/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
-
-    React.createElement('button', {type: 'foo'}, ['child'])
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
     application.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -93,19 +75,13 @@ React.createElement("button", {type: "foo"}, ["child"]);
 
 ```
 
- lint/react/useButtonType/reject/4/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useButtonType/reject/4/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
-
-    createElement('button', {type: 'foo'}, ['child'])
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
     application.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -119,7 +95,6 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -135,7 +110,6 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -151,7 +125,6 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -167,7 +140,6 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -183,7 +155,6 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -199,7 +170,6 @@ createElement("button", {type: "foo"}, ["child"]);
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -213,7 +183,6 @@ React.createElement("div", ["child"]);
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -227,7 +196,6 @@ React.createElement("div", {type: "type"}, ["child"]);
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -241,7 +209,6 @@ React.createElement("button", {type: "button"}, ["child"]);
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -255,7 +222,6 @@ React.createElement("button", {type: "submit"}, ["child"]);
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -269,7 +235,6 @@ React.createElement("button", {type: "reset"}, ["child"]);
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -283,7 +248,6 @@ createElement("div", ["child"]);
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -297,7 +261,6 @@ createElement("div", {type: "type"}, ["child"]);
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -311,7 +274,6 @@ createElement("button", {type: "button"}, ["child"]);
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -325,7 +287,6 @@ createElement("button", {type: "submit"}, ["child"]);
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 

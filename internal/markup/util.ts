@@ -4,9 +4,10 @@ import {humanizeNumber} from "@internal/string-utils";
 import {AnyPath, createAnyPath} from "@internal/path";
 import {ob1Coerce0, ob1Coerce1, ob1Get0, ob1Get1} from "@internal/ob1";
 import {StaticMarkup} from "./escape";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export function createEmptyAttributes(): Consumer {
-	return consumeUnknown({}, "parse", "romemarkup");
+	return consumeUnknown({}, DIAGNOSTIC_CATEGORIES.parse, "romemarkup");
 }
 
 export function isSingleEscaped(markup: StaticMarkup): markup is [string] {

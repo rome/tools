@@ -31,28 +31,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 4:0
 				path: UIDPath<core/uncategorised/386/input.js>
 				start: Position 4:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"block"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed block"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
-					frame {location: SourceLocation core/uncategorised/386/input.js 4:1-4:1}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 4:1
+							path: UIDPath<core/uncategorised/386/input.js>
+							start: Position 4:1
+						}
+					}
 				]
 			}
 		}
@@ -70,11 +73,5 @@ JSRoot {
 
   ℹ We expected to find the closing character } here
 
-    {
-     ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -8,22 +8,12 @@
 
 ```
 
- lint/js/noSetterReturn/reject/1/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noSetterReturn/reject/1/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
-    2 │   set name(value) {
-    3 │     if (!value) {
-  > 4 │       return 'wrong';
-      │       ^^^^^^^^^^^^^^^
-    5 │     }
-    6 │   }
-
   ℹ Setters that return values are either typos or should not be setters.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -44,22 +34,12 @@ class p {
 
 ```
 
- lint/js/noSetterReturn/reject/2/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noSetterReturn/reject/2/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
-    2 │   static set name(value) {
-    3 │     if (!value) {
-  > 4 │       return 'wrong';
-      │       ^^^^^^^^^^^^^^^
-    5 │     }
-    6 │   }
-
   ℹ Setters that return values are either typos or should not be setters.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -80,22 +60,12 @@ class p {
 
 ```
 
- lint/js/noSetterReturn/reject/3/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noSetterReturn/reject/3/file.ts:4:3 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not return a value at the end of a setter method.
 
-    2 │   set name(value) {
-    3 │     if (!value) {
-  > 4 │       return 'wrong';
-      │       ^^^^^^^^^^^^^^^
-    5 │     }
-    6 │   }
-
   ℹ Setters that return values are either typos or should not be setters.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -115,7 +85,6 @@ let p = {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

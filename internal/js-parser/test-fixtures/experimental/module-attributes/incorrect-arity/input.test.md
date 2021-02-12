@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "import() requires exactly one argument"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<experimental/module-attributes/incorrect-arity/input.js>
@@ -124,12 +125,5 @@ JSRoot {
 
   ✖ import() requires exactly one argument
 
-  > 1 │ import();
-      │        ^
-    2 │ import("./foo.json", { with: { type: "json"} }, "unsupported");
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

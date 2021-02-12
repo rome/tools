@@ -1,6 +1,7 @@
 import {DiagnosticAdvice} from "@internal/diagnostics";
 import {createDiagnosticsCategory} from "../index";
 import {markup} from "@internal/markup";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics/categories";
 
 const IGNORE_ADVICE: DiagnosticAdvice = [
 	{
@@ -18,7 +19,7 @@ const IGNORE_ADVICE: DiagnosticAdvice = [
 // @internal/core/server/commands/init.ts
 export const initCommand = createDiagnosticsCategory({
 	UNCOMMITTED_CHANGES: {
-		category: "commands/auto-config/uncommittedChanges",
+		category: DIAGNOSTIC_CATEGORIES["commands/auto-config/uncommittedChanges"],
 		message: markup`Uncommitted changes in repository`,
 		advice: [
 			{
@@ -35,7 +36,7 @@ export const initCommand = createDiagnosticsCategory({
 		],
 	},
 	EXPECTED_REPO: {
-		category: "commands/auto-config/expectedRepo",
+		category: DIAGNOSTIC_CATEGORIES["commands/auto-config/expectedRepo"],
 		message: markup`Directory is not a repository. Are you sure this is where you wanted to create a project?`,
 		advice: [
 			{

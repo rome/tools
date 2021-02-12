@@ -41,22 +41,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "implements list cannot be empty"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:33
 				path: UIDPath<typescript/class/extends-implements-empty/input.ts>
 				start: Position 1:33
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"implements"
-					RAW_MARKUP {value: " list cannot be empty"}
-				]
 			}
 		}
 	]
@@ -71,12 +69,5 @@ JSRoot {
 
   ✖ implements list cannot be empty
 
-  > 1 │ class Foo extends Bar implements {
-      │                                  ^
-    2 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

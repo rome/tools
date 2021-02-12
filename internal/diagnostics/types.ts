@@ -14,9 +14,12 @@ import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
 import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
-import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
+import {AnyPath, MixedPathSet} from "@internal/path";
 
-export type DiagnosticsPathMap = MixedPathMap<Diagnostics>;
+export type DiagnosticCategoryDescription = {
+	category: DiagnosticCategory;
+	categoryValue?: string;
+};
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
@@ -26,10 +29,8 @@ export type DiagnosticFilter = {
 	line?: Number1;
 };
 
-export type DiagnosticSuppression = {
+export type DiagnosticSuppression = DiagnosticCategoryDescription & {
 	path: AnyPath;
-	category: DiagnosticCategory;
-	categoryValue: undefined | string;
 	startLine: Number1;
 	endLine: Number1;
 	loc: SourceLocation;
@@ -111,9 +112,7 @@ export type DiagnosticIntegrity = {
 	hash: string;
 };
 
-export type DiagnosticDescription = {
-	category: DiagnosticCategory;
-	categoryValue?: string;
+export type DiagnosticDescription = DiagnosticCategoryDescription & {
 	message: StaticMarkup;
 	advice: DiagnosticAdvice;
 };

@@ -8,12 +8,9 @@
 
 ```
 
- lint/react/useFragmentSyntax/reject/1/file.tsx:1 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━━━━
+ lint,react,useFragmentSyntax/reject/1/file.tsx:1 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    <Fragment><Foo /><Foo /></Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -26,9 +23,6 @@
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -46,12 +40,9 @@
 
 ```
 
- lint/react/useFragmentSyntax/reject/2/file.tsx:1 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━━━━
+ lint,react,useFragmentSyntax/reject/2/file.tsx:1 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    <React.Fragment><Foo /><Foo /></React.Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -64,9 +55,6 @@
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -84,12 +72,9 @@
 
 ```
 
- lint/react/useFragmentSyntax/reject/3/file.tsx:1:19 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
+ lint,react,useFragmentSyntax/reject/3/file.tsx:1:19 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = <div><Fragment><Foo /><Foo /></Fragment></div>
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -102,9 +87,6 @@
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -122,12 +104,9 @@ const Hello = <div>
 
 ```
 
- lint/react/useFragmentSyntax/reject/4/file.tsx:1:19 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
+ lint,react,useFragmentSyntax/reject/4/file.tsx:1:19 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = <div><React.Fragment><Foo /><Foo /></React.Fragment></div>
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -140,9 +119,6 @@ const Hello = <div>
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -160,12 +136,9 @@ const Hello = <div>
 
 ```
 
- lint/react/useFragmentSyntax/reject/5/file.tsx:1:14 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
+ lint,react,useFragmentSyntax/reject/5/file.tsx:1:14 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = <React.Fragment><Foo /><Foo /></React.Fragment>
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -178,9 +151,6 @@ const Hello = <div>
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -198,12 +168,9 @@ const Hello = <>
 
 ```
 
- lint/react/useFragmentSyntax/reject/6/file.tsx:1:14 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
+ lint,react,useFragmentSyntax/reject/6/file.tsx:1:14 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = <Fragment><Foo /><Foo /></Fragment>
-                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -216,9 +183,6 @@ const Hello = <>
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -236,15 +200,9 @@ const Hello = <>
 
 ```
 
- lint/react/useFragmentSyntax/reject/7/file.tsx:2:11 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
+ lint,react,useFragmentSyntax/reject/7/file.tsx:2:11 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    1 │ function Foo() {
-  > 2 │   let bar = <React.Fragment><Foo /><Foo /></React.Fragment>;
-      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │   return bar;
-    4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -257,9 +215,6 @@ const Hello = <>
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -280,15 +235,9 @@ function Foo() {
 
 ```
 
- lint/react/useFragmentSyntax/reject/8/file.tsx:2:11 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
+ lint,react,useFragmentSyntax/reject/8/file.tsx:2:11 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    1 │ function Foo() {
-  > 2 │   let bar = <Fragment><Foo /><Foo /></Fragment>;
-      │             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │   return bar;
-    4 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -301,9 +250,6 @@ function Foo() {
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -324,14 +270,9 @@ function Foo() {
 
 ```
 
- lint/react/useFragmentSyntax/reject/9/file.tsx:2:8 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━━
+ lint,react,useFragmentSyntax/reject/9/file.tsx:2:8 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    1 │ function Hello() {
-  > 2 │   return <React.Fragment><Foo /><Foo /></React.Fragment>
-      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -344,9 +285,6 @@ function Foo() {
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -366,14 +304,9 @@ function Hello() {
 
 ```
 
- lint/react/useFragmentSyntax/reject/10/file.tsx:2:8 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
+ lint,react,useFragmentSyntax/reject/10/file.tsx:2:8 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    1 │ function Hello() {
-  > 2 │   return <Fragment><Foo /><Foo /></Fragment>
-      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ }
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -386,9 +319,6 @@ function Hello() {
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -408,12 +338,9 @@ function Hello() {
 
 ```
 
- lint/react/useFragmentSyntax/reject/11/file.tsx:1:20 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━
+ lint,react,useFragmentSyntax/reject/11/file.tsx:1:20 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = () => <React.Fragment><Foo /><Foo /></React.Fragment>
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -426,9 +353,6 @@ function Hello() {
     4   │ - </React.Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -448,12 +372,9 @@ function Hello() {
 
 ```
 
- lint/react/useFragmentSyntax/reject/12/file.tsx:1:20 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━
+ lint,react,useFragmentSyntax/reject/12/file.tsx:1:20 lint/react/useFragmentSyntax  FIXABLE  ━━━━━━━
 
   ✖ Use shorthand syntax for Fragment elements instead of standard syntax.
-
-    const Hello = () => <Fragment><Foo /><Foo /></Fragment>
-                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.
 
@@ -466,9 +387,6 @@ function Hello() {
     4   │ - </Fragment>
       4 │ + </>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -487,7 +405,6 @@ function Hello() {
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -504,7 +421,6 @@ function Hello() {
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -518,7 +434,6 @@ function Hello() {
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -534,7 +449,6 @@ function Hello() {
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -552,7 +466,6 @@ const Hello = <div>
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -568,7 +481,6 @@ const Hello = <>
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -584,7 +496,6 @@ const Hello = <Fragment key="id">
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -600,7 +511,6 @@ const Hello = <React.Fragment key="id">
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -617,7 +527,6 @@ function Foo() {
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -635,7 +544,6 @@ function Hello() {
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -653,7 +561,6 @@ function Hello() {
 ### `22`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -669,7 +576,6 @@ function Hello() {
 ### `23`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -685,7 +591,6 @@ function Hello() {
 ### `24`
 
 ```
-✔ No known problems!
 
 ```
 

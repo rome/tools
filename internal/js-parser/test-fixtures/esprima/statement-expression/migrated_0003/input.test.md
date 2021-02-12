@@ -32,13 +32,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\\\uXXXX"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<esprima/statement-expression/migrated_0003/input.js>
@@ -57,11 +58,5 @@ JSRoot {
 
   ✖ Expecting Unicode escape sequence \uXXXX
 
-    a\\u0061
-      ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

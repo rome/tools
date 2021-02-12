@@ -8,18 +8,12 @@
 
 ```
 
- lint/jsx/usePascalCase/reject/1/file.tsx:1 lint/jsx/usePascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx,usePascalCase/reject/1/file.tsx:1 lint/jsx/usePascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Switch Foo_component to FooComponent.
 
-    <Foo_component />
-    ^^^^^^^^^^^^^^^^^
-
   ℹ User-defined JSX components should be defined and referenced in PascalCase.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@
 
 ```
 
- lint/jsx/usePascalCase/reject/2/file.tsx:1 lint/jsx/usePascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx,usePascalCase/reject/2/file.tsx:1 lint/jsx/usePascalCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Switch FOO_COMPONENT to FOOCOMPONENT.
 
-    <FOO_COMPONENT />
-    ^^^^^^^^^^^^^^^^^
-
   ℹ User-defined JSX components should be defined and referenced in PascalCase.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +47,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -73,7 +60,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -87,7 +73,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -101,7 +86,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -115,7 +99,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -129,7 +112,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -143,7 +125,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

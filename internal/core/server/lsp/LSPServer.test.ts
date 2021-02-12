@@ -3,6 +3,7 @@ import {createIntegrationTest} from "@internal/test-helpers";
 import LSPServer from "@internal/core/server/lsp/LSPServer";
 import {JSONObject} from "@internal/codec-config";
 import {Consumer, consumeUnknown} from "@internal/consume";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 function makeRange(
 	startLine: number,
@@ -30,7 +31,7 @@ function createMessage(res: JSONObject) {
 function consumeMessage(msg: string): Consumer {
 	const content = msg.split("\r\n\r\n", 2)[1];
 	const data = JSON.parse(content);
-	return consumeUnknown(data, "parse", "json");
+	return consumeUnknown(data, DIAGNOSTIC_CATEGORIES.parse, "json");
 }
 
 test(

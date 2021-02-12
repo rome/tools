@@ -1,3 +1,4 @@
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import {createRelativeFilePath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
@@ -9,7 +10,7 @@ test(
 			t,
 			{
 				path: createRelativeFilePath("file.ts"),
-				category: "lint/ts/useInterfaces",
+				category: DIAGNOSTIC_CATEGORIES["lint/ts/useInterfaces"],
 			},
 		);
 	},

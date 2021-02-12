@@ -26,13 +26,14 @@ JSRoot {
 			]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "regex"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "regex"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<es2015/uncategorised/196/input.js>
@@ -106,11 +107,5 @@ JSRoot {
 
   ✖ Range values reversed. Start char code is greater than end char code
 
-    /[\uD834\uDF06-\uD834\uDF08a-z]/u
-            ^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

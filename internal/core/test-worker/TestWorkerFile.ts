@@ -7,6 +7,7 @@
 
 import {UnknownObject} from "@internal/typescript-helpers";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticLocation,
@@ -419,7 +420,7 @@ export default class TestWorkerFile {
 			struct,
 			{
 				description: {
-					category: "tests/failure",
+					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 				},
 				path: this.path,
 				cleanFrames,

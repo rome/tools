@@ -8,12 +8,9 @@
 
 ```
 
- lint/react/noUselessFragment/reject/1/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
+ lint,react,noUselessFragment/reject/1/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
-
-    <>{foo}</>
-    ^^^^^^^^^^
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
@@ -25,9 +22,6 @@
     3   │ - </>
       1 │ + {foo}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -42,12 +36,9 @@
 
 ```
 
- lint/react/noUselessFragment/reject/2/file.tsx:1:3 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
+ lint,react,noUselessFragment/reject/2/file.tsx:1:3 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
-
-    <p><>foo</></p>
-       ^^^^^^^^
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
@@ -59,9 +50,6 @@
     3   │ - </>
       1 │ + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -78,12 +66,9 @@
 
 ```
 
- lint/react/noUselessFragment/reject/3/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
+ lint,react,noUselessFragment/reject/3/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
-
-    <></>
-    ^^^^^
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
@@ -92,9 +77,6 @@
 
   - <></>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -109,12 +91,9 @@
 
 ```
 
- lint/react/noUselessFragment/reject/4/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
+ lint,react,noUselessFragment/reject/4/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
-
-    <React.Fragment>foo</React.Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
@@ -126,9 +105,6 @@
     3   │ - </React.Fragment>
       1 │ + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -143,12 +119,9 @@ foo;
 
 ```
 
- lint/react/noUselessFragment/reject/5/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
+ lint,react,noUselessFragment/reject/5/file.tsx:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
-
-    <Fragment>foo</Fragment>
-    ^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
@@ -160,9 +133,6 @@ foo;
     3   │ - </Fragment>
       1 │ + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -177,18 +147,9 @@ foo;
 
 ```
 
- lint/react/noUselessFragment/reject/6/file.tsx:2:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
+ lint,react,noUselessFragment/reject/6/file.tsx:2:1 lint/react/noUselessFragment  FIXABLE  ━━━━━━━━━
 
   ✖ Avoid using unnecessary Fragment.
-
-    1 │ <section>
-  > 2 │   <>
-      │   ^^
-  > 3 │     <div />
-  > 4 │     <div />
-  > 5 │   </>
-      │ ^^^^^
-    6 │ </section>
 
   ℹ A Fragment is redundant if it contains only one child, or if it is the child of a html
     element, and is not a keyed fragment.
@@ -202,9 +163,6 @@ foo;
       1 │ + <div·/>
       2 │ + <div·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -221,7 +179,6 @@ foo;
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -238,7 +195,6 @@ foo;
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -255,7 +211,6 @@ foo;
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -272,7 +227,6 @@ foo;
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -288,7 +242,6 @@ const cat = <>
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -306,7 +259,6 @@ function cat() {
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -324,7 +276,6 @@ function cat() {
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -343,7 +294,6 @@ function cat() {
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -362,7 +312,6 @@ function cat() {
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -378,7 +327,6 @@ function cat() {
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 

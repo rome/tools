@@ -8,21 +8,15 @@
 
 ```
 
- lint/jsx/noImplicitBoolean/reject/1/file.tsx:1:7 lint/jsx/noImplicitBoolean  FIXABLE  ━━━━━━━━━━━━━
+ lint,jsx,noImplicitBoolean/reject/1/file.tsx:1:7 lint/jsx/noImplicitBoolean  FIXABLE  ━━━━━━━━━━━━━
 
   ✖ Use explicit boolean values for boolean JSX props.
-
-    <input disabled />
-           ^^^^^^^^
 
   ℹ Safe fix
 
   - disabled
   + disabled={true}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -36,7 +30,6 @@
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -50,7 +43,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -64,7 +56,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -78,7 +69,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -92,7 +82,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

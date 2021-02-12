@@ -8,16 +8,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/1/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/1/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang="foo"></html>
-               ^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -33,16 +27,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/2/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/2/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang="ex"></html>
-               ^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -58,16 +46,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/3/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/3/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang="foo-bar"></html>
-               ^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -83,12 +65,9 @@
 
 ```
 
- lint/a11y/useValidLang/reject/4/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/4/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
-
-    <html lang="aa-zz"></html>
-               ^^^^^^^
 
   ℹ Did you mean aa-AF?
 
@@ -109,11 +88,6 @@
   - aa-AM
   and 222 others...
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
-
-✖ Found 1 problem
 
 ```
 
@@ -129,12 +103,9 @@
 
 ```
 
- lint/a11y/useValidLang/reject/5/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/5/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
-
-    <html lang="zz-AA"></html>
-               ^^^^^^^
 
   ℹ Did you mean az-AF?
 
@@ -155,11 +126,6 @@
   - az-AW
   and 37 others...
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
-
-✖ Found 1 problem
 
 ```
 
@@ -175,16 +141,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/6/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/6/file.html:1:11 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang="en2"></html>
-               ^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -199,7 +159,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -214,7 +173,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -230,16 +188,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/1/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/1/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='foo'></html>
-          ^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -254,16 +206,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/2/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/2/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='ex'></html>
-          ^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -278,16 +224,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/3/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/3/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
 
-    <html lang='foo-bar'></html>
-          ^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -302,12 +242,9 @@
 
 ```
 
- lint/a11y/useValidLang/reject/4/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/4/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
-
-    <html lang='aa-zz'></html>
-          ^^^^^^^^^^^^
 
   ℹ Did you mean aa-AF?
 
@@ -328,11 +265,6 @@
   - aa-AM
   and 222 others...
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
-
-✖ Found 1 problem
 
 ```
 
@@ -347,12 +279,9 @@
 
 ```
 
- lint/a11y/useValidLang/reject/5/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/5/file.tsx:1:6 lint/a11y/useValidLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid value for the lang attribute.
-
-    <html lang='zz-AA'></html>
-          ^^^^^^^^^^^^
 
   ℹ Did you mean az-AF?
 
@@ -373,11 +302,6 @@
   - az-AW
   and 37 others...
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
-
-✖ Found 1 problem
 
 ```
 
@@ -392,16 +316,10 @@
 
 ```
 
- lint/a11y/useValidLang/reject/6/file.tsx:1:23 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useValidLang/reject/6/file.tsx:1:23 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
 
-    <html lang='en2></html>
-                           ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -414,7 +332,6 @@ undefined
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -428,7 +345,6 @@ undefined
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -442,7 +358,6 @@ undefined
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 

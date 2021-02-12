@@ -11,6 +11,58 @@ CSSRoot {
 	integrity: undefined
 	loc: SourceLocation invalid/selector5/input.css 1:0-3:1
 	path: RelativeFilePath<invalid/selector5/input.css>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "css"
+				marker: undefined
+				sourceText: undefined
+				end: Position 1:9
+				path: RelativeFilePath<invalid/selector5/input.css>
+				start: Position 1:9
+			}
+			description: Object {
+				categoryValue: "css"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown attribute matcher."}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Did you mean <emphasis>~=</emphasis>?"}
+					}
+					diff {
+						language: "unknown"
+						diff: Array [
+							Array [
+								-1
+								"*"
+							]
+							Array [
+								1
+								"~="
+							]
+						]
+					}
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Or one of these?"}
+					}
+					list {
+						truncate: true
+						list: Array [
+							RAW_MARKUP {value: "|="}
+							RAW_MARKUP {value: "^="}
+							RAW_MARKUP {value: "$="}
+							RAW_MARKUP {value: "*="}
+							RAW_MARKUP {value: "="}
+						]
+					}
+				]
+			}
+		}
+	]
 	body: Array [
 		CSSRule {
 			loc: SourceLocation invalid/selector5/input.css 1:0-3:1
@@ -63,61 +115,6 @@ CSSRoot {
 					loc: SourceLocation invalid/selector5/input.css 1:23-1:24
 				}
 			]
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 1:9
-				path: RelativeFilePath<invalid/selector5/input.css>
-				start: Position 1:9
-			}
-			description: Object {
-				category: "parse"
-				categoryValue: "css"
-				message: RAW_MARKUP {value: "Unknown attribute matcher."}
-				advice: Array [
-					log {
-						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Did you mean <emphasis>"}
-							"~="
-							RAW_MARKUP {value: "</emphasis>?"}
-						]
-					}
-					diff {
-						language: "unknown"
-						diff: Array [
-							Array [
-								-1
-								"*"
-							]
-							Array [
-								1
-								"~="
-							]
-						]
-					}
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Or one of these?"}
-					}
-					list {
-						truncate: true
-						list: Array [
-							"|="
-							"^="
-							"$="
-							"*="
-							"="
-						]
-					}
-				]
-			}
 		}
 	]
 }

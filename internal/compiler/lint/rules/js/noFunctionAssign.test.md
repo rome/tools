@@ -8,18 +8,12 @@
 
 ```
 
- lint/js/noFunctionAssign/reject/1/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noFunctionAssign/reject/1/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
 
-    function foo() {}; foo = bar;
-                       ^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,18 +29,12 @@ foo = bar;
 
 ```
 
- lint/js/noFunctionAssign/reject/2/file.ts:1:17 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noFunctionAssign/reject/2/file.ts:1:17 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
 
-    function foo() { foo = bar; }
-                     ^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -63,18 +51,12 @@ function foo() {
 
 ```
 
- lint/js/noFunctionAssign/reject/3/file.ts:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noFunctionAssign/reject/3/file.ts:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
 
-    foo = bar; function foo() { };
-    ^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -90,18 +72,12 @@ function foo() {}
 
 ```
 
- lint/js/noFunctionAssign/reject/4/file.ts:1:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noFunctionAssign/reject/4/file.ts:1:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
 
-    [foo] = bar; function foo() { };
-     ^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -117,18 +93,12 @@ function foo() {}
 
 ```
 
- lint/js/noFunctionAssign/reject/5/file.ts:1:5 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noFunctionAssign/reject/5/file.ts:1:5 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
 
-    ({x: foo = 0} = bar); function foo() { };
-         ^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -144,18 +114,12 @@ function foo() {}
 
 ```
 
- lint/js/noFunctionAssign/reject/6/file.ts:1:18 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noFunctionAssign/reject/6/file.ts:1:18 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
 
-    function foo() { [foo] = bar; }
-                      ^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -172,18 +136,12 @@ function foo() {
 
 ```
 
- lint/js/noFunctionAssign/reject/7/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noFunctionAssign/reject/7/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
 
-    (function() { ({x: foo = 0} = bar); function foo() { }; })();
-                       ^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -200,7 +158,6 @@ function foo() {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -216,7 +173,6 @@ function foo() {
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -232,7 +188,6 @@ function foo(foo) {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -249,7 +204,6 @@ function foo() {
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -264,7 +218,6 @@ foo = bar;
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -279,7 +232,6 @@ foo = bar;
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -295,7 +247,6 @@ var foo = function() {
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 

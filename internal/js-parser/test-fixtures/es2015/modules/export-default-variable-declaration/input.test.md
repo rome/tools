@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Only expressions, functions or classes are allowed as the `default` export."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
@@ -101,13 +102,5 @@ JSRoot {
 
   ✖ Only expressions, functions or classes are allowed as the `default` export.
 
-  > 1 │ export default const Foo = () => {
-      │                ^
-    2 │     return `<div class="bar">Hola</div>`;
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

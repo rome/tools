@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Deleting a private field is not allowed"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 4:18
 				path: UIDPath<experimental/class-private-properties/failure-delete-private-property/input.js>
@@ -148,15 +149,5 @@ JSRoot {
 
   ✖ Deleting a private field is not allowed
 
-    2 │   #x;
-    3 │   constructor() {
-  > 4 │     delete this.#x;
-      │                 ^^
-    5 │   }
-    6 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -24,28 +24,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<es2015/uncategorised/267/input.js>
 				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"template expression value"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed template expression value"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
-					frame {location: SourceLocation es2015/uncategorised/267/input.js 1:11-1:11}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:11
+							path: UIDPath<es2015/uncategorised/267/input.js>
+							start: Position 1:11
+						}
+					}
 				]
 			}
 		}
@@ -118,11 +121,5 @@ JSRoot {
 
   ℹ We expected to find the closing character } here
 
-    `hello ${10;test`
-               ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

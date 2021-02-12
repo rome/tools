@@ -8,19 +8,13 @@
 
 ```
 
- lint/jsx-a11y/noOnChange/reject/1/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noOnChange/reject/1/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
-
-    <select onChange={() => {}} />;
-            ^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@
 
 ```
 
- lint/jsx-a11y/noOnChange/reject/2/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noOnChange/reject/2/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
-
-    <select onChange={handleOnChange} />;
-            ^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,19 +50,13 @@
 
 ```
 
- lint/jsx-a11y/noOnChange/reject/3/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noOnChange/reject/3/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
-
-    <option onChange={() => {}} />
-            ^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -89,19 +71,13 @@
 
 ```
 
- lint/jsx-a11y/noOnChange/reject/4/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noOnChange/reject/4/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
-
-    <option onChange={() => {}} {...props} />
-            ^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -115,7 +91,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -129,7 +104,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -143,7 +117,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -157,7 +130,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -171,7 +143,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -185,7 +156,6 @@
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -199,7 +169,6 @@
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -213,7 +182,6 @@
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -227,7 +195,6 @@
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -241,7 +208,6 @@
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 

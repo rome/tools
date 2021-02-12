@@ -8,22 +8,15 @@
 
 ```
 
- lint/js/preferOptionalChaining/reject/1/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/1/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ foo && foo.bar;
-      │ ^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -39,22 +32,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/2/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/2/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ foo !== undefined && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·!==·undefined·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -70,22 +56,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/3/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/3/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ foo !== null && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·!==·null·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -101,22 +80,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/4/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/4/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ foo != undefined && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·!=·undefined·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -132,22 +104,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/5/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/5/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ foo != null && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·!=·null·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -163,22 +128,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/6/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/6/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ foo != null && foo.bar === "baz";
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·!=·null·&&·foo.bar·===·"baz"
   + foo?.bar·===·"baz"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -194,22 +152,15 @@ foo?.bar === "baz";
 
 ```
 
- lint/js/preferOptionalChaining/reject/7/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/7/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ undefined !== foo && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - undefined·!==·foo·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -225,22 +176,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/8/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/8/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ null !== foo && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - null·!==·foo·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -256,22 +200,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/9/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
+ lint,js,preferOptionalChaining/reject/9/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ undefined != foo && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - undefined·!=·foo·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -287,22 +224,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/10/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━
+ lint,js,preferOptionalChaining/reject/10/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ null != foo && foo.bar;
-      │ ^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - null·!=·foo·&&·foo.bar
   + foo?.bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -318,22 +248,15 @@ foo?.bar;
 
 ```
 
- lint/js/preferOptionalChaining/reject/11/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━
+ lint,js,preferOptionalChaining/reject/11/filename.ts:2 lint/js/preferOptionalChaining  FIXABLE  ━━━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ foo ? foo.bar.baz : undefined
-      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·?·foo.bar.baz·:·undefined
   + foo?.bar.baz
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -349,24 +272,15 @@ foo?.bar.baz;
 
 ```
 
- lint/js/preferOptionalChaining/reject/12/filename.ts:2:4 lint/js/preferOptionalChaining  FIXABLE  ━
+ lint,js,preferOptionalChaining/reject/12/filename.ts:2:4 lint/js/preferOptionalChaining  FIXABLE  ━
 
   ✖ Prefer optional chaining to manual checks.
-
-    1 │ let foo = {};
-  > 2 │ if (foo != undefined && foo.bar != null) {
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │   foo.bar('baz');
-    4 │ }
 
   ℹ Safe fix
 
   - foo·!=·undefined·&&·foo.bar·!=·null
   + foo?.bar·!=·null
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -383,7 +297,6 @@ if (foo?.bar != null) {
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -398,7 +311,6 @@ foo?.bar;
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -414,7 +326,6 @@ foo && bar.foo;
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -430,7 +341,6 @@ bar in foo && foo.bar;
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -445,7 +355,6 @@ foo?.[bar];
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -460,7 +369,6 @@ foo ? foo.bar.baz : null;
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 

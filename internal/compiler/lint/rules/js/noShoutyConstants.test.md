@@ -8,7 +8,7 @@
 
 ```
 
- lint/js/noShoutyConstants/reject/1/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
+ lint,js,noShoutyConstants/reject/1/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
 
@@ -18,18 +18,11 @@
 
   ℹ This constant is declared here
 
-  > 1 │ const FOO = "FOO";
-      │       ^^^
-    2 │ console.log(FOO);
-
   ℹ Safe fix
 
   - FOO
   + "FOO"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,7 +38,7 @@ console.log("FOO");
 
 ```
 
- lint/js/noShoutyConstants/reject/2/file.ts:3:8 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,noShoutyConstants/reject/2/file.ts:3:8 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
 
@@ -55,19 +48,11 @@ console.log("FOO");
 
   ℹ This constant is declared here
 
-  > 1 │ const FOO = "FOO";
-      │       ^^^
-    2 │ function f() {
-    3 │   return FOO;
-
   ℹ Safe fix
 
   - FOO
   + "FOO"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -85,7 +70,7 @@ function f() {
 
 ```
 
- lint/js/noShoutyConstants/reject/3/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
+ lint,js,noShoutyConstants/reject/3/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
 
@@ -95,18 +80,11 @@ function f() {
 
   ℹ This constant is declared here
 
-  > 1 │ const FOO = "FOO", BAR = "bar";
-      │       ^^^
-    2 │ console.log(FOO);
-
   ℹ Safe fix
 
   - FOO
   + "FOO"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -122,7 +100,6 @@ console.log("FOO");
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -137,7 +114,6 @@ console.log(FOO);
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -152,7 +128,6 @@ console.log(FOO);
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -24,21 +24,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:23
 				path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
 				start: Position 2:9
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Only one default export allowed per module."}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {location: SourceLocation es2015/modules/duplicate-export-default-and-export-as-default/input.js 1:15-1:28}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:28
+							path: UIDPath<es2015/modules/duplicate-export-default-and-export-as-default/input.js>
+							start: Position 1:15
+						}
+					}
 				]
 			}
 		}
@@ -103,12 +113,5 @@ JSRoot {
 
   ℹ Defined already here
 
-  > 1 │ export default function() {};
-      │                ^^^^^^^^^^^^^
-    2 │ export { foo as default };
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

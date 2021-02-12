@@ -8,12 +8,9 @@
 
 ```
 
- lint/js/useSingleVarDeclarator/reject/1/file.ts:1 lint/js/useSingleVarDeclarator  FIXABLE  ━━━━━━━━
+ lint,js,useSingleVarDeclarator/reject/1/file.ts:1 lint/js/useSingleVarDeclarator  FIXABLE  ━━━━━━━━
 
   ✖ Declare variables separately.
-
-    let foo, bar;
-    ^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -21,9 +18,6 @@
       1 │ + let·foo;
       2 │ + let·bar;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,7 +32,6 @@ let bar;
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 

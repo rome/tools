@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 5:4
 				path: UIDPath<typescript/class/private-fields/input.ts>
@@ -222,15 +223,5 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
-    3 │   #b?;
-    4 │   #c?: number;
-  > 5 │   #d!;
-      │     ^
-    6 │   #e!: boolean;
-    7 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -40,25 +40,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<jsx/errors/unclosed-tag/input.jsx>
 				start: Position 1:5
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unclosed JSX element"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-							"foo"
-							RAW_MARKUP {value: "</emphasis>"}
-						]
+						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>foo</emphasis>"}
 					}
-					frame {location: SourceLocation jsx/errors/unclosed-tag/input.jsx 1:1-1:4}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:4
+							path: UIDPath<jsx/errors/unclosed-tag/input.jsx>
+							start: Position 1:1
+						}
+					}
 				]
 			}
 		}
@@ -76,11 +82,5 @@ JSRoot {
 
   ℹ Originated from opening tag of foo
 
-    <foo>yes
-     ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

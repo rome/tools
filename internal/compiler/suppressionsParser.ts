@@ -4,8 +4,8 @@ import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	descriptions,
-	isValidDiagnosticCategoryName,
-	joinCategoryName,
+	formatCategoryDescription,
+	splitPossibleCategoryName,
 } from "@internal/diagnostics";
 import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {
@@ -214,16 +214,18 @@ const suppressionCommentParser = createParser<ParserTypes>({
 			}
 
 			// Read a category name!
-			const [categoryName, end] = parser.readInputFrom(
+			const [strCategoryName, end] = parser.readInputFrom(
 				index,
 				isCategoryNameChar,
 			);
 
+			const categoryName = splitPossibleCategoryName(strCategoryName);
+
 			let token;
-			if (isValidDiagnosticCategoryName(categoryName)) {
-				token = parser.finishValueToken("Category", categoryName, end);
+			if (categoryName === undefined) {
+				token = parser.finishValueToken("InvalidCategory", strCategoryName, end);
 			} else {
-				token = parser.finishValueToken("InvalidCategory", categoryName, end);
+				token = parser.finishValueToken("Category", categoryName, end);
 			}
 
 			return [state, token];
@@ -308,7 +310,6 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 					break;
 				}
 
-				const start = parser.getPosition();
 				parser.nextToken();
 				const startLine = targetNode.loc.start.line;
 				const endLine = targetNode.loc.end.line;
@@ -330,41 +331,40 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 				}
 
 				for (const [categoryToken, categoryValueToken] of categories) {
-					const category = categoryToken.value;
 					let categoryValue = categoryValueToken?.value;
-
 					if (categoryValue === "") {
 						categoryValue = undefined;
 					}
 
-					const dupeKey = joinCategoryName({category, categoryValue});
+					const loc = parser.finishLocAt(
+						parser.getPositionFromIndex(categoryToken.start),
+						parser.getPositionFromIndex(
+							(categoryValueToken ?? categoryToken).end,
+						),
+					);
 
-					if (suppressedCategories.has(dupeKey)) {
+					if (categoryToken.type === "InvalidCategory") {
 						parser.unexpectedDiagnostic({
-							token: categoryToken,
-							description: descriptions.SUPPRESSIONS.DUPLICATE(dupeKey),
+							description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
+								categoryToken.value,
+							),
+							location: loc,
 						});
 					} else {
-						suppressedCategories.add(dupeKey);
+						const category = categoryToken.value;
+						const dupeKey = formatCategoryDescription({category, categoryValue});
 
-						const loc = parser.finishLocAt(
-							parser.getPositionFromIndex(categoryToken.start),
-							parser.getPositionFromIndex(
-								(categoryValueToken ?? categoryToken).end,
-							),
-						);
-
-						if (categoryToken.type === "InvalidCategory") {
+						if (suppressedCategories.has(dupeKey)) {
 							parser.unexpectedDiagnostic({
-								description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
-									category,
-								),
-								location: loc,
+								token: categoryToken,
+								description: descriptions.SUPPRESSIONS.DUPLICATE(dupeKey),
 							});
 						} else {
+							suppressedCategories.add(dupeKey);
+
 							suppressions.push({
 								path: parser.path,
-								category: categoryToken.value,
+								category,
 								categoryValue,
 								loc,
 								startLine,

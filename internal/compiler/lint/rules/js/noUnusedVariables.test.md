@@ -8,18 +8,12 @@
 
 ```
 
- lint/js/noUnusedVariables/reject/1/file.ts:1:6 lint/js/noUnusedVariables(a) ━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noUnusedVariables/reject/1/file.ts:1:6 lint/js/noUnusedVariables(a) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The const variable a is unused.
 
-    const a = 4;
-          ^
-
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@ const a = 4;
 
 ```
 
- lint/js/noUnusedVariables/reject/2/file.ts:1:4 lint/js/noUnusedVariables(a) ━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noUnusedVariables/reject/2/file.ts:1:4 lint/js/noUnusedVariables(a) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The let variable a is unused.
 
-    let a = 4;
-        ^
-
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -60,26 +48,18 @@ let a = 4;
 
 ```
 
- lint/js/noUnusedVariables/reject/3/file.ts:1:13 lint/js/noUnusedVariables(myVar) ━━━━━━━━━━━━━━━━━━
+ lint,js,noUnusedVariables/reject/3/file.ts:1:13 lint/js/noUnusedVariables(myVar) ━━━━━━━━━━━━━━━━━━
 
   ✖ The parameter variable myVar is unused.
 
-  > 1 │ function foo(myVar) {
-      │              ^^^^^
-    2 │   console.log('foo');
-    3 │ };
-
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
- lint/js/noUnusedVariables/reject/3/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noUnusedVariables/reject/3/file.ts:1:9 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The function variable foo is unused.
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -96,20 +76,12 @@ function foo(myVar) {
 
 ```
 
- lint/js/noUnusedVariables/reject/4/file.ts:1:13 lint/js/noUnusedVariables(myVar) ━━━━━━━━━━━━━━━━━━
+ lint,js,noUnusedVariables/reject/4/file.ts:1:13 lint/js/noUnusedVariables(myVar) ━━━━━━━━━━━━━━━━━━
 
   ✖ The parameter variable myVar is unused.
 
-  > 1 │ function foo(myVar) {
-      │              ^^^^^
-    2 │   console.log('foo');
-    3 │ }
-
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -127,26 +99,18 @@ foo();
 
 ```
 
- lint/js/noUnusedVariables/reject/5/file.ts:1:13 lint/js/noUnusedVariables(b) ━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noUnusedVariables/reject/5/file.ts:1:13 lint/js/noUnusedVariables(b) ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The parameter variable b is unused.
 
-  > 1 │ const foo = (b) => {
-      │              ^
-    2 │   console.log('foo');
-    3 │ };
-
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
- lint/js/noUnusedVariables/reject/5/file.ts:1:6 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noUnusedVariables/reject/5/file.ts:1:6 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The const variable foo is unused.
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -162,7 +126,6 @@ function foo(b) {
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -179,7 +142,6 @@ foo();
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 

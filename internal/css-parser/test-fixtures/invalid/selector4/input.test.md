@@ -16,13 +16,14 @@ CSSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected to close attribute selector with a right square bracket <emphasis>]</emphasis>."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "css"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: RelativeFilePath<invalid/selector4/input.css>

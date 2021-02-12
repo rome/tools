@@ -33,13 +33,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Statement outside of a case or default block"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<core/categorized/malformed-switch/input.js>
@@ -58,13 +59,5 @@ JSRoot {
 
   ✖ Statement outside of a case or default block
 
-    1 │ switch (x) {
-  > 2 │   var y = 5;
-      │   ^^^^^^^^^^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

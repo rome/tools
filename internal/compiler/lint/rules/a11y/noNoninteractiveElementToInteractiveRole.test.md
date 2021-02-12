@@ -8,19 +8,13 @@
 
 ```
 
- lint/a11y/noNoninteractiveElementToInteractiveRole/reject/1/file.tsx:1:4
+ lint,a11y,noNoninteractiveElementToInteractiveRole/reject/1/file.tsx:1:4
 lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The HTML element h1 is non-interactive and should not have an interactive role.
 
-    <h1 role="checkbox"></h1>
-        ^^^^^^^^^^^^^^^
-
   ℹ Replace h1 with a div or a span.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,7 +28,6 @@ lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━�
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -49,19 +42,13 @@ lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━�
 
 ```
 
- lint/a11y/noNoninteractiveElementToInteractiveRole/reject/1/file.html:1:4
+ lint,a11y,noNoninteractiveElementToInteractiveRole/reject/1/file.html:1:4
 lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The HTML element h1 is non-interactive and should not have an interactive role.
 
-    <h1 role="checkbox"></h1>
-        ^^^^^^^^^^^^^^^
-
   ℹ Replace h1 with a div or a span.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -76,7 +63,6 @@ lint/a11y/noNoninteractiveElementToInteractiveRole ━━━━━━━━━�
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

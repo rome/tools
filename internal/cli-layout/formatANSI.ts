@@ -1,4 +1,5 @@
 import {formatAnsi, formatAnsiRGB} from "./ansi";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import OneDarkPro from "./syntax-theme/OneDarkPro.json";
 import {Dict} from "@internal/typescript-helpers";
 import {Consumer, consumeUnknown} from "@internal/consume";
@@ -162,7 +163,9 @@ function getTokenColors(consumer: undefined | Consumer): Theme {
 	if (consumer === undefined) {
 		if (defaultTokenColors === undefined) {
 			defaultTokenColors = {
-				...getTokenColors(consumeUnknown(OneDarkPro, "parse", "vscodeTheme")),
+				...getTokenColors(
+					consumeUnknown(OneDarkPro, DIAGNOSTIC_CATEGORIES.parse, "vscodeTheme"),
+				),
 				kind: "default",
 			};
 		}

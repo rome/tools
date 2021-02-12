@@ -8,23 +8,13 @@
 
 ```
 
- lint/react/useSortComp/reject/1/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useSortComp/reject/1/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ render should be placed after displayName.
-
-    1 │ // Must force a lifecycle method to be placed before render
-    2 │ class Hello extends React.Component {
-  > 3 │   render() {
-      │   ^^^^^^
-    4 │     return <div>Hello</div>;
-    5 │   }
 
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -47,23 +37,13 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/useSortComp/reject/2/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useSortComp/reject/2/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ render should be placed after onClick.
-
-    1 │ // Must force a custom method to be placed before render
-    2 │ class Hello extends React.Component {
-  > 3 │   render() {
-      │   ^^^^^^
-    4 │     return <div>Hello</div>;
-    5 │   }
 
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -86,23 +66,13 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/useSortComp/reject/3/file.tsx:4:2 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useSortComp/reject/3/file.tsx:4:2 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ render should be placed after onClick.
-
-    2 │ var Hello = () => {
-    3 │   return class Test extends React.Component {
-  > 4 │     render () {
-      │     ^^^^^^
-    5 │       return <div>Hello</div>;
-    6 │     }
 
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -127,23 +97,13 @@ var Hello = () => {
 
 ```
 
- lint/react/useSortComp/reject/4/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useSortComp/reject/4/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ props should be placed after render.
-
-    1 │ // Type Annotations should not be at the top by default
-    2 │ class Hello extends React.Component {
-  > 3 │   props: { text: string };
-      │   ^^^^^
-    4 │   constructor() {}
-    5 │   state: Object = {};
 
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -169,7 +129,6 @@ class Hello extends React.Component {
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -206,7 +165,6 @@ class Hello extends React.Component {
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -227,7 +185,6 @@ class Hello extends React.Component {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -249,7 +206,6 @@ class Hello extends React.Component {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -288,7 +244,6 @@ class Hello extends React.Component {
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -321,7 +276,6 @@ class Hello extends React.Component {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -359,7 +313,6 @@ class Hello extends React.Component {
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -382,7 +335,6 @@ class Hello extends React.Component {
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -402,7 +354,6 @@ function Hello(props) {
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -422,7 +373,6 @@ var Hello = (props) =>
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -448,7 +398,6 @@ class Hello {
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -474,7 +423,6 @@ const foo = class {
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -492,7 +440,6 @@ class Hello extends React.Component {
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -513,7 +460,6 @@ class MyComponent extends React.Component {
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -533,7 +479,6 @@ class MyComponent extends React.Component {
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -553,7 +498,6 @@ class MyComponent extends React.Component {
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -574,7 +518,6 @@ class MyComponent extends React.Component {
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -595,7 +538,6 @@ class MyComponent extends React.Component {
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 

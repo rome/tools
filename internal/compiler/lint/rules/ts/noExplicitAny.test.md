@@ -8,18 +8,12 @@
 
 ```
 
- lint/ts/noExplicitAny/reject/1/file.ts:1:11 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/1/file.ts:1:11 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    const age: any = 'seventeen';age;
-               ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,18 +29,12 @@ age;
 
 ```
 
- lint/ts/noExplicitAny/reject/2/file.ts:1:12 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/2/file.ts:1:12 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    const ages: any[] = ['seventeen'];ages;
-                ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,18 +50,12 @@ ages;
 
 ```
 
- lint/ts/noExplicitAny/reject/3/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/3/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    const ages: Array<any> = ['seventeen'];ages;
-                      ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -89,18 +71,12 @@ ages;
 
 ```
 
- lint/ts/noExplicitAny/reject/4/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/4/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    function greet(): any {};greet();
-                      ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -116,18 +92,12 @@ greet();
 
 ```
 
- lint/ts/noExplicitAny/reject/5/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/5/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    function greet(): any[] {};greet();
-                      ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -143,18 +113,12 @@ greet();
 
 ```
 
- lint/ts/noExplicitAny/reject/6/file.ts:1:24 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/6/file.ts:1:24 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    function greet(): Array<any> {};greet();
-                            ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -170,18 +134,12 @@ greet();
 
 ```
 
- lint/ts/noExplicitAny/reject/7/file.ts:1:30 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/7/file.ts:1:30 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    function greet(): Array<Array<any>> {};greet();
-                                  ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -197,18 +155,12 @@ greet();
 
 ```
 
- lint/ts/noExplicitAny/reject/8/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/8/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
-    function greet(param: Array<any>): string { return param; };greet();
-                                ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -226,24 +178,18 @@ greet();
 
 ```
 
- lint/ts/noExplicitAny/reject/9/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Avoid using the any type.
-
-    function greet(param: Array<any>): Array<any> { return param; };greet();
-                                ^^^
-
-  ℹ Using nonspecific types defeats the purpose of using TypeScript.
-
- lint/ts/noExplicitAny/reject/9/file.ts:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/9/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,ts,noExplicitAny/reject/9/file.ts:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 2 problems
+  ✖ Avoid using the any type.
+
+  ℹ Using nonspecific types defeats the purpose of using TypeScript.
+
 
 ```
 
@@ -260,7 +206,6 @@ greet();
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -275,7 +220,6 @@ age;
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -290,7 +234,6 @@ ages;
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -305,7 +248,6 @@ greet();
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -320,7 +262,6 @@ greet();
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -335,7 +276,6 @@ greet();
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -352,7 +292,6 @@ greet();
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 

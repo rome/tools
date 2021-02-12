@@ -8,22 +8,13 @@
 
 ```
 
- lint/react/noStringRefs/reject/1/file.tsx:3:20 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noStringRefs/reject/1/file.tsx:3:20 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using this.refs is a deprecated pattern.
-
-    1 │ class Hello extends React.Component {
-    2 │   componentDidMount() {
-  > 3 │     const component = this.refs.hello;
-      │                       ^^^^^^^^^
-    4 │   }
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -49,23 +40,13 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/noStringRefs/reject/2/file.tsx:3:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noStringRefs/reject/2/file.tsx:3:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
-
-    1 │ class Hello extends React.Component {
-    2 │   render() {
-  > 3 │     return <div ref='hello'>Hello {this.props.name}</div>;
-      │                 ^^^^^^^^^^^
-    4 │   }
-    5 │ }
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -87,22 +68,12 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/noStringRefs/reject/3/file.tsx:3:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noStringRefs/reject/3/file.tsx:3:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed jsx expression container
 
   ℹ We expected to find the closing character } here
 
-    1 │ class Hello extends React.Component {
-    2 │   render() {
-  > 3 │     return <div ref={${"`"}hello${"`"}}>Hello {this.props.name}</div>;
-      │                       ^
-    4 │   }
-    5 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -116,23 +87,13 @@ undefined
 
 ```
 
- lint/react/noStringRefs/reject/4/file.tsx:3:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noStringRefs/reject/4/file.tsx:3:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
-
-    1 │ class Hello extends React.Component {
-    2 │   render() {
-  > 3 │     return <div ref={'hello'}>Hello {this.props.name}</div>;
-      │                 ^^^^^^^^^^^^^
-    4 │   }
-    5 │ }
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -154,22 +115,12 @@ class Hello extends React.Component {
 
 ```
 
- lint/react/noStringRefs/reject/5/file.tsx:3:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noStringRefs/reject/5/file.tsx:3:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed jsx expression container
 
   ℹ We expected to find the closing character } here
 
-    1 │ class Hello extends React.Component {
-    2 │   render() {
-  > 3 │     return <div ref={${"`"}hello${"$"}{index}${"`"}>Hello {this.props.name}</div>;
-      │                       ^
-    4 │   }
-    5 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -183,29 +134,20 @@ undefined
 
 ```
 
- lint/react/noStringRefs/reject/6/file.tsx:3:20 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noStringRefs/reject/6/file.tsx:3:20 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using this.refs is a deprecated pattern.
-
-    1 │ class Hello extends React.Component {
-    2 │   componentDidMount() {
-  > 3 │     const component = this.refs.hello;
-      │                       ^^^^^^^^^
-    4 │   }
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
- lint/react/noStringRefs/reject/6/file.tsx:7:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noStringRefs/reject/6/file.tsx:7:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -230,7 +172,6 @@ class Hello extends React.Component {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 

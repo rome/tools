@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticLocation, descriptions} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticLocation,
+	descriptions,
+} from "@internal/diagnostics";
 import {
 	Comments,
 	ConfigCommentMap,
@@ -827,7 +831,7 @@ export function parseJSONExtra(
 				type: "json",
 				comments: new Map(),
 				context: {
-					category: "parse",
+					category: DIAGNOSTIC_CATEGORIES.parse,
 					categoryValue,
 					normalizeKey(path) {
 						return getContext().normalizeKey(path);
@@ -879,7 +883,7 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 	parser.finalize();
 
 	const context: Required<ConsumeContext> = {
-		category: "parse",
+		category: DIAGNOSTIC_CATEGORIES.parse,
 		categoryValue,
 		normalizeKey: (key) => key,
 		getDiagnosticLocation: (

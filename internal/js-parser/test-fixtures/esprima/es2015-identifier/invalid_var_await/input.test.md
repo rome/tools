@@ -48,14 +48,15 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:17
 				path: UIDPath<esprima/es2015-identifier/invalid_var_await/input.js>
 				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 				advice: Array [
 					log {
@@ -64,7 +65,7 @@ JSRoot {
 					}
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"<dim>undefined</dim>\" />"}
+						text: RAW_MARKUP {value: "Add <emphasis>\\\"type\\\": \\\"module\\\"</emphasis> to your <filelink emphasis target=\"\\<dim>undefined\\</dim>\">\\<dim>undefined\\</dim></filelink>"}
 					}
 				]
 			}
@@ -81,15 +82,9 @@ JSRoot {
 
   ✖ import and export can only appear in a module
 
-    export var await;
-    ^^^^^^^^^^^^^^^^^
-
   ℹ Change the extension to .mjs to turn this file into a module
 
   ℹ Add "type": "module" to your <dim>undefined</dim>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -27,7 +27,8 @@ import {
 	DiagnosticSuppressions,
 	DiagnosticsProcessor,
 	descriptions,
-	joinCategoryName,
+	equalCategoryNames,
+	formatCategoryDescription,
 } from "@internal/diagnostics";
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
@@ -71,7 +72,6 @@ export type ContextArg = {
 
 type AddDiagnosticResult = {
 	loc: undefined | DiagnosticLocation;
-	diagnostic: undefined | Diagnostic;
 	suppressed: boolean;
 };
 
@@ -188,7 +188,7 @@ export default class CompilerContext {
 		const nonOverlapSuppressions = new Map();
 
 		for (const suppression of this.suppressions) {
-			const key = joinCategoryName(suppression);
+			const key = formatCategoryDescription(suppression);
 
 			if (!nonOverlapSuppressions.has(key)) {
 				nonOverlapSuppressions.set(key, suppression);
@@ -371,7 +371,7 @@ export default class CompilerContext {
 			};
 		}
 
-		const diagnostic = this.diagnostics.addDiagnostic({
+		this.diagnostics.addDiagnostic({
 			...diag,
 			tags,
 			description: {
@@ -403,7 +403,7 @@ export default class CompilerContext {
 			);
 			for (const {category, categoryValue, action} of decisions) {
 				if (
-					category === diagCategory &&
+					equalCategoryNames(category, diagCategory) &&
 					action === "fix" &&
 					categoryValue === diagCategoryValue
 				) {
@@ -414,7 +414,6 @@ export default class CompilerContext {
 
 		return {
 			loc,
-			diagnostic,
 			suppressed,
 		};
 	}

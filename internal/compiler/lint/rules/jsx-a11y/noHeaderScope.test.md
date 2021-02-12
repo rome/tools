@@ -8,12 +8,9 @@
 
 ```
 
- lint/jsx-a11y/noHeaderScope/reject/1/file.tsx:1 lint/jsx-a11y/noHeaderScope  FIXABLE  ━━━━━━━━━━━━━
+ lint,jsx-a11y,noHeaderScope/reject/1/file.tsx:1 lint/jsx-a11y/noHeaderScope  FIXABLE  ━━━━━━━━━━━━━
 
   ✖ Avoid using the scope attribute on elements other than th elements.
-
-    <div scope={scope} />
-    ^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using the scope attribute incorrectly on tables makes them difficult to navigate using the
     keyboard.
@@ -23,9 +20,6 @@
   - <div·scope={scope}·/>
   + <div·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,12 +34,9 @@
 
 ```
 
- lint/jsx-a11y/noHeaderScope/reject/2/file.tsx:1 lint/jsx-a11y/noHeaderScope  FIXABLE  ━━━━━━━━━━━━━
+ lint,jsx-a11y,noHeaderScope/reject/2/file.tsx:1 lint/jsx-a11y/noHeaderScope  FIXABLE  ━━━━━━━━━━━━━
 
   ✖ Avoid using the scope attribute on elements other than th elements.
-
-    <div scope='col' />
-    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Using the scope attribute incorrectly on tables makes them difficult to navigate using the
     keyboard.
@@ -55,9 +46,6 @@
   - <div·scope="col"·/>
   + <div·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -71,7 +59,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -85,7 +72,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

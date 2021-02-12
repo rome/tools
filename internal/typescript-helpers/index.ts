@@ -124,3 +124,24 @@ export function mergeObjects<A extends object>(
 
 	return newObj;
 }
+
+export function equalArray<A extends unknown[], B extends unknown[]>(
+	a: A | B,
+	b: B,
+): a is B {
+	if (a.length !== b.length) {
+		return false;
+	}
+
+	if (a === b) {
+		return true;
+	}
+
+	for (let i = 0; i < a.length; i++) {
+		if (a[i] !== b[i]) {
+			return false;
+		}
+	}
+
+	return true;
+}

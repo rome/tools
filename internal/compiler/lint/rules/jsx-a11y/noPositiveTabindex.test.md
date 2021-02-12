@@ -8,12 +8,9 @@
 
 ```
 
- lint/jsx-a11y/noPositiveTabindex/reject/1/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
+ lint,jsx-a11y,noPositiveTabindex/reject/1/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
-
-    <span tabIndex='5'>foo</span>
-          ^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
@@ -24,9 +21,6 @@
       1 │ + <span>
     2 2 │   → foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,12 +37,9 @@
 
 ```
 
- lint/jsx-a11y/noPositiveTabindex/reject/2/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
+ lint,jsx-a11y,noPositiveTabindex/reject/2/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
-
-    <span tabIndex={5}>foo</span>
-          ^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
@@ -59,9 +50,6 @@
       1 │ + <span>
     2 2 │   → foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -78,12 +66,9 @@
 
 ```
 
- lint/jsx-a11y/noPositiveTabindex/reject/3/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
+ lint,jsx-a11y,noPositiveTabindex/reject/3/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
-
-    <span tabIndex={'5'}>foo</span>
-          ^^^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
@@ -94,9 +79,6 @@
       1 │ + <span>
     2 2 │   → foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -112,7 +94,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -128,7 +109,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -144,7 +124,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -160,7 +139,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -176,7 +154,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -192,7 +169,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

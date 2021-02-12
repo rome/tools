@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid super suffix operator"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 3:9
 				path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
@@ -117,15 +118,5 @@ JSRoot {
 
   ✖ Invalid super suffix operator
 
-    1 │ class A {
-    2 │   x () {
-  > 3 │     super - 1;
-      │           ^
-    4 │   }
-    5 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

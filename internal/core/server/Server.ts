@@ -13,6 +13,7 @@ import {
 	VERSION,
 } from "@internal/core";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	DiagnosticOrigin,
 	Diagnostics,
 	DiagnosticsProcessor,
@@ -480,7 +481,7 @@ export default class Server {
 				},
 			],
 		});
-		
+
 		processor.insertDiagnosticsEvent.subscribe((diagnostics) => {
 			if (processor.hasDiagnostics()) {
 				this.fatalErrorHandler.wrapPromise(
@@ -915,7 +916,7 @@ export default class Server {
 				},
 				objectPath: [],
 				context: {
-					category: "flags/invalid",
+					category: DIAGNOSTIC_CATEGORIES["flags/invalid"],
 					getOriginalValue: () => {
 						return undefined;
 					},
@@ -957,8 +958,6 @@ export default class Server {
 				promises.push(commandPromise);
 
 				await Promise.race(promises);
-
-				let foo;
 
 				// Only the command promise should have won the race with a resolve
 				const data = await commandPromise;

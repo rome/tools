@@ -8,19 +8,13 @@
 
 ```
 
- lint/a11y/useMediaCaption/reject/1/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useMediaCaption/reject/1/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
-
-    <audio {...props} />
-    ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
     of the dialogue, sound effects, musical cues, and other relevant audio information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@
 
 ```
 
- lint/a11y/useMediaCaption/reject/2/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useMediaCaption/reject/2/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
-
-    <video {...props} />
-    ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
     of the dialogue, sound effects, musical cues, and other relevant audio information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,19 +50,13 @@
 
 ```
 
- lint/a11y/useMediaCaption/reject/3/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useMediaCaption/reject/3/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
-
-    <audio>child</audio>
-    ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
     of the dialogue, sound effects, musical cues, and other relevant audio information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -91,19 +73,13 @@
 
 ```
 
- lint/a11y/useMediaCaption/reject/4/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useMediaCaption/reject/4/file.tsx:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
-
-    <video>child</video>
-    ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
     of the dialogue, sound effects, musical cues, and other relevant audio information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -119,7 +95,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -135,7 +110,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -151,7 +125,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -165,7 +138,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -181,7 +153,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -198,19 +169,13 @@
 
 ```
 
- lint/a11y/useMediaCaption/reject/1/file.html:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useMediaCaption/reject/1/file.html:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
-
-    <audio>child</audio>
-    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
     of the dialogue, sound effects, musical cues, and other relevant audio information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -227,19 +192,13 @@
 
 ```
 
- lint/a11y/useMediaCaption/reject/2/file.html:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useMediaCaption/reject/2/file.html:1 lint/a11y/useMediaCaption ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a track for captions when using audio or video elements.
-
-    <video>child</video>
-    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
     of the dialogue, sound effects, musical cues, and other relevant audio information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -255,7 +214,6 @@
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -271,7 +229,6 @@
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -287,7 +244,6 @@
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 

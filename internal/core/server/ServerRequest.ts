@@ -26,6 +26,7 @@ import {
 	WorkerUpdateInlineSnapshotResult,
 } from "@internal/core";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticCategory,
@@ -40,6 +41,7 @@ import {
 	diagnosticLocationToMarkupFilelink,
 	getOrDeriveDiagnosticsFromError,
 	provideDiagnosticAdviceForError,
+	joinCategoryName,
 } from "@internal/diagnostics";
 import {
 	DiagnosticsFileHandler,
@@ -137,7 +139,7 @@ async function globUnmatched(
 	const {server} = req;
 	const {configCategory, ignoreProjectIgnore} = opts;
 
-	let category: DiagnosticCategory = "args/fileNotFound";
+	let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["args/fileNotFound"];
 
 	let advice: DiagnosticAdvice = [...(opts.advice || [])];
 
@@ -517,7 +519,7 @@ export default class ServerRequest {
 	private logDiagnostics(diagnostics: Diagnostics) {
 		for (const diag of diagnostics) {
 			this.logger.error(
-				markup`Encountered diagnostic: ${diag.description.message}. Category: ${diag.description.category}. Location: ${diagnosticLocationToMarkupFilelink(
+				markup`Encountered diagnostic: ${diag.description.message}. Category: ${joinCategoryName(diag.description.category)}. Location: ${diagnosticLocationToMarkupFilelink(
 					diag.location,
 				)}`,
 			);
@@ -686,8 +688,8 @@ export default class ServerRequest {
 			category =
 				typeof target !== "string" &&
 				(target.type === "arg" || target.type === "arg-range")
-					? "args/invalid"
-					: "flags/invalid";
+					? DIAGNOSTIC_CATEGORIES["args/invalid"]
+					: DIAGNOSTIC_CATEGORIES["flags/invalid"];
 		}
 
 		const diag: Diagnostic = {
@@ -855,7 +857,7 @@ export default class ServerRequest {
 				err,
 				{
 					description: {
-						category: "internalError/request",
+						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 						advice: [
 							{
 								type: "log",
@@ -1276,7 +1278,7 @@ export default class ServerRequest {
 				err,
 				{
 					description: {
-						category: "internalError/request",
+						category: DIAGNOSTIC_CATEGORIES["internalError/request"],
 					},
 				},
 			);

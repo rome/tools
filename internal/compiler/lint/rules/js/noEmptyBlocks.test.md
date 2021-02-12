@@ -8,18 +8,12 @@
 
 ```
 
- lint/js/noEmptyBlocks/reject/1/file.ts:1:9 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noEmptyBlocks/reject/1/file.ts:1:9 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid empty logic blocks.
 
-    if (foo) {}
-             ^^
-
   ℹ Empty logic blocks usually result from incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,20 +29,12 @@ if (foo) {
 
 ```
 
- lint/js/noEmptyBlocks/reject/2/file.ts:3:7 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noEmptyBlocks/reject/2/file.ts:3:7 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid empty logic blocks.
 
-    1 │ if (foo) {
-    2 │   // foo;
-  > 3 │ } else {}
-      │        ^^
-
   ℹ Empty logic blocks usually result from incomplete refactoring.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -65,7 +51,6 @@ if (foo) {
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -81,7 +66,6 @@ if (foo) {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -97,7 +81,6 @@ if (foo) {
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

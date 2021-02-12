@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "await is not allowed in async function parameters"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-arrow-function/input.js>
@@ -111,13 +112,5 @@ JSRoot {
 
   ✖ await is not allowed in async function parameters
 
-    1 │ async function fn() {
-  > 2 │   (x = await 2) => {};
-      │             ^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

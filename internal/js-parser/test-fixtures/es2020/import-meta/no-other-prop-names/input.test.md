@@ -37,26 +37,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The only valid meta property for import is import.meta"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
 				start: Position 1:7
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "The only valid meta property for "}
-					"import"
-					RAW_MARKUP {value: " is "}
-					"import"
-					RAW_MARKUP {value: "."}
-					"meta"
-				]
 			}
 		}
 	]
@@ -71,11 +65,5 @@ JSRoot {
 
   ✖ The only valid meta property for import is import.meta
 
-    import.notMeta;
-           ^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

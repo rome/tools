@@ -8,18 +8,12 @@
 
 ```
 
- lint/jsx-a11y/useAnchorContent/reject/1/file.jsx:1 lint/jsx-a11y/useAnchorContent ━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useAnchorContent/reject/1/file.jsx:1 lint/jsx-a11y/useAnchorContent ━━━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using anchor elements.
 
-    <a />
-    ^^^^^
-
   ℹ All links on a page should have content that is accessible to screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@
 
 ```
 
- lint/jsx-a11y/useAnchorContent/reject/2/file.jsx:1 lint/jsx-a11y/useAnchorContent ━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useAnchorContent/reject/2/file.jsx:1 lint/jsx-a11y/useAnchorContent ━━━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using anchor elements.
 
-    <a><TextWrapper aria-hidden /></a>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ All links on a page should have content that is accessible to screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -61,7 +49,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -77,7 +64,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -93,7 +79,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -107,7 +92,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

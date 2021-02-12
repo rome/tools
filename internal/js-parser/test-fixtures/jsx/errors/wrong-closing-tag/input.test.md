@@ -40,29 +40,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
 				start: Position 1:1
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>"}
-					"Foo"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-							"Foo"
-							RAW_MARKUP {value: "</emphasis>"}
-						]
+						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>Foo</emphasis>"}
 					}
-					frame {location: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:1-1:4}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:4
+							path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
+							start: Position 1:1
+						}
+					}
 				]
 			}
 		}
@@ -80,11 +82,5 @@ JSRoot {
 
   ℹ Originated from opening tag of Foo
 
-    <Foo></Bar>
-     ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

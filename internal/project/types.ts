@@ -17,6 +17,7 @@ import {Consumer, consumeUnknown} from "@internal/consume";
 import {DeepPartial, Dict} from "@internal/typescript-helpers";
 import {SemverRangeNode} from "@internal/codec-semver";
 import {LintRuleName} from "@internal/compiler";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -229,7 +230,7 @@ export function createMockProjectConfigMeta(
 		configPath: projectDirectory.append("package.json"),
 		configCacheKeys: {},
 		configDependencies: new AbsoluteFilePathSet(),
-		consumer: consumeUnknown({}, "parse", "json"),
+		consumer: consumeUnknown({}, DIAGNOSTIC_CATEGORIES.parse, "json"),
 		configSourceSubKey: undefined,
 		consumersChain: [],
 	};

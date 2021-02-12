@@ -8,19 +8,13 @@
 
 ```
 
- lint/jsx-a11y/useKeyWithMouseEvents/reject/1/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint,jsx-a11y,useKeyWithMouseEvents/reject/1/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOver mouse event with the onFocus keyboard event.
-
-    <div onMouseOver={ () => void 0 } />
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@
 
 ```
 
- lint/jsx-a11y/useKeyWithMouseEvents/reject/2/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint,jsx-a11y,useKeyWithMouseEvents/reject/2/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOut mouse event with the onBlur keyboard event.
-
-    <div onMouseOut={ () => void 0 } />
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,19 +50,13 @@
 
 ```
 
- lint/jsx-a11y/useKeyWithMouseEvents/reject/3/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint,jsx-a11y,useKeyWithMouseEvents/reject/3/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOver mouse event with the onFocus keyboard event.
-
-    <div onMouseOver={ () => void 0 } >{props}</div>
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -91,19 +73,13 @@
 
 ```
 
- lint/jsx-a11y/useKeyWithMouseEvents/reject/4/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint,jsx-a11y,useKeyWithMouseEvents/reject/4/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOut mouse event with the onBlur keyboard event.
-
-    <div onMouseOut={ () => void 0 } >{props}</div>
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -119,7 +95,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -133,7 +108,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -147,7 +121,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -163,7 +136,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -179,7 +151,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

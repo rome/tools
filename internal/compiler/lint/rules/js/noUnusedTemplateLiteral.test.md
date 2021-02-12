@@ -8,21 +8,15 @@
 
 ```
 
- lint/js/noUnusedTemplateLiteral/reject/1/file.ts:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━
+ lint,js,noUnusedTemplateLiteral/reject/1/file.ts:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━
 
   ✖ Do not use template literals if interpolation and special-character handling are not needed.
-
-    const foo = `bar`
-                ^^^^^
 
   ℹ Safe fix
 
   - `bar`
   + "bar"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -37,21 +31,15 @@ const foo = "bar";
 
 ```
 
- lint/js/noUnusedTemplateLiteral/reject/2/file.ts:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━
+ lint,js,noUnusedTemplateLiteral/reject/2/file.ts:1:12 lint/js/noUnusedTemplateLiteral  FIXABLE  ━━━
 
   ✖ Do not use template literals if interpolation and special-character handling are not needed.
-
-    const foo = `bar `
-                ^^^^^^
 
   ℹ Safe fix
 
   - `bar·`
   + "bar·"
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -65,7 +53,6 @@ const foo = "bar ";
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -80,7 +67,6 @@ const foo = `bar
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -94,7 +80,6 @@ const foo = `"bar"`;
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -17,7 +17,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 **ESLint Equivalent:** [jsx-fragments](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:b0517c124d745c18316f7fd353d0c2ab689a7d95,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:cc050e9d3fae0c5afeb954d201145286659bf653,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -81,9 +81,6 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
 
-    <span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token variable">div</span>&gt;&lt;<span class="token variable">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">Fragment</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
-                       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Shorthand fragment syntax saves keystrokes and is only unapplicable</span>
     <span style="color: rgb(38, 148, 255);">when keys are required.</span>
 
@@ -106,10 +103,6 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use shorthand syntax for </span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;"> elements instead of standard</span>
     <span style="color: Tomato;">syntax.</span>
-
-    <span class="token keyword">const</span> <span class="token variable">Hello</span> <span class="token operator">=</span> &lt;<span class="token variable">div</span>&gt;&lt;<span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token variable">Foo</span> <span class="token operator">/</span>&gt;&lt;<span class="token operator">/</span><span class="token variable">React</span><span class="token punctuation">.</span><span class="token attr-name">Fragment</span>&gt;&lt;<span class="token operator">/</span>
-    <span class="token variable">div</span>&gt;
-    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Shorthand fragment syntax saves keystrokes and is only unapplicable</span>
     <span style="color: rgb(38, 148, 255);">when keys are required.</span>

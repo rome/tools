@@ -14,6 +14,7 @@ import Client from "./Client";
 import {consumeUnknown} from "@internal/consume";
 import review from "./review";
 import {BridgeError} from "@internal/events";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export type ClientRequestType = "local" | "server";
 
@@ -68,7 +69,10 @@ export default class ClientRequest {
 		let flags;
 		if (localCommand.defineFlags !== undefined) {
 			flags = localCommand.defineFlags(
-				consumeUnknown(query.commandFlags, "flags/invalid"),
+				consumeUnknown(
+					query.commandFlags,
+					DIAGNOSTIC_CATEGORIES["flags/invalid"],
+				),
 			);
 		}
 

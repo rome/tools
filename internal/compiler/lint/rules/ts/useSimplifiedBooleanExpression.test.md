@@ -8,22 +8,16 @@
 
 ```
 
- lint/ts/useSimplifiedBooleanExpression/reject/1/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
+ lint,ts,useSimplifiedBooleanExpression/reject/1/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
-
-    function foo(x: boolean) { return !!x; }
-                                      ^^^
 
   ℹ Safe fix
 
   - !!x
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,22 +34,16 @@ function foo(x: boolean) {
 
 ```
 
- lint/ts/useSimplifiedBooleanExpression/reject/2/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
+ lint,ts,useSimplifiedBooleanExpression/reject/2/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
-
-    function foo(x: boolean) { return x === true; }
-                                      ^^^^^^^^^^
 
   ℹ Safe fix
 
   - x·===·true
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,22 +60,16 @@ function foo(x: boolean) {
 
 ```
 
- lint/ts/useSimplifiedBooleanExpression/reject/3/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
+ lint,ts,useSimplifiedBooleanExpression/reject/3/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
-
-    function foo(x: boolean) { return false === x; }
-                                      ^^^^^^^^^^^
 
   ℹ Safe fix
 
   - false·===·x
   + !x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -104,22 +86,16 @@ function foo(x: boolean) {
 
 ```
 
- lint/ts/useSimplifiedBooleanExpression/reject/4/file.ts:1:46 lint/ts/useSimplifiedBooleanExpression
+ lint,ts,useSimplifiedBooleanExpression/reject/4/file.ts:1:46 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
-
-    function foo(x: boolean, y: boolean) { return (x || y) === true }
-                                                  ^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - (x·||·y)·===·true
   + x·||·y
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -135,7 +111,6 @@ function foo(x: boolean, y: boolean) {
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -151,7 +126,6 @@ function foo(x?: boolean) {
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -167,7 +141,6 @@ function foo(x: boolean | number) {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 

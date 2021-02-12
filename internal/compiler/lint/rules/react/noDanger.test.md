@@ -8,18 +8,12 @@
 
 ```
 
- lint/react/noDanger/reject/1/file.tsx:1:5 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noDanger/reject/1/file.tsx:1:5 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
-    <div dangerouslySetInnerHTML={{ __html: 'child' }}></div>;
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting content using code can expose users to cross-site scripting (XSS) attacks.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@
 
 ```
 
- lint/react/noDanger/reject/2/file.tsx:1:28 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noDanger/reject/2/file.tsx:1:28 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
-    React.createElement('div', {dangerouslySetInnerHTML: { __html: 'child' }})
-                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting content using code can expose users to cross-site scripting (XSS) attacks.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -60,18 +48,12 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
 
- lint/react/noDanger/reject/3/file.tsx:1:22 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noDanger/reject/3/file.tsx:1:22 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
-    createElement('div', {dangerouslySetInnerHTML: { __html: 'child' }})
-                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting content using code can expose users to cross-site scripting (XSS) attacks.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -85,7 +67,6 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -101,7 +82,6 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -115,7 +95,6 @@ React.createElement("div", child);
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

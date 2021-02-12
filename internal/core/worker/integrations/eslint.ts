@@ -1,6 +1,6 @@
 import IntegrationLoader from "@internal/core/common/IntegrationLoader";
 import {FileReference} from "@internal/core/common/types/files";
-import {Diagnostics} from "@internal/diagnostics";
+import {DIAGNOSTIC_CATEGORIES, Diagnostics} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {Position} from "@internal/parser-core";
 import {ob1Coerce1To0} from "@internal/ob1";
@@ -86,7 +86,7 @@ export async function maybeRunESLint(
 				description: {
 					message: markup`${message.get("message").asString()}`,
 					advice: [],
-					category: "eslint",
+					category: DIAGNOSTIC_CATEGORIES.eslint,
 					categoryValue: message.get("ruleId").asStringOrVoid(),
 				},
 				location: {

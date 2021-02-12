@@ -21,23 +21,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected ts syntax to be enabled"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:14
 				path: UIDPath<typescript/class/async-optional-method/input.js>
 				start: Position 2:14
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected "}
-					"ts"
-					RAW_MARKUP {value: " syntax to be enabled"}
-				]
 			}
 		}
 	]
@@ -126,13 +123,5 @@ JSRoot {
 
   ✖ Expected ts syntax to be enabled
 
-    1 │ class A extends B {
-  > 2 │   async method?(val: string): Promise<void>;
-      │               ^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

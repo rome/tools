@@ -24,28 +24,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<esprima/es2015-array-pattern/with-default-catch-param-fail/input.js>
 				start: Position 1:14
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"catch clause param"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed catch clause param"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							")"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
-					frame {location: SourceLocation esprima/es2015-array-pattern/with-default-catch-param-fail/input.js 1:19-1:19}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:19
+							path: UIDPath<esprima/es2015-array-pattern/with-default-catch-param-fail/input.js>
+							start: Position 1:19
+						}
+					}
 				]
 			}
 		}
@@ -127,11 +130,5 @@ JSRoot {
 
   ℹ We expected to find the closing character ) here
 
-    try { } catch ([a] = []) { }
-                       ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

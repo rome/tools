@@ -8,16 +8,10 @@
 
 ```
 
- lint/react/noRenderReturnValue/reject/1/file.tsx:1:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
+ lint,react,noRenderReturnValue/reject/1/file.tsx:1:12 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    const foo = ReactDOM.render(<div />, document.body);
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -32,16 +26,10 @@ const foo = ReactDOM.render(<div />, document.body);
 
 ```
 
- lint/react/noRenderReturnValue/reject/2/file.tsx:1:19 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
+ lint,react,noRenderReturnValue/reject/2/file.tsx:1:19 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    const foo = bar && ReactDOM.render(<div />, document.body);
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -56,16 +44,10 @@ const foo = bar && ReactDOM.render(<div />, document.body);
 
 ```
 
- lint/react/noRenderReturnValue/reject/3/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
+ lint,react,noRenderReturnValue/reject/3/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    const foo = bar ? ReactDOM.render(<div />, document.body) : null
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -80,16 +62,10 @@ const foo = bar ? ReactDOM.render(<div />, document.body) : null;
 
 ```
 
- lint/react/noRenderReturnValue/reject/4/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
+ lint,react,noRenderReturnValue/reject/4/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    const foo = () => ReactDOM.render(<div />, document.body);
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -106,18 +82,10 @@ function foo() {
 
 ```
 
- lint/react/noRenderReturnValue/reject/5/file.tsx:2:8 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━
+ lint,react,noRenderReturnValue/reject/5/file.tsx:2:8 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    1 │ const foo = {
-  > 2 │   react: ReactDOM.render(<div />, document.body)
-      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ };
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -134,17 +102,10 @@ const foo = {
 
 ```
 
- lint/react/noRenderReturnValue/reject/6/file.tsx:2:6 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━
+ lint,react,noRenderReturnValue/reject/6/file.tsx:2:6 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    1 │ let foo;
-  > 2 │ foo = ReactDOM.render(<div />, document.body);
-      │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -160,18 +121,10 @@ foo = ReactDOM.render(<div />, document.body);
 
 ```
 
- lint/react/noRenderReturnValue/reject/7/file.tsx:2:8 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━
+ lint,react,noRenderReturnValue/reject/7/file.tsx:2:8 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    1 │ function render () {
-  > 2 │   return ReactDOM.render(<div />, document.body)
-      │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -187,7 +140,6 @@ function render() {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -201,7 +153,6 @@ ReactDOM.render(<div />, document.body);
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -217,7 +168,6 @@ function render() {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 

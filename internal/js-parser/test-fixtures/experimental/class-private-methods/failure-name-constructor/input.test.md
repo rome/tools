@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Classes may not have a private field named '#constructor'"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:14
 				path: UIDPath<experimental/class-private-methods/failure-name-constructor/input.js>
@@ -103,13 +104,5 @@ JSRoot {
 
   ✖ Classes may not have a private field named '#constructor'
 
-    1 │ class Foo {
-  > 2 │   #constructor() {};
-      │   ^^^^^^^^^^^^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

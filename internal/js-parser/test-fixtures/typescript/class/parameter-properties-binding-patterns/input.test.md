@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "A parameter property may not be declared using a binding pattern."}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:16
 				path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
@@ -115,13 +116,5 @@ JSRoot {
 
   ✖ A parameter property may not be declared using a binding pattern.
 
-    1 │ class C {
-  > 2 │     constructor(public []) {}
-      │                 ^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

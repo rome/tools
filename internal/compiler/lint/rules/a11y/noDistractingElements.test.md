@@ -8,19 +8,13 @@
 
 ```
 
- lint/a11y/noDistractingElements/reject/1/file.tsx:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━━
+ lint,a11y,noDistractingElements/reject/1/file.tsx:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━━
 
   ✖ Avoid using deprecated blink elements.
-
-    <blink />
-    ^^^^^^^^^
 
   ℹ Deprecated blink are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@
 
 ```
 
- lint/a11y/noDistractingElements/reject/2/file.tsx:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━━
+ lint,a11y,noDistractingElements/reject/2/file.tsx:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━━
 
   ✖ Avoid using deprecated marquee elements.
-
-    <marquee />
-    ^^^^^^^^^^^
 
   ℹ Deprecated marquee are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -61,7 +49,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -75,7 +62,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -90,19 +76,13 @@
 
 ```
 
- lint/a11y/noDistractingElements/reject/1/file.html:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━
+ lint,a11y,noDistractingElements/reject/1/file.html:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━
 
   ✖ Avoid using deprecated blink elements.
-
-    <blink />
-    ^^^^^^
 
   ℹ Deprecated blink are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -118,19 +98,13 @@
 
 ```
 
- lint/a11y/noDistractingElements/reject/2/file.html:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━
+ lint,a11y,noDistractingElements/reject/2/file.html:1 lint/a11y/noDistractingElements ━━━━━━━━━━━━━━
 
   ✖ Avoid using deprecated marquee elements.
-
-    <marquee />
-    ^^^^^^^^
 
   ℹ Deprecated marquee are difficult to read and distract attention away from page content,
     especially for users with visual impairments.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -145,7 +119,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -160,7 +133,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 

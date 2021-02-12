@@ -8,12 +8,9 @@
 
 ```
 
- lint/jsx-a11y/noAutofocus/reject/1/file.tsx:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noAutofocus/reject/1/file.tsx:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Avoid the autoFocus attribute.
-
-    <input autoFocus />
-           ^^^^^^^^^
 
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
     keyboard-only navigation.
@@ -23,9 +20,6 @@
   - <input·autoFocus·/>
   + <input·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,12 +34,9 @@
 
 ```
 
- lint/jsx-a11y/noAutofocus/reject/2/file.tsx:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noAutofocus/reject/2/file.tsx:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Avoid the autoFocus attribute.
-
-    <input autoFocus='true' />
-           ^^^^^^^^^^^^^^^^
 
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
     keyboard-only navigation.
@@ -55,9 +46,6 @@
   - <input·autoFocus="true"·/>
   + <input·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,12 +60,9 @@
 
 ```
 
- lint/jsx-a11y/noAutofocus/reject/3/file.tsx:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━
+ lint,jsx-a11y,noAutofocus/reject/3/file.tsx:1:7 lint/jsx-a11y/noAutofocus  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Avoid the autoFocus attribute.
-
-    <input autoFocus={"false"} />
-           ^^^^^^^^^^^^^^^^^^^
 
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
     keyboard-only navigation.
@@ -87,9 +72,6 @@
   - <input·autoFocus={"false"}·/>
   + <input·/>
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -103,7 +85,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -117,7 +98,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -131,7 +111,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

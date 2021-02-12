@@ -393,7 +393,9 @@ class CheckRunner {
 		for (const subprocessor of this.processors) {
 			const diagnostics = subprocessor.getDiagnosticsForPath(path, false);
 			if (diagnostics !== undefined) {
-				processor.addDiagnostics(guaranteed ? diagnostics.guaranteed : diagnostics.complete);
+				processor.addDiagnostics(
+					guaranteed ? diagnostics.guaranteed : diagnostics.complete,
+				);
 				processor.addSuppressions(diagnostics.suppressions);
 			}
 		}

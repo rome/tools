@@ -10,7 +10,10 @@ import {
 import {FileReference} from "../common/types/files";
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {sha256} from "@internal/string-utils";
-import {DiagnosticIntegrity} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticIntegrity,
+} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {ToJSONObject} from "@internal/codec-config/json/types";
 
@@ -134,7 +137,11 @@ export class CacheEntry<Value extends RSERValue = RSERValue> {
 			return undefined;
 		}
 
-		const consumer = consumeUnknown(decoded.value, "parse", "rser");
+		const consumer = consumeUnknown(
+			decoded.value,
+			DIAGNOSTIC_CATEGORIES.parse,
+			"rser",
+		);
 		const value = this.loader.validate(consumer);
 		this.value = value;
 		return value;

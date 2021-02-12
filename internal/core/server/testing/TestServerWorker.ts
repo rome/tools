@@ -11,7 +11,10 @@ import {createClient} from "@internal/codec-websocket";
 import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import TestServer, {BridgeDiagnosticsError} from "@internal/core/server/testing/TestServer";
 import {ob1Coerce0To1} from "@internal/ob1";
-import {deriveDiagnosticFromErrorStructure} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	deriveDiagnosticFromErrorStructure,
+} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {ReporterProgress} from "@internal/cli-reporter";
 import {
@@ -234,7 +237,7 @@ export default class TestServerWorker {
 					},
 					{
 						description: {
-							category: "tests/timeout",
+							category: DIAGNOSTIC_CATEGORIES["tests/timeout"],
 							message: markup`Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
 							advice: [
 								{

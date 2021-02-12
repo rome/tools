@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 4:17
 				path: UIDPath<experimental/class-private-properties/failure-delete-optional-private-property/input.js>
@@ -154,15 +155,5 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ Expected an identifier
 
-    2 │   #x;
-    3 │   constructor() {
-  > 4 │     delete this?.#x;
-      │                  ^
-    5 │   }
-    6 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

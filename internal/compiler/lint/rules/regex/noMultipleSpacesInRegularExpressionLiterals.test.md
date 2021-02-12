@@ -8,13 +8,10 @@
 
 ```
 
- lint/regex/noMultipleSpacesInRegularExpressionLiterals/reject/1/file.ts:1:1
+ lint,regex,noMultipleSpacesInRegularExpressionLiterals/reject/1/file.ts:1:1
 lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
-
-    /   /
-     ^^^
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {3}/
@@ -24,9 +21,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - ···
   + ·{3}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -41,13 +35,10 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ```
 
- lint/regex/noMultipleSpacesInRegularExpressionLiterals/reject/2/file.ts:1:1
+ lint,regex,noMultipleSpacesInRegularExpressionLiterals/reject/2/file.ts:1:1
 lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
-
-    /  foo/
-     ^^
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {2}/
@@ -57,9 +48,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - ··foo
   + ·{2}foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -74,13 +62,10 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ```
 
- lint/regex/noMultipleSpacesInRegularExpressionLiterals/reject/3/file.ts:1:4
+ lint,regex,noMultipleSpacesInRegularExpressionLiterals/reject/3/file.ts:1:4
 lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
-
-    /foo   /
-        ^^^
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {3}/
@@ -90,9 +75,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo···
   + foo·{3}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -107,13 +89,10 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ```
 
- lint/regex/noMultipleSpacesInRegularExpressionLiterals/reject/4/file.ts:1:4
+ lint,regex,noMultipleSpacesInRegularExpressionLiterals/reject/4/file.ts:1:4
 lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
-
-    /foo  bar/
-        ^^
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {2}/
@@ -123,9 +102,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo··bar
   + foo·{2}bar
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -140,13 +116,10 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ```
 
- lint/regex/noMultipleSpacesInRegularExpressionLiterals/reject/5/file.ts:1:4
+ lint,regex,noMultipleSpacesInRegularExpressionLiterals/reject/5/file.ts:1:4
 lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
-
-    /foo   bar    baz/
-        ^^^^^^^^^^
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {7}/
@@ -156,9 +129,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo···bar····baz
   + foo·{3}bar·{4}baz
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -173,13 +143,10 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 
 ```
 
- lint/regex/noMultipleSpacesInRegularExpressionLiterals/reject/6/file.ts:1:10
+ lint,regex,noMultipleSpacesInRegularExpressionLiterals/reject/6/file.ts:1:10
 lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This regular expression contains unclear uses of multiple spaces.
-
-    /foo [ba]r  b(a|z)/
-              ^^
 
   ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier
     instead. eg / {2}/
@@ -189,9 +156,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
   - foo·[ba]r··b(a|z)
   + foo·[ba]r·{2}b(a|z)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -205,7 +169,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -219,7 +182,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -233,7 +195,6 @@ lint/regex/noMultipleSpacesInRegularExpressionLiterals  FIXABLE  ━━━━━
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

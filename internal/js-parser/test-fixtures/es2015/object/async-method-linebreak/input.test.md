@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "There shouldn't be any newlines between async and the rest of the function"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:9
 				path: UIDPath<es2015/object/async-method-linebreak/input.js>
@@ -85,13 +86,5 @@ JSRoot {
 
   ✖ There shouldn't be any newlines between async and the rest of the function
 
-    1 │ ({
-    2 │     async
-    3 │     foo() {}
-    4 │ })
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -17,7 +17,7 @@ This rule detects `continue` statements that can be marked as unnecessary. These
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:f679a8df31ee0e40820c95878f897f8c4902fa1d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ce9bf6e63b203f9a5579f5390f64e9e7432fb4d8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -49,10 +49,6 @@ This rule detects `continue` statements that can be marked as unnecessary. These
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:2</span> <strong>lint/js/noUnnecessaryContinue</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Unnecessary </span><span style="color: Tomato;"><strong>continue</strong></span><span style="color: Tomato;"> statement</span>
-
-  <strong>  1</strong><strong> │ </strong><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">i</span><span class="token operator">--</span><span class="token punctuation">)</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>    <span class="token keyword">continue</span><span class="token punctuation">;</span>
-     <strong> │ </strong>    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 

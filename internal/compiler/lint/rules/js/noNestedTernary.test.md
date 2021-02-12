@@ -8,16 +8,10 @@
 
 ```
 
- lint/js/noNestedTernary/reject/1/file.ts:1:24 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noNestedTernary/reject/1/file.ts:1:24 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
-    let thing = foo ? bar : baz === qux ? quxx : foobar;
-                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -32,20 +26,14 @@ let thing = foo ? bar : baz === qux ? quxx : foobar;
 
 ```
 
- lint/js/noNestedTernary/reject/2/file.ts:1:36 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noNestedTernary/reject/2/file.ts:1:36 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
-    let thing = foo ? bar ? boo : foo : baz ? boo : foo;
-                                        ^^^^^^^^^^^^^^^
-
- lint/js/noNestedTernary/reject/2/file.ts:1:18 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noNestedTernary/reject/2/file.ts:1:18 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -60,16 +48,10 @@ let thing = foo ? bar ? boo : foo : baz ? boo : foo;
 
 ```
 
- lint/js/noNestedTernary/reject/3/file.ts:1:6 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noNestedTernary/reject/3/file.ts:1:6 lint/js/noNestedTernary ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
-    foo ? baz === qux ? quxx() : foobar() : bar();
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -83,7 +65,6 @@ foo ? baz === qux ? quxx() : foobar() : bar();
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -97,7 +78,6 @@ let thing = foo ? bar : foobar;
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -111,7 +91,6 @@ let thing = foo ? bar || boo : foo || bar;
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -125,7 +104,6 @@ let thing = foo ? bar && boo : foo && bar;
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -139,7 +117,6 @@ let thing = foo || baz ? bar || boo : foo || bar;
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -153,7 +130,6 @@ let thing = foo && baz ? bar || boo : foo && bar;
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -167,7 +143,6 @@ let thing = foo || baz ? bar || boo : foo && bar;
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 

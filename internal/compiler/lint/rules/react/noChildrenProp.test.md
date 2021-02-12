@@ -8,19 +8,13 @@
 
 ```
 
- lint/react/noChildrenProp/reject/1/file.tsx:1:13 lint/react/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noChildrenProp/reject/1/file.tsx:1:13 lint/react/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing children using a prop.
-
-    <MyComponent children={'foo'}></MyComponent>
-                 ^^^^^^^^^^^^^^^^
 
   ℹ The canonical way to pass children in React is to use JSX elements or additional arguments to
     React.createElement.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@
 
 ```
 
- lint/react/noChildrenProp/reject/2/file.tsx:1:28 lint/react/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noChildrenProp/reject/2/file.tsx:1:28 lint/react/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing children using a prop.
-
-    React.createElement('div', {children: 'foo'})
-                                ^^^^^^^^^^^^^^^
 
   ℹ The canonical way to pass children in React is to use JSX elements or additional arguments to
     React.createElement.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,19 +50,13 @@ React.createElement("div", {children: "foo"});
 
 ```
 
- lint/react/noChildrenProp/reject/3/file.tsx:1:22 lint/react/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,noChildrenProp/reject/3/file.tsx:1:22 lint/react/noChildrenProp ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing children using a prop.
-
-    createElement('div', {children: 'foo'})
-                          ^^^^^^^^^^^^^^^
 
   ℹ The canonical way to pass children in React is to use JSX elements or additional arguments to
     React.createElement.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -88,7 +70,6 @@ createElement("div", {children: "foo"});
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -104,7 +85,6 @@ createElement("div", {children: "foo"});
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -118,7 +98,6 @@ React.createElement("div", {}, "children");
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -12,7 +12,7 @@ import Path from "../lib/Path";
 import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";
 import {SUPPRESSION_START} from "../suppressionsParser";
-import {joinCategoryName} from "@internal/diagnostics";
+import {formatCategoryDescription} from "@internal/diagnostics";
 
 function getStartLine(node: AnyNode): undefined | Number1 {
 	const {loc} = node;
@@ -50,7 +50,7 @@ export function addSuppressions(
 		const suppressionCategories: Set<string> = new Set();
 		for (const decision of decisions) {
 			if (decision.action === "suppress") {
-				suppressionCategories.add(joinCategoryName(decision));
+				suppressionCategories.add(formatCategoryDescription(decision));
 			}
 		}
 		if (suppressionCategories.size === 0) {

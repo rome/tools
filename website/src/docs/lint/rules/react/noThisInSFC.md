@@ -17,7 +17,7 @@ report `this` being used in stateless components
 **ESLint Equivalent:** [no-this-in-sfc](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-this-in-sfc.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:12c5c3969a6d08b1411ba5246fe9162e87fc8221,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:1ca81368940d3a04d8a03ad3e26a56ccaed618d0,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -284,13 +284,6 @@ report `this` being used in stateless components
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
-  <strong>  2</strong><strong> │ </strong>  <span class="token keyword">function</span> <span class="token function">Foo</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
-  <strong>  3</strong><strong> │ </strong>    <span class="token keyword">return</span> <span class="token punctuation">(</span>
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 4</strong><strong> │ </strong>      &lt;<span class="token variable">div</span>&gt;<span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>&lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
-     <strong> │ </strong>            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  5</strong><strong> │ </strong>    <span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <strong>  6</strong><strong> │ </strong>  <span class="token punctuation">}</span>
-
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: rgb(38, 148, 255);">instead.</span>
 
@@ -307,13 +300,6 @@ report `this` being used in stateless components
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:3</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
-
-  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
-  <strong>  2</strong><strong> │ </strong>  &lt;<span class="token variable">div</span>&gt;
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>    <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
-     <strong> │ </strong>     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  4</strong><strong> │ </strong>  &lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
-  <strong>  5</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: rgb(38, 148, 255);">instead.</span>
@@ -332,13 +318,6 @@ report `this` being used in stateless components
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
 
-  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">forwardRef</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
-  <strong>  2</strong><strong> │ </strong>  &lt;<span class="token variable">div</span>&gt;
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>    <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
-     <strong> │ </strong>     <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  4</strong><strong> │ </strong>  &lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
-  <strong>  5</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: rgb(38, 148, 255);">instead.</span>
 
@@ -356,13 +335,6 @@ report `this` being used in stateless components
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:3:4</span> <strong>lint/react/noThisInSFC</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using </span><span style="color: Tomato;"><strong>this</strong></span><span style="color: Tomato;"> in stateless functional components.</span>
-
-  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">Foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">memo</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">props</span><span class="token punctuation">,</span> <span class="token variable">ref</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
-  <strong>  2</strong><strong> │ </strong>    &lt;<span class="token variable">div</span>&gt;
-  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>      <span class="token punctuation">{</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">bar</span><span class="token punctuation">}</span>
-     <strong> │ </strong>       <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
-  <strong>  4</strong><strong> │ </strong>    &lt;<span class="token operator">/</span><span class="token variable">div</span>&gt;
-  <strong>  5</strong><strong> │ </strong>  <span class="token punctuation">)</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The </span><span style="color: rgb(38, 148, 255);"><strong>this</strong></span><span style="color: rgb(38, 148, 255);"> keyword has no binding in functional components. Use hooks</span>
     <span style="color: rgb(38, 148, 255);">instead.</span>

@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Illegal 'use strict' directive in function with non-simple parameter list"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:15
 				path: UIDPath<es2016/simple-parameter-list/arrow-function/input.js>
@@ -101,13 +102,5 @@ JSRoot {
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
 
-    1 │ var a = (options = {}) => {
-  > 2 │   "use strict";
-      │   ^^^^^^^^^^^^^
-    3 │ };
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

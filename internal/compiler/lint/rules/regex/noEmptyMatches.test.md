@@ -8,18 +8,12 @@
 
 ```
 
- lint/regex/noEmptyMatches/reject/1/file.ts:1:8 lint/regex/noEmptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,regex,noEmptyMatches/reject/1/file.ts:1:8 lint/regex/noEmptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This expression can return empty matches, and may match infinitely in some use cases.
 
-    let a = /a*/
-            ^^^^
-
   ℹ Strengthen the regular expression so that empty matches are not possible.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@ let a = /a*/;
 
 ```
 
- lint/regex/noEmptyMatches/reject/2/file.ts:1:8 lint/regex/noEmptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,regex,noEmptyMatches/reject/2/file.ts:1:8 lint/regex/noEmptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This expression can return empty matches, and may match infinitely in some use cases.
 
-    let b = /a*(abc)?[1,2,3]*/
-            ^^^^^^^^^^^^^^^^^^
-
   ℹ Strengthen the regular expression so that empty matches are not possible.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +47,6 @@ let b = /a*(abc)?[1,2,3]*/;
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -73,7 +60,6 @@ let a = /a*(abc)+[1,2,3]?/;
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

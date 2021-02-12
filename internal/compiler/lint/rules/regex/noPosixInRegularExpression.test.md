@@ -8,18 +8,12 @@
 
 ```
 
- lint/regex/noPosixInRegularExpression/reject/1/file.ts:1:18 lint/regex/noPosixInRegularExpression ━
+ lint,regex,noPosixInRegularExpression/reject/1/file.ts:1:18 lint/regex/noPosixInRegularExpression ━
 
   ✖ Do not use POSIX character classes and collating sequences.
 
-    const pattern = /[[:alpha:]]/
-                      ^
-
   ℹ This functionality is not supported in JavaScript regular expressions.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@ const pattern = /[[:alpha:]\]/;
 
 ```
 
- lint/regex/noPosixInRegularExpression/reject/2/file.ts:1:18 lint/regex/noPosixInRegularExpression ━
+ lint,regex,noPosixInRegularExpression/reject/2/file.ts:1:18 lint/regex/noPosixInRegularExpression ━
 
   ✖ Do not use POSIX character classes and collating sequences.
 
-    const pattern = /[[.ch.]]/
-                      ^
-
   ℹ This functionality is not supported in JavaScript regular expressions.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 

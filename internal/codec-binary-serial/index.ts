@@ -4,7 +4,10 @@ import RSERBufferWriter from "./RSERBufferWriter";
 import RSERStream from "./RSERStream";
 import fs = require("fs");
 import {markup} from "@internal/markup";
-import {provideDiagnosticAdviceForError} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	provideDiagnosticAdviceForError,
+} from "@internal/diagnostics";
 import {createAbsoluteFilePath} from "@internal/path";
 
 export {default as RSERBufferObserver} from "./RSERBufferAssembler";
@@ -80,7 +83,7 @@ export function decodeSingleMessageRSERStream(
 							message: markup`An error occured while decoding binary file ${createAbsoluteFilePath(
 								String(readStream.path),
 							)}`,
-							category: "parse",
+							category: DIAGNOSTIC_CATEGORIES.parse,
 							categoryValue: "binary",
 						},
 					},

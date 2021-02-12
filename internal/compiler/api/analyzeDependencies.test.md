@@ -27,14 +27,18 @@ Object {
 				integrity: undefined
 				language: "js"
 				marker: undefined
+				sourceText: undefined
 				sourceTypeJS: "module"
 				end: Position 1:19
 				path: UIDPath<unknown>
 				start: Position 1:0
 			}
 			description: Object {
-				category: "analyzeDependencies/cjsExportInES"
 				message: RAW_MARKUP {value: "You cannot use CommonJS exports in an ES module"}
+				category: Array [
+					"analyzeDependencies"
+					"cjsExportInES"
+				]
 				advice: Array [
 					action {
 						command: "check"
@@ -193,14 +197,15 @@ Object {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				sourceText: undefined
+				marker: undefined
+				sourceText: "export const foo = 'bar';\nexports.bar = 'foo';"
 				end: Position 1:25
 				path: UIDPath<unknown>
 				start: Position 1:0
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 				advice: Array [
 					log {
@@ -209,11 +214,7 @@ Object {
 					}
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\""}
-							"package.json"
-							RAW_MARKUP {value: "\" />"}
-						]
+						text: RAW_MARKUP {value: "Add <emphasis>\\\"type\\\": \\\"module\\\"</emphasis> to your <filelink emphasis target=\"package.json\">package.json</filelink>"}
 					}
 				]
 			}

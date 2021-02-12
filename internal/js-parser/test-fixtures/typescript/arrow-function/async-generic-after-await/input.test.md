@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 3:13
 				path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
@@ -113,14 +114,5 @@ JSRoot {
 
   ✖ Expected a semicolon or a line terminator
 
-    1 │ async () => {
-    2 │   await null;
-  > 3 │   async <T>() => null;
-      │               ^
-    4 │ };
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

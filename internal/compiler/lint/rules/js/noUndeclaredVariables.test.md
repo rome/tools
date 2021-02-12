@@ -8,16 +8,10 @@
 
 ```
 
- lint/js/noUndeclaredVariables/reject/1/file.ts:1 lint/js/noUndeclaredVariables(foobar) ━━━━━━━━━━━━
+ lint,js,noUndeclaredVariables/reject/1/file.ts:1 lint/js/noUndeclaredVariables(foobar) ━━━━━━━━━━━━
 
   ✖ The foobar variable is undeclared
 
-    foobar;
-    ^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 

@@ -8,18 +8,12 @@
 
 ```
 
- lint/js/noCommaOperator/reject/1/file.ts:1:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noCommaOperator/reject/1/file.ts:1:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the comma operator. It can lead to easy mistakes and ambiguous code.
 
-    (0, 1, 2)
-     ^^^^^^^
-
   ℹ If you want multiple expressions, then break it up.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@
 
 ```
 
- lint/js/noCommaOperator/reject/2/file.ts:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noCommaOperator/reject/2/file.ts:1 lint/js/noCommaOperator ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid the comma operator. It can lead to easy mistakes and ambiguous code.
 
-    test(), rome()
-    ^^^^^^^^^^^^^^
-
   ℹ If you want multiple expressions, then break it up.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +47,6 @@ test(), rome();
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -73,7 +60,6 @@ foo(0, 1, 2);
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -87,7 +73,6 @@ foo(0, 1, 2);
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -101,7 +86,6 @@ foo(0, 1, 2);
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

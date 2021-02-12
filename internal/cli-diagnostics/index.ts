@@ -42,7 +42,7 @@ export async function printDiagnostics(
 	printer.processor.addDiagnostics(diagnostics);
 	printer.processor.addSuppressions(suppressions);
 	await printer.print({
-		showFooter: !(excludeFooter && printer.hasProblems()),
+		showFooter: !excludeFooter && printer.hasProblems(),
 	});
 	return printer;
 }

@@ -8,12 +8,9 @@
 
 ```
 
- lint/jsx-a11y/useAriaProps/reject/1/file.jsx:1:20 lint/jsx-a11y/useAriaProps  FIXABLE  ━━━━━━━━━━━━
+ lint,jsx-a11y,useAriaProps/reject/1/file.jsx:1:20 lint/jsx-a11y/useAriaProps  FIXABLE  ━━━━━━━━━━━━
 
   ✖ aria-labell is an invalid ARIA attribute.
-
-    <input className='' aria-labell='' />
-                        ^^^^^^^^^^^^^^
 
   Suggested fix: ARIA Spelling Mistake
 
@@ -22,9 +19,6 @@
 
   ℹ
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -39,16 +33,10 @@
 
 ```
 
- lint/jsx-a11y/useAriaProps/reject/2/file.jsx:1:5 lint/jsx-a11y/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useAriaProps/reject/2/file.jsx:1:5 lint/jsx-a11y/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ aria- is an invalid ARIA attribute.
 
-    <div aria-='foobar' />
-         ^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -63,12 +51,9 @@
 
 ```
 
- lint/jsx-a11y/useAriaProps/reject/3/file.jsx:1:5 lint/jsx-a11y/useAriaProps  FIXABLE  ━━━━━━━━━━━━━
+ lint,jsx-a11y,useAriaProps/reject/3/file.jsx:1:5 lint/jsx-a11y/useAriaProps  FIXABLE  ━━━━━━━━━━━━━
 
   ✖ aria-labeledby is an invalid ARIA attribute.
-
-    <div aria-labeledby='foobar' />
-         ^^^^^^^^^^^^^^^^^^^^^^^
 
   Suggested fix: ARIA Spelling Mistake
 
@@ -77,9 +62,6 @@
 
   ℹ
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -94,16 +76,10 @@
 
 ```
 
- lint/jsx-a11y/useAriaProps/reject/4/file.jsx:1:5 lint/jsx-a11y/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useAriaProps/reject/4/file.jsx:1:5 lint/jsx-a11y/useAriaProps ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ aria-skldjfaria-klajsd is an invalid ARIA attribute.
 
-    <div aria-skldjfaria-klajsd='foobar' />
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -117,7 +93,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -131,7 +106,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -145,7 +119,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -159,7 +132,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -173,7 +145,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -187,7 +158,6 @@
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -201,7 +171,6 @@
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 

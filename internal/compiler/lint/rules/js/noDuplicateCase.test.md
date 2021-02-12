@@ -8,7 +8,7 @@
 
 ```
 
- lint/js/noDuplicateCase/reject/1/file.ts:7:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDuplicateCase/reject/1/file.ts:7:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "c" case.
 
@@ -16,16 +16,6 @@
 
   ℹ Defined already here
 
-     9 │   case 'd':
-    10 │     break;
-  > 11 │   case 'c':
-       │        ^^^
-    12 │     break;
-    13 │   default:
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -54,7 +44,7 @@ switch (expr) {
 
 ```
 
- lint/js/noDuplicateCase/reject/2/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDuplicateCase/reject/2/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the 2 case.
 
@@ -62,16 +52,6 @@ switch (expr) {
 
   ℹ Defined already here
 
-     7 │   case 3:
-     8 │     break;
-   > 9 │   case 2:
-       │        ^
-    10 │     break;
-    11 │   default:
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -98,7 +78,7 @@ switch (expr) {
 
 ```
 
- lint/js/noDuplicateCase/reject/3/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDuplicateCase/reject/3/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the 2n case.
 
@@ -106,16 +86,6 @@ switch (expr) {
 
   ℹ Defined already here
 
-     7 │   case 3:
-     8 │     break;
-   > 9 │   case 2n:
-       │        ^^
-    10 │     break;
-    11 │   default:
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -142,7 +112,7 @@ switch (expr) {
 
 ```
 
- lint/js/noDuplicateCase/reject/4/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDuplicateCase/reject/4/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "a" case.
 
@@ -150,16 +120,6 @@ switch (expr) {
 
   ℹ Defined already here
 
-    3 │   case foo:
-    4 │     break;
-  > 5 │   case foo:
-      │        ^^^
-    6 │     break;
-    7 │   default:
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -182,7 +142,7 @@ switch ("a") {
 
 ```
 
- lint/js/noDuplicateCase/reject/5/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDuplicateCase/reject/5/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "foo" case.
 
@@ -190,16 +150,6 @@ switch ("a") {
 
   ℹ Defined already here
 
-    3 │   case 'foo':
-    4 │     break;
-  > 5 │   case 'foo':
-      │        ^^^^^
-    6 │     break;
-    7 │   default:
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -222,7 +172,7 @@ switch ("a") {
 
 ```
 
- lint/js/noDuplicateCase/reject/6/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDuplicateCase/reject/6/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the null case.
 
@@ -230,16 +180,6 @@ switch ("a") {
 
   ℹ Defined already here
 
-    3 │   case null:
-    4 │     break;
-  > 5 │   case null:
-      │        ^^^^
-    6 │     break;
-    7 │   default:
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -261,7 +201,6 @@ switch ("a") {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -287,7 +226,6 @@ switch (expr) {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -313,7 +251,6 @@ switch (expr) {
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

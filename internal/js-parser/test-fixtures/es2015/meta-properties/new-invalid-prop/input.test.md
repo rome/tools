@@ -21,26 +21,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The only valid meta property for new is new.target"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:10
 				path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
 				start: Position 2:6
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "The only valid meta property for "}
-					"new"
-					RAW_MARKUP {value: " is "}
-					"new"
-					RAW_MARKUP {value: "."}
-					"target"
-				]
 			}
 		}
 	]
@@ -95,13 +89,5 @@ JSRoot {
 
   ✖ The only valid meta property for new is new.target
 
-    1 │ function f() {
-  > 2 │   new.prop
-      │       ^^^^
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

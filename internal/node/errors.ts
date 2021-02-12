@@ -7,6 +7,7 @@ import {
 } from "@internal/v8";
 import {StaticMarkup, markup} from "@internal/markup";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticCategory,
@@ -116,9 +117,9 @@ export function convertPossibleNodeErrorToDiagnostic(
 		location = getDiagnosticLocationFromErrorFrame(struct.frames[0]);
 	}
 
-	let category: DiagnosticCategory = "internalError/fatal";
+	let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["internalError/fatal"];
 	if (err.path !== undefined) {
-		category = "internalError/fs";
+		category = DIAGNOSTIC_CATEGORIES["internalError/fs"];
 	} else {
 		// TODO probably others
 	}

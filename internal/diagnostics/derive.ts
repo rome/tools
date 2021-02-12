@@ -24,7 +24,7 @@ import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {
 	appendAdviceToDiagnostic,
 	diagnosticLocationToMarkupFilelink,
-	joinCategoryName,
+	formatCategoryDescription,
 	prependAdviceToDiagnostic,
 } from "./helpers";
 import {RequiredProps} from "@internal/typescript-helpers";
@@ -108,7 +108,7 @@ export function deriveRootAdviceFromDiagnostic(
 		header = markup`<emphasis>${diag.label}</emphasis> ${header}`;
 	}
 
-	header = markup`${header} <emphasis>${joinCategoryName(description)}</emphasis>`;
+	header = markup`${header} <emphasis>${formatCategoryDescription(description)}</emphasis>`;
 
 	if (tags.internal) {
 		header = markup`${header} <inverse><error> INTERNAL </error></inverse>`;
@@ -442,6 +442,10 @@ export function addOriginsToDiagnostics(
 	origins: DiagnosticOrigin[],
 	diagnostics: Diagnostics,
 ): Diagnostics {
+	if (origins.length === 0) {
+		return diagnostics;
+	}
+
 	return diagnostics.map((diag) => {
 		return addOriginsToDiagnostic(origins, diag);
 	});
@@ -451,6 +455,10 @@ export function addOriginsToDiagnostic(
 	origins: DiagnosticOrigin[],
 	diag: Diagnostic,
 ): Diagnostic {
+	if (origins.length === 0) {
+		return diag;
+	}
+
 	const newOrigins =
 		diag.origins === undefined ? origins : [...origins, ...diag.origins];
 	return {

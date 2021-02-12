@@ -21,23 +21,20 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:33
 				path: UIDPath<esprima/invalid-syntax/migrated_0178/input.js>
 				start: Position 1:33
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown label <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
 			}
 		}
 	]
@@ -105,11 +102,5 @@ JSRoot {
 
   ✖ Unknown label x
 
-    x: while (true) { (function () { break x; }); }
-                                     ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

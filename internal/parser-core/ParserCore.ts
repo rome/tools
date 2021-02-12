@@ -16,6 +16,7 @@ import {
 	ValueToken,
 } from "./types";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticDescription,
@@ -29,6 +30,7 @@ import {
 	catchDiagnosticsSync,
 	createSingleDiagnosticError,
 	descriptions,
+	joinCategoryName,
 } from "@internal/diagnostics";
 import {AnyComment, AnyNode, RootBase} from "@internal/ast";
 import {AnyPath, UNKNOWN_PATH} from "@internal/path";
@@ -88,7 +90,9 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		this.impl = impl;
 		this.language = overrides.diagnosticLanguage ?? impl.diagnosticLanguage;
 		this.diagnosticCategory =
-			overrides.diagnosticCategory ?? impl.diagnosticCategory ?? "parse";
+			overrides.diagnosticCategory ??
+			impl.diagnosticCategory ??
+			DIAGNOSTIC_CATEGORIES.parse;
 		this.diagnosticCategoryValue =
 			overrides.diagnosticCategoryValue ??
 			impl.diagnosticCategoryValue ??
@@ -511,7 +515,10 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 		}
 
 		let sourceText;
-		if (this.options.path === undefined || this.options.includeSourceTextInDiagnostics) {
+		if (
+			this.options.path === undefined ||
+			this.options.includeSourceTextInDiagnostics
+		) {
 			sourceText = this.sourceText;
 		}
 
@@ -784,21 +791,22 @@ export default class ParserCore<Types extends ParserCoreTypes> {
 	//# Diagnostics
 
 	public getDiagnostics(): Diagnostics {
-		const collector = new DiagnosticsProcessor({
+		const processor = new DiagnosticsProcessor({
 			origins: [
 				{
-					category: this.diagnosticCategory,
+					category: joinCategoryName(this.diagnosticCategory),
 				},
 			],
-			//unique: ['start.line'],
 		});
 
 		for (const filter of this.state.diagnosticFilters) {
-			collector.addFilter(filter);
+			processor.addFilter(filter);
 		}
 
 		// TODO remove any trailing "eof" diagnostic
-		return collector.addDiagnostics(this.state.diagnostics).slice(0, 1);
+		processor.addDiagnostics(this.state.diagnostics);
+
+		return processor.getDiagnostics().slice(0, 1);
 	}
 
 	public addDiagnostic(diag: Diagnostic) {

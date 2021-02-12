@@ -24,28 +24,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js>
 				start: Position 1:4
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"property name"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed property name"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"]"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>]</emphasis> here"}
 					}
-					frame {location: SourceLocation esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js 1:11-1:11}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:11
+							path: UIDPath<esprima/es2015-generator/generator-method-with-invalid-computed-name/input.js>
+							start: Position 1:11
+						}
+					}
 				]
 			}
 		}
@@ -127,11 +130,5 @@ JSRoot {
 
   ℹ We expected to find the closing character ] here
 
-    ({ *[yield iter]() {} })
-               ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

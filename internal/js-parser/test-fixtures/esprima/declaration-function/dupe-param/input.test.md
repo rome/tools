@@ -24,25 +24,32 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<esprima/declaration-function/dupe-param/input.js>
 				start: Position 1:14
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>x</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {location: SourceLocation esprima/declaration-function/dupe-param/input.js 1:14-1:15 (x)}
+					frame {
+						location: Object {
+							identifierName: "x"
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:15
+							path: UIDPath<esprima/declaration-function/dupe-param/input.js>
+							start: Position 1:14
+						}
+					}
 				]
 			}
 		}
@@ -109,11 +116,5 @@ JSRoot {
 
   ℹ Defined already here
 
-    function a(x, x) {'use strict';}
-                  ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

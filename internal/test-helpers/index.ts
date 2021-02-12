@@ -23,6 +23,7 @@ import {
 	readFileText,
 } from "@internal/fs";
 import {ExtendedMap} from "@internal/collections";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 const dirname = testOptions.dirname ?? "";
 
@@ -91,7 +92,7 @@ async function _getFixtures(
 						...inheritOptions.asUnknownObject(),
 						...ownOptions.asUnknownObject(),
 					},
-					"tests/fixtureOptions",
+					DIAGNOSTIC_CATEGORIES["tests/fixtureOptions"],
 				);
 
 	// An array of directories names that lead to this fixture
@@ -160,7 +161,7 @@ export async function getFixtures(dir: string): Promise<Fixture[]> {
 		name: undefined,
 		dir: root,
 		parts: [],
-		options: consumeUnknown({}, "tests/fixtureOptions"),
+		options: consumeUnknown({}, DIAGNOSTIC_CATEGORIES["tests/fixtureOptions"]),
 	});
 }
 

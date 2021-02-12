@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Object pattern cannot contains methods"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-pattern-with-method/input.js>
@@ -83,11 +84,5 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
 
   ✖ Object pattern cannot contains methods
 
-    ({a(){}}=0)
-      ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

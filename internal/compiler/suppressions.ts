@@ -10,6 +10,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	DiagnosticSuppression,
+	equalCategoryNames,
 } from "@internal/diagnostics";
 import {ob1Coerce0, ob1Number1} from "@internal/ob1";
 import {addPositions} from "@internal/parser-core";
@@ -93,7 +94,7 @@ export function matchesSuppression(
 	suppression: DiagnosticSuppression,
 ): boolean {
 	return (
-		category === suppression.category &&
+		equalCategoryNames(category, suppression.category) &&
 		equalPaths(path, suppression.path) &&
 		start !== undefined &&
 		end !== undefined &&

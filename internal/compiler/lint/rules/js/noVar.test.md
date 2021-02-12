@@ -8,19 +8,12 @@
 
 ```
 
- lint/js/noVar/reject/1/file.ts:1 lint/js/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noVar/reject/1/file.ts:1 lint/js/noVar ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Variable declarations using var are disallowed.
 
-  > 1 │ var foobar;
-      │ ^^^^^^^^^^^
-    2 │ foobar
-
   ℹ Use let or const instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 

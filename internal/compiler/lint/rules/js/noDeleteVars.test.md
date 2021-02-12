@@ -8,19 +8,12 @@
 
 ```
 
- lint/js/noDeleteVars/reject/1/file.js:2 lint/js/noDeleteVars ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDeleteVars/reject/1/file.js:2 lint/js/noDeleteVars ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This is an invalid use of the delete operator.
 
-    1 │ const foo = 'test';
-  > 2 │ delete foo;
-      │ ^^^^^^^^^^
-
   ℹ Only object properties can be deleted.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,7 +28,6 @@ delete foo;
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -50,7 +42,6 @@ arr[0][2] = undefined;
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -65,7 +56,6 @@ obj.a.b.c = undefined;
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

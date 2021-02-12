@@ -8,21 +8,15 @@
 
 ```
 
- lint/js/useTemplate/reject/1/file.ts:1:31 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/1/file.ts:1:31 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    const foo = 'bar'; console.log(foo + 'baz')
-                                   ^^^^^^^^^^^
 
   ℹ Safe fix
 
   - foo·+·"baz"
   + `${foo}baz`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,21 +32,15 @@ console.log(`${foo}baz`);
 
 ```
 
- lint/js/useTemplate/reject/2/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/2/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    console.log((1 * 2) + 'foo')
-                ^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - 1·*·2·+·"foo"
   + `${1·*·2}foo`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -67,21 +55,15 @@ console.log(`${1 * 2}foo`);
 
 ```
 
- lint/js/useTemplate/reject/3/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/3/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    console.log(1 + 'foo' + 2 + 'bar' + 'baz' + 3)
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - 1·+·"foo"·+·2·+·"bar"·+·"baz"·+·3
   + `${1}foo${2}barbaz${3}`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -96,21 +78,15 @@ console.log(`${1}foo${2}barbaz${3}`);
 
 ```
 
- lint/js/useTemplate/reject/4/file.ts:1:13 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/4/file.ts:1:13 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    console.log((1 + 'foo') * 2)
-                 ^^^^^^^^^
 
   ℹ Safe fix
 
   - 1·+·"foo"
   + `${1}foo`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -125,19 +101,16 @@ console.log(`${1}foo` * 2);
 
 ```
 
- lint/js/useTemplate/reject/5/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/5/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    console.log((1 * (2 + 'foo')) + 'bar')
-                ^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - 1·*·(2·+·"foo")·+·"bar"
   + `${1·*·(2·+·"foo")}bar`
 
- lint/js/useTemplate/reject/5/file.ts:1:18 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/5/file.ts:1:18 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
 
@@ -146,9 +119,6 @@ console.log(`${1}foo` * 2);
   - 2·+·"foo"
   + `${2}foo`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -163,21 +133,15 @@ console.log(`${1 * `${2}foo`}bar`);
 
 ```
 
- lint/js/useTemplate/reject/6/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/6/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    console.log('foo' + 1)
-                ^^^^^^^^^
 
   ℹ Safe fix
 
   - "foo"·+·1
   + `foo${1}`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -192,21 +156,15 @@ console.log(`foo${1}`);
 
 ```
 
- lint/js/useTemplate/reject/7/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/7/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    console.log('foo' + `bar${`baz${'bat' + 'bam'}`}` + 'boo')
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - "foo"·+·`bar${`baz${"bat"·+·"bam"}`}`·+·"boo"
   + `foobarbaz${"bat"·+·"bam"}boo`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -221,21 +179,15 @@ console.log(`foobarbaz${"bat" + "bam"}boo`);
 
 ```
 
- lint/js/useTemplate/reject/8/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useTemplate/reject/8/file.ts:1:12 lint/js/useTemplate  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Template literals are preferred over string concatenation.
-
-    console.log('foo' + 1 + 2)
-                ^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - "foo"·+·1·+·2
   + `foo${1}${2}`
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -249,7 +201,6 @@ console.log(`foo${1}${2}`);
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -263,7 +214,6 @@ console.log("foo" + "bar");
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 

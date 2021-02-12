@@ -8,18 +8,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/1/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/1/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe />
-    ^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/2/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/2/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe {...props} />
-    ^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -60,18 +48,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/3/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/3/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title="" />
-    ^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -86,18 +68,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/4/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/4/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title={""} />
-    ^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -112,18 +88,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/5/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/5/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title={``} />
-    ^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -138,18 +108,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/6/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/6/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title={undefined} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -164,18 +128,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/7/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/7/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title={false} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -190,18 +148,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/8/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/8/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title={true} />
-    ^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -216,18 +168,12 @@
 
 ```
 
- lint/jsx-a11y/useIframeTitle/reject/9/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
+ lint,jsx-a11y,useIframeTitle/reject/9/file.tsx:1 lint/jsx-a11y/useIframeTitle ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a title attribute when using iframe elements.
 
-    <iframe title={42} />
-    ^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Screen readers rely on the title set on an iframe to describe the content being displayed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -241,7 +187,6 @@
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -255,7 +200,6 @@
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 

@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'with' in strict mode"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<es2015/class/extends-strict/input.js>
@@ -107,14 +108,5 @@ JSRoot {
 
   ✖ 'with' in strict mode
 
-    1 │ class C extends (function B() {
-  > 2 │   with ({});
-      │   ^^^^^^^^^^
-    3 │   return B;
-    4 │ }()) {}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

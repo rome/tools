@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:13
 				path: UIDPath<esprima/es2015-generator/generator-parameter-invalid-computed-property-name/input.js>
@@ -129,13 +130,5 @@ JSRoot {
 
   ✖ Expected an identifier
 
-    1 │ (function*() {
-  > 2 │     function*({[yield 3]: y}) {}
-      │              ^
-    3 │ })
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

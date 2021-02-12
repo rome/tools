@@ -8,16 +8,10 @@
 
 ```
 
- lint/js/useFunctionDeclarations/reject/1/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
+ lint,js,useFunctionDeclarations/reject/1/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
 
   ✖ Use a function declaration instead of a const function.
 
-    const foo = function () {};
-                ^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -32,16 +26,10 @@ function foo() {}
 
 ```
 
- lint/js/useFunctionDeclarations/reject/2/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
+ lint,js,useFunctionDeclarations/reject/2/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
 
   ✖ Use a function declaration instead of a const function.
 
-    const foo = () => {};
-                ^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -56,16 +44,10 @@ function foo() {}
 
 ```
 
- lint/js/useFunctionDeclarations/reject/3/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
+ lint,js,useFunctionDeclarations/reject/3/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
 
   ✖ Use a function declaration instead of a const function.
 
-    const foo = () => {function bar() {this;}};
-                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -83,7 +65,6 @@ function foo() {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -99,7 +80,6 @@ const foo = () => {
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

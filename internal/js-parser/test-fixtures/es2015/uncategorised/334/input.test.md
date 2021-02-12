@@ -18,6 +18,26 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/334/input.js 1:0-1:15
 	path: UIDPath<es2015/uncategorised/334/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "eval is a reserved word"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				marker: undefined
+				sourceText: undefined
+				end: Position 1:8
+				path: UIDPath<es2015/uncategorised/334/input.js>
+				start: Position 1:4
+			}
+		}
+	]
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2015/uncategorised/334/input.js 1:0-1:15
@@ -39,28 +59,6 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:8
-				path: UIDPath<es2015/uncategorised/334/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"eval"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
-			}
-		}
-	]
 }
 ```
 
@@ -72,11 +70,5 @@ JSRoot {
 
   ✖ eval is a reserved word
 
-    [...eval] = arr
-        ^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

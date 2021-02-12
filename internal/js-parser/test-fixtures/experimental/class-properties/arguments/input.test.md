@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 3:19
 				path: UIDPath<experimental/class-properties/arguments/input.js>
@@ -116,15 +117,5 @@ JSRoot {
 
   ✖ 'arguments' is not allowed in class field initializer
 
-    1 │ function fn() {
-    2 │   class A {
-  > 3 │     foo = arguments;
-      │           ^^^^^^^^^
-    4 │   }
-    5 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

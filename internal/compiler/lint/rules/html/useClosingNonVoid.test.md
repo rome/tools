@@ -7,7 +7,6 @@
 ### `0`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -22,7 +21,6 @@
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -38,7 +36,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -52,7 +49,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

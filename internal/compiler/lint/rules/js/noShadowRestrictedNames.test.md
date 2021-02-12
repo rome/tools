@@ -8,19 +8,13 @@
 
 ```
 
- lint/js/noShadowRestrictedNames/reject/1/file.ts:1:9 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━
+ lint,js,noShadowRestrictedNames/reject/1/file.ts:1:9 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━
 
   ✖ Do not shadow the global NaN property.
-
-    function NaN() {}
-             ^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
     named after a known global.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@ function NaN() {}
 
 ```
 
- lint/js/noShadowRestrictedNames/reject/2/file.ts:1:4 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━
+ lint,js,noShadowRestrictedNames/reject/2/file.ts:1:4 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━━
 
   ✖ Do not shadow the global Set property.
-
-    let Set;
-        ^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
     named after a known global.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,19 +50,13 @@ let Set;
 
 ```
 
- lint/js/noShadowRestrictedNames/reject/3/file.ts:1:15 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
+ lint,js,noShadowRestrictedNames/reject/3/file.ts:1:15 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
 
   ✖ Do not shadow the global Object property.
-
-    try {  } catch(Object) {}
-                   ^^^^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
     named after a known global.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -91,19 +73,13 @@ try {
 
 ```
 
- lint/js/noShadowRestrictedNames/reject/4/file.ts:1:10 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
+ lint,js,noShadowRestrictedNames/reject/4/file.ts:1:10 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
 
   ✖ Do not shadow the global Array property.
-
-    !function Array() {}
-              ^^^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
     named after a known global.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -118,19 +94,13 @@ try {
 
 ```
 
- lint/js/noShadowRestrictedNames/reject/5/file.ts:1:14 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
+ lint,js,noShadowRestrictedNames/reject/5/file.ts:1:14 lint/js/noShadowRestrictedNames ━━━━━━━━━━━━━
 
   ✖ Do not shadow the global JSON property.
-
-    function test(JSON) {console.log(JSON)}
-                  ^^^^
 
   ℹ Consider renaming this variable. It's easy to confuse the origin of variables when they're
     named after a known global.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 

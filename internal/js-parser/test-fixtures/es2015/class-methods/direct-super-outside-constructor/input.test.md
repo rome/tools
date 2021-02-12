@@ -24,14 +24,15 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:13
 				path: UIDPath<es2015/class-methods/direct-super-outside-constructor/input.js>
 				start: Position 2:8
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super() is only valid inside a class constructor of a subclass"}
 				advice: Array [
 					log {
@@ -117,15 +118,7 @@ JSRoot {
 
   ✖ super() is only valid inside a class constructor of a subclass
 
-    1 │ class A {
-  > 2 │   x () {super()}
-      │         ^^^^^
-    3 │ }
-
   ℹ Maybe a typo in the method name ('constructor') or not extending another class?
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

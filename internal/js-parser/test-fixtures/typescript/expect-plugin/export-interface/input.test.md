@@ -44,19 +44,16 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<typescript/expect-plugin/export-interface/input.js>
 				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "A "}
-					"interface declaration"
-					RAW_MARKUP {value: " is only valid inside of a TypeScript file"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "A interface declaration is only valid inside of a TypeScript file"}
 				advice: Array [
 					log {
 						category: "info"
@@ -77,13 +74,7 @@ JSRoot {
 
   ✖ A interface declaration is only valid inside of a TypeScript file
 
-    export interface Foo {}
-           ^
-
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

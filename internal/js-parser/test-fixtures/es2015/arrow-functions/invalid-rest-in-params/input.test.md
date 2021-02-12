@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 3:13
 				path: UIDPath<es2015/arrow-functions/invalid-rest-in-params/input.js>
@@ -83,15 +84,5 @@ JSRoot {
 
   ✖ The rest element has to be the last element when destructuring
 
-    1 │ (
-    2 │     first,
-  > 3 │     ...second,
-      │     ^^^^^^^^^
-    4 │     third
-    5 │ ) => {};
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

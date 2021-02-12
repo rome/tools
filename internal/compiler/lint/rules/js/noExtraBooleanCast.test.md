@@ -8,12 +8,9 @@
 
 ```
 
- lint/js/noExtraBooleanCast/reject/1/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/1/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    if (Boolean(foo)) {}
-        ^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -22,9 +19,6 @@
   - Boolean(foo)
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,12 +34,9 @@ if (foo) {
 
 ```
 
- lint/js/noExtraBooleanCast/reject/2/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/2/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    if (!!Boolean(foo)) {}
-        ^^^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -54,7 +45,7 @@ if (foo) {
   - !!Boolean(foo)
   + Boolean(foo)
 
- lint/js/noExtraBooleanCast/reject/2/file.ts:1:6 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/2/file.ts:1:6 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -65,9 +56,6 @@ if (foo) {
   - Boolean(foo)
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -83,12 +71,9 @@ if (foo) {
 
 ```
 
- lint/js/noExtraBooleanCast/reject/3/file.ts:1:5 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/3/file.ts:1:5 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    if (!Boolean(foo)) {}
-         ^^^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -97,9 +82,6 @@ if (foo) {
   - Boolean(foo)
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -115,12 +97,9 @@ if (!foo) {
 
 ```
 
- lint/js/noExtraBooleanCast/reject/4/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/4/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    while (!!foo) {}
-           ^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -129,9 +108,6 @@ if (!foo) {
   - !!foo
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -146,14 +122,9 @@ while (foo) {}
 
 ```
 
- lint/js/noExtraBooleanCast/reject/5/file.ts:4:9 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/5/file.ts:4:9 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    2 │ do {
-    3 │   1 + 1;
-  > 4 │ } while (Boolean(x));
-      │          ^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -162,9 +133,6 @@ while (foo) {}
   - Boolean(x)
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -182,12 +150,9 @@ do {
 
 ```
 
- lint/js/noExtraBooleanCast/reject/6/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/6/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    for (; !!foo; ) {}
-           ^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -196,9 +161,6 @@ do {
   - !!foo
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -213,12 +175,9 @@ while (foo) {}
 
 ```
 
- lint/js/noExtraBooleanCast/reject/7/file.ts:1:12 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/7/file.ts:1:12 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    new Boolean(!!x);
-                ^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -227,9 +186,6 @@ while (foo) {}
   - !!x
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -244,12 +200,9 @@ new Boolean(x);
 
 ```
 
- lint/js/noExtraBooleanCast/reject/8/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/8/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    !!!x;
-     ^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -258,9 +211,6 @@ new Boolean(x);
   - !!x
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -275,12 +225,9 @@ new Boolean(x);
 
 ```
 
- lint/js/noExtraBooleanCast/reject/9/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,noExtraBooleanCast/reject/9/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
-
-    !Boolean(x);
-     ^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -289,9 +236,6 @@ new Boolean(x);
   - Boolean(x)
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -305,7 +249,6 @@ new Boolean(x);
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -319,7 +262,6 @@ Boolean(!x);
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -333,7 +275,6 @@ Boolean(!x);
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 

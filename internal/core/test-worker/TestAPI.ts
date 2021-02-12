@@ -6,6 +6,7 @@
  */
 
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticAdviceItem,
@@ -331,7 +332,7 @@ export default class TestAPI implements TestHelper {
 			getErrorStructure(new Error(), framesToShift + 1),
 			{
 				description: {
-					category: "tests/failure",
+					category: DIAGNOSTIC_CATEGORIES["tests/failure"],
 					message: markup`${message}`,
 					advice,
 				},
@@ -436,9 +437,9 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	public is(
-		received: unknown,
-		expected: unknown,
+	public is<T extends unknown>(
+		received: T,
+		expected: T,
 		message: string = "t.is() failed, using Object.is semantics",
 	): void {
 		if (Object.is(received, expected) !== true) {
@@ -834,7 +835,7 @@ export default class TestAPI implements TestHelper {
 						{
 							cleanFrames,
 							description: {
-								category: "tests/snapshots/incorrect",
+								category: DIAGNOSTIC_CATEGORIES["tests/snapshots/incorrect"],
 								message: markupMessage,
 								advice,
 							},

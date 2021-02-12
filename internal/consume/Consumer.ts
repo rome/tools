@@ -21,6 +21,7 @@ import {
 	UnknownObject,
 	VoidCallback,
 	isPlainObject,
+	Dict,
 } from "@internal/typescript-helpers";
 import {
 	JSONArray,
@@ -42,6 +43,7 @@ import {
 	ConsumerHandleUnexpected,
 	ConsumerOnDefinition,
 	ConsumerOptions,
+	ConsumerMapCallback,
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
@@ -819,6 +821,14 @@ export default class Consumer {
 		return value;
 	}
 
+	public asMappedObject<T>(callback: (c: Consumer, key: string) => T): Dict<T> {
+		const obj: Dict<T> = {};
+		for (const [key, value] of this.asMap()) {
+			obj[key] = callback(value, key);
+		}
+		return obj;
+	}
+
 	public asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
 		this.declareDefinition({
 			type: "object",
@@ -866,7 +876,7 @@ export default class Consumer {
 		});
 	}
 
-	public asMappedArray<T>(callback: (c: Consumer) => T): T[] {
+	public asMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
 		return Array.from(this.asIterable(), callback);
 	}
 
@@ -874,11 +884,11 @@ export default class Consumer {
 		return this.asImplicitMappedArray((c) => c);
 	}
 
-	public asImplicitMappedArray<T>(callback: (c: Consumer) => T): T[] {
+	public asImplicitMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
 		if (Array.isArray(this.asUnknown())) {
 			return this.asMappedArray(callback);
 		} else if (this.exists()) {
-			return [callback(this)];
+			return [callback(this, 0)];
 		} else {
 			return [];
 		}

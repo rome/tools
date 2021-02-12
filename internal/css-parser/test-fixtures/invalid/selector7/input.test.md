@@ -16,13 +16,14 @@ CSSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected an identifier"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "css"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: RelativeFilePath<invalid/selector7/input.css>

@@ -26,6 +26,7 @@ import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./Diagnostics
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
 import {AnyPath, MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
 import {Event} from "@internal/events";
+import { formatCategoryDescription } from "./helpers";
 
 export type DiagnosticsProcessorOptions = {
 	filters?: DiagnosticFilterWithTest[];
@@ -36,10 +37,12 @@ export type DiagnosticsProcessorOptions = {
 };
 
 type DiagnosticsMapEntry = {
-	cachedCalculated: undefined | {
-		includedSuppressions: boolean;
-		value: CalculatedDiagnostics;
-	};
+	cachedCalculated:
+		| undefined
+		| {
+				includedSuppressions: boolean;
+				value: CalculatedDiagnostics;
+			};
 
 	dependencies: MixedPathSet;
 	dependents: MixedPathSet;
@@ -67,7 +70,7 @@ type SeenKeys = Set<string>;
 function isDeduped(diag: Diagnostic, seenKeys: SeenKeys): boolean {
 	const parts: string[] = [
 		`label:${diag.label === undefined ? "" : readMarkup(diag.label)}`,
-		`category:${diag.description.category}`,
+		`category:${formatCategoryDescription(diag.description)}`,
 		`message:${readMarkup(diag.description.message)}`,
 	];
 
@@ -156,7 +159,10 @@ export default class DiagnosticsProcessor {
 	private cachedFlatDiagnostics: undefined | Diagnostics;
 	private possibleCount: number;
 
-	private getMapEntry(path: AnyPath, tag?: undefined | string): DiagnosticsMapEntry {
+	private getMapEntry(
+		path: AnyPath,
+		tag?: undefined | string,
+	): DiagnosticsMapEntry {
 		let entry: undefined | DiagnosticsMapEntry = this.map.get(path);
 		if (entry === undefined) {
 			entry = {
@@ -244,7 +250,9 @@ export default class DiagnosticsProcessor {
 
 	public addFilters(filters: DiagnosticFilterWithTest[]) {
 		if (this.map.size > 0) {
-			throw new Error("DiagnosticProcessor: Filters cannot be added after diagnostics already injected")
+			throw new Error(
+				"DiagnosticProcessor: Filters cannot be added after diagnostics already injected",
+			);
 		}
 		this.filters = this.filters.concat(filters);
 	}
@@ -384,7 +392,7 @@ export default class DiagnosticsProcessor {
 					this.getMapEntry(dep.path).dependents.add(path);
 				}
 			}
-			
+
 			const visibility = this.getDiagnosticVisibility(diag, entry.dedupeKeys);
 			if (visibility !== "hidden") {
 				this.possibleCount++;
@@ -395,7 +403,7 @@ export default class DiagnosticsProcessor {
 			}
 		}
 
-		if (guaranteed !== undefined) {
+		if (guaranteed !== undefined && guaranteed.length > 0) {
 			this.guaranteedDiagnosticsEvent.send(guaranteed);
 		}
 		this.insertDiagnosticsEvent.send();
@@ -414,7 +422,9 @@ export default class DiagnosticsProcessor {
 		return this.map.has(path);
 	}
 
-	public getSuppressionsForPath(path: AnyPath): undefined | DiagnosticSuppressions {
+	public getSuppressionsForPath(
+		path: AnyPath,
+	): undefined | DiagnosticSuppressions {
 		if (this.map.has(path)) {
 			return Array.from(this.getMapEntry(path).suppressions);
 		} else {
@@ -422,13 +432,25 @@ export default class DiagnosticsProcessor {
 		}
 	}
 
-	public getDiagnosticsForPath(path: AnyPath, includeSuppressions: boolean = true): undefined | CalculatedDiagnostics {
+	public getAllDiagnosticsForPath(path: AnyPath): Diagnostics {
+		const calculated = this.getDiagnosticsForPath(path, true);
+		if (calculated === undefined) {
+			return [];
+		} else {
+			return calculated.complete;
+		}
+	}
+
+	public getDiagnosticsForPath(
+		path: AnyPath,
+		includeSuppressions: boolean = true,
+	): undefined | CalculatedDiagnostics {
 		const entry = this.map.get(path);
 		if (entry === undefined) {
 			return undefined;
 		}
 
-		if (entry.cachedCalculated !== undefined && entry.cachedCalculated.includedSuppressions === includeSuppressions) {
+		if (entry.cachedCalculated?.includedSuppressions === includeSuppressions) {
 			return entry.cachedCalculated.value;
 		}
 
@@ -459,7 +481,7 @@ export default class DiagnosticsProcessor {
 
 		// Add errors for unused suppressions
 		for (const suppression of unusedSuppressions) {
-			const [categoryPrefix] = suppression.category.split("/");
+			const categoryPrefix = suppression.category[0];
 			if (this.allowedUnusedSuppressionPrefixes.has(categoryPrefix)) {
 				continue;
 			}
@@ -493,6 +515,7 @@ export default class DiagnosticsProcessor {
 
 		this.possibleCount -= entry.possibleCount;
 		this.map.delete(path);
+		this.normalizer.removePath(path);
 		this.modifiedDiagnosticsForPathEvent.send(path);
 
 		// Some diagnostics may now be visible on dependents

@@ -1,5 +1,6 @@
 import {createDiagnosticsCategory} from "./index";
 import {StaticMarkup, markup} from "@internal/markup";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export const bundler = createDiagnosticsCategory({
 	DETECTED_CYCLE: (
@@ -22,7 +23,7 @@ export const bundler = createDiagnosticsCategory({
 		}
 
 		return {
-			category: "bundler/moduleCycle",
+			category: DIAGNOSTIC_CATEGORIES["bundler/moduleCycle"],
 			message: markup`The variable <emphasis>${localName}</emphasis> won't be initialized yet`,
 			advice: [
 				{

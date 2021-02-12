@@ -29,25 +29,32 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:45
 				path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
 				start: Position 1:36
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"__proto__"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>__proto__</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {location: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)}
+					frame {
+						location: Object {
+							identifierName: "__proto__"
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:45
+							path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
+							start: Position 1:36
+						}
+					}
 				]
 			}
 		}
@@ -109,11 +116,5 @@ JSRoot {
 
   ℹ Defined already here
 
-    "use strict"; function t(__proto__, __proto__) { }
-                                        ^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

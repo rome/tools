@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 4:12
 				path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
@@ -141,15 +142,5 @@ JSRoot {
 
   ✖ super is only allowed in object methods and classes
 
-    2 │   foo: {
-    3 │     get: function(){
-  > 4 │       return super.foo;
-      │              ^
-    5 │     }
-    6 │   }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

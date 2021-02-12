@@ -8,12 +8,9 @@
 
 ```
 
- lint/js/useBlockStatements/reject/1/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/1/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-    if (x) x;
-    ^^^^^^^^^
 
   ℹ Safe fix
 
@@ -22,9 +19,6 @@
       2 │ + → x;
       3 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -41,15 +35,9 @@ if (x) {
 
 ```
 
- lint/js/useBlockStatements/reject/2/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/2/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-  > 1 │ if (x) {
-      │ ^^^^^^^^
-  > 2 │   x;
-  > 3 │ } else y;
-      │ ^^^^^^^^^
 
   ℹ Safe fix
 
@@ -60,9 +48,6 @@ if (x) {
       4 │ + → y;
       5 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -81,14 +66,9 @@ if (x) {
 
 ```
 
- lint/js/useBlockStatements/reject/3/file.ts:3:7 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/3/file.ts:3:7 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-    1 │ if (x) {
-    2 │   x
-  > 3 │ } else if (y) y;
-      │        ^^^^^^^^^
 
   ℹ Safe fix
 
@@ -97,9 +77,6 @@ if (x) {
       2 │ + → y;
       3 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -118,12 +95,9 @@ if (x) {
 
 ```
 
- lint/js/useBlockStatements/reject/4/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/4/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-    for (;;);
-    ^^^^^^^^^
 
   ℹ Safe fix
 
@@ -131,9 +105,6 @@ if (x) {
       1 │ + for·(;;)·{
       2 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -150,12 +121,9 @@ while (true) {
 
 ```
 
- lint/js/useBlockStatements/reject/5/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/5/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-    for (p in obj);
-    ^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -163,9 +131,6 @@ while (true) {
       1 │ + for·(p·in·obj)·{
       2 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -182,12 +147,9 @@ for (p in obj) {
 
 ```
 
- lint/js/useBlockStatements/reject/6/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/6/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-    for (x of xs);
-    ^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -195,9 +157,6 @@ for (p in obj) {
       1 │ + for·(x·of·xs)·{
       2 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -214,12 +173,9 @@ for (x of xs) {
 
 ```
 
- lint/js/useBlockStatements/reject/7/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/7/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-    do; while (x);
-    ^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -228,9 +184,6 @@ for (x of xs) {
       1 │ + do·{
       2 │ + }·while·(x);
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -247,12 +200,9 @@ do {
 
 ```
 
- lint/js/useBlockStatements/reject/8/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/8/file.ts:1 lint/js/useBlockStatements  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Block statements are preferred in this position.
-
-    while (x);
-    ^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -260,9 +210,6 @@ do {
       1 │ + while·(x)·{
       2 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -279,16 +226,10 @@ while (x) {
 
 ```
 
- lint/js/useBlockStatements/reject/9/file.ts:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,useBlockStatements/reject/9/file.ts:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'with' in strict mode
 
-    with (x);
-    ^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 

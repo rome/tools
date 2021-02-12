@@ -23,13 +23,14 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Classes may not have static property named prototype"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 2:18
 				path: UIDPath<experimental/class-properties/no-static-prototype-2/input.js>
@@ -126,14 +127,5 @@ JSRoot {
 
   ✖ Classes may not have static property named prototype
 
-    1 │ class Foo {
-  > 2 │   static prototype
-      │          ^^^^^^^^^
-    3 │   *x(){}
-    4 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -24,21 +24,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
 				start: Position 1:10
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "constructors in/after an Optional Chain are not allowed"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Optional chain member responsible"}
 					}
-					frame {location: SourceLocation es2020/optional-chaining/class-contructor-call/input.js 1:4-1:8}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:8
+							path: UIDPath<es2020/optional-chaining/class-contructor-call/input.js>
+							start: Position 1:4
+						}
+					}
 				]
 			}
 		}
@@ -92,11 +102,5 @@ JSRoot {
 
   ℹ Optional chain member responsible
 
-    new C?.b.d()
-        ^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

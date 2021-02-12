@@ -8,18 +8,12 @@
 
 ```
 
- lint/react/noDangerWithChildren/reject/1/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/1/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    <div dangerouslySetInnerHTML={{ __html: 'HTML' }}>children</div>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -36,18 +30,12 @@
 
 ```
 
- lint/react/noDangerWithChildren/reject/2/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/2/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    <div dangerouslySetInnerHTML={{ __html: 'HTML' }} children={'children'} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,18 +50,12 @@
 
 ```
 
- lint/react/noDangerWithChildren/reject/3/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/3/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    <div dangerouslySetInnerHTML={{ __html: 'HTML' }} children={['children']} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -88,18 +70,12 @@
 
 ```
 
- lint/react/noDangerWithChildren/reject/4/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/4/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    <Invalid dangerouslySetInnerHTML={{ __html: 'HTML' }}>children</Invalid>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -116,18 +92,12 @@
 
 ```
 
- lint/react/noDangerWithChildren/reject/5/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/5/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    <Invalid dangerouslySetInnerHTML={{ __html: 'HTML' }} children={'children'}/>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -142,18 +112,12 @@
 
 ```
 
- lint/react/noDangerWithChildren/reject/6/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/6/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -172,18 +136,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/7/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/7/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -202,19 +160,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/8/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/8/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children'
-       })
-    ^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -232,19 +183,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/9/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/9/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children:
-    ['children'] })
-    ^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -262,19 +206,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/10/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/10/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children:
-    'children' })
-    ^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -292,19 +229,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/11/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/11/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children:
-    ['children'] })
-    ^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -322,18 +252,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/12/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/12/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -352,18 +276,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/13/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/13/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    React.createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -382,18 +300,12 @@ React.createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/14/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/14/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -408,18 +320,12 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, "children");
 
 ```
 
- lint/react/noDangerWithChildren/reject/15/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/15/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -434,18 +340,12 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, ["children"]);
 
 ```
 
- lint/react/noDangerWithChildren/reject/16/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/16/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children' })
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -463,18 +363,12 @@ createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/17/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/17/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('div', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: ['children'] })
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -492,19 +386,12 @@ createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/18/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/18/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: 'children'
-    })
-    ^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -522,19 +409,12 @@ createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/19/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/19/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' }, children: ['children']
-       })
-    ^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -552,18 +432,12 @@ createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/20/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/20/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, 'children')
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -582,18 +456,12 @@ createElement(
 
 ```
 
- lint/react/noDangerWithChildren/reject/21/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
+ lint,react,noDangerWithChildren/reject/21/file.tsx:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━
 
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
-    createElement('Invalid', { dangerouslySetInnerHTML: { __html: 'HTML' } }, ['children'])
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -611,7 +479,6 @@ createElement(
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -625,7 +492,6 @@ createElement(
 ### `22`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -641,7 +507,6 @@ createElement(
 ### `23`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -655,7 +520,6 @@ createElement(
 ### `24`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -669,7 +533,6 @@ createElement(
 ### `25`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -683,7 +546,6 @@ createElement(
 ### `26`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -699,7 +561,6 @@ createElement(
 ### `27`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -713,7 +574,6 @@ createElement(
 ### `28`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -727,7 +587,6 @@ createElement(
 ### `29`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -741,7 +600,6 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}});
 ### `30`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -755,7 +613,6 @@ React.createElement("div", {}, "children");
 ### `31`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -769,7 +626,6 @@ React.createElement("div", {}, ["children"]);
 ### `32`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -783,7 +639,6 @@ React.createElement("div", {children: "children"});
 ### `33`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -797,7 +652,6 @@ React.createElement("div", {children: ["children"]});
 ### `34`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -811,7 +665,6 @@ React.createElement("valid", {dangerouslySetInnerHTML: {__html: "HTML"}});
 ### `35`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -825,7 +678,6 @@ React.createElement("valid", {}, "children");
 ### `36`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -839,7 +691,6 @@ React.createElement("valid", {}, ["children"]);
 ### `37`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -853,7 +704,6 @@ React.createElement("valid", {children: "children"});
 ### `38`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -867,7 +717,6 @@ React.createElement("valid", {children: ["children"]});
 ### `39`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -881,7 +730,6 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}});
 ### `40`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -895,7 +743,6 @@ createElement("div", {}, "children");
 ### `41`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -909,7 +756,6 @@ createElement("div", {}, ["children"]);
 ### `42`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -923,7 +769,6 @@ createElement("div", {children: "children"});
 ### `43`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -937,7 +782,6 @@ createElement("div", {children: ["children"]});
 ### `44`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -951,7 +795,6 @@ createElement("valid", {dangerouslySetInnerHTML: {__html: "HTML"}});
 ### `45`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -965,7 +808,6 @@ createElement("valid", {}, "children");
 ### `46`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -979,7 +821,6 @@ createElement("valid", {}, ["children"]);
 ### `47`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -993,7 +834,6 @@ createElement("valid", {children: "children"});
 ### `48`
 
 ```
-✔ No known problems!
 
 ```
 

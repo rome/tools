@@ -24,25 +24,32 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:19
 				path: UIDPath<core/uncategorised/465/input.js>
 				start: Position 1:18
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Label <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis> is already declared"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Label <emphasis>x</emphasis> is already declared"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {location: SourceLocation core/uncategorised/465/input.js 1:0-1:1 (x)}
+					frame {
+						location: Object {
+							identifierName: "x"
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:1
+							path: UIDPath<core/uncategorised/465/input.js>
+							start: Position 1:0
+						}
+					}
 				]
 			}
 		}
@@ -101,11 +108,5 @@ JSRoot {
 
   ℹ Defined already here
 
-    x: while (true) { x: while (true) { } }
-    ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

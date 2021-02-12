@@ -8,18 +8,10 @@
 
 ```
 
- lint/js/noDupeArgs/reject/1/file.js:1:18 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDupeArgs/reject/1/file.js:1:18 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate function arguments. Check the a argument.
 
-  > 1 │ function hello(a, a) {
-      │                   ^
-    2 │   //
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -36,20 +28,12 @@ function hello(a, a) {
 
 ```
 
- lint/js/noDupeArgs/reject/2/file.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDupeArgs/reject/2/file.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Argument a name clash in strict mode
 
   ℹ Defined already here
 
-  > 1 │ const hello = (a, a) => {
-      │                   ^
-    2 │   //
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -63,18 +47,10 @@ undefined
 
 ```
 
- lint/js/noDupeArgs/reject/3/file.js:1:27 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDupeArgs/reject/3/file.js:1:27 lint/js/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate function arguments. Check the a argument.
 
-  > 1 │ const hello = function (a, a) {
-      │                            ^
-    2 │   //
-    3 │ }
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -90,7 +66,6 @@ function hello(a, a) {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -106,7 +81,6 @@ function foo(foo) {
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

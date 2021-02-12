@@ -8,18 +8,12 @@
 
 ```
 
- lint/js/noAsyncPromiseExecutor/reject/1/file.ts:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
+ lint,js,noAsyncPromiseExecutor/reject/1/file.ts:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
 
   ✖ Promise executor functions should not be async.
 
-    new Promise(async function foo() {})
-                ^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ This can lead to lost errors and unnecessary indirection.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@ new Promise(async function foo() {});
 
 ```
 
- lint/js/noAsyncPromiseExecutor/reject/2/file.ts:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
+ lint,js,noAsyncPromiseExecutor/reject/2/file.ts:1:12 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
 
   ✖ Promise executor functions should not be async.
 
-    new Promise(async () => {})
-                ^^^^^^^^^^^^^^
-
   ℹ This can lead to lost errors and unnecessary indirection.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -60,18 +48,12 @@ new Promise(async () => {});
 
 ```
 
- lint/js/noAsyncPromiseExecutor/reject/3/file.ts:1:16 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
+ lint,js,noAsyncPromiseExecutor/reject/3/file.ts:1:16 lint/js/noAsyncPromiseExecutor ━━━━━━━━━━━━━━━
 
   ✖ Promise executor functions should not be async.
 
-    new Promise(((((async () => {})))))
-                    ^^^^^^^^^^^^^^
-
   ℹ This can lead to lost errors and unnecessary indirection.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -85,7 +67,6 @@ new Promise(async () => {});
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -99,7 +80,6 @@ new Promise(() => {});
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -113,7 +93,6 @@ new Promise(() => {}, async function unrelated() {});
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

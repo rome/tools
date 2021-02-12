@@ -9,7 +9,10 @@ import {commandCategories} from "../../common/commands";
 import {createLocalCommand} from "../commands";
 import ClientRequest from "../ClientRequest";
 import {consumeUnknown} from "@internal/consume";
-import {createSingleDiagnosticError} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	createSingleDiagnosticError,
+} from "@internal/diagnostics";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {getEnvVar} from "@internal/cli-environment";
 import {markup} from "@internal/markup";
@@ -49,7 +52,7 @@ export default createLocalCommand({
 			return false;
 		}
 
-		const data = consumeUnknown(res.data, "parse", "json");
+		const data = consumeUnknown(res.data, DIAGNOSTIC_CATEGORIES.parse, "json");
 
 		if (data.exists()) {
 			const type = data.get("type").asString();

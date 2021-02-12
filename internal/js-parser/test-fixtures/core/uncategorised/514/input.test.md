@@ -24,25 +24,32 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<core/uncategorised/514/input.js>
 				start: Position 1:14
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"t"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>t</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {location: SourceLocation core/uncategorised/514/input.js 1:14-1:15 (t)}
+					frame {
+						location: Object {
+							identifierName: "t"
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:15
+							path: UIDPath<core/uncategorised/514/input.js>
+							start: Position 1:14
+						}
+					}
 				]
 			}
 		}
@@ -109,11 +116,5 @@ JSRoot {
 
   ℹ Defined already here
 
-    function a(t, t) { "use strict"; }
-                  ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -5,7 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {deriveDiagnosticFromError} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	deriveDiagnosticFromError,
+} from "@internal/diagnostics";
 import {TestWorkerBridge} from "@internal/core";
 import TestWorkerFile from "./TestWorkerFile";
 import inspector = require("inspector");
@@ -57,7 +60,7 @@ export default class TestWorker {
 						err,
 						{
 							description: {
-								category: "tests/unhandledRejection",
+								category: DIAGNOSTIC_CATEGORIES["tests/unhandledRejection"],
 							},
 						},
 					),

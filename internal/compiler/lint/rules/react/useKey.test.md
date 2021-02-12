@@ -8,24 +8,18 @@
 
 ```
 
- lint/react/useKey/reject/1/file.tsx:1:11 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Provide a key prop with a unique value for each element in array.
-
-    const a = [<div />, <div />]
-               ^^^^^^^
-
-  ℹ Keys help React identify which items have changed, are added, or are removed.
-
- lint/react/useKey/reject/1/file.tsx:1:20 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/1/file.tsx:1:11 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in array.
 
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/1/file.tsx:1:20 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✖ Found 2 problems
+  ✖ Provide a key prop with a unique value for each element in array.
+
+  ℹ Keys help React identify which items have changed, are added, or are removed.
+
 
 ```
 
@@ -40,18 +34,12 @@ const a = [<div />, <div />];
 
 ```
 
- lint/react/useKey/reject/2/file.tsx:1:26 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/2/file.tsx:1:26 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    const a = [1, 2].map(x => <div>{x}</div>);
-                              ^^^^^^^^^^^^^^
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -70,18 +58,12 @@ const a = [1, 2].map((x) =>
 
 ```
 
- lint/react/useKey/reject/3/file.tsx:1:24 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/3/file.tsx:1:24 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    const a = foo?.map(x => <div>{x}</div>);
-                            ^^^^^^^^^^^^^^
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -100,18 +82,12 @@ const a = foo?.map((x) =>
 
 ```
 
- lint/react/useKey/reject/4/file.tsx:1:34 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/4/file.tsx:1:34 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    React.Children.map(children, x => <div>{x}</div>);
-                                      ^^^^^^^^^^^^^^
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -133,18 +109,12 @@ React.Children.map(
 
 ```
 
- lint/react/useKey/reject/5/file.tsx:1:28 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/5/file.tsx:1:28 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    Children.map(children, x => <div>{x}</div>);
-                                ^^^^^^^^^^^^^^
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -166,20 +136,12 @@ Children.map(
 
 ```
 
- lint/react/useKey/reject/6/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/6/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    1 │ const a = [1, 2].map(x => {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -198,20 +160,12 @@ const a = [1, 2].map((x) => {
 
 ```
 
- lint/react/useKey/reject/7/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/7/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    1 │ React.Children.map(children, x => {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -233,20 +187,12 @@ React.Children.map(
 
 ```
 
- lint/react/useKey/reject/8/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/8/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    1 │ Children.map(children, x => {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -268,20 +214,12 @@ Children.map(
 
 ```
 
- lint/react/useKey/reject/9/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/9/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    1 │ const a = [1, 2].map(function(x) {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -300,20 +238,12 @@ const a = [1, 2].map(function(x) {
 
 ```
 
- lint/react/useKey/reject/10/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/10/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    1 │ React.Children.map(children, function(x) {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -335,20 +265,12 @@ React.Children.map(
 
 ```
 
- lint/react/useKey/reject/11/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,react,useKey/reject/11/file.tsx:2:8 lint/react/useKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a key prop with a unique value for each element in iterator.
 
-    1 │ Children.map(children, function(x) {
-  > 2 │   return <div>{x}</div>;
-      │          ^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -369,7 +291,6 @@ Children.map(
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -383,7 +304,6 @@ const a = [<div key="a" />, <div key={"b"} />];
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -401,7 +321,6 @@ const a = [1, 2].map((x) =>
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -422,7 +341,6 @@ React.Children.map(
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -443,7 +361,6 @@ Children.map(
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -461,7 +378,6 @@ const a = [1, 2].map((x) => {
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -482,7 +398,6 @@ React.Children.map(
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -503,7 +418,6 @@ Children.map(
 ### `18`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -521,7 +435,6 @@ const a = [1, 2].map(function(x) {
 ### `19`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -542,7 +455,6 @@ React.Children.map(
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 

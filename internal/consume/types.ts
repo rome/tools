@@ -14,6 +14,8 @@ import Consumer from "./Consumer";
 import {AnyPath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
+export type ConsumerMapCallback<T> = (c: Consumer, i: number) => T;
+
 export type ConsumeProtectedFunction = (...args: unknown[]) => Consumer;
 
 export type ConsumeKey = number | string;

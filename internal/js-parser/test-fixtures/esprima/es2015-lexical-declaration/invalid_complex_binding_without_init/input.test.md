@@ -18,25 +18,6 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:0-2:0
 	path: UIDPath<esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js>
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:6
-				path: UIDPath<esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js>
-				start: Position 1:6
-			}
-		}
-	]
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js 1:0-1:6
@@ -57,6 +38,26 @@ JSRoot {
 			}
 		}
 	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Complex binding patterns require an initialization value"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				marker: undefined
+				sourceText: undefined
+				end: Position 1:6
+				path: UIDPath<esprima/es2015-lexical-declaration/invalid_complex_binding_without_init/input.js>
+				start: Position 1:6
+			}
+		}
+	]
 }
 ```
 
@@ -68,11 +69,5 @@ JSRoot {
 
   ✖ Complex binding patterns require an initialization value
 
-    let []
-          ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

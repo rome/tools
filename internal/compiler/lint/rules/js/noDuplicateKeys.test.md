@@ -8,21 +8,12 @@
 
 ```
 
- lint/js/noDuplicateKeys/reject/1/file.ts:2:1 lint/js/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noDuplicateKeys/reject/1/file.ts:2:1 lint/js/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component key. Check the test key.
 
   ℹ Defined already here
 
-    2 │   test: true,
-    3 │   test2: true,
-  > 4 │   test: false,
-      │   ^^^^
-    5 │ };
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 

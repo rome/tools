@@ -16,11 +16,7 @@ import {
 	DiagnosticsProcessor,
 	deriveRootAdviceFromDiagnostic,
 } from "@internal/diagnostics";
-import {
-	MarkupRGB,
-	StaticMarkup,
-	markup,
-} from "@internal/markup";
+import {MarkupRGB, StaticMarkup, markup} from "@internal/markup";
 import {Reporter} from "@internal/cli-reporter";
 import {
 	DiagnosticsFileHandler,
@@ -45,7 +41,7 @@ import {createReadStream, exists, lstat} from "@internal/fs";
 import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 import {sha256} from "@internal/string-utils";
-import { GlobalLock } from "@internal/async";
+import {Locker} from "@internal/async";
 
 type RawBanner = {
 	palettes: MarkupRGB[];
@@ -153,10 +149,11 @@ export default class DiagnosticsPrinter extends Error {
 		this.filteredCount = 0;
 		this.truncatedCount = 0;
 
-		this.printLock = new GlobalLock();
+		// Ensure we print sequentially
+		this.printLock = new Locker();
+
 		this.seenDiagnostics = new Set();
 		this.streaming = opts.streaming ?? false;
-
 		this.defaultFooterEnabled = true;
 		this.hasTruncatedDiagnostics = false;
 		this.missingFileSources = new MixedPathSet();
@@ -168,11 +165,11 @@ export default class DiagnosticsPrinter extends Error {
 		if (this.streaming) {
 			if (this.processor.hasDiagnostics()) {
 				this.printBody(this.processor.getDiagnostics());
-
-				this.processor.newDiagnosticEvent.subscribe((diag) => {
-					this.printBody([diag]);
-				});
 			}
+
+			this.processor.guaranteedDiagnosticsEvent.subscribe((diags) => {
+				this.printBody(diags);
+			});
 		}
 	}
 
@@ -182,7 +179,7 @@ export default class DiagnosticsPrinter extends Error {
 
 	private streaming: boolean;
 	private seenDiagnostics: Set<Diagnostic>;
-	private printLock: GlobalLock;
+	private printLock: Locker<void>;
 	private options: DiagnosticsPrinterOptions;
 	private reporter: Reporter;
 	private onFooterPrintCallbacks: {
@@ -518,16 +515,18 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	public async printBody(diagnostics: Diagnostics) {
-		await this.printLock.wrap(async () => {
-			await this.wrapError(
-				"root",
-				async () => {
-					const filteredDiagnostics = this.filterDiagnostics(diagnostics);
-					await this.fetchFileSources(filteredDiagnostics);
-					await this.printDiagnostics(filteredDiagnostics);
-				},
-			);
-		});
+		await this.wrapError(
+			"root",
+			async () => {
+				const lockPromise = this.printLock.getLock();
+				const filteredDiagnostics = this.filterDiagnostics(diagnostics);
+				await this.fetchFileSources(filteredDiagnostics);
+
+				const lock = await lockPromise;
+				await this.printDiagnostics(filteredDiagnostics);
+				lock.release();
+			},
+		);
 	}
 
 	private async wrapError(reason: string, callback: () => Promise<void>) {
@@ -622,7 +621,9 @@ export default class DiagnosticsPrinter extends Error {
 					}
 				}
 
-				let log = `::error ${parts.join(",")}::${markupToJoinedPlainText(message)}`;
+				let log = `::error ${parts.join(",")}::${markupToJoinedPlainText(
+					message,
+				)}`;
 				this.reporter.logRaw(log);
 				break;
 			}
@@ -869,8 +870,8 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	private async printFooter() {
-		await this.printLock.wait();
-		
+		await this.printLock.waitLockDrained();
+
 		await this.wrapError(
 			"footer",
 			async () => {
@@ -928,8 +929,12 @@ export default class DiagnosticsPrinter extends Error {
 			},
 		);
 	}
-	
-	public async print({showFooter = true}: {showFooter?: boolean} = {}): Promise<void> {
+
+	public async print(
+		{showFooter = true}: {
+			showFooter?: boolean;
+		} = {},
+	): Promise<void> {
 		await this.printBody(this.processor.getDiagnostics());
 
 		if (showFooter) {

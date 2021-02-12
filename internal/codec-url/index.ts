@@ -6,8 +6,8 @@
  */
 
 import {Consumer, consume, consumeUnknown} from "@internal/consume";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import url = require("url");
-
 import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
 import {AnyPath, UNKNOWN_PATH} from "@internal/path";
 
@@ -22,13 +22,17 @@ export function consumeUrl(
 ): ConsumableUrl {
 	const parts = url.parse(rawUrl, true);
 
-	const query = consumeUnknown({...parts.query}, "parse", "urlquery");
+	const query = consumeUnknown(
+		{...parts.query},
+		DIAGNOSTIC_CATEGORIES.parse,
+		"urlquery",
+	);
 
 	const href = consume({
 		path,
 		value: parts.pathname,
 		context: {
-			category: "parse",
+			category: DIAGNOSTIC_CATEGORIES.parse,
 			categoryValue: "url",
 			getDiagnosticLocation() {
 				return {

@@ -12,7 +12,7 @@ import {
 	DiagnosticDescriptionOptional,
 	DiagnosticLocation,
 	descriptions,
-	joinCategoryName,
+	formatCategoryDescription,
 } from "@internal/diagnostics";
 import {
 	LintCompilerOptionsDecision,
@@ -173,7 +173,7 @@ export function buildLintDecisionGlobalString(
 	category: DiagnosticCategory,
 	categoryValue: undefined | string,
 ): string {
-	return `global-${action}-${joinCategoryName({category, categoryValue})}`;
+	return `global-${action}-${formatCategoryDescription({category, categoryValue})}`;
 }
 
 export function buildLintDecisionString(
@@ -202,7 +202,7 @@ export function buildLintDecisionString(
 
 	const parts = [
 		action,
-		joinCategoryName({category, categoryValue}),
+		formatCategoryDescription({category, categoryValue}),
 		filename,
 		pos,
 	];

@@ -38,21 +38,31 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
+				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<jsx/errors/nested-fragment-unclosed/input.jsx>
 				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unclosed JSX element"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from this opening tag"}
 					}
-					frame {location: SourceLocation jsx/errors/nested-fragment-unclosed/input.jsx 1:0-1:2}
+					frame {
+						location: Object {
+							integrity: undefined
+							marker: undefined
+							sourceText: undefined
+							end: Position 1:2
+							path: UIDPath<jsx/errors/nested-fragment-unclosed/input.jsx>
+							start: Position 1:0
+						}
+					}
 				]
 			}
 		}
@@ -70,11 +80,5 @@ JSRoot {
 
   ℹ Originated from this opening tag
 
-    <><></>
-    ^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

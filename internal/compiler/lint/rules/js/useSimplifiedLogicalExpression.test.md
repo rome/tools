@@ -8,23 +8,16 @@
 
 ```
 
- lint/js/useSimplifiedLogicalExpression/reject/1/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
+ lint,js,useSimplifiedLogicalExpression/reject/1/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
-
-    1 │ const boolExp = true;
-  > 2 │ const r = true && boolExp;
-      │           ^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - true·&&·boolExp
   + boolExp
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -40,23 +33,16 @@ const r = boolExp;
 
 ```
 
- lint/js/useSimplifiedLogicalExpression/reject/2/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
+ lint,js,useSimplifiedLogicalExpression/reject/2/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
-
-    1 │ const boolExp = true;
-  > 2 │ const r = boolExp || true;
-      │           ^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - boolExp·||·true
   + true
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,23 +58,16 @@ const r = true;
 
 ```
 
- lint/js/useSimplifiedLogicalExpression/reject/3/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
+ lint,js,useSimplifiedLogicalExpression/reject/3/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
-
-    1 │ const nonNullExp = 123;
-  > 2 │ const r = null ?? nonNullExp;
-      │           ^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - null·??·nonNullExp
   + nonNullExp
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -104,24 +83,16 @@ const r = nonNullExp;
 
 ```
 
- lint/js/useSimplifiedLogicalExpression/reject/4/file.ts:3:10 lint/js/useSimplifiedLogicalExpression
+ lint,js,useSimplifiedLogicalExpression/reject/4/file.ts:3:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
-
-    1 │ const boolExpr1 = true;
-    2 │ const boolExpr2 = false;
-  > 3 │ const r = (!boolExpr1) || (!boolExpr2);
-      │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - !boolExpr1·||·!boolExpr2
   + !(boolExpr1·&&·boolExpr2)
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -137,7 +108,6 @@ const r = !(boolExpr1 && boolExpr2);
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -153,7 +123,6 @@ const r = !(boolExpr1 && boolExpr2);
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

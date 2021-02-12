@@ -8,20 +8,14 @@
 
 ```
 
- lint/js/useDefaultImportBasename/reject/1/file.ts:1 lint/js/useDefaultImportBasename ━━━━━━━━━━━━━━
+ lint,js,useDefaultImportBasename/reject/1/file.ts:1 lint/js/useDefaultImportBasename ━━━━━━━━━━━━━━
 
   ✖ Use the basename bar, or Bar when importing the default.
-
-    import foo from './bar';
-    ^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ If you really meant to use a named import, use the following:
 
     import {default as foo}
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,7 +29,6 @@ import foo from "./bar";
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 

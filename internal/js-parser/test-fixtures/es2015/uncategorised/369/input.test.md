@@ -18,6 +18,26 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/369/input.js 1:0-2:0
 	path: UIDPath<es2015/uncategorised/369/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "enum is a reserved word"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				marker: undefined
+				sourceText: undefined
+				end: Position 1:4
+				path: UIDPath<es2015/uncategorised/369/input.js>
+				start: Position 1:0
+			}
+		}
+	]
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation es2015/uncategorised/369/input.js 1:0-1:13
@@ -39,28 +59,6 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:4
-				path: UIDPath<es2015/uncategorised/369/input.js>
-				start: Position 1:0
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"enum"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
-			}
-		}
-	]
 }
 ```
 
@@ -72,11 +70,5 @@ JSRoot {
 
   ✖ enum is a reserved word
 
-    enum = foo();
-    ^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

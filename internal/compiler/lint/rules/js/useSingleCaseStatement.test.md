@@ -8,18 +8,9 @@
 
 ```
 
- lint/js/useSingleCaseStatement/reject/1/file.ts:3:1 lint/js/useSingleCaseStatement  FIXABLE  ━━━━━━
+ lint,js,useSingleCaseStatement/reject/1/file.ts:3:1 lint/js/useSingleCaseStatement  FIXABLE  ━━━━━━
 
   ✖ A switch case should only have a single statement. If you want more, then wrap it in a block.
-
-    1 │ switch (foo) {
-    2 │   case true:
-  > 3 │   case false:
-      │   ^^^^^^^^^^^
-  > 4 │     let foo = '';
-  > 5 │     foo;
-      │ ^^^^^^^^
-    6 │ }
 
   ℹ Safe fix
 
@@ -30,9 +21,6 @@
       3 │ + → foo;
       4 │ + }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -52,7 +40,6 @@ switch (foo) {
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -70,7 +57,6 @@ switch (foo) {
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -88,7 +74,6 @@ switch (foo) {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

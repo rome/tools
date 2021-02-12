@@ -8,22 +8,14 @@
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/1/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint,js,noUnnecessaryContinue/reject/1/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
-
-    1 │ loop: for (let i = 0; i < 5; i++) {
-  > 2 │   continue loop;
-      │   ^^^^^^^^^^^^^^
-    3 │ }
 
   ℹ Safe fix
 
   - continue·loop;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,21 +30,14 @@ loop: for (let i = 0; i < 5; i++) {}
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/2/file.ts:2:2 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint,js,noUnnecessaryContinue/reject/2/file.ts:2:2 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
-
-    1 │ while (i--)
-  > 2 │     continue;
-      │     ^^^^^^^^^
 
   ℹ Safe fix
 
   - continue;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -67,22 +52,14 @@ while (i--) {}
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/3/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint,js,noUnnecessaryContinue/reject/3/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
-
-    1 │ while (1) {
-  > 2 │   continue;
-      │   ^^^^^^^^^
-    3 │ }
 
   ℹ Safe fix
 
   - continue;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -97,24 +74,14 @@ while (1) {}
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/4/file.ts:4:8 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint,js,noUnnecessaryContinue/reject/4/file.ts:4:8 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
-
-    2 │      if (i > 5) {
-    3 │          console.log('foo');
-  > 4 │          continue;
-      │          ^^^^^^^^^
-    5 │      }
-    6 │      else if (i >= 5 && i < 8) {
 
   ℹ Safe fix
 
   - continue;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -137,22 +104,14 @@ for (let i = 0; i < 10; i++) {
 
 ```
 
- lint/js/noUnnecessaryContinue/reject/5/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
+ lint,js,noUnnecessaryContinue/reject/5/file.ts:2:1 lint/js/noUnnecessaryContinue  FIXABLE  ━━━━━━━━
 
   ✖ Unnecessary continue statement
-
-    1 │ for (let i = 0; i < 9; i++) {
-  > 2 │   continue;
-      │   ^^^^^^^^^
-    3 │ }
 
   ℹ Safe fix
 
   - continue;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -166,7 +125,6 @@ for (let i = 0; i < 9; i++) {}
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -186,7 +144,6 @@ while (i) {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -203,7 +160,6 @@ while (i) {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -228,7 +184,6 @@ while (condition) {
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -248,7 +203,6 @@ loop: while (1) {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 

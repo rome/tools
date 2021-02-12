@@ -8,18 +8,12 @@
 
 ```
 
- lint/js/noRestrictedGlobals/reject/1/file.ts:1:12 lint/js/noRestrictedGlobals ━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noRestrictedGlobals/reject/1/file.ts:1:12 lint/js/noRestrictedGlobals ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use the global variable event.
 
-    console.log(event);
-                ^^^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -34,18 +28,12 @@ console.log(event);
 
 ```
 
- lint/js/noRestrictedGlobals/reject/2/file.ts:1:4 lint/js/noRestrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noRestrictedGlobals/reject/2/file.ts:1:4 lint/js/noRestrictedGlobals ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use the global variable event.
 
-    foo(event)
-        ^^^^^
-
   ℹ Use a local variable instead.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +47,6 @@ foo(event);
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 

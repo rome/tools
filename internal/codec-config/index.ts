@@ -16,6 +16,7 @@ import {toml as _toml} from "./toml/index";
 import {Consumer, consume, consumeUnknown} from "@internal/consume";
 import {ParserOptions} from "@internal/parser-core";
 import {JSONValue} from "@internal/codec-config/json/types";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export {
 	JSONArray,
@@ -65,7 +66,11 @@ function partialToFull(partial: PartialConfigHandler): ConfigHandler {
 
 		stringify(value: unknown, comments: ConfigCommentMap = new Map()): string {
 			return partial.stringifyFromConsumer({
-				consumer: consumeUnknown(value, "parse", partial.language),
+				consumer: consumeUnknown(
+					value,
+					DIAGNOSTIC_CATEGORIES.parse,
+					partial.language,
+				),
 				comments,
 			});
 		},

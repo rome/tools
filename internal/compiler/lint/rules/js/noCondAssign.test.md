@@ -8,20 +8,12 @@
 
 ```
 
- lint/js/noCondAssign/reject/1/file.ts:1:16 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noCondAssign/reject/1/file.ts:1:16 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
-  > 1 │ for (let i = 1; i = 10; i++) {
-      │                 ^^^^^^
-    2 │   console.log('foo');
-    3 │ }
-
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,20 +30,12 @@ for (let i = 1; i = 10; i++) {
 
 ```
 
- lint/js/noCondAssign/reject/2/file.ts:1:4 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noCondAssign/reject/2/file.ts:1:4 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
-  > 1 │ if (foo = 'bar') {
-      │     ^^^^^^^^^^^
-    2 │   console.log('foo');
-    3 │ }
-
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -68,20 +52,12 @@ if (foo = "bar") {
 
 ```
 
- lint/js/noCondAssign/reject/3/file.ts:1:7 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noCondAssign/reject/3/file.ts:1:7 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
-  > 1 │ while (foo = 'bar') {
-      │        ^^^^^^^^^^^
-    2 │   console.log('foo');
-    3 │ }
-
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -98,20 +74,12 @@ while (foo = "bar") {
 
 ```
 
- lint/js/noCondAssign/reject/4/file.ts:3:9 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noCondAssign/reject/4/file.ts:3:9 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
-    1 │ do {
-    2 │   console.log('foo');
-  > 3 │ } while (foo = 'bar')
-      │          ^^^^^^^^^^^
-
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -128,18 +96,12 @@ do {
 
 ```
 
- lint/js/noCondAssign/reject/5/file.ts:1:1 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,js,noCondAssign/reject/5/file.ts:1:1 lint/js/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not assign variables in loop conditions.
 
-    (foo = bar) ? foo() : bar();
-     ^^^^^^^^^
-
   ℹ It is a common typo to mistype an equality operator as an assignment operator.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -153,7 +115,6 @@ do {
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -169,7 +130,6 @@ while ((foo = foo.bar) !== undefined) {
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -185,7 +145,6 @@ if (foo++ === 3) {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 

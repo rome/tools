@@ -8,19 +8,13 @@
 
 ```
 
- lint/a11y/useHtmlLang/reject/1/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/1/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html></html>
-    ^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,19 +29,13 @@
 
 ```
 
- lint/a11y/useHtmlLang/reject/2/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/2/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html {...props}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -62,16 +50,10 @@
 
 ```
 
- lint/a11y/useHtmlLang/reject/3/file.tsx:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/3/file.tsx:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute value should be either an expression or a quoted JSX text
 
-    <html lang=
-               ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -85,16 +67,10 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/4/file.tsx:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/4/file.tsx:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
 
-    ></html>
-    ^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -108,19 +84,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/5/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/5/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html lang={""}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -135,19 +105,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/6/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/6/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html lang={``}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -162,19 +126,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/7/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/7/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html lang={undefined}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -189,19 +147,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/8/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/8/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html lang={false}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -216,19 +168,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/9/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/9/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html lang={true}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -243,19 +189,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/10/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/10/file.tsx:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html lang={42}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -269,7 +209,6 @@ undefined
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -283,7 +222,6 @@ undefined
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -297,7 +235,6 @@ undefined
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -311,7 +248,6 @@ undefined
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -326,19 +262,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/1/file.html:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/1/file.html:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-    <html></html>
-    ^^^^^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -354,21 +284,13 @@ undefined
 
 ```
 
- lint/a11y/useHtmlLang/reject/2/file.html:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint,a11y,useHtmlLang/reject/2/file.html:1 lint/a11y/useHtmlLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a lang attribute when using the html element.
-
-  > 1 │ <html lang="
-      │ ^^^^^^^^^^^^
-  > 2 │ "></html>
-      │ ^^^^^^^^
 
   ℹ Setting a lang attribute on HTML elements configures the language used by screen readers when
     no user default is specified.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -383,7 +305,6 @@ undefined
 ### `16`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -398,7 +319,6 @@ undefined
 ### `17`
 
 ```
-✔ No known problems!
 
 ```
 
