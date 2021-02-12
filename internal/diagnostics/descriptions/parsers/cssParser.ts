@@ -29,4 +29,41 @@ export const cssParser = createDiagnosticsCategory({
 	INVALID_CUSTOM_PROPERTY: {
 		message: markup`Invalid custom property found inside the "var" function`,
 	},
+	MISSING_KEYFRAME_NAME: {
+		message: markup`The keyframe must have a name`,
+	},
+	INVALID_IDENTIFIER: (ident: string, invalidIdents: string[]) => ({
+		message: markup`The identifier <emphasis>${ident}</emphasis> can't be used here`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`In this position, the words ${invalidIdents.map((i) =>
+					markup`<emphasis>${i}</emphasis>, `
+				)} are CSS-wide keywords, so they are reserved`,
+			},
+		],
+	}),
+	UNKNOW_KEYFRAME_SELECTOR_NAME: {
+		message: markup`The selector name of the keyframe is not correct.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`The only valid values are percentages, and the keywords <emphasis>from</emphasis> and <emphasis>to</emphasis>`,
+			},
+		],
+	},
+
+	INVALID_KEYFRAME_SELECTOR_NAME: (
+		wrongKeyword: string,
+		validMatchers: string[],
+	) => ({
+		message: markup`The keyword <emphasis>${wrongKeyword}</emphasis> is not accepted as valid keyframe name.`,
+		advice: buildSuggestionAdvice(
+			wrongKeyword,
+			validMatchers,
+			{minRating: 0, ignoreCase: false},
+		),
+	}),
 });
