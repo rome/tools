@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:22
 				path: UIDPath<es2015/uncategorised/291/input.js>
@@ -70,6 +69,9 @@ JSRoot {
  es2015/uncategorised/291/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'import' and 'export' may only appear at the top level
+
+    if (1) import "acorn";
+                          ^
 
 
 ```

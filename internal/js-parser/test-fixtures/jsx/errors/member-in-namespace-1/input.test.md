@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<jsx/errors/member-in-namespace-1/input.jsx>
@@ -88,6 +87,9 @@ JSRoot {
  jsx/errors/member-in-namespace-1/input.jsx:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
+
+    <a.b:c />
+        ^
 
 
 ```

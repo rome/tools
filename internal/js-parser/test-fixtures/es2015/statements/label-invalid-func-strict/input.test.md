@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:34
 				path: UIDPath<es2015/statements/label-invalid-func-strict/input.js>
@@ -109,6 +108,9 @@ JSRoot {
  es2015/statements/label-invalid-func-strict/input.js:1:35 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ In strict mode code, functions can only be declared at top level or inside a block
+
+    function foo() {"use strict"; bar: function baz() {}}
+                                       ^
 
 
 ```

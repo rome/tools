@@ -18,7 +18,7 @@ import {
 	LintCompilerOptionsDecision,
 	LintCompilerOptionsDecisionAction,
 } from "../types";
-import {ob1Coerce0, ob1Get0, ob1Get1, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {LinterCompilerOptionsPerFile} from "@internal/core/server/checker/Checker";
 import {escapeSplit} from "@internal/string-utils";
@@ -53,16 +53,16 @@ export function deriveDecisionPositionKey(
 	}
 
 	if (action === "suppress") {
-		return `${ob1Get1(start.line)}`;
+		return `${start.line.valueOf()}`;
 	} else {
-		return `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
+		return `${start.line.valueOf()}:${start.column.valueOf()}`;
 	}
 }
 
 function addPartPositionOffset(pos: Position, part: string): Position {
 	return addPositions(
 		pos,
-		{line: ob1Number1, column: ob1Coerce0(part.length + 1)},
+		{line: new OneIndexed(), column: new ZeroIndexed(part.length + 1)},
 	);
 }
 

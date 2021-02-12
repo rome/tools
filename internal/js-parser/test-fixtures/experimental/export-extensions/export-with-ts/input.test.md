@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<experimental/export-extensions/export-with-ts/input.js>
@@ -237,6 +236,11 @@ JSRoot {
  experimental/export-extensions/export-with-ts/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected `from` for an export node
+
+  > 1 │ export abstract class A {}
+      │                 ^
+    2 │ export declare interface B {}
+    3 │ export enum C {}
 
 
 ```

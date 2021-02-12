@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<es2015/uncategorised/388/input.js>
@@ -79,6 +78,9 @@ JSRoot {
  es2015/uncategorised/388/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    export function() {};
+                   ^
 
 
 ```

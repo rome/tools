@@ -8,9 +8,12 @@
 
 ```
 
- lint,react,useStylePropObject/reject/1/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
+ lint/react/useStylePropObject/reject/1/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
+
+    <div style={true} />
+         ^^^^^^^^^^^^
 
   ℹ React will ignore non-object style props, even valid JSON strings.
 
@@ -28,9 +31,12 @@
 
 ```
 
- lint,react,useStylePropObject/reject/2/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
+ lint/react/useStylePropObject/reject/2/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
+
+    <div style={1} />
+         ^^^^^^^^^
 
   ℹ React will ignore non-object style props, even valid JSON strings.
 
@@ -48,9 +54,12 @@
 
 ```
 
- lint,react,useStylePropObject/reject/3/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
+ lint/react/useStylePropObject/reject/3/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
+
+    <div style={undefined} />
+         ^^^^^^^^^^^^^^^^^
 
   ℹ React will ignore non-object style props, even valid JSON strings.
 
@@ -68,9 +77,12 @@
 
 ```
 
- lint,react,useStylePropObject/reject/4/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
+ lint/react/useStylePropObject/reject/4/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
+
+    <div style="color: 'red'" />
+         ^^^^^^^^^^^^^^^^^^^^
 
   ℹ React will ignore non-object style props, even valid JSON strings.
 
@@ -88,9 +100,12 @@
 
 ```
 
- lint,react,useStylePropObject/reject/5/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
+ lint/react/useStylePropObject/reject/5/file.tsx:1:5 lint/react/useStylePropObject ━━━━━━━━━━━━━━━━━
 
   ✖ The style prop value must be an object.
+
+    <div style={"color: 'red'"} />
+         ^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ React will ignore non-object style props, even valid JSON strings.
 

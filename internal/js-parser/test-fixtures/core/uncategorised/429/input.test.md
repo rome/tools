@@ -31,7 +31,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<core/uncategorised/429/input.js>
@@ -49,6 +48,9 @@ JSRoot {
  core/uncategorised/429/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated comment
+
+    /*
+    ^
 
 
 ```

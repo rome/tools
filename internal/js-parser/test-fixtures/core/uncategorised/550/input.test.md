@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<core/uncategorised/550/input.js>
@@ -76,6 +75,10 @@ JSRoot {
  core/uncategorised/550/input.js:2:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Legacy octal literals are not allowed in strict mode
+
+    1 │ 'use strict';
+  > 2 │ const a = 07;
+      │             ^
 
 
 ```

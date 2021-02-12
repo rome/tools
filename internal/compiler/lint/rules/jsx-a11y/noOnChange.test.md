@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx-a11y,noOnChange/reject/1/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/1/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
+
+    <select onChange={() => {}} />;
+            ^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
@@ -29,9 +32,12 @@
 
 ```
 
- lint,jsx-a11y,noOnChange/reject/2/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/2/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
+
+    <select onChange={handleOnChange} />;
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
@@ -50,9 +56,12 @@
 
 ```
 
- lint,jsx-a11y,noOnChange/reject/3/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/3/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
+
+    <option onChange={() => {}} />
+            ^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.
@@ -71,9 +80,12 @@
 
 ```
 
- lint,jsx-a11y,noOnChange/reject/4/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noOnChange/reject/4/file.tsx:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
+
+    <option onChange={() => {}} {...props} />
+            ^^^^^^^^^^^^^^^^^^^
 
   ℹ The onBlur event is more declarative and reliable for indicating input changes when using
     keyboard navigation.

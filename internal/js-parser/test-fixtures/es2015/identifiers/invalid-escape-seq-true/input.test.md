@@ -34,12 +34,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword true"}
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>true</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<es2015/identifiers/invalid-escape-seq-true/input.js>
@@ -57,6 +56,9 @@ JSRoot {
  es2015/identifiers/invalid-escape-seq-true/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword true
+
+    \u0074rue
+    ^
 
 
 ```

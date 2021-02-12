@@ -8,7 +8,7 @@
 
 ```
 
- lint,react,noDanger/reject/1/file.tsx:1:5 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDanger/reject/1/file.tsx:1:5 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
 
@@ -28,9 +28,12 @@
 
 ```
 
- lint,react,noDanger/reject/2/file.tsx:1:28 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDanger/reject/2/file.tsx:1:28 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
+
+    React.createElement('div', {dangerouslySetInnerHTML: { __html: 'child' }})
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting content using code can expose users to cross-site scripting (XSS) attacks.
 
@@ -48,9 +51,12 @@ React.createElement("div", {dangerouslySetInnerHTML: {__html: "child"}});
 
 ```
 
- lint,react,noDanger/reject/3/file.tsx:1:22 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noDanger/reject/3/file.tsx:1:22 lint/react/noDanger ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid passing content using the dangerouslySetInnerHTML prop.
+
+    createElement('div', {dangerouslySetInnerHTML: { __html: 'child' }})
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Setting content using code can expose users to cross-site scripting (XSS) attacks.
 

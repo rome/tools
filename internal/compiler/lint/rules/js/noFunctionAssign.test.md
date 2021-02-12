@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,noFunctionAssign/reject/1/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noFunctionAssign/reject/1/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
+
+    function foo() {}; foo = bar;
+                       ^^^
 
   ℹ Use a local variable instead.
 
@@ -29,9 +32,12 @@ foo = bar;
 
 ```
 
- lint,js,noFunctionAssign/reject/2/file.ts:1:17 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noFunctionAssign/reject/2/file.ts:1:17 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
+
+    function foo() { foo = bar; }
+                     ^^^
 
   ℹ Use a local variable instead.
 
@@ -51,9 +57,12 @@ function foo() {
 
 ```
 
- lint,js,noFunctionAssign/reject/3/file.ts:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noFunctionAssign/reject/3/file.ts:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
+
+    foo = bar; function foo() { };
+    ^^^
 
   ℹ Use a local variable instead.
 
@@ -72,9 +81,12 @@ function foo() {}
 
 ```
 
- lint,js,noFunctionAssign/reject/4/file.ts:1:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noFunctionAssign/reject/4/file.ts:1:1 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
+
+    [foo] = bar; function foo() { };
+     ^^^
 
   ℹ Use a local variable instead.
 
@@ -93,9 +105,12 @@ function foo() {}
 
 ```
 
- lint,js,noFunctionAssign/reject/5/file.ts:1:5 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noFunctionAssign/reject/5/file.ts:1:5 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
+
+    ({x: foo = 0} = bar); function foo() { };
+         ^^^
 
   ℹ Use a local variable instead.
 
@@ -114,9 +129,12 @@ function foo() {}
 
 ```
 
- lint,js,noFunctionAssign/reject/6/file.ts:1:18 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noFunctionAssign/reject/6/file.ts:1:18 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
+
+    function foo() { [foo] = bar; }
+                      ^^^
 
   ℹ Use a local variable instead.
 
@@ -136,9 +154,12 @@ function foo() {
 
 ```
 
- lint,js,noFunctionAssign/reject/7/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noFunctionAssign/reject/7/file.ts:1:19 lint/js/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not reassign a function declaration.
+
+    (function() { ({x: foo = 0} = bar); function foo() { }; })();
+                       ^^^
 
   ℹ Use a local variable instead.
 

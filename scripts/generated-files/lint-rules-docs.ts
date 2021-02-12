@@ -14,10 +14,10 @@ import {markupToHtml} from "@internal/cli-layout";
 import {createAnyPath} from "@internal/path";
 import {dedent} from "@internal/string-utils";
 import {tests} from "@internal/compiler/lint/rules/tests";
-import {ob1Coerce1} from "@internal/ob1";
 import {ROOT, modifyGeneratedFile} from "../_utils";
 import {getDocRuleDescription, getLintDefs} from "./lint-rules";
 import {readFileText} from "@internal/fs";
+import {OneIndexed} from "@internal/math";
 
 const {worker, performFileOperation} = createMockWorker();
 
@@ -121,7 +121,7 @@ async function run(
 				format: "html",
 				excludeFooter: true,
 				features: {
-					columns: ob1Coerce1(75),
+					columns: new OneIndexed(75),
 				},
 			});
 		},

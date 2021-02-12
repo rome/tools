@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:11
 				path: UIDPath<es2015/uncategorised/298/input.js>
@@ -91,6 +90,9 @@ JSRoot {
  es2015/uncategorised/298/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Object pattern cannot contains methods
+
+    ({ get test() { } }) => 42
+           ^^^^
 
 
 ```

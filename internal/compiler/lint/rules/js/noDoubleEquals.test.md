@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,noDoubleEquals/reject/1/file.ts:1 lint/js/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDoubleEquals/reject/1/file.ts:1 lint/js/noDoubleEquals  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use === instead of ==.
+
+    foo == bar
+    ^^^^^^^^^^
 
   ℹ == is only allowed when comparing against null.
 

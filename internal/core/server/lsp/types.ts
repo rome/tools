@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0} from "@internal/ob1";
 import {JSONArray, JSONObject, JSONPropertyValue} from "@internal/codec-config";
 
 export type LSPRequestMessage = {
@@ -94,7 +93,7 @@ export type LSPPosition = {
 	/**
    * Line position in a document (zero-based).
    */
-	line: Number0;
+	line: number;
 
 	/**
    * Character offset on a line in a document (zero-based). Assuming that the line is
@@ -104,7 +103,7 @@ export type LSPPosition = {
    * If the character value is greater than the line length it defaults back to the
    * line length.
    */
-	character: Number0;
+	character: number;
 };
 
 export type LSPRange = {

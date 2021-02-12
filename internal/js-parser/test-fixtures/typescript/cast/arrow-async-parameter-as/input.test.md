@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<typescript/cast/arrow-async-parameter-as/input.ts>
@@ -75,6 +74,9 @@ JSRoot {
  typescript/cast/arrow-async-parameter-as/input.ts:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected type cast in parameter position
+
+    async (a as T) => {};
+           ^^^^^^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<core/uncategorised/545/input.js>
@@ -90,6 +89,9 @@ JSRoot {
  core/uncategorised/545/input.js:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ public is a reserved word
+
+    const { public } = foo();
+            ^^^^^^
 
 
 ```

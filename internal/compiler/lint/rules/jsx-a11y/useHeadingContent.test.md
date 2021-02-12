@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx-a11y,useHeadingContent/reject/1/file.tsx:1 lint/jsx-a11y/useHeadingContent ━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useHeadingContent/reject/1/file.tsx:1 lint/jsx-a11y/useHeadingContent ━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using heading elements.
+
+    <h1 />
+    ^^^^^^
 
   ℹ All headings on a page should have content that is accessible to screen readers.
 
@@ -28,9 +31,12 @@
 
 ```
 
- lint,jsx-a11y,useHeadingContent/reject/2/file.tsx:1 lint/jsx-a11y/useHeadingContent ━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useHeadingContent/reject/2/file.tsx:1 lint/jsx-a11y/useHeadingContent ━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using heading elements.
+
+    <h1><TextWrapper aria-hidden /></h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ All headings on a page should have content that is accessible to screen readers.
 
@@ -50,9 +56,12 @@
 
 ```
 
- lint,jsx-a11y,useHeadingContent/reject/3/file.tsx:1 lint/jsx-a11y/useHeadingContent ━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useHeadingContent/reject/3/file.tsx:1 lint/jsx-a11y/useHeadingContent ━━━━━━━━━━━━━━━
 
   ✖ Provide screen reader accessible content when using heading elements.
+
+    <h1><div aria-hidden /></h1>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ All headings on a page should have content that is accessible to screen readers.
 

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<esprima/invalid-syntax/migrated_0258/input.js>
@@ -100,6 +99,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0258/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    function f(a, ...b, c){}
+                      ^
 
 
 ```

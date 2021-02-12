@@ -53,7 +53,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:3
 				path: UIDPath<es2015/let/let-as-identifier-strict-fail/input.js>
@@ -71,6 +70,10 @@ JSRoot {
  es2015/let/let-as-identifier-strict-fail/input.js:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ let is a reserved word
+
+    1 │ "use strict";
+  > 2 │ let + 1
+      │ ^^^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<esprima/es2015-generator/generator-parameter-computed-property-name/input.js>
@@ -123,6 +122,11 @@ JSRoot {
  esprima/es2015-generator/generator-parameter-computed-property-name/input.js:2:12 parse(js) ━━━━━━━
 
   ✖ Expected an identifier
+
+    1 │ (function*() {
+  > 2 │     function({[yield 3]: y}) {}
+      │             ^
+    3 │ })
 
 
 ```

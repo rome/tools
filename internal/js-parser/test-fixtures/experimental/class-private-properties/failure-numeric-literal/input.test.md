@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:3
 				path: UIDPath<experimental/class-private-properties/failure-numeric-literal/input.js>
@@ -91,6 +90,11 @@ JSRoot {
  experimental/class-private-properties/failure-numeric-literal/input.js:2:3 parse(js) ━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    1 │ class Foo {
+  > 2 │   #2 = y
+      │    ^
+    3 │ }
 
 
 ```

@@ -14,7 +14,6 @@ import {
 import {orderBySimilarity, splitLines} from "@internal/string-utils";
 import stringDiff from "@internal/string-diff";
 import {Position} from "@internal/parser-core";
-import {ob1Get1} from "@internal/ob1";
 import {StaticMarkup, markup} from "@internal/markup";
 import {joinCategoryName} from "./categories";
 
@@ -121,8 +120,8 @@ export function truncateSourceText(
 	const lines = splitLines(code);
 
 	// Pad the starting and ending lines by 10
-	const fromLine = Math.max(ob1Get1(start.line) - 10, 0);
-	const toLine = Math.max(ob1Get1(end.line) + 10, lines.length);
+	const fromLine = Math.max(start.line.valueOf() - 10, 0);
+	const toLine = Math.max(end.line.valueOf() + 10, lines.length);
 
 	const capturedLines = lines.slice(fromLine, toLine);
 	return "\n".repeat(fromLine) + capturedLines.join("\n");
@@ -158,16 +157,17 @@ export function buildDuplicateLocationAdvice(
 
 export function diagnosticLocationToMarkupFilelink(
 	loc: DiagnosticLocation,
+	innerText: string = "",
 ): StaticMarkup {
 	const {start, path} = loc;
 
 	if (start === undefined) {
-		return markup`<filelink target="${path.join()}" />`;
+		return markup`<filelink target="${path.join()}">${innerText}</filelink>`;
 	}
 
-	return markup`<filelink target="${path.join()}" line="${String(start.line)}" column="${String(
-		start.column,
-	)}" />`;
+	return markup`<filelink target="${path.join()}" line="${String(
+		start.line.valueOf(),
+	)}" column="${String(start.column.valueOf())}">${innerText}</filelink>`;
 }
 
 // Category value can allow arbitrary values so we need to escape bad characters

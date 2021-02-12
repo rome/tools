@@ -51,7 +51,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<esprima/invalid-syntax/migrated_0257/input.js>
@@ -69,6 +68,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0257/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    'use strict'; a package
+                    ^
 
 
 ```

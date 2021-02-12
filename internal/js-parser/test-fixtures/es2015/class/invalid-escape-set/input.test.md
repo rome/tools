@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "set can't contain a unicode escape"}
+				message: RAW_MARKUP {value: "<emphasis>set</emphasis> can't contain a unicode escape"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:12
 				path: UIDPath<es2015/class/invalid-escape-set/input.js>
@@ -113,6 +112,9 @@ JSRoot {
  es2015/class/invalid-escape-set/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ set can't contain a unicode escape
+
+    class X { se\u0074 x(value) {} }
+                ^
 
 
 ```

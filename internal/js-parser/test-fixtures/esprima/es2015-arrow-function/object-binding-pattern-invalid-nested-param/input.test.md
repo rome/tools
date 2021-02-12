@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:28
 				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js>
@@ -211,6 +210,9 @@ JSRoot {
  esprima/es2015-arrow-function/object-binding-pattern-invalid-nested-param/input.js:1:24 parse(js) ━
 
   ✖ Binding member expression
+
+    ([[[[[[[[[[[[[[[[[[[[{a:b[0]}]]]]]]]]]]]]]]]]]]]])=>0;
+                            ^^^^
 
 
 ```

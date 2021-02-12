@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:27
 				path: UIDPath<es2015/uncategorised/347/input.js>
@@ -122,6 +121,9 @@ JSRoot {
  es2015/uncategorised/347/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ setter should have exactly one param
+
+    class A { set prop(x, y) {} }
+              ^^^^^^^^^^^^^^^^^
 
 
 ```

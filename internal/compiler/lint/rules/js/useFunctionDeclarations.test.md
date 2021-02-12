@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,useFunctionDeclarations/reject/1/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
+ lint/js/useFunctionDeclarations/reject/1/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
 
   ✖ Use a function declaration instead of a const function.
+
+    const foo = function () {};
+                ^^^^^^^^^^^^^^
 
 
 ```
@@ -26,9 +29,12 @@ function foo() {}
 
 ```
 
- lint,js,useFunctionDeclarations/reject/2/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
+ lint/js/useFunctionDeclarations/reject/2/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
 
   ✖ Use a function declaration instead of a const function.
+
+    const foo = () => {};
+                ^^^^^^^^
 
 
 ```
@@ -44,7 +50,7 @@ function foo() {}
 
 ```
 
- lint,js,useFunctionDeclarations/reject/3/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
+ lint/js/useFunctionDeclarations/reject/3/file.ts:1:12 lint/js/useFunctionDeclarations  FIXABLE  ━━━
 
   ✖ Use a function declaration instead of a const function.
 

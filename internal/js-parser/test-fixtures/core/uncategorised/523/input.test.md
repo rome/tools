@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword this"}
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>this</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<core/uncategorised/523/input.js>
@@ -71,6 +70,9 @@ JSRoot {
  core/uncategorised/523/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword this
+
+    var this = 10;
+        ^^^^
 
 
 ```

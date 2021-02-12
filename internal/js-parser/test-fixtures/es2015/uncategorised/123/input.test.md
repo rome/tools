@@ -29,7 +29,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:45
 				path: UIDPath<es2015/uncategorised/123/input.js>
@@ -125,6 +124,9 @@ JSRoot {
  es2015/uncategorised/123/input.js:1:40 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super() is only valid inside a class constructor of a subclass
+
+    "use strict"; (class A {constructor() { super() }})
+                                            ^^^^^
 
   ℹ Maybe a typo in the method name ('constructor') or not extending another class?
 

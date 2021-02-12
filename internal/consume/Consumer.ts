@@ -17,11 +17,11 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {
+	Dict,
 	UnknownFunction,
 	UnknownObject,
 	VoidCallback,
 	isPlainObject,
-	Dict,
 } from "@internal/typescript-helpers";
 import {
 	JSONArray,
@@ -41,20 +41,17 @@ import {
 	ConsumeProtectedFunction,
 	ConsumeSourceLocationRequestTarget,
 	ConsumerHandleUnexpected,
+	ConsumerMapCallback,
 	ConsumerOnDefinition,
 	ConsumerOptions,
-	ConsumerMapCallback,
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
 	AnyIndexedNumber,
-	Number0,
-	Number1,
-	ob1Add,
-	ob1Coerce0,
-	ob1Coerce1,
-	ob1Get,
-} from "@internal/ob1";
+	OneIndexed,
+	ZeroIndexed,
+	isIndexedNumberish,
+} from "@internal/math";
 import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {
@@ -249,8 +246,8 @@ export default class Consumer {
 	}
 
 	public getLocationRange(
-		startIndex: Number0,
-		endIndex: Number0 = startIndex,
+		startIndex: ZeroIndexed,
+		endIndex: ZeroIndexed = startIndex,
 		target?: ConsumeSourceLocationRequestTarget,
 	): SourceLocation {
 		const loc = this.getLocation(target);
@@ -269,11 +266,11 @@ export default class Consumer {
 			...loc,
 			start: {
 				...start,
-				column: ob1Add(start.column, startIndex),
+				column: start.column.add(startIndex),
 			},
 			end: {
 				...start,
-				column: ob1Add(start.column, endIndex),
+				column: start.column.add(endIndex),
 			},
 		};
 	}
@@ -1253,22 +1250,22 @@ export default class Consumer {
 		}
 	}
 
-	public asZeroIndexedNumber(def?: number): Number0 {
-		return ob1Coerce0(this.asNumber(def));
+	public asZeroIndexedNumber(def?: number): ZeroIndexed {
+		return new ZeroIndexed(this.asNumber(def));
 	}
 
-	public asOneIndexedNumber(def?: number): Number1 {
-		return ob1Coerce1(this.asNumber(def));
+	public asOneIndexedNumber(def?: number): OneIndexed {
+		return new OneIndexed(this.asNumber(def));
 	}
 
-	public asZeroIndexedNumberOrVoid(): undefined | Number0 {
+	public asZeroIndexedNumberOrVoid(): undefined | ZeroIndexed {
 		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : ob1Coerce0(num);
+		return num === undefined ? undefined : new ZeroIndexed(num);
 	}
 
-	public asOneIndexedNumberOrVoid(): undefined | Number1 {
+	public asOneIndexedNumberOrVoid(): undefined | OneIndexed {
 		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : ob1Coerce1(num);
+		return num === undefined ? undefined : new OneIndexed(num);
 	}
 
 	public asNumber(def?: number): number {
@@ -1278,7 +1275,10 @@ export default class Consumer {
 			required: def === undefined,
 		});
 
-		const value = this.getValue(def);
+		let value = this.getValue(def);
+		if (isIndexedNumberish(value)) {
+			value = value.valueOf();
+		}
 		if (typeof value !== "number") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
 			return 0;
@@ -1292,23 +1292,23 @@ export default class Consumer {
 			max?: number;
 			default?: number;
 		},
-	): number
+	): number;
 
 	public asNumberInRange(
 		opts: {
-			min: Number0;
-			max?: Number0;
-			default?: Number0;
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
 		},
-	): Number0
+	): OneIndexed;
 
 	public asNumberInRange(
 		opts: {
-			min: Number1;
-			max?: Number1;
-			default?: Number1;
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
 		},
-	): Number1
+	): OneIndexed;
 
 	public asNumberInRange(
 		opts: {
@@ -1317,9 +1317,9 @@ export default class Consumer {
 			default?: number | AnyIndexedNumber;
 		},
 	): number | AnyIndexedNumber {
-		const min = ob1Get(opts.min);
-		const max = ob1Get(opts.max);
-		const def = ob1Get(opts.default);
+		const min = opts.min === undefined ? undefined : opts.min.valueOf();
+		const max = opts.max === undefined ? undefined : opts.max.valueOf();
+		const def = opts.default === undefined ? undefined : opts.default.valueOf();
 
 		this.declareDefinition({
 			type: "number",
@@ -1334,15 +1334,22 @@ export default class Consumer {
 		// Nice error message when both min and max are specified
 		if (min !== undefined && max !== undefined && (num < min || num > max)) {
 			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_BETWEEN(min, max));
-			return num;
+		} else {
+			if (min !== undefined && num < min) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
+			}
+
+			if (max !== undefined && num > max) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
+			}
 		}
 
-		if (min !== undefined && num < min) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
+		if (opts.min instanceof OneIndexed) {
+			return new OneIndexed(num);
 		}
 
-		if (max !== undefined && num > max) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
+		if (opts.min instanceof ZeroIndexed) {
+			return new ZeroIndexed(num);
 		}
 
 		return num;

@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword from"}
+				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<es2015/modules/invalid-escape-import-from/input.js>
@@ -85,6 +84,9 @@ JSRoot {
  es2015/modules/invalid-escape-import-from/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected keyword from
+
+    import X fro\u006d 'x'
+             ^
 
 
 ```

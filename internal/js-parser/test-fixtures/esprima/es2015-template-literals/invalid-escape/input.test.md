@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<esprima/es2015-template-literals/invalid-escape/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  esprima/es2015-template-literals/invalid-escape/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
+
+    `\1`;
+      ^
 
 
 ```

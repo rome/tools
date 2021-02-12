@@ -44,7 +44,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<esprima/invalid-syntax/migrated_0126/input.js>
@@ -62,6 +61,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0126/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-in statement
+
+    for (+i in {});
+         ^^
 
 
 ```

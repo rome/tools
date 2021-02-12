@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<core/create-parenthesized-expressions/valid-parenthesized-assignment-array-pattern-1/input.js>
@@ -72,6 +71,9 @@ JSRoot {
 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
+
+    [(((x)))] = t;
+        ^
 
 
 ```

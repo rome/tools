@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:31
 				path: UIDPath<esprima/es2015-object-initialiser/proto-literal-shorthand/input.js>
@@ -83,6 +82,9 @@ JSRoot {
  esprima/es2015-object-initialiser/proto-literal-shorthand/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
+
+    ({ "__proto__": null, __proto__ })
+                          ^^^^^^^^^
 
 
 ```

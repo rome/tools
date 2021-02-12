@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:11
 				path: UIDPath<es2020/import-meta/not-assignable/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  es2020/import-meta/not-assignable/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in assignment expression
+
+    import.meta = true;
+    ^^^^^^^^^^^
 
 
 ```

@@ -8,7 +8,7 @@
 
 ```
 
- lint,react,noDidMountSetState/reject/1/file.tsx:3:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
+ lint/react/noDidMountSetState/reject/1/file.tsx:3:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidMount method.
 
@@ -34,7 +34,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDidMountSetState/reject/2/file.tsx:4:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
+ lint/react/noDidMountSetState/reject/2/file.tsx:4:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidMount method.
 
@@ -61,7 +61,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDidMountSetState/reject/3/file.tsx:3:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
+ lint/react/noDidMountSetState/reject/3/file.tsx:3:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidMount method.
 
@@ -87,7 +87,7 @@ class Hello extends Component {
 
 ```
 
- lint,react,noDidMountSetState/reject/4/file.tsx:4:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
+ lint/react/noDidMountSetState/reject/4/file.tsx:4:2 lint/react/noDidMountSetState ━━━━━━━━━━━━━━━━━
 
   ✖ Avoid calling this.setState in the componentDidMount method.
 

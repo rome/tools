@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:16
 				path: UIDPath<experimental/module-attributes/trailing-comma/input.js>
@@ -117,6 +116,10 @@ JSRoot {
  experimental/module-attributes/trailing-comma/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
+
+  > 1 │ import("foo.js",);
+      │                ^
+    2 │ import("foo.json", { with: { type: "json" } },);
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:15
 				path: UIDPath<es2016/simple-parameter-list/array-pattern-default/input.js>
@@ -115,6 +114,11 @@ JSRoot {
  es2016/simple-parameter-list/array-pattern-default/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
+
+    1 │ function a([ option1, option2 ] = []) {
+  > 2 │   "use strict";
+      │   ^^^^^^^^^^^^^
+    3 │ }
 
 
 ```

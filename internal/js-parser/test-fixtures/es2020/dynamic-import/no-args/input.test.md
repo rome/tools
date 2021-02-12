@@ -42,7 +42,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<es2020/dynamic-import/no-args/input.js>
@@ -60,6 +59,9 @@ JSRoot {
  es2020/dynamic-import/no-args/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import() requires exactly one argument
+
+    import();
+           ^
 
 
 ```

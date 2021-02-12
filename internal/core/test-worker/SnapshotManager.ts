@@ -16,7 +16,7 @@ import TestWorkerFile from "./TestWorkerFile";
 import {descriptions} from "@internal/diagnostics";
 import {parseSnapshot, snapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@internal/v8";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {prettyFormatToString} from "@internal/pretty-format";
 import {FilePathLocker} from "../../async/lockers";
 import {naturalCompare} from "@internal/string-utils";
@@ -56,8 +56,8 @@ function buildEntriesKey(testName: string, entryName: string): string {
 }
 
 export type InlineSnapshotUpdate = {
-	line: Number1;
-	column: Number0;
+	line: OneIndexed;
+	column: ZeroIndexed;
 	snapshot: boolean | number | string | null;
 };
 
@@ -303,9 +303,15 @@ export default class SnapshotManager {
 		callFrame: ErrorFrame,
 		received: unknown,
 		expected?: InlineSnapshotUpdate["snapshot"],
-	): {
-		status: "MATCH" | "NO_MATCH" | "UPDATE";
-	} {
+	):
+		| {
+				status: "MATCH" | "UPDATE";
+			}
+		| {
+				status: "NO_MATCH";
+				receivedFormat: string;
+				expectedFormat: string;
+			} {
 		let receivedFormat = stringOrPrettyFormat(received);
 		let expectedFormat = stringOrPrettyFormat(expected);
 
@@ -342,7 +348,7 @@ export default class SnapshotManager {
 			return {status: "UPDATE"};
 		}
 
-		return {status: "NO_MATCH"};
+		return {status: "NO_MATCH", receivedFormat, expectedFormat};
 	}
 
 	public async get(

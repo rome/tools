@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2015/uncategorised/278/input.js>
@@ -33,22 +32,13 @@ JSRoot {
 			description: Object {
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed function params"}
+				message: RAW_MARKUP {value: "Unclosed <emphasis>function params</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:19
-							path: UIDPath<es2015/uncategorised/278/input.js>
-							start: Position 1:19
-						}
-					}
+					frame {location: SourceLocation es2015/uncategorised/278/input.js 1:19-1:19}
 				]
 			}
 		}
@@ -129,6 +119,9 @@ JSRoot {
  es2015/uncategorised/278/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed function params
+
+    function f(a, ...b = 0)
+              ^
 
   ℹ We expected to find the closing character ) here
 

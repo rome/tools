@@ -7,14 +7,14 @@
 
 import {AnyComment, AnyNode, AnyRoot} from "@internal/ast";
 import {CompilerContext, signals} from "@internal/compiler";
-import {Number1, ob1Get1} from "@internal/ob1";
+import {OneIndexed} from "@internal/math";
 import Path from "../lib/Path";
 import {LintCompilerOptionsDecision} from "../types";
 import {injectComment} from "../transforms/helpers";
 import {SUPPRESSION_START} from "../suppressionsParser";
 import {formatCategoryDescription} from "@internal/diagnostics";
 
-function getStartLine(node: AnyNode): undefined | Number1 {
+function getStartLine(node: AnyNode): undefined | OneIndexed {
 	const {loc} = node;
 	if (loc === undefined) {
 		return undefined;
@@ -39,7 +39,7 @@ export function addSuppressions(
 		return ast;
 	}
 
-	const visitedLines: Set<Number1> = new Set();
+	const visitedLines: Set<OneIndexed> = new Set();
 
 	function addComment(
 		path: Path,
@@ -139,7 +139,7 @@ export function addSuppressions(
 					return signals.retain;
 				}
 
-				const decisions = context.getLintDecisions(String(ob1Get1(line)));
+				const decisions = context.getLintDecisions(String(line.valueOf()));
 				if (decisions.length === 0) {
 					return signals.retain;
 				}

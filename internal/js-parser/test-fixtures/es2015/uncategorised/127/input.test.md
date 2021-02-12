@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:22
 				path: UIDPath<es2015/uncategorised/127/input.js>
@@ -103,6 +102,9 @@ JSRoot {
  es2015/uncategorised/127/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Constructor cannot be a generator
+
+    class A { *constructor() {} }
+               ^^^^^^^^^^^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<esprima/es2015-export-declaration/invalid-export-batch-token/input.js>
@@ -70,6 +69,9 @@ JSRoot {
  esprima/es2015-export-declaration/invalid-export-batch-token/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━
 
   ✖ Expected `from` for an export node
+
+    export * +
+             ^
 
 
 ```

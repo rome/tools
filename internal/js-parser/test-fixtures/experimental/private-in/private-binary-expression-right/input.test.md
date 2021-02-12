@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:7
 				path: UIDPath<experimental/private-in/private-binary-expression-right/input.js>
@@ -153,6 +152,13 @@ JSRoot {
  experimental/private-in/private-binary-expression-right/input.js:4:8 parse(js) ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    2 │   #x = 1;
+    3 │   test() {
+  > 4 │     1 + #x;
+      │         ^
+    5 │   }
+    6 │ }
 
 
 ```

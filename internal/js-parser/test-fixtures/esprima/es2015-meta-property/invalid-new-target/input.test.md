@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<esprima/es2015-meta-property/invalid-new-target/input.js>
@@ -77,6 +76,9 @@ JSRoot {
  esprima/es2015-meta-property/invalid-new-target/input.js:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
+
+    var x = new.target;
+            ^^^^^^^^^^
 
 
 ```

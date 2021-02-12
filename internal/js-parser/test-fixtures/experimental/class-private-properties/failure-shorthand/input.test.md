@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:10
 				path: UIDPath<experimental/class-private-properties/failure-shorthand/input.js>
@@ -145,6 +144,13 @@ JSRoot {
  experimental/class-private-properties/failure-shorthand/input.js:4:11 parse(js) ━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    2 │   #x;
+    3 │   constructor() {
+  > 4 │     delete #x;
+      │            ^
+    5 │   }
+    6 │ }
 
 
 ```

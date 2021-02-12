@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<esprima/invalid-syntax/migrated_0085/input.js>
@@ -75,6 +74,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0085/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
+
+    ((a)) => 42
+      ^
 
 
 ```

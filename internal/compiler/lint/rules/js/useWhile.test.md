@@ -8,9 +8,15 @@
 
 ```
 
- lint,js,useWhile/reject/1/file.ts:1 lint/js/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/useWhile/reject/1/file.ts:1 lint/js/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use while loops instead of for loops.
+
+  > 1 │ for (; x.running;) {
+      │ ^^^^^^^^^^^^^^^^^^^^
+  > 2 │   x.step();
+  > 3 │ }
+      │ ^
 
   ℹ Safe fix
 
@@ -34,9 +40,15 @@ while (x.running) {
 
 ```
 
- lint,js,useWhile/reject/2/file.ts:1 lint/js/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/useWhile/reject/2/file.ts:1 lint/js/useWhile  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use while loops instead of for loops.
+
+  > 1 │ for (;;) {
+      │ ^^^^^^^^^^
+  > 2 │   doSomething();
+  > 3 │ }
+      │ ^
 
   ℹ Safe fix
 

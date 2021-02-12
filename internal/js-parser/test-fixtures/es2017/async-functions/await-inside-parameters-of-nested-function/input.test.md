@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:24
 				path: UIDPath<es2017/async-functions/await-inside-parameters-of-nested-function/input.js>
@@ -135,6 +134,11 @@ JSRoot {
  es2017/async-functions/await-inside-parameters-of-nested-function/input.js:2:25 parse(js) ━━━━━━━━━
 
   ✖ Expected a comma to separate items in function params
+
+    1 │ async function foo() {
+  > 2 │   function bar(x = await 2) {}
+      │                          ^
+    3 │ }
 
 
 ```

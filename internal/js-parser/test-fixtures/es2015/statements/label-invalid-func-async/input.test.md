@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<es2015/statements/label-invalid-func-async/input.js>
@@ -80,6 +79,9 @@ JSRoot {
  es2015/statements/label-invalid-func-async/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Async functions can only be declared at the top level or inside a block
+
+    foo: async function bar() {}
+         ^
 
 
 ```

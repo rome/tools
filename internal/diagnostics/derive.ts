@@ -34,7 +34,7 @@ import {
 	createSingleDiagnosticError,
 	getDiagnosticsFromError,
 	isUserDiagnosticError,
-} from "./errors";
+} from "./error-wrappers";
 import {AnyPath, MixedPathSet, UNKNOWN_PATH, equalPaths} from "@internal/path";
 
 function normalizeArray<T>(val: undefined | (T[])): T[] {

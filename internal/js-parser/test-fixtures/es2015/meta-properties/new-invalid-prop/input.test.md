@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:10
 				path: UIDPath<es2015/meta-properties/new-invalid-prop/input.js>
@@ -88,6 +87,11 @@ JSRoot {
  es2015/meta-properties/new-invalid-prop/input.js:2:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for new is new.target
+
+    1 │ function f() {
+  > 2 │   new.prop
+      │       ^^^^
+    3 │ }
 
 
 ```

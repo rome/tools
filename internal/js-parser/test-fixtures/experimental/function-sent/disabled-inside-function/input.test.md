@@ -21,20 +21,24 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected ("}
-			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
-				end: Position 2:18
+				end: Position 2:17
 				path: UIDPath<experimental/function-sent/disabled-inside-function/input.js>
 				start: Position 2:17
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -114,7 +118,14 @@ JSRoot {
 
  experimental/function-sent/disabled-inside-function/input.js:2:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character .
+
+    1 │ function foo() {
+  > 2 │   return function.sent;
+      │                  ^
+    3 │ }
+
+  ℹ Expected the opening function params character (
 
 
 ```

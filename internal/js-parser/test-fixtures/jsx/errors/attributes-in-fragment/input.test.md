@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<jsx/errors/attributes-in-fragment/input.jsx>
@@ -81,6 +80,9 @@ JSRoot {
  jsx/errors/attributes-in-fragment/input.jsx:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
+
+    < key="nope"></>
+         ^
 
 
 ```

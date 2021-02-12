@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<es2020/bigint/hex-as-property-name/input.js>
@@ -73,6 +72,9 @@ JSRoot {
  es2020/bigint/hex-as-property-name/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    ({ 0xbeefban: 0 });
+       ^
 
 
 ```

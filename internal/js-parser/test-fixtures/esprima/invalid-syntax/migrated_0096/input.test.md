@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<esprima/invalid-syntax/migrated_0096/input.js>
@@ -69,6 +68,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0096/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Parenthesized expression didnt contain anything
+
+    () ? 42
+     ^
 
 
 ```

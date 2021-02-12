@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js>
@@ -78,6 +77,9 @@ JSRoot {
  esprima/es2015-arrow-function/arrow-with-multiple-rest/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    (...a, ...b) => 0
+     ^^^^
 
 
 ```

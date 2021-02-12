@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword const"}
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>const</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<es2015/identifiers/invalid-escape-seq-const/input.js>
@@ -92,6 +91,11 @@ JSRoot {
  es2015/identifiers/invalid-escape-seq-const/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword const
+
+  > 1 │ var co\u{6e}st = 123;
+      │       ^
+    2 │
+    3 │ co\u{6e}st x = 2;
 
 
 ```

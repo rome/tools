@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<typescript/types/tuple-rest-optional-invalid/input.ts>
@@ -95,6 +94,9 @@ JSRoot {
  typescript/types/tuple-rest-optional-invalid/input.ts:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A tuple member cannot be both optional and rest.
+
+    type A = [...N, ...N?];
+                    ^^^^^
 
 
 ```

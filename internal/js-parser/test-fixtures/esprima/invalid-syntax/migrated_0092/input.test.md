@@ -18,6 +18,31 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-2:0
 	path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:5
+				path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
+				start: Position 1:4
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Defined already here"}
+					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:4-1:5 (a)}
+				]
+			}
+		}
+	]
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation esprima/invalid-syntax/migrated_0092/input.js 1:0-1:12
@@ -46,42 +71,6 @@ JSRoot {
 						}
 					]
 				}
-			}
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				marker: undefined
-				sourceText: undefined
-				end: Position 1:5
-				path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
-				advice: Array [
-					log {
-						category: "info"
-						text: RAW_MARKUP {value: "Defined already here"}
-					}
-					frame {
-						location: Object {
-							identifierName: "a"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:5
-							path: UIDPath<esprima/invalid-syntax/migrated_0092/input.js>
-							start: Position 1:4
-						}
-					}
-				]
 			}
 		}
 	]

@@ -1,7 +1,10 @@
 import {createDiagnosticsCategory} from "./index";
 import {DiagnosticLocation} from "../types";
 import {markup} from "@internal/markup";
-import {buildSuggestionAdvice} from "../helpers";
+import {
+	buildSuggestionAdvice,
+	diagnosticLocationToMarkupFilelink,
+} from "../helpers";
 import {DiagnosticCategory} from "../categories";
 import {ResolverQueryResponseNotFound} from "@internal/core/server/fs/Resolver";
 import {SourceLocation} from "@internal/parser-core";
@@ -70,13 +73,7 @@ export const resolver = createDiagnosticsCategory({
 							let format = markup`${name}`;
 
 							if (location !== undefined) {
-								if (location.start === undefined) {
-									format = markup`<filelink target="${location.path.join()}">${name}</filelink>`;
-								} else {
-									format = markup`<filelink target="${location.path.join()}" line="${String(
-										location.start.line,
-									)}" column="${String(location.start.column)}">${name}</filelink>`;
-								}
+								format = diagnosticLocationToMarkupFilelink(location, name);
 							}
 
 							if (source !== undefined) {

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js>
@@ -74,6 +73,9 @@ JSRoot {
  esprima/es2015-destructuring-assignment/invalid-group-assignment/input.js:1:1 parse(js) ━━━━━━━━━━━
 
   ✖ Invalid left-hand side in assignment expression
+
+    (a,b)=(c,d);
+     ^^^
 
 
 ```

@@ -29,7 +29,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:13
 				path: UIDPath<esprima/es2015-array-pattern/dupe-param-2/input.js>
@@ -44,17 +43,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "a"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 2:13
-							path: UIDPath<esprima/es2015-array-pattern/dupe-param-2/input.js>
-							start: Position 2:12
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-array-pattern/dupe-param-2/input.js 2:12-2:13 (a)}
 				]
 			}
 		}

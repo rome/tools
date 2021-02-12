@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:3
 				path: UIDPath<experimental/class-private-methods/asi-failure-generator/input.js>
@@ -137,6 +136,12 @@ JSRoot {
  experimental/class-private-methods/asi-failure-generator/input.js:3:3 parse(js) ━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an class property value
+
+    1 │ class Foo {
+    2 │   p = x
+  > 3 │   *#m () {}
+      │    ^
+    4 │ }
 
 
 ```

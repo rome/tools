@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:44
 				path: UIDPath<core/uncategorised/517/input.js>
@@ -39,17 +38,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "t"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:44
-							path: UIDPath<core/uncategorised/517/input.js>
-							start: Position 1:43
-						}
-					}
+					frame {location: SourceLocation core/uncategorised/517/input.js 1:43-1:44 (t)}
 				]
 			}
 		}

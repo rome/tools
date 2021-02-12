@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
@@ -39,17 +38,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "b"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:6
-							path: UIDPath<esprima/es2015-array-binding-pattern/invalid-dup-param/input.js>
-							start: Position 1:5
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-array-binding-pattern/invalid-dup-param/input.js 1:5-1:6 (b)}
 				]
 			}
 		}

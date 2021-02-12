@@ -8,9 +8,12 @@
 
 ```
 
- lint,ts,noExplicitAny/reject/1/file.ts:1:11 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/1/file.ts:1:11 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
+
+    const age: any = 'seventeen';age;
+               ^^^
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
@@ -29,9 +32,12 @@ age;
 
 ```
 
- lint,ts,noExplicitAny/reject/2/file.ts:1:12 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/2/file.ts:1:12 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
+
+    const ages: any[] = ['seventeen'];ages;
+                ^^^
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
@@ -50,7 +56,7 @@ ages;
 
 ```
 
- lint,ts,noExplicitAny/reject/3/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/3/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -71,9 +77,12 @@ ages;
 
 ```
 
- lint,ts,noExplicitAny/reject/4/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/4/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
+
+    function greet(): any {};greet();
+                      ^^^
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
@@ -92,9 +101,12 @@ greet();
 
 ```
 
- lint,ts,noExplicitAny/reject/5/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/5/file.ts:1:18 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
+
+    function greet(): any[] {};greet();
+                      ^^^
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
@@ -113,7 +125,7 @@ greet();
 
 ```
 
- lint,ts,noExplicitAny/reject/6/file.ts:1:24 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/6/file.ts:1:24 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -134,7 +146,7 @@ greet();
 
 ```
 
- lint,ts,noExplicitAny/reject/7/file.ts:1:30 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/7/file.ts:1:30 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -155,7 +167,7 @@ greet();
 
 ```
 
- lint,ts,noExplicitAny/reject/8/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/8/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
@@ -178,13 +190,13 @@ greet();
 
 ```
 
- lint,ts,noExplicitAny/reject/9/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/9/file.ts:1:28 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
- lint,ts,noExplicitAny/reject/9/file.ts:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/ts/noExplicitAny/reject/9/file.ts:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 

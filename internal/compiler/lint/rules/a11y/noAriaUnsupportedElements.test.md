@@ -8,10 +8,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/1/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/1/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <meta charset="UTF-8" aria-hidden="false" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -29,10 +32,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/2/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/2/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <meta charset="UTF-8" role="meta" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -50,10 +56,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/3/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/3/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <html aria-required="true" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -71,10 +80,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/4/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/4/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <html role="html"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -92,10 +104,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/5/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/5/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <script aria-label="script"></script>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -113,10 +128,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/6/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/6/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <script role="script"></script>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -134,10 +152,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/7/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/7/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <style aria-labelledby></style>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -155,10 +176,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/8/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/8/file.tsx:1 lint/a11y/noAriaUnsupportedElements ━━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <style role="style"></style>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -228,10 +252,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/1/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/1/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <meta charset="UTF-8" aria-hidden="false" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -249,10 +276,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/2/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/2/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <meta charset="UTF-8" role="meta" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -270,10 +300,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/3/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/3/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <html aria-required="true" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -292,10 +325,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/4/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/4/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <html role="html"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -314,10 +350,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/5/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/5/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <script aria-label="script"></script>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -336,10 +375,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/6/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/6/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <script role="script"></script>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -358,10 +400,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/7/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/7/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <style aria-labelledby="id"></style>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
@@ -380,10 +425,13 @@
 
 ```
 
- lint,a11y,noAriaUnsupportedElements/reject/8/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
+ lint/a11y/noAriaUnsupportedElements/reject/8/file.html:1 lint/a11y/noAriaUnsupportedElements ━━━━━━
 
   ✖ Avoid the role attribute and aria-* attributes when using meta, html, script, and style
     elements.
+
+    <style role="style"></style>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 

@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<es2018/object-rest-spread/24/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  es2018/object-rest-spread/24/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid rest operator's argument
+
+    ({...[]} = {})
+         ^^
 
 
 ```

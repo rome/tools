@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:26
 				path: UIDPath<experimental/module-attributes/valid-syntax-with-no-type-attribute/input.js>
@@ -92,6 +91,9 @@ JSRoot {
  experimental/module-attributes/valid-syntax-with-no-type-attribute/input.js:1:27 parse(js) ━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    import foo from "foo.json" with lazy: "true";
+                               ^
 
 
 ```

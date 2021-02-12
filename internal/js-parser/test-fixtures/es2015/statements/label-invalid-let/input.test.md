@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<es2015/statements/label-invalid-let/input.js>
@@ -71,6 +70,9 @@ JSRoot {
  es2015/statements/label-invalid-let/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    foo: let bar;
+             ^
 
 
 ```

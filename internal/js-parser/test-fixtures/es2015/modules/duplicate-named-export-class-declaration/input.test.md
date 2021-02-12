@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:19
 				path: UIDPath<es2015/modules/duplicate-named-export-class-declaration/input.js>
@@ -39,16 +38,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:12
-							path: UIDPath<es2015/modules/duplicate-named-export-class-declaration/input.js>
-							start: Position 1:9
-						}
-					}
+					frame {location: SourceLocation es2015/modules/duplicate-named-export-class-declaration/input.js 1:9-1:12}
 				]
 			}
 		}
@@ -104,6 +94,10 @@ JSRoot {
  es2015/modules/duplicate-named-export-class-declaration/input.js:2:7 parse(js) ━━━━━━━━━━━━━━━━━━━━
 
   ✖ `Foo` has already been exported. Exported identifiers must be unique.
+
+    1 │ export { Foo };
+  > 2 │ export class Foo {};
+      │        ^^^^^^^^^^^^
 
   ℹ Defined already here
 

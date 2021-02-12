@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:10
 				path: UIDPath<experimental/module-attributes/import-with-statement/input.js>
@@ -69,6 +68,10 @@ JSRoot {
  experimental/module-attributes/import-with-statement/input.js:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'with' in strict mode
+
+    1 │ import "x"
+  > 2 │ with ({});
+      │ ^^^^^^^^^^
 
 
 ```

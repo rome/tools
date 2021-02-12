@@ -39,7 +39,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<es2020/bigint/invalid-octal-legacy/input.js>
@@ -57,6 +56,9 @@ JSRoot {
  es2020/bigint/invalid-octal-legacy/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A bigint can't be an octal
+
+    016432n
+          ^
 
 
 ```

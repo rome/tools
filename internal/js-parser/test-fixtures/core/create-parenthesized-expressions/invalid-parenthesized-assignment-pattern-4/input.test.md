@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-assignment-pattern-4/input.js>
@@ -81,6 +80,9 @@ JSRoot {
 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
+
+    [(a = 1)] = t
+      ^^^^^
 
 
 ```

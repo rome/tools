@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "static can't contain a unicode escape"}
+				message: RAW_MARKUP {value: "<emphasis>static</emphasis> can't contain a unicode escape"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:12
 				path: UIDPath<es2015/class/invalid-escape-static/input.js>
@@ -103,6 +102,9 @@ JSRoot {
  es2015/class/invalid-escape-static/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ static can't contain a unicode escape
+
+    class X { st\u0061tic y() {} }
+                ^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:31
 				path: UIDPath<typescript/assert-predicate/arrow-function/input.ts>
@@ -203,6 +202,11 @@ JSRoot {
  typescript/assert-predicate/arrow-function/input.ts:3:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Flow type cast expressions aren't allowed in TypeScript
+
+    1 │ const assert1 = (value: unknown): asserts value is string => {}
+    2 │ const assert2 = (value: unknown): asserts value => {}
+  > 3 │ const assert3 = (value: unknown): asserts => {}
+      │                  ^^^^^^^^^^^^^^
 
 
 ```

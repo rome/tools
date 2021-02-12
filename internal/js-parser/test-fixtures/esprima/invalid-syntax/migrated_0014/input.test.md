@@ -43,12 +43,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected number in radix 8"}
+				message: RAW_MARKUP {value: "Expected number in radix <emphasis>8</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<esprima/invalid-syntax/migrated_0014/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0014/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected number in radix 8
+
+    0o9
+      ^
 
 
 ```

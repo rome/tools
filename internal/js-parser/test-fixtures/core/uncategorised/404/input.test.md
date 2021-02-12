@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword if"}
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>if</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:11
 				path: UIDPath<core/uncategorised/404/input.js>
@@ -73,6 +72,9 @@ JSRoot {
  core/uncategorised/404/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword if
+
+    function if() { }
+             ^^
 
 
 ```

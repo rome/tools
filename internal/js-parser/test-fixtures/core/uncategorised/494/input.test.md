@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:53
 				path: UIDPath<core/uncategorised/494/input.js>
@@ -130,6 +129,9 @@ JSRoot {
  core/uncategorised/494/input.js:1:49 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
+
+    function hello() {'use strict'; ({ s: function s(eval) { } }); }
+                                                     ^^^^
 
 
 ```

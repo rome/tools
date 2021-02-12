@@ -8,7 +8,7 @@
 import {BaseTokens, SimpleToken, StringToken} from "@internal/parser-core";
 import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {UserConfig} from "@internal/core";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Consumer} from "@internal/consume";
 import {GridLocators} from "@internal/cli-layout";
 
@@ -81,12 +81,12 @@ export type MarkupTagName =
 
 export type MarkupFormatPositionNormalizer = (
 	path: AnyPath,
-	line: undefined | Number1,
-	column: undefined | Number0,
+	line: undefined | OneIndexed,
+	column: undefined | ZeroIndexed,
 ) => {
 	path: AnyPath;
-	line?: Number1;
-	column?: Number0;
+	line?: OneIndexed;
+	column?: ZeroIndexed;
 };
 
 export type MarkupFormatFilenameHumanizer = (

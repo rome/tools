@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:11
 				path: UIDPath<es2018/async-generators/for-await-no-semi-3/input.js>
@@ -96,6 +95,11 @@ JSRoot {
  es2018/async-generators/for-await-no-semi-3/input.js:2:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't have an await on a regular for loop
+
+    1 │ async function f() {
+  > 2 │   for await (x = 0;false;);
+      │            ^
+    3 │ }
 
 
 ```

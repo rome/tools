@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:2
 				path: UIDPath<es2015/uncategorised/394/input.js>
@@ -132,6 +131,12 @@ JSRoot {
  es2015/uncategorised/394/input.js:2:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
+
+    1 │ var a;
+  > 2 │ (a) = {};
+      │  ^
+    3 │ (a.b) = {};
+    4 │ (a['c']) = {};
 
 
 ```

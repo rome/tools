@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<core/uncategorised/368/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  core/uncategorised/368/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in assignment expression
+
+    func() = 4
+    ^^^^^^
 
 
 ```

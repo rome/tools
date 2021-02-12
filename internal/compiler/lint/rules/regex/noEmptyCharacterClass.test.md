@@ -8,9 +8,12 @@
 
 ```
 
- lint,regex,noEmptyCharacterClass/reject/1/file.ts:1:15 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint/regex/noEmptyCharacterClass/reject/1/file.ts:1:15 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
+
+    let foo = /^abc[]/;foo;
+                   ^
 
   ℹ Empty character classes are usually typos.
 
@@ -29,9 +32,12 @@ foo;
 
 ```
 
- lint,regex,noEmptyCharacterClass/reject/2/file.ts:1:14 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint/regex/noEmptyCharacterClass/reject/2/file.ts:1:14 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
+
+    let foo = /foo[]bar/;foo;
+                  ^^
 
   ℹ Empty character classes are usually typos.
 
@@ -50,7 +56,7 @@ foo;
 
 ```
 
- lint,regex,noEmptyCharacterClass/reject/3/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint/regex/noEmptyCharacterClass/reject/3/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
 
@@ -72,9 +78,12 @@ if (foo.match(/^abc/)) {
 
 ```
 
- lint,regex,noEmptyCharacterClass/reject/4/file.ts:1:11 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint/regex/noEmptyCharacterClass/reject/4/file.ts:1:11 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
+
+    let foo = /[]]/;foo;
+               ^^
 
   ℹ Empty character classes are usually typos.
 
@@ -93,9 +102,12 @@ foo;
 
 ```
 
- lint,regex,noEmptyCharacterClass/reject/5/file.ts:1:13 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint/regex/noEmptyCharacterClass/reject/5/file.ts:1:13 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
+
+    let foo = /\[[]/;foo;
+                 ^
 
   ℹ Empty character classes are usually typos.
 
@@ -114,9 +126,12 @@ foo;
 
 ```
 
- lint,regex,noEmptyCharacterClass/reject/6/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
+ lint/regex/noEmptyCharacterClass/reject/6/file.ts:1:20 lint/regex/noEmptyCharacterClass ━━━━━━━━━━━
 
   ✖ Do not use empty character classes in regular expressions.
+
+    let foo = /\[\[\]a-z[]/;foo;
+                        ^
 
   ℹ Empty character classes are usually typos.
 

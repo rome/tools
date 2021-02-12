@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:4
 				path: UIDPath<core/regression/invalid-octal-strict-directive-function/input.js>
@@ -268,6 +267,12 @@ JSRoot {
  core/regression/invalid-octal-strict-directive-function/input.js:2:4 parse(js) ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Octal literal in strict mode
+
+    1 │ function a() {
+  > 2 │   "\5";
+      │     ^
+    3 │   "use strict";
+    4 │ }
 
 
 ```

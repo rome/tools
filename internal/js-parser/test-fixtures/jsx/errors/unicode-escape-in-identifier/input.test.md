@@ -46,7 +46,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<jsx/errors/unicode-escape-in-identifier/input.jsx>
@@ -64,6 +63,9 @@ JSRoot {
  jsx/errors/unicode-escape-in-identifier/input.jsx:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown JSX identifier token
+
+    <\u{2F804}></\u{2F804}>
+     ^
 
 
 ```

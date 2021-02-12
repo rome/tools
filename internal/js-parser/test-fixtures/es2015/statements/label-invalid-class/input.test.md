@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token"}
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>c</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2015/statements/label-invalid-class/input.js>
@@ -71,7 +70,10 @@ JSRoot {
 
  es2015/statements/label-invalid-class/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character c
+
+    foo: class X {}
+         ^^^^^
 
 
 ```

@@ -10,7 +10,7 @@ import {
 	canBeRightFlankingDelimiter,
 	hasBlockTokens,
 } from "@internal/markdown-parser";
-import {Number0, ob1Add, ob1Get0, ob1Sub} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {
 	AnyMarkdownInlineNode,
 	MarkdownBoldInline,
@@ -108,7 +108,7 @@ export function tokenizeInline(
 	parser: MarkdownParser,
 	state: MarkdownParserState,
 	charToCheck: "*" | "_",
-	index: Number0,
+	index: ZeroIndexed,
 ): ParserCoreTokenizeState<MarkdownParserTypes> | undefined {
 	const [valueOfInlineToken, endIndexOfDelimiter] = parser.readInputFrom(
 		index,
@@ -117,12 +117,12 @@ export function tokenizeInline(
 
 	const leftFlankingDelimiter = canBeLeftFlankingDelimiter({
 		startIndex: index,
-		endIndex: ob1Sub(endIndexOfDelimiter, 1),
+		endIndex: endIndexOfDelimiter.subtract(1),
 		input: parser.input,
 	});
 	const rightFlankingDelimiter = canBeRightFlankingDelimiter({
 		startIndex: index,
-		endIndex: ob1Sub(endIndexOfDelimiter, 1),
+		endIndex: endIndexOfDelimiter.subtract(1),
 		input: parser.input,
 	});
 
@@ -148,7 +148,7 @@ export function tokenizeInline(
 
 				let endIndex = indexToCheck;
 
-				const nextChar = parser.getInputCharOnly(ob1Add(index, 1));
+				const nextChar = parser.getInputCharOnly(index.add(1));
 				if (valueOfInlineToken.length > 1) {
 					// we found a character that matches but we need to make sure that also the next character
 					// is the same
@@ -179,11 +179,11 @@ export function tokenizeInline(
 			];
 		}
 
-		const nextChar = parser.getInputCharOnly(ob1Add(closingIndex, 2));
+		const nextChar = parser.getInputCharOnly(closingIndex.add(2));
 		const [, closingIndexOfDelimiter] = parser.readInputFrom(
 			closingIndex,
 			(char1, index, input) => {
-				const prevChar = input[ob1Get0(index) - 1];
+				const prevChar = input[index.valueOf() - 1];
 				return !(prevChar !== " " && char1 === charToCheck);
 			},
 		);
@@ -208,7 +208,7 @@ export function tokenizeInline(
 	}
 
 	if (rightFlankingDelimiter) {
-		const nextChar = parser.getInputCharOnly(ob1Add(endIndexOfDelimiter, 2));
+		const nextChar = parser.getInputCharOnly(endIndexOfDelimiter.add(2));
 
 		return [
 			{

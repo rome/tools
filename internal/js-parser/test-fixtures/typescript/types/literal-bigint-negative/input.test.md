@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected \\\"number\\\""}
+				message: RAW_MARKUP {value: "Unexpected token, expected \"number\""}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<typescript/types/literal-bigint-negative/input.ts>
@@ -75,6 +74,9 @@ JSRoot {
  typescript/types/literal-bigint-negative/input.ts:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected token, expected "number"
+
+    let x: -1n;
+            ^
 
 
 ```

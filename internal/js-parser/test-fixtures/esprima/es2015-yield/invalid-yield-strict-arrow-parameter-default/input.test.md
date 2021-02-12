@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:24
 				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js>
@@ -88,6 +87,9 @@ JSRoot {
  esprima/es2015-yield/invalid-yield-strict-arrow-parameter-default/input.js:1:19 parse(js) ━━━━━━━━━
 
   ✖ yield is a reserved word
+
+    "use strict"; (x = yield) => {}
+                       ^^^^^
 
 
 ```

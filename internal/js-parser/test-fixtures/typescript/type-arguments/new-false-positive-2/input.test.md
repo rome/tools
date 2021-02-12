@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<typescript/type-arguments/new-false-positive-2/input.ts>
@@ -75,6 +74,9 @@ JSRoot {
  typescript/type-arguments/new-false-positive-2/input.ts:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ In TypeScript, a new expression with type arguments must have parens
+
+    new A<T>;
+            ^
 
 
 ```

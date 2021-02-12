@@ -1,5 +1,4 @@
 import {
-	StructuredNodeSystemErrorProperties,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
 	setErrorFrames,
@@ -19,6 +18,7 @@ import {
 import {prettyFormatEager} from "@internal/pretty-format";
 import {UNKNOWN_PATH, createAbsoluteFilePath} from "@internal/path";
 import {lstatSync} from "@internal/fs";
+import {NodeSystemError} from "@internal/node";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {
 	return err.path ?? err.address;
@@ -193,7 +193,3 @@ export function convertPossibleNodeErrorToDiagnostic(
 
 	return diagErr;
 }
-
-// https://nodejs.org/api/errors.html#errors_class_systemerror
-export type NodeSystemError = Error &
-	Partial<StructuredNodeSystemErrorProperties>;

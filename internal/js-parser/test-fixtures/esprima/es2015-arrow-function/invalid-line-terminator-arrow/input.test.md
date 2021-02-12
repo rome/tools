@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js>
@@ -72,6 +71,10 @@ JSRoot {
  esprima/es2015-arrow-function/invalid-line-terminator-arrow/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ Parenthesized expression didnt contain anything
+
+  > 1 │ ()
+      │  ^
+    2 │ => 42
 
 
 ```

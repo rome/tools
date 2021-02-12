@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:17
 				path: UIDPath<esprima/es2015-identifier/invalid_var_await/input.js>
@@ -81,6 +80,9 @@ JSRoot {
  esprima/es2015-identifier/invalid_var_await/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import and export can only appear in a module
+
+    export var await;
+    ^^^^^^^^^^^^^^^^^
 
   ℹ Change the extension to .mjs to turn this file into a module
 

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<esprima/es2015-for-of/unexpected-number/input.js>
@@ -74,6 +73,9 @@ JSRoot {
  esprima/es2015-for-of/unexpected-number/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A constant must have an initializer
+
+    for (const of 42);
+               ^^
 
 
 ```

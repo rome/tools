@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<es2015/uncategorised/392/input.js>
@@ -139,6 +138,9 @@ JSRoot {
 
   ✖ ES2015 named imports do not destructure. Use another statement for destructuring after the
     import.
+
+    import foo, { bar: { a } } from 'my-module';
+                       ^
 
 
 ```

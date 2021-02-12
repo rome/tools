@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:33
 				path: UIDPath<esprima/invalid-syntax/migrated_0180/input.js>
@@ -98,6 +97,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0180/input.js:1:33 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
+
+    x: while (true) { (function () { break; }); }
+                                     ^
 
 
 ```

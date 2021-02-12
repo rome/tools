@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:27
 				path: UIDPath<typescript/types/tuple-rest-trailing-comma/input.ts>
@@ -94,6 +93,9 @@ JSRoot {
  typescript/types/tuple-rest-trailing-comma/input.ts:1:27 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    let x: [string, ...string[],]
+                               ^
 
 
 ```

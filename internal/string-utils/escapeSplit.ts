@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {ZeroIndexed} from "@internal/math";
 import {isEscaped} from "./isEscaped";
-import {ob1Coerce0} from "@internal/ob1";
 
 export function escapeSplit(input: string, splitChar: string): string[] {
 	const parts: string[] = [];
@@ -23,7 +23,7 @@ export function escapeSplit(input: string, splitChar: string): string[] {
 	for (let i = 0; i < input.length; i++) {
 		let char = input[i];
 
-		if (!isEscaped(ob1Coerce0(i), input) && char === splitChar) {
+		if (!isEscaped(new ZeroIndexed(i), input) && char === splitChar) {
 			push();
 		} else {
 			buff += char;

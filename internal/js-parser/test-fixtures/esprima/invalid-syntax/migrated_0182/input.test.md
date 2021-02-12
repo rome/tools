@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:19
 				path: UIDPath<esprima/invalid-syntax/migrated_0182/input.js>
@@ -39,17 +38,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "x"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:1
-							path: UIDPath<esprima/invalid-syntax/migrated_0182/input.js>
-							start: Position 1:0
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0182/input.js 1:0-1:1 (x)}
 				]
 			}
 		}
@@ -105,6 +94,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0182/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Label x is already declared
+
+    x: while (true) { x: while (true) { } }
+                      ^
 
   ℹ Defined already here
 

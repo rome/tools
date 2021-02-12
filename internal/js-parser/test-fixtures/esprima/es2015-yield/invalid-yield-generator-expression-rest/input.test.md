@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:23
 				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-expression-rest/input.js>
@@ -91,6 +90,9 @@ JSRoot {
  esprima/es2015-yield/invalid-yield-generator-expression-rest/input.js:1:18 parse(js) ━━━━━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
+
+    (function *(x, ...yield){})
+                      ^^^^^
 
 
 ```

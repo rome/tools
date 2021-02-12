@@ -10,7 +10,6 @@ import {forkThread} from "@internal/core/common/utils/fork";
 import {createClient} from "@internal/codec-websocket";
 import {TestWorkerFlags} from "@internal/core/test-worker/TestWorker";
 import TestServer, {BridgeDiagnosticsError} from "@internal/core/server/testing/TestServer";
-import {ob1Coerce0To1} from "@internal/ob1";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	deriveDiagnosticFromErrorStructure,
@@ -204,7 +203,7 @@ export default class TestServerWorker {
 
 			const resolved = this.runner.sourceMaps.assertApproxOriginalPositionFor(
 				createAnyPath(urlToFilename(callFrame.get("url").asString())),
-				ob1Coerce0To1(loc.get("lineNumber").asZeroIndexedNumber()),
+				loc.get("lineNumber").asZeroIndexedNumber().toOneIndexed(),
 				loc.get("columnNumber").asZeroIndexedNumber(),
 			);
 

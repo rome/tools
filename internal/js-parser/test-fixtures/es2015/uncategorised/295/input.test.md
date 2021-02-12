@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<es2015/uncategorised/295/input.js>
@@ -33,22 +32,13 @@ JSRoot {
 			description: Object {
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed switch body"}
+				message: RAW_MARKUP {value: "Unclosed <emphasis>switch body</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 2:0
-							path: UIDPath<es2015/uncategorised/295/input.js>
-							start: Position 2:0
-						}
-					}
+					frame {location: SourceLocation es2015/uncategorised/295/input.js 2:0-2:0}
 				]
 			}
 		}
@@ -105,6 +95,9 @@ JSRoot {
  es2015/uncategorised/295/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed switch body
+
+    switch (cond) { case 10: let a = 20;
+                  ^
 
   ℹ We expected to find the closing character } here
 

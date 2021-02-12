@@ -31,7 +31,7 @@ import {
 	JSRegExpSubExpression,
 } from "@internal/ast";
 import {Diagnostics, descriptions} from "@internal/diagnostics";
-import {Number0, ob1Add, ob1Get0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 
 type Operator =
 	| "^"
@@ -113,15 +113,15 @@ function getCodePoint(char: string): number {
 
 function readOctalCode(
 	input: string,
-	index: Number0,
+	index: ZeroIndexed,
 	nextChar: string,
 ): {
 	octalValue: number | undefined;
-	end: Number0;
+	end: ZeroIndexed;
 } {
 	let char = nextChar;
 	let octal = "";
-	let nextIndex: Number0 = ob1Add(index, 1);
+	let nextIndex: ZeroIndexed = index.add(1);
 	while (isDigit(char)) {
 		octal += char;
 		// stop at max octal ascii in case of octal escape
@@ -129,8 +129,8 @@ function readOctalCode(
 			octal = octal.slice(0, octal.length - 1);
 			break;
 		}
-		nextIndex = ob1Add(nextIndex, 1);
-		char = input[ob1Get0(nextIndex)];
+		nextIndex = nextIndex.add(1);
+		char = input[nextIndex.valueOf()];
 	}
 	if (octal === "") {
 		return {octalValue: undefined, end: nextIndex};
@@ -154,9 +154,9 @@ const regExpParser = createParser<RegExpParserTypes>({
 		const char = parser.getInputCharOnly(index);
 
 		if (char === "\\") {
-			let end = ob1Add(index, 2);
+			let end = index.add(2);
 
-			const nextChar = parser.getInputCharOnly(index, 1);
+			const nextChar = parser.getInputCharOnly(index.increment());
 			switch (nextChar) {
 				case "t":
 					return parser.finishComplexToken(
@@ -222,12 +222,12 @@ const regExpParser = createParser<RegExpParserTypes>({
 					if (parser.options.unicode) {
 						// named group back reference https://github.com/tc39/proposal-regexp-named-groups#backreferences
 						let value = "";
-						let [char, next] = parser.getInputChar(index, 2);
+						let [char, next] = parser.getInputChar(index.add(2));
 
 						if (char === "<") {
 							while (!parser.isEOF(next)) {
 								value += char;
-								[char, next] = parser.getInputChar(index, 1);
+								[char, next] = parser.getInputChar(index.increment());
 
 								if (char === ">") {
 									break;
@@ -324,11 +324,11 @@ const regExpParser = createParser<RegExpParserTypes>({
 				}
 
 				case "x": {
-					const [possibleHex] = parser.getInputRange(index, 3, 1);
+					const possibleHex = parser.getInputRangeOnly(index.increment(), 3);
 
 					// \xhh
 					if (possibleHex.length === 2 && isHex(possibleHex)) {
-						end = ob1Add(end, 2);
+						end = end.add(2);
 
 						return parser.finishComplexToken(
 							"Character",
@@ -352,11 +352,11 @@ const regExpParser = createParser<RegExpParserTypes>({
 
 				case "u": {
 					// Get the next 4 characters after \u
-					const [possibleHex] = parser.getInputRange(index, 4, 2);
+					const possibleHex = parser.getInputRangeOnly(index.add(2), 4);
 
 					// \uhhhh
 					if (possibleHex.length === 4 && isHex(possibleHex)) {
-						end = ob1Add(end, 4);
+						end = end.add(4);
 
 						return parser.finishComplexToken(
 							"Character",
@@ -426,7 +426,7 @@ const regExpParser = createParser<RegExpParserTypes>({
 							);
 						} else {
 							backReference = backReference.slice(0, backReference.length - 1);
-							referenceEnd = ob1Add(referenceEnd, -1);
+							referenceEnd = referenceEnd.decrement();
 							if (isOct(backReference)) {
 								return parser.finishComplexToken(
 									"Character",
@@ -705,7 +705,7 @@ function parseCharacter(parser: RegExpParser): AnyJSRegExpEscapedCharacter {
 	}
 
 	if (token.type === "NamedBackReferenceCharacter") {
-		const start = parser.input.slice(0, ob1Get0(token.start));
+		const start = parser.input.slice(0, token.start.valueOf());
 		parser.nextToken();
 
 		if (token.value[token.value.length - 1] !== ">") {

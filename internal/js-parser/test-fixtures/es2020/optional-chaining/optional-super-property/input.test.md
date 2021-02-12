@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:20
 				path: UIDPath<es2020/optional-chaining/optional-super-property/input.js>
@@ -114,6 +113,13 @@ JSRoot {
  es2020/optional-chaining/optional-super-property/input.js:3:20 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid super suffix operator
+
+    1 │ const a = {
+    2 │     b(){
+  > 3 │         return super?.c;
+      │                     ^
+    4 │     }
+    5 │ }
 
 
 ```

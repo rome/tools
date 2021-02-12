@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:43
 				path: UIDPath<typescript/assert-predicate/function-declaration/input.ts>
@@ -175,6 +174,11 @@ JSRoot {
  typescript/assert-predicate/function-declaration/input.ts:3:44 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    1 │ function asserts1 (value: unknown): asserts value is string {}·
+    2 │ function asserts2 (value: unknown): asserts value {}
+  > 3 │ function asserts3 (value: unknown): asserts {}
+      │                                             ^
 
 
 ```

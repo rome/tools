@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<es2016/exponentiation-operator/14/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  es2016/exponentiation-operator/14/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    a %*= 1;
+       ^
 
 
 ```

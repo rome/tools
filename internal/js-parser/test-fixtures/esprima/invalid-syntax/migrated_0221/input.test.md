@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:36
 				path: UIDPath<esprima/invalid-syntax/migrated_0221/input.js>
@@ -82,6 +81,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0221/input.js:1:36 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Octal literal in strict mode
+
+    function hello() { "octal directive\1"; "use strict"; }
+                                        ^
 
 
 ```

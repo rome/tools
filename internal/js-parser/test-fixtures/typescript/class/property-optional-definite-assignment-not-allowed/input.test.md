@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:4
 				path: UIDPath<typescript/class/property-optional-definite-assignment-not-allowed/input.ts>
@@ -112,6 +111,11 @@ JSRoot {
  typescript/class/property-optional-definite-assignment-not-allowed/input.ts:2:4 parse(js) ━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ class C {
+  > 2 │   x?!: number;
+      │     ^
+    3 │ }
 
 
 ```

@@ -8,12 +8,15 @@
 
 ```
 
- lint,react,useButtonType/reject/1/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useButtonType/reject/1/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 
+    <button>child</button>
+    ^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-    application.
+     application.
 
 
 ```
@@ -31,12 +34,15 @@
 
 ```
 
- lint,react,useButtonType/reject/2/file.tsx:1:8 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useButtonType/reject/2/file.tsx:1:8 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 
+    <button type='foo'>child</button>
+            ^^^^^^^^^^
+
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-    application.
+     application.
 
 
 ```
@@ -54,12 +60,15 @@
 
 ```
 
- lint,react,useButtonType/reject/3/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useButtonType/reject/3/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 
+    React.createElement('button', {type: 'foo'}, ['child'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-    application.
+     application.
 
 
 ```
@@ -75,12 +84,15 @@ React.createElement("button", {type: "foo"}, ["child"]);
 
 ```
 
- lint,react,useButtonType/reject/4/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useButtonType/reject/4/file.tsx:1 lint/react/useButtonType ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide an explicit type prop on button elements.
 
+    createElement('button', {type: 'foo'}, ['child'])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-    application.
+     application.
 
 
 ```

@@ -46,7 +46,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<experimental/numeric-separator/invalid-24/input.js>
@@ -64,6 +63,9 @@ JSRoot {
  experimental/numeric-separator/invalid-24/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    ._1_1
+    ^
 
 
 ```

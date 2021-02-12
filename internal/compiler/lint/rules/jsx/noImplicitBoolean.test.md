@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx,noImplicitBoolean/reject/1/file.tsx:1:7 lint/jsx/noImplicitBoolean  FIXABLE  ━━━━━━━━━━━━━
+ lint/jsx/noImplicitBoolean/reject/1/file.tsx:1:7 lint/jsx/noImplicitBoolean  FIXABLE  ━━━━━━━━━━━━━
 
   ✖ Use explicit boolean values for boolean JSX props.
+
+    <input disabled />
+           ^^^^^^^^
 
   ℹ Safe fix
 

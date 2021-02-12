@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:17
 				path: UIDPath<esprima/invalid-syntax/migrated_0041/input.js>
@@ -97,6 +96,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0041/input.js:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Bad character escape sequence
+
+    var x = /[a-z]/\ux
+                     ^
 
 
 ```

@@ -9,7 +9,7 @@ import {
 	LSPTextEdit,
 } from "./types";
 import stringDiff, {Diffs, diffConstants} from "@internal/string-diff";
-import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {Position} from "@internal/parser-core";
 import {
 	DiagnosticAdviceAction,
@@ -22,13 +22,13 @@ import {Server, WorkerBufferPatch} from "@internal/core";
 export function convertPositionToLSP(pos: undefined | Position): LSPPosition {
 	if (pos === undefined) {
 		return {
-			line: ob1Number0,
-			character: ob1Number0,
+			line: 0,
+			character: 0,
 		};
 	} else {
 		return {
-			line: ob1Coerce1To0(pos.line),
-			character: pos.column,
+			line: pos.line.toZeroIndexed().valueOf(),
+			character: pos.column.valueOf(),
 		};
 	}
 }
@@ -97,24 +97,24 @@ export function diffTextEdits(original: string, desired: string): LSPTextEdit[] 
 
 	const diffs: Diffs = stringDiff(original, desired);
 
-	let currLine: Number0 = ob1Number0;
-	let currChar: Number0 = ob1Number0;
+	let currLine: ZeroIndexed = new ZeroIndexed();
+	let currChar: ZeroIndexed = new ZeroIndexed();
 
 	function advance(str: string) {
 		for (const char of str) {
 			if (char === "\n") {
-				currLine = ob1Inc(currLine);
-				currChar = ob1Number0;
+				currLine = currLine.increment();
+				currChar = new ZeroIndexed();
 			} else {
-				currChar = ob1Inc(currChar);
+				currChar = currChar.increment();
 			}
 		}
 	}
 
 	function getPosition(): LSPPosition {
 		return {
-			line: currLine,
-			character: currChar,
+			line: currLine.valueOf(),
+			character: currChar.valueOf(),
 		};
 	}
 
@@ -162,6 +162,24 @@ export function getLSPRange(range: Consumer): LSPRange {
 
 	return {
 		start: {
+			line: start.get("line").asNumber(),
+			character: start.get("character").asNumber(),
+		},
+		end: {
+			line: end.get("line").asNumber(),
+			character: end.get("character").asNumber(),
+		},
+	};
+}
+
+function getWorkerBufferPatchFromLSPRange(
+	range: Consumer,
+): WorkerBufferPatch["range"] {
+	const start = range.get("start");
+	const end = range.get("end");
+
+	return {
+		start: {
 			line: start.get("line").asZeroIndexedNumber(),
 			character: start.get("character").asZeroIndexedNumber(),
 		},
@@ -176,7 +194,7 @@ export function getWorkerBufferPatches(
 	contentChanges: Consumer,
 ): WorkerBufferPatch[] {
 	return contentChanges.asMappedArray((change) => {
-		const range = getLSPRange(change.get("range"));
+		const range = getWorkerBufferPatchFromLSPRange(change.get("range"));
 
 		return {
 			text: change.get("text").asString(),

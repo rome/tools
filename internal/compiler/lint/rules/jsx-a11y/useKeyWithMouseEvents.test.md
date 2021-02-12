@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx-a11y,useKeyWithMouseEvents/reject/1/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint/jsx-a11y/useKeyWithMouseEvents/reject/1/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOver mouse event with the onFocus keyboard event.
+
+    <div onMouseOver={ () => void 0 } />
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
@@ -29,9 +32,12 @@
 
 ```
 
- lint,jsx-a11y,useKeyWithMouseEvents/reject/2/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint/jsx-a11y/useKeyWithMouseEvents/reject/2/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOut mouse event with the onBlur keyboard event.
+
+    <div onMouseOut={ () => void 0 } />
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
@@ -50,9 +56,12 @@
 
 ```
 
- lint,jsx-a11y,useKeyWithMouseEvents/reject/3/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint/jsx-a11y/useKeyWithMouseEvents/reject/3/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOver mouse event with the onFocus keyboard event.
+
+    <div onMouseOver={ () => void 0 } >{props}</div>
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
@@ -73,9 +82,12 @@
 
 ```
 
- lint,jsx-a11y,useKeyWithMouseEvents/reject/4/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
+ lint/jsx-a11y/useKeyWithMouseEvents/reject/4/file.tsx:1:5 lint/jsx-a11y/useKeyWithMouseEvents ━━━━━
 
   ✖ Pair the onMouseOut mouse event with the onBlur keyboard event.
+
+    <div onMouseOut={ () => void 0 } >{props}</div>
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.

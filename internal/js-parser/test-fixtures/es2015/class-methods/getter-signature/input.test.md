@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:19
 				path: UIDPath<es2015/class-methods/getter-signature/input.js>
@@ -113,6 +112,11 @@ JSRoot {
  es2015/class-methods/getter-signature/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ getter should have no parameters
+
+    1 │ class A {
+  > 2 │   get prop (arg) {}
+      │   ^^^^^^^^^^^^^^^^^
+    3 │ }
 
 
 ```

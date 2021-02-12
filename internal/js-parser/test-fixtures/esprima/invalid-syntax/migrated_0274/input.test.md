@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:38
 				path: UIDPath<esprima/invalid-syntax/migrated_0274/input.js>
@@ -140,6 +139,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0274/input.js:1:25 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Duplicate constructor in the same class
+
+    class A {constructor(){} "constructor"(){}}
+                             ^^^^^^^^^^^^^
 
 
 ```

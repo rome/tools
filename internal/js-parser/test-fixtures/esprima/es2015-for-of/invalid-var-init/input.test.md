@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<esprima/es2015-for-of/invalid-var-init/input.js>
@@ -77,6 +76,9 @@ JSRoot {
  esprima/es2015-for-of/invalid-var-init/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
+
+    for (var x = 1 of y);
+         ^^^^^^^^^
 
 
 ```

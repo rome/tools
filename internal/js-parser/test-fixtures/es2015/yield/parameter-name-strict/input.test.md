@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:17
 				path: UIDPath<es2015/yield/parameter-name-strict/input.js>
@@ -88,6 +87,10 @@ JSRoot {
  es2015/yield/parameter-name-strict/input.js:2:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
+
+    1 │ "use strict";
+  > 2 │ function fn(yield) {}
+      │             ^^^^^
 
 
 ```

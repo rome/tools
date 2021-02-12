@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:7
 				path: UIDPath<es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js>
@@ -95,6 +94,11 @@ JSRoot {
  es2015/yield/parameter-name-arrow-no-parens-inside-generator/input.js:2:8 parse(js) ━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ function* fn() {
+  > 2 │   yield => {};
+      │         ^
+    3 │ }
 
 
 ```

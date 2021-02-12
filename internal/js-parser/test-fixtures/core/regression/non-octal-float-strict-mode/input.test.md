@@ -40,7 +40,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<core/regression/non-octal-float-strict-mode/input.js>
@@ -58,6 +57,9 @@ JSRoot {
  core/regression/non-octal-float-strict-mode/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Legacy octal literals are not allowed in strict mode
+
+    09.5
+      ^
 
 
 ```

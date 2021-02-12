@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<esprima/declaration-function/dupe-param/input.js>
@@ -39,17 +38,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "x"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:15
-							path: UIDPath<esprima/declaration-function/dupe-param/input.js>
-							start: Position 1:14
-						}
-					}
+					frame {location: SourceLocation esprima/declaration-function/dupe-param/input.js 1:14-1:15 (x)}
 				]
 			}
 		}

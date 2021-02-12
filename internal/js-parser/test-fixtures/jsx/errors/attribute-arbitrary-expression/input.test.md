@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<jsx/errors/attribute-arbitrary-expression/input.jsx>
@@ -100,6 +99,9 @@ JSRoot {
  jsx/errors/attribute-arbitrary-expression/input.jsx:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute value should be either an expression or a quoted JSX text
+
+    <Foo bar=bar() />
+             ^
 
 
 ```

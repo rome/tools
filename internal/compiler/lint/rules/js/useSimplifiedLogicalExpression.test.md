@@ -8,10 +8,14 @@
 
 ```
 
- lint,js,useSimplifiedLogicalExpression/reject/1/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
+ lint/js/useSimplifiedLogicalExpression/reject/1/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
+
+    1 │ const boolExp = true;
+  > 2 │ const r = true && boolExp;
+      │           ^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -33,10 +37,14 @@ const r = boolExp;
 
 ```
 
- lint,js,useSimplifiedLogicalExpression/reject/2/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
+ lint/js/useSimplifiedLogicalExpression/reject/2/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
+
+    1 │ const boolExp = true;
+  > 2 │ const r = boolExp || true;
+      │           ^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -58,10 +66,14 @@ const r = true;
 
 ```
 
- lint,js,useSimplifiedLogicalExpression/reject/3/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
+ lint/js/useSimplifiedLogicalExpression/reject/3/file.ts:2:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
+
+    1 │ const nonNullExp = 123;
+  > 2 │ const r = null ?? nonNullExp;
+      │           ^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -83,10 +95,15 @@ const r = nonNullExp;
 
 ```
 
- lint,js,useSimplifiedLogicalExpression/reject/4/file.ts:3:10 lint/js/useSimplifiedLogicalExpression
+ lint/js/useSimplifiedLogicalExpression/reject/4/file.ts:3:10 lint/js/useSimplifiedLogicalExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Logical expression contains unnecessary complexity.
+
+    1 │ const boolExpr1 = true;
+    2 │ const boolExpr2 = false;
+  > 3 │ const r = (!boolExpr1) || (!boolExpr2);
+      │           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 

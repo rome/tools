@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:33
 				path: UIDPath<es2015/duplicate-proto/in-new-expression/input.js>
@@ -102,6 +101,9 @@ JSRoot {
  es2015/duplicate-proto/in-new-expression/input.js:1:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
+
+    new {__proto__: Number, __proto__: Number}.__proto__;
+                            ^^^^^^^^^
 
 
 ```

@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<core/regression/octal-float-fail/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  core/regression/octal-float-fail/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    07.5
+      ^
 
 
 ```

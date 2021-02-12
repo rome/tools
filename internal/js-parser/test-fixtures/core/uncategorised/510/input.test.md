@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:43
 				path: UIDPath<core/uncategorised/510/input.js>
@@ -96,6 +95,9 @@ JSRoot {
  core/uncategorised/510/input.js:1:37 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ static is a reserved word
+
+    function hello() { "use strict"; var static; }
+                                         ^^^^^^
 
 
 ```

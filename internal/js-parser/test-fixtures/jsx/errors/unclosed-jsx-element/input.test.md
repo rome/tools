@@ -49,7 +49,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<jsx/errors/unclosed-jsx-element/input.jsx>
@@ -64,16 +63,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>div</emphasis>"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:4
-							path: UIDPath<jsx/errors/unclosed-jsx-element/input.jsx>
-							start: Position 1:1
-						}
-					}
+					frame {location: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4}
 				]
 			}
 		}
@@ -88,6 +78,9 @@ JSRoot {
  jsx/errors/unclosed-jsx-element/input.jsx:1:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed JSX element
+
+    <div>() => {}
+                 ^
 
   ℹ Originated from opening tag of div
 

@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,noUnsafeNegation/reject/1/file.ts:1 lint/js/noUnsafeNegation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeNegation/reject/1/file.ts:1 lint/js/noUnsafeNegation  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ✖ The negation operator is used unsafely on the left side of this binary expression.
+
+    !1 in [1,2]
+    ^^^^^^^^^^^
 
   ℹ Safe fix
 

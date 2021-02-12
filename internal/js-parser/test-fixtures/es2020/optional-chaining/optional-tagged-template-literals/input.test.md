@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<es2020/optional-chaining/optional-tagged-template-literals/input.js>
@@ -84,6 +83,9 @@ JSRoot {
  es2020/optional-chaining/optional-tagged-template-literals/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ Tagged Template Literals are not allowed in optionalChain
+
+    a?.b`foo`
+        ^
 
 
 ```

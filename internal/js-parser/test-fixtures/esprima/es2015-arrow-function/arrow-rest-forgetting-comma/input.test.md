@@ -21,20 +21,24 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected ,"}
-			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js>
 				start: Position 1:3
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -92,7 +96,12 @@ JSRoot {
 
  esprima/es2015-arrow-function/arrow-rest-forgetting-comma/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character .
+
+    (a ...b) => 0
+       ^^^
+
+  ℹ Expected character ,
 
 
 ```

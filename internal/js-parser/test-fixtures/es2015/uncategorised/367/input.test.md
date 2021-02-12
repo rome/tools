@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:11
 				path: UIDPath<es2015/uncategorised/367/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  es2015/uncategorised/367/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'await' as identifier inside an async function
+
+    class await {}
+          ^^^^^
 
 
 ```

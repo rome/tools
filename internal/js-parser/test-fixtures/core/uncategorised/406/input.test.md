@@ -38,20 +38,24 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected ("}
-			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
-				end: Position 1:3
+				end: Position 1:2
 				path: UIDPath<core/uncategorised/406/input.js>
 				start: Position 1:2
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening if test character <emphasis>(</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -64,7 +68,12 @@ JSRoot {
 
  core/uncategorised/406/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character .
+
+    if.a;
+      ^
+
+  ℹ Expected the opening if test character (
 
 
 ```

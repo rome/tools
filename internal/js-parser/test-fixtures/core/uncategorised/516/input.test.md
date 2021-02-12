@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<core/uncategorised/516/input.js>
@@ -88,6 +87,9 @@ JSRoot {
  core/uncategorised/516/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ package is a reserved word
+
+    function a(package) { "use strict"; }
+               ^^^^^^^
 
 
 ```

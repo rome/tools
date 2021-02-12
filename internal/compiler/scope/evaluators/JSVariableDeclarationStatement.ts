@@ -15,7 +15,9 @@ export default createScopeEvaluator({
 		node = jsVariableDeclarationStatement.assert(node);
 
 		if (node.declare) {
-			for (const {name} of getBindingIdentifiers(node)) {
+			for (const {
+				name,
+			} of getBindingIdentifiers(node)) {
 				scope.addGlobal(name);
 			}
 		} else {

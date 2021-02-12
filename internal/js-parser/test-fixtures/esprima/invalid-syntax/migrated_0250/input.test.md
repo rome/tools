@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:30
 				path: UIDPath<esprima/invalid-syntax/migrated_0250/input.js>
@@ -96,6 +95,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0250/input.js:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
+
+    x = { __proto__: 42, __proto__: 43 }
+                         ^^^^^^^^^
 
 
 ```

@@ -4,23 +4,23 @@ import {
 	MarkdownParser,
 	Tokens,
 } from "@internal/markdown-parser";
-import {Number0, ob1Add} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {MarkdownListChildren, MarkdownListItem} from "@internal/ast";
 import {parseParagraph} from "./paragraph";
 
 function isChecked(
 	parser: MarkdownParser,
-	index: Number0,
-): [boolean | undefined, Number0] {
-	const openSquareBracketChar = parser.getInputCharOnly(index, 1);
-	const spaceOrXChar = parser.getInputCharOnly(index, 2);
-	const closedSquareBracketChar = parser.getInputCharOnly(index, 3);
+	index: ZeroIndexed,
+): [boolean | undefined, ZeroIndexed] {
+	const openSquareBracketChar = parser.getInputCharOnly(index.increment());
+	const spaceOrXChar = parser.getInputCharOnly(index.add(2));
+	const closedSquareBracketChar = parser.getInputCharOnly(index.add(3));
 
 	if (openSquareBracketChar === "[" && closedSquareBracketChar === "]") {
 		if (spaceOrXChar === " ") {
-			return [false, ob1Add(index, 3)];
+			return [false, index.add(3)];
 		} else if (spaceOrXChar.toLowerCase() === "x") {
-			return [true, ob1Add(index, 3)];
+			return [true, index.add(3)];
 		}
 	}
 	return [undefined, index];
@@ -28,16 +28,15 @@ function isChecked(
 
 export function tokenizeListItem(
 	parser: MarkdownParser,
-	index: Number0,
+	index: ZeroIndexed,
 	withChar?: undefined | "*" | "-",
 ): TokenValues<Tokens> | undefined {
 	if (withChar) {
-		const nextChar = parser.getInputCharOnly(index, 1);
+		const nextChar = parser.getInputCharOnly(index.increment());
 		if (nextChar === " ") {
-			const [checked, newIndex] = isChecked(parser, ob1Add(index, 1));
+			const [checked, newIndex] = isChecked(parser, index.add(1));
 
-			const endIndex =
-				checked === undefined ? ob1Add(index, 2) : ob1Add(newIndex, 2);
+			const endIndex = checked === undefined ? index.add(2) : newIndex.add(2);
 
 			return parser.finishComplexToken<"ListItem", ListProperties>(
 				"ListItem",
@@ -52,7 +51,7 @@ export function tokenizeListItem(
 	}
 	const [, endIndex] = parser.readInputFrom(index, isDigit);
 	const nextChar = parser.getInputCharOnly(endIndex);
-	const nextNextChar = parser.getInputCharOnly(endIndex, 1);
+	const nextNextChar = parser.getInputCharOnly(endIndex.increment());
 	if (nextChar === "." && (nextNextChar === " " || nextNextChar === "\n")) {
 		return parser.finishComplexToken<"ListItem", ListProperties>(
 			"ListItem",
@@ -60,7 +59,7 @@ export function tokenizeListItem(
 				numeric: true,
 				checked: undefined,
 			},
-			ob1Add(endIndex, 2),
+			endIndex.add(2),
 		);
 	}
 

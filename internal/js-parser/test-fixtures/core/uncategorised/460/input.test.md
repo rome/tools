@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<core/uncategorised/460/input.js>
@@ -70,6 +69,9 @@ JSRoot {
  core/uncategorised/460/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown label x
+
+    while (true) { continue x; }
+                   ^
 
 
 ```

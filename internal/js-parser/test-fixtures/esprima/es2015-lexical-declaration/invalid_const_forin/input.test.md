@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:16
 				path: UIDPath<esprima/es2015-lexical-declaration/invalid_const_forin/input.js>
@@ -80,6 +79,9 @@ JSRoot {
  esprima/es2015-lexical-declaration/invalid_const_forin/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
+
+    for (const x = 0 in y){}
+         ^^^^^^^^^^^
 
 
 ```

@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<experimental/class-private-properties/invalid-ts-type-literal/input.js>
@@ -82,6 +81,11 @@ JSRoot {
  experimental/class-private-properties/invalid-ts-type-literal/input.js:1 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ A interface declaration is only valid inside of a TypeScript file
+
+  > 1 │ interface I {
+      │ ^
+    2 │   #p: string
+    3 │ }
 
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 

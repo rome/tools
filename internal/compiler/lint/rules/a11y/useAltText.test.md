@@ -8,9 +8,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/1/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/1/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img src="foo" />
+    ^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -29,9 +32,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/2/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/2/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img {...props} />
+    ^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -50,9 +56,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/3/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/3/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img {...props} alt={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -71,9 +80,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/4/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/4/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img src="foo" role="presentation" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -92,9 +104,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/5/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/5/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img src="foo" role="none" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -113,9 +128,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/6/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/6/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <object {...props} />
+    ^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -134,9 +152,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/7/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/7/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <object aria-label={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -155,9 +176,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/8/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/8/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <area {...props} />
+    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -176,9 +200,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/9/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/9/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <area alt={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -197,9 +224,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/10/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/10/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <input type="image" {...props} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -218,9 +248,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/11/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/11/file.jsx:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <input type="image" {...props} alt={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -503,9 +536,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/1/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/1/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img src="foo" />
+    ^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -524,9 +560,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/2/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/2/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img alt />
+    ^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -545,9 +584,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/3/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/3/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img src="foo" role="presentation" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -566,9 +608,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/4/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/4/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <img src="foo" role="none" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -587,9 +632,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/5/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/5/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <object ></object>
+    ^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -609,9 +657,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/6/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/6/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <area  />
+    ^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -630,9 +681,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/7/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/7/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <area alt />
+    ^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -651,9 +705,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/8/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/8/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <input type="image" />
+    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.
@@ -672,9 +729,12 @@
 
 ```
 
- lint,a11y,useAltText/reject/9/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAltText/reject/9/file.html:1 lint/a11y/useAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide alt text when using img, area, input type='image', and object elements.
+
+    <input type="image" alt />
+    ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Meaningful alternative text on elements helps users relying on screen readers to understand
     content's purpose within a page.

@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,noEmptyBlocks/reject/1/file.ts:1:9 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyBlocks/reject/1/file.ts:1:9 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid empty logic blocks.
+
+    if (foo) {}
+             ^^
 
   ℹ Empty logic blocks usually result from incomplete refactoring.
 
@@ -29,9 +32,14 @@ if (foo) {
 
 ```
 
- lint,js,noEmptyBlocks/reject/2/file.ts:3:7 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noEmptyBlocks/reject/2/file.ts:3:7 lint/js/noEmptyBlocks ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid empty logic blocks.
+
+    1 │ if (foo) {
+    2 │   // foo;
+  > 3 │ } else {}
+      │        ^^
 
   ℹ Empty logic blocks usually result from incomplete refactoring.
 

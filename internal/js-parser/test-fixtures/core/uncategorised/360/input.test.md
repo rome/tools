@@ -36,7 +36,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<core/uncategorised/360/input.js>
@@ -54,6 +53,10 @@ JSRoot {
  core/uncategorised/360/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
+
+  > 1 │ "Hello
+      │       ^
+    2 │ World"
 
 
 ```

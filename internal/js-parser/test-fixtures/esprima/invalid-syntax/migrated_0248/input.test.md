@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:20
 				path: UIDPath<esprima/invalid-syntax/migrated_0248/input.js>
@@ -63,17 +62,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "__proto__"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:9
-							path: UIDPath<esprima/invalid-syntax/migrated_0248/input.js>
-							start: Position 1:0
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0248/input.js 1:0-1:9 (__proto__)}
 				]
 			}
 		}
@@ -88,6 +77,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0248/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Label __proto__ is already declared
+
+    __proto__: __proto__: 42;
+               ^^^^^^^^^
 
   ℹ Defined already here
 

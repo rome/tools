@@ -6,7 +6,7 @@
  */
 
 import {Position} from "@internal/parser-core";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {JSONPropertyValue} from "@internal/codec-config";
 import inspector = require("inspector");
 
@@ -70,8 +70,8 @@ export type ErrorFrame = {
 	functionName: undefined | string;
 	methodName: undefined | string;
 	path: undefined | AnyPath;
-	lineNumber: undefined | Number1;
-	columnNumber: undefined | Number0;
+	lineNumber: undefined | OneIndexed;
+	columnNumber: undefined | ZeroIndexed;
 	isTopLevel: boolean;
 	isAsync: boolean;
 	isEval: boolean;

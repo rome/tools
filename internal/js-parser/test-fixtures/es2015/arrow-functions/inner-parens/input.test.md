@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<es2015/arrow-functions/inner-parens/input.js>
@@ -88,6 +87,9 @@ JSRoot {
  es2015/arrow-functions/inner-parens/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
+
+    var foo = ((foo)) => {};
+                ^^^
 
 
 ```

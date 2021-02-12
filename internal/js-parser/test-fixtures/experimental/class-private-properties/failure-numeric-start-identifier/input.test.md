@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:4
 				path: UIDPath<experimental/class-private-properties/failure-numeric-start-identifier/input.js>
@@ -92,6 +91,11 @@ JSRoot {
  experimental/class-private-properties/failure-numeric-start-identifier/input.js:2:4 parse(js) ━━━━━
 
   ✖ Identifier directly after number
+
+    1 │ class Foo {
+  > 2 │   #2x = y
+      │     ^
+    3 │ }
 
 
 ```

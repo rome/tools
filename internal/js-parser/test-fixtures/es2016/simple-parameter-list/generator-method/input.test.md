@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:17
 				path: UIDPath<es2016/simple-parameter-list/generator-method/input.js>
@@ -120,6 +119,13 @@ JSRoot {
  es2016/simple-parameter-list/generator-method/input.js:3:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Illegal 'use strict' directive in function with non-simple parameter list
+
+    1 │ var obj = {
+    2 │   * a(options = {}) {
+  > 3 │     "use strict";
+      │     ^^^^^^^^^^^^^
+    4 │   }
+    5 │ };
 
 
 ```

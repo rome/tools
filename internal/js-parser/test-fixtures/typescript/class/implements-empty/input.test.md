@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<typescript/class/implements-empty/input.ts>
@@ -65,6 +64,10 @@ JSRoot {
  typescript/class/implements-empty/input.ts:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ implements list cannot be empty
+
+  > 1 │ class Foo implements {
+      │                      ^
+    2 │ }
 
 
 ```

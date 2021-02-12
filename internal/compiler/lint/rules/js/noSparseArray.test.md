@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,noSparseArray/reject/1/file.ts:1:3 lint/js/noSparseArray  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noSparseArray/reject/1/file.ts:1:3 lint/js/noSparseArray  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This array contains an empty slot.
+
+    [1,,2]
+       ^
 
   ℹ Sparse arrays without values for some items can lead to confusion.
 

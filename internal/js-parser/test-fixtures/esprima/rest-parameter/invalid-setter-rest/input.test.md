@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:16
 				path: UIDPath<esprima/rest-parameter/invalid-setter-rest/input.js>
@@ -101,6 +100,9 @@ JSRoot {
  esprima/rest-parameter/invalid-setter-rest/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ setter function argument must not be a rest parameter
+
+    x = { set f(...y) {} }
+                   ^
 
 
 ```

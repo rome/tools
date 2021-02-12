@@ -34,12 +34,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\\\uXXXX"}
+				message: RAW_MARKUP {value: "Expecting Unicode escape sequence \\uXXXX"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<core/uncategorised/361/input.js>
@@ -57,6 +56,9 @@ JSRoot {
  core/uncategorised/361/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expecting Unicode escape sequence \uXXXX
+
+    x\
+      ^
 
 
 ```

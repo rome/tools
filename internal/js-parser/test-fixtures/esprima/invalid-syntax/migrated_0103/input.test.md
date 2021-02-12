@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token"}
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>/</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<esprima/invalid-syntax/migrated_0103/input.js>
@@ -72,7 +71,10 @@ JSRoot {
 
  esprima/invalid-syntax/migrated_0103/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character /
+
+    p = { "q"/ }
+             ^
 
 
 ```

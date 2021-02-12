@@ -8,9 +8,12 @@
 
 ```
 
- lint,a11y,noNoninteractiveTabindex/reject/1/file.tsx:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━━
+ lint/a11y/noNoninteractiveTabindex/reject/1/file.tsx:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
+
+    <div tabIndex="0" ></div>
+         ^^^^^^^^^^^^
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
@@ -28,9 +31,12 @@
 
 ```
 
- lint,a11y,noNoninteractiveTabindex/reject/2/file.tsx:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━━
+ lint/a11y/noNoninteractiveTabindex/reject/2/file.tsx:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
+
+    <div role="article" tabIndex="0" ></div>
+         ^^^^^^^^^^^^^^
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
@@ -48,9 +54,12 @@
 
 ```
 
- lint,a11y,noNoninteractiveTabindex/reject/3/file.tsx:1:9 lint/a11y/noNoninteractiveTabindex ━━━━━━━
+ lint/a11y/noNoninteractiveTabindex/reject/3/file.tsx:1:9 lint/a11y/noNoninteractiveTabindex ━━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
+
+    <article tabIndex={0} />
+             ^^^^^^^^^^^^
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
@@ -198,9 +207,12 @@
 
 ```
 
- lint,a11y,noNoninteractiveTabindex/reject/1/file.html:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━
+ lint/a11y/noNoninteractiveTabindex/reject/1/file.html:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
+
+    <div tabindex="0" ></div>
+         ^^^^^^^^^^^^
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 
@@ -219,9 +231,12 @@
 
 ```
 
- lint,a11y,noNoninteractiveTabindex/reject/2/file.html:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━
+ lint/a11y/noNoninteractiveTabindex/reject/2/file.html:1:5 lint/a11y/noNoninteractiveTabindex ━━━━━━
 
   ✖ Do not use tabIndex on an element that is not interactive.
+
+    <div role="article" tabindex="0" ></div>
+         ^^^^^^^^^^^^^^
 
   ℹ Adding non-interactive elements to the keyboard navigation flow can confuse users.
 

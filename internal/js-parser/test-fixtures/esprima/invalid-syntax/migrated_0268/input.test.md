@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<esprima/invalid-syntax/migrated_0268/input.js>
@@ -98,6 +97,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0268/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A type annotation is only valid inside of a TypeScript file
+
+    class A {a:0}
+              ^
 
   ℹ To enable TypeScript support, the file extension should end in .ts or .tsx
 

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:28
 				path: UIDPath<es2015/uncategorised/349/input.js>
@@ -88,6 +87,9 @@ JSRoot {
  es2015/uncategorised/349/input.js:1:19 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
+
+    ({ '__proto__': 1, __proto__: 2 })
+                       ^^^^^^^^^
 
 
 ```

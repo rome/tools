@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<es2017/async-functions/6/input.js>
@@ -77,6 +76,9 @@ JSRoot {
  es2017/async-functions/6/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    async () => {}()
+                  ^
 
 
 ```

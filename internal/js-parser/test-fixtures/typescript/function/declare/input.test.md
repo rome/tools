@@ -21,20 +21,24 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected ("}
-			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
-				end: Position 1:18
+				end: Position 1:16
 				path: UIDPath<typescript/function/declare/input.ts>
 				start: Position 1:17
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>f</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -177,7 +181,13 @@ JSRoot {
 
  typescript/function/declare/input.ts:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character f
+
+  > 1 │ declare function f(): void;
+      │                  ^
+    2 │ declare function f<T>(): T;
+
+  ℹ Expected the opening function params character (
 
 
 ```

@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx-a11y,noPositiveTabindex/reject/1/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
+ lint/jsx-a11y/noPositiveTabindex/reject/1/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
+
+    <span tabIndex='5'>foo</span>
+          ^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
@@ -37,9 +40,12 @@
 
 ```
 
- lint,jsx-a11y,noPositiveTabindex/reject/2/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
+ lint/jsx-a11y/noPositiveTabindex/reject/2/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
+
+    <span tabIndex={5}>foo</span>
+          ^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.
@@ -66,9 +72,12 @@
 
 ```
 
- lint,jsx-a11y,noPositiveTabindex/reject/3/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
+ lint/jsx-a11y/noPositiveTabindex/reject/3/file.tsx:1:6 lint/jsx-a11y/noPositiveTabindex  FIXABLE  ━
 
   ✖ Avoid positive integer values for the tabIndex attribute.
+
+    <span tabIndex={'5'}>foo</span>
+          ^^^^^^^^^^^^^^
 
   ℹ Elements with a positive tab index override natural page content order. This causes elements
     without a positive tab index to come last when navigating using a keyboard.

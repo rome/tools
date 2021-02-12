@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:19
 				path: UIDPath<typescript/types/tuple-rest-invalid/input.ts>
@@ -94,6 +93,9 @@ JSRoot {
  typescript/types/tuple-rest-invalid/input.ts:1:19 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    let x: [...number[], string]
+                       ^
 
 
 ```

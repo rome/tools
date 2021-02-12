@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:14
 				path: UIDPath<typescript/class/method-readonly/input.ts>
@@ -119,6 +118,11 @@ JSRoot {
  typescript/class/method-readonly/input.ts:2:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ class C {
+  > 2 │     readonly m() {}
+      │               ^
+    3 │ }
 
 
 ```

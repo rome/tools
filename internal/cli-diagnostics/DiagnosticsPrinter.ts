@@ -36,7 +36,7 @@ import {
 	MixedPathSet,
 	equalPaths,
 } from "@internal/path";
-import {Number0, Number1, ob1Get0, ob1Get1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {createReadStream, exists, lstat} from "@internal/fs";
 import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
@@ -49,8 +49,8 @@ type RawBanner = {
 };
 
 type PositionLike = {
-	line?: undefined | Number1;
-	column?: undefined | Number0;
+	line?: undefined | OneIndexed;
+	column?: undefined | ZeroIndexed;
 };
 
 const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
@@ -613,11 +613,11 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (start !== undefined) {
 					if (start.line !== undefined) {
-						parts.push(`line=${ob1Get1(start.line)}`);
+						parts.push(`line=${start.line.valueOf()}`);
 					}
 
 					if (start.column !== undefined) {
-						parts.push(`col=${ob1Get0(start.column)}`);
+						parts.push(`col=${start.column.valueOf()}`);
 					}
 				}
 
@@ -985,7 +985,7 @@ export default class DiagnosticsPrinter extends Error {
 			let scale =
 				stream.features.columns === undefined
 					? 1
-					: ob1Get1(stream.features.columns) / height;
+					: stream.features.columns.valueOf() / height;
 			if (scale > 1) {
 				scale = 1;
 			}

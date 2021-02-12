@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,useSingleVarDeclarator/reject/1/file.ts:1 lint/js/useSingleVarDeclarator  FIXABLE  ━━━━━━━━
+ lint/js/useSingleVarDeclarator/reject/1/file.ts:1 lint/js/useSingleVarDeclarator  FIXABLE  ━━━━━━━━
 
   ✖ Declare variables separately.
+
+    let foo, bar;
+    ^^^^^^^^^^^^^
 
   ℹ Safe fix
 

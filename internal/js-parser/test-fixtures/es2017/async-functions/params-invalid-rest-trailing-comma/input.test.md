@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:12
 				path: UIDPath<es2017/async-functions/params-invalid-rest-trailing-comma/input.js>
@@ -73,6 +72,9 @@ JSRoot {
  es2017/async-functions/params-invalid-rest-trailing-comma/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    async (...a,) => {};
+                ^
 
 
 ```

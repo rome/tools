@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<es2015/uncategorised/325/input.js>
@@ -78,6 +77,9 @@ JSRoot {
  es2015/uncategorised/325/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Complex binding patterns require an initialization value
+
+    var [x]
+           ^
 
 
 ```

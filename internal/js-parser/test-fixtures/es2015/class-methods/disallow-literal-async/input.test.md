@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:9
 				path: UIDPath<es2015/class-methods/disallow-literal-async/input.js>
@@ -103,6 +102,11 @@ JSRoot {
  es2015/class-methods/disallow-literal-async/input.js:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class A {
+  > 2 │   "async" a() {}
+      │           ^
+    3 │ }
 
 
 ```

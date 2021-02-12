@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx,noCommentText/reject/1/file.tsx:1:15 lint/jsx/noCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/noCommentText/reject/1/file.tsx:1:15 lint/jsx/noCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Wrap comments inside children within braces.
+
+    const a = <div>// comment</div>
+                   ^^^^^^^^^^
 
   ℹ JavaScript comment sequences are not supported by JSX and result in unwanted characters
     on-screen.
@@ -36,9 +39,12 @@ const a = <div>
 
 ```
 
- lint,jsx,noCommentText/reject/2/file.tsx:1:15 lint/jsx/noCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/noCommentText/reject/2/file.tsx:1:15 lint/jsx/noCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Wrap comments inside children within braces.
+
+    const a = <div>/* comment */</div>
+                   ^^^^^^^^^^^^^
 
   ℹ JavaScript comment sequences are not supported by JSX and result in unwanted characters
     on-screen.
@@ -64,9 +70,12 @@ const a = <div>
 
 ```
 
- lint,jsx,noCommentText/reject/3/file.tsx:1:15 lint/jsx/noCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/noCommentText/reject/3/file.tsx:1:15 lint/jsx/noCommentText  FIXABLE  ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Wrap comments inside children within braces.
+
+    const a = <div>/** comment */</div>
+                   ^^^^^^^^^^^^^^
 
   ℹ JavaScript comment sequences are not supported by JSX and result in unwanted characters
     on-screen.

@@ -46,7 +46,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:12
 				path: UIDPath<core/uncategorised/422/input.js>
@@ -64,6 +63,9 @@ JSRoot {
  core/uncategorised/422/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    while(false)
+                ^
 
 
 ```

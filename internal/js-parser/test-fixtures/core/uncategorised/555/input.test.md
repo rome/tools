@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:13
 				path: UIDPath<core/uncategorised/555/input.js>
@@ -101,6 +100,13 @@ JSRoot {
  core/uncategorised/555/input.js:3:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    1 │ function foo (·
+    2 │     first,
+  > 3 │     ...second,
+      │              ^
+    4 │     third,
+    5 │ ) {
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<es2015/uncategorised/357/input.js>
@@ -71,6 +70,9 @@ JSRoot {
  es2015/uncategorised/357/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an await argument
+
+    await = foo();
+          ^
 
 
 ```

@@ -40,7 +40,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<core/categorized/malformed-switch/input.js>
@@ -58,6 +57,11 @@ JSRoot {
  core/categorized/malformed-switch/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Statement outside of a case or default block
+
+    1 │ switch (x) {
+  > 2 │   var y = 5;
+      │   ^^^^^^^^^^
+    3 │ }
 
 
 ```

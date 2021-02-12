@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<experimental/logical-assignment-operator/and-and-equals/input.js>
@@ -104,6 +103,10 @@ JSRoot {
  experimental/logical-assignment-operator/and-and-equals/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+  > 1 │ a &&= b;
+      │     ^
+    2 │ obj.a &&= b;
 
 
 ```

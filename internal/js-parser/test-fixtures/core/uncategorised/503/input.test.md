@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:69
 				path: UIDPath<core/uncategorised/503/input.js>
@@ -107,6 +106,9 @@ JSRoot {
  core/uncategorised/503/input.js:1:69 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Octal literal in strict mode
+
+    function hello() { "use strict"; function inner() { "octal directive\1"; } }
+                                                                         ^
 
 
 ```

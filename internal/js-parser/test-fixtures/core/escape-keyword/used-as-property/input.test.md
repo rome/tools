@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword break"}
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>break</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:4
 				path: UIDPath<core/escape-keyword/used-as-property/input.js>
@@ -86,6 +85,11 @@ JSRoot {
  core/escape-keyword/used-as-property/input.js:2:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword break
+
+    1 │ var a = {
+  > 2 │   br\u{65}ak: 2
+      │     ^
+    3 │ };
 
 
 ```

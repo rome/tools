@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword new"}
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>new</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:16
 				path: UIDPath<es2015/meta-properties/new-target-invalid-escaped-new/input.js>
@@ -88,6 +87,9 @@ JSRoot {
  es2015/meta-properties/new-target-invalid-escaped-new/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword new
+
+    function f() { n\u0065w.target; }
+                    ^
 
 
 ```

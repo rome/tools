@@ -8,7 +8,7 @@
 
 ```
 
- lint,react,noDirectMutationState/reject/1/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/1/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -37,7 +37,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/2/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/2/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -66,7 +66,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/3/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/3/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -95,7 +95,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/4/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/4/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -124,7 +124,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/5/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/5/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -152,14 +152,14 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/6/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/6/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
- lint,react,noDirectMutationState/reject/6/file.tsx:4:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/6/file.tsx:4:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -188,7 +188,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/7/file.tsx:6:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/7/file.tsx:6:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -216,7 +216,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/8/file.tsx:5:6 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/8/file.tsx:5:6 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -244,7 +244,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/9/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/9/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -269,7 +269,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/10/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/10/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -294,7 +294,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/11/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/11/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -319,7 +319,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/12/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/12/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -344,7 +344,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/13/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/13/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -369,7 +369,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/14/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/14/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -394,7 +394,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/15/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/15/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -419,7 +419,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/16/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/16/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -444,7 +444,7 @@ class Hello extends Component {
 
 ```
 
- lint,react,noDirectMutationState/reject/17/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/17/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
@@ -469,7 +469,7 @@ class Hello extends React.PureComponent {
 
 ```
 
- lint,react,noDirectMutationState/reject/18/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
+ lint/react/noDirectMutationState/reject/18/file.tsx:3:4 lint/react/noDirectMutationState ━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 

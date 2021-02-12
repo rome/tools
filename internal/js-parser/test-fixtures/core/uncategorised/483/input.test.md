@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:50
 				path: UIDPath<core/uncategorised/483/input.js>
@@ -102,6 +101,9 @@ JSRoot {
  core/uncategorised/483/input.js:1:41 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ arguments is a reserved word
+
+    function hello() {'use strict'; function arguments() { } }
+                                             ^^^^^^^^^
 
 
 ```

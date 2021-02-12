@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:23
 				path: UIDPath<experimental/class-properties/super-inside-function/input.js>
@@ -130,6 +129,11 @@ JSRoot {
  experimental/class-properties/super-inside-function/input.js:3:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
+
+    1 │ class A {
+    2 │   foo = function fn() {
+    3 │     super.x();
+    4 │   }
 
 
 ```

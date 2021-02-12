@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<core/categorized/valid-assignment-pattern-3/input.js>
@@ -71,6 +70,9 @@ JSRoot {
  core/categorized/valid-assignment-pattern-3/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
+
+    [(((x)))] = t;
+        ^
 
 
 ```

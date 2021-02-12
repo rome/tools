@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,noCompareNegZero/reject/1/file.ts:1:1 lint/js/noCompareNegZero ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noCompareNegZero/reject/1/file.ts:1:1 lint/js/noCompareNegZero ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not use the >= operator to compare against -0.
+
+    (1 >= -0)
+     ^^^^^^^
 
 
 ```

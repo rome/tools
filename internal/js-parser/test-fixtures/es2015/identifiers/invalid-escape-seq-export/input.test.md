@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword export"}
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>export</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<es2015/identifiers/invalid-escape-seq-export/input.js>
@@ -106,6 +105,11 @@ JSRoot {
  es2015/identifiers/invalid-escape-seq-export/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword export
+
+  > 1 │ var expor\u{74} = 123;
+      │          ^
+    2 │
+    3 │ var x;
 
 
 ```

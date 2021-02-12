@@ -8,12 +8,16 @@
 
 ```
 
- lint,js,noShoutyConstants/reject/1/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
+ lint/js/noShoutyConstants/reject/1/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
 
+    1 │ const FOO = "FOO";
+  > 2 │ console.log(FOO);
+      │             ^^^
+
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-    It introduces a level of unnecessary indirection when it's only two additional characters to
+     It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
@@ -38,12 +42,18 @@ console.log("FOO");
 
 ```
 
- lint,js,noShoutyConstants/reject/2/file.ts:3:8 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━
+ lint/js/noShoutyConstants/reject/2/file.ts:3:8 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
 
+    1 │ const FOO = "FOO";
+    2 │ function f() {
+  > 3 │   return FOO;
+      │          ^^^
+    4 │ }
+
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-    It introduces a level of unnecessary indirection when it's only two additional characters to
+     It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
@@ -70,12 +80,12 @@ function f() {
 
 ```
 
- lint,js,noShoutyConstants/reject/3/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
+ lint/js/noShoutyConstants/reject/3/file.ts:2:12 lint/js/noShoutyConstants  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Redundant constant reference
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-    It introduces a level of unnecessary indirection when it's only two additional characters to
+     It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here

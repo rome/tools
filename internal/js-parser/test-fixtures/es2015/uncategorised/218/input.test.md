@@ -36,7 +36,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<es2015/uncategorised/218/input.js>
@@ -54,6 +53,9 @@ JSRoot {
  es2015/uncategorised/218/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Bad character escape sequence
+
+    "\u{FFFF"
+        ^
 
 
 ```

@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<experimental/template-literal-invalid-escapes-untagged/17/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  experimental/template-literal-invalid-escapes-untagged/17/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
+
+    `\u0`
+       ^
 
 
 ```

@@ -45,7 +45,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:22
 				path: UIDPath<typescript/class/extends-empty/input.ts>
@@ -63,6 +62,10 @@ JSRoot {
  typescript/class/extends-empty/input.ts:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ extends list cannot be empty
+
+  > 1 │ interface foo extends {
+      │                       ^
+    2 │ }
 
 
 ```

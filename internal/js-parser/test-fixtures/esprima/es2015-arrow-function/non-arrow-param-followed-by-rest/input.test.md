@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<esprima/es2015-arrow-function/non-arrow-param-followed-by-rest/input.js>
@@ -78,6 +77,9 @@ JSRoot {
  esprima/es2015-arrow-function/non-arrow-param-followed-by-rest/input.js:1:2 parse(js) ━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
+
+    ((a),...b) => 0;
+      ^
 
 
 ```

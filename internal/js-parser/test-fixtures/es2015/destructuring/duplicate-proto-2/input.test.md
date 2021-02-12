@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:27
 				path: UIDPath<es2015/destructuring/duplicate-proto-2/input.js>
@@ -106,6 +105,9 @@ JSRoot {
  es2015/destructuring/duplicate-proto-2/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Redefinition of __proto__ property
+
+    ([{ __proto__: x, __proto__: y }] = [{}]);
+                      ^^^^^^^^^
 
 
 ```

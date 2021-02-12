@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<es2017/async-functions/await-inside-arrow-expression-disallowed/input.js>
@@ -85,6 +84,9 @@ JSRoot {
  es2017/async-functions/await-inside-arrow-expression-disallowed/input.js:1:14 parse(js) ━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    () => { await x }
+                  ^
 
 
 ```

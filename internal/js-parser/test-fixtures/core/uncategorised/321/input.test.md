@@ -46,7 +46,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<core/uncategorised/321/input.js>
@@ -64,6 +63,9 @@ JSRoot {
  core/uncategorised/321/input.js:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ a
+    2 │ b
 
 
 ```

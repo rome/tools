@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:38
 				path: UIDPath<core/uncategorised/501/input.js>
@@ -102,6 +101,9 @@ JSRoot {
  core/uncategorised/501/input.js:1:38 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Octal literal in strict mode
+
+    function hello() { 'use strict'; ({ "\1": 42 }); }
+                                          ^
 
 
 ```

@@ -29,7 +29,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:45
 				path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
@@ -44,17 +43,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "__proto__"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:45
-							path: UIDPath<esprima/invalid-syntax/migrated_0249/input.js>
-							start: Position 1:36
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0249/input.js 1:36-1:45 (__proto__)}
 				]
 			}
 		}

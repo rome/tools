@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-member-expr/input.js>
@@ -91,6 +90,9 @@ JSRoot {
  esprima/es2015-arrow-function/object-binding-pattern-invalid-member-expr/input.js:1:4 parse(js) ━━━
 
   ✖ Binding member expression
+
+    ({a:b[0]})=>0
+        ^^^^
 
 
 ```

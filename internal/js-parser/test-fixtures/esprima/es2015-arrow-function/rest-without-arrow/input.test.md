@@ -43,12 +43,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token"}
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>.</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<esprima/es2015-arrow-function/rest-without-arrow/input.js>
@@ -65,7 +64,10 @@ JSRoot {
 
  esprima/es2015-arrow-function/rest-without-arrow/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character .
+
+    (...a) + 1
+     ^
 
 
 ```

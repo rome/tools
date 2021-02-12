@@ -8,10 +8,13 @@
 
 ```
 
- lint,jsx-a11y,useKeyWithClickEvents/reject/1/file.tsx:1 lint/jsx-a11y/useKeyWithClickEvents ━━━━━━━
+ lint/jsx-a11y/useKeyWithClickEvents/reject/1/file.tsx:1 lint/jsx-a11y/useKeyWithClickEvents ━━━━━━━
 
   ✖ Pair the onClick mouse event with the onKeyUp, the onKeyDown, or the onKeyPress keyboard
     event.
+
+    <div onClick={() => {}} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:40
 				path: UIDPath<es2015/uncategorised/125/input.js>
@@ -140,6 +139,9 @@ JSRoot {
  es2015/uncategorised/125/input.js:1:27 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Duplicate constructor in the same class
+
+    class A { constructor() {} 'constructor'() {} }
+                               ^^^^^^^^^^^^^
 
 
 ```

@@ -11,15 +11,14 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-	MixedPathMap,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {
 	DIAGNOSTIC_CATEGORIES,
 	Diagnostics,
+	DiagnosticsProcessor,
 	catchDiagnostics,
 	formatCategoryDescription,
-	DiagnosticsProcessor,
 } from "@internal/diagnostics";
 import {
 	PartialServerQueryRequest,
@@ -134,7 +133,9 @@ export default class LSPServer {
 		lines.push(`[Diagnostics - ${date.toTimeString()}] ${path.join()}`);
 		for (const diag of diagnostics) {
 			lines.push(
-				`  (${formatCategoryDescription(diag.description)}) ${readMarkup(diag.description.message)}`,
+				`  (${formatCategoryDescription(diag.description)}) ${readMarkup(
+					diag.description.message,
+				)}`,
 			);
 		}
 		this.logMessage(path, lines.join("\n"));
@@ -242,9 +243,12 @@ export default class LSPServer {
 			subscription.unsubscribe();
 		});
 
-		this.projectSessions.set(path, {
-			request: req,
-		});
+		this.projectSessions.set(
+			path,
+			{
+				request: req,
+			},
+		);
 		this.lintSessionsPending.delete(path);
 
 		const date = new Date();
@@ -326,7 +330,9 @@ export default class LSPServer {
 				const codeActions: LSPCodeAction[] = [];
 				const seenDecisions = new Set<string>();
 
-				const diagnostics = this.diagnosticsProcessor.getAllDiagnosticsForPath(path);
+				const diagnostics = this.diagnosticsProcessor.getAllDiagnosticsForPath(
+					path,
+				);
 				if (diagnostics.length === 0) {
 					return codeActions;
 				}
@@ -349,7 +355,9 @@ export default class LSPServer {
 						seenDecisions.add(decision);
 
 						codeActions.push({
-							title: `${readMarkup(advice.noun)}: ${formatCategoryDescription(diag.description)}`,
+							title: `${readMarkup(advice.noun)}: ${formatCategoryDescription(
+								diag.description,
+							)}`,
 							command: {
 								title: "Rome: Check",
 								command: "rome.check.decisions",

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<core/uncategorised/380/input.js>
@@ -87,6 +86,10 @@ JSRoot {
  core/uncategorised/380/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated regular expression
+
+  > 1 │ var x = /
+      │          ^
+    2 │ /
 
 
 ```

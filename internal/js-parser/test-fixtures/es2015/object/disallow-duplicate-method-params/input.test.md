@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<es2015/object/disallow-duplicate-method-params/input.js>
@@ -39,17 +38,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							identifierName: "a"
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 2:12
-							path: UIDPath<es2015/object/disallow-duplicate-method-params/input.js>
-							start: Position 2:11
-						}
-					}
+					frame {location: SourceLocation es2015/object/disallow-duplicate-method-params/input.js 2:11-2:12 (a)}
 				]
 			}
 		}

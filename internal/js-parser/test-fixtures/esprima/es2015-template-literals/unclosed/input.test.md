@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:0
 				path: UIDPath<esprima/es2015-template-literals/unclosed/input.js>
@@ -65,6 +64,8 @@ JSRoot {
  esprima/es2015-template-literals/unclosed/input.js:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated template
+
+    `test
 
 
 ```

@@ -11,21 +11,53 @@ import {getBindingIdentifiers, isFunctionNode} from "@internal/js-ast-utils";
 import {
 	AnyJSFunction,
 	JSRoot,
+	TSCallSignatureDeclaration,
+	TSConstructSignatureDeclaration,
+	TSConstructorType,
 	TSDeclareFunction,
 	TSDeclareMethod,
+	TSFunctionType,
+	TSMethodSignature,
 } from "@internal/ast";
 import {VarBinding} from "./bindings";
+
+export function buildTSSignatureScope(
+	node:
+		| TSCallSignatureDeclaration
+		| TSConstructorType
+		| TSConstructSignatureDeclaration
+		| TSFunctionType
+		| TSMethodSignature,
+	parentScope: Scope,
+): Scope {
+	const scope = parentScope.fork("function", node);
+
+	const {
+		meta,
+	} = node;
+	scope.injectEvaluate(meta.typeParameters, meta);
+	for (const param of meta.parameters) {
+		scope.injectEvaluate(param, meta);
+	}
+	scope.injectEvaluate(meta.rest, meta);
+
+	return scope;
+}
 
 export function buildFunctionScope(
 	node: AnyJSFunction | TSDeclareFunction | TSDeclareMethod,
 	parentScope: Scope,
 ): Scope {
-	const {head} = node;
+	const {
+		head,
+	} = node;
 
 	const scope = parentScope.fork("function", node);
 
 	if (node.type === "JSFunctionExpression") {
-		const {id} = node;
+		const {
+			id,
+		} = node;
 		if (id !== undefined) {
 			scope.addBinding(
 				new LetBinding({
@@ -73,7 +105,9 @@ export function buildFunctionScope(
 
 // var are function scoped so we have separate traversal logic to inject them
 export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
-	const {context} = scope.getRootScope();
+	const {
+		context,
+	} = scope.getRootScope();
 
 	context.reduce(
 		topNode,
@@ -81,7 +115,9 @@ export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 			{
 				name: "scopeVarFunc",
 				enter: (path) => {
-					const {node} = path;
+					const {
+						node,
+					} = path;
 
 					if (isFunctionNode(node) && node !== topNode) {
 						return signals.skip;

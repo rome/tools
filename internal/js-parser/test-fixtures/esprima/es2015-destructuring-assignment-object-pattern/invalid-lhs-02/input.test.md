@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-02/input.js>
@@ -82,6 +81,9 @@ JSRoot {
  esprima/es2015-destructuring-assignment-object-pattern/invalid-lhs-02/input.js:1:5 parse(js) ━━━━━━
 
   ✖ Invalid left-hand side in assignment object property value
+
+    ({a: this} = 0);
+         ^^^^
 
 
 ```

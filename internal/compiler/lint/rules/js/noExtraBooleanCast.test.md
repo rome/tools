@@ -8,7 +8,7 @@
 
 ```
 
- lint,js,noExtraBooleanCast/reject/1/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/1/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -34,7 +34,7 @@ if (foo) {
 
 ```
 
- lint,js,noExtraBooleanCast/reject/2/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/2/file.ts:1:4 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -45,7 +45,7 @@ if (foo) {
   - !!Boolean(foo)
   + Boolean(foo)
 
- lint,js,noExtraBooleanCast/reject/2/file.ts:1:6 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/2/file.ts:1:6 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -71,7 +71,7 @@ if (foo) {
 
 ```
 
- lint,js,noExtraBooleanCast/reject/3/file.ts:1:5 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/3/file.ts:1:5 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -97,9 +97,12 @@ if (!foo) {
 
 ```
 
- lint,js,noExtraBooleanCast/reject/4/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/4/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
+
+    while (!!foo) {}
+           ^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -122,9 +125,14 @@ while (foo) {}
 
 ```
 
- lint,js,noExtraBooleanCast/reject/5/file.ts:4:9 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/5/file.ts:4:9 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
+
+    2 │ do {
+    3 │   1 + 1;
+  > 4 │ } while (Boolean(x));
+      │          ^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -150,7 +158,7 @@ do {
 
 ```
 
- lint,js,noExtraBooleanCast/reject/6/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/6/file.ts:1:7 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
 
@@ -175,9 +183,12 @@ while (foo) {}
 
 ```
 
- lint,js,noExtraBooleanCast/reject/7/file.ts:1:12 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/7/file.ts:1:12 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
+
+    new Boolean(!!x);
+                ^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -200,9 +211,12 @@ new Boolean(x);
 
 ```
 
- lint,js,noExtraBooleanCast/reject/8/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/8/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
+
+    !!!x;
+     ^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
@@ -225,9 +239,12 @@ new Boolean(x);
 
 ```
 
- lint,js,noExtraBooleanCast/reject/9/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/noExtraBooleanCast/reject/9/file.ts:1:1 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
+
+    !Boolean(x);
+     ^^^^^^^^^^
 
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 

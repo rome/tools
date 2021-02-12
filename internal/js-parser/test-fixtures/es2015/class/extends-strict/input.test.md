@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<es2015/class/extends-strict/input.js>
@@ -107,6 +106,12 @@ JSRoot {
  es2015/class/extends-strict/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'with' in strict mode
+
+    1 │ class C extends (function B() {
+  > 2 │   with ({});
+      │   ^^^^^^^^^^
+    3 │   return B;
+    4 │ }()) {}
 
 
 ```

@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  core/create-parenthesized-expressions/invalid-parenthesized-left-hand-side/input.js:1:1 parse(js) ━
 
   ✖ Invalid left-hand side in assignment expression
+
+    (!a) += 1
+     ^^
 
 
 ```

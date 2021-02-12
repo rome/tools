@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:1
 				path: UIDPath<typescript/interface/new-line-error/input.ts>
@@ -69,6 +68,10 @@ JSRoot {
  typescript/interface/new-line-error/input.ts:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ interface
+  > 2 │ F {}
+      │   ^
 
 
 ```

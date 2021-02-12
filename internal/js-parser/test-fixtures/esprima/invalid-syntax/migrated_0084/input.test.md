@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<esprima/invalid-syntax/migrated_0084/input.js>
@@ -57,22 +56,13 @@ JSRoot {
 			description: Object {
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed object"}
+				message: RAW_MARKUP {value: "Unclosed <emphasis>object</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 2:0
-							path: UIDPath<esprima/invalid-syntax/migrated_0084/input.js>
-							start: Position 2:0
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0084/input.js 2:0-2:0}
 				]
 			}
 		}
@@ -87,6 +77,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0084/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed object
+
+    ({get
+     ^
 
   ℹ We expected to find the closing character } here
 

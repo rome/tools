@@ -39,7 +39,6 @@ CSSRoot {
 			location: Object {
 				integrity: undefined
 				language: "css"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: RelativeFilePath<invalid/selector3/input.css>

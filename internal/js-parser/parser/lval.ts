@@ -67,7 +67,6 @@ import {
 	toReferenceIdentifier,
 } from "./index";
 import {descriptions} from "@internal/diagnostics";
-import {ob1Get0} from "@internal/ob1";
 
 const VALID_REST_ARGUMENT_TYPES = ["JSIdentifier", "JSMemberExpression"];
 
@@ -774,7 +773,7 @@ export function parseSpread(
 		refNeedsArrowPos,
 	);
 
-	if (ob1Get0(parser.state.commaAfterSpreadAt) === -1 && match(parser, tt.comma)) {
+	if (parser.state.commaAfterSpreadAt === -1 && match(parser, tt.comma)) {
 		parser.state.commaAfterSpreadAt = parser.state.index;
 	}
 
@@ -1246,7 +1245,7 @@ export function raiseRestNotLast(
 }
 
 export function checkCommaAfterRestFromSpread(parser: JSParser): void {
-	if (ob1Get0(parser.state.commaAfterSpreadAt) > -1) {
+	if (parser.state.commaAfterSpreadAt > -1) {
 		raiseRestNotLast(
 			parser,
 			undefined,

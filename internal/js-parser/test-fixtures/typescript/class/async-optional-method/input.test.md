@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected ts syntax to be enabled"}
+				message: RAW_MARKUP {value: "Expected <emphasis>ts</emphasis> syntax to be enabled"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:14
 				path: UIDPath<typescript/class/async-optional-method/input.js>
@@ -122,6 +121,11 @@ JSRoot {
  typescript/class/async-optional-method/input.js:2:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected ts syntax to be enabled
+
+    1 │ class A extends B {
+  > 2 │   async method?(val: string): Promise<void>;
+      │               ^
+    3 │ }
 
 
 ```

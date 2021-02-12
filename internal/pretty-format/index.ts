@@ -23,8 +23,7 @@ import {
 	serializeLazyMarkup,
 } from "@internal/markup";
 import {markupToJoinedPlainText} from "@internal/cli-layout";
-import {Position, isPosition, isSourceLocation} from "@internal/parser-core";
-import {ob1Get} from "@internal/ob1";
+import {Position, isPositionish, isSourceLocation} from "@internal/parser-core";
 
 type RecursiveStack = unknown[];
 
@@ -57,7 +56,7 @@ const DEFAULT_OPTIONS: FormatOptions = {
 	insertLocator: undefined,
 };
 
-export const CUSTOM_PRETTY_FORMAT = Symbol.for("custom-pretty-format");
+const NODE_UTIL_INSPECT_CUSTOM = Symbol.for("nodejs.util.inspect.custom");
 
 export function prettyFormatToString(value: unknown): string {
 	return markupToJoinedPlainText(markup`${prettyFormat(value)}`);
@@ -353,8 +352,8 @@ function formatObjectLabel(label: StaticMarkup): StaticMarkup {
 }
 
 function formatPositionValue(val: Position): StaticMarkup {
-	return markup`<token type="number">${String(ob1Get(val.line))}:${String(
-		ob1Get(val.column),
+	return markup`<token type="number">${String(val.line.valueOf())}:${String(
+		val.column.valueOf(),
 	)}</token>`;
 }
 
@@ -371,12 +370,26 @@ function formatObject(
 		return formatObjectLabel(label);
 	}
 
-	const customFormat = obj[CUSTOM_PRETTY_FORMAT];
+	const customFormat = obj[NODE_UTIL_INSPECT_CUSTOM];
 	if (opts.allowCustom && typeof customFormat === "function") {
-		return markupTag("dim", markup`${String(customFormat.call(obj))}`);
+		const customValue = customFormat.call(obj, opts.depth, {});
+		let inner;
+		if (typeof customValue === "string") {
+			inner = markup`${customValue}`;
+		} else {
+			inner = prettyFormat(
+				customValue,
+				{
+					compact: opts.compact,
+					allowCustom: true,
+					stack: opts.stack,
+				},
+			);
+		}
+		return markupTag("dim", inner);
 	}
 
-	if (isPosition(obj)) {
+	if (isPositionish(obj)) {
 		const label = formatObjectLabel(markup`Position`);
 		return markup`${label} ${formatPositionValue(obj)}`;
 	}
@@ -475,9 +488,13 @@ function formatDate(val: Date): StaticMarkup {
 
 type Objectish = {
 	type?: unknown;
-	[CUSTOM_PRETTY_FORMAT]?: () => string;
+	[NODE_UTIL_INSPECT_CUSTOM]?: (
+		depth: number,
+		opts: NodeJS.InspectOptions,
+	) => unknown;
 	[key: string]: unknown;
 	[Symbol.iterator]?: unknown;
+	[Symbol.toStringTag]?: unknown;
 };
 
 function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup {
@@ -501,7 +518,9 @@ function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup 
 	if (val.constructor !== undefined) {
 		label = markup`${val.constructor.name}`;
 
-		if (val.constructor.name === "Object") {
+		if (typeof val[Symbol.toStringTag] === "string") {
+			label = markup`${String(val[Symbol.toStringTag])}`;
+		} else if (val.constructor.name === "Object") {
 			if (typeof val.type === "string") {
 				label = markup`${val.type}`;
 				labelKeys.push("type");

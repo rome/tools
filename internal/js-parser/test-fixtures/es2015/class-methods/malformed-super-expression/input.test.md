@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:9
 				path: UIDPath<es2015/class-methods/malformed-super-expression/input.js>
@@ -117,6 +116,13 @@ JSRoot {
  es2015/class-methods/malformed-super-expression/input.js:3:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid super suffix operator
+
+    1 │ class A {
+    2 │   x () {
+  > 3 │     super - 1;
+      │           ^
+    4 │   }
+    5 │ }
 
 
 ```

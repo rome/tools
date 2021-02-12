@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,useSortedSpecifiers/reject/1/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/1/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the import declaration should be sorted alphabetically.
+
+    import {b, a, c, D} from 'mod';
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -31,9 +34,12 @@ import {D, a, b, c} from "mod";
 
 ```
 
- lint,js,useSortedSpecifiers/reject/2/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/2/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the import declaration should be sorted alphabetically.
+
+    import {b as A, a as C, B} from 'mod';
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -54,9 +60,12 @@ import {b as A, B, a as C} from "mod";
 
 ```
 
- lint,js,useSortedSpecifiers/reject/3/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/3/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the import declaration should be sorted alphabetically.
+
+    import {c, b as b2, b as b1, b} from 'mod';
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -77,9 +86,12 @@ import {b, b as b1, b as b2, c} from "mod";
 
 ```
 
- lint,js,useSortedSpecifiers/reject/4/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/4/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the export declaration should be sorted alphabetically.
+
+    export {b, a, c, D} from 'mod';
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -100,9 +112,12 @@ export {D, a, b, c} from "mod";
 
 ```
 
- lint,js,useSortedSpecifiers/reject/5/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/5/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the export declaration should be sorted alphabetically.
+
+    export {b as A, a as C, B} from 'mod';
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -123,9 +138,12 @@ export {B, a as C, b as A} from "mod";
 
 ```
 
- lint,js,useSortedSpecifiers/reject/6/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/6/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the export declaration should be sorted alphabetically.
+
+    export {c, b as b2, b as b1, b} from 'mod';
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -146,9 +164,12 @@ export {b, b as b1, b as b2, c} from "mod";
 
 ```
 
- lint,js,useSortedSpecifiers/reject/7/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/7/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the export declaration should be sorted alphabetically.
+
+    export {b, a, c, D};
+    ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -169,9 +190,12 @@ export {D, a, b, c};
 
 ```
 
- lint,js,useSortedSpecifiers/reject/8/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/8/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the export declaration should be sorted alphabetically.
+
+    export {b as A, a as C, B};
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -192,9 +216,12 @@ export {B, a as C, b as A};
 
 ```
 
- lint,js,useSortedSpecifiers/reject/9/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
+ lint/js/useSortedSpecifiers/reject/9/file.ts:1 lint/js/useSortedSpecifiers  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ The specifiers of the export declaration should be sorted alphabetically.
+
+    export {c, b as b2, b as b1, b};
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 

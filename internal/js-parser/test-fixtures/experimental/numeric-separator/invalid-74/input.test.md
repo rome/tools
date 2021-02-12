@@ -18,6 +18,25 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation experimental/numeric-separator/invalid-74/input.js 1:0-2:0
 	path: UIDPath<experimental/numeric-separator/invalid-74/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid or unexpected int token"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:0
+				path: UIDPath<experimental/numeric-separator/invalid-74/input.js>
+				start: Position 1:0
+			}
+		}
+	]
 	body: Array [
 		JSExpressionStatement {
 			loc: SourceLocation experimental/numeric-separator/invalid-74/input.js 1:0-1:9
@@ -38,26 +57,6 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid or unexpected int token"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				marker: undefined
-				sourceText: undefined
-				end: Position 1:0
-				path: UIDPath<experimental/numeric-separator/invalid-74/input.js>
-				start: Position 1:0
-			}
-		}
-	]
 }
 ```
 
@@ -68,6 +67,9 @@ JSRoot {
  experimental/numeric-separator/invalid-74/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid or unexpected int token
+
+    0o1_1_, 0
+    ^
 
 
 ```

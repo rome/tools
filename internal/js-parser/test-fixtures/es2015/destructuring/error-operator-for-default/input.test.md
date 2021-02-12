@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<es2015/destructuring/error-operator-for-default/input.js>
@@ -79,6 +78,9 @@ JSRoot {
  es2015/destructuring/error-operator-for-default/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only '=' operator can be used for specifying default value.
+
+    ([a += a] = a)
+      ^
 
 
 ```

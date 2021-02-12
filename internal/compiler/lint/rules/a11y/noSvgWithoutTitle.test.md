@@ -8,9 +8,12 @@
 
 ```
 
- lint,a11y,noSvgWithoutTitle/reject/1/file.tsx:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/noSvgWithoutTitle/reject/1/file.tsx:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Alternative text title element cannot be empty
+
+    <svg>foo</svg>
+    ^^^^^^^^^^^^^^
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
@@ -30,9 +33,16 @@
 
 ```
 
- lint,a11y,noSvgWithoutTitle/reject/2/file.tsx:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/noSvgWithoutTitle/reject/2/file.tsx:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Alternative text title element cannot be empty
+
+  > 1 │ <svg>
+      │ ^^^^^
+  > 2 │     <title></title>
+  > 3 │     <circle />
+  > 4 │ </svg>
+      │ ^^^^^^
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
@@ -98,9 +108,12 @@
 
 ```
 
- lint,a11y,noSvgWithoutTitle/reject/1/file.html:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/noSvgWithoutTitle/reject/1/file.html:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Alternative text title element cannot be empty
+
+    <svg>foo</svg>
+    ^^^^^^^^^^^^^
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 
@@ -120,9 +133,16 @@
 
 ```
 
- lint,a11y,noSvgWithoutTitle/reject/2/file.html:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/noSvgWithoutTitle/reject/2/file.html:1 lint/a11y/noSvgWithoutTitle ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Alternative text title element cannot be empty
+
+  > 1 │ <svg>
+      │ ^^^^^
+  > 2 │     <title></title>
+  > 3 │     <circle />
+  > 4 │ </svg>
+      │ ^^^^^
 
   ℹ For accessibility purposes, SVGs should have an alternative text, provided via title element.
 

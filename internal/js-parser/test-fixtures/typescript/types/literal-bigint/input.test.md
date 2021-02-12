@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<typescript/types/literal-bigint/input.ts>
@@ -78,6 +77,9 @@ JSRoot {
  typescript/types/literal-bigint/input.ts:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown TS non array type start
+
+    let x: 0n;
+           ^
 
 
 ```

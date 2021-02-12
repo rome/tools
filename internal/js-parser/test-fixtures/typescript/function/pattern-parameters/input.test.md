@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<typescript/function/pattern-parameters/input.ts>
@@ -94,6 +93,9 @@ JSRoot {
  typescript/function/pattern-parameters/input.ts:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A binding pattern parameter cannot be optional in an implementation signature.
+
+    function f([]?, {}) {}
+               ^^
 
 
 ```

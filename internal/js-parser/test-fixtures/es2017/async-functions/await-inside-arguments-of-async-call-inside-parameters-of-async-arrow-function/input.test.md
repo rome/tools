@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:28
 				path: UIDPath<es2017/async-functions/await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function/input.js>
@@ -129,6 +128,11 @@ JSRoot {
  on/input.js:2:28 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ await is not allowed in async function parameters
+
+    1 │ async function fn() {
+  > 2 │   async (x = async(y = await 2)) => {};
+      │                             ^
+    3 │ }
 
 
 ```

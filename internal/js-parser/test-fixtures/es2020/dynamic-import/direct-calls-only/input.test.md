@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:20
 				path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
@@ -92,6 +91,11 @@ JSRoot {
  es2020/dynamic-import/direct-calls-only/input.js:2:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for import is import.meta
+
+    1 │ function failsParse() {
+  > 2 │   return import.then();
+      │                 ^^^^
+    3 │ }
 
 
 ```

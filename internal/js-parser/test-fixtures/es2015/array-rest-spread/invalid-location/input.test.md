@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<es2015/array-rest-spread/invalid-location/input.js>
@@ -75,6 +74,9 @@ JSRoot {
  es2015/array-rest-spread/invalid-location/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    [...a, b] = c
+     ^^^^
 
 
 ```

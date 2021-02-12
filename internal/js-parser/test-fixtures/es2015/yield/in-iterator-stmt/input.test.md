@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:15
 				path: UIDPath<es2015/yield/in-iterator-stmt/input.js>
@@ -94,6 +93,11 @@ JSRoot {
  es2015/yield/in-iterator-stmt/input.js:2:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-in statement
+
+    1 │ function* g() {
+  > 2 │   for (yield '' in {}; ; ) ;
+      │        ^^^^^^^^
+    3 │ }
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:7
 				path: UIDPath<experimental/class-private-properties/asi-failure-generator/input.js>
@@ -133,6 +132,12 @@ JSRoot {
  experimental/class-private-properties/asi-failure-generator/input.js:3:8 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ class Foo {
+    2 │   #p = x
+  > 3 │   *m () {}
+      │         ^
+    4 │ }
 
 
 ```

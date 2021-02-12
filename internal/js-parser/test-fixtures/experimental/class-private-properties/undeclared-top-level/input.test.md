@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected character #"}
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>#</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<experimental/class-private-properties/undeclared-top-level/input.js>
@@ -80,6 +79,9 @@ JSRoot {
  experimental/class-private-properties/undeclared-top-level/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ Unexpected character #
+
+    var prop = foo.#priv;
+                   ^
 
 
 ```

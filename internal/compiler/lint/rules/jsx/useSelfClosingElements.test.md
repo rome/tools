@@ -8,10 +8,13 @@
 
 ```
 
- lint,jsx,useSelfClosingElements/reject/1/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
+ lint/jsx/useSelfClosingElements/reject/1/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
 
   ✖ JSX elements without children should be marked as self-closing. In JSX, it is valid for any
     element to be self-closing.
+
+    <div></div>
+    ^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -33,10 +36,13 @@
 
 ```
 
- lint,jsx,useSelfClosingElements/reject/2/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
+ lint/jsx/useSelfClosingElements/reject/2/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
 
   ✖ JSX elements without children should be marked as self-closing. In JSX, it is valid for any
     element to be self-closing.
+
+    <Component></Component>
+    ^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -58,10 +64,13 @@
 
 ```
 
- lint,jsx,useSelfClosingElements/reject/3/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
+ lint/jsx/useSelfClosingElements/reject/3/filename.tsx:1 lint/jsx/useSelfClosingElements  FIXABLE  ━
 
   ✖ JSX elements without children should be marked as self-closing. In JSX, it is valid for any
     element to be self-closing.
+
+    <Foo.bar></Foo.bar>
+    ^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 

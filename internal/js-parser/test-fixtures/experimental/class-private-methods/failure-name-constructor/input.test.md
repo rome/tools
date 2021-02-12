@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:14
 				path: UIDPath<experimental/class-private-methods/failure-name-constructor/input.js>
@@ -103,6 +102,11 @@ JSRoot {
  experimental/class-private-methods/failure-name-constructor/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have a private field named '#constructor'
+
+    1 │ class Foo {
+  > 2 │   #constructor() {};
+      │   ^^^^^^^^^^^^
+    3 │ }
 
 
 ```

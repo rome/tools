@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:19
 				path: UIDPath<es2018/object-rest-spread/9/input.js>
@@ -89,6 +88,9 @@ JSRoot {
  es2018/object-rest-spread/9/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Cannot have multiple rest elements when destructuring
+
+    let { x, ...y, ...z } = obj;
+                      ^
 
 
 ```

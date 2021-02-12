@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:44
 				path: UIDPath<core/uncategorised/506/input.js>
@@ -96,6 +95,9 @@ JSRoot {
  core/uncategorised/506/input.js:1:37 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ package is a reserved word
+
+    function hello() { "use strict"; var package; }
+                                         ^^^^^^^
 
 
 ```

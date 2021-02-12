@@ -35,12 +35,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected number in radix 2"}
+				message: RAW_MARKUP {value: "Expected number in radix <emphasis>2</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<es2015/uncategorised/206/input.js>
@@ -58,6 +57,9 @@ JSRoot {
  es2015/uncategorised/206/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected number in radix 2
+
+    0b
+      ^
 
 
 ```

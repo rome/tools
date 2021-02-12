@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<esprima/es2015-generator/malformed-generator-method-2/input.js>
@@ -99,6 +98,9 @@ JSRoot {
  esprima/es2015-generator/malformed-generator-method-2/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    class Foo { * }
+                  ^
 
 
 ```

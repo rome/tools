@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:23
 				path: UIDPath<esprima/invalid-syntax/migrated_0278/input.js>
@@ -103,6 +102,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0278/input.js:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ static is a reserved word
+
+    class A {static [static](){};}
+                     ^^^^^^
 
 
 ```

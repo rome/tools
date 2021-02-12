@@ -21,20 +21,24 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected {"}
-			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
-				end: Position 2:26
+				end: Position 2:23
 				path: UIDPath<typescript/assert-predicate/asserts-this-with-predicate/input.ts>
 				start: Position 2:24
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>i</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening block character <emphasis>{</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -194,7 +198,15 @@ JSRoot {
 
  typescript/assert-predicate/asserts-this-with-predicate/input.ts:2:24 parse(js) ━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected {
+  ✖ Unexpected character i
+
+    1 │ class Foo {
+  > 2 │   isBar(): asserts this is Foo {}
+      │                         ^
+    3 │   isBaz = (): asserts this is Foo => {}
+    4 │ }
+
+  ℹ Expected the opening block character {
 
 
 ```

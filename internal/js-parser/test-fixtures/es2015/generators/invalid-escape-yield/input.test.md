@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:26
 				path: UIDPath<es2015/generators/invalid-escape-yield/input.js>
@@ -81,6 +80,9 @@ JSRoot {
  es2015/generators/invalid-escape-yield/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
+
+    (function* () { y\u0069eld; })
+                    ^^^^^^^^^^
 
 
 ```

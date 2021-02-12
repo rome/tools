@@ -16,15 +16,7 @@ import * as base64 from "./base64";
 import {compareByGeneratedPositionsInflated, toRelativeUrl} from "./util";
 import ArraySet from "./ArraySet";
 import MappingList from "./MappingList";
-import {
-	Number0,
-	Number1,
-	ob1Get0,
-	ob1Get1,
-	ob1Inc,
-	ob1Number0,
-	ob1Number1,
-} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 import {VoidCallback} from "@internal/typescript-helpers";
 import {ExtendedMap} from "@internal/collections";
@@ -133,12 +125,16 @@ export default class SourceMapGenerator {
 		}
 	}
 
-	private validatePosition(key: string, line: Number1, column: Number0): void {
-		if (ob1Get1(line) <= 0) {
+	private validatePosition(
+		key: string,
+		line: OneIndexed,
+		column: ZeroIndexed,
+	): void {
+		if (line.valueOf() <= 0) {
 			throw new Error(`${key} line should be >= 1 but is ${line}`);
 		}
 
-		if (ob1Get0(column) < 0) {
+		if (column.valueOf() < 0) {
 			throw new Error(`${key} column should be >= 0 but is ${column}`);
 		}
 	}
@@ -148,10 +144,10 @@ export default class SourceMapGenerator {
    * specified by the source map format.
    */
 	private serializeMappings(): string {
-		let previousGeneratedColumn: Number0 = ob1Number0;
-		let previousGeneratedLine: Number1 = ob1Number1;
-		let previousOriginalColumn: Number0 = ob1Number0;
-		let previousOriginalLine: Number1 = ob1Number1;
+		let previousGeneratedColumn: ZeroIndexed = new ZeroIndexed();
+		let previousGeneratedLine: OneIndexed = new OneIndexed();
+		let previousOriginalColumn: ZeroIndexed = new ZeroIndexed();
+		let previousOriginalLine: OneIndexed = new OneIndexed();
 		let previousName: number = 0;
 		let previousSource: number = 0;
 		let result: string = "";
@@ -161,21 +157,23 @@ export default class SourceMapGenerator {
 			const mapping = mappings[i];
 			let next = "";
 
-			if (mapping.generated.line !== previousGeneratedLine) {
-				previousGeneratedColumn = ob1Number0;
-				while (mapping.generated.line !== previousGeneratedLine) {
+			if (mapping.generated.line.equal(previousGeneratedLine)) {
+				if (i > 0) {
+					if (!compareByGeneratedPositionsInflated(mapping, mappings[i - 1])) {
+						continue;
+					}
+					next += ",";
+				}
+			} else {
+				previousGeneratedColumn = new ZeroIndexed();
+				while (!mapping.generated.line.equal(previousGeneratedLine)) {
 					next += ";";
-					previousGeneratedLine = ob1Inc(previousGeneratedLine);
+					previousGeneratedLine = previousGeneratedLine.increment();
 				}
-			} else if (i > 0) {
-				if (!compareByGeneratedPositionsInflated(mapping, mappings[i - 1])) {
-					continue;
-				}
-				next += ",";
 			}
 
 			next += base64.encodeVLQ(
-				ob1Get0(mapping.generated.column) - ob1Get0(previousGeneratedColumn),
+				mapping.generated.column.valueOf() - previousGeneratedColumn.valueOf(),
 			);
 			previousGeneratedColumn = mapping.generated.column;
 
@@ -186,12 +184,12 @@ export default class SourceMapGenerator {
 
 				if (mapping.original) {
 					next += base64.encodeVLQ(
-						ob1Get1(mapping.original.line) - ob1Get1(previousOriginalLine),
+						mapping.original.line.valueOf() - previousOriginalLine.valueOf(),
 					);
 					previousOriginalLine = mapping.original.line;
 
 					next += base64.encodeVLQ(
-						ob1Get0(mapping.original.column) - ob1Get0(previousOriginalColumn),
+						mapping.original.column.valueOf() - previousOriginalColumn.valueOf(),
 					);
 					previousOriginalColumn = mapping.original.column;
 

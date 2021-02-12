@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<es2020/dynamic-import/invalid-arguments-spread/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  es2020/dynamic-import/invalid-arguments-spread/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Spread is not allowed in import()
+
+    import(...[1])
+           ^^^^^^
 
 
 ```

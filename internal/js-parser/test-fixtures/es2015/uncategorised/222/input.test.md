@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<es2015/uncategorised/222/input.js>
@@ -82,6 +81,9 @@ JSRoot {
  es2015/uncategorised/222/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in assignment object property value
+
+    ({ obj:20 } = 42)
+           ^^
 
 
 ```

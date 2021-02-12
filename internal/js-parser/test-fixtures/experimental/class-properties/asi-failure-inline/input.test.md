@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:3
 				path: UIDPath<experimental/class-properties/asi-failure-inline/input.js>
@@ -89,6 +88,11 @@ JSRoot {
  experimental/class-properties/asi-failure-inline/input.js:2:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class Foo {
+  > 2 │   x y
+      │     ^
+    3 │ }
 
 
 ```

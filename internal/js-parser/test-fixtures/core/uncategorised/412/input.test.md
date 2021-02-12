@@ -39,12 +39,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token"}
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>2</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<core/uncategorised/412/input.js>
@@ -61,7 +60,10 @@ JSRoot {
 
  core/uncategorised/412/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character 2
+
+    continue 2;
+             ^
 
 
 ```

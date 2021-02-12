@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:13
 				path: UIDPath<typescript/arrow-function/async-generic-after-await/input.ts>
@@ -113,6 +112,12 @@ JSRoot {
  typescript/arrow-function/async-generic-after-await/input.ts:3:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ async () => {
+    2 │   await null;
+  > 3 │   async <T>() => null;
+      │               ^
+    4 │ };
 
 
 ```

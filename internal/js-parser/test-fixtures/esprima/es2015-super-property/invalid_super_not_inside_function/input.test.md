@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<esprima/es2015-super-property/invalid_super_not_inside_function/input.js>
@@ -71,6 +70,9 @@ JSRoot {
  esprima/es2015-super-property/invalid_super_not_inside_function/input.js:1:8 parse(js) ━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
+
+    var x = super();
+            ^
 
 
 ```

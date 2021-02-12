@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<es2015/for-of/invalid-expr/input.js>
@@ -33,22 +32,13 @@ JSRoot {
 			description: Object {
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed for head"}
+				message: RAW_MARKUP {value: "Unclosed <emphasis>for head</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:15
-							path: UIDPath<es2015/for-of/invalid-expr/input.js>
-							start: Position 1:15
-						}
-					}
+					frame {location: SourceLocation es2015/for-of/invalid-expr/input.js 1:15-1:15}
 				]
 			}
 		}
@@ -113,6 +103,9 @@ JSRoot {
  es2015/for-of/invalid-expr/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed for head
+
+    for (let x of y, z) {}
+        ^
 
   ℹ We expected to find the closing character ) here
 

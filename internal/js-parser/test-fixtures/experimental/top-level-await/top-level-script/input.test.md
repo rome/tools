@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<experimental/top-level-await/top-level-script/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  experimental/top-level-await/top-level-script/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    await 0;
+          ^
 
 
 ```

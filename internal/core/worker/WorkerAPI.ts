@@ -194,8 +194,8 @@ export default class WorkerAPI {
 
 					for (const update of pendingUpdates) {
 						if (
-							loc.start.column === update.column &&
-							loc.start.line === update.line
+							loc.start.column.equal(update.column) &&
+							loc.start.line.equal(update.line)
 						) {
 							matchedUpdate = update;
 							break;

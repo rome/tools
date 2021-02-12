@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:6
 				path: UIDPath<typescript/variable-declarator/definite-assignment-not-allowed/input.ts>
@@ -86,6 +85,9 @@ JSRoot {
  typescript/variable-declarator/definite-assignment-not-allowed/input.ts:1:6 parse(js) ━━━━━━━━━━━━━
 
   ✖ Complex binding patterns require an initialization value
+
+    let {}! = {};
+          ^
 
 
 ```

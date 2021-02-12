@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<es2015/uncategorised/251/input.js>
@@ -75,6 +74,9 @@ JSRoot {
  es2015/uncategorised/251/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in arrow function parameters
+
+    (10) => 00
+     ^^
 
 
 ```

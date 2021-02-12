@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:16
 				path: UIDPath<es2015/yield/function-name-function-declaration-inside-generator/input.js>
@@ -97,6 +96,11 @@ JSRoot {
  es2015/yield/function-name-function-declaration-inside-generator/input.js:2:11 parse(js) ━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
+
+    1 │ function* fn() {
+  > 2 │   function yield() {}
+      │            ^^^^^
+    3 │ }
 
 
 ```

@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:17
 				path: UIDPath<es2020/dynamic-import/invalid-new/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  es2020/dynamic-import/invalid-new/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
+
+    new import("foo");
+              ^^^^^^^
 
 
 ```

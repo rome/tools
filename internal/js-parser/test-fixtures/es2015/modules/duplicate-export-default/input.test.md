@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:28
 				path: UIDPath<es2015/modules/duplicate-export-default/input.js>
@@ -39,16 +38,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Defined already here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:17
-							path: UIDPath<es2015/modules/duplicate-export-default/input.js>
-							start: Position 1:15
-						}
-					}
+					frame {location: SourceLocation es2015/modules/duplicate-export-default/input.js 1:15-1:17}
 				]
 			}
 		}
@@ -99,6 +89,10 @@ JSRoot {
  es2015/modules/duplicate-export-default/input.js:2:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only one default export allowed per module.
+
+    1 │ export default {};
+  > 2 │ export default function() {};
+      │                ^^^^^^^^^^^^^
 
   ℹ Defined already here
 

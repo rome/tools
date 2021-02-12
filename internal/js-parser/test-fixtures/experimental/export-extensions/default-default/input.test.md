@@ -46,7 +46,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:19
 				path: UIDPath<experimental/export-extensions/default-default/input.js>
@@ -64,6 +63,9 @@ JSRoot {
  experimental/export-extensions/default-default/input.js:1:20 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    export default from "bar";
+                        ^
 
 
 ```

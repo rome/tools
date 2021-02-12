@@ -8,9 +8,13 @@
 
 ```
 
- lint,jsx,useJSXFileExtension/reject/1/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/useJSXFileExtension/reject/1/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <div></div>
+      │ ^^^^^^^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 
@@ -29,9 +33,13 @@
 
 ```
 
- lint,jsx,useJSXFileExtension/reject/2/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/useJSXFileExtension/reject/2/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <></>
+      │ ^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 
@@ -49,9 +57,13 @@
 
 ```
 
- lint,jsx,useJSXFileExtension/reject/3/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/useJSXFileExtension/reject/3/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <Fragment></Fragment>
+      │ ^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 
@@ -69,9 +81,13 @@
 
 ```
 
- lint,jsx,useJSXFileExtension/reject/4/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx/useJSXFileExtension/reject/4/test.js:2 lint/jsx/useJSXFileExtension ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Files with the .js extension cannot contain JSX elements.
+
+    1 │ // @jsx
+  > 2 │ <React.Fragment></React.Fragment>
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Change the test.js file extension to .jsx or .tsx.
 

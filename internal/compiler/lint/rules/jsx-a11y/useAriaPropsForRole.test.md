@@ -8,7 +8,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/1/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/1/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the checkbox ARIA role does not have the required ARIA attributes.
 
@@ -28,7 +28,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/2/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/2/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the switch ARIA role does not have the required ARIA attributes.
 
@@ -48,7 +48,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/3/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/3/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
@@ -72,7 +72,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/4/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/4/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
@@ -94,7 +94,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/5/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/5/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
@@ -116,7 +116,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/6/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/6/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
@@ -136,7 +136,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/7/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/7/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
@@ -158,7 +158,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/8/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/8/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
@@ -180,7 +180,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/9/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/9/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━━
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
@@ -200,7 +200,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/10/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/10/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
@@ -222,7 +222,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/11/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/11/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
@@ -244,7 +244,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/12/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/12/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
@@ -264,7 +264,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/13/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/13/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
@@ -290,7 +290,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/14/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/14/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
@@ -316,7 +316,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/15/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/15/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
@@ -340,7 +340,7 @@
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/16/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/16/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
@@ -365,7 +365,7 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/17/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/17/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the radio ARIA role does not have the required ARIA attributes.
 
@@ -385,7 +385,7 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/18/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/18/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the option ARIA role does not have the required ARIA attributes.
 
@@ -405,9 +405,12 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/19/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/19/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the heading ARIA role does not have the required ARIA attributes.
+
+    <span role='heading'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-level
 
@@ -425,7 +428,7 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/20/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/20/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
@@ -447,7 +450,7 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/21/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/21/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
@@ -467,7 +470,7 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/22/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/22/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
@@ -487,9 +490,12 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/23/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/23/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the menuitemcheckbox ARIA role does not have the required ARIA attributes.
+
+    <span role='menuitemcheckbox' ></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-checked
 
@@ -507,9 +513,12 @@ aria-orientation="horizontal" />;
 
 ```
 
- lint,jsx-a11y,useAriaPropsForRole/reject/24/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
+ lint/jsx-a11y/useAriaPropsForRole/reject/24/file.tsx:1 lint/jsx-a11y/useAriaPropsForRole ━━━━━━━━━━
 
   ✖ The element with the menuitemradio ARIA role does not have the required ARIA attributes.
+
+    <span role='menuitemradio' ></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Missing aria attribute: aria-checked
 

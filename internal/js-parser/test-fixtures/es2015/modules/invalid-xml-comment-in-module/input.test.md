@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<es2015/modules/invalid-xml-comment-in-module/input.js>
@@ -85,6 +84,9 @@ JSRoot {
  es2015/modules/invalid-xml-comment-in-module/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    <!--bar-->
+    ^
 
 
 ```

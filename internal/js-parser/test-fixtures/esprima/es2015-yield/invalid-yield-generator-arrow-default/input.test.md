@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:26
 				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js>
@@ -112,6 +111,9 @@ JSRoot {
  esprima/es2015-yield/invalid-yield-generator-arrow-default/input.js:1:26 parse(js) ━━━━━━━━━━━━━━━━
 
   ✖ yield is not allowed in generator parameters
+
+    function* g() { (x = yield 42) => {} }
+                              ^
 
 
 ```

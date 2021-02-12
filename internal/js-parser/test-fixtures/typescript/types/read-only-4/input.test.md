@@ -36,7 +36,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:33
 				path: UIDPath<typescript/types/read-only-4/input.ts>
@@ -80,6 +79,9 @@ JSRoot {
  typescript/types/read-only-4/input.ts:1:20 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'readonly' type modifier is only permitted on array and tuple literal types.
+
+    type T33 = readonly Array<string>;  // Error
+                        ^^^^^^^^^^^^^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:25
 				path: UIDPath<esprima/invalid-syntax/migrated_0270/input.js>
@@ -103,6 +102,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0270/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have static property named prototype
+
+    class A {static prototype(){}}
+                    ^^^^^^^^^
 
 
 ```

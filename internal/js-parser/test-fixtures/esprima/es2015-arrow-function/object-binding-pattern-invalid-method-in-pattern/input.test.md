@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<esprima/es2015-arrow-function/object-binding-pattern-invalid-method-in-pattern/input.js>
@@ -92,6 +91,9 @@ JSRoot {
 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Object pattern cannot contains methods
+
+    ({get a(){}}) => 0;
+          ^
 
 
 ```

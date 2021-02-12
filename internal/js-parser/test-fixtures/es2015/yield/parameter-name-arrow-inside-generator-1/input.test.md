@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:8
 				path: UIDPath<es2015/yield/parameter-name-arrow-inside-generator-1/input.js>
@@ -99,6 +98,11 @@ JSRoot {
  es2015/yield/parameter-name-arrow-inside-generator-1/input.js:2:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is not allowed in generator parameters
+
+    1 │ function* fn() {
+  > 2 │   (yield) => {};
+      │         ^
+    3 │ }
 
 
 ```

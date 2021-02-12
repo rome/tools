@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<es2020/import-meta/error-in-script/input.js>
@@ -77,6 +76,9 @@ JSRoot {
  es2020/import-meta/error-in-script/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import.meta may only appear in a module
+
+    const x = import.meta;
+              ^^^^^^^^^^^
 
 
 ```

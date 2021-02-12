@@ -15,16 +15,7 @@ import {
 } from "./constants";
 import {Position} from "@internal/parser-core";
 import {ToLines, cleanEquivalentString, showInvisibles} from "./utils";
-import {
-	Number0,
-	ob1Coerce0,
-	ob1Coerce0To1,
-	ob1Coerce1To0,
-	ob1Get0,
-	ob1Inc,
-	ob1Number0,
-	ob1Number1Neg1,
-} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {
 	AnyMarkups,
 	StaticMarkup,
@@ -89,8 +80,8 @@ function formatLineView(
 				{
 					char: "<error><emphasis>^</emphasis></error>",
 					line: "1",
-					start: String(marker.start),
-					end: String(marker.end),
+					start: marker.start,
+					end: marker.end,
 				},
 			),
 		);
@@ -101,8 +92,8 @@ function formatLineView(
 
 type Marker = {
 	message: StaticMarkup;
-	start: Number0;
-	end: Number0;
+	start: ZeroIndexed;
+	end: ZeroIndexed;
 };
 
 type FormattedLine = {
@@ -136,10 +127,10 @@ export default function buildCodeFrame(
 	if (type === "pointer" && (start === undefined || end === undefined)) {
 		shouldBail = true;
 	}
-	if (start?.line === ob1Number1Neg1) {
+	if (start?.line.valueOf() === -1) {
 		shouldBail = true;
 	}
-	if (end?.line === ob1Number1Neg1) {
+	if (end?.line.valueOf() === -1) {
 		shouldBail = true;
 	}
 	if (shouldBail) {
@@ -153,34 +144,34 @@ export default function buildCodeFrame(
 	let truncated = false;
 
 	const startLineIndex =
-		start === undefined ? ob1Number0 : ob1Coerce1To0(start.line);
+		start === undefined ? new ZeroIndexed() : start.line.toZeroIndexed();
 	let endLineIndex =
 		end === undefined
-			? ob1Coerce0(allLines.length - 1)
-			: ob1Coerce1To0(end.line);
+			? new ZeroIndexed(allLines.length - 1)
+			: end.line.toZeroIndexed();
 
 	// Increase the amount of lines we should show for "context"
 	let contextStartIndex =
 		start === undefined
 			? startLineIndex
-			: ob1Coerce0(
-					Math.max(0, ob1Get0(startLineIndex) - CODE_FRAME_CONTEXT_LINES),
+			: new ZeroIndexed(
+					Math.max(0, startLineIndex.valueOf() - CODE_FRAME_CONTEXT_LINES),
 				);
 	let contextEndIndex =
 		end === undefined
 			? endLineIndex
-			: ob1Coerce0(
+			: new ZeroIndexed(
 					Math.min(
 						allLines.length - 1,
-						ob1Get0(endLineIndex) + CODE_FRAME_CONTEXT_LINES,
+						endLineIndex.valueOf() + CODE_FRAME_CONTEXT_LINES,
 					),
 				);
 
 	let maxVisibleLineNo = 0;
 
 	let formattedLines: Array<FormattedLine | undefined> = [];
-	for (let i = contextStartIndex; i <= contextEndIndex; i = ob1Inc(i)) {
-		let line = allLines[ob1Get0(i)];
+	for (let i = contextStartIndex; i <= contextEndIndex; i = i.increment()) {
+		let line = allLines[i.valueOf()];
 		if (line === undefined) {
 			continue;
 		}
@@ -203,26 +194,26 @@ export default function buildCodeFrame(
 		let marker: undefined | Marker;
 
 		if (shouldHighlight && start !== undefined && end !== undefined) {
-			if (i === startLineIndex && i === endLineIndex) {
+			if (i.equal(startLineIndex) && i.equal(endLineIndex)) {
 				// Only line in the selection
 				marker = {
 					message: markerMessage,
 					start: start.column,
 					end: end.column,
 				};
-			} else if (i === startLineIndex) {
+			} else if (i.equal(startLineIndex)) {
 				// First line in selection
 				marker = {
 					message: markup``,
 					start: start.column,
 					// line could be highlighted
-					end: ob1Coerce0(rawLine.length),
+					end: new ZeroIndexed(rawLine.length),
 				};
-			} else if (i === endLineIndex) {
+			} else if (i.equal(endLineIndex)) {
 				// Last line in selection
 				marker = {
 					message: markerMessage,
-					start: ob1Number0,
+					start: new ZeroIndexed(),
 					end: end.column,
 				};
 			}
@@ -239,9 +230,7 @@ export default function buildCodeFrame(
 			},
 		).value;
 
-		const lineNo = ob1Coerce0To1(i);
-		let gutter = markup`${String(lineNo)}`;
-
+		let gutter = markup`${String(i.toOneIndexed().valueOf())}`;
 		if (shouldHighlight) {
 			gutter = markup`${CODE_FRAME_SELECTED_INDENT}${gutter}`;
 		} else {
@@ -254,7 +243,7 @@ export default function buildCodeFrame(
 			line: highlightLine,
 		});
 
-		maxVisibleLineNo = ob1Get0(i) + 1;
+		maxVisibleLineNo = i.valueOf() + 1;
 
 		if (truncateLines !== undefined && maxVisibleLineNo > truncateLines) {
 			truncated = true;
@@ -300,9 +289,9 @@ export default function buildCodeFrame(
 
 	// If what the marker is highlighting equals the marker message then it's redundant so don't show the message
 	if (!isEmptyMarkup(markerMessage) && start !== undefined && end !== undefined) {
-		const line = allLines[ob1Get0(ob1Coerce1To0(start.line))];
+		const line = allLines[start.line.toZeroIndexed().valueOf()];
 		if (line !== undefined) {
-			const text = line[0].slice(ob1Get0(start.column), ob1Get0(end.column));
+			const text = line[0].slice(start.column.valueOf(), end.column.valueOf());
 			if (cleanEquivalentString(text) === cleanEquivalentString(markerMessage)) {
 				for (const selection of formattedLines) {
 					if (selection?.marker?.message === markerMessage) {

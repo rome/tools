@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:20
 				path: UIDPath<es2015/uncategorised/38/input.js>
@@ -100,6 +99,9 @@ JSRoot {
  es2015/uncategorised/38/input.js:1:20 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Parenthesized expression didnt contain anything
+
+    console.log(typeof () => {});
+                        ^
 
 
 ```

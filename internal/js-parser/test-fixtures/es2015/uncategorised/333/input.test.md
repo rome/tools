@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:20
 				path: UIDPath<es2015/uncategorised/333/input.js>
@@ -108,6 +107,9 @@ JSRoot {
  es2015/uncategorised/333/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
+
+    'use strict'; ({eval = defValue} = obj)
+                    ^^^^
 
 
 ```

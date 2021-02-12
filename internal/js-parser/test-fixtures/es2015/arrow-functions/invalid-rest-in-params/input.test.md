@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:13
 				path: UIDPath<es2015/arrow-functions/invalid-rest-in-params/input.js>
@@ -83,6 +82,13 @@ JSRoot {
  es2015/arrow-functions/invalid-rest-in-params/input.js:3:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    1 │ (
+    2 │     first,
+  > 3 │     ...second,
+      │     ^^^^^^^^^
+    4 │     third
+    5 │ ) => {};
 
 
 ```

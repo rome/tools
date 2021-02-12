@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:0
 				path: UIDPath<jsx/errors/unterminated-string/input.jsx>
@@ -76,6 +75,8 @@ JSRoot {
  jsx/errors/unterminated-string/input.jsx:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
+
+    <foo bar="
 
 
 ```

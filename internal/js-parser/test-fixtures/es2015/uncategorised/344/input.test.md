@@ -36,7 +36,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<es2015/uncategorised/344/input.js>
@@ -54,6 +53,9 @@ JSRoot {
  es2015/uncategorised/344/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
+
+    super
+    ^
 
 
 ```

@@ -387,14 +387,17 @@ class CheckRunner {
 		}
 	}
 
-	public getDiagnosticsForPath(path: AnyPath, guaranteed: boolean): Diagnostics {
+	public getDiagnosticsForPath(
+		path: AnyPath,
+		guaranteedOnly: boolean,
+	): Diagnostics {
 		const processor = new DiagnosticsProcessor();
 
 		for (const subprocessor of this.processors) {
 			const diagnostics = subprocessor.getDiagnosticsForPath(path, false);
 			if (diagnostics !== undefined) {
 				processor.addDiagnostics(
-					guaranteed ? diagnostics.guaranteed : diagnostics.complete,
+					guaranteedOnly ? diagnostics.guaranteed : diagnostics.complete,
 				);
 				processor.addSuppressions(diagnostics.suppressions);
 			}

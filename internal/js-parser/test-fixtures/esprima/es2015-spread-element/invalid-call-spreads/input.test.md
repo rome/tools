@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<esprima/es2015-spread-element/invalid-call-spreads/input.js>
@@ -83,6 +82,9 @@ JSRoot {
  esprima/es2015-spread-element/invalid-call-spreads/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an spread argument
+
+    f(... ... g);
+          ^
 
 
 ```

@@ -8,9 +8,16 @@
 
 ```
 
- lint,react,useSortComp/reject/1/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useSortComp/reject/1/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ render should be placed after displayName.
+
+    1 │ // Must force a lifecycle method to be placed before render
+    2 │ class Hello extends React.Component {
+  > 3 │   render() {
+      │   ^^^^^^
+    4 │     return <div>Hello</div>;
+    5 │   }
 
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
@@ -37,9 +44,16 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,useSortComp/reject/2/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useSortComp/reject/2/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ render should be placed after onClick.
+
+    1 │ // Must force a custom method to be placed before render
+    2 │ class Hello extends React.Component {
+  > 3 │   render() {
+      │   ^^^^^^
+    4 │     return <div>Hello</div>;
+    5 │   }
 
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
@@ -66,7 +80,7 @@ class Hello extends React.Component {
 
 ```
 
- lint,react,useSortComp/reject/3/file.tsx:4:2 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useSortComp/reject/3/file.tsx:4:2 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ render should be placed after onClick.
 
@@ -97,9 +111,16 @@ var Hello = () => {
 
 ```
 
- lint,react,useSortComp/reject/4/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useSortComp/reject/4/file.tsx:3:1 lint/react/useSortComp ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ props should be placed after render.
+
+    1 │ // Type Annotations should not be at the top by default
+    2 │ class Hello extends React.Component {
+  > 3 │   props: { text: string };
+      │   ^^^^^
+    4 │   constructor() {}
+    5 │   state: Object = {};
 
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.

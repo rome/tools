@@ -8,9 +8,12 @@
 
 ```
 
- lint,js,noNegationElse/reject/1/file.ts:1 lint/js/noNegationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noNegationElse/reject/1/file.ts:1 lint/js/noNegationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invert blocks when performing a negation test.
+
+    if (!true) {consequent;} else {alternate;}
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -41,9 +44,12 @@ if (true) {
 
 ```
 
- lint,js,noNegationElse/reject/2/file.ts:1 lint/js/noNegationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noNegationElse/reject/2/file.ts:1 lint/js/noNegationElse  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invert blocks when performing a negation test.
+
+    !true ? consequent : alternate
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 

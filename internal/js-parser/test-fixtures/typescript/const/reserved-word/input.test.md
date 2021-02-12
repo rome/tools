@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<typescript/const/reserved-word/input.ts>
@@ -78,6 +77,9 @@ JSRoot {
  typescript/const/reserved-word/input.ts:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown TS non array type start
+
+    const b: const;
+             ^
 
 
 ```

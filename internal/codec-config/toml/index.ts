@@ -9,19 +9,19 @@ import {
 	PartialConsumeConfigResult,
 } from "@internal/codec-config/types";
 import {DIAGNOSTIC_CATEGORIES, descriptions} from "@internal/diagnostics";
-import {Number0, ob1Inc} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import convertToTomlFromConsumer from "@internal/codec-config/toml/convertToTomlFromConsumer";
 
 function isSingleStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return !(char === "'" && !isEscaped(index, input));
 }
 function isDoubleStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return !(char === "'" && !isEscaped(index, input));
@@ -44,14 +44,14 @@ const tomlParser = createParser<TOMLParserTypes>({
 			case "'":
 			case '"': {
 				const [value, end] = parser.readInputFrom(
-					ob1Inc(index),
+					index.increment(),
 					char === '"' ? isDoubleStringValueChar : isSingleStringValueChar,
 				);
 
 				// TODO check overflow
 
 				// TODO string unescaping
-				return parser.finishValueToken("String", value, ob1Inc(end));
+				return parser.finishValueToken("String", value, end.increment());
 			}
 
 			case "[":

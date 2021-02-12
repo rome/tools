@@ -9,13 +9,13 @@ import {
 	SourceLocation,
 } from "./types";
 import {catchDiagnosticsSync} from "@internal/diagnostics";
-import {ob1Add, ob1Dec} from "@internal/ob1";
 import {
 	TaggedTemplateFunction,
 	isPlainObject,
 } from "@internal/typescript-helpers";
 import {pretty} from "@internal/pretty-format";
 import {AnyPath, UNKNOWN_PATH, isPath} from "@internal/path";
+import {isIndexedNumberish} from "@internal/math";
 
 export function isDigit(char: undefined | string): boolean {
 	return char !== undefined && /[0-9]/.test(char);
@@ -140,23 +140,28 @@ export function comparePositions(
 		return 0;
 	}
 
-	if (left.line === right.line) {
-		if (left.column < right.column) {
+	const leftLine = left.line.valueOf();
+	const leftColumn = left.column.valueOf();
+	const rightLine = right.line.valueOf();
+	const rightColumn = right.column.valueOf();
+
+	if (leftLine === rightLine) {
+		if (leftColumn < rightColumn) {
 			return -1;
 		}
 
-		if (left.column > right.column) {
+		if (leftColumn > rightColumn) {
 			return 1;
 		}
 
 		return 0;
 	}
 
-	if (left.line < right.line) {
+	if (leftLine < rightLine) {
 		return -1;
 	}
 
-	if (left.line > right.line) {
+	if (leftLine > rightLine) {
 		return 1;
 	}
 
@@ -166,13 +171,13 @@ export function comparePositions(
 }
 
 export function derivePositionKey(pos: Position): string {
-	return `${String(pos.line)}:${String(pos.column)}`;
+	return `${String(pos.line.valueOf())}:${String(pos.column.valueOf())}`;
 }
 
 export function addPositions(a: Position, b: Position): Position {
 	return {
-		line: ob1Dec(ob1Add(a.line, b.line)),
-		column: ob1Add(a.column, b.column),
+		line: a.line.add(b.line).decrement(),
+		column: a.column.add(b.column),
 	};
 }
 
@@ -228,11 +233,11 @@ export function extractSourceLocationRangeFromNodes(
 	};
 }
 
-export function isPosition(val: unknown): val is Position {
+export function isPositionish(val: unknown): val is Position {
 	return (
 		isPlainObject(val) &&
-		typeof val.line === "number" &&
-		typeof val.column === "number"
+		isIndexedNumberish(val.line) &&
+		isIndexedNumberish(val.column)
 	);
 }
 
@@ -258,7 +263,7 @@ export function isSourceLocation(val: unknown): val is SourceLocation {
 		(isPath(val) || typeof val.filename === "undefined") &&
 		(typeof val.identifierName === "string" ||
 		typeof val.identifierName === "undefined") &&
-		isPosition(val.start) &&
-		isPosition(val.end)
+		isPositionish(val.start) &&
+		isPositionish(val.end)
 	);
 }

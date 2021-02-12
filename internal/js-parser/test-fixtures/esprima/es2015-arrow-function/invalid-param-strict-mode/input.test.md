@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<esprima/es2015-arrow-function/invalid-param-strict-mode/input.js>
@@ -79,6 +78,9 @@ JSRoot {
  esprima/es2015-arrow-function/invalid-param-strict-mode/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
+
+    eval => {"use strict"};
+    ^^^^
 
 
 ```

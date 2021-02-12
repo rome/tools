@@ -49,7 +49,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js>
@@ -67,6 +66,9 @@ JSRoot {
  esprima/es2015-identifier/invalid_escaped_surrogate_pairs/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ Invalid Unicode escape
+
+    var \uD83B\uDE00
+              ^
 
 
 ```

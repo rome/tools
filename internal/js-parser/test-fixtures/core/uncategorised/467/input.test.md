@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:38
 				path: UIDPath<core/uncategorised/467/input.js>
@@ -91,6 +90,9 @@ JSRoot {
  core/uncategorised/467/input.js:1:29 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ 'with' in strict mode
+
+    (function () { 'use strict'; with (i); }())
+                                 ^^^^^^^^^
 
 
 ```

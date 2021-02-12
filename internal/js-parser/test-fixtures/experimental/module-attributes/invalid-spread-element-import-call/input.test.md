@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:20
 				path: UIDPath<experimental/module-attributes/invalid-spread-element-import-call/input.js>
@@ -84,6 +83,9 @@ JSRoot {
  experimental/module-attributes/invalid-spread-element-import-call/input.js:1:19 parse(js) ━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
+
+    import("./foo.json", ...[]);
+                       ^
 
 
 ```

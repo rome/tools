@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<es2015/uncategorised/273/input.js>
@@ -88,6 +87,9 @@ JSRoot {
  es2015/uncategorised/273/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an array element
+
+    var a = [if (x) x]
+             ^
 
 
 ```

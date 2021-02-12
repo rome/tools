@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:24
 				path: UIDPath<core/uncategorised/420/input.js>
@@ -75,6 +74,9 @@ JSRoot {
  core/uncategorised/420/input.js:1:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    if(false) doThis(); else
+                            ^
 
 
 ```

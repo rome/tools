@@ -8,7 +8,7 @@
 import {Event} from "@internal/events";
 import {TerminalFeatures} from "@internal/cli-environment";
 import {AnyMarkup, AnyMarkups, StaticMarkup} from "@internal/markup";
-import {Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {
 	AsyncCallback,
 	AsyncVoidCallback,
@@ -61,8 +61,8 @@ export type ReporterStreamLineSnapshot = {
 };
 
 export type ReporterStreamState = {
-	lineSnapshots: Map<ReporterStreamLineSnapshot, Number0>;
-	currentLine: Number0;
+	lineSnapshots: Map<ReporterStreamLineSnapshot, ZeroIndexed>;
+	currentLine: ZeroIndexed;
 	buffer: string[];
 	leadingNewline: boolean;
 	nextLineInsertLeadingNewline: boolean;

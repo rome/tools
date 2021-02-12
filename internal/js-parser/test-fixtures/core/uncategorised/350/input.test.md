@@ -40,7 +40,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<core/uncategorised/350/input.js>
@@ -58,6 +57,9 @@ JSRoot {
  core/uncategorised/350/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid number
+
+    3e+
+       ^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:20
 				path: UIDPath<es2015/yield/in-plain-function/input.js>
@@ -89,6 +88,9 @@ JSRoot {
  es2015/yield/in-plain-function/input.js:1:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    (function () { yield 10 })
+                         ^
 
 
 ```

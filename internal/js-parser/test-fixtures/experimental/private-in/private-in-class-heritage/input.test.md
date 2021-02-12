@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:21
 				path: UIDPath<experimental/private-in/private-in-class-heritage/input.js>
@@ -185,6 +184,13 @@ JSRoot {
  experimental/private-in/private-in-class-heritage/input.js:4:21 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an class heritage
+
+    2 │   #x = 1;
+    3 │   test() {
+  > 4 │     class X extends (#x in {}) {};
+      │                      ^
+    5 │   }
+    6 │ }
 
 
 ```

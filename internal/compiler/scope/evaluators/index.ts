@@ -35,7 +35,12 @@ import JSClassMethod from "./JSClassMethod";
 import TSDeclareMethod from "./TSDeclareMethod";
 import JSForInStatement from "./JSForInStatement";
 import TSMappedType from "./TSMappedType";
+import TSCallSignatureDeclaration from "./TSCallSignatureDeclaration";
+import TSConstructorType from "./TSConstructorType";
+import TSConstructSignatureDeclaration from "./TSConstructSignatureDeclaration";
 import TSFunctionType from "./TSFunctionType";
+import TSMethodSignature from "./TSMethodSignature";
+import TSConditionalType from "./TSConditionalType";
 import {AnyNode} from "@internal/ast";
 
 export type ScopeEvaluator = {
@@ -49,7 +54,6 @@ export function createScopeEvaluator<T extends ScopeEvaluator>(obj: T): T {
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();
 
-evaluators.set("TSFunctionType", TSFunctionType);
 evaluators.set("TSMappedType", TSMappedType);
 evaluators.set("TSTypeParameter", TSTypeParameter);
 evaluators.set("TSTypeParameterDeclaration", TSTypeParameterDeclaration);
@@ -79,5 +83,14 @@ evaluators.set("JSClassMethod", JSClassMethod);
 evaluators.set("JSObjectMethod", JSObjectMethod);
 evaluators.set("TSInterfaceDeclaration", TSInterfaceDeclaration);
 evaluators.set("TSEnumDeclaration", TSEnumDeclaration);
+evaluators.set("TSCallSignatureDeclaration", TSCallSignatureDeclaration);
+evaluators.set("TSConstructorType", TSConstructorType);
+evaluators.set(
+	"TSConstructSignatureDeclaration",
+	TSConstructSignatureDeclaration,
+);
+evaluators.set("TSFunctionType", TSFunctionType);
+evaluators.set("TSMethodSignature", TSMethodSignature);
+evaluators.set("TSConditionalType", TSConditionalType);
 
 export default evaluators;

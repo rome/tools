@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:12
 				path: UIDPath<typescript/cast/destructure-and-assign/input.ts>
@@ -112,6 +111,10 @@ JSRoot {
  typescript/cast/destructure-and-assign/input.ts:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected type cast in parameter position
+
+  > 1 │ [a as number] = [42];
+      │  ^^^^^^^^^^^
+    2 │ [<number>a] = [42];
 
 
 ```

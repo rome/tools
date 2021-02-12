@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<esprima/es2015-template-literals/unclosed-nested/input.js>
@@ -33,22 +32,13 @@ JSRoot {
 			description: Object {
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed template expression value"}
+				message: RAW_MARKUP {value: "Unclosed <emphasis>template expression value</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 2:0
-							path: UIDPath<esprima/es2015-template-literals/unclosed-nested/input.js>
-							start: Position 2:0
-						}
-					}
+					frame {location: SourceLocation esprima/es2015-template-literals/unclosed-nested/input.js 2:0-2:0}
 				]
 			}
 		}
@@ -108,6 +98,9 @@ JSRoot {
  esprima/es2015-template-literals/unclosed-nested/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed template expression value
+
+    `hello ${10 `test`
+           ^
 
   ℹ We expected to find the closing character } here
 

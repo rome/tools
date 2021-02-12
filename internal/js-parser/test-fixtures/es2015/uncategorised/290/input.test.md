@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:23
 				path: UIDPath<es2015/uncategorised/290/input.js>
@@ -81,6 +80,9 @@ JSRoot {
  es2015/uncategorised/290/input.js:1:23 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid escape sequence in template
+
+    "use strict"; `${test}\02`;
+                           ^
 
 
 ```

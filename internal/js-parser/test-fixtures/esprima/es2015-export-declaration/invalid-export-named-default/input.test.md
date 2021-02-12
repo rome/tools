@@ -18,6 +18,25 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation esprima/es2015-export-declaration/invalid-export-named-default/input.js 1:0-2:0
 	path: UIDPath<esprima/es2015-export-declaration/invalid-export-named-default/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>default</emphasis>"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:15
+				path: UIDPath<esprima/es2015-export-declaration/invalid-export-named-default/input.js>
+				start: Position 1:8
+			}
+		}
+	]
 	body: Array [
 		JSExportLocalDeclaration {
 			declaration: undefined
@@ -38,26 +57,6 @@ JSRoot {
 			]
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword default"}
-			}
-			location: Object {
-				integrity: undefined
-				language: "js"
-				marker: undefined
-				sourceText: undefined
-				end: Position 1:15
-				path: UIDPath<esprima/es2015-export-declaration/invalid-export-named-default/input.js>
-				start: Position 1:8
-			}
-		}
-	]
 }
 ```
 
@@ -68,6 +67,9 @@ JSRoot {
  esprima/es2015-export-declaration/invalid-export-named-default/input.js:1:8 parse(js) ━━━━━━━━━━━━━
 
   ✖ Unexpected keyword default
+
+    export {default}
+            ^^^^^^^
 
 
 ```

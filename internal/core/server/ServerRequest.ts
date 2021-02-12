@@ -40,8 +40,8 @@ import {
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getOrDeriveDiagnosticsFromError,
-	provideDiagnosticAdviceForError,
 	joinCategoryName,
+	provideDiagnosticAdviceForError,
 } from "@internal/diagnostics";
 import {
 	DiagnosticsFileHandler,
@@ -85,7 +85,6 @@ import {
 	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
-import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
 import {markup, readMarkup} from "@internal/markup";
 import {DiagnosticsProcessorOptions} from "@internal/diagnostics/DiagnosticsProcessor";
 import {VCSClient} from "@internal/vcs";
@@ -94,6 +93,7 @@ import {FormatterOptions} from "@internal/formatter";
 import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
 import WorkerBridge from "../common/bridges/WorkerBridge";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -519,9 +519,9 @@ export default class ServerRequest {
 	private logDiagnostics(diagnostics: Diagnostics) {
 		for (const diag of diagnostics) {
 			this.logger.error(
-				markup`Encountered diagnostic: ${diag.description.message}. Category: ${joinCategoryName(diag.description.category)}. Location: ${diagnosticLocationToMarkupFilelink(
-					diag.location,
-				)}`,
+				markup`Encountered diagnostic: ${diag.description.message}. Category: ${joinCategoryName(
+					diag.description.category,
+				)}. Location: ${diagnosticLocationToMarkupFilelink(diag.location)}`,
 			);
 		}
 	}
@@ -713,12 +713,12 @@ export default class ServerRequest {
 		return {
 			sourceText: cwd,
 			start: {
-				line: ob1Number1,
-				column: ob1Number0,
+				line: new OneIndexed(),
+				column: new ZeroIndexed(),
 			},
 			end: {
-				line: ob1Number1,
-				column: ob1Coerce0(cwd.length),
+				line: new OneIndexed(),
+				column: new ZeroIndexed(cwd.length),
 			},
 			path: createUIDPath("cwd"),
 		};
@@ -726,13 +726,13 @@ export default class ServerRequest {
 
 	public getDiagnosticLocationFromFlags(
 		target: "none",
-	): RequiredProps<DiagnosticLocation, "sourceText">
+	): RequiredProps<DiagnosticLocation, "sourceText">;
 	public getDiagnosticLocationFromFlags(
 		target: Exclude<SerializeCLITarget, "none">,
-	): SerializeCLILocation
+	): SerializeCLILocation;
 	public getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
-	): DiagnosticLocation
+	): DiagnosticLocation;
 	public getDiagnosticLocationFromFlags(
 		target: SerializeCLITarget,
 	): DiagnosticLocation {

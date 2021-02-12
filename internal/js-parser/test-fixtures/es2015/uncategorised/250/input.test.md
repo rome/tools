@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<es2015/uncategorised/250/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  es2015/uncategorised/250/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Parenthesized expression didnt contain anything
+
+    () <= 42
+     ^
 
 
 ```

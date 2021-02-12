@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<es2015/statements/label-invalid-const/input.js>
@@ -74,6 +73,9 @@ JSRoot {
  es2015/statements/label-invalid-const/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Lexical declaration cannot appear in a single-statement context
+
+    foo: const bar = null;
+         ^
 
 
 ```

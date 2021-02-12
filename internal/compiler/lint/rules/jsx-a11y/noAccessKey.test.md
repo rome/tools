@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx-a11y,noAccessKey/reject/1/file.tsx:1:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noAccessKey/reject/1/file.tsx:1:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
+
+    <input accessKey='key />
+                            ^
 
 
 ```
@@ -25,10 +28,13 @@ undefined
 
 ```
 
- lint,jsx-a11y,noAccessKey/reject/2/file.tsx:1:7 lint/jsx-a11y/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━
+ lint/jsx-a11y/noAccessKey/reject/2/file.tsx:1:7 lint/jsx-a11y/noAccessKey  FIXABLE  ━━━━━━━━━━━━━━━
 
   ✖ Avoid the accessKey attribute to reduce inconsistencies between keyboard shortcuts and screen
     reader keyboard comments.
+
+    <input accessKey={key} />
+           ^^^^^^^^^^^^^^^
 
   ℹ Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard
     actions across applications.

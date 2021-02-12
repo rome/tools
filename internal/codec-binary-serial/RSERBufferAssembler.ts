@@ -10,7 +10,7 @@ import {
 import {
 	Position,
 	SourceLocation,
-	isPosition,
+	isPositionish,
 	isSourceLocation,
 } from "@internal/parser-core";
 import {
@@ -36,7 +36,12 @@ import {
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
 import {utf8Count} from "./utf8";
-import {ob1Get} from "@internal/ob1";
+import {
+	AnyIndexedNumber,
+	OneIndexed,
+	ZeroIndexed,
+	isIndexedNumberish,
+} from "@internal/math";
 
 const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
@@ -173,6 +178,17 @@ export default class RSERBufferAssembler {
 		for (let i = 0; i < val.length; ++i) {
 			this.encodeValue(val[i]);
 		}
+	}
+
+	private encodeIndexedNumber(num: AnyIndexedNumber) {
+		if (num instanceof OneIndexed) {
+			this.writeCode(VALUE_CODES.ONE_INDEXED_NUMBER);
+		} else if (num instanceof ZeroIndexed) {
+			this.writeCode(VALUE_CODES.ZERO_INDEXED_NUMBER);
+		} else {
+			throw new Error("Unknown indexed number");
+		}
+		this.encodeInt(num.valueOf());
 	}
 
 	private encodeSet(set: RSERSet) {
@@ -325,12 +341,17 @@ export default class RSERBufferAssembler {
 			return;
 		}
 
-		if (val instanceof ArrayBuffer) {
-			return this.encodeArrayBuffer(val);
+		if (Array.isArray(val)) {
+			return this.encodeArray(val);
 		}
 
-		if (ArrayBuffer.isView(val)) {
-			return this.encodeArrayBufferView(val);
+		// Weird duck typing for cross-realm objects
+		if (
+			isPlainObject(val) &&
+			val.constructor !== undefined &&
+			val.constructor.name === "Object"
+		) {
+			return this.encodePlainObject(val);
 		}
 
 		if (val instanceof Set) {
@@ -341,14 +362,6 @@ export default class RSERBufferAssembler {
 			return this.encodeMap(val);
 		}
 
-		if (val instanceof Error) {
-			return this.encodeError(val);
-		}
-
-		if (val instanceof RegExp) {
-			return this.encodeRegExp(val);
-		}
-
 		if (isPathMap(val)) {
 			return this.encodePathMap(val);
 		}
@@ -357,27 +370,39 @@ export default class RSERBufferAssembler {
 			return this.encodePathSet(val);
 		}
 
-		if (Array.isArray(val)) {
-			return this.encodeArray(val);
+		if (isIndexedNumberish(val)) {
+			return this.encodeIndexedNumber(val);
 		}
 
 		if (val instanceof Date) {
 			return this.encodeDate(val);
 		}
 
-		if (isPlainObject(val)) {
-			this.encodePlainObject(val);
-		} else {
-			throw new Error(
-				pretty`Don't know how to serialize the object ${val} to RSER`,
-			);
+		if (val instanceof Error) {
+			return this.encodeError(val);
 		}
+
+		if (val instanceof RegExp) {
+			return this.encodeRegExp(val);
+		}
+
+		if (val instanceof ArrayBuffer) {
+			return this.encodeArrayBuffer(val);
+		}
+
+		if (ArrayBuffer.isView(val)) {
+			return this.encodeArrayBufferView(val);
+		}
+
+		throw new Error(
+			pretty`Don't know how to serialize the object ${val} to RSER`,
+		);
 	}
 
 	private encodePosition(pos: Position) {
 		this.writeCode(VALUE_CODES.POSITION);
-		this.encodeInt(ob1Get(pos.line));
-		this.encodeInt(ob1Get(pos.column));
+		this.encodeInt(pos.line.valueOf());
+		this.encodeInt(pos.column.valueOf());
 	}
 
 	private encodeSourceLocation(loc: SourceLocation) {
@@ -391,17 +416,17 @@ export default class RSERBufferAssembler {
 			this.encodeString(loc.identifierName, true);
 		}
 
-		this.encodeInt(ob1Get(loc.start.line));
-		this.encodeInt(ob1Get(loc.start.column));
-		this.encodeInt(ob1Get(loc.end.line));
-		this.encodeInt(ob1Get(loc.end.column));
+		this.encodeInt(loc.start.line.valueOf());
+		this.encodeInt(loc.start.column.valueOf());
+		this.encodeInt(loc.end.line.valueOf());
+		this.encodeInt(loc.end.column.valueOf());
 	}
 
 	private encodePlainObject(val: RSERObject) {
 		const keys = Object.keys(val);
 
 		// Dedicated types for common object shapes
-		if (keys.length === 2 && isPosition(val)) {
+		if (keys.length === 2 && isPositionish(val)) {
 			return this.encodePosition(val);
 		}
 		if (keys.length <= 4 && isSourceLocation(val)) {

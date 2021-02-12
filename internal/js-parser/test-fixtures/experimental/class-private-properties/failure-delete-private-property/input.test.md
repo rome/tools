@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:18
 				path: UIDPath<experimental/class-private-properties/failure-delete-private-property/input.js>
@@ -148,6 +147,13 @@ JSRoot {
  experimental/class-private-properties/failure-delete-private-property/input.js:4:16 parse(js) ━━━━━
 
   ✖ Deleting a private field is not allowed
+
+    2 │   #x;
+    3 │   constructor() {
+  > 4 │     delete this.#x;
+      │                 ^^
+    5 │   }
+    6 │ }
 
 
 ```

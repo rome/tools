@@ -8,9 +8,15 @@
 
 ```
 
- lint,react,useRenderReturn/reject/1/file.tsx:3:10 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/1/file.tsx:3:10 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React from 'react';
+    2 │ class Foo extends React.Component {
+  > 3 │   render() {}
+      │            ^^
+    4 │ }
 
 
 ```
@@ -29,9 +35,20 @@ class Foo extends React.Component {
 
 ```
 
- lint,react,useRenderReturn/reject/2/file.tsx:3:10 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/2/file.tsx:3:10 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React from 'react';
+    2 │ class Foo extends React.Component {
+  > 3 │   render() {
+      │            ^
+  > 4 │     [1, 2, 3].map((num) => {
+  > 5 │       return <div> Foo </div>
+  > 6 │     });
+  > 7 │   }
+      │ ^^^
+    8 │ }
 
 
 ```
@@ -56,9 +73,15 @@ class Foo extends React.Component {
 
 ```
 
- lint,react,useRenderReturn/reject/3/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/3/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React from 'react';
+    2 │ class Foo extends React.Component {
+  > 3 │   render = () => { }
+      │                  ^^^
+    4 │ }
 
 
 ```
@@ -77,9 +100,15 @@ class Foo extends React.Component {
 
 ```
 
- lint,react,useRenderReturn/reject/4/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/4/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React, {Component} from 'react';
+    2 │ class Foo extends Component {
+  > 3 │   render = () => { }
+      │                  ^^^
+    4 │ }
 
 
 ```
@@ -98,9 +127,15 @@ class Foo extends Component {
 
 ```
 
- lint,react,useRenderReturn/reject/5/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/5/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React from 'react';
+    2 │ const Foo = class extends React.Component {
+  > 3 │   render = () => { }
+      │                  ^^^
+    4 │ }
 
 
 ```
@@ -119,9 +154,15 @@ const Foo = class extends React.Component {
 
 ```
 
- lint,react,useRenderReturn/reject/6/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/6/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React, {Component} from 'react';
+    2 │ const Foo = class extends Component {
+  > 3 │   render = () => { }
+      │                  ^^^
+    4 │ }
 
 
 ```
@@ -140,9 +181,15 @@ const Foo = class extends Component {
 
 ```
 
- lint,react,useRenderReturn/reject/7/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/7/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React from 'react';
+    2 │ const Foo = class extends React.PureComponent {
+  > 3 │   render = () => { }
+      │                  ^^^
+    4 │ }
 
 
 ```
@@ -161,9 +208,15 @@ const Foo = class extends React.PureComponent {
 
 ```
 
- lint,react,useRenderReturn/reject/8/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/useRenderReturn/reject/8/file.tsx:3:16 lint/react/useRenderReturn ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The render method on a component must return content.
+
+    1 │ import React, {PureComponent} from 'react';
+    2 │ const Foo = class extends PureComponent {
+  > 3 │   render = () => { }
+      │                  ^^^
+    4 │ }
 
 
 ```

@@ -482,7 +482,7 @@ export default class Server {
 			],
 		});
 
-		processor.insertDiagnosticsEvent.subscribe((diagnostics) => {
+		processor.insertDiagnosticsEvent.subscribe(() => {
 			if (processor.hasDiagnostics()) {
 				this.fatalErrorHandler.wrapPromise(
 					this.handleDisconnectedDiagnostics(processor.getDiagnostics()),

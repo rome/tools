@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<es2015/arrow-functions/comma-after-rest-param/input.js>
@@ -73,6 +72,9 @@ JSRoot {
  es2015/arrow-functions/comma-after-rest-param/input.js:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    (...rest,) => {}
+            ^
 
 
 ```

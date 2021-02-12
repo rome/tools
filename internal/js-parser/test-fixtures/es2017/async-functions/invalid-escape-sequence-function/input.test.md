@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2017/async-functions/invalid-escape-sequence-function/input.js>
@@ -95,6 +94,9 @@ JSRoot {
  es2017/async-functions/invalid-escape-sequence-function/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    \u0061sync function() { await x }
+               ^
 
 
 ```

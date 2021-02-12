@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword from"}
+				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:23
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js>
@@ -77,6 +76,8 @@ JSRoot {
  esprima/es2015-import-declaration/invalid-import-named-as-missing-from/input.js:2 parse(js) ━━━━━━━
 
   ✖ Expected keyword from
+
+    import {default as foo}
 
 
 ```

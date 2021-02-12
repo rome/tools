@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:41
 				path: UIDPath<esprima/es2015-meta-property/unknown-property/input.js>
@@ -101,6 +100,9 @@ JSRoot {
  esprima/es2015-meta-property/unknown-property/input.js:1:25 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for new is new.target
+
+    var f = function() { new.unknown_property; }
+                             ^^^^^^^^^^^^^^^^
 
 
 ```

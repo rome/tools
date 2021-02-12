@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<core/categorized/invalid-fn-decl-inside-loop/input.js>
@@ -82,6 +81,9 @@ JSRoot {
 
   ✖ In non-strict mode code, functions can only be declared at top level, inside a block, or as
     the body of an if statement
+
+    while (1) function foo(){}
+              ^
 
 
 ```

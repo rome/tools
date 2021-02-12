@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:14
 				path: UIDPath<es2015/for-in/strict-initializer/input.js>
@@ -81,6 +80,10 @@ JSRoot {
  es2015/for-in/strict-initializer/input.js:2:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
+
+    1 │ 'use strict';
+  > 2 │ for (var a = 0 in {});
+      │      ^^^^^^^^^
 
 
 ```

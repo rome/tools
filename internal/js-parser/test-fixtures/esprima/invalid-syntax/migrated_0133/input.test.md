@@ -42,7 +42,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<esprima/invalid-syntax/migrated_0133/input.js>
@@ -60,6 +59,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0133/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing catch or finally clause
+
+    try { }
+    ^
 
 
 ```

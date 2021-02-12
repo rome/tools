@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:20
 				path: UIDPath<es2015/uncategorised/363/input.js>
@@ -99,6 +98,9 @@ JSRoot {
  es2015/uncategorised/363/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can't use await outside of an async function
+
+    function foo({ await }) {}
+                   ^^^^^
 
 
 ```

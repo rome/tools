@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:17
 				path: UIDPath<es2017/async-functions/3/input.js>
@@ -88,6 +87,9 @@ JSRoot {
  es2017/async-functions/3/input.js:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Function parameters can't be parenthesized
+
+    var foo = async ((foo)) => {};
+                     ^
 
 
 ```

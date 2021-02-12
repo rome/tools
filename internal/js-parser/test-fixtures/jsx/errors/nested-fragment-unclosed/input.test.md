@@ -38,7 +38,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<jsx/errors/nested-fragment-unclosed/input.jsx>
@@ -53,16 +52,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from this opening tag"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:2
-							path: UIDPath<jsx/errors/nested-fragment-unclosed/input.jsx>
-							start: Position 1:0
-						}
-					}
+					frame {location: SourceLocation jsx/errors/nested-fragment-unclosed/input.jsx 1:0-1:2}
 				]
 			}
 		}
@@ -77,6 +67,9 @@ JSRoot {
  jsx/errors/nested-fragment-unclosed/input.jsx:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed JSX element
+
+    <><></>
+           ^
 
   ℹ Originated from this opening tag
 

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<es2017/async-functions/invalid-inside-loop/input.js>
@@ -81,6 +80,9 @@ JSRoot {
  es2017/async-functions/invalid-inside-loop/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Async functions can only be declared at the top level or inside a block
+
+    while (1) async function foo(){}
+              ^
 
 
 ```

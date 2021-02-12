@@ -8,9 +8,15 @@
 
 ```
 
- lint,js,noDuplicateKeys/reject/1/file.ts:2:1 lint/js/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateKeys/reject/1/file.ts:2:1 lint/js/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component key. Check the test key.
+
+    1 │ const foo = {
+  > 2 │   test: true,
+      │   ^^^^
+    3 │   test2: true,
+    4 │   test: false,
 
   ℹ Defined already here
 

@@ -14,7 +14,7 @@ import {
 	Diagnostics,
 } from "./types";
 import {addOriginsToDiagnostics} from "./derive";
-import {DiagnosticsError} from "./errors";
+import {DiagnosticsError} from "./error-wrappers";
 import {
 	DIAGNOSTIC_CATEGORIES_SUPPRESS_DEPENDENCIES,
 	DiagnosticCategoryPrefix,
@@ -26,7 +26,7 @@ import DiagnosticsNormalizer, {DiagnosticsNormalizerOptions} from "./Diagnostics
 import {MarkupFormatNormalizeOptions, readMarkup} from "@internal/markup";
 import {AnyPath, MixedPathMap, MixedPathSet, equalPaths} from "@internal/path";
 import {Event} from "@internal/events";
-import { formatCategoryDescription } from "./helpers";
+import {formatCategoryDescription} from "./helpers";
 
 export type DiagnosticsProcessorOptions = {
 	filters?: DiagnosticFilterWithTest[];
@@ -159,10 +159,7 @@ export default class DiagnosticsProcessor {
 	private cachedFlatDiagnostics: undefined | Diagnostics;
 	private possibleCount: number;
 
-	private getMapEntry(
-		path: AnyPath,
-		tag?: undefined | string,
-	): DiagnosticsMapEntry {
+	private getMapEntry(path: AnyPath): DiagnosticsMapEntry {
 		let entry: undefined | DiagnosticsMapEntry = this.map.get(path);
 		if (entry === undefined) {
 			entry = {
@@ -313,8 +310,15 @@ export default class DiagnosticsProcessor {
 
 	private getDiagnosticVisibility(
 		diag: Diagnostic,
-		dedupeKeys: SeenKeys,
-		unusedSuppressions?: Set<DiagnosticSuppression>,
+		{
+			dedupeKeys,
+			includeSuppressions,
+			unusedSuppressions,
+		}: {
+			dedupeKeys: SeenKeys;
+			includeSuppressions: boolean;
+			unusedSuppressions?: Set<DiagnosticSuppression>;
+		},
 	): DiagnosticVisibility {
 		const entry = this.getMapEntry(diag.location.path);
 
@@ -322,7 +326,10 @@ export default class DiagnosticsProcessor {
 			return "hidden";
 		}
 
-		if (doesMatchSuppression(diag, entry.suppressions, unusedSuppressions)) {
+		if (
+			includeSuppressions &&
+			doesMatchSuppression(diag, entry.suppressions, unusedSuppressions)
+		) {
 			return "hidden";
 		}
 
@@ -393,7 +400,10 @@ export default class DiagnosticsProcessor {
 				}
 			}
 
-			const visibility = this.getDiagnosticVisibility(diag, entry.dedupeKeys);
+			const visibility = this.getDiagnosticVisibility(
+				diag,
+				{dedupeKeys: entry.dedupeKeys, includeSuppressions: true},
+			);
 			if (visibility !== "hidden") {
 				this.possibleCount++;
 				entry.possibleCount++;
@@ -458,15 +468,14 @@ export default class DiagnosticsProcessor {
 		const guaranteed: Diagnostics = [];
 
 		const unusedSuppressions: Set<DiagnosticSuppression> = new Set(
-			includeSuppressions ? entry.suppressions : [],
+			entry.suppressions,
 		);
 		const dedupeKeys: SeenKeys = new Set();
 
 		for (const diag of entry.diagnostics) {
 			const visibility = this.getDiagnosticVisibility(
 				diag,
-				dedupeKeys,
-				unusedSuppressions,
+				{dedupeKeys, unusedSuppressions, includeSuppressions},
 			);
 			if (visibility === "hidden") {
 				continue;

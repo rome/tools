@@ -22,7 +22,7 @@ import {
 	markup,
 	normalizeMarkup,
 } from "@internal/markup";
-import {ob1Number0, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {mergeObjects} from "@internal/typescript-helpers";
 import {AnyPath, MixedPathMap, MixedPathSet} from "@internal/path";
 
@@ -44,7 +44,7 @@ function maybeMerge<T extends object>(a: T, b: Partial<T>): T {
 	return a;
 }
 
-function maybeMap<T>(arr: Array<T>, callback: (item: T) => T): Array<T> {
+function maybeMap<T>(arr: T[], callback: (item: T) => T): T[] {
 	let modified = false;
 
 	const normalized = arr.map((item) => {
@@ -105,8 +105,8 @@ export default class DiagnosticsNormalizer {
 					// using some default positions and then we'll toss whatever positions they return
 					const resolved = sourceMaps.approxOriginalPositionFor(
 						path,
-						line ?? ob1Number1,
-						column ?? ob1Number0,
+						line ?? new OneIndexed(),
+						column ?? new ZeroIndexed(),
 					);
 					if (resolved !== undefined) {
 						return {
@@ -126,8 +126,8 @@ export default class DiagnosticsNormalizer {
 		this.inlineSourceText.set(path, sourceText);
 	}
 
-	private normalizePath(path: AnyPath): AnyPath
-	private normalizePath(path: undefined | AnyPath): undefined | AnyPath
+	private normalizePath(path: AnyPath): AnyPath;
+	private normalizePath(path: undefined | AnyPath): undefined | AnyPath;
 	private normalizePath(path: undefined | AnyPath): undefined | AnyPath {
 		const {markupOptions} = this;
 		if (markupOptions === undefined || path === undefined) {
@@ -173,10 +173,13 @@ export default class DiagnosticsNormalizer {
 				);
 				if (resolved !== undefined) {
 					path = resolved.source;
-					start = mergeObjects(start, {
-						line: resolved.line,
-						column: resolved.column,
-					});
+					start = mergeObjects(
+						start,
+						{
+							line: resolved.line,
+							column: resolved.column,
+						},
+					);
 				}
 			}
 
@@ -189,10 +192,13 @@ export default class DiagnosticsNormalizer {
 				if (resolved !== undefined) {
 					// TODO confirm this is the same as `start` if it resolved
 					path = resolved.source;
-					end = mergeObjects(end, {
-						line: resolved.line,
-						column: resolved.column,
-					});
+					end = mergeObjects(
+						end,
+						{
+							line: resolved.line,
+							column: resolved.column,
+						},
+					);
 				}
 			}
 		}
@@ -229,14 +235,17 @@ export default class DiagnosticsNormalizer {
 		start = this.normalizePositionValue(start);
 		end = this.normalizePositionValue(end);
 
-		return maybeMerge(location, {
-			integrity,
-			sourceText,
-			path: normalizedPath,
-			marker,
-			start,
-			end,
-		});
+		return maybeMerge(
+			location,
+			{
+				integrity,
+				sourceText,
+				path: normalizedPath,
+				marker,
+				start,
+				end,
+			},
+		);
 	}
 
 	private normalizeMarkup(markup: StaticMarkup): StaticMarkup {
@@ -252,42 +261,62 @@ export default class DiagnosticsNormalizer {
 	private normalizeDependencies(
 		deps: DiagnosticDependencies,
 	): DiagnosticDependencies {
-		return maybeMap(deps, (dep) => {
-			return maybeMerge(dep, {
-				path: this.normalizePath(dep.path),
-			});
-		});
+		return maybeMap(
+			deps,
+			(dep) => {
+				return maybeMerge(
+					dep,
+					{
+						path: this.normalizePath(dep.path),
+					},
+				);
+			},
+		);
 	}
 
 	private normalizeAdvice(advice: DiagnosticAdvice): DiagnosticAdvice {
-		return maybeMap(advice, (item) => {
-			return this.normalizeAdviceItem(item);
-		});
+		return maybeMap(
+			advice,
+			(item) => {
+				return this.normalizeAdviceItem(item);
+			},
+		);
 	}
 
-	private normalizeAdviceItem(
-		item: DiagnosticAdviceItem,
-	): DiagnosticAdviceItem {
+	private normalizeAdviceItem(item: DiagnosticAdviceItem): DiagnosticAdviceItem {
 		const {sourceMaps} = this;
 
 		switch (item.type) {
 			case "frame":
-				return maybeMerge(item, {
-					location: this.normalizeLocation(item.location),
-				});
+				return maybeMerge(
+					item,
+					{
+						location: this.normalizeLocation(item.location),
+					},
+				);
 
 			case "list":
-				return maybeMerge(item, {
-					list: maybeMap(item.list, (markup) => this.normalizeMarkup(markup)),
-				});
+				return maybeMerge(
+					item,
+					{
+						list: maybeMap(item.list, (markup) => this.normalizeMarkup(markup)),
+					},
+				);
 
 			case "log":
-				return maybeMerge(item, {
-					text: this.normalizeMarkup(item.text),
-				});
+				return maybeMerge(
+					item,
+					{
+						text: this.normalizeMarkup(item.text),
+					},
+				);
 
 			case "action":
-				if (this.markupOptions.stripPositions && item.commandFlags !== undefined && Object.keys(item.commandFlags).length > 0) {
+				if (
+					this.markupOptions.stripPositions &&
+					item.commandFlags !== undefined &&
+					Object.keys(item.commandFlags).length > 0
+				) {
 					return {
 						...item,
 						// Command flags could have position information
@@ -312,42 +341,54 @@ export default class DiagnosticsNormalizer {
 					}
 				}
 
-				return maybeMerge(item, {
-					importantPaths,
-					frames: maybeMap(item.frames, (frame) => {
-						const {path, line, column} = frame;
+				return maybeMerge(
+					item,
+					{
+						importantPaths,
+						frames: maybeMap(
+							item.frames,
+							(frame) => {
+								const {path, line, column} = frame;
 
-						if (
-							path === undefined ||
-							line === undefined ||
-							column === undefined ||
-							(sourceMaps !== undefined && !sourceMaps.has(path))
-						) {
-							return maybeMerge(frame, {
-								line: this.normalizePositionValue(line),
-								column: this.normalizePositionValue(column),
-								path: this.normalizePath(path),
-							});
-						}
+								if (
+									path === undefined ||
+									line === undefined ||
+									column === undefined ||
+									(sourceMaps !== undefined && !sourceMaps.has(path))
+								) {
+									return maybeMerge(
+										frame,
+										{
+											line: this.normalizePositionValue(line),
+											column: this.normalizePositionValue(column),
+											path: this.normalizePath(path),
+										},
+									);
+								}
 
-						if (sourceMaps !== undefined) {
-							const resolved = sourceMaps.approxOriginalPositionFor(
-								path,
-								line,
-								column,
-							);
-							if (resolved !== undefined) {
-								return maybeMerge(frame, {
-									path: this.normalizePath(resolved.source),
-									line: this.normalizePositionValue(resolved.line),
-									column: this.normalizePositionValue(resolved.column),
-								});
-							}
-						}
+								if (sourceMaps !== undefined) {
+									const resolved = sourceMaps.approxOriginalPositionFor(
+										path,
+										line,
+										column,
+									);
+									if (resolved !== undefined) {
+										return maybeMerge(
+											frame,
+											{
+												path: this.normalizePath(resolved.source),
+												line: this.normalizePositionValue(resolved.line),
+												column: this.normalizePositionValue(resolved.column),
+											},
+										);
+									}
+								}
 
-						return frame;
-					}),
-				});
+								return frame;
+							},
+						),
+					},
+				);
 			}
 		}
 
@@ -357,9 +398,12 @@ export default class DiagnosticsNormalizer {
 	public normalizeSuppression(
 		suppression: DiagnosticSuppression,
 	): DiagnosticSuppression {
-		return maybeMerge(suppression, {
-			path: this.normalizePath(suppression.path),
-		});
+		return maybeMerge(
+			suppression,
+			{
+				path: this.normalizePath(suppression.path),
+			},
+		);
 	}
 
 	private hasNormalize(): boolean {
@@ -376,19 +420,27 @@ export default class DiagnosticsNormalizer {
 			return true;
 		}
 
-		if (markupOptions.humanizeFilename !== undefined || markupOptions.normalizePosition !== undefined) {
+		if (
+			markupOptions.humanizeFilename !== undefined ||
+			markupOptions.normalizePosition !== undefined
+		) {
 			return true;
 		}
 
 		return false;
 	}
 
-	private normalizeDescription(description: DiagnosticDescription): DiagnosticDescription {
+	private normalizeDescription(
+		description: DiagnosticDescription,
+	): DiagnosticDescription {
 		const advice = this.normalizeAdvice(description.advice);
-		return maybeMerge(description, {
-			message: this.normalizeMarkup(description.message),
-			advice,
-		});
+		return maybeMerge(
+			description,
+			{
+				message: this.normalizeMarkup(description.message),
+				advice,
+			},
+		);
 	}
 
 	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {

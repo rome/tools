@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<es2015/for-in/let-initializer/input.js>
@@ -76,6 +75,9 @@ JSRoot {
  es2015/for-in/let-initializer/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Loop variable declaration may not have an initializer
+
+    for (let a = 0 in {});
+         ^^^^^^^^^
 
 
 ```

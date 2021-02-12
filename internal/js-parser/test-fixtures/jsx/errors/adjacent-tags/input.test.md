@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:22
 				path: UIDPath<jsx/errors/adjacent-tags/input.jsx>
@@ -137,6 +136,9 @@ JSRoot {
 
   ✖ Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment
     <>...</>?
+
+    var x = <div>one</div><div>two</div>;
+                          ^
 
 
 ```

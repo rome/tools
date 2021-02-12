@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-module-specifier/input.js>
@@ -73,6 +72,9 @@ JSRoot {
  esprima/es2015-import-declaration/invalid-import-module-specifier/input.js:1:18 parse(js) ━━━━━━━━━
 
   ✖ Export from only allows strings
+
+    export {foo} from bar
+                      ^^^
 
 
 ```

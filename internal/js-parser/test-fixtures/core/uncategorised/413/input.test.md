@@ -39,7 +39,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<core/uncategorised/413/input.js>
@@ -57,6 +56,9 @@ JSRoot {
  core/uncategorised/413/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an throw argument
+
+    throw
+         ^
 
 
 ```

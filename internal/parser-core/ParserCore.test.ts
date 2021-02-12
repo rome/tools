@@ -9,7 +9,7 @@ import {
 	createParser,
 	isDigit,
 } from "@internal/parser-core/index";
-import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import {isNewline} from "@internal/css-parser/utils";
@@ -39,26 +39,26 @@ test(
 
 			tokenize(
 				parser: ParserCore<TestParserTypes>,
-				index: Number0,
+				index: ZeroIndexed,
 			): TokenValues<TestParserTypes["tokens"]> | undefined {
 				const char = parser.getInputCharOnly(index);
 
-				if (char === "/" && parser.getInputCharOnly(index, 1) === "/") {
-					index = ob1Add(index, 2);
+				if (char === "/" && parser.getInputCharOnly(index.increment()) === "/") {
+					index = index.add(2);
 					let value = "";
 
 					while (
 						!(isNewline(parser.getInputCharOnly(index)) || parser.isEOF(index))
 					) {
 						value += parser.getInputCharOnly(index);
-						index = ob1Add(index, 1);
+						index = index.increment();
 					}
 
 					return parser.finishValueToken("Comment", value, index);
 				}
 
 				if (char === '"') {
-					index = ob1Add(index, 1);
+					index = index.increment();
 					let value = "";
 
 					while (parser.getInputCharOnly(index) !== '"') {
@@ -70,10 +70,10 @@ test(
 						}
 
 						value += parser.getInputCharOnly(index);
-						index = ob1Add(index, 1);
+						index = index.increment();
 					}
 
-					return parser.finishValueToken("String", value, ob1Inc(index));
+					return parser.finishValueToken("String", value, index.increment());
 				}
 
 				if (isDigit(char)) {
@@ -85,7 +85,7 @@ test(
 						!parser.isEOF(index)
 					) {
 						value += parser.getInputCharOnly(index);
-						index = ob1Add(index, 1);
+						index = index.increment();
 					}
 
 					return parser.finishValueToken("Number", parseInt(value), index);

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<es2015/uncategorised/239/input.js>
@@ -78,6 +77,9 @@ JSRoot {
  es2015/uncategorised/239/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import missing a source
+
+    import foo from bar
+                    ^
 
 
 ```

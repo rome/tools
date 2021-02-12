@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<esprima/es2015-generator/incomplete-yield-delegate/input.js>
@@ -92,6 +91,9 @@ JSRoot {
  esprima/es2015-generator/incomplete-yield-delegate/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an yield argument
+
+    (function*() { yield* })
+                          ^
 
 
 ```

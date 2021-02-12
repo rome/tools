@@ -33,14 +33,14 @@ import {
 	createParser,
 	isDigit,
 } from "@internal/parser-core";
-import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {isEscaped} from "@internal/string-utils";
 import {isWordChar, isWordStartChar} from "@internal/codec-config/util";
 
 // Check if a character is a part of a string, returning false for a newline or unescaped quote char
 function isJSONStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	if (char === "\n") {
@@ -53,7 +53,7 @@ function isJSONStringValueChar(
 // NOTE: Different methods as we allow newlines in RJSON strings
 function isRJSONStringValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return !(char === '"' && !isEscaped(index, input));
@@ -72,10 +72,10 @@ function isntNewline(char: string): boolean {
 
 function isntBlockCommentEnd(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
-	const nextChar = input[ob1Get0(index) + 1];
+	const nextChar = input[index.valueOf() + 1];
 	return !(char === "*" && nextChar === "/");
 }
 
@@ -120,37 +120,37 @@ export const jsonParser = createParser<JSONParserTypes>({
 			pathToComments: new Map(),
 		};
 	},
-	tokenize(parser: JSONParser, index: Number0) {
+	tokenize(parser: JSONParser, index: ZeroIndexed) {
 		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index, 1);
+		const nextChar = parser.getInputCharOnly(index.increment());
 
 		// Line comment
 		if (char === "/" && nextChar === "/") {
-			const commentValueIndex = ob1Add(index, 2);
+			const commentValueIndex = index.add(2);
 			const [value] = parser.readInputFrom(commentValueIndex, isntNewline);
 			// (comment content start + comment content length)
 			return parser.finishValueToken(
 				"LineComment",
 				value,
-				ob1Add(commentValueIndex, value.length),
+				commentValueIndex.add(value.length),
 			);
 		}
 
 		// BlockComment
 		if (char === "/" && nextChar === "*") {
-			const commentValueIndex = ob1Add(index, 2);
+			const commentValueIndex = index.add(2);
 			const [value] = parser.readInputFrom(
 				commentValueIndex,
 				isntBlockCommentEnd,
 			);
 
 			// (comment content start + comment content length + 2 characters for comment end)
-			const endIndex = ob1Add(ob1Add(commentValueIndex, value.length), 2);
+			const endIndex = commentValueIndex.add(value.length).add(2);
 
 			// Ensure the comment is closed
 			if (
-				parser.input[ob1Get0(endIndex) - 2] !== "*" ||
-				parser.input[ob1Get0(endIndex) - 1] !== "/"
+				parser.input[endIndex.valueOf() - 2] !== "*" ||
+				parser.input[endIndex.valueOf() - 1] !== "/"
 			) {
 				throw parser.unexpected({
 					description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
@@ -165,7 +165,7 @@ export const jsonParser = createParser<JSONParserTypes>({
 		switch (char) {
 			case '"': {
 				const [value, end, overflow] = parser.readInputFrom(
-					ob1Inc(index),
+					index.increment(),
 					parser.meta.type === "rjson"
 						? isRJSONStringValueChar
 						: isJSONStringValueChar,
@@ -186,7 +186,7 @@ export const jsonParser = createParser<JSONParserTypes>({
 						if (char === "\n") {
 							throw parser.unexpected({
 								description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
-								start: parser.getPositionFromIndex(ob1Add(index, strIndex)),
+								start: parser.getPositionFromIndex(index.add(strIndex)),
 							});
 						}
 					}
@@ -198,14 +198,14 @@ export const jsonParser = createParser<JSONParserTypes>({
 					(metadata, strIndex) => {
 						throw parser.unexpected({
 							description: metadata,
-							start: parser.getPositionFromIndex(ob1Add(index, strIndex)),
+							start: parser.getPositionFromIndex(index.add(strIndex)),
 						});
 					},
 					parser.meta.type === "rjson",
 				);
 
 				// increment to take the trailing quote
-				return parser.finishValueToken("String", unescaped, ob1Inc(end));
+				return parser.finishValueToken("String", unescaped, end.increment());
 			}
 
 			case "'":
@@ -256,13 +256,13 @@ export const jsonParser = createParser<JSONParserTypes>({
 				parser.readInputFrom(index, isNumberChar)[0],
 			);
 			const num = Number(value);
-			return parser.finishValueToken("Number", num, ob1Add(index, value.length));
+			return parser.finishValueToken("Number", num, index.add(value.length));
 		}
 
 		// Word - boolean, undefined etc
 		if (isWordStartChar(char)) {
 			const [value] = parser.readInputFrom(index, isWordChar);
-			return parser.finishValueToken("Word", value, ob1Add(index, value.length));
+			return parser.finishValueToken("Word", value, index.add(value.length));
 		}
 
 		// Unknown character
@@ -446,7 +446,7 @@ function parseObject(
 // Remove underscores from 'a string, this is used for numeric separators eg. 100_000
 function removeUnderscores(
 	parser: JSONParser,
-	index: Number0,
+	index: ZeroIndexed,
 	raw: string,
 ): string {
 	let str = "";
@@ -459,7 +459,7 @@ function removeUnderscores(
 			if (parser.meta.type !== "rjson") {
 				throw parser.unexpected({
 					description: descriptions.JSON.NUMERIC_SEPARATORS_IN_JSON,
-					start: parser.getPositionFromIndex(ob1Inc(index)),
+					start: parser.getPositionFromIndex(index.increment()),
 				});
 			}
 		} else {
@@ -924,11 +924,11 @@ function _parse(parser: JSONParser, categoryValue: string): ConfigParserResult {
 						...loc,
 						start: {
 							...loc.start,
-							column: ob1Add(loc.start.column, 1),
+							column: loc.start.column.add(1),
 						},
 						end: {
 							...loc.end,
-							column: ob1Sub(loc.end.column, 1),
+							column: loc.end.column.subtract(1),
 						},
 					};
 				}

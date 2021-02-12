@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {enhanceNodeInspectClass} from "@internal/node";
 import os = require("os");
 
 interface AgnosticFilePathMemo {
@@ -42,30 +43,32 @@ export type AnyPath = AbsoluteFilePath | RelativeFilePath | URLPath | UIDPath;
 
 export type PathSegments = string[];
 
-export abstract class BasePath<Super extends AnyPath = AnyPath> {
+export class BasePath<Super extends AnyPath = AnyPath> {
 	constructor(parsed: ParsedPath, memo: FilePathMemo<Super>) {
 		this.segments = parsed.segments;
 		this.parsed = parsed;
 		this.memo = memo;
 		this.memoizedChildren = new Map();
+		this[Symbol.toStringTag] = "BasePath";
 	}
 
 	public parsed: ParsedPath;
-	protected static displayName = "BasePath";
 	protected segments: PathSegments;
 	protected memo: FilePathMemo<Super>;
+	public [Symbol.toStringTag]: string;
 
 	// Memoize children when append() is called with strings
 	private memoizedChildren: Map<string, Super>;
 
-	// Actually meant to be CUSTOM_PRETTY_FORMAT from "@internal/pretty-format" but it causes a module cycle
-	public [Symbol.for("custom-pretty-format")](): string {
-		// @ts-ignore
-		return `${this.constructor.displayName}<${this.join()}>`;
+	protected _assert(): Super {
+		throw new Error("Unimplemented");
 	}
 
-	protected abstract _assert(): Super
-	protected abstract _fork(parsed: ParsedPath, memo: FilePathMemo<Super>): Super
+	protected _fork(parsed: ParsedPath, memo: FilePathMemo<Super>): Super {
+		parsed;
+		memo;
+		throw new Error("Unimplemented");
+	}
 
 	private getPortableMemo(): AgnosticFilePathMemo & {
 		parent: undefined;
@@ -526,8 +529,15 @@ export abstract class BasePath<Super extends AnyPath = AnyPath> {
 	}
 }
 
+enhanceNodeInspectClass(
+	BasePath,
+	(path) => {
+		return `${path[Symbol.toStringTag]}<${path.join()}>`;
+	},
+);
+
 export class RelativeFilePath extends BasePath<RelativeFilePath> {
-	protected static displayName = "RelativeFilePath";
+	public [Symbol.toStringTag] = "RelativeFilePath";
 
 	// TypeScript is structurally typed whereas here we would prefer nominal typing
 	// We use this as a hack.
@@ -554,8 +564,7 @@ export class RelativeFilePath extends BasePath<RelativeFilePath> {
 }
 
 export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
-	protected static displayName = "AbsoluteFilePath";
-	protected type: "absolute" = "absolute";
+	public [Symbol.toStringTag] = "AbsoluteFilePath";
 
 	private chain: undefined | (AbsoluteFilePath[]);
 
@@ -664,8 +673,7 @@ export class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 }
 
 export class UIDPath extends BasePath<UIDPath> {
-	protected static displayName = "UIDPath";
-	protected type: "uid" = "uid";
+	public [Symbol.toStringTag] = "UIDPath";
 
 	protected _assert(): UIDPath {
 		return this;
@@ -689,8 +697,7 @@ export class UIDPath extends BasePath<UIDPath> {
 }
 
 export class URLPath extends BasePath<URLPath> {
-	protected static displayName = "URLPath";
-	protected type: "url" = "url";
+	public [Symbol.toStringTag] = "URLPath";
 
 	protected _assert(): URLPath {
 		return this;

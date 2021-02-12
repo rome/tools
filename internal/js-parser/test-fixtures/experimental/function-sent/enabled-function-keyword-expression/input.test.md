@@ -21,20 +21,24 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected ,"}
-			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:20
 				path: UIDPath<experimental/function-sent/enabled-function-keyword-expression/input.js>
 				start: Position 2:19
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>{</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -103,7 +107,14 @@ JSRoot {
 
  experimental/function-sent/enabled-function-keyword-expression/input.js:2:19 parse(js) ━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character {
+
+    1 │ function* foo() {
+  > 2 │   (function.sent() {});
+      │                    ^
+    3 │ }
+
+  ℹ Expected character ,
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:14
 				path: UIDPath<es2017/async-functions/allow-await-outside-function-throw/input.js>
@@ -89,6 +88,11 @@ JSRoot {
  es2017/async-functions/allow-await-outside-function-throw/input.js:2:15 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ function a() {
+  > 2 │   return await 1
+      │                ^
+    3 │ }
 
 
 ```

@@ -46,7 +46,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<es2020/import-meta/no-other-prop-names/input.js>
@@ -64,6 +63,9 @@ JSRoot {
  es2020/import-meta/no-other-prop-names/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The only valid meta property for import is import.meta
+
+    import.notMeta;
+           ^^^^^^^
 
 
 ```

@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword const"}
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>const</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:16
 				path: UIDPath<es2015/shorthand/1/input.js>
@@ -85,6 +84,9 @@ JSRoot {
  es2015/shorthand/1/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword const
+
+    var x = ({ const });
+               ^^^^^
 
 
 ```

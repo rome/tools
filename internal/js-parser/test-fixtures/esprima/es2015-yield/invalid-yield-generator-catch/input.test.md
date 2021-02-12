@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:35
 				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-catch/input.js>
@@ -95,6 +94,9 @@ JSRoot {
  esprima/es2015-yield/invalid-yield-generator-catch/input.js:1:30 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
+
+    function *g() { try {} catch (yield) {} }
+                                  ^^^^^
 
 
 ```

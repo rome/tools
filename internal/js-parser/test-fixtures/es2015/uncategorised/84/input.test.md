@@ -40,7 +40,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<es2015/uncategorised/84/input.js>
@@ -58,6 +57,9 @@ JSRoot {
  es2015/uncategorised/84/input.js:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected `from` for an export node
+
+    export *
+            ^
 
 
 ```

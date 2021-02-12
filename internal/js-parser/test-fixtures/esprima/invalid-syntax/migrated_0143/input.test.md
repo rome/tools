@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:22
 				path: UIDPath<esprima/invalid-syntax/migrated_0143/input.js>
@@ -69,6 +68,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0143/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Multiple default clauses
+
+    switch (c) { default: default: }
+                          ^
 
 
 ```

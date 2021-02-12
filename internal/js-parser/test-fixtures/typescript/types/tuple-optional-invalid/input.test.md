@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:23
 				path: UIDPath<typescript/types/tuple-optional-invalid/input.ts>
@@ -88,6 +87,9 @@ JSRoot {
  typescript/types/tuple-optional-invalid/input.ts:1:17 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A required element cannot follow an optional element.
+
+    let x: [string?, number]
+                     ^^^^^^
 
 
 ```

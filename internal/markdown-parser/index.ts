@@ -14,7 +14,7 @@ import {
 	MarkdownListItem,
 	MarkdownRoot,
 } from "@internal/ast";
-import {Number0, ob1Add} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {isEscaped} from "@internal/string-utils";
 import {CodeProperties, MarkdownParserTypes} from "./types";
 import {hasThematicBreak, isntInlineCharacter} from "./utils";
@@ -71,13 +71,13 @@ const markdownParser = createParser<MarkdownParserTypes>({
 				return [state, consumeHeading(parser, index)];
 			}
 			if (char === "\n") {
-				const nextChar = parser.getInputCharOnly(index, 1);
+				const nextChar = parser.getInputCharOnly(index.increment());
 				if (nextChar === "#") {
-					return [state, consumeHeading(parser, ob1Add(index, 1))];
+					return [state, consumeHeading(parser, index.add(1))];
 				}
 
 				if (nextChar === "`") {
-					const token = consumeCode(parser, ob1Add(index, 1));
+					const token = consumeCode(parser, index.add(1));
 					if (token) {
 						return [state, token];
 					}
@@ -222,7 +222,7 @@ const markdownParser = createParser<MarkdownParserTypes>({
 	},
 });
 
-function consumeHeading(parser: MarkdownParser, index: Number0) {
+function consumeHeading(parser: MarkdownParser, index: ZeroIndexed) {
 	const [value, end] = parser.readInputFrom(
 		index,
 		(char1) => {
@@ -239,11 +239,11 @@ function consumeHeading(parser: MarkdownParser, index: Number0) {
 function tokenizeBlock(
 	parser: MarkdownParser,
 	blockChar: string,
-	index: Number0,
+	index: ZeroIndexed,
 	currentChar: string,
 ) {
-	const nextChar = parser.getInputCharOnly(index, 1);
-	const nextNextChar = parser.getInputCharOnly(index, 2);
+	const nextChar = parser.getInputCharOnly(index.increment());
+	const nextNextChar = parser.getInputCharOnly(index.add(2));
 	if (hasThematicBreak([currentChar, nextChar, nextNextChar].join(""))) {
 		// by spec, should be at least 3, with an infinite number
 		const [value, endIndex] = parser.readInputFrom(
@@ -391,21 +391,21 @@ export function parseMarkdown(opts: ParserOptions): MarkdownRoot {
 	);
 }
 
-function consumeCode(parser: MarkdownParser, index: Number0) {
-	const nextChar = parser.getInputCharOnly(index, 1);
-	const nextNextChar = parser.getInputCharOnly(index, 2);
+function consumeCode(parser: MarkdownParser, index: ZeroIndexed) {
+	const nextChar = parser.getInputCharOnly(index.increment());
+	const nextNextChar = parser.getInputCharOnly(index.add(2));
 	if (nextChar === "`" && nextNextChar === "`") {
 		const [languageValue, languageIndex] = parser.readInputFrom(
-			ob1Add(index, 3),
+			index.add(3),
 			isntLineBreak,
 		);
 
 		const [value, endIndex] = parser.readInputFrom(
 			languageIndex,
 			(_, index) => {
-				const firstChar = parser.getInputCharOnly(index, 1);
-				const secondChar = parser.getInputCharOnly(index, 2);
-				const thirdChar = parser.getInputCharOnly(index, 3);
+				const firstChar = parser.getInputCharOnly(index.increment());
+				const secondChar = parser.getInputCharOnly(index.add(2));
+				const thirdChar = parser.getInputCharOnly(index.add(3));
 				return !(firstChar === "`" && secondChar === "`" && thirdChar === "`");
 			},
 		);
@@ -417,7 +417,7 @@ function consumeCode(parser: MarkdownParser, index: Number0) {
 				value,
 			},
 			// skip the three back ticks and let's point to their next char
-			ob1Add(endIndex, 4),
+			endIndex.add(4),
 		);
 	}
 

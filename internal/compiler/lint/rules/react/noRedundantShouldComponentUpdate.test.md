@@ -8,10 +8,16 @@
 
 ```
 
- lint,react,noRedundantShouldComponentUpdate/reject/1/file.tsx:1
+ lint/react/noRedundantShouldComponentUpdate/reject/1/file.tsx:1
 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not implement shouldComponentUpdate when extending React.PureComponent.
+
+  > 1 │ class Hello extends React.PureComponent {
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │   shouldComponentUpdate() {}
+  > 3 │ }
+      │ ^
 
   ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides
     no benefit.
@@ -32,10 +38,16 @@ class Hello extends React.PureComponent {
 
 ```
 
- lint,react,noRedundantShouldComponentUpdate/reject/2/file.tsx:1
+ lint/react/noRedundantShouldComponentUpdate/reject/2/file.tsx:1
 lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not implement shouldComponentUpdate when extending React.PureComponent.
+
+  > 1 │ class Hello extends PureComponent {
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 2 │   shouldComponentUpdate() {}
+  > 3 │ }
+      │ ^
 
   ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides
     no benefit.

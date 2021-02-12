@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:21
 				path: UIDPath<es2015/yield/in-class-heritage/input.js>
@@ -92,6 +91,9 @@ JSRoot {
  es2015/yield/in-class-heritage/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
+
+    class A extends yield B { }
+                    ^^^^^
 
 
 ```

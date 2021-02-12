@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:42
 				path: UIDPath<esprima/es2015-class/migrated_0019/input.js>
@@ -140,6 +139,9 @@ JSRoot {
  esprima/es2015-class/migrated_0019/input.js:1:27 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Duplicate constructor in the same class
+
+    class A {"constructor"(){} ["constructor"](){}}
+                               ^^^^^^^^^^^^^^^
 
 
 ```

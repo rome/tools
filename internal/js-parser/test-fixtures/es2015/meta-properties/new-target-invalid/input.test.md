@@ -46,7 +46,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2015/meta-properties/new-target-invalid/input.js>
@@ -64,6 +63,9 @@ JSRoot {
  es2015/meta-properties/new-target-invalid/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
+
+    new.target
+    ^^^^^^^^^^
 
 
 ```

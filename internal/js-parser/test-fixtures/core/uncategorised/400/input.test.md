@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword null"}
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>null</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<core/uncategorised/400/input.js>
@@ -83,6 +82,9 @@ JSRoot {
  core/uncategorised/400/input.js:1:11 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword null
+
+    function t(null) { }
+               ^^^^
 
 
 ```

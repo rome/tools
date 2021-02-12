@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:7
 				path: UIDPath<es2015/class-methods/disallow-literal-get/input.js>
@@ -103,6 +102,11 @@ JSRoot {
  es2015/class-methods/disallow-literal-get/input.js:2:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class A {
+  > 2 │   "get" a() {}
+      │         ^
+    3 │ }
 
 
 ```

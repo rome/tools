@@ -24,7 +24,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<esprima/invalid-syntax/migrated_0260/input.js>
@@ -33,22 +32,13 @@ JSRoot {
 			description: Object {
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed function params"}
+				message: RAW_MARKUP {value: "Unclosed <emphasis>function params</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>)</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:16
-							path: UIDPath<esprima/invalid-syntax/migrated_0260/input.js>
-							start: Position 1:16
-						}
-					}
+					frame {location: SourceLocation esprima/invalid-syntax/migrated_0260/input.js 1:16-1:16}
 				]
 			}
 		}
@@ -124,6 +114,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0260/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed function params
+
+    function x(...a = 1){}
+              ^
 
   ℹ We expected to find the closing character ) here
 

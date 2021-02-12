@@ -18,12 +18,11 @@ CSSRoot {
 				advice: Array []
 				categoryValue: "css"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Invalid custom property found inside the \\\"var\\\" function"}
+				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "css"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:17
 				path: RelativeFilePath<invalid/var/input.css>

@@ -8,9 +8,16 @@
 
 ```
 
- lint,js,noDuplicateCase/reject/1/file.ts:7:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/1/file.ts:7:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "c" case.
+
+    5 │   case 'b':
+    6 │     break;
+  > 7 │   case 'c':
+      │        ^^^
+    8 │     break;
+    9 │   case 'd':
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
@@ -44,9 +51,16 @@ switch (expr) {
 
 ```
 
- lint,js,noDuplicateCase/reject/2/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/2/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the 2 case.
+
+    3 │   case 1:
+    4 │     break;
+  > 5 │   case 2:
+      │        ^
+    6 │     break;
+    7 │   case 3:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
@@ -78,9 +92,16 @@ switch (expr) {
 
 ```
 
- lint,js,noDuplicateCase/reject/3/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/3/file.ts:5:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the 2n case.
+
+    3 │   case 1:
+    4 │     break;
+  > 5 │   case 2n:
+      │        ^^
+    6 │     break;
+    7 │   case 3:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
@@ -112,9 +133,16 @@ switch (expr) {
 
 ```
 
- lint,js,noDuplicateCase/reject/4/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/4/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "a" case.
+
+    1 │ const foo = 'a';
+    2 │ switch ('a') {
+  > 3 │   case foo:
+      │        ^^^
+    4 │     break;
+    5 │   case foo:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
@@ -142,9 +170,16 @@ switch ("a") {
 
 ```
 
- lint,js,noDuplicateCase/reject/5/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/5/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the "foo" case.
+
+    1 │ const foo = 'a';
+    2 │ switch ('a') {
+  > 3 │   case 'foo':
+      │        ^^^^^
+    4 │     break;
+    5 │   case 'foo':
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
@@ -172,9 +207,16 @@ switch ("a") {
 
 ```
 
- lint,js,noDuplicateCase/reject/6/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDuplicateCase/reject/6/file.ts:3:6 lint/js/noDuplicateCase ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Do not duplicate the null case.
+
+    1 │ const foo = 'a';
+    2 │ switch ('a') {
+  > 3 │   case null:
+      │        ^^^^
+    4 │     break;
+    5 │   case null:
 
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 

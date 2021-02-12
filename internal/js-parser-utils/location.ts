@@ -5,12 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, ob1Number0} from "@internal/ob1";
-
 export function createIndexTracker(): IndexTracker {
-	return {index: ob1Number0};
+	return {index: 0};
 }
 
 export type IndexTracker = {
-	index: Number0;
+	index: number;
 };

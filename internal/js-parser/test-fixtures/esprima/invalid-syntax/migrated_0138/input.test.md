@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<esprima/invalid-syntax/migrated_0138/input.js>
@@ -79,6 +78,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0138/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A constant must have an initializer
+
+    const x = 12, y;
+                  ^
 
 
 ```

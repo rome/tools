@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword false"}
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>false</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<core/uncategorised/403/input.js>
@@ -73,6 +72,9 @@ JSRoot {
  core/uncategorised/403/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword false
+
+    function false() { }
+             ^^^^^
 
 
 ```

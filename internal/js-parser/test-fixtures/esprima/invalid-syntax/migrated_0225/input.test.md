@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:46
 				path: UIDPath<esprima/invalid-syntax/migrated_0225/input.js>
@@ -96,6 +95,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0225/input.js:1:37 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ interface is a reserved word
+
+    function hello() { "use strict"; var interface; }
+                                         ^^^^^^^^^
 
 
 ```

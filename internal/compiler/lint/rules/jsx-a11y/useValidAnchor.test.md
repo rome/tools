@@ -8,7 +8,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/1/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/1/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -28,7 +28,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/2/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/2/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -48,7 +48,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/3/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/3/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -68,7 +68,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/4/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/4/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -88,7 +88,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/5/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/5/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -108,7 +108,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/6/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/6/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -128,7 +128,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/7/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/7/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -148,7 +148,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/8/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/8/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
 
@@ -168,7 +168,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/9/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/9/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
 
@@ -188,7 +188,7 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/10/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/10/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a href attribute for the a element.
 
@@ -208,13 +208,13 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/11/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/11/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
- lint,jsx-a11y,useValidAnchor/reject/11/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/11/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -234,13 +234,13 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/12/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/12/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
- lint,jsx-a11y,useValidAnchor/reject/12/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/12/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -260,13 +260,13 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/13/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/13/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
- lint,jsx-a11y,useValidAnchor/reject/13/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/13/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -286,13 +286,13 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/14/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/14/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
- lint,jsx-a11y,useValidAnchor/reject/14/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/14/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -312,13 +312,13 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/15/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/15/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
- lint,jsx-a11y,useValidAnchor/reject/15/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/15/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 
@@ -338,13 +338,13 @@
 
 ```
 
- lint,jsx-a11y,useValidAnchor/reject/16/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/16/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Provide a valid href attribute for the a element.
 
   ℹ Anchor elements should only be used for default section or page navigation.
 
- lint,jsx-a11y,useValidAnchor/reject/16/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
+ lint/jsx-a11y/useValidAnchor/reject/16/file.jsx:1 lint/jsx-a11y/useValidAnchor ━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use a button element instead of an a element.
 

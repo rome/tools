@@ -9,61 +9,48 @@ Object {
 	suppressions: Array [
 		Object {
 			categoryValue: "dog"
-			endLine: 2
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<2>
 			loc: SourceLocation unknown 1:15-1:23
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: "dog"
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:15-1:23
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 		Object {
 			categoryValue: "cat"
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:26-1:34
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 8
-			startLine: 8
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<8>
 			loc: SourceLocation unknown 7:15-1:18
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<8>
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: undefined
-				message: RAW_MARKUP {value: "Duplicate suppression category <emphasis>parse(dog)</emphasis>"}
-				category: Array [
-					"suppressions"
-					"duplicate"
-				]
-			}
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:31
 				path: UIDPath<unknown>
 				start: Position 1:26
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -73,18 +60,37 @@ Object {
 					"duplicate"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:42
 				path: UIDPath<unknown>
 				start: Position 4:37
 			}
+			description: Object {
+				advice: Array []
+				categoryValue: undefined
+				message: RAW_MARKUP {value: "Duplicate suppression category <emphasis>parse(dog)</emphasis>"}
+				category: Array [
+					"suppressions"
+					"duplicate"
+				]
+			}
 		}
 		Object {
 			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "text"
+				sourceText: undefined
+				end: Position 7:26
+				path: UIDPath<unknown>
+				start: Position 7:21
+			}
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -93,15 +99,6 @@ Object {
 					"suppressions"
 					"duplicate"
 				]
-			}
-			location: Object {
-				integrity: undefined
-				language: "text"
-				marker: undefined
-				sourceText: undefined
-				end: Position 7:26
-				path: UIDPath<unknown>
-				start: Position 7:21
 			}
 		}
 	]
@@ -116,27 +113,14 @@ Object {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: undefined
-				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
-				category: Array [
-					"suppressions"
-					"incorrectSuppressionStart"
-				]
-			}
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<unknown>
 				start: Position 1:3
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -146,18 +130,17 @@ Object {
 					"incorrectSuppressionStart"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:15
 				path: UIDPath<unknown>
 				start: Position 4:3
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -167,18 +150,17 @@ Object {
 					"incorrectSuppressionStart"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 7:16
 				path: UIDPath<unknown>
 				start: Position 7:3
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -188,18 +170,17 @@ Object {
 					"incorrectSuppressionStart"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 10:20
 				path: UIDPath<unknown>
 				start: Position 10:3
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -209,18 +190,17 @@ Object {
 					"incorrectSuppressionStart"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 13:22
 				path: UIDPath<unknown>
 				start: Position 13:3
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -230,18 +210,17 @@ Object {
 					"incorrectSuppressionStart"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 16:21
 				path: UIDPath<unknown>
 				start: Position 16:3
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -251,14 +230,25 @@ Object {
 					"incorrectSuppressionStart"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 19:23
 				path: UIDPath<unknown>
 				start: Position 19:3
+			}
+			description: Object {
+				advice: Array []
+				categoryValue: undefined
+				message: RAW_MARKUP {value: "This looks like a suppression comment typo. Did you mean <emphasis>rome-ignore</emphasis> instead?"}
+				category: Array [
+					"suppressions"
+					"incorrectSuppressionStart"
+				]
 			}
 		}
 	]
@@ -272,45 +262,32 @@ Object {
 	suppressions: Array [
 		Object {
 			categoryValue: undefined
-			endLine: 2
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<2>
 			loc: SourceLocation unknown 1:15-1:20
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:15-1:18
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 	]
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: undefined
-				message: RAW_MARKUP {value: "Suppression comments must have an explanation"}
-				category: Array [
-					"suppressions"
-					"missingExplanation"
-				]
-			}
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:12
 				path: UIDPath<unknown>
 				start: Position 1:20
 			}
-		}
-		Object {
-			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
 				categoryValue: undefined
@@ -320,14 +297,25 @@ Object {
 					"missingExplanation"
 				]
 			}
+		}
+		Object {
+			origins: Array [Object {category: "parse"}]
 			location: Object {
 				integrity: undefined
 				language: "text"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<unknown>
 				start: Position 4:21
+			}
+			description: Object {
+				advice: Array []
+				categoryValue: undefined
+				message: RAW_MARKUP {value: "Suppression comments must have an explanation"}
+				category: Array [
+					"suppressions"
+					"missingExplanation"
+				]
 			}
 		}
 	]
@@ -342,67 +330,67 @@ Object {
 	suppressions: Array [
 		Object {
 			categoryValue: "foo"
-			endLine: 2
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<2>
 			loc: SourceLocation unknown 1:15-1:23
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: "dog"
-			endLine: 2
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<2>
 			loc: SourceLocation unknown 1:26-1:36
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: "bar"
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:16-1:24
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 		Object {
 			categoryValue: "cat"
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:27-4:37
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 		Object {
 			categoryValue: "yes"
-			endLine: 10
-			startLine: 10
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<10>
 			loc: SourceLocation unknown 8:15-2:25
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<10>
 		}
 		Object {
 			categoryValue: "frog"
-			endLine: 10
-			startLine: 10
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<10>
 			loc: SourceLocation unknown 8:26-8:37
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<10>
 		}
 		Object {
 			categoryValue: "wow"
-			endLine: 16
-			startLine: 16
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<16>
 			loc: SourceLocation unknown 14:15-3:25
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<16>
 		}
 		Object {
 			categoryValue: "fish"
-			endLine: 16
-			startLine: 16
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<16>
 			loc: SourceLocation unknown 14:26-14:37
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<16>
 		}
 	]
 }
@@ -412,76 +400,62 @@ Object {
 
 ```javascript
 Object {
+	diagnostics: Array [
+		Object {
+			location: SourceLocation unknown 3:17-3:22
+			description: Object {
+				advice: Array []
+				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
+				category: Array [
+					"suppressions"
+					"overlap"
+				]
+			}
+		}
+		Object {
+			location: SourceLocation unknown 4:17-4:22
+			description: Object {
+				advice: Array []
+				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
+				category: Array [
+					"suppressions"
+					"overlap"
+				]
+			}
+		}
+	]
 	suppressions: Array [
 		Object {
 			categoryValue: undefined
-			endLine: 6
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<6>
 			loc: SourceLocation unknown 1:15-1:20
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 3:17-3:22
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:17-4:22
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 9
-			startLine: 9
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<9>
 			loc: SourceLocation unknown 8:15-8:20
 			path: UIDPath<unknown>
-		}
-	]
-	diagnostics: Array [
-		Object {
-			description: Object {
-				advice: Array []
-				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
-				category: Array [
-					"suppressions"
-					"overlap"
-				]
-			}
-			location: Object {
-				integrity: undefined
-				marker: undefined
-				sourceText: undefined
-				end: Position 3:22
-				path: UIDPath<unknown>
-				start: Position 3:17
-			}
-		}
-		Object {
-			description: Object {
-				advice: Array []
-				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
-				category: Array [
-					"suppressions"
-					"overlap"
-				]
-			}
-			location: Object {
-				integrity: undefined
-				marker: undefined
-				sourceText: undefined
-				end: Position 4:22
-				path: UIDPath<unknown>
-				start: Position 4:17
-			}
+			startLine: OneIndexedNumber<9>
 		}
 	]
 }
@@ -493,6 +467,7 @@ Object {
 Object {
 	diagnostics: Array [
 		Object {
+			location: SourceLocation unknown 3:17-3:22
 			description: Object {
 				advice: Array []
 				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
@@ -501,40 +476,32 @@ Object {
 					"overlap"
 				]
 			}
-			location: Object {
-				integrity: undefined
-				marker: undefined
-				sourceText: undefined
-				end: Position 3:22
-				path: UIDPath<unknown>
-				start: Position 3:17
-			}
 		}
 	]
 	suppressions: Array [
 		Object {
 			categoryValue: undefined
-			endLine: 5
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 1:15-1:20
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 4
-			startLine: 4
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<4>
 			loc: SourceLocation unknown 3:17-3:22
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<4>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 8
-			startLine: 8
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<8>
 			loc: SourceLocation unknown 7:15-7:20
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<8>
 		}
 	]
 }
@@ -544,26 +511,9 @@ Object {
 
 ```javascript
 Object {
-	suppressions: Array [
-		Object {
-			categoryValue: undefined
-			endLine: 5
-			startLine: 2
-			category: Array ["parse"]
-			loc: SourceLocation unknown 1:15-1:20
-			path: UIDPath<unknown>
-		}
-		Object {
-			categoryValue: undefined
-			endLine: 4
-			startLine: 4
-			category: Array ["parse"]
-			loc: SourceLocation unknown 3:17-3:22
-			path: UIDPath<unknown>
-		}
-	]
 	diagnostics: Array [
 		Object {
+			location: SourceLocation unknown 3:17-3:22
 			description: Object {
 				advice: Array []
 				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse</emphasis>"}
@@ -572,14 +522,24 @@ Object {
 					"overlap"
 				]
 			}
-			location: Object {
-				integrity: undefined
-				marker: undefined
-				sourceText: undefined
-				end: Position 3:22
-				path: UIDPath<unknown>
-				start: Position 3:17
-			}
+		}
+	]
+	suppressions: Array [
+		Object {
+			categoryValue: undefined
+			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
+			loc: SourceLocation unknown 1:15-1:20
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
+		}
+		Object {
+			categoryValue: undefined
+			category: Array ["parse"]
+			endLine: OneIndexedNumber<4>
+			loc: SourceLocation unknown 3:17-3:22
+			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<4>
 		}
 	]
 }
@@ -591,6 +551,7 @@ Object {
 Object {
 	diagnostics: Array [
 		Object {
+			location: SourceLocation unknown 5:17-5:27
 			description: Object {
 				advice: Array []
 				message: RAW_MARKUP {value: "overlap suppression category <emphasis>parse(foo)</emphasis>"}
@@ -599,48 +560,40 @@ Object {
 					"overlap"
 				]
 			}
-			location: Object {
-				integrity: undefined
-				marker: undefined
-				sourceText: undefined
-				end: Position 5:27
-				path: UIDPath<unknown>
-				start: Position 5:17
-			}
 		}
 	]
 	suppressions: Array [
 		Object {
 			categoryValue: "foo"
-			endLine: 7
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<7>
 			loc: SourceLocation unknown 1:15-1:25
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: "bar"
-			endLine: 6
-			startLine: 6
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<6>
 			loc: SourceLocation unknown 3:17-3:27
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<6>
 		}
 		Object {
 			categoryValue: "baz"
-			endLine: 6
-			startLine: 6
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<6>
 			loc: SourceLocation unknown 4:17-4:27
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<6>
 		}
 		Object {
 			categoryValue: "foo"
-			endLine: 6
-			startLine: 6
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<6>
 			loc: SourceLocation unknown 5:17-5:27
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<6>
 		}
 	]
 }
@@ -654,35 +607,35 @@ Object {
 	suppressions: Array [
 		Object {
 			categoryValue: undefined
-			endLine: 2
-			startLine: 2
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<2>
 			loc: SourceLocation unknown 1:15-1:20
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<2>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 5
-			startLine: 5
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<5>
 			loc: SourceLocation unknown 4:16-4:21
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<5>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 10
-			startLine: 10
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<10>
 			loc: SourceLocation unknown 8:15-8:20
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<10>
 		}
 		Object {
 			categoryValue: undefined
-			endLine: 16
-			startLine: 16
 			category: Array ["parse"]
+			endLine: OneIndexedNumber<16>
 			loc: SourceLocation unknown 14:15-14:20
 			path: UIDPath<unknown>
+			startLine: OneIndexedNumber<16>
 		}
 	]
 }

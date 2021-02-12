@@ -8,9 +8,15 @@
 
 ```
 
- lint,react,noAccessStateInSetState/reject/1/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/1/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class MyComponent extends Component {
+  > 2 │   function increment() {
+      │            ^
+    3 │     this.setState({value: this.state.value + 1});
+    4 │   }
 
 
 ```
@@ -25,9 +31,15 @@ undefined
 
 ```
 
- lint,react,noAccessStateInSetState/reject/2/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/2/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class MyComponent extends Component {
+  > 2 │   function increment() {
+      │            ^
+    3 │     this.setState({value: 1 + this.state.value});
+    4 │   }
 
 
 ```
@@ -42,9 +54,15 @@ undefined
 
 ```
 
- lint,react,noAccessStateInSetState/reject/3/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/3/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class MyComponent extends Component {
+  > 2 │   function toggle() {
+      │            ^
+    3 │     this.setState({
+    4 │       value: !this.state.value
 
 
 ```
@@ -59,9 +77,15 @@ undefined
 
 ```
 
- lint,react,noAccessStateInSetState/reject/4/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/react/noAccessStateInSetState/reject/4/file.tsx:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class MyComponent extends Component {
+  > 2 │   function toggle() {
+      │            ^
+    3 │     this.setState({
+    4 │       value: !!this.state.value
 
 
 ```
@@ -76,7 +100,7 @@ undefined
 
 ```
 
- lint,react,noAccessStateInSetState/reject/5/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
+ lint/react/noAccessStateInSetState/reject/5/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
@@ -103,7 +127,7 @@ class MyComponent extends Component {
 
 ```
 
- lint,react,noAccessStateInSetState/reject/6/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
+ lint/react/noAccessStateInSetState/reject/6/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
@@ -130,7 +154,7 @@ class MyComponent extends Component {
 
 ```
 
- lint,react,noAccessStateInSetState/reject/7/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
+ lint/react/noAccessStateInSetState/reject/7/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 
@@ -156,7 +180,7 @@ class MyComponent extends Component {
 
 ```
 
- lint,react,noAccessStateInSetState/reject/8/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
+ lint/react/noAccessStateInSetState/reject/8/file.tsx:3:2 lint/react/noAccessStateInSetState ━━━━━━━
 
   ✖ Avoid using this.state within a this.setState call.
 

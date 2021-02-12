@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<es2015/yield/parameter-name-generator/input.js>
@@ -83,6 +82,9 @@ JSRoot {
  es2015/yield/parameter-name-generator/input.js:1:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Can not use 'yield' as identifier inside a generator
+
+    function* fn(yield) {}
+                 ^^^^^
 
 
 ```

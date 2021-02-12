@@ -44,7 +44,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<core/uncategorised/417/input.js>
@@ -62,6 +61,9 @@ JSRoot {
  core/uncategorised/417/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-in statement
+
+    for (i + 1 in {});
+         ^^^^^
 
 
 ```

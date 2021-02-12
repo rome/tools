@@ -27,7 +27,6 @@ Object {
 				integrity: undefined
 				language: "js"
 				marker: undefined
-				sourceText: undefined
 				sourceTypeJS: "module"
 				end: Position 1:19
 				path: UIDPath<unknown>
@@ -197,7 +196,6 @@ Object {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: "export const foo = 'bar';\nexports.bar = 'foo';"
 				end: Position 1:25
 				path: UIDPath<unknown>

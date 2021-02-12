@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<core/uncategorised/390/input.js>
@@ -100,6 +99,9 @@ JSRoot {
  core/uncategorised/390/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an call expression argument
+
+    ({ set: s(if) { } })
+              ^
 
 
 ```

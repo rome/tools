@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<es2015/destructuring/parenthesized-lhs-object/input.js>
@@ -82,6 +81,9 @@ JSRoot {
  es2015/destructuring/parenthesized-lhs-object/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid parenthesized binding
+
+    ({a}) = 2;
+     ^^^
 
 
 ```

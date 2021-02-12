@@ -3,7 +3,6 @@ import {FileReference} from "@internal/core/common/types/files";
 import {DIAGNOSTIC_CATEGORIES, Diagnostics} from "@internal/diagnostics";
 import {markup} from "@internal/markup";
 import {Position} from "@internal/parser-core";
-import {ob1Coerce1To0} from "@internal/ob1";
 import {WorkerProject} from "../types";
 import Worker from "../Worker";
 
@@ -71,14 +70,14 @@ export async function maybeRunESLint(
 		for (const message of result.get("messages").asIterable()) {
 			const start: Position = {
 				line: message.get("line").asOneIndexedNumber(),
-				column: ob1Coerce1To0(message.get("column").asOneIndexedNumber()),
+				column: message.get("column").asOneIndexedNumber().toZeroIndexed(),
 			};
 			let end: Position = start;
 
 			if (message.has("endLine") && message.has("endColumn")) {
 				end = {
 					line: message.get("endLine").asOneIndexedNumber(),
-					column: ob1Coerce1To0(message.get("endColumn").asOneIndexedNumber()),
+					column: message.get("endColumn").asOneIndexedNumber().toZeroIndexed(),
 				};
 			}
 

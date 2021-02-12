@@ -8,9 +8,12 @@
 
 ```
 
- lint,jsx-a11y,noTargetBlank/reject/1/file.tsx:1:31 lint/jsx-a11y/noTargetBlank  FIXABLE  ━━━━━━━━━━
+ lint/jsx-a11y/noTargetBlank/reject/1/file.tsx:1:31 lint/jsx-a11y/noTargetBlank  FIXABLE  ━━━━━━━━━━
 
   ✖ Avoid using target="_blank" without rel="noreferrer".
+
+    <a href='http://external.link' target='_blank'>child</a>
+                                   ^^^^^^^^^^^^^^^
 
   ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See
     https://html.spec.whatwg.org/multipage/links.html#link-type-noopener for more details.
@@ -37,9 +40,12 @@
 
 ```
 
- lint,jsx-a11y,noTargetBlank/reject/2/file.tsx:1:22 lint/jsx-a11y/noTargetBlank  FIXABLE  ━━━━━━━━━━
+ lint/jsx-a11y/noTargetBlank/reject/2/file.tsx:1:22 lint/jsx-a11y/noTargetBlank  FIXABLE  ━━━━━━━━━━
 
   ✖ Avoid using target="_blank" without rel="noreferrer".
+
+    <a href={dynamicLink} target='_blank'>child</a>
+                          ^^^^^^^^^^^^^^^
 
   ℹ Opening external links in new tabs without rel="noreferrer" is a security risk. See
     https://html.spec.whatwg.org/multipage/links.html#link-type-noopener for more details.

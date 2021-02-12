@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:11
 				path: UIDPath<jsx/errors/attribute-empty-expression/input.jsx>
@@ -76,6 +75,9 @@ JSRoot {
  jsx/errors/attribute-empty-expression/input.jsx:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ JSX attribute cannot be an empty expression
+
+    <foo bar={} />
+             ^^
 
 
 ```

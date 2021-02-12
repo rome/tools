@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2018/object-rest-spread/21/input.js>
@@ -69,6 +68,9 @@ JSRoot {
  es2018/object-rest-spread/21/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Not a valid assignment target
+
+    ({...x = 1} = {})
+         ^^^^^
 
 
 ```

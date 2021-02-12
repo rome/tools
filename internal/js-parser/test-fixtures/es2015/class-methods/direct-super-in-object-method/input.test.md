@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:12
 				path: UIDPath<es2015/class-methods/direct-super-in-object-method/input.js>
@@ -141,6 +140,13 @@ JSRoot {
  es2015/class-methods/direct-super-in-object-method/input.js:4:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ super is only allowed in object methods and classes
+
+    2 │   foo: {
+    3 │     get: function(){
+  > 4 │       return super.foo;
+      │              ^
+    5 │     }
+    6 │   }
 
 
 ```

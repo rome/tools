@@ -42,7 +42,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<es2020/dynamic-import/invalid-trailing-comma/input.js>
@@ -60,6 +59,9 @@ JSRoot {
  es2020/dynamic-import/invalid-trailing-comma/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
+
+    import("foo",);
+                ^
 
 
 ```

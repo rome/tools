@@ -41,7 +41,7 @@ import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";
 import RSERParserError from "./RSERParserError";
-import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Position, SourceLocation} from "@internal/parser-core";
 
 const sharedCachedKeyDecoder = new CachedKeyDecoder();
@@ -103,11 +103,11 @@ export default class RSERBufferParser {
 		}
 	}
 
-	private peekInt(size: 1, offset?: number): number
-	private peekInt(size: 2, offset?: number): number
-	private peekInt(size: 4, offset?: number): number
-	private peekInt(size: 8, offset?: number): bigint
-	private peekInt(size: IntSize, offset?: number): number | bigint
+	private peekInt(size: 1, offset?: number): number;
+	private peekInt(size: 2, offset?: number): number;
+	private peekInt(size: 4, offset?: number): number;
+	private peekInt(size: 8, offset?: number): bigint;
+	private peekInt(size: IntSize, offset?: number): number | bigint;
 	private peekInt(size: IntSize, offset: number = 0): number | bigint {
 		this.assertReadableSize(size);
 
@@ -143,11 +143,11 @@ export default class RSERBufferParser {
 		return code;
 	}
 
-	private readInt(bytes: 1): number
-	private readInt(bytes: 2): number
-	private readInt(bytes: 4): number
-	private readInt(bytes: 8): bigint
-	private readInt(bytes: IntSize): number | bigint
+	private readInt(bytes: 1): number;
+	private readInt(bytes: 2): number;
+	private readInt(bytes: 4): number;
+	private readInt(bytes: 8): bigint;
+	private readInt(bytes: IntSize): number | bigint;
 	private readInt(bytes: IntSize): number | bigint {
 		const ival = this.peekInt(bytes);
 		this.readOffset += bytes;
@@ -362,6 +362,12 @@ export default class RSERBufferParser {
 			case VALUE_CODES.NEGATIVE_ZERO:
 				return this.decodeNumber();
 
+			case VALUE_CODES.ONE_INDEXED_NUMBER:
+				return this.decodeOneIndexedNumber();
+
+			case VALUE_CODES.ZERO_INDEXED_NUMBER:
+				return this.decodeZeroIndexedNumber();
+
 			case VALUE_CODES.INT64:
 				return this.decodeInt();
 
@@ -431,8 +437,8 @@ export default class RSERBufferParser {
 
 	private decodePositionValue(): Position {
 		return {
-			line: ob1Coerce1(this.decodeNumber()),
-			column: ob1Coerce0(this.decodeNumber()),
+			line: new OneIndexed(this.decodeNumber()),
+			column: new ZeroIndexed(this.decodeNumber()),
 		};
 	}
 
@@ -512,6 +518,16 @@ export default class RSERBufferParser {
 		const num = this.view.getFloat64(this.readOffset);
 		this.readOffset += 8;
 		return num;
+	}
+
+	private decodeOneIndexedNumber(): OneIndexed {
+		this.expectCode(VALUE_CODES.ONE_INDEXED_NUMBER);
+		return new OneIndexed(this.decodeNumber());
+	}
+
+	private decodeZeroIndexedNumber(): ZeroIndexed {
+		this.expectCode(VALUE_CODES.ZERO_INDEXED_NUMBER);
+		return new ZeroIndexed(this.decodeNumber());
 	}
 
 	private decodeNegativeZero(): number {

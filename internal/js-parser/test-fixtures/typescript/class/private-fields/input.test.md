@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 5:4
 				path: UIDPath<typescript/class/private-fields/input.ts>
@@ -222,6 +221,13 @@ JSRoot {
  typescript/class/private-fields/input.ts:5:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    3 │   #b?;
+    4 │   #c?: number;
+  > 5 │   #d!;
+      │     ^
+    6 │   #e!: boolean;
+    7 │ }
 
 
 ```

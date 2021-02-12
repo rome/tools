@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:52
 				path: UIDPath<esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js>
@@ -125,6 +124,9 @@ JSRoot {
  esprima/es2015-yield/invalid-yield-generator-strict-function-parameter/input.js:1:47 parse(js) ━━━━
 
   ✖ yield is a reserved word
+
+    "use strict"; function *g() { var z = function(yield) {} }
+                                                   ^^^^^
 
 
 ```

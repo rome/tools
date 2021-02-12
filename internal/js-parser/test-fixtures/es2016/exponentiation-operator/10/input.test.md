@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<es2016/exponentiation-operator/10/input.js>
@@ -72,6 +71,9 @@ JSRoot {
  es2016/exponentiation-operator/10/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Illegal expression. Wrap left hand side or entire exponentiation in parentheses.
+
+    -5 ** 6;
+     ^
 
 
 ```

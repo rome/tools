@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2015/uncategorised/371/input.js>
@@ -74,6 +73,9 @@ JSRoot {
  es2015/uncategorised/371/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ enum is a reserved word
+
+    const enum = foo();
+          ^^^^
 
 
 ```

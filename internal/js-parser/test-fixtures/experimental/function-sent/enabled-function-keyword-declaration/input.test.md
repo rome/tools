@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:17
 				path: UIDPath<experimental/function-sent/enabled-function-keyword-declaration/input.js>
@@ -97,6 +96,11 @@ JSRoot {
  experimental/function-sent/enabled-function-keyword-declaration/input.js:2:18 parse(js) ━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    1 │ function* foo() {
+  > 2 │   function.sent() {}
+      │                   ^
+    3 │ }
 
 
 ```

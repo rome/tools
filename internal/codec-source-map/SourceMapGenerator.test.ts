@@ -1,6 +1,6 @@
 import {test} from "rome";
 import {Mapping} from "@internal/codec-source-map/types";
-import {ob1Coerce0, ob1Coerce1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {
 	SourceMapConsumer,
 	SourceMapGenerator,
@@ -26,13 +26,13 @@ test(
 				name,
 				source: createAnyPath(source),
 				original: {
-					line: ob1Coerce1(originalLine),
-					column: ob1Coerce0(originalColumn),
+					line: new OneIndexed(originalLine),
+					column: new ZeroIndexed(originalColumn),
 				},
 				generated: {
-					line: ob1Coerce1(generatedLine),
-					column: ob1Coerce0(generatedColumn),
-					index: ob1Coerce0(0),
+					line: new OneIndexed(generatedLine),
+					column: new ZeroIndexed(generatedColumn),
+					index: new ZeroIndexed(),
 				},
 			};
 		}

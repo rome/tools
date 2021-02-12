@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<esprima/invalid-syntax/migrated_0101/input.js>
@@ -89,6 +88,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0101/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ eval is a reserved word
+
+    (eval) => { "use strict"; 42 }
+     ^^^^
 
 
 ```

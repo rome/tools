@@ -8,9 +8,13 @@
 
 ```
 
- lint,ts,preferShorthandArrayType/reject/1/file.ts:1:11 lint/ts/preferShorthandArrayType  FIXABLE  ━
+ lint/ts/preferShorthandArrayType/reject/1/file.ts:1:11 lint/ts/preferShorthandArrayType  FIXABLE  ━
 
   ✖ Use shorthand T[] syntax instead of Array<T> syntax.
+
+  > 1 │ let valid: Array<foo>;
+      │            ^^^^^^^^^^
+    2 │ let invalid: bar[];
 
   ℹ Safe fix
 
@@ -32,16 +36,19 @@ let invalid: bar[];
 
 ```
 
- lint,ts,preferShorthandArrayType/reject/2/file.ts:1:13 lint/ts/preferShorthandArrayType  FIXABLE  ━
+ lint/ts/preferShorthandArrayType/reject/2/file.ts:1:13 lint/ts/preferShorthandArrayType  FIXABLE  ━
 
   ✖ Use shorthand T[] syntax instead of Array<T> syntax.
+
+    let invalid: Array<foo, Array<string>>;
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
   - Array<foo,·Array<string>>
   + foo[]·|·(string[])[]
 
- lint,ts,preferShorthandArrayType/reject/2/file.ts:1:24 lint/ts/preferShorthandArrayType  FIXABLE  ━
+ lint/ts/preferShorthandArrayType/reject/2/file.ts:1:24 lint/ts/preferShorthandArrayType  FIXABLE  ━
 
   ✖ Use shorthand T[] syntax instead of Array<T> syntax.
 
@@ -64,9 +71,12 @@ let invalid: foo[] | (string[])[];
 
 ```
 
- lint,ts,preferShorthandArrayType/reject/3/file.ts:1:21 lint/ts/preferShorthandArrayType  FIXABLE  ━
+ lint/ts/preferShorthandArrayType/reject/3/file.ts:1:21 lint/ts/preferShorthandArrayType  FIXABLE  ━
 
   ✖ Use shorthand T[] syntax instead of Array<T> syntax.
+
+    let invalid: Promise<Array<string>>;
+                         ^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -87,9 +97,12 @@ let invalid: Promise<string[]>;
 
 ```
 
- lint,ts,preferShorthandArrayType/reject/4/file.ts:1:13 lint/ts/preferShorthandArrayType  FIXABLE  ━
+ lint/ts/preferShorthandArrayType/reject/4/file.ts:1:13 lint/ts/preferShorthandArrayType  FIXABLE  ━
 
   ✖ Use shorthand T[] syntax instead of Array<T> syntax.
+
+    let invalid: Array<Foo<Bar>>;
+                 ^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 

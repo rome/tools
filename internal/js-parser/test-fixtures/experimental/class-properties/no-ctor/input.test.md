@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:13
 				path: UIDPath<experimental/class-properties/no-ctor/input.js>
@@ -89,6 +88,11 @@ JSRoot {
  experimental/class-properties/no-ctor/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have a non-static field named 'constructor'
+
+    1 │ class Foo {
+  > 2 │   constructor
+      │   ^^^^^^^^^^^
+    3 │ }
 
 
 ```

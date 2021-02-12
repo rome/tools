@@ -8,9 +8,16 @@
 
 ```
 
- lint,js,noUnsafeFinally/reject/1/file.ts:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/1/file.ts:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSReturnStatement inside a finally clause is unsafe.
+
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     return 1;
+      │     ^^^^^^^^^
+    8 │   }
+    9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
 
@@ -36,9 +43,16 @@ function greet1() {
 
 ```
 
- lint,js,noUnsafeFinally/reject/2/file.ts:7:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/2/file.ts:7:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
+
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     break;
+      │     ^
+    8 │   }
+    9 │ }
 
 
 ```
@@ -53,9 +67,16 @@ undefined
 
 ```
 
- lint,js,noUnsafeFinally/reject/3/file.ts:7:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/3/file.ts:7:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ No loop label found
+
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     continue;
+      │     ^
+    8 │   }
+    9 │ }
 
 
 ```
@@ -70,9 +91,16 @@ undefined
 
 ```
 
- lint,js,noUnsafeFinally/reject/4/file.ts:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noUnsafeFinally/reject/4/file.ts:7:2 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using JSThrowStatement inside a finally clause is unsafe.
+
+    5 │     throw err;
+    6 │   } finally {
+  > 7 │     throw new Error('Finally');
+      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    8 │   }
+    9 │ }
 
   ℹ Do not use control flow statements inside finally clauses.
 

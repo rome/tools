@@ -21,20 +21,24 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
-			description: Object {
-				advice: Array []
-				categoryValue: "js"
-				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected token, expected ("}
-			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
-				end: Position 1:9
+				end: Position 1:3
 				path: UIDPath<experimental/top-level-await/for-await-script/input.js>
 				start: Position 1:4
+			}
+			description: Object {
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening for head character <emphasis>(</emphasis>"}
+					}
+				]
 			}
 		}
 	]
@@ -87,7 +91,12 @@ JSRoot {
 
  experimental/top-level-await/for-await-script/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character a
+
+    for await (const a of b);
+        ^
+
+  ℹ Expected the opening for head character (
 
 
 ```

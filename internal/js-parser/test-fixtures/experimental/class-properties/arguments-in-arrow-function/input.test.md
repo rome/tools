@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:25
 				path: UIDPath<experimental/class-properties/arguments-in-arrow-function/input.js>
@@ -128,6 +127,13 @@ JSRoot {
  experimental/class-properties/arguments-in-arrow-function/input.js:3:16 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ 'arguments' is not allowed in class field initializer
+
+    1 │ function fn() {
+    2 │   class A {
+  > 3 │     foo = () => arguments;
+      │                 ^^^^^^^^^
+    4 │   }
+    5 │ }
 
 
 ```

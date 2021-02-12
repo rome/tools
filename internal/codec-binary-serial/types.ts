@@ -1,3 +1,4 @@
+import {AnyIndexedNumber} from "@internal/math";
 import {
 	AbsoluteFilePathMap,
 	AnyPath,
@@ -29,6 +30,7 @@ export type RSERValue =
 	| RegExp
 	| Error
 	| ArrayBuffer
+	| AnyIndexedNumber
 	| RSERArrayBufferView
 	| AnyPath
 	| PathSet

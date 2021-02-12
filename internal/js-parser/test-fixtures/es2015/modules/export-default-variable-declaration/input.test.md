@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<es2015/modules/export-default-variable-declaration/input.js>
@@ -101,6 +100,11 @@ JSRoot {
  es2015/modules/export-default-variable-declaration/input.js:1:15 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only expressions, functions or classes are allowed as the `default` export.
+
+  > 1 │ export default const Foo = () => {
+      │                ^
+    2 │     return `<div class="bar">Hola</div>`;
+    3 │ }
 
 
 ```

@@ -45,7 +45,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:9
 				path: UIDPath<esprima/es2015-for-of/invalid-lhs-init/input.js>
@@ -63,6 +62,9 @@ JSRoot {
  esprima/es2015-for-of/invalid-lhs-init/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid left-hand side in for-of statement
+
+    for (this of that);
+         ^^^^
 
 
 ```

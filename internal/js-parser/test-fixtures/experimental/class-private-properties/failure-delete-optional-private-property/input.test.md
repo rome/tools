@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:17
 				path: UIDPath<experimental/class-private-properties/failure-delete-optional-private-property/input.js>
@@ -154,6 +153,13 @@ JSRoot {
 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    2 │   #x;
+    3 │   constructor() {
+  > 4 │     delete this?.#x;
+      │                  ^
+    5 │   }
+    6 │ }
 
 
 ```

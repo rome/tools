@@ -35,7 +35,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:33
 				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js>
@@ -76,6 +75,9 @@ JSRoot {
  esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js:1:28 parse(js) ━━━━━━━━━━━━━━━━━
 
   ✖ yield is a reserved word
+
+    "use strict"; try {} catch (yield) {}
+                                ^^^^^
 
 
 ```

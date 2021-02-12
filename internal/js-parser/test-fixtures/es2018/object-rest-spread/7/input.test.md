@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<es2018/object-rest-spread/7/input.js>
@@ -103,6 +102,9 @@ JSRoot {
  es2018/object-rest-spread/7/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The rest element has to be the last element when destructuring
+
+    let { ...x, y, z } = obj;
+             ^
 
 
 ```

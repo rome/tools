@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:14
 				path: UIDPath<esprima/es2015-export-declaration/invalid-export-default-equal/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  esprima/es2015-export-declaration/invalid-export-default-equal/input.js:1:15 parse(js) ━━━━━━━━━━━━
 
   ✖ Unknown start to an export default declaration
+
+    export default = 42
+                   ^
 
 
 ```

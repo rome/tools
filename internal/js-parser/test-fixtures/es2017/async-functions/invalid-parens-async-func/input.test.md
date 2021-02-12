@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:7
 				path: UIDPath<es2017/async-functions/invalid-parens-async-func/input.js>
@@ -90,6 +89,9 @@ JSRoot {
  es2017/async-functions/invalid-parens-async-func/input.js:1:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+    (async) function x (a) {}
+            ^
 
 
 ```

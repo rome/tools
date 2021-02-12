@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 4:5
 				path: UIDPath<experimental/private-in/private-in-parenthesized/input.js>
@@ -159,6 +158,13 @@ JSRoot {
  experimental/private-in/private-in-parenthesized/input.js:4:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an statement expression
+
+    2 │   #x = 1;
+    3 │   test() {
+  > 4 │     (#x) in {};
+      │      ^
+    5 │   }
+    6 │ }
 
 
 ```

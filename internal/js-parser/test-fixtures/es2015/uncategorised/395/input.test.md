@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<es2015/uncategorised/395/input.js>
@@ -81,6 +80,9 @@ JSRoot {
  es2015/uncategorised/395/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Binding member expression
+
+    ([a.a]) => 42
+      ^^^
 
 
 ```

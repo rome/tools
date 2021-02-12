@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:1
 				path: UIDPath<core/uncategorised/352/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  core/uncategorised/352/input.js:1:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Identifier directly after number
+
+    3x
+     ^
 
 
 ```

@@ -17,7 +17,7 @@ import {
 } from "./escape";
 import {sliceEscaped} from "@internal/string-utils";
 import {buildFileLink, formatGrammarNumber} from "./util";
-import { Dict } from "@internal/typescript-helpers";
+import {Dict} from "@internal/typescript-helpers";
 
 function buildTag(
 	tag: MarkupParsedTag,
@@ -85,13 +85,15 @@ function buildTag(
 		const val = finalAttributes[key];
 		if (val === undefined) {
 			continue;
-		} else if (val === true) {
+		}
+
+		if (val === true) {
 			open += ` ${key}`;
 		} else {
 			open += readMarkup(markup` ${key}="${val}"`);
 		}
 	}
-	
+
 	for (let key in setAttributes) {
 		if (originalAttributes[key] !== setAttributes[key]) {
 			modified = true;

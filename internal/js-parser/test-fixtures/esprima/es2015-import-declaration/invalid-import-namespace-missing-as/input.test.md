@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword as"}
+				message: RAW_MARKUP {value: "Expected keyword <emphasis>as</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js>
@@ -78,6 +77,9 @@ JSRoot {
  esprima/es2015-import-declaration/invalid-import-namespace-missing-as/input.js:1:9 parse(js) ━━━━━━
 
   ✖ Expected keyword as
+
+    import * from "foo"
+             ^
 
 
 ```

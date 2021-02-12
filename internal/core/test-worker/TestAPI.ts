@@ -673,13 +673,13 @@ export default class TestAPI implements TestHelper {
 		const callError = getErrorStructure(new Error(), 1);
 
 		this.onTeardown(async () => {
-			const {status} = this.snapshotManager.testInlineSnapshot(
+			const res = this.snapshotManager.testInlineSnapshot(
 				callFrame,
 				received,
 				snapshot,
 			);
 
-			if (status === "UPDATE" && this.options.freezeSnapshots) {
+			if (res.status === "UPDATE" && this.options.freezeSnapshots) {
 				await this.emitDiagnostic(
 					deriveDiagnosticFromErrorStructure(
 						callError,
@@ -691,7 +691,7 @@ export default class TestAPI implements TestHelper {
 				);
 			}
 
-			if (status === "NO_MATCH") {
+			if (res.status === "NO_MATCH") {
 				await this.emitDiagnostic(
 					deriveDiagnosticFromErrorStructure(
 						callError,
@@ -700,8 +700,8 @@ export default class TestAPI implements TestHelper {
 							description: {
 								...descriptions.SNAPSHOTS.INLINE_BAD_MATCH,
 								advice: this.buildMatchAdvice(
-									received,
-									snapshot,
+									res.receivedFormat,
+									res.expectedFormat,
 									{
 										receivedAlias: "What the code gave us",
 										expectedAlias: "Existing inline snapshot",

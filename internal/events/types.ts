@@ -35,7 +35,6 @@ export type BridgeEventsDeclaration = Dict<BridgeEventDeclaration<
 	RSERValue
 >>;
 
-// rome-ignore lint/js/noUndeclaredVariables(Ret) lint/js/noUndeclaredVariables(Param): Do not support scope tracking infer types
 type ExtractEventTypes<Type> = Type extends BridgeEventDeclaration<
 	infer Param,
 	infer Ret
@@ -64,7 +63,6 @@ export type BridgeEventsDeclarationToInstances<
 	>
 };
 
-// rome-ignore lint/js/noUndeclaredVariables(ClientEvents) lint/js/noUndeclaredVariables(ServerEvents) lint/js/noUndeclaredVariables(SharedEvents): We do not support scope tracking infer types
 export type BridgeClient<Factories> = Factories extends BridgeFactories<
 	infer ClientEvents,
 	infer ServerEvents,
@@ -73,7 +71,6 @@ export type BridgeClient<Factories> = Factories extends BridgeFactories<
 	? Bridge<ClientEvents, ServerEvents, SharedEvents>
 	: never;
 
-// rome-ignore lint/js/noUndeclaredVariables(ClientEvents) lint/js/noUndeclaredVariables(ServerEvents) lint/js/noUndeclaredVariables(SharedEvents): We do not support scope tracking infer types
 export type BridgeServer<Factories> = Factories extends BridgeFactories<
 	infer ClientEvents,
 	infer ServerEvents,

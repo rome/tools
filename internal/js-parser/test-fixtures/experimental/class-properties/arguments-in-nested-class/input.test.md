@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 3:37
 				path: UIDPath<experimental/class-properties/arguments-in-nested-class/input.js>
@@ -173,6 +172,13 @@ JSRoot {
  experimental/class-properties/arguments-in-nested-class/input.js:3:28 parse(js) ━━━━━━━━━━━━━━━━━━━
 
   ✖ 'arguments' is not allowed in class field initializer
+
+    1 │ function fn() {
+    2 │   class A {
+  > 3 │     foo = class B { bar() { arguments } };
+      │                             ^^^^^^^^^
+    4 │   }
+    5 │ }
 
 
 ```

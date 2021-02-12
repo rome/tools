@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "async can't contain a unicode escape"}
+				message: RAW_MARKUP {value: "<emphasis>async</emphasis> can't contain a unicode escape"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:17
 				path: UIDPath<es2017/async-functions/invalid-escape-async-static-class-method/input.js>
@@ -114,6 +113,9 @@ JSRoot {
  es2017/async-functions/invalid-escape-async-static-class-method/input.js:1:17 parse(js) ━━━━━━━━━━━
 
   ✖ async can't contain a unicode escape
+
+    class X { static \u0061sync x() { await x } }
+                     ^
 
 
 ```

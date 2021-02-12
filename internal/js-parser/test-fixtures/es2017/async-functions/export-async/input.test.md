@@ -45,7 +45,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<es2017/async-functions/export-async/input.js>
@@ -64,6 +63,9 @@ JSRoot {
 
   ✖ Started with `export async` so we expected to receive an async function but no function
     keyword was found
+
+    export async;
+                ^
 
 
 ```

@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unexpected keyword default"}
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>default</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<es2015/uncategorised/232/input.js>
@@ -71,6 +70,9 @@ JSRoot {
  es2015/uncategorised/232/input.js:1:6 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected keyword default
+
+    const default = 2
+          ^^^^^^^
 
 
 ```

@@ -48,7 +48,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:0
 				path: UIDPath<experimental/numeric-separator/invalid-25/input.js>
@@ -66,6 +65,9 @@ JSRoot {
  experimental/numeric-separator/invalid-25/input.js:1 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid or unexpected int token
+
+    0o01_8
+    ^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:3
 				path: UIDPath<experimental/class-private-properties/failure-spaces/input.js>
@@ -88,6 +87,11 @@ JSRoot {
  experimental/class-private-properties/failure-spaces/input.js:2:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected space between # and identifier
+
+    1 │ class Spaces {
+  > 2 │   #  wrongSpaces;
+      │    ^
+    3 │ }
 
 
 ```

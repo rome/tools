@@ -36,7 +36,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:0
 				path: UIDPath<esprima/invalid-syntax/migrated_0168/input.js>
@@ -54,6 +53,8 @@ JSRoot {
  esprima/invalid-syntax/migrated_0168/input.js:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated string constant
+
+    "\
 
 
 ```

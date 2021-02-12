@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:12
 				path: UIDPath<es2015/meta-properties/invalid-arrow-function/input.js>
@@ -98,6 +97,11 @@ JSRoot {
  es2015/meta-properties/invalid-arrow-function/input.js:2:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ new.target can only be used in functions or class properties
+
+    1 │ const A = () => {
+  > 2 │   new.target;
+      │   ^^^^^^^^^^
+    3 │ }
 
 
 ```

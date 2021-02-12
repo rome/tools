@@ -31,12 +31,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Escape sequence in keyword null"}
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>null</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<es2015/identifiers/invalid-escape-seq-null/input.js>
@@ -54,6 +53,9 @@ JSRoot {
  es2015/identifiers/invalid-escape-seq-null/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Escape sequence in keyword null
+
+    nul\u{6c}
+       ^
 
 
 ```

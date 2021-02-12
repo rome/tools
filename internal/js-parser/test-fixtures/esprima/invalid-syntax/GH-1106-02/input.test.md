@@ -36,7 +36,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:3
 				path: UIDPath<esprima/invalid-syntax/GH-1106-02/input.js>
@@ -54,6 +53,9 @@ JSRoot {
  esprima/invalid-syntax/GH-1106-02/input.js:1:3 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Bad character escape sequence
+
+    "\xx";
+       ^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:2
 				path: UIDPath<esprima/es2015-spread-element/invalid-call-dot-dot/input.js>
@@ -76,6 +75,9 @@ JSRoot {
  esprima/es2015-spread-element/invalid-call-dot-dot/input.js:1:2 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an call expression argument
+
+    f(..g);
+      ^
 
 
 ```

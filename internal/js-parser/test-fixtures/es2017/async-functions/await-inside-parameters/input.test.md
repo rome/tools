@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:27
 				path: UIDPath<es2017/async-functions/await-inside-parameters/input.js>
@@ -94,6 +93,9 @@ JSRoot {
  es2017/async-functions/await-inside-parameters/input.js:1:28 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ await is not allowed in async function parameters
+
+    async function fn(x = await 2) {}
+                                ^
 
 
 ```

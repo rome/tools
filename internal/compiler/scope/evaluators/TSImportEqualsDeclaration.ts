@@ -12,7 +12,10 @@ import {createScopeEvaluator} from "./index";
 
 export default createScopeEvaluator({
 	inject(node: AnyNode, parent: AnyNode, scope: Scope) {
-		const {moduleReference, id} = tsImportEqualsDeclaration.assert(node);
+		const {
+			moduleReference,
+			id,
+		} = tsImportEqualsDeclaration.assert(node);
 
 		if (moduleReference.type === "TSExternalModuleReference") {
 			scope.addBinding(

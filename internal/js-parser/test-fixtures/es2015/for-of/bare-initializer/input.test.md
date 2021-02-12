@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:10
 				path: UIDPath<es2015/for-of/bare-initializer/input.js>
@@ -80,6 +79,10 @@ JSRoot {
  es2015/for-of/bare-initializer/input.js:2:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Not a valid assignment target
+
+    1 │ var a;
+  > 2 │ for (a = 0 of {});
+      │      ^^^^^
 
 
 ```

@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:19
 				path: UIDPath<es2017/async-functions/no-constructor/input.js>
@@ -103,6 +102,11 @@ JSRoot {
  es2017/async-functions/no-constructor/input.js:2:8 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Constructor cannot be async
+
+    1 │ class A {
+  > 2 │   async constructor() {}
+      │         ^^^^^^^^^^^
+    3 │ }
 
 
 ```

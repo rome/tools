@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:9
 				path: UIDPath<typescript/class/duplicate-modifier-1/input.ts>
@@ -89,6 +88,11 @@ JSRoot {
  typescript/class/duplicate-modifier-1/input.ts:2:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown class property start
+
+    1 │ class A {
+  > 2 │   declare public declare foo;
+      │           ^
+    3 │ }
 
 
 ```

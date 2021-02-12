@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:10
 				path: UIDPath<esprima/invalid-syntax/migrated_0073/input.js>
@@ -100,6 +99,9 @@ JSRoot {
  esprima/invalid-syntax/migrated_0073/input.js:1:10 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unknown start to an call expression argument
+
+    ({ set: s(if) { } })
+              ^
 
 
 ```

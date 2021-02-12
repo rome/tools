@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:13
 				path: UIDPath<es2017/trailing-function-commas/6/input.js>
@@ -83,6 +82,9 @@ JSRoot {
  es2017/trailing-function-commas/6/input.js:1:13 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    function log(,) { }
+                 ^
 
 
 ```

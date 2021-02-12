@@ -33,7 +33,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "regex"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:29
 				path: UIDPath<esprima/expression-primary-literal-regular-expression/u-flag-surrogate-pair/input.js>
@@ -120,6 +119,9 @@ JSRoot {
 parse(regex) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Range values reversed. Start char code is greater than end char code
+
+    var x = /[\uD834\uDF06-\uD834\uDF08a-z]/u
+                    ^^^^^^^^^^^^^
 
 
 ```

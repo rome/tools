@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<experimental/module-attributes/dynamic-import-with-valid-syntax/input.js>
@@ -100,6 +99,9 @@ JSRoot {
  experimental/module-attributes/dynamic-import-with-valid-syntax/input.js:1:17 parse(js) ━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
+
+    import("foo.json", { with: { type: "json" } })
+                     ^
 
 
 ```

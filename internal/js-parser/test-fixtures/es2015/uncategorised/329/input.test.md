@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:8
 				path: UIDPath<es2015/uncategorised/329/input.js>
@@ -77,6 +76,9 @@ JSRoot {
  es2015/uncategorised/329/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Lexical declaration cannot appear in a single-statement context
+
+    for (;;) const x = 10;
+             ^
 
 
 ```

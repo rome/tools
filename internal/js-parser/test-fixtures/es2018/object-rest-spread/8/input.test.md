@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:16
 				path: UIDPath<es2018/object-rest-spread/8/input.js>
@@ -103,6 +102,9 @@ JSRoot {
  es2018/object-rest-spread/8/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ A trailing comma is not permitted after the rest element
+
+    let { x, y, ...z, } = obj;
+                    ^
 
 
 ```

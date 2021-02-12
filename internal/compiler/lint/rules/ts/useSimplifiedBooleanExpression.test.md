@@ -8,10 +8,13 @@
 
 ```
 
- lint,ts,useSimplifiedBooleanExpression/reject/1/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
+ lint/ts/useSimplifiedBooleanExpression/reject/1/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
+
+    function foo(x: boolean) { return !!x; }
+                                      ^^^
 
   ℹ Safe fix
 
@@ -34,10 +37,13 @@ function foo(x: boolean) {
 
 ```
 
- lint,ts,useSimplifiedBooleanExpression/reject/2/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
+ lint/ts/useSimplifiedBooleanExpression/reject/2/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
+
+    function foo(x: boolean) { return x === true; }
+                                      ^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -60,10 +66,13 @@ function foo(x: boolean) {
 
 ```
 
- lint,ts,useSimplifiedBooleanExpression/reject/3/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
+ lint/ts/useSimplifiedBooleanExpression/reject/3/file.ts:1:34 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
+
+    function foo(x: boolean) { return false === x; }
+                                      ^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -86,10 +95,13 @@ function foo(x: boolean) {
 
 ```
 
- lint,ts,useSimplifiedBooleanExpression/reject/4/file.ts:1:46 lint/ts/useSimplifiedBooleanExpression
+ lint/ts/useSimplifiedBooleanExpression/reject/4/file.ts:1:46 lint/ts/useSimplifiedBooleanExpression
    FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Boolean expression contains unnecessary complexity.
+
+    function foo(x: boolean, y: boolean) { return (x || y) === true }
+                                                  ^^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 

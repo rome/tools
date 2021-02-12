@@ -39,7 +39,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<esprima/expression-primary-array/migrated_0012/input.js>
@@ -57,6 +56,9 @@ JSRoot {
  esprima/expression-primary-array/migrated_0012/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Invalid Unicode escape
+
+    \u2163\u2161\u200A
+                      ^
 
 
 ```

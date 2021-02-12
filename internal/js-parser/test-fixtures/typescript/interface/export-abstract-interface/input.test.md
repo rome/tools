@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<typescript/interface/export-abstract-interface/input.ts>
@@ -70,6 +69,11 @@ JSRoot {
  typescript/interface/export-abstract-interface/input.ts:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a semicolon or a line terminator
+
+  > 1 │ export abstract interface I {
+      │                 ^
+    2 │
+    3 │ }
 
 
 ```

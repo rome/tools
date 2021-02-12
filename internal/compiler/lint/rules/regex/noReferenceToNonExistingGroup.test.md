@@ -8,10 +8,13 @@
 
 ```
 
- lint,regex,noReferenceToNonExistingGroup/reject/1/file.ts:1:20
+ lint/regex/noReferenceToNonExistingGroup/reject/1/file.ts:1:20
 lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 18 group.
+
+    let foo = /([abc]+)=\18/;foo;
+                        ^^^
 
 
 ```
@@ -28,10 +31,13 @@ foo;
 
 ```
 
- lint,regex,noReferenceToNonExistingGroup/reject/2/file.ts:1:20
+ lint/regex/noReferenceToNonExistingGroup/reject/2/file.ts:1:20
 lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 49 group.
+
+    let foo = /([abc]+)=\49/;foo;
+                        ^^^
 
 
 ```
@@ -48,10 +54,13 @@ foo;
 
 ```
 
- lint,regex,noReferenceToNonExistingGroup/reject/3/file.ts:1:20
+ lint/regex/noReferenceToNonExistingGroup/reject/3/file.ts:1:20
 lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 78 group.
+
+    let foo = /([abc]+)=\78/;foo;
+                        ^^^
 
 
 ```
@@ -68,10 +77,13 @@ foo;
 
 ```
 
- lint,regex,noReferenceToNonExistingGroup/reject/4/file.ts:1:20
+ lint/regex/noReferenceToNonExistingGroup/reject/4/file.ts:1:20
 lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 99 group.
+
+    let foo = /([abc]+)=\99/;foo;
+                        ^^^
 
 
 ```
@@ -88,12 +100,15 @@ foo;
 
 ```
 
- lint,regex,noReferenceToNonExistingGroup/reject/5/file.ts:1:19
+ lint/regex/noReferenceToNonExistingGroup/reject/5/file.ts:1:19
 lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 19 group.
 
- lint,regex,noReferenceToNonExistingGroup/reject/5/file.ts:1:25
+    let foo = /(([abc])\19)+=\28/;foo;
+                       ^^^
+
+ lint/regex/noReferenceToNonExistingGroup/reject/5/file.ts:1:25
 lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 28 group.
@@ -113,10 +128,13 @@ foo;
 
 ```
 
- lint,regex,noReferenceToNonExistingGroup/reject/6/file.ts:1:20
+ lint/regex/noReferenceToNonExistingGroup/reject/6/file.ts:1:20
 lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 19 group.
+
+    let foo = /([abc]+)=\199/;foo;
+                        ^^^
 
 
 ```

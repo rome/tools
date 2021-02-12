@@ -40,7 +40,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
@@ -55,16 +54,7 @@ JSRoot {
 						category: "info"
 						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>Foo</emphasis>"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:4
-							path: UIDPath<jsx/errors/wrong-closing-tag/input.jsx>
-							start: Position 1:1
-						}
-					}
+					frame {location: SourceLocation jsx/errors/wrong-closing-tag/input.jsx 1:1-1:4}
 				]
 			}
 		}

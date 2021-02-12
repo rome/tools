@@ -42,7 +42,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:4
 				path: UIDPath<core/uncategorised/377/input.js>
@@ -51,22 +50,13 @@ JSRoot {
 			description: Object {
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Unclosed object"}
+				message: RAW_MARKUP {value: "Unclosed <emphasis>object</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
 						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
-					frame {
-						location: Object {
-							integrity: undefined
-							marker: undefined
-							sourceText: undefined
-							end: Position 1:5
-							path: UIDPath<core/uncategorised/377/input.js>
-							start: Position 1:5
-						}
-					}
+					frame {location: SourceLocation core/uncategorised/377/input.js 1:5-1:5}
 				]
 			}
 		}
@@ -81,6 +71,9 @@ JSRoot {
  core/uncategorised/377/input.js:1:4 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unclosed object
+
+    1 + {
+        ^
 
   ℹ We expected to find the closing character } here
 

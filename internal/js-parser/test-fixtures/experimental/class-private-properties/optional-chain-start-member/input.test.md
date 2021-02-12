@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 5:16
 				path: UIDPath<experimental/class-private-properties/optional-chain-start-member/input.js>
@@ -165,6 +164,12 @@ JSRoot {
  experimental/class-private-properties/optional-chain-start-member/input.js:5:16 parse(js) ━━━━━━━━━
 
   ✖ Expected an identifier
+
+    4 │   static test() {
+  > 5 │     return Foo?.#x.toFixed;
+      │                 ^
+    6 │   }
+    7 │ }
 
 
 ```

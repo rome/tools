@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:18
 				path: UIDPath<es2018/object-rest-spread/20/input.js>
@@ -116,6 +115,9 @@ JSRoot {
  es2018/object-rest-spread/20/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected an identifier
+
+    function test({...{a}}) {}
+                      ^
 
 
 ```

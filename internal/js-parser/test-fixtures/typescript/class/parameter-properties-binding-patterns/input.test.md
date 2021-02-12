@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:16
 				path: UIDPath<typescript/class/parameter-properties-binding-patterns/input.ts>
@@ -115,6 +114,11 @@ JSRoot {
  typescript/class/parameter-properties-binding-patterns/input.ts:2:16 parse(js) ━━━━━━━━━━━━━━━━━━━━
 
   ✖ A parameter property may not be declared using a binding pattern.
+
+    1 │ class C {
+  > 2 │     constructor(public []) {}
+      │                 ^
+    3 │ }
 
 
 ```

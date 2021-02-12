@@ -47,7 +47,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:5
 				path: UIDPath<es2015/uncategorised/264/input.js>
@@ -65,6 +64,9 @@ JSRoot {
  es2015/uncategorised/264/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unterminated template
+
+    `test
+         ^
 
 
 ```

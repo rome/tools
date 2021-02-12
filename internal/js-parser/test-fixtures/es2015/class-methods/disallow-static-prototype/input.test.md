@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 2:18
 				path: UIDPath<es2015/class-methods/disallow-static-prototype/input.js>
@@ -103,6 +102,11 @@ JSRoot {
  es2015/class-methods/disallow-static-prototype/input.js:2:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Classes may not have static property named prototype
+
+    1 │ class A {
+  > 2 │   static prototype() {}
+      │          ^^^^^^^^^
+    3 │ }
 
 
 ```

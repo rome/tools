@@ -30,7 +30,6 @@ JSRoot {
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:15
 				path: UIDPath<es2020/dynamic-import/multiple-args/input.js>
@@ -83,6 +82,9 @@ JSRoot {
  es2020/dynamic-import/multiple-args/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Trailing comma is disallowed inside import(...) arguments
+
+    import('hello', 'world', '!');
+                  ^
 
 
 ```

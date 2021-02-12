@@ -25,12 +25,11 @@ JSRoot {
 				advice: Array []
 				categoryValue: "js"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "Expected keyword from"}
+				message: RAW_MARKUP {value: "Expected keyword <emphasis>from</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
 				language: "js"
-				marker: undefined
 				sourceText: undefined
 				end: Position 1:12
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-default-after-named/input.js>
@@ -105,6 +104,9 @@ JSRoot {
  esprima/es2015-import-declaration/invalid-import-default-after-named/input.js:1:12 parse(js) ━━━━━━
 
   ✖ Expected keyword from
+
+    import {bar}, foo from "foo"
+                ^
 
 
 ```

@@ -8,7 +8,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/1/file.tsx:1:22 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/1/file.tsx:1:22 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-checked is not correct.
 
@@ -26,7 +26,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/2/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/2/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-autocomplete is not correct.
 
@@ -46,7 +46,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/3/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/3/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-invalid is not correct.
 
@@ -66,7 +66,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/4/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/4/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-errormessage is not correct.
 
@@ -84,7 +84,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/5/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/5/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-relevant is not correct.
 
@@ -105,7 +105,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/6/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/6/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
 
@@ -123,7 +123,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/7/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/7/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
 
@@ -141,7 +141,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/8/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/8/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-details is not correct.
 
@@ -406,7 +406,7 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/1/file.html:1:22 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/1/file.html:1:22 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-checked is not correct.
 
@@ -425,9 +425,12 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/2/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/2/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-autocomplete is not correct.
+
+    <span aria-autocomplete="test" ></span>
+          ^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The supported values for the aria-autocomplete attribute are: "inline", "list", "both", "none"
 
@@ -446,9 +449,12 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/3/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/3/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-invalid is not correct.
+
+    <span aria-invalid="foo"></span>
+          ^^^^^^^^^^^^^^^^^^
 
   ℹ The supported values for the aria-invalid attribute are: "grammar", false, "spelling", true
 
@@ -467,9 +473,12 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/4/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/4/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-errormessage is not correct.
+
+    <span aria-errormessage="" ></span>
+          ^^^^^^^^^^^^^^^^^^^^
 
 
 ```
@@ -486,9 +495,12 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/5/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/5/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-relevant is not correct.
+
+    <span aria-relevant="fancy" ></span>
+          ^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The supported values for the aria-relevant attribute are: "additions", "all", "removals",
     "text"
@@ -508,9 +520,12 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/6/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/6/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
+
+    <span aria-labelledby="" ></span>
+          ^^^^^^^^^^^^^^^^^^
 
 
 ```
@@ -527,9 +542,12 @@
 
 ```
 
- lint,a11y,useAriaProptypes/reject/7/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
+ lint/a11y/useAriaProptypes/reject/7/file.html:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-details is not correct.
+
+    <span aria-details="" ></span>
+          ^^^^^^^^^^^^^^^
 
 
 ```

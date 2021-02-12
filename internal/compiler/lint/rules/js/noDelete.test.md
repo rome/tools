@@ -8,9 +8,13 @@
 
 ```
 
- lint,js,noDelete/reject/1/file.ts:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDelete/reject/1/file.ts:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This is an unexpected use of the delete operator.
+
+    1 │ const arr = [['a','b','c'], [1, 2, 3]];
+  > 2 │ delete arr[0][2];
+      │ ^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
@@ -32,9 +36,13 @@ arr[0][2] = undefined;
 
 ```
 
- lint,js,noDelete/reject/2/file.ts:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ lint/js/noDelete/reject/2/file.ts:2 lint/js/noDelete  FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This is an unexpected use of the delete operator.
+
+    1 │ const obj = {a: {b: {c: 123}}};
+  > 2 │ delete obj.a.b.c;
+      │ ^^^^^^^^^^^^^^^^
 
   ℹ Safe fix
 
