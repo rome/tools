@@ -666,11 +666,7 @@ export default class Client {
 			server.attachToBridge(bridges.server),
 			this.attachBridge(status),
 		]);
-
-		this.endEvent.subscribe(async () => {
-			await server.end();
-		});
-
+		
 		return {serverClient, bridge: bridges.client, server};
 	}
 

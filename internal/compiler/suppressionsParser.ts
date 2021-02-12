@@ -376,7 +376,6 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 
 				if (requireExplanations && !parser.eatToken("Explanation")) {
 					parser.unexpectedDiagnostic({
-						start,
 						description: descriptions.SUPPRESSIONS.MISSING_EXPLANATION,
 					});
 				}

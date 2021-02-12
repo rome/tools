@@ -11,6 +11,7 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	MixedPathMap,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {Diagnostics, catchDiagnostics} from "@internal/diagnostics";
@@ -53,7 +54,7 @@ export default class LSPServer {
 		this.lintSessions = new AbsoluteFilePathMap();
 		this.fileBuffers = new AbsoluteFilePathSet();
 		this.fileVersions = new AbsoluteFilePathMap();
-		this.pathToDiagnostics = new AbsoluteFilePathMap();
+		this.pathToDiagnostics = new MixedPathMap();
 
 		this.watchProjectEvent = new Event({name: "watchProject"});
 
@@ -87,7 +88,7 @@ export default class LSPServer {
 	private fileVersions: AbsoluteFilePathMap<number>;
 	private lintSessionsPending: AbsoluteFilePathSet;
 	private lintSessions: AbsoluteFilePathMap<ServerRequest>;
-	private pathToDiagnostics: AbsoluteFilePathMap<Diagnostics>;
+	private pathToDiagnostics: MixedPathMap<Diagnostics>;
 
 	public watchProjectEvent: Event<AbsoluteFilePath, void>;
 
@@ -192,36 +193,33 @@ export default class LSPServer {
 			createProgress: () => {
 				return this.createProgress();
 			},
-			onChanges: ({changes}) => {
-				for (let change of changes) {
-					if (change.type !== "absolute") {
-						// Can only display absolute path diagnostics
-						continue;
-					}
-
-					const {path, diagnostics} = change;
-
-					// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
-					const processor = this.request.createDiagnosticsProcessor();
-					processor.addFilter({
-						category: "lint/pendingFixes",
-					});
-					processor.addDiagnostics(diagnostics);
-
-					this.pathToDiagnostics.set(path, processor.getDiagnostics());
-
-					this.transport.write({
-						method: "textDocument/publishDiagnostics",
-						params: {
-							uri: `file://${path.join()}`,
-							diagnostics: convertDiagnosticsToLSP(
-								processor.getDiagnostics(),
-								this.server,
-							),
-						},
-					});
+			onChange: ({path, diagnostics}) => {
+				if (!path.isAbsolute()) {
+					// Can only display absolute path diagnostics
+					return;
 				}
+
+				// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
+				const processor = this.request.createDiagnosticsProcessor();
+				processor.addFilter({
+					category: "lint/pendingFixes",
+				});
+				processor.addDiagnostics(diagnostics);
+
+				this.pathToDiagnostics.set(path, processor.getDiagnostics());
+
+				this.transport.write({
+					method: "textDocument/publishDiagnostics",
+					params: {
+						uri: `file://${path.join()}`,
+						diagnostics: convertDiagnosticsToLSP(
+							processor.getDiagnostics(),
+							this.server,
+						),
+					},
+				});
 			},
+			onRunEnd: ({}) => {},
 		});
 
 		const subscription = await checker.watch(runner);

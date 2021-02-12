@@ -11,6 +11,7 @@ import {
 	DiagnosticDependencies,
 	DiagnosticIntegrity,
 	DiagnosticLocation,
+	DiagnosticSuppression,
 	DiagnosticTags,
 } from "./types";
 import {SourceMapConsumerCollection} from "@internal/codec-source-map";
@@ -328,16 +329,26 @@ export default class DiagnosticsNormalizer {
 		return item;
 	}
 
-	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
-		const {sourceMaps} = this;
+	public normalizeSuppression(suppression: DiagnosticSuppression): DiagnosticSuppression {
+		const path = this.normalizePath(suppression.path);
+		if (path.equal(suppression.path)) {
+			return suppression;
+		} else {
+			return {
+				...suppression,
+				path,
+			};
+		}
+	}
 
+	public hasNormalize(): boolean {
+		const {sourceMaps} = this;
+		return this.hasMarkupOptions || (sourceMaps !== undefined && sourceMaps.hasAny()) || this.inlineSourceText.size === 0 || this.hasOptions;
+	}
+
+	public normalizeDiagnostic(diag: Diagnostic): Diagnostic {
 		// Fast path for a common case
-		if (
-			!this.hasMarkupOptions &&
-			(sourceMaps === undefined || !sourceMaps.hasAny()) &&
-			this.inlineSourceText.size === 0 &&
-			!this.hasOptions
-		) {
+		if (!this.hasNormalize()) {
 			return diag;
 		}
 

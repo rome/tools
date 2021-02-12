@@ -271,12 +271,9 @@ export default class DependencyGraph {
 	public validate(
 		node: DependencyNode,
 		diagnosticsProcessor: DiagnosticsProcessor,
-	): boolean {
+	): void {
 		const resolvedImports = node.resolveImports();
-		return (
-			diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length >
-			0
-		);
+		diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics);
 	}
 
 	private validateTransitive(

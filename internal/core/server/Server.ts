@@ -471,12 +471,7 @@ export default class Server {
 	public createDisconnectedDiagnosticsProcessor(
 		origins: DiagnosticOrigin[],
 	): DiagnosticsProcessor {
-		return this.createDiagnosticsProcessor({
-			onDiagnostics: (diagnostics: Diagnostics) => {
-				this.fatalErrorHandler.wrapPromise(
-					this.handleDisconnectedDiagnostics(diagnostics),
-				);
-			},
+		const processor = this.createDiagnosticsProcessor({
 			origins: [
 				...origins,
 				{
@@ -485,6 +480,16 @@ export default class Server {
 				},
 			],
 		});
+		
+		processor.insertDiagnosticsEvent.subscribe((diagnostics) => {
+			if (processor.hasDiagnostics()) {
+				this.fatalErrorHandler.wrapPromise(
+					this.handleDisconnectedDiagnostics(processor.getDiagnostics()),
+				);
+			}
+		});
+
+		return processor;
 	}
 
 	private maybeSetupGlobalErrorHandlers() {

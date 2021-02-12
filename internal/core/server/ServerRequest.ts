@@ -582,7 +582,7 @@ export default class ServerRequest {
 
 	public createDiagnosticsPrinter(
 		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
-		opts: Partial<Omit<DiagnosticsPrinterOptions, "processor">> = {}
+		opts: Partial<Omit<DiagnosticsPrinterOptions, "processor">> = {},
 	): DiagnosticsPrinter {
 		processor.unshiftOrigin({
 			category: "server",
@@ -1312,7 +1312,7 @@ export default class ServerRequest {
 		if (shouldPrint) {
 			await printer.print({
 				// Don't output the footer if this is a notifier for an invalid request as it will be followed by a help screen
-				showFooter: !(rawErr instanceof ServerRequestInvalid)
+				showFooter: !(rawErr instanceof ServerRequestInvalid),
 			});
 		}
 
