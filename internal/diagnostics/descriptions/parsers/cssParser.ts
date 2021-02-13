@@ -74,4 +74,53 @@ export const cssParser = createDiagnosticsCategory({
 	URL_FUNCTION_INVALID_VALUE: {
 		message: markup`The function <emphasis>url()</emphasis> can only accept strings.`,
 	},
+
+	CALC_VALUE_NOT_RECOGNISED: {
+		message: markup`The function <emphasis>calc()</emphasis> doesn't this token`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`<emphasis>calc()</emphasis> supports only numbers, percentages, dimensions or other sums.`,
+			},
+		],
+	},
+
+	CALC_MISSING_LEFT_SPACE: {
+		message: markup`Missing left space.`,
+	},
+
+	CALC_MISSING_RIGHT_SPACE: {
+		message: markup`Missing right space.`,
+	},
+
+	CALC_OPERATOR_ADD_OR_PLUS_NEEDED: {
+		message: markup`An operator is needed.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Consider adding <emphasis>+ or -</emphasis>`,
+			},
+		],
+	},
+
+	CALC_OPERATOR_TIMES_OR_MOD_NEEDED: {
+		message: markup`An operator is needed.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: markup`Consider adding <emphasis>* or /</emphasis>`,
+			},
+		],
+	},
+
+	CALC_UNTERMITED_SUM: {
+		message: markup`The character <emphasis>)</emphasis> is missing, the expression is not completed.`,
+	},
+
+	CALC_INCORRECT_NUMBER_VALUE: {
+		message: markup`Incorrect character, expected a number or a parenthesis`,
+	},
 });
