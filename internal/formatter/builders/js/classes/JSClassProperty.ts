@@ -23,6 +23,10 @@ export default function JSClassProperty(
 		builder.tokenize(node.key, node),
 	];
 
+	if (node.meta.optional) {
+		tokens.push("?");
+	}
+
 	if (builder.options.typeAnnotations && node.definite) {
 		tokens.push("!");
 	}
