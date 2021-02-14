@@ -47,6 +47,7 @@ import {
 	markup,
 } from "@internal/markup";
 import {tomlParser} from "./parsers/tomlParser";
+import {browserquery} from "./parsers/browserquery";
 
 export function join(conjunction: string, items: StaticMarkups): StaticMarkup {
 	if (items.length === 0) {
@@ -180,4 +181,5 @@ export const descriptions = {
 	RECOVERY_STORE: recoveryStore,
 	INIT_COMMAND: initCommand,
 	TOML_PARSER: tomlParser,
+	BROWSERQUERY: browserquery,
 };

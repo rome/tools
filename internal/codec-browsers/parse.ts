@@ -9,6 +9,7 @@ import {
 } from "@internal/parser-core";
 import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {markup} from "@internal/markup";
+import {AnyTargetBrowser} from "@internal/codec-browsers/resolve";
 
 type BrowserQueryTokens = BaseTokens & {
 	String: ValueToken<"String", string>;
@@ -149,19 +150,15 @@ const browserQueryParser = createParser<BrowserQueryParserTypes>({
 	},
 });
 
-// TODO: probably gonna rewrite all of this
 function parseBrowserQuery(options: ParserOptions) {
-	const parsed: object[] = [];
+	const targets: AnyTargetBrowser[] = [];
 
 	const parser = browserQueryParser.create(options);
 
 	while (!parser.matchToken("EOF")) {
 		switch (parser.getToken().type) {
 			case "String":
-				parsed.push({
-					type: "BrowserName",
-					name: (parser.getToken() as BrowserQueryTokens["String"]).value,
-				});
+				const name = (parser.getToken() as BrowserQueryTokens["String"]).value;
 
 				parser.nextToken();
 				// if (parser.getToken().type !== "GT" || parser.getToken().type !== "") {
