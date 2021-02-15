@@ -17,7 +17,7 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
 **ESLint Equivalent:** [jsx-fragments](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:cc050e9d3fae0c5afeb954d201145286659bf653,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2c36924b8eb453664fd25918f3fb51cf3227d974,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -93,6 +93,8 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
   <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;/</span><span style="color: Tomato;"><strong>Fragment</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>4</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;/&gt;</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -115,6 +117,8 @@ This rule enforces the use of `<>...</>` over `<Fragment>...</Fragment>`. The sh
   <strong>  </strong><strong>3</strong><strong> </strong><strong>3</strong><strong> │ </strong>  <span style="opacity: 0.8;">&rarr; </span>&lt;Foo<span style="opacity: 0.8;">&middot;</span>/&gt;
   <strong>  </strong><strong>4</strong><strong> </strong><strong> </strong><strong> │ </strong><span style="color: Tomato;">-</span> <span style="color: Tomato;">&lt;/</span><span style="color: Tomato;"><strong>React.Fragment</strong></span><span style="color: Tomato;">&gt;</span>
   <strong>  </strong><strong> </strong><strong> </strong><strong>4</strong><strong> │ </strong><span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">&lt;/&gt;</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

@@ -17,7 +17,7 @@ disallow assigning to imported bindings
 **ESLint Equivalent:** [no-import-assign](https://eslint.org/docs/rules/no-import-assign)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:6cf44884c20ff502052312bf4854aab34ed525d6,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:96743370b1602293fc26ef964f764fd838acc1f7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -30,6 +30,8 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -44,6 +46,8 @@ disallow assigning to imported bindings
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -56,6 +60,8 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -70,6 +76,8 @@ disallow assigning to imported bindings
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -82,6 +90,8 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -96,6 +106,8 @@ disallow assigning to imported bindings
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -109,6 +121,8 @@ disallow assigning to imported bindings
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -121,6 +135,8 @@ disallow assigning to imported bindings
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The imported variable </span><span style="color: Tomato;"><strong>x</strong></span><span style="color: Tomato;"> is read-only.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead of reassigning an import.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

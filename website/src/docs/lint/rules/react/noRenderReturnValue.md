@@ -17,7 +17,7 @@ prevent usage of the return value of `React.render`
 **ESLint Equivalent:** [no-render-return-value](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-render-return-value.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:6d4f9d47790678886ab636ffe90439803aa081ec,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:4f490a274e574ebc931c9064d07527c492a71c93,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -41,6 +41,8 @@ prevent usage of the return value of `React.render`
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -50,6 +52,8 @@ prevent usage of the return value of `React.render`
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:18</span> <strong>lint/react/noRenderReturnValue</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not depend on the return value from </span><span style="color: Tomato;"><strong>ReactDOM.render()</strong></span><span style="color: Tomato;">.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

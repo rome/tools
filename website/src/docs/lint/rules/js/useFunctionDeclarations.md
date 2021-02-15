@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:67cb7736077dab377c85cafcf530e1aebd861f20,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:cf34270b7c79bb1a674bda749924663ea8b6983a,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -50,6 +50,8 @@ MISSING DOCUMENTATION
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:12</span> <strong>lint/js/useFunctionDeclarations</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Use a </span><span style="color: Tomato;"><strong>function declaration</strong></span><span style="color: Tomato;"> instead of a </span><span style="color: Tomato;"><strong>const function</strong></span><span style="color: Tomato;">.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

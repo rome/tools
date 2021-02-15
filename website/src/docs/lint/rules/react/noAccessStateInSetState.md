@@ -17,7 +17,7 @@ prevent using `this.state` within a `this.setState`
 **ESLint Equivalent:** [no-access-state-in-setstate](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-access-state-in-setstate.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:888735778b47c4f35bcd8f75cc4da1681b0de2d2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:87f54e389ff020a2151e6ee516979c9b2322271c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -122,6 +122,8 @@ prevent using `this.state` within a `this.setState`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
     <span style="color: rgb(38, 148, 255);">state data.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -142,6 +144,8 @@ prevent using `this.state` within a `this.setState`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
     <span style="color: rgb(38, 148, 255);">state data.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -160,6 +164,8 @@ prevent using `this.state` within a `this.setState`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
     <span style="color: rgb(38, 148, 255);">state data.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -180,6 +186,8 @@ prevent using `this.state` within a `this.setState`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Batched state calls could result in unexpected errors due to stale</span>
     <span style="color: rgb(38, 148, 255);">state data.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

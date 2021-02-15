@@ -106,9 +106,7 @@ function check(
 					loc: {
 						...loc,
 						start: tracker.getPositionFromIndex(new ZeroIndexed(i)),
-						end: tracker.getPositionFromIndex(
-							new ZeroIndexed(i + word.length),
-						),
+						end: tracker.getPositionFromIndex(new ZeroIndexed(i + word.length)),
 					},
 				});
 

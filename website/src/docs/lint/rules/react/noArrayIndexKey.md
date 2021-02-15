@@ -17,7 +17,7 @@ prevent usage of Array index in keys
 **ESLint Equivalent:** [no-array-index-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:959e6b0383d1758fd1e3fbb4ab24cb0f694f58dd,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:0db20c265c239d6e318d47b34c94bb97f998d2a9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -33,12 +33,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -55,12 +59,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -78,12 +86,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -100,6 +112,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -114,6 +128,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -131,6 +147,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -146,12 +164,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -168,6 +190,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -183,12 +207,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -205,12 +233,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -228,12 +260,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -250,6 +286,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -264,6 +302,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -281,6 +321,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -296,12 +338,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -317,6 +363,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -333,6 +381,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -347,6 +397,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -363,12 +415,16 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -385,6 +441,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -399,6 +457,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -415,6 +475,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -429,6 +491,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -445,6 +509,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -459,6 +525,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -475,6 +543,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -489,6 +559,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -505,6 +577,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -519,6 +593,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -535,6 +611,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -550,6 +628,8 @@ prevent usage of Array index in keys
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -564,6 +644,8 @@ prevent usage of Array index in keys
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

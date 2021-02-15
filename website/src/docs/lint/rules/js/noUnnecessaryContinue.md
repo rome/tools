@@ -17,7 +17,7 @@ This rule detects `continue` statements that can be marked as unnecessary. These
 
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:ce9bf6e63b203f9a5579f5390f64e9e7432fb4d8,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:204c9c942e5842ba7efb1ae1c020fa693ecc12c2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -53,6 +53,8 @@ This rule detects `continue` statements that can be marked as unnecessary. These
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>continue;</strong></span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

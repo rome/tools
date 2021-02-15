@@ -73,7 +73,7 @@ async function run(
 	i: number,
 	filename: string,
 	code: string,
-) {
+): Promise<string> {
 	const diagnosticsHTML = await performFileOperation(
 		{
 			uid: `${joinCategoryName(category)}/${i}/${filename}`,

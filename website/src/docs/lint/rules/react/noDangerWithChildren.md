@@ -17,7 +17,7 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 **ESLint Equivalent:** [no-danger-with-children](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger-with-children.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:bdc754a17592dd7c626ff133bea117a55c59e7f9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:c8a16c176788a8b84f34e38573ae7a35f873ad81,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -30,6 +30,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -44,6 +46,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -56,6 +60,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -70,6 +76,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -82,6 +90,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -96,6 +106,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -108,6 +120,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -122,6 +136,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -134,6 +150,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -148,6 +166,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -160,6 +180,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -174,6 +196,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -186,6 +210,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -200,6 +226,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -212,6 +240,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -226,6 +256,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -238,6 +270,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -252,6 +286,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -264,6 +300,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -278,6 +316,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -290,6 +330,8 @@ report when a DOM element is using both `children` and `dangerouslySetInnerHTML`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting HTML content will inadvertently override any passed children</span>
     <span style="color: rgb(38, 148, 255);">in React.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

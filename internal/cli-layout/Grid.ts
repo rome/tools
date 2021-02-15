@@ -629,7 +629,7 @@ export default class Grid {
 			// Start of a sentence that was caused by line wrapping
 			if (
 				!word.endsWith("\n") &&
-				this.cursor.column.valueOf() === 0 &&
+				this.cursor.column.valueOf() === 1 &&
 				word !== ""
 			) {
 				ignoreTrailingSpace = true;

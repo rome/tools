@@ -40,9 +40,9 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Position 1:0
+				end: Position 1:3
 				path: RelativeFilePath<invalid/selector3/input.css>
-				start: Position 1:0
+				start: Position 1:2
 			}
 		}
 	]

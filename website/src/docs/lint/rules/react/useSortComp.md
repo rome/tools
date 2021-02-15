@@ -17,7 +17,7 @@ This rule enforces methods and properties order. When creating React components 
 **ESLint Equivalent:** [sort-comp](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:fdb9c8b26c328cf1590d1537cf5cb6e974876867,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:39e51113b5e10457a440437ef166ee6cebd39758,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -93,6 +93,8 @@ This rule enforces methods and properties order. When creating React components 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">When creating React components it is more convenient to always follow</span>
     <span style="color: rgb(38, 148, 255);">the same organisation for method order to help you easily find</span>
     <span style="color: rgb(38, 148, 255);">lifecycle methods, event handlers, etc.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

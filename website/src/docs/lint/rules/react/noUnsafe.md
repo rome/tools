@@ -17,7 +17,7 @@ prevent usage of unsafe lifecycle methods
 **ESLint Equivalent:** [no-unsafe](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-unsafe.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:15392fa7b042f32b12c6d6d9d9a64401dd224893,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:3ac55f6d5d9422aeac138ae34b357b8c0944fcef,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -34,6 +34,8 @@ prevent usage of unsafe lifecycle methods
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span>
     <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html">https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html</a></span>
     <span style="color: rgb(38, 148, 255);">for more information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -52,6 +54,8 @@ prevent usage of unsafe lifecycle methods
     <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html">https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html</a></span>
     <span style="color: rgb(38, 148, 255);">for more information.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -68,6 +72,8 @@ prevent usage of unsafe lifecycle methods
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span>
     <span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html">https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html</a></span>
     <span style="color: rgb(38, 148, 255);">for more information.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

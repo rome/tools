@@ -17,7 +17,7 @@ prevent passing of children as props
 **ESLint Equivalent:** [no-children-prop](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-children-prop.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e1bcafb9fec04c0fd56aad94ad324a02a314f4ad,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:409e97b44dae916e711d6a78c0fee9887a010514,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -30,6 +30,8 @@ prevent passing of children as props
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The canonical way to pass children in React is to use JSX elements or</span>
     <span style="color: rgb(38, 148, 255);">additional arguments to React.createElement.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

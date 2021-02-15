@@ -17,7 +17,7 @@ disallow unnecessary boolean casts
 **ESLint Equivalent:** [no-extra-boolean-cast](https://eslint.org/docs/rules/no-extra-boolean-cast)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:1faecd946ef4c35868ae655271c6228c2067cdca,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:4559dd2318bff388de9db731e24382ab1476596f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -35,6 +35,8 @@ disallow unnecessary boolean casts
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>)</strong></span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -54,6 +56,8 @@ disallow unnecessary boolean casts
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!!</strong></span><span style="color: Tomato;">Boolean(foo)</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">Boolean(foo)</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:6</span> <strong>lint/js/noExtraBooleanCast</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid </span><span style="color: Tomato;"><strong>redundant double-negation</strong></span><span style="color: Tomato;">.</span>
@@ -65,6 +69,8 @@ disallow unnecessary boolean casts
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>)</strong></span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -83,6 +89,8 @@ disallow unnecessary boolean casts
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>Boolean(</strong></span><span style="color: Tomato;">foo</span><span style="color: Tomato;"><strong>)</strong></span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -148,6 +156,8 @@ disallow unnecessary boolean casts
 
   <span style="color: Tomato;">-</span> <span style="color: Tomato;"><strong>!!</strong></span><span style="color: Tomato;">foo</span>
   <span style="color: MediumSeaGreen;">+</span> <span style="color: MediumSeaGreen;">foo</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

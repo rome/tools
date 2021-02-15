@@ -17,7 +17,7 @@ prevent usage of dangerous JSX props
 **ESLint Equivalent:** [no-danger](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-danger.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:75bf4646cbc2b8b46e47971b2b13501a579d917f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:2c7e253f2a9a30970fccc0e141867ab8cc8e0989,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -30,6 +30,8 @@ prevent usage of dangerous JSX props
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Setting content using code can expose users to cross-site scripting</span>
     <span style="color: rgb(38, 148, 255);">(XSS) attacks.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

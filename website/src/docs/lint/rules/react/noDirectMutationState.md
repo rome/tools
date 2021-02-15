@@ -17,7 +17,7 @@ prevent direct mutation of `this.state`
 **ESLint Equivalent:** [no-direct-mutation-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-direct-mutation-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:835fac8e3493858aa8114e81ab7ecd656b249bf7,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:7fdf8819ac51dba5afa43931ee9c06eb278ea748,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -36,6 +36,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -56,6 +58,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -74,6 +78,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -94,6 +100,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -112,6 +120,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -133,6 +143,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:4:4</span> <strong>lint/react/noDirectMutationState</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid mutating </span><span style="color: Tomato;"><strong>this.state</strong></span><span style="color: Tomato;"> directly.</span>
@@ -140,6 +152,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -162,6 +176,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -183,6 +199,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -200,6 +218,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -219,6 +239,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -236,6 +258,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -255,6 +279,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -272,6 +298,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -291,6 +319,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -308,6 +338,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -327,6 +359,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -345,6 +379,8 @@ prevent direct mutation of `this.state`
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -362,6 +398,8 @@ prevent direct mutation of `this.state`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Calling </span><span style="color: rgb(38, 148, 255);"><strong>setState()</strong></span><span style="color: rgb(38, 148, 255);"> after mutating </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly may replace the</span>
     <span style="color: rgb(38, 148, 255);">mutation you made. The only place you may set </span><span style="color: rgb(38, 148, 255);"><strong>this.state</strong></span><span style="color: rgb(38, 148, 255);"> directly is</span>
     <span style="color: rgb(38, 148, 255);">in a constructor of a react class component.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

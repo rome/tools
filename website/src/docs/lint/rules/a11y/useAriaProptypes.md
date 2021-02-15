@@ -17,7 +17,7 @@ enforce ARIA state and property values are valid
 **ESLint Equivalent:** [aria-proptypes](https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/master/docs/rules/aria-proptypes.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:e2b5fc8daecde0376d5bb06b0f3c8a8e82fcda64,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:ae08f05d5ac8d4a54aaf1faabe88bc298b6d6b0f,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -27,6 +27,8 @@ enforce ARIA state and property values are valid
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:22</span> <strong>lint/a11y/useAriaProptypes</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The value of the ARIA attribute </span><span style="color: Tomato;"><strong>aria-checked</strong></span><span style="color: Tomato;"> is not correct.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -41,6 +43,8 @@ enforce ARIA state and property values are valid
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The supported values for the </span><span style="color: rgb(38, 148, 255);"><strong>aria-autocomplete</strong></span><span style="color: rgb(38, 148, 255);"> attribute are:</span>
     <span style="color: rgb(38, 148, 255);">&quot;inline&quot;, &quot;list&quot;, &quot;both&quot;, &quot;none&quot;</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -54,6 +58,8 @@ enforce ARIA state and property values are valid
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The supported values for the </span><span style="color: rgb(38, 148, 255);"><strong>aria-invalid</strong></span><span style="color: rgb(38, 148, 255);"> attribute are: &quot;grammar&quot;,</span>
     <span style="color: rgb(38, 148, 255);">false, &quot;spelling&quot;, true</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -63,6 +69,8 @@ enforce ARIA state and property values are valid
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/a11y/useAriaProptypes</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The value of the ARIA attribute </span><span style="color: Tomato;"><strong>aria-errormessage</strong></span><span style="color: Tomato;"> is not correct.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -77,6 +85,8 @@ enforce ARIA state and property values are valid
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">The supported values for the </span><span style="color: rgb(38, 148, 255);"><strong>aria-relevant</strong></span><span style="color: rgb(38, 148, 255);"> attribute are:</span>
     <span style="color: rgb(38, 148, 255);">&quot;additions&quot;, &quot;all&quot;, &quot;removals&quot;, &quot;text&quot;</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -86,6 +96,8 @@ enforce ARIA state and property values are valid
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:6</span> <strong>lint/a11y/useAriaProptypes</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The value of the ARIA attribute </span><span style="color: Tomato;"><strong>aria-labelledby</strong></span><span style="color: Tomato;"> is not correct.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -97,6 +109,8 @@ enforce ARIA state and property values are valid
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The value of the ARIA attribute </span><span style="color: Tomato;"><strong>aria-labelledby</strong></span><span style="color: Tomato;"> is not correct.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -107,12 +121,16 @@ enforce ARIA state and property values are valid
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The value of the ARIA attribute </span><span style="color: Tomato;"><strong>aria-details</strong></span><span style="color: Tomato;"> is not correct.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text"><span class="token punctuation">&lt;</span><span class="token tag">span</span> <span class="token attr-name">role</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;checkbox&quot;</span> <span class="token attr-name">aria-checked</span><span class="token attr-equals">=</span><span class="token attr-value">&quot;test&quot;</span> <span class="token punctuation">&gt;</span><span class="token punctuation">&lt;/</span><span class="token attr-name">span</span><span class="token punctuation">&gt;</span></code></pre>{% endraw %}
 {% raw %}<pre class="language-text"><code class="language-text">
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.html:1:22</span> <strong>lint/a11y/useAriaProptypes</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">The value of the ARIA attribute </span><span style="color: Tomato;"><strong>aria-checked</strong></span><span style="color: Tomato;"> is not correct.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

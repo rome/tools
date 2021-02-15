@@ -17,7 +17,7 @@ prevent usage of `setState` in `componentDidMount`
 **ESLint Equivalent:** [no-did-mount-set-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-mount-set-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:90668f8149c652294c6edab4ebd412732b6bf461,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:222cc2e6b7523a1edbb363375f3f02015299aec3,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -37,6 +37,8 @@ prevent usage of `setState` in `componentDidMount`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
     <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -57,6 +59,8 @@ prevent usage of `setState` in `componentDidMount`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
     <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -75,6 +79,8 @@ prevent usage of `setState` in `componentDidMount`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
     <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -95,6 +101,8 @@ prevent usage of `setState` in `componentDidMount`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state after mounting causes a second render that can cause</span>
     <span style="color: rgb(38, 148, 255);">visual layout thrashing.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

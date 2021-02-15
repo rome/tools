@@ -24,7 +24,7 @@ CSSRoot {
 				integrity: undefined
 				language: "css"
 				sourceText: undefined
-				end: Position 1:3
+				end: Position 1:4
 				path: RelativeFilePath<invalid/selector7/input.css>
 				start: Position 1:3
 			}

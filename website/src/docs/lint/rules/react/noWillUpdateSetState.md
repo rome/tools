@@ -17,7 +17,7 @@ prevent usage of `setState` in `componentWillUpdate`
 **ESLint Equivalent:** [no-will-update-set-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-will-update-set-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:63bdf4a589713394f7b38599d92dabdec276e8a4,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:93602cc37549936059a11b85bea08904e64c5b87,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -37,6 +37,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -57,6 +59,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -75,6 +79,8 @@ prevent usage of `setState` in `componentWillUpdate`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -96,6 +102,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -115,6 +123,8 @@ prevent usage of `setState` in `componentWillUpdate`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -133,6 +143,8 @@ prevent usage of `setState` in `componentWillUpdate`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately before a scheduled render causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

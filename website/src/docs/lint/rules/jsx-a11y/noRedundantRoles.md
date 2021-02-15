@@ -17,7 +17,7 @@ enforce explicit role property is not the same as implicit/default role property
 **ESLint Equivalent:** [no-redundant-roles](https://github.com/evcohen/eslint-plugin-jsx-a11y/blob/master/docs/rules/no-redundant-roles.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:8cfc7145a97c581599978773b1d50dab2cc695de,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:7147641b87a452d7edc31bc0ae6fad6fd7088338,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -223,6 +223,8 @@ enforce explicit role property is not the same as implicit/default role property
   <strong>  </strong><strong>2</strong><strong> </strong><strong>2</strong><strong> │ </strong>  &lt;/td&gt;
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

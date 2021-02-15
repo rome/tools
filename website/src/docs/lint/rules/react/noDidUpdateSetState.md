@@ -17,7 +17,7 @@ pevent usage of `setState` in `componentDidUpdate`
 **ESLint Equivalent:** [no-did-update-set-state](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-did-update-set-state.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:521f8446cdde3f196965baf07f40112bd529b717,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:191d0544ff5491b01d3f31a2d07b142957e363d2,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -37,6 +37,8 @@ pevent usage of `setState` in `componentDidUpdate`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -57,6 +59,8 @@ pevent usage of `setState` in `componentDidUpdate`
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
 
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
+
 </code></pre>{% endraw %}
 
 ---
@@ -75,6 +79,8 @@ pevent usage of `setState` in `componentDidUpdate`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -95,6 +101,8 @@ pevent usage of `setState` in `componentDidUpdate`
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Updating state immediately after a previous update causes a second</span>
     <span style="color: rgb(38, 148, 255);">render that can cause visual layout thrashing.</span>
+
+  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

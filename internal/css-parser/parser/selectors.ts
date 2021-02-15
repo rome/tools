@@ -18,7 +18,7 @@ import {AnyCSSPattern} from "@internal/ast/css/unions";
 import {CSSParser, Tokens} from "../types";
 import {matchToken, readToken} from "../tokenizer";
 import {descriptions} from "@internal/diagnostics";
-import {parseFunction} from "../index";
+import {parseFunction} from "@internal/css-parser/parser/function";
 
 const ATTRIBUTE_SELECTOR_MATCHERS = ["~=", "|=", "^=", "$=", "*=", "="];
 
@@ -63,6 +63,7 @@ function parseClassSelector(parser: CSSParser): CSSClassSelector | undefined {
 	}
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+		token: parser.getToken(),
 	});
 	return undefined;
 }
@@ -106,6 +107,7 @@ function parsePseudoSelector(
 	}
 	parser.unexpectedDiagnostic({
 		description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+		token: parser.getToken(),
 	});
 	return undefined;
 }
@@ -205,6 +207,7 @@ function parseAttributeMatcher(parser: CSSParser): AttributeMatcher | undefined 
 				matcher,
 				ATTRIBUTE_SELECTOR_MATCHERS,
 			),
+			token: parser.getToken(),
 		});
 	}
 	return undefined;
@@ -252,6 +255,7 @@ function parseAttributeSelector(
 	if (!matchToken(parser, "Ident")) {
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.EXPECTED_IDENTIFIER,
+			token: parser.getToken(),
 		});
 		return undefined;
 	}
@@ -284,6 +288,7 @@ function parseAttributeSelector(
 		} else {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNKNOWN_ATTRIBUTE_MODIFIER,
+				token: parser.getToken(),
 			});
 			return undefined;
 		}
@@ -294,6 +299,7 @@ function parseAttributeSelector(
 	if (!matchToken(parser, "RightSquareBracket")) {
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.EXPECTED_CLOSING_ATTRIBUTE_SELECTOR,
+			token: parser.getToken(),
 		});
 		return undefined;
 	}
@@ -352,6 +358,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 				parser.unexpectedDiagnostic({
 					description: descriptions.CSS_PARSER.EXPECTED_SELECTOR,
 					start: last ? undefined : selectorStart,
+					token: parser.getToken(),
 				});
 				break;
 			} else {
@@ -372,6 +379,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.EXPECTED_LBRACKET,
 				start: selectorStart,
+				token: parser.getToken(),
 			});
 			parser.nextToken();
 			break;
@@ -382,6 +390,7 @@ function parseSelector(parser: CSSParser): CSSSelector {
 		parser.unexpectedDiagnostic({
 			description: descriptions.CSS_PARSER.UNEXPECTED_EMPTY_SELECTOR,
 			start,
+			token: parser.getToken(),
 		});
 	}
 
