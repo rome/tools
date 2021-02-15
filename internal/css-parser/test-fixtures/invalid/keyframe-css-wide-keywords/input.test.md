@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/keyframe-css-wide-keywords/input.css 1:0-3:19
-	path: RelativeFilePath<invalid/keyframe-css-wide-keywords/input.css>
+	path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -19,7 +19,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 1:18
-				path: RelativeFilePath<invalid/keyframe-css-wide-keywords/input.css>
+				path: RelativePath<invalid/keyframe-css-wide-keywords/input.css>
 				start: Position 1:11
 			}
 			description: Object {

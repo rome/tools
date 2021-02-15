@@ -57,12 +57,13 @@ import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
 	AnyPath,
-	RelativeFilePath,
+	RelativePath,
 	URLPath,
 	createAbsoluteFilePath,
 	createAnyPath,
 	createURLPath,
 	isPath,
+	AnyFilePath,
 } from "@internal/path";
 import {StaticMarkup, markup, readMarkup} from "@internal/markup";
 import {consumeUnknown} from ".";
@@ -213,13 +214,16 @@ export default class Consumer {
 		}
 
 		const getDiagnosticLocation = this.context.getDiagnosticLocation;
-		if (getDiagnosticLocation === undefined) {
-			return {
-				path: this.path,
-			};
-		} else {
-			return getDiagnosticLocation(this.keyPath, target);
+		if (getDiagnosticLocation !== undefined) {
+			const loc = getDiagnosticLocation(this.keyPath, target);
+			if (loc !== undefined) {
+				return loc;
+			}
 		}
+
+		return {
+			path: this.path,
+		};
 	}
 
 	public getLocation(
@@ -1171,6 +1175,26 @@ export default class Consumer {
 		}
 	}
 
+	public asFilePath(def?: string): AnyFilePath {
+		const path = this.asAnyPath(def);
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FILE_PATH);
+			return path.toExplicitRelative();
+		}
+	}
+
+	public asFilePathOrVoid(): undefined | AnyFilePath {
+		const path = this.asAnyPath();
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
 	public asAbsoluteFilePath(
 		def?: string,
 		cwd?: AbsoluteFilePath,
@@ -1197,7 +1221,7 @@ export default class Consumer {
 		}
 	}
 
-	public asRelativeFilePath(def?: string): RelativeFilePath {
+	public asRelativePath(def?: string): RelativePath {
 		const path = this.asAnyPath(def);
 		if (path.isRelative()) {
 			return path.assertRelative();
@@ -1207,17 +1231,17 @@ export default class Consumer {
 		}
 	}
 
-	public asRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asRelativePathOrVoid(): undefined | RelativePath {
 		if (this.exists()) {
-			return this.asRelativeFilePath();
+			return this.asRelativePath();
 		} else {
 			this._declareOptionalPath();
 			return undefined;
 		}
 	}
 
-	public asExplicitRelativeFilePath(def?: string): RelativeFilePath {
-		const path = this.asRelativeFilePath(def);
+	public asExplicitRelativePath(def?: string): RelativePath {
+		const path = this.asRelativePath(def);
 
 		if (path.isExplicitRelative()) {
 			return path;
@@ -1227,9 +1251,9 @@ export default class Consumer {
 		}
 	}
 
-	public asExplicitRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asExplicitRelativePathOrVoid(): undefined | RelativePath {
 		if (this.exists()) {
-			return this.asExplicitRelativeFilePath();
+			return this.asExplicitRelativePath();
 		} else {
 			this._declareOptionalPath();
 			return undefined;

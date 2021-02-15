@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/keyfram-number/input.css 1:0-5:1
-	path: RelativeFilePath<invalid/keyfram-number/input.css>
+	path: RelativePath<invalid/keyfram-number/input.css>
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"
@@ -37,7 +37,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:3
-				path: RelativeFilePath<invalid/keyfram-number/input.css>
+				path: RelativePath<invalid/keyfram-number/input.css>
 				start: Position 2:1
 			}
 			description: Object {

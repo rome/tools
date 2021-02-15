@@ -4,7 +4,7 @@ import {
 	AnyPath,
 	MixedPathMap,
 	PathSet,
-	RelativeFilePathMap,
+	RelativePathMap,
 	UIDPathMap,
 	URLPathMap,
 } from "@internal/path";
@@ -43,7 +43,7 @@ export type RSERValue =
 export type AnyRSERPathMap =
 	| RSERMixedPathMap
 	| AbsoluteFilePathMap<RSERValue>
-	| RelativeFilePathMap<RSERValue>
+	| RelativePathMap<RSERValue>
 	| URLPathMap<RSERValue>
 	| UIDPathMap<RSERValue>;
 

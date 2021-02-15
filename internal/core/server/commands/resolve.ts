@@ -27,27 +27,25 @@ export default createServerCommand({
 		req.expectArgumentLength(1, 2);
 
 		let origin;
-		let relative = "";
+		let relative;
 		let key;
 
 		if (args.length === 2) {
-			origin = flags.cwd.resolveMaybeUrl(args[0]);
-			relative = args[1];
+			origin = flags.cwd.resolve(req.args.getIndex(0).asFilePath());
+			relative = req.args.getIndex(1).asFilePath();
 			key = 1;
 		} else {
 			origin = flags.cwd;
-			relative = args[0];
+			relative = req.args.getIndex(0).asFilePath();
 			key = 0;
 		}
 
-		const query = {
-			...req.getResolverOptionsFromFlags(),
-			origin,
-			source: createAnyPath(relative),
-		};
-
 		const resolved = await server.resolver.resolveEntryAssert(
-			query,
+			{
+				...req.getResolverOptionsFromFlags(),
+				origin,
+				source: createAnyPath(relative),
+			},
 			{
 				location: req.getDiagnosticLocationFromFlags({type: "arg", key}),
 			},

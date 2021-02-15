@@ -1,7 +1,7 @@
 import {test} from "rome";
 import {dedent} from "@internal/string-utils";
 import {parseDecisionStrings} from "@internal/compiler";
-import {createAbsoluteFilePath, createRelativeFilePath} from "@internal/path";
+import {createAbsoluteFilePath, createRelativePath} from "@internal/path";
 import lint from "./index";
 import {parseJS} from "@internal/js-parser";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
@@ -10,7 +10,7 @@ test(
 	"apply single autofix",
 	async (t) => {
 		const {lintCompilerOptionsPerFile} = parseDecisionStrings({
-			path: createRelativeFilePath("test"),
+			path: createRelativePath("test"),
 			decisions: [
 				{
 					value: "fix-lint/js/noDoubleEquals-foo.ts-2:0-0",

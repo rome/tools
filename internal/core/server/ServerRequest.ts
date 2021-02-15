@@ -79,8 +79,8 @@ import {
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyPath,
-	RelativeFilePath,
 	createAbsoluteFilePath,
+	createFilePath,
 	createAnyPath,
 	createUIDPath,
 } from "@internal/path";
@@ -94,6 +94,7 @@ import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
+import { consume, Consumer } from "@internal/consume";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -259,11 +260,14 @@ export default class ServerRequest {
 			serial: true,
 		});
 
+		this.args = this.createArgsConsumer();
+
 		this.client.requestsInFlight.add(this);
 	}
 
 	public id: number;
 	public query: ServerQueryRequest;
+	public args: Consumer;
 	public bridge: BridgeServer<typeof ServerBridge>;
 	public client: ServerClient;
 	public logger: ReporterNamespace;
@@ -279,6 +283,25 @@ export default class ServerRequest {
 	private cancelledReason: undefined | string;
 	private toredown: boolean;
 	private files: AbsoluteFilePathMap<RecoverySaveFile>;
+
+	private createArgsConsumer(): Consumer {
+		return consume({
+			value: this.query.args,
+			context: {
+				category: DIAGNOSTIC_CATEGORIES["args/invalid"],
+				getDiagnosticLocation: (keys, target) => {
+					if (keys.length === 0 && typeof keys[0] === "number") {
+						return this.getDiagnosticLocationFromFlags({
+							type: "arg",
+							key: keys[0],
+						});
+					} else {
+						return undefined;
+					}
+				},
+			},
+		});
+	}
 
 	public queueSaveFile(path: AbsoluteFilePath, opts: RecoverySaveFile) {
 		this.files.set(path, opts);
@@ -558,7 +581,7 @@ export default class ServerRequest {
 		});
 	}
 
-	private maybeReadMemoryFile(path: RelativeFilePath): undefined | string {
+	private maybeReadMemoryFile(path: AnyPath): undefined | string {
 		if (path.isUID()) {
 			switch (path.getBasename()) {
 				case "argv":
@@ -575,7 +598,7 @@ export default class ServerRequest {
 		return [
 			this.server.createDiagnosticsPrinterFileHandler(),
 			{
-				readRelative: async (path) => {
+				read: async (path) => {
 					return this.maybeReadMemoryFile(path);
 				},
 			},
@@ -1178,7 +1201,7 @@ export default class ServerRequest {
 		}
 
 		for (let i = 0; i < rawArgs.length; i++) {
-			const path = createAnyPath(rawArgs[i]);
+			const path = createFilePath(rawArgs[i]);
 			let abs: AbsoluteFilePath;
 
 			if (path.isAbsolute()) {

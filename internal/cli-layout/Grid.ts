@@ -1024,6 +1024,7 @@ export default class Grid {
 		// This can happen since we wrap some other elements in views
 		// The following conditions need to be met:
 		// - No custom line wrap mode
+		// - No align attribute
 		// - No pointer
 		// - View viewport is the same
 		// - No line prefixes
@@ -1032,7 +1033,8 @@ export default class Grid {
 			lineWrapMode === undefined &&
 			pointer === undefined &&
 			subViewport !== undefined &&
-			subViewport === this.viewportWidth &&
+			subViewport.equal(this.viewportWidth) &&
+			!attributes.has("align") &&
 			linePrefixes.width.valueOf() === 0 &&
 			startCursor.column.valueOf() === 1
 		) {

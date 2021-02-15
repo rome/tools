@@ -11,7 +11,7 @@ CSSRoot {
 	diagnostics: Array []
 	integrity: undefined
 	loc: SourceLocation custom-properties/input.css 1:0-6:1
-	path: RelativeFilePath<custom-properties/input.css>
+	path: RelativePath<custom-properties/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation custom-properties/input.css 1:0-6:1

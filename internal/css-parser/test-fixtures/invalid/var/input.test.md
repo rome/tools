@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/var/input.css 1:0-5:1
-	path: RelativeFilePath<invalid/var/input.css>
+	path: RelativePath<invalid/var/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -25,7 +25,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:18
-				path: RelativeFilePath<invalid/var/input.css>
+				path: RelativePath<invalid/var/input.css>
 				start: Position 2:17
 			}
 		}

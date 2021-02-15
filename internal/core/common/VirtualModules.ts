@@ -9,6 +9,7 @@ import {modules} from "./virtual-modules";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
+	AnyPath,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {FSStats, createFakeStats} from "@internal/fs";
@@ -113,11 +114,13 @@ export default class VirtualModules {
 	}
 
 	public getPossibleVirtualFileContents(
-		path: AbsoluteFilePath,
+		path: AnyPath,
 	): undefined | string {
-		if (this.isVirtualPath(path)) {
-			const entry = this.statMap.assert(path);
-			return entry.content;
+		if (path.isAbsolute()) {
+			if (this.isVirtualPath(path)) {
+				const entry = this.statMap.assert(path);
+				return entry.content;
+			}
 		}
 
 		return undefined;

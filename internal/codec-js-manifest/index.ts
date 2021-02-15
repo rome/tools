@@ -31,8 +31,8 @@ import {manifestNameToString, normalizeName} from "./name";
 import {descriptions} from "@internal/diagnostics";
 import {
 	AbsoluteFilePath,
-	RelativeFilePathMap,
-	createRelativeFilePath,
+	RelativePathMap,
+	createRelativePath,
 } from "@internal/path";
 import {toCamelCase} from "@internal/string-utils";
 import {PathPatterns, parsePathPattern} from "@internal/path-match";
@@ -430,12 +430,12 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 		return true;
 	}
 
-	const exports: ManifestExports = new RelativeFilePathMap();
+	const exports: ManifestExports = new RelativePathMap();
 
 	// "exports": "./index.js"
 	if (typeof unknown === "string") {
 		exports.set(
-			createRelativeFilePath("."),
+			createRelativePath("."),
 			new Map([["default", createRelativeExportCondition(consumer)]]),
 		);
 		return exports;
@@ -453,7 +453,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 		}
 
 		const conditions = normalizeExportsConditions(value);
-		exports.set(value.getKey().asRelativeFilePath(), conditions);
+		exports.set(value.getKey().asRelativePath(), conditions);
 	}
 
 	if (dotConditionCount && dotConditionCount !== exports.size) {
@@ -469,7 +469,7 @@ function createRelativeExportCondition(
 	return {
 		type: "relative",
 		consumer: value,
-		relative: value.asExplicitRelativeFilePath(),
+		relative: value.asExplicitRelativePath(),
 	};
 }
 

@@ -11,8 +11,8 @@ import {SemverVersionNode} from "@internal/codec-semver";
 import {Consumer} from "@internal/consume";
 import {
 	AbsoluteFilePath,
-	RelativeFilePath,
-	RelativeFilePathMap,
+	RelativePath,
+	RelativePathMap,
 } from "@internal/path";
 import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Dict} from "@internal/typescript-helpers";
@@ -50,12 +50,12 @@ export type ManifestBugs = {
 	email: MString;
 };
 
-export type ManifestExports = RelativeFilePathMap<ManifestExportConditions>;
+export type ManifestExports = RelativePathMap<ManifestExportConditions>;
 
 export type ManifestExportRelativeCondition = {
 	type: "relative";
 	consumer: Consumer;
-	relative: RelativeFilePath;
+	relative: RelativePath;
 };
 
 export type ManifestExportNestedCondition = {

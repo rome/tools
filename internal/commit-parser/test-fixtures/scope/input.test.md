@@ -16,6 +16,6 @@ CommitRoot {
 	rawBody: "commit with an included scope"
 	scope: "test scope"
 	loc: SourceLocation scope/input.txt 1:0-1:45
-	path: RelativeFilePath<scope/input.txt>
+	path: RelativePath<scope/input.txt>
 }
 ```

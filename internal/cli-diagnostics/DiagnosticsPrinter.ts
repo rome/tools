@@ -54,18 +54,21 @@ type PositionLike = {
 };
 
 const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
-	async readAbsolute(path) {
-		if ((await exists(path)) && (await lstat(path)).isFile()) {
-			return createReadStream(path);
-		} else {
-			return undefined;
+	async read(path) {
+		if (path.isAbsolute()) {
+			if ((await exists(path)) && (await lstat(path)).isFile()) {
+				return createReadStream(path);
+			}
 		}
-	},
-	async readRelative() {
+		
 		return undefined;
 	},
 	async exists(path) {
-		return await exists(path);
+		if (path.isAbsolute()) {
+			return await exists(path);
+		} else {
+			return undefined;
+		}
 	},
 };
 
@@ -250,22 +253,18 @@ export default class DiagnosticsPrinter extends Error {
 	}
 
 	private async addFileSource(dep: FileDependency) {
-		const path = dep.path.assertAbsolute();
+		const {path} = dep;
 
 		let needsHash = dep.integrity !== undefined;
 		let needsSource = dep.type === "reference";
 
 		// If we don't need the source then just do an existence check
 		if (!(needsSource || needsHash)) {
-			let exists: undefined | boolean;
-			if (path.isRelative()) {
-				// Always assume relative paths exist
+			let exists: undefined | boolean = await this.fileHandler.exists(path);
+			if (exists === undefined && path.isUID()) {
 				exists = true;
 			}
-			if (exists === undefined) {
-				exists = await this.fileHandler.exists(path);
-			}
-			if (exists === undefined) {
+			if (!exists) {
 				this.missingFileSources.add(path);
 				return;
 			}
@@ -277,8 +276,8 @@ export default class DiagnosticsPrinter extends Error {
 			sourceText = dep.sourceText;
 		}
 		if (needsSource || needsHash) {
-			if (path.isAbsolute()) {
-				const stream = await this.fileHandler.readAbsolute(path);
+			if (sourceText === undefined) {
+				const stream = await this.fileHandler.read(path);
 
 				if (stream !== undefined) {
 					if (typeof stream === "string") {
@@ -320,12 +319,6 @@ export default class DiagnosticsPrinter extends Error {
 
 						sourceText = buff;
 					}
-				}
-			} else {
-				sourceText = await this.fileHandler.readRelative(path.assertRelative());
-
-				if (sourceText !== undefined && needsHash) {
-					this.fileHashes.set(path, sha256.sync(sourceText));
 				}
 			}
 			if (sourceText === undefined) {
@@ -468,7 +461,7 @@ export default class DiagnosticsPrinter extends Error {
 
 			// "reference" dependency can override "change" since it has more metadata that needs conflict resolution
 			if (existing === undefined || existing.type === "change") {
-				depsMap.set(dep.path, dep);
+				depsMap.set(path, dep);
 				continue;
 			}
 
@@ -479,21 +472,26 @@ export default class DiagnosticsPrinter extends Error {
 					dep.sourceText !== existing.sourceText
 				) {
 					throw new Error(
-						`Found multiple sourceText entires for ${dep.path.join()} that didn't match`,
+						`Found multiple sourceText entries for ${dep.path.join()} that didn't match`,
 					);
 				}
 
-				if (existing.sourceText === undefined) {
-					existing.sourceText = dep.sourceText;
+				let language = existing.language ?? dep.language;
+				if (dep.language === undefined && existing.language !== undefined && dep.language !== existing.language) {
+					language = "unknown";
 				}
 
-				if (existing.sourceTypeJS !== dep.sourceTypeJS) {
-					existing.sourceTypeJS = "unknown";
+				let sourceTypeJS = existing.sourceTypeJS ?? dep.sourceTypeJS;
+				if (dep.sourceTypeJS === undefined && existing.sourceTypeJS !== undefined && dep.sourceTypeJS !== existing.sourceTypeJS) {
+					sourceTypeJS = "unknown";
 				}
-
-				if (existing.language !== dep.language) {
-					existing.language = "unknown";
-				}
+				
+				depsMap.set(path, {
+					...existing,
+					sourceText: existing.sourceText ?? dep.sourceText,
+					sourceTypeJS,
+					language,
+				});
 			}
 		}
 
@@ -502,11 +500,6 @@ export default class DiagnosticsPrinter extends Error {
 
 	public async fetchFileSources(diagnostics: Diagnostics) {
 		for (const dep of this.getDependenciesFromDiagnostics(diagnostics)) {
-			const {path} = dep;
-			if (!path.isAbsolute()) {
-				continue;
-			}
-
 			await this.wrapError(
 				`addFileSource(${dep.path.join()})`,
 				() => this.addFileSource(dep),
@@ -679,7 +672,7 @@ export default class DiagnosticsPrinter extends Error {
 		// Check if this file doesn't even exist
 		if (path !== undefined) {
 			const normalPath = this.normalizePath(path);
-			const isMissing = this.missingFileSources.has(path);
+			const isMissing = this.missingFileSources.has(normalPath);
 			if (isMissing) {
 				outdatedAdvice.push({
 					type: "log",

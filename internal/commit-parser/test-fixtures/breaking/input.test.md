@@ -16,6 +16,6 @@ CommitRoot {
 	rawBody: "commit with a breaking change indicator"
 	scope: ""
 	loc: SourceLocation breaking/input.txt 1:0-1:47
-	path: RelativeFilePath<breaking/input.txt>
+	path: RelativePath<breaking/input.txt>
 }
 ```

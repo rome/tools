@@ -360,19 +360,14 @@ function printFrame(
 	} else if (path !== undefined) {
 		const source = opts.fileSources.get(path);
 		if (source === undefined) {
-			if (
-				path.isAbsolute() &&
-				opts.missingFileSources.has(path.assertAbsolute())
-			) {
-				return printLog(
-					{
-						type: "log",
-						category: "warn",
-						text: markup`File ${path} does not exist`,
-					},
-					opts,
-				);
-			}
+			return printLog(
+				{
+					type: "log",
+					category: "warn",
+					text: markup`Cannot render frame as ${path} does not exist`,
+				},
+				opts,
+			);
 		} else {
 			lines = source.lines;
 			sourceText = source.sourceText;

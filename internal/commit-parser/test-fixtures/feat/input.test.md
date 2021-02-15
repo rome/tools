@@ -16,6 +16,6 @@ CommitRoot {
 	rawBody: "commit with a feat commit type"
 	scope: ""
 	loc: SourceLocation feat/input.txt 1:0-1:35
-	path: RelativeFilePath<feat/input.txt>
+	path: RelativePath<feat/input.txt>
 }
 ```

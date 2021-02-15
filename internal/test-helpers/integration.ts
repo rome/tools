@@ -11,12 +11,12 @@ import {
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	RelativeFilePath,
+	RelativePath,
 	TEMP_PATH,
 	UIDPath,
 	createAbsoluteFilePath,
 	createAnyPath,
-	createRelativeFilePath,
+	createRelativePath,
 	createUIDPath,
 } from "@internal/path";
 import {JSONObject, json} from "@internal/codec-config";
@@ -68,9 +68,9 @@ type IntegrationTestHelper = {
 	bridge: BridgeClient<typeof ServerBridge>;
 	client: Client;
 	server: Server;
-	readFile: (relative: RelativeFilePath | string) => Promise<string>;
+	readFile: (relative: RelativePath | string) => Promise<string>;
 	writeFile: (
-		relative: RelativeFilePath | string,
+		relative: RelativePath | string,
 		content: string,
 	) => Promise<void>;
 	createRequest: (query?: PartialServerQueryRequest) => Promise<ServerRequest>;
@@ -173,7 +173,7 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 		}: IntegrationWorkerFileRefOptions,
 		callback: (ref: FileReference) => Promise<T>,
 	): Promise<T> {
-		let relative = createRelativeFilePath(uid);
+		let relative = createRelativePath(uid);
 
 		if (real === undefined && sourceText === undefined) {
 			throw new Error("real and sourceText cannot be undefined");
@@ -462,12 +462,12 @@ export function createIntegrationTest(
 					bridge,
 					client,
 					server,
-					async readFile(relative: RelativeFilePath | string): Promise<string> {
+					async readFile(relative: RelativePath | string): Promise<string> {
 						const absolute = projectPath.append(relative);
 						return readFileText(absolute);
 					},
 					async writeFile(
-						relative: RelativeFilePath | string,
+						relative: RelativePath | string,
 						content: string,
 					): Promise<void> {
 						const absolute = projectPath.append(relative);

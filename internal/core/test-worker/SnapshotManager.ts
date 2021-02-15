@@ -8,7 +8,8 @@
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	RelativeFilePath,
+	createFilePath,
+	RelativePath,
 } from "@internal/path";
 import {exists, readFileText} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";
@@ -93,7 +94,7 @@ export default class SnapshotManager {
 	public static buildSnapshot(
 		{entries, absolute, relative}: {
 			absolute: AbsoluteFilePath;
-			relative: RelativeFilePath;
+			relative: RelativePath;
 			entries: Iterable<SnapshotEntry>;
 		},
 	): string {
@@ -191,7 +192,7 @@ export default class SnapshotManager {
 			return this.defaultSnapshotPath;
 		}
 
-		const path = this.runner.path.getParent().resolve(filename);
+		const path = this.runner.path.getParent().resolve(createFilePath(filename));
 		const ext = path.getExtensions();
 		if (ext.endsWith(SNAPSHOT_EXT)) {
 			return path;

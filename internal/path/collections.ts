@@ -9,12 +9,12 @@ import {MappedKeyMap, MappedSet} from "@internal/collections";
 import {
 	AbsoluteFilePath,
 	AnyPath,
-	RelativeFilePath,
+	RelativePath,
 	UIDPath,
 	URLPath,
 	createAbsoluteFilePath,
 	createAnyPath,
-	createRelativeFilePath,
+	createRelativePath,
 	createUIDPath,
 	createURLPath,
 } from "./index";
@@ -72,19 +72,19 @@ export class AbsoluteFilePathMap<Value>
 	}
 }
 
-export class RelativeFilePathMap<Value>
-	extends BasePathMap<RelativeFilePath, Value> {
-	constructor(entries?: [RelativeFilePath, Value][]) {
+export class RelativePathMap<Value>
+	extends BasePathMap<RelativePath, Value> {
+	constructor(entries?: [RelativePath, Value][]) {
 		super(entries);
-		this[Symbol.toStringTag] = "RelativeFilePathMap";
+		this[Symbol.toStringTag] = "RelativePathMap";
 	}
 
-	public createKey(str: string): RelativeFilePath {
-		return createRelativeFilePath(str);
+	public createKey(str: string): RelativePath {
+		return createRelativePath(str);
 	}
 
-	public keysToSet(): RelativeFilePathSet {
-		return new RelativeFilePathSet(this.keys());
+	public keysToSet(): RelativePathSet {
+		return new RelativePathSet(this.keys());
 	}
 }
 
@@ -172,18 +172,18 @@ export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath> {
 	}
 }
 
-export class RelativeFilePathSet extends BasePathSet<RelativeFilePath> {
-	constructor(entries?: Iterable<RelativeFilePath>) {
+export class RelativePathSet extends BasePathSet<RelativePath> {
+	constructor(entries?: Iterable<RelativePath>) {
 		super(entries);
-		this[Symbol.toStringTag] = "RelativeFilePathSet";
+		this[Symbol.toStringTag] = "RelativePathSet";
 	}
 
 	public addString(str: string): void {
-		this.add(createRelativeFilePath(str));
+		this.add(createRelativePath(str));
 	}
 
-	public concat(...items: Iterable<RelativeFilePath>[]): RelativeFilePathSet {
-		return new RelativeFilePathSet(concat(items));
+	public concat(...items: Iterable<RelativePath>[]): RelativePathSet {
+		return new RelativePathSet(concat(items));
 	}
 }
 
@@ -234,7 +234,7 @@ export class MixedPathSet extends BasePathSet<AnyPath> {
 
 export type PathSet =
 	| AbsoluteFilePathSet
-	| RelativeFilePathSet
+	| RelativePathSet
 	| URLPathSet
 	| UIDPathSet
 	| MixedPathSet;
@@ -242,7 +242,7 @@ export type PathSet =
 export function isPathSet(val: unknown): val is PathSet {
 	return (
 		val instanceof AbsoluteFilePathSet ||
-		val instanceof RelativeFilePathSet ||
+		val instanceof RelativePathSet ||
 		val instanceof URLPathSet ||
 		val instanceof UIDPathSet ||
 		val instanceof MixedPathSet
@@ -251,7 +251,7 @@ export function isPathSet(val: unknown): val is PathSet {
 
 export type PathMap<Value> =
 	| AbsoluteFilePathMap<Value>
-	| RelativeFilePathMap<Value>
+	| RelativePathMap<Value>
 	| URLPathMap<Value>
 	| UIDPathMap<Value>
 	| MixedPathMap<Value>;
@@ -259,7 +259,7 @@ export type PathMap<Value> =
 export function isPathMap(val: unknown): val is PathMap<unknown> {
 	return (
 		val instanceof AbsoluteFilePathMap ||
-		val instanceof RelativeFilePathMap ||
+		val instanceof RelativePathMap ||
 		val instanceof URLPathMap ||
 		val instanceof UIDPathMap ||
 		val instanceof MixedPathMap

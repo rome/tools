@@ -440,7 +440,7 @@ export default class Server {
 
 	public createDiagnosticsPrinterFileHandler(): DiagnosticsFileHandler {
 		return {
-			readAbsolute: async (path) => {
+			read: async (path) => {
 				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
 					path,
 				);
@@ -451,7 +451,7 @@ export default class Server {
 				}
 			},
 			exists: async (path) => {
-				if (this.virtualModules.isVirtualPath(path)) {
+				if (path.isAbsolute() && this.virtualModules.isVirtualPath(path)) {
 					return true;
 				} else {
 					return undefined;

@@ -10,7 +10,7 @@
 Object {
 	corrupt: false
 	diagnostics: Array []
-	path: RelativeFilePath<0.test>
+	path: RelativePath<0.test>
 	comments: Array [
 		CommentLine {
 			id: "0"
@@ -76,7 +76,7 @@ Object {
 Object {
 	comments: Array []
 	corrupt: false
-	path: RelativeFilePath<1.test>
+	path: RelativePath<1.test>
 	parsed: Array [
 		Object {
 			loc: SourceLocation 1.test 1:0-1:1
@@ -108,7 +108,7 @@ Object {
 				language: "unknown"
 				sourceText: undefined
 				end: Position 1:0
-				path: RelativeFilePath<1.test>
+				path: RelativePath<1.test>
 				start: Position 1:0
 			}
 		}
@@ -122,7 +122,7 @@ Object {
 Object {
 	comments: Array []
 	corrupt: false
-	path: RelativeFilePath<2.test>
+	path: RelativePath<2.test>
 	parsed: Array [
 		Object {
 			loc: SourceLocation 2.test 1:0-1:28
@@ -154,7 +154,7 @@ Object {
 				language: "unknown"
 				sourceText: undefined
 				end: Position 1:0
-				path: RelativeFilePath<2.test>
+				path: RelativePath<2.test>
 				start: Position 1:0
 			}
 		}

@@ -19,6 +19,7 @@ export const consume = createDiagnosticsCategory({
 	EXPECTED_NUMBER: {message: markup`Expected a number`},
 	EXPECTED_URL: {message: markup`Expected a URL`},
 	EXPECTED_VALID_NUMBER: {message: markup`Expected valid number`},
+	EXPECTED_FILE_PATH: {message: markup`Expected a file path`},
 	EXPECTED_ABSOLUTE_PATH: {message: markup`Expected an absolute file path`},
 	EXPECTED_RELATIVE_PATH: {message: markup`Expected a relative file path`},
 	EXPECTED_EXPLICIT_RELATIVE_PATH: {

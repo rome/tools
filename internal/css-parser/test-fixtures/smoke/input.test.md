@@ -10,7 +10,7 @@ CSSRoot {
 	diagnostics: Array []
 	integrity: undefined
 	loc: SourceLocation smoke/input.css 1:0-12:1
-	path: RelativeFilePath<smoke/input.css>
+	path: RelativePath<smoke/input.css>
 	comments: Array [
 		CommentBlock {
 			id: "0"

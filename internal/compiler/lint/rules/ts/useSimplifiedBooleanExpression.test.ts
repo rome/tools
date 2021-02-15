@@ -1,4 +1,4 @@
-import {createRelativeFilePath} from "@internal/path";
+import {createRelativePath} from "@internal/path";
 import {test} from "rome";
 import {testLint} from "../../utils/testing";
 import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
@@ -20,7 +20,7 @@ test(
 					"function foo(x: boolean | number) { return x === true; }",
 					"function foo(x: boolean | undefined) { return false === x; }",
 				],
-				path: createRelativeFilePath("file.ts"),
+				path: createRelativePath("file.ts"),
 				category: DIAGNOSTIC_CATEGORIES["lint/ts/useSimplifiedBooleanExpression"],
 			},
 		);

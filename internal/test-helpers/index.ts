@@ -12,7 +12,7 @@ import {TestHelper, test, testOptions} from "rome";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
-	RelativeFilePath,
+	RelativePath,
 	createAbsoluteFilePath,
 } from "@internal/path";
 import {
@@ -48,7 +48,7 @@ export type Fixture = {
 };
 
 export type FixtureFile = {
-	relative: RelativeFilePath;
+	relative: RelativePath;
 	absolute: AbsoluteFilePath;
 	content: Buffer;
 };

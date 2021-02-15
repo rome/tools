@@ -5,7 +5,7 @@ import {
 	SourceMapConsumerCollection,
 } from "@internal/codec-source-map/index";
 import {ResolvedLocation} from "@internal/codec-source-map/types";
-import {AnyPath, createRelativeFilePath} from "@internal/path";
+import {AnyPath, createRelativePath} from "@internal/path";
 import {SourceMap} from "@internal/codec-source-map";
 
 /* Source test1
@@ -75,8 +75,8 @@ const jsonSourceMap2: SourceMap = {
 test(
 	"Verify hasAny, add, has are correct",
 	async (t) => {
-		const test1Path = createRelativeFilePath("test1");
-		const test2Path = createRelativeFilePath("test2");
+		const test1Path = createRelativePath("test1");
+		const test2Path = createRelativePath("test2");
 		const consumerCollection = new SourceMapConsumerCollection();
 
 		t.false(consumerCollection.hasAny());
@@ -97,17 +97,17 @@ test(
 
 		t.true(consumerCollection.has(test1Path));
 		t.true(consumerCollection.has(test2Path));
-		t.false(consumerCollection.has(createRelativeFilePath("other")));
+		t.false(consumerCollection.has(createRelativePath("other")));
 	},
 );
 
 test(
 	"Should return the position of the targeted anchor in the sources files",
 	async (t) => {
-		const test1Path = createRelativeFilePath("test1");
-		const test2Path = createRelativeFilePath("test2");
-		const test1JSPath = createRelativeFilePath("js/test1.js");
-		const test2JSPath = createRelativeFilePath("js/test2.js");
+		const test1Path = createRelativePath("test1");
+		const test2Path = createRelativePath("test2");
+		const test1JSPath = createRelativePath("js/test1.js");
+		const test2JSPath = createRelativePath("js/test2.js");
 
 		const consumerCollection = new SourceMapConsumerCollection();
 		consumerCollection.add(

@@ -6,7 +6,7 @@
  */
 
 import {Reporter} from "@internal/cli-reporter";
-import {AbsoluteFilePath, RelativeFilePath} from "@internal/path";
+import {AbsoluteFilePath, AnyPath} from "@internal/path";
 import {DiagnosticsProcessor} from "@internal/diagnostics";
 import {FSReadStream} from "@internal/fs";
 
@@ -23,11 +23,8 @@ export type DiagnosticsPrinterFlags = {
 };
 
 export type DiagnosticsFileHandler = {
-	readRelative?: (path: RelativeFilePath) => Promise<undefined | string>;
-	readAbsolute?: (
-		path: AbsoluteFilePath,
-	) => Promise<undefined | string | FSReadStream>;
-	exists?: (path: AbsoluteFilePath) => Promise<undefined | boolean>;
+	read?: (path: AnyPath) => Promise<undefined | string | FSReadStream>;
+	exists?: (path: AnyPath) => Promise<undefined | boolean>;
 };
 
 export type DiagnosticsPrinterOptions = {

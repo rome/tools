@@ -35,7 +35,7 @@ export type ConsumeContext = {
 	getDiagnosticLocation?: (
 		keys: ConsumePath,
 		target: ConsumeSourceLocationRequestTarget,
-	) => DiagnosticLocation;
+	) => undefined | DiagnosticLocation;
 	getOriginalValue?: (path: ConsumePath) => unknown;
 };
 
@@ -45,7 +45,7 @@ export type ConsumePropertyMetadata = {
 	alternateName?: string;
 	getDiagnosticLocation?: (
 		target: ConsumeSourceLocationRequestTarget,
-	) => DiagnosticLocation;
+	) => undefined | DiagnosticLocation;
 };
 
 type ConsumePropertyDefinitionBase = {

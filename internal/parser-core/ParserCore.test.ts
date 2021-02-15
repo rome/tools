@@ -13,7 +13,7 @@ import {ZeroIndexed} from "@internal/math";
 import {dedent} from "@internal/string-utils";
 import {markup} from "@internal/markup";
 import {isNewline} from "@internal/css-parser/utils";
-import {createRelativeFilePath} from "@internal/path";
+import {createRelativePath} from "@internal/path";
 
 type TestTokens = BaseTokens & {
 	Comment: ValueToken<"Comment", string>;
@@ -149,16 +149,16 @@ test(
 
 				// Comment
 			`,
-			path: createRelativeFilePath("0.test"),
+			path: createRelativePath("0.test"),
 		});
 
 		const parser1 = testParser.create({
-			path: createRelativeFilePath("1.test"),
+			path: createRelativePath("1.test"),
 			input: "a", // Invalid
 		});
 
 		const parser2 = testParser.create({
-			path: createRelativeFilePath("2.test"),
+			path: createRelativePath("2.test"),
 			input: `"i'm an unterminated string`,
 		});
 
