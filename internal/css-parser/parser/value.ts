@@ -4,8 +4,10 @@ import {isCustomProperty} from "@internal/css-parser/utils";
 import {ValueToken} from "@internal/parser-core";
 import {parseSimpleBlock} from "@internal/css-parser/parser/block";
 import {parseFunction} from "@internal/css-parser/parser/function";
+import {parseUrl} from "@internal/css-parser/parser/url";
 
 export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
+	console.log("value", parser.getToken());
 	if (
 		matchToken(parser, "LeftCurlyBracket") ||
 		matchToken(parser, "LeftParen") ||
@@ -16,6 +18,10 @@ export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined 
 
 	if (matchToken(parser, "Function")) {
 		return parseFunction(parser);
+	}
+
+	if (matchToken(parser, "URL") || matchToken(parser, "BadURL")) {
+		return parseUrl(parser);
 	}
 
 	const start = parser.getPosition();

@@ -18,7 +18,7 @@ CSSRoot {
 				advice: Array []
 				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Expected an identifier"}
+				message: RAW_MARKUP {value: "Expected an identifier."}
 			}
 			location: Object {
 				integrity: undefined

@@ -47,7 +47,7 @@ CSSRoot {
 				advice: Array [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "The only valid values are percentages, and the keywords <emphasis>from</emphasis> and <emphasis>to</emphasis>"}
+						text: RAW_MARKUP {value: "The only valid values are percentages, and the keywords <emphasis>from</emphasis> and <emphasis>to</emphasis>."}
 					}
 				]
 			}

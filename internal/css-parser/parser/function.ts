@@ -1,15 +1,23 @@
 import {AnyCSSValue, CSSParser, Tokens} from "@internal/css-parser/types";
-import {CSSCustomProperty, CSSFunction, CSSVarFunction} from "@internal/ast";
+import {
+	CSSCustomProperty,
+	CSSFunction,
+	CSSUrlFunction,
+	CSSVarFunction,
+} from "@internal/ast";
 import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
 
-export function parseFunction(parser: CSSParser): CSSFunction | CSSVarFunction {
+export function parseFunction(
+	parser: CSSParser,
+): CSSFunction | CSSVarFunction | CSSUrlFunction | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
 	const params: AnyCSSValue[] = [];
 	const isVarFunction = name === "var";
+	const isUrlFunction = name === "url";
 	parser.nextToken();
 
 	while (true) {
@@ -49,6 +57,33 @@ export function parseFunction(parser: CSSParser): CSSFunction | CSSVarFunction {
 				params: params as [CSSCustomProperty, ...AnyCSSValue[]],
 			},
 		);
+	}
+
+	if (isUrlFunction) {
+		if (params.length > 1) {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.URL_FUNCTION_TOO_MANY_PARAMETERS,
+				token,
+			});
+		}
+		const value = params[0];
+		if (value.type === "CSSString") {
+			return parser.finishNode(
+				start,
+				{
+					type: "CSSUrlFunction",
+					name: "url",
+					params: [value],
+				},
+			);
+		} else {
+			parser.unexpectedDiagnostic({
+				description: descriptions.CSS_PARSER.URL_FUNCTION_INVALID_VALUE,
+				token,
+			});
+			parser.nextToken();
+			return undefined;
+		}
 	}
 
 	return parser.finishNode(

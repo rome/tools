@@ -59,6 +59,7 @@ export function parseDeclaration(
 ): CSSDeclaration | undefined {
 	while (!matchEndOfDeclaration(parser, endingTokenType)) {
 		const currentToken = parser.getToken();
+		console.log(currentToken);
 		if (currentToken.type !== "Ident") {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.INVALID_DECLARATION,

@@ -18,7 +18,7 @@ CSSRoot {
 				advice: Array []
 				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Expected a selector"}
+				message: RAW_MARKUP {value: "Expected a selector."}
 			}
 			location: Object {
 				integrity: undefined

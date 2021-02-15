@@ -584,6 +584,7 @@ function consumeURLToken(
 			) {
 				const [newValue, newIndex] = consumeEscaped(parser, index);
 				index = newIndex;
+				console.log(newValue);
 				value += newValue;
 				continue;
 			}

@@ -84,14 +84,16 @@ function parsePseudoSelector(
 			);
 		} else if (matchToken(parser, "Function")) {
 			const func = parseFunction(parser);
-			return parser.finishNode(
-				start,
-				{
-					type: "CSSPseudoClassSelector",
-					value: func.name,
-					params: func.params,
-				},
-			);
+			if (func) {
+				return parser.finishNode(
+					start,
+					{
+						type: "CSSPseudoClassSelector",
+						value: func.name,
+						params: func.params,
+					},
+				);
+			}
 		} else if (matchToken(parser, "Colon")) {
 			const pseudoClass = parsePseudoSelector(parser);
 			if (pseudoClass) {

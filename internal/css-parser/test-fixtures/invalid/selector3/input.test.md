@@ -34,7 +34,7 @@ CSSRoot {
 				advice: Array []
 				category: "parse"
 				categoryValue: "css"
-				message: RAW_MARKUP {value: "Unexpected empty selectors"}
+				message: RAW_MARKUP {value: "Unexpected empty selectors."}
 			}
 			location: Object {
 				integrity: undefined
