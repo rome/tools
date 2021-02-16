@@ -1,18 +1,15 @@
-import { AnyFilePath, AnyPath, PathSegments } from "./types";
-import AbsoluteFilePath from "./classes/AbsoluteFilePath";
-import RelativePath from "./classes/RelativePath";
-import UIDPath from "./classes/UIDPath";
-import URLPath from "./classes/URLPath";
-import {ParsedPath, parsePathSegments, splitPathSegments} from "./parse";
-import {createRelativePath} from "./index";
-import { enhanceNodeInspectClass } from "@internal/node";
+import {AnyFilePath, AnyPath, PathSegments} from "../types";
+import AbsoluteFilePath from "./AbsoluteFilePath";
+import RelativePath from "./RelativePath";
+import UIDPath from "./UIDPath";
+import URLPath from "./URLPath";
+import {ParsedPath, parsePathSegments, splitPathSegments} from "../parse";
+import {createRelativePath} from "../index";
+import {enhanceNodeInspectClass} from "@internal/node";
 
-export interface AgnosticFilePathMemo {
+export interface FilePathMemo<Super> {
 	filename: undefined | string;
 	ext: undefined | string;
-}
-
-export interface FilePathMemo<Super> extends AgnosticFilePathMemo {
 	parent: undefined | Super;
 	unique: undefined | Super;
 }
@@ -60,18 +57,6 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		parsed;
 		memo;
 		throw new Error("Unimplemented");
-	}
-
-	private getPortableMemo(): AgnosticFilePathMemo & {
-		parent: undefined;
-		unique: undefined;
-	} {
-		return {
-			parent: undefined,
-			unique: undefined,
-			filename: this.memo.filename,
-			ext: this.memo.ext,
-		};
 	}
 
 	public toJSON(): string {
@@ -143,13 +128,11 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 			throw new Error("No parent segments");
 		}
 
-		const parent = this._fork(
-			{
-				...this.parsed,
-				//explicitDirectory: true,
-				segments,
-			},
-		);
+		const parent = this._fork({
+			...this.parsed,
+			//explicitDirectory: true,
+			segments,
+		});
 		this.memo.parent = parent;
 		return parent;
 	}
@@ -179,34 +162,28 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 		}
 	}
 
+	private _unexpected(message: string) {
+		throw new Error(`${this[Symbol.toStringTag]}<${this.join()}>: ${message}`);
+	}
+
 	public assertRelative(): RelativePath {
-		throw new Error(
-			`Expected relative path but got: ${JSON.stringify(this.join())}`,
-		);
+		throw this._unexpected("Expected relative path");
 	}
 
 	public assertUID(): UIDPath {
-		throw new Error(
-			`Expected uid path but got: ${JSON.stringify(this.join())}`,
-		);
+		throw this._unexpected("Expected UID path");
 	}
 
 	public assertAbsolute(): AbsoluteFilePath {
-		throw new Error(
-			`Expected absolute file path but got: ${JSON.stringify(this.join())}`,
-		);
-  }
-  
-  public assertFilePath(): AnyFilePath {
-		throw new Error(
-			`Expected file path but got: ${JSON.stringify(this.join())}`,
-		);
-  }
+		throw this._unexpected("Expected absolute file path");
+	}
+
+	public assertFilePath(): AnyFilePath {
+		throw this._unexpected("Expected relative or absolute file path");
+	}
 
 	public assertURL(): URLPath {
-		throw new Error(
-			`Expected URL file path but got: ${JSON.stringify(this.join())}`,
-		);
+		throw this._unexpected("Expected URL");
 	}
 
 	public isRoot(): boolean {
@@ -355,9 +332,7 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 			}
 		}*/
 
-		const path = this._fork(
-			parsePathSegments(this.segments, this.parsed.hint),
-		);
+		const path = this._fork(parsePathSegments(this.segments, this.parsed.hint));
 		this.memo.unique = path;
 		return path;
 	}
@@ -458,14 +433,14 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 			if (cached !== undefined) {
 				return cached;
 			}
-    }
-    
-    let segments: PathSegments;
-    if (typeof item === "string") {
-      segments = splitPathSegments(item);
-    } else {
-      segments = item.getSegments();
-    }
+		}
+
+		let segments: PathSegments;
+		if (typeof item === "string") {
+			segments = splitPathSegments(item);
+		} else {
+			segments = item.getSegments();
+		}
 
 		const parsed = parsePathSegments(
 			[...this.getSegments(), ...segments],
@@ -485,6 +460,6 @@ export class BasePath<Super extends AnyPath = AnyPath> {
 enhanceNodeInspectClass(
 	BasePath,
 	(path) => {
-		return `${path[Symbol.toStringTag]}<${path.join()}>`;
+		return `${path[Symbol.toStringTag]}<${path.format()}>`;
 	},
 );

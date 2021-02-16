@@ -33,7 +33,12 @@ import {
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
-import {AnyPath, MixedPathSet, equalPaths} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	AnyPath,
+	equalPaths,
+} from "@internal/path";
 import {
 	AnyVisitor,
 	CompilerProject,
@@ -112,7 +117,7 @@ export default class CompilerContext {
 		this.project = CompilerContext.normalizeProject(project);
 		this.options = options;
 		this.origin = origin;
-		this.cacheDependencies = new MixedPathSet();
+		this.cacheDependencies = new AbsoluteFilePathSet();
 		this.language = inferDiagnosticLanguageFromRootAST(ast);
 		this.sourceTypeJS = ast.type === "JSRoot" ? ast.sourceType : undefined;
 		this.rootScope = new RootScope(this, ast);
@@ -142,7 +147,7 @@ export default class CompilerContext {
 	private ast: AnyRoot;
 
 	public comments: CommentsConsumer;
-	private cacheDependencies: MixedPathSet;
+	private cacheDependencies: AbsoluteFilePathSet;
 	public records: Record[];
 
 	public diagnostics: DiagnosticsProcessor;
@@ -231,11 +236,11 @@ export default class CompilerContext {
 		return false;
 	}
 
-	public getCacheDependencies(): AnyPath[] {
+	public getCacheDependencies(): AbsoluteFilePath[] {
 		return Array.from(this.cacheDependencies);
 	}
 
-	public addCacheDependency(path: AnyPath) {
+	public addCacheDependency(path: AbsoluteFilePath) {
 		this.cacheDependencies.add(path);
 	}
 

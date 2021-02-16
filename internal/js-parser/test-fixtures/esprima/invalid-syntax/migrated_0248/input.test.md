@@ -83,5 +83,8 @@ JSRoot {
 
   ℹ Defined already here
 
+    __proto__: __proto__: 42;
+    ^^^^^^^^^
+
 
 ```

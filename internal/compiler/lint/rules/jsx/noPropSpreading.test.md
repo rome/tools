@@ -15,6 +15,8 @@
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -35,6 +37,8 @@
 
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -57,6 +61,8 @@
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -77,6 +83,8 @@
 
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

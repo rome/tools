@@ -125,5 +125,8 @@ JSRoot {
 
   ℹ We expected to find the closing character ) here
 
+    function f(a, ...b = 0)
+                       ^
+
 
 ```

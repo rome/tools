@@ -69,6 +69,11 @@ let a = 4;
 
   ✖ The function variable foo is unused.
 
+  > 1 │ function foo(myVar) {
+      │          ^^^
+    2 │   console.log('foo');
+    3 │ };
+
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 
 
@@ -129,6 +134,11 @@ foo();
  lint/js/noUnusedVariables/reject/5/file.ts:1:6 lint/js/noUnusedVariables(foo) ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The const variable foo is unused.
+
+  > 1 │ const foo = (b) => {
+      │       ^^^
+    2 │   console.log('foo');
+    3 │ };
 
   ℹ Unused variables are dead code and usually the result of incomplete refactoring.
 

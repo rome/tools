@@ -17,10 +17,14 @@
       │             ^^^
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-     It introduces a level of unnecessary indirection when it's only two additional characters to
+    It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
+
+  > 1 │ const FOO = "FOO";
+      │       ^^^
+    2 │ console.log(FOO);
 
   ℹ Safe fix
 
@@ -53,10 +57,15 @@ console.log("FOO");
     4 │ }
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-     It introduces a level of unnecessary indirection when it's only two additional characters to
+    It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
+
+  > 1 │ const FOO = "FOO";
+      │       ^^^
+    2 │ function f() {
+    3 │   return FOO;
 
   ℹ Safe fix
 
@@ -85,15 +94,19 @@ function f() {
   ✖ Redundant constant reference
 
   ℹ You should avoid declaring constants with a string that's the same value as the variable name.
-     It introduces a level of unnecessary indirection when it's only two additional characters to
+    It introduces a level of unnecessary indirection when it's only two additional characters to
     inline.
 
   ℹ This constant is declared here
+
+  ⚠ Cannot render frame as lint/js/noShoutyConstants/reject/3/file.ts does not exist
 
   ℹ Safe fix
 
   - FOO
   + "FOO"
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

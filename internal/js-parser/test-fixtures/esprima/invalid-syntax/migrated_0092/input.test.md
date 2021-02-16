@@ -87,5 +87,8 @@ JSRoot {
 
   ℹ Defined already here
 
+    (a, a) => 42
+        ^
+
 
 ```

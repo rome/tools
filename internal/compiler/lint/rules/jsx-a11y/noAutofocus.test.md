@@ -16,7 +16,7 @@
            ^^^^^^^^^
 
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
-     keyboard-only navigation.
+    keyboard-only navigation.
 
   ℹ Safe fix
 
@@ -45,7 +45,7 @@
            ^^^^^^^^^^^^^^^^
 
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
-     keyboard-only navigation.
+    keyboard-only navigation.
 
   ℹ Safe fix
 
@@ -74,7 +74,7 @@
            ^^^^^^^^^^^^^^^^^^^
 
   ℹ Automatically focusing elements overrides natural page content focus order, causing issues for
-     keyboard-only navigation.
+    keyboard-only navigation.
 
   ℹ Safe fix
 

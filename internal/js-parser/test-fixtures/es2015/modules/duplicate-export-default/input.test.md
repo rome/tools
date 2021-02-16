@@ -96,5 +96,9 @@ JSRoot {
 
   ℹ Defined already here
 
+  > 1 │ export default {};
+      │                ^^
+    2 │ export default function() {};
+
 
 ```

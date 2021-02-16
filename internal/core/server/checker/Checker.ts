@@ -35,6 +35,7 @@ import {WatchFilesEvent} from "../fs/glob";
 import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 import {ExtendedMap} from "@internal/collections";
 import {humanizeDuration} from "@internal/string-utils";
+import {ServerRequestGlobArgs} from "../ServerRequest";
 
 type CheckWatchChange = {
 	path: AnyPath;
@@ -45,7 +46,7 @@ export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
 export type CheckerOptions = {
 	apply?: boolean;
-	args?: string[];
+	args?: ServerRequestGlobArgs;
 	hasDecisions?: boolean;
 	formatOnly?: boolean;
 	globalDecisions?: LintCompilerOptionsDecisions;

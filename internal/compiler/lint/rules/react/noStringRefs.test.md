@@ -15,6 +15,8 @@
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -46,6 +48,8 @@ class Hello extends React.Component {
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -81,6 +85,13 @@ class Hello extends React.Component {
 
   ℹ We expected to find the closing character } here
 
+    1 │ class Hello extends React.Component {
+    2 │   render() {
+  > 3 │     return <div ref={${"`"}hello${"`"}}>Hello {this.props.name}</div>;
+      │                       ^
+    4 │   }
+    5 │ }
+
 
 ```
 
@@ -100,6 +111,8 @@ undefined
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -135,6 +148,13 @@ class Hello extends React.Component {
 
   ℹ We expected to find the closing character } here
 
+    1 │ class Hello extends React.Component {
+    2 │   render() {
+  > 3 │     return <div ref={${"`"}hello${"$"}{index}${"`"}>Hello {this.props.name}</div>;
+      │                       ^
+    4 │   }
+    5 │ }
+
 
 ```
 
@@ -155,12 +175,16 @@ undefined
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
  lint/react/noStringRefs/reject/6/file.tsx:7:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more
     information.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

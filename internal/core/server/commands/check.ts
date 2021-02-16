@@ -18,8 +18,9 @@ import {
 } from "@internal/compiler";
 import {Consumer} from "@internal/consume";
 import {commandCategories} from "@internal/core/common/commands";
-import {createAnyPath, createUIDPath} from "@internal/path";
+import {createFilePath, createUIDPath} from "@internal/path";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
+import {ServerRequestGlobArgs} from "../ServerRequest";
 
 type Flags = {
 	decisions: string[];
@@ -102,7 +103,7 @@ export default createServerCommand<Flags>({
 		}
 
 		// Look up arguments manually in vsc if we were passed a changes branch
-		let args;
+		let args: undefined | ServerRequestGlobArgs;
 		if (flags.changed !== undefined) {
 			// No arguments expected when using this flag
 			req.expectArgumentLength(0);
@@ -110,20 +111,23 @@ export default createServerCommand<Flags>({
 			const client = await req.getVCSClient();
 			const target =
 				flags.changed === "" ? await client.getDefaultBranch() : flags.changed;
-			args = await client.getModifiedFiles(target);
+			const modifiedFiles = await client.getModifiedFiles(target);
+			const flagLoc = req.getDiagnosticLocationFromFlags({
+				type: "flag",
+				key: "changed",
+			});
 
 			// Only include lintable files
-			args = args.filter((arg) => {
-				const path = createAnyPath(arg);
-
+			args = [];
+			for (const arg of modifiedFiles) {
+				const path = createFilePath(arg);
 				for (const ext of LINTABLE_EXTENSIONS) {
 					if (path.hasEndExtension(ext)) {
-						return true;
+						args.push([path, flagLoc]);
+						break;
 					}
 				}
-
-				return false;
-			});
+			}
 
 			if (args.length === 0) {
 				reporter.warn(
@@ -131,7 +135,7 @@ export default createServerCommand<Flags>({
 				);
 			} else {
 				reporter.info(markup`Files changed from <emphasis>${target}</emphasis>`);
-				reporter.list(args.map((arg) => markup`<filelink target="${arg}" />`));
+				reporter.list(args.map(([path]) => markup`${path}`));
 				reporter.hr();
 			}
 		}

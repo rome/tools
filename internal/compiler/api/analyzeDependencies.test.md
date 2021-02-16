@@ -44,8 +44,8 @@ Object {
 						extra: undefined
 						hidden: true
 						shortcut: "s"
-						args: Array ["unknown"]
-						commandFlags: Object {decisions: Array ["suppress-analyzeDependencies/cjsExportInES-unknown-1"]}
+						args: Array ["uid://unknown"]
+						commandFlags: Object {decisions: Array ["suppress-analyzeDependencies/cjsExportInES-uid://unknown-1"]}
 						instruction: RAW_MARKUP {value: "To suppress this error run"}
 						noun: RAW_MARKUP {value: "Add suppression comment"}
 					}

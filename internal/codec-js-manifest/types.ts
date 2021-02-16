@@ -9,11 +9,7 @@ import {ManifestDependencies} from "./dependencies";
 import {SPDXExpressionNode} from "@internal/codec-spdx-license";
 import {SemverVersionNode} from "@internal/codec-semver";
 import {Consumer} from "@internal/consume";
-import {
-	AbsoluteFilePath,
-	RelativePath,
-	RelativePathMap,
-} from "@internal/path";
+import {AbsoluteFilePath, RelativePath, RelativePathMap} from "@internal/path";
 import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Dict} from "@internal/typescript-helpers";
 import {PathPatterns} from "@internal/path-match";

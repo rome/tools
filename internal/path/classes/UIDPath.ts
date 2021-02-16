@@ -1,5 +1,5 @@
-import { ParsedPath } from "../parse";
-import { BasePath, FilePathMemo } from "../BasePath";
+import {ParsedPath} from "../parse";
+import {BasePath, FilePathMemo} from "./BasePath";
 
 export default class UIDPath extends BasePath<UIDPath> {
 	public [Symbol.toStringTag] = "UIDPath";

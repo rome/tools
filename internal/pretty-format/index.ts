@@ -395,7 +395,7 @@ function formatObject(
 	}
 
 	if (isSourceLocation(obj)) {
-		let inner = markup`<token type="string">${obj.path.join()}</token> ${formatPositionValue(
+		let inner = markup`<token type="string">${obj.path.format()}</token> ${formatPositionValue(
 			obj.start,
 		)}<dim>-</dim>${formatPositionValue(obj.end)}`;
 		if (obj.identifierName !== undefined) {

@@ -503,7 +503,9 @@ async function normalizeTypeCheckingLibs(
 	const libFiles: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	// Normalize library directories
-	const directories: AbsoluteFilePath[] = consumer.asMappedArray((item) => projectDirectory.resolve(item.asFilePath()));
+	const directories: AbsoluteFilePath[] = consumer.asMappedArray((item) =>
+		projectDirectory.resolve(item.asFilePath())
+	);
 
 	// Crawl library directories and add their files
 	for (const directory of directories) {

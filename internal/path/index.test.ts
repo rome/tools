@@ -7,8 +7,8 @@
 
 import {
 	createAbsoluteFilePath,
-	createFilePath,
 	createAnyPath,
+	createFilePath,
 	createRelativePath,
 } from "@internal/path";
 import {test} from "rome";
@@ -66,7 +66,9 @@ for (let i = 0; i < relativeTests.length; i++) {
 				text: "Metadata",
 			});
 
-			const relative = createAbsoluteFilePath(absolute).relative(createFilePath(arg));
+			const relative = createAbsoluteFilePath(absolute).relative(
+				createFilePath(arg),
+			);
 
 			t.addToAdvice({
 				type: "inspect",

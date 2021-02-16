@@ -33,6 +33,8 @@ const foo = ReactDOM.render(<div />, document.body);
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -50,6 +52,8 @@ const foo = bar && ReactDOM.render(<div />, document.body);
  lint/react/noRenderReturnValue/reject/3/file.tsx:1:18 lint/react/noRenderReturnValue ━━━━━━━━━━━━━━
 
   ✖ Do not depend on the return value from ReactDOM.render().
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

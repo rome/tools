@@ -15,6 +15,8 @@
   ℹ The canonical way to pass children in React is to use JSX elements or additional arguments to
     React.createElement.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 

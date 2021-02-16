@@ -39,6 +39,11 @@ function hello(a, a) {
 
   ℹ Defined already here
 
+  > 1 │ const hello = (a, a) => {
+      │                   ^
+    2 │   //
+    3 │ }
+
 
 ```
 

@@ -209,9 +209,15 @@ export default class DiagnosticsNormalizer {
 		// During printing we'll fill it back in
 		let {sourceText} = location;
 		if (path !== undefined && !this.inlinedSourceTextFilenames.has(path)) {
-			sourceText = sourceText ?? this.inlineSourceText.get(path) ?? this.inlineSourceText.get(normalizedPath);
+			sourceText =
+				sourceText ??
+				this.inlineSourceText.get(path) ??
+				this.inlineSourceText.get(normalizedPath);
 
-			if (location.sourceText !== undefined && location.sourceText !== sourceText) {
+			if (
+				location.sourceText !== undefined &&
+				location.sourceText !== sourceText
+			) {
 				throw new Error(
 					`Found multiple sourceText entries for ${path.join()} that did not match`,
 				);

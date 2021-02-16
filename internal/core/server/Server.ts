@@ -58,7 +58,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath, createAnyPath, createUIDPath} from "@internal/path";
+import {AbsoluteFilePath, createUIDPath} from "@internal/path";
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -241,8 +241,7 @@ export default class Server {
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
-					humanizeFilename: (filename) => {
-						const path = createAnyPath(filename);
+					humanizeFilename: (path) => {
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
 								path.assertAbsolute(),

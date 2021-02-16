@@ -1,6 +1,6 @@
-import { ParsedPath } from "../parse";
-import { BasePath, FilePathMemo } from "../BasePath";
-import { AnyFilePath } from "../types";
+import {ParsedPath} from "../parse";
+import {BasePath, FilePathMemo} from "./BasePath";
+import {AnyFilePath} from "../types";
 
 export default class RelativePath extends BasePath<RelativePath> {
 	public [Symbol.toStringTag] = "RelativePath";

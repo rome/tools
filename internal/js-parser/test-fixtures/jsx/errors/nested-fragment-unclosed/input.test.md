@@ -73,5 +73,8 @@ JSRoot {
 
   ℹ Originated from this opening tag
 
+    <><></>
+    ^^
+
 
 ```

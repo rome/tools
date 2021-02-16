@@ -49,6 +49,8 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </img>
       1 │ + <img·/>
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -72,6 +74,8 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   - <hr·children={"invalid·children"}·/>
   + <hr·/>
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -97,6 +101,8 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     1   │ - <area·dangerouslySetInnerHTML={{__html:·""}}>
     2   │ - </area>
       1 │ + <area·/>
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -124,6 +130,8 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
     3   │ - </img>
       1 │ + <img·/>
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -147,6 +155,8 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
 
   - React.createElement("img",·{children:·"child"})
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -169,6 +179,8 @@ FIXABLE  ━━━━━━━━━━━━━━━━━━━━━━━�
   ℹ Safe fix
 
   - React.createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -220,6 +232,8 @@ React.createElement("img", {});
 
   - createElement("img",·{children:·"child"})
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -242,6 +256,8 @@ React.createElement("img", {});
   ℹ Safe fix
 
   - createElement("img",·{dangerouslySetInnerHTML:·{__html:·"child"}})
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

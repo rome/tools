@@ -8,7 +8,7 @@ import {
 } from "@internal/diagnostics";
 import {printDiagnosticsToString} from "@internal/cli-diagnostics";
 import {highlightCode} from "@internal/markup-syntax-highlight";
-import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
+import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 import {concatMarkup, joinMarkupLines, markup} from "@internal/markup";
 import {markupToHtml} from "@internal/cli-layout";
 import {createAnyPath} from "@internal/path";
@@ -35,7 +35,7 @@ function highlightPre(filename: string, code: string): string {
 						path,
 						input: code,
 						sourceTypeJS: undefined,
-						language: inferDiagnosticLanguageFromFilename(path),
+						language: inferDiagnosticLanguageFromPath(path),
 						highlight: true,
 					}),
 					markup`\n`,
@@ -122,6 +122,15 @@ async function run(
 				excludeFooter: true,
 				features: {
 					columns: new OneIndexed(75),
+				},
+				printerOptions: {
+					fileHandlers: [
+						{
+							async exists() {
+								return true;
+							},
+						},
+					],
 				},
 			});
 		},

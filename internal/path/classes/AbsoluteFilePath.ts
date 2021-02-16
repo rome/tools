@@ -1,8 +1,9 @@
-import { ParsedPath, parsePathSegments } from "../parse";
-import { BasePath, FilePathMemo } from "../BasePath";
-import { AnyFilePath, AnyPath, PathSegments } from "../types";
-import { createRelativePath, HOME_PATH } from "..";
+import {ParsedPath, parsePathSegments} from "../parse";
+import {BasePath, FilePathMemo} from "./BasePath";
+import {AnyFilePath, AnyPath, PathSegments} from "../types";
+import {HOME_PATH, createRelativePath} from "..";
 import RelativePath from "./RelativePath";
+import {createFilePath} from "../factories";
 
 export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 	public [Symbol.toStringTag] = "AbsoluteFilePath";
@@ -60,9 +61,11 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 
 	public resolve(other: string | AnyFilePath): AbsoluteFilePath;
 	public resolve(other: AnyPath): Exclude<AnyPath, RelativePath>;
-	public resolve(other: string | AnyPath): AbsoluteFilePath | Exclude<AnyPath, RelativePath> {
+	public resolve(
+		other: string | AnyPath,
+	): AbsoluteFilePath | Exclude<AnyPath, RelativePath> {
 		if (typeof other === "string") {
-			other = createRelativePath(other);
+			other = createFilePath(other);
 		}
 		if (!other.isRelative()) {
 			return other;
@@ -108,9 +111,7 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 		}
 		finalSegments = finalSegments.concat(relative);
 
-		return new RelativePath(
-			parsePathSegments(finalSegments, "relative"),
-		);
+		return new RelativePath(parsePathSegments(finalSegments, "relative"));
 	}
 
 	public format(cwd?: AbsoluteFilePath): string {
@@ -126,16 +127,14 @@ export default class AbsoluteFilePath extends BasePath<AbsoluteFilePath> {
 			// Add tilde and push it as a possible name
 			// We construct this manually to get around the segment normalization which would explode ~
 			names.push(
-				new RelativePath(
-					{
-						hint: "relative",
-						segments: ["~", ...relativeToHome.getSegments()],
-						absoluteType: "posix",
-						absoluteTarget: undefined,
-						explicitDirectory: this.parsed.explicitDirectory,
-						explicitRelative: false,
-					},
-				).join(),
+				new RelativePath({
+					hint: "relative",
+					segments: ["~", ...relativeToHome.getSegments()],
+					absoluteType: "posix",
+					absoluteTarget: undefined,
+					explicitDirectory: this.parsed.explicitDirectory,
+					explicitRelative: false,
+				}).join(),
 			);
 		}
 

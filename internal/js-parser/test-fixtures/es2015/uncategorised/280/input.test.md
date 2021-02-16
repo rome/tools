@@ -121,5 +121,8 @@ JSRoot {
 
   ℹ Defined already here
 
+    "use strict"; function x(a, { a }){}
+                                  ^
+
 
 ```

@@ -16,7 +16,7 @@
     ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
-     of the dialogue, sound effects, musical cues, and other relevant audio information.
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 
 ```
@@ -40,7 +40,7 @@
     ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
-     of the dialogue, sound effects, musical cues, and other relevant audio information.
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 
 ```
@@ -64,7 +64,7 @@
     ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
-     of the dialogue, sound effects, musical cues, and other relevant audio information.
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 
 ```
@@ -90,7 +90,7 @@
     ^^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
-     of the dialogue, sound effects, musical cues, and other relevant audio information.
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 
 ```
@@ -189,7 +189,7 @@
     ^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
-     of the dialogue, sound effects, musical cues, and other relevant audio information.
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 
 ```
@@ -215,7 +215,7 @@
     ^^^^^^^^^^^^^^^^^^^
 
   ℹ Captions support users with hearing-impairments. They should be a transcription or translation
-     of the dialogue, sound effects, musical cues, and other relevant audio information.
+    of the dialogue, sound effects, musical cues, and other relevant audio information.
 
 
 ```

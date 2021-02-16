@@ -1,6 +1,5 @@
 import {RSERValue} from "./types";
-import RSERBufferAssembler from "./RSERBufferAssembler";
-import RSERBufferWriter from "./RSERBufferWriter";
+import RSERWriterMaterial from "./RSERWriterMaterial";
 import RSERStream from "./RSERStream";
 import fs = require("fs");
 import {markup} from "@internal/markup";
@@ -9,10 +8,13 @@ import {
 	provideDiagnosticAdviceForError,
 } from "@internal/diagnostics";
 import {createAbsoluteFilePath} from "@internal/path";
+import RSERWriterCounter from "./RSERWriterCounter";
+import RSERWriterHasher from "./RSERWriterHasher";
+import {sha256} from "@internal/string-utils";
 
-export {default as RSERBufferObserver} from "./RSERBufferAssembler";
+export {default as RSERBufferObserver} from "./RSERWriterBase";
 export {default as RSERBufferParser} from "./RSERBufferParser";
-export {default as RSERBufferWriter} from "./RSERBufferWriter";
+export {default as RSERWriterMaterial} from "./RSERWriterMaterial";
 export {default as RSERStream} from "./RSERStream";
 
 export {
@@ -34,19 +36,30 @@ export function encodeValueToRSERMessage(val: RSERValue): ArrayBuffer {
 	return encodeValueToRSERBuffer(val, false);
 }
 
-function encodeValueToRSERBuffer(val: RSERValue, isStream: boolean): ArrayBuffer {
-	const assembler = new RSERBufferAssembler();
-	if (isStream) {
-		assembler.encodeStreamHeader();
+export function hashRSERValue(val: RSERValue): string {
+	if (typeof val === "string") {
+		// Fast path for strings
+		return sha256.sync(val);
 	}
-	assembler.encodeValue(val);
-	const payloadLength = assembler.totalSize;
-	assembler.encodeMessageHeader(payloadLength);
-	const messageLength = assembler.totalSize;
 
-	const buf = new RSERBufferWriter(new ArrayBuffer(messageLength), assembler);
+	const hasher = new RSERWriterHasher();
+	hasher.encodeValue(val);
+	return hasher.digest();
+}
+
+function encodeValueToRSERBuffer(val: RSERValue, isStream: boolean): ArrayBuffer {
+	const counter = new RSERWriterCounter();
 	if (isStream) {
-		assembler.encodeStreamHeader();
+		counter.encodeStreamHeader();
+	}
+	counter.encodeValue(val);
+	const payloadLength = counter.totalSize;
+	counter.encodeMessageHeader(payloadLength);
+	const messageLength = counter.totalSize;
+
+	const buf = new RSERWriterMaterial(new ArrayBuffer(messageLength), counter);
+	if (isStream) {
+		buf.encodeStreamHeader();
 	}
 	buf.encodeMessageHeader(payloadLength);
 	buf.encodeValue(val);

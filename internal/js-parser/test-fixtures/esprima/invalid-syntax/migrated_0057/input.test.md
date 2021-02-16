@@ -68,5 +68,7 @@ JSRoot {
 
   ℹ We expected to find the closing character ] here
 
+    [
+
 
 ```

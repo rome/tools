@@ -15,6 +15,8 @@
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -41,6 +43,8 @@ class Hello extends React.Component {
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -70,6 +74,8 @@ class Hello extends React.Component {
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -96,6 +102,8 @@ class Hello extends Component {
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -125,6 +133,8 @@ class Hello extends Component {
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -151,6 +161,8 @@ class Hello extends React.Component {
 
   ℹ Updating state immediately before a scheduled render causes a second render that can cause
     visual layout thrashing.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

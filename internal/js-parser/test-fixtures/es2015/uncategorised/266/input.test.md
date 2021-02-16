@@ -104,5 +104,8 @@ JSRoot {
 
   ℹ We expected to find the closing character } here
 
+    `hello ${10 `test`
+                      ^
+
 
 ```

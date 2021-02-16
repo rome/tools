@@ -119,5 +119,8 @@ JSRoot {
 
   ℹ We expected to find the closing character ] here
 
+    ({[a,b]:0})
+        ^
+
 
 ```

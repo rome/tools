@@ -78,10 +78,8 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
+	AnyFilePath,
 	AnyPath,
-	createAbsoluteFilePath,
-	createFilePath,
-	createAnyPath,
 	createUIDPath,
 } from "@internal/path";
 import {Dict, RequiredProps, mergeObjects} from "@internal/typescript-helpers";
@@ -94,7 +92,7 @@ import {RecoverySaveFile} from "./fs/RecoveryStore";
 import {GlobOptions, Globber} from "./fs/glob";
 import WorkerBridge from "../common/bridges/WorkerBridge";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
-import { consume, Consumer } from "@internal/consume";
+import {Consumer, consume} from "@internal/consume";
 
 type ServerRequestOptions = {
 	server: Server;
@@ -121,8 +119,10 @@ type WrapRequestDiagnosticOpts = {
 	noRetry?: boolean;
 };
 
+export type ServerRequestGlobArgs = [AnyFilePath, DiagnosticLocation][];
+
 type ServerRequestGlobOptions = Omit<GlobOptions, "args" | "relativeDirectory"> & {
-	args?: Array<AnyPath | string>;
+	args?: ServerRequestGlobArgs;
 	tryAlternateArg?: (path: AnyPath) => undefined | AnyPath;
 	ignoreArgumentMisses?: boolean;
 	ignoreProjectIgnore?: boolean;
@@ -289,7 +289,7 @@ export default class ServerRequest {
 			value: this.query.args,
 			context: {
 				category: DIAGNOSTIC_CATEGORIES["args/invalid"],
-				getDiagnosticLocation: (keys, target) => {
+				getDiagnosticLocation: (keys) => {
 					if (keys.length === 0 && typeof keys[0] === "number") {
 						return this.getDiagnosticLocationFromFlags({
 							type: "arg",
@@ -508,14 +508,16 @@ export default class ServerRequest {
 		max: boolean = true,
 	): Promise<AbsoluteFilePath> {
 		this.expectArgumentLength(index + 1, max ? undefined : Infinity);
-		const arg = this.query.args[index];
+
+		const arg = this.args.getIndex(index);
+		const source = arg.asFilePath();
 
 		return await this.server.resolver.resolveEntryAssertPath(
 			{
 				...this.getResolverOptionsFromFlags(),
-				source: createAnyPath(arg),
+				source,
 			},
-			{location: this.getDiagnosticLocationFromFlags({type: "arg", key: index})},
+			{location: arg.getDiagnosticLocation()},
 		);
 	}
 
@@ -1062,15 +1064,13 @@ export default class ServerRequest {
 			},
 		);
 
-		// Turn all the cacheDependencies entries from 'absolute paths to UIDs
+		// Turn all the cacheDependencies entries from absolute paths to UIDs
 		return {
 			...res,
 			value: {
 				...res.value,
-				cacheDependencies: res.value.cacheDependencies.map((filename) => {
-					return projectManager.getFileReference(
-						createAbsoluteFilePath(filename),
-					).uid;
+				cacheDependencies: res.value.cacheDependencies.map((path) => {
+					return projectManager.getFileReference(path.assertAbsolute()).uid;
 				}),
 			},
 		};
@@ -1194,16 +1194,20 @@ export default class ServerRequest {
 		const argToLocation: AbsoluteFilePathMap<DiagnosticLocation> = new AbsoluteFilePathMap();
 		const args: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
-		let rawArgs: Array<string | AnyPath> = opts.args ?? this.query.args;
+		let rawArgs: ServerRequestGlobArgs =
+			opts.args ??
+			this.args.asMappedArray((elem) => [
+				elem.asFilePath(),
+				elem.getDiagnosticLocation(),
+			]);
 		if (rawArgs.length === 0) {
-			rawArgs = [cwd];
-			argToLocation.set(cwd, this.getDiagnosticLocationForClientCwd());
+			rawArgs = [[cwd, this.getDiagnosticLocationForClientCwd()]];
 		}
 
 		for (let i = 0; i < rawArgs.length; i++) {
-			const path = createFilePath(rawArgs[i]);
-			let abs: AbsoluteFilePath;
+			const [path, loc] = rawArgs[i];
 
+			let abs: AbsoluteFilePath;
 			if (path.isAbsolute()) {
 				abs = path.assertAbsolute();
 			} else {
@@ -1212,7 +1216,15 @@ export default class ServerRequest {
 					abs = resolved;
 				} else {
 					// Will need to be resolved...
-					abs = await this.resolveEntryAssertPathArg(i, false);
+					abs = await this.server.resolver.resolveEntryAssertPath(
+						{
+							...this.getResolverOptionsFromFlags(),
+							source: path,
+							// Allow requests to stop at directories
+							requestedType: "directory",
+						},
+						{location: loc},
+					);
 				}
 			}
 
@@ -1239,17 +1251,17 @@ export default class ServerRequest {
 				args.add(abs);
 
 				if (!argToLocation.has(abs)) {
-					argToLocation.set(
-						abs,
-						this.getDiagnosticLocationFromFlags({
-							type: "arg",
-							key: i,
-						}),
-					);
+					argToLocation.set(abs, loc);
 				}
 			} else {
 				// This should fail. Resolver produces much nicer error messages.
-				await this.resolveEntryAssertPathArg(i, false);
+				await this.server.resolver.resolveEntryAssertPath(
+					{
+						...this.getResolverOptionsFromFlags(),
+						source: path,
+					},
+					{location: loc},
+				);
 			}
 		}
 

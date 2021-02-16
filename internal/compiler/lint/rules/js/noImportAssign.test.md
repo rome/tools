@@ -14,6 +14,8 @@
 
   ℹ Use a local variable instead of reassigning an import.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -34,6 +36,8 @@ x = 1;
   ✖ The imported variable x is read-only.
 
   ℹ Use a local variable instead of reassigning an import.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -56,6 +60,8 @@ import x from "y";
 
   ℹ Use a local variable instead of reassigning an import.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -76,6 +82,8 @@ import x from "y";
   ✖ The imported variable x is read-only.
 
   ℹ Use a local variable instead of reassigning an import.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -98,6 +106,8 @@ x++;
 
   ℹ Use a local variable instead of reassigning an import.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -119,6 +129,8 @@ import x from "y";
 
   ℹ Use a local variable instead of reassigning an import.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -139,6 +151,8 @@ import x from "y";
   ✖ The imported variable x is read-only.
 
   ℹ Use a local variable instead of reassigning an import.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -162,6 +176,8 @@ for (x in y) {
   ✖ The imported variable x is read-only.
 
   ℹ Use a local variable instead of reassigning an import.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

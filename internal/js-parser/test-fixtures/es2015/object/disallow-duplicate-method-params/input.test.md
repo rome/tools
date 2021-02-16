@@ -112,5 +112,10 @@ JSRoot {
 
   ℹ Defined already here
 
+    1 │ ({
+  > 2 │     bar(a, a) {}
+      │            ^
+    3 │ })
+
 
 ```

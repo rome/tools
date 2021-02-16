@@ -14,6 +14,8 @@
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -36,6 +38,8 @@
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -56,6 +60,8 @@
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -75,6 +81,8 @@
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -98,6 +106,8 @@
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -117,6 +127,8 @@
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -142,6 +154,8 @@ React.createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -166,6 +180,8 @@ React.createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -188,6 +204,8 @@ React.createElement(
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -212,6 +230,8 @@ React.createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -235,6 +255,8 @@ React.createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -257,6 +279,8 @@ React.createElement(
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -282,6 +306,8 @@ React.createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -306,6 +332,8 @@ React.createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -326,6 +354,8 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, "children");
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -345,6 +375,8 @@ createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}}, ["children"]);
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -369,6 +401,8 @@ createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -391,6 +425,8 @@ createElement(
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -415,6 +451,8 @@ createElement(
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -437,6 +475,8 @@ createElement(
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -461,6 +501,8 @@ createElement(
   ✖ Avoid passing both children and the dangerouslySetInnerHTML prop.
 
   ℹ Setting HTML content will inadvertently override any passed children in React.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

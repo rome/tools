@@ -1,6 +1,5 @@
 import {
 	AnyRSERPathMap,
-	IntSize,
 	RSERArray,
 	RSERArrayBufferView,
 	RSERMap,
@@ -37,6 +36,7 @@ import {
 	setErrorFrames,
 	setNodeErrorProps,
 } from "@internal/v8";
+import {IntSize} from "./int";
 import {utf8Decode} from "./utf8";
 import {CachedKeyDecoder} from "@internal/codec-binary-serial/CachedKeyDecoder";
 import {ExtendedMap} from "@internal/collections";

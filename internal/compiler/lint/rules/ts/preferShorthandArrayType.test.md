@@ -52,6 +52,9 @@ let invalid: bar[];
 
   ✖ Use shorthand T[] syntax instead of Array<T> syntax.
 
+    let invalid: Array<foo, Array<string>>;
+                            ^^^^^^^^^^^^^
+
   ℹ Safe fix
 
   - Array<string>

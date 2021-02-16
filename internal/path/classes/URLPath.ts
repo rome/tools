@@ -1,6 +1,6 @@
-import { ParsedPath, parsePathSegments } from "../parse";
-import { BasePath, FilePathMemo } from "../BasePath";
-import { AnyPath } from "../types";
+import {ParsedPath, parsePathSegments} from "../parse";
+import {BasePath, FilePathMemo} from "./BasePath";
+import {AnyPath} from "../types";
 
 export default class URLPath extends BasePath<URLPath> {
 	public [Symbol.toStringTag] = "URLPath";
@@ -40,9 +40,7 @@ export default class URLPath extends BasePath<URLPath> {
 			// Get the segments that include the protocol and domain
 			const domainSegments = this.getSegments().slice(0, 3);
 			const finalSegments = [...domainSegments, ...path.getSegments()];
-			return new URLPath(
-				parsePathSegments(finalSegments, "url"),
-			);
+			return new URLPath(parsePathSegments(finalSegments, "url"));
 		} else {
 			return this.append(path.assertRelative());
 		}

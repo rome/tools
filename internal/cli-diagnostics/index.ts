@@ -51,7 +51,7 @@ export async function printDiagnosticsToString(
 	opts: {
 		diagnostics: Diagnostics;
 		suppressions: DiagnosticSuppressions;
-		printerOptions?: DiagnosticsPrinterOptions;
+		printerOptions?: Partial<DiagnosticsPrinterOptions>;
 		format?: ReporterStream["format"];
 		excludeFooter?: boolean;
 		features?: Partial<TerminalFeatures>;

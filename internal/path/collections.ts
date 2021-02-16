@@ -72,8 +72,7 @@ export class AbsoluteFilePathMap<Value>
 	}
 }
 
-export class RelativePathMap<Value>
-	extends BasePathMap<RelativePath, Value> {
+export class RelativePathMap<Value> extends BasePathMap<RelativePath, Value> {
 	constructor(entries?: [RelativePath, Value][]) {
 		super(entries);
 		this[Symbol.toStringTag] = "RelativePathMap";

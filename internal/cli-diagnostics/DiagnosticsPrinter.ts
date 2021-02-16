@@ -38,7 +38,7 @@ import {
 } from "@internal/path";
 import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {createReadStream, exists, lstat} from "@internal/fs";
-import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
+import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 import {markupToJoinedPlainText} from "@internal/cli-layout/format";
 import {sha256} from "@internal/string-utils";
 import {Locker} from "@internal/async";
@@ -60,7 +60,7 @@ const DEFAULT_FILE_HANDLER: Required<DiagnosticsFileHandler> = {
 				return createReadStream(path);
 			}
 		}
-		
+
 		return undefined;
 	},
 	async exists(path) {
@@ -336,10 +336,7 @@ export default class DiagnosticsPrinter extends Error {
 							path: dep.path,
 							input: sourceText,
 							sourceTypeJS: dep.sourceTypeJS,
-							language: inferDiagnosticLanguageFromFilename(
-								dep.path,
-								dep.language,
-							),
+							language: inferDiagnosticLanguageFromPath(dep.path, dep.language),
 						}),
 					},
 				);
@@ -477,21 +474,32 @@ export default class DiagnosticsPrinter extends Error {
 				}
 
 				let language = existing.language ?? dep.language;
-				if (dep.language === undefined && existing.language !== undefined && dep.language !== existing.language) {
+				if (
+					dep.language === undefined &&
+					existing.language !== undefined &&
+					dep.language !== existing.language
+				) {
 					language = "unknown";
 				}
 
 				let sourceTypeJS = existing.sourceTypeJS ?? dep.sourceTypeJS;
-				if (dep.sourceTypeJS === undefined && existing.sourceTypeJS !== undefined && dep.sourceTypeJS !== existing.sourceTypeJS) {
+				if (
+					dep.sourceTypeJS === undefined &&
+					existing.sourceTypeJS !== undefined &&
+					dep.sourceTypeJS !== existing.sourceTypeJS
+				) {
 					sourceTypeJS = "unknown";
 				}
-				
-				depsMap.set(path, {
-					...existing,
-					sourceText: existing.sourceText ?? dep.sourceText,
-					sourceTypeJS,
-					language,
-				});
+
+				depsMap.set(
+					path,
+					{
+						...existing,
+						sourceText: existing.sourceText ?? dep.sourceText,
+						sourceTypeJS,
+						language,
+					},
+				);
 			}
 		}
 

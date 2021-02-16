@@ -101,6 +101,9 @@ try {
 
   ✖ Do not reassign catch parameters.
 
+    try { } catch ({message, name}) { message = 'test'; name = 10; }
+                                                        ^^^^
+
   ℹ Use a local variable instead.
 
 

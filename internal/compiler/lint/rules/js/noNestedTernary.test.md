@@ -40,6 +40,9 @@ let thing = foo ? bar : baz === qux ? quxx : foobar;
 
   ✖ Nesting ternary expressions can make code more difficult to understand.
 
+    let thing = foo ? bar ? boo : foo : baz ? boo : foo;
+                      ^^^^^^^^^^^^^^^
+
 
 ```
 

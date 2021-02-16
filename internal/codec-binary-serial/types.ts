@@ -9,8 +9,6 @@ import {
 	URLPathMap,
 } from "@internal/path";
 
-export type IntSize = 0 | 1 | 2 | 4 | 8;
-
 export type EqualShapeObjects<Value> = {[key in keyof Value]: Value[key]};
 
 // Value types

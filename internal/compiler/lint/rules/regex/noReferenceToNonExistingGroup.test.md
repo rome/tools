@@ -113,6 +113,9 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 28 group.
 
+    let foo = /(([abc])\19)+=\28/;foo;
+                             ^^^
+
 
 ```
 

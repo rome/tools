@@ -6,6 +6,7 @@ import Worker from "./Worker";
 import {
 	RSERValue,
 	decodeSingleMessageRSERStream,
+	hashRSERValue,
 } from "@internal/codec-binary-serial";
 import {FileReference} from "../common/types/files";
 import {Consumer, consumeUnknown} from "@internal/consume";
@@ -15,7 +16,7 @@ import {
 	DiagnosticIntegrity,
 } from "@internal/diagnostics";
 import {markup} from "@internal/markup";
-import {ToJSONObject} from "@internal/codec-config/json/types";
+import {isPlainObject} from "@internal/typescript-helpers";
 
 // This can be shared across multiple machines safely
 export type PortableCacheMetadata = {
@@ -77,15 +78,15 @@ const localMetaLoader = createCacheEntryLoader<LocalCacheMetadata>(
 	},
 );
 
-type CacheKeyParts = Array<string | ToJSONObject>;
+type CacheKeyParts = RSERValue[];
 
 function serializeCacheKey(rawParts: CacheKeyParts): string {
 	const parts: string[] = [];
 	for (const part of rawParts) {
 		if (typeof part === "string") {
 			parts.push(part);
-		} else if (Object.keys(part).length > 0) {
-			parts.push(sha256.sync(JSON.stringify(part)));
+		} else if (!isPlainObject(part) || Object.keys(part).length > 0) {
+			parts.push(hashRSERValue(part));
 		}
 	}
 	return parts.join("-");

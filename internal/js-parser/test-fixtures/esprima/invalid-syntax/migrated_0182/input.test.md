@@ -100,5 +100,8 @@ JSRoot {
 
   ℹ Defined already here
 
+    x: while (true) { x: while (true) { } }
+    ^
+
 
 ```

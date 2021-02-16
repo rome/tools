@@ -113,9 +113,7 @@ export default class VirtualModules {
 		return segments[0] === "" && segments[1] === "\0";
 	}
 
-	public getPossibleVirtualFileContents(
-		path: AnyPath,
-	): undefined | string {
+	public getPossibleVirtualFileContents(path: AnyPath): undefined | string {
 		if (path.isAbsolute()) {
 			if (this.isVirtualPath(path)) {
 				const entry = this.statMap.assert(path);

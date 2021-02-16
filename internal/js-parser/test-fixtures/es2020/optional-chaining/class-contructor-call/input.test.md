@@ -95,5 +95,8 @@ JSRoot {
 
   ℹ Optional chain member responsible
 
+    new C?.b.d()
+        ^^^^
+
 
 ```

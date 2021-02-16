@@ -102,5 +102,8 @@ JSRoot {
 
   ℹ Defined already here
 
+    ([a,[b],...b])=>0;
+         ^
+
 
 ```

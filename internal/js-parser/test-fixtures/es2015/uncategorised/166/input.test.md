@@ -116,5 +116,8 @@ JSRoot {
 
   ℹ Defined already here
 
+    function x(a, { a }){}
+                    ^
+
 
 ```

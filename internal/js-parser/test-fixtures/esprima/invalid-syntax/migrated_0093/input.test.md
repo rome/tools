@@ -92,5 +92,8 @@ JSRoot {
 
   ℹ Defined already here
 
+    "use strict"; (a, a) => 42
+                      ^
+
 
 ```

@@ -17,6 +17,9 @@
 
   ℹ Defined already here
 
+    <Hello foo='bar' foo='baz' />
+                     ^^^^^^^^^
+
 
 ```
 
@@ -40,11 +43,20 @@
 
   ℹ Defined already here
 
+    <div style='{}' style='{}' id='foo' id='bar' />
+                    ^^^^^^^^^^
+
  lint/jsx/noDuplicateProps/reject/2/file.tsx:1:27 lint/jsx/noDuplicateProps ━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid duplicate component props. Check the id prop.
 
+    <div style='{}' style='{}' id='foo' id='bar' />
+                               ^^^^^^^^
+
   ℹ Defined already here
+
+    <div style='{}' style='{}' id='foo' id='bar' />
+                                        ^^^^^^^^
 
 
 ```

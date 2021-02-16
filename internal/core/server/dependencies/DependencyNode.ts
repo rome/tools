@@ -27,7 +27,12 @@ import {
 	WorkerAnalyzeDependencyResult,
 	getFileHandlerFromPath,
 } from "@internal/core";
-import {AbsoluteFilePath, AbsoluteFilePathMap, UIDPath} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathMap,
+	UIDPath,
+	UIDPathMap,
+} from "@internal/path";
 
 import {ExtensionHandler} from "../../common/file-handlers/types";
 
@@ -346,7 +351,7 @@ export default class DependencyNode {
 		const {graph} = this;
 
 		// Build up a map of any forwarded imports
-		const resolvedImports: BundleCompileResolvedImports = {};
+		const resolvedImports: BundleCompileResolvedImports = new UIDPathMap();
 
 		// Diagnostics for unknown imports
 		const diagnostics: Diagnostics = [];
@@ -379,11 +384,19 @@ export default class DependencyNode {
 				}
 
 				// If the resolved target isn't the same as the file then forward it
-				if (resolved.node.uid !== mod.uid) {
-					resolvedImports[`${mod.uid}:${name}`] = {
-						id: resolved.node.uid,
-						name: resolved.record.name,
-					};
+				if (!resolved.node.uid.equal(mod.uid)) {
+					let forId = resolvedImports.get(mod.uid);
+					if (forId === undefined) {
+						forId = new Map();
+						resolvedImports.set(mod.uid, forId);
+					}
+					forId.set(
+						name,
+						{
+							id: resolved.node.uid,
+							name: resolved.record.name,
+						},
+					);
 				}
 			}
 		}

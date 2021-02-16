@@ -336,6 +336,9 @@ export default class TestAPI implements TestHelper {
 					message: markup`${message}`,
 					advice,
 				},
+				tags: {
+					internal: false,
+				},
 			},
 		);
 		throw createSingleDiagnosticError(diag);

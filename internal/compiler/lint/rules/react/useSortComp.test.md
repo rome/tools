@@ -87,6 +87,8 @@ class Hello extends React.Component {
   ℹ When creating React components it is more convenient to always follow the same organisation
     for method order to help you easily find lifecycle methods, event handlers, etc.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 

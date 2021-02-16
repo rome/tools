@@ -21,6 +21,9 @@
 
   ✖ Provide a key prop with a unique value for each element in array.
 
+    const a = [<div />, <div />]
+                        ^^^^^^^
+
   ℹ Keys help React identify which items have changed, are added, or are removed.
 
 

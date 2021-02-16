@@ -84,5 +84,8 @@ JSRoot {
 
   ℹ Originated from opening tag of div
 
+    <div>() => {}
+     ^^^
+
 
 ```

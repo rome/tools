@@ -8,8 +8,8 @@
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
-	createFilePath,
 	RelativePath,
+	createFilePath,
 } from "@internal/path";
 import {exists, readFileText} from "@internal/fs";
 import {TestServerRunnerOptions} from "../server/testing/types";

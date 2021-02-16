@@ -16,7 +16,7 @@
     ^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-     application.
+    application.
 
 
 ```
@@ -42,7 +42,7 @@
             ^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-     application.
+    application.
 
 
 ```
@@ -68,7 +68,7 @@
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-     application.
+    application.
 
 
 ```
@@ -92,7 +92,7 @@ React.createElement("button", {type: "foo"}, ["child"]);
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
   ℹ The default button type of "submit" causes page reloads and is not typical behavior in a React
-     application.
+    application.
 
 
 ```

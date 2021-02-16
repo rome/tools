@@ -102,5 +102,8 @@ JSRoot {
 
   ℹ We expected to find the closing character ] here
 
+    void { [1, 2]: 3 };
+             ^
+
 
 ```

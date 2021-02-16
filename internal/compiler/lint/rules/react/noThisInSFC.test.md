@@ -169,6 +169,13 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
+    2 │   return (
+    3 │     <div>
+  > 4 │       {this.context.foo ? this.props.bar : ''}
+      │                           ^^^^
+    5 │     </div>
+    6 │   );
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
 
@@ -204,6 +211,13 @@ function Foo(props, context) {
  lint/react/noThisInSFC/reject/7/file.tsx:3:17 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
+
+    1 │ function Foo(props, context) {
+    2 │   const { foo } = this.context;
+  > 3 │   const { bar } = this.props;
+      │                   ^^^^
+    4 │   return (
+    5 │     <div>
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -242,6 +256,13 @@ function Foo(props, context) {
  lint/react/noThisInSFC/reject/8/file.tsx:7:4 lint/react/noThisInSFC ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using this in stateless functional components.
+
+    5 │   return (
+    6 │     <div>
+  > 7 │       {this.props.bar}
+      │        ^^^^
+    8 │     </div>
+    9 │   );
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
@@ -282,6 +303,13 @@ function Foo(props) {
 
   ✖ Avoid using this in stateless functional components.
 
+    1 │ function Foo(props) {
+    2 │   const { loading } = this.state;
+  > 3 │   const { bar } = this.props;
+      │                   ^^^^
+    4 │   if (loading) {
+    5 │     return <Loader />;
+
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
 
@@ -313,6 +341,8 @@ function Foo(props) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -336,6 +366,8 @@ React.memo(function Foo(props) {
   ✖ Avoid using this in stateless functional components.
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -361,6 +393,8 @@ React.forwardRef((props, ref) =>
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -384,6 +418,8 @@ const Foo = React.forwardRef((props, ref) =>
   ✖ Avoid using this in stateless functional components.
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

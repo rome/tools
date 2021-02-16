@@ -69,10 +69,7 @@ type IntegrationTestHelper = {
 	client: Client;
 	server: Server;
 	readFile: (relative: RelativePath | string) => Promise<string>;
-	writeFile: (
-		relative: RelativePath | string,
-		content: string,
-	) => Promise<void>;
+	writeFile: (relative: RelativePath | string, content: string) => Promise<void>;
 	createRequest: (query?: PartialServerQueryRequest) => Promise<ServerRequest>;
 };
 
@@ -165,31 +162,39 @@ export function createMockWorker(force: boolean = false): IntegrationWorker {
 	let projectIdCounter = 0;
 
 	async function performFileOperation<T>(
-		{
-			project = defaultProjectId,
-			real,
-			sourceText,
-			uid,
-		}: IntegrationWorkerFileRefOptions,
+		opts: IntegrationWorkerFileRefOptions,
 		callback: (ref: FileReference) => Promise<T>,
 	): Promise<T> {
-		let relative = createRelativePath(uid);
+		const {
+			project = defaultProjectId,
+			sourceText,
+		} = opts;
 
-		if (real === undefined && sourceText === undefined) {
+		let relative = createRelativePath(
+			typeof opts.uid === "string" ? opts.uid : opts.uid.format(),
+		);
+
+		if (opts.real === undefined && opts.sourceText === undefined) {
 			throw new Error("real and sourceText cannot be undefined");
 		}
 
-		if (real === undefined) {
+		let real: AbsoluteFilePath;
+		if (opts.real === undefined) {
 			real = createAbsoluteFilePath(`/project-${project}`).append(relative);
+		} else if (typeof opts.real === "string") {
+			real = createAbsoluteFilePath(opts.real);
 		} else {
-			real = createAbsoluteFilePath(real);
+			real = opts.real;
 		}
+
+		const uid =
+			typeof opts.uid === "string" ? createUIDPath(opts.uid) : opts.uid;
 
 		const ref: FileReference = {
 			project,
 			manifest: undefined,
 			remote: false,
-			uid: createUIDPath(uid),
+			uid,
 			relative,
 			real,
 		};

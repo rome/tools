@@ -135,10 +135,7 @@ export default class TestWorkerFile {
 		this.worker = worker;
 		this.projectDirectory = createAbsoluteFilePath(opts.projectDirectory);
 
-		this.snapshotManager = new SnapshotManager(
-			this,
-			createAbsoluteFilePath(opts.path),
-		);
+		this.snapshotManager = new SnapshotManager(this, opts.path);
 
 		this.onlyFocusedTests = false;
 		this.hasDiagnostics = false;
@@ -426,6 +423,9 @@ export default class TestWorkerFile {
 				cleanFrames,
 				stackAdviceOptions: {
 					importantPaths: new MixedPathSet([this.path]),
+				},
+				tags: {
+					internal: false,
 				},
 			},
 		);

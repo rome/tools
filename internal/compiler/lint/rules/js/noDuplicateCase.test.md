@@ -23,6 +23,13 @@
 
   ℹ Defined already here
 
+     9 │   case 'd':
+    10 │     break;
+  > 11 │   case 'c':
+       │        ^^^
+    12 │     break;
+    13 │   default:
+
 
 ```
 
@@ -66,6 +73,13 @@ switch (expr) {
 
   ℹ Defined already here
 
+     7 │   case 3:
+     8 │     break;
+   > 9 │   case 2:
+       │        ^
+    10 │     break;
+    11 │   default:
+
 
 ```
 
@@ -106,6 +120,13 @@ switch (expr) {
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
+
+     7 │   case 3:
+     8 │     break;
+   > 9 │   case 2n:
+       │        ^^
+    10 │     break;
+    11 │   default:
 
 
 ```
@@ -148,6 +169,13 @@ switch (expr) {
 
   ℹ Defined already here
 
+    3 │   case foo:
+    4 │     break;
+  > 5 │   case foo:
+      │        ^^^
+    6 │     break;
+    7 │   default:
+
 
 ```
 
@@ -185,6 +213,13 @@ switch ("a") {
 
   ℹ Defined already here
 
+    3 │   case 'foo':
+    4 │     break;
+  > 5 │   case 'foo':
+      │        ^^^^^
+    6 │     break;
+    7 │   default:
+
 
 ```
 
@@ -221,6 +256,13 @@ switch ("a") {
   ℹ Duplicated switch logic paths are hard to follow and usually typos.
 
   ℹ Defined already here
+
+    3 │   case null:
+    4 │     break;
+  > 5 │   case null:
+      │        ^^^^
+    6 │     break;
+    7 │   default:
 
 
 ```

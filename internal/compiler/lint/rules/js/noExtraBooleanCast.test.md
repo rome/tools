@@ -19,6 +19,8 @@
   - Boolean(foo)
   + foo
 
+  ⚠ This diagnostic refers to a file that does not exist
+
 
 ```
 
@@ -45,6 +47,8 @@ if (foo) {
   - !!Boolean(foo)
   + Boolean(foo)
 
+  ⚠ This diagnostic refers to a file that does not exist
+
  lint/js/noExtraBooleanCast/reject/2/file.ts:1:6 lint/js/noExtraBooleanCast  FIXABLE  ━━━━━━━━━━━━━━
 
   ✖ Avoid redundant double-negation.
@@ -55,6 +59,8 @@ if (foo) {
 
   - Boolean(foo)
   + foo
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -81,6 +87,8 @@ if (foo) {
 
   - Boolean(foo)
   + foo
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -168,6 +176,8 @@ do {
 
   - !!foo
   + foo
+
+  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

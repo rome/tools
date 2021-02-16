@@ -8,7 +8,6 @@
 import {ServerRequest} from "@internal/core";
 import {commandCategories} from "../../common/commands";
 import {createServerCommand} from "../commands";
-import {createAnyPath} from "@internal/path";
 import {markup} from "@internal/markup";
 
 export default createServerCommand({
@@ -28,26 +27,23 @@ export default createServerCommand({
 
 		let origin;
 		let relative;
-		let key;
 
 		if (args.length === 2) {
 			origin = flags.cwd.resolve(req.args.getIndex(0).asFilePath());
-			relative = req.args.getIndex(1).asFilePath();
-			key = 1;
+			relative = req.args.getIndex(1);
 		} else {
 			origin = flags.cwd;
-			relative = req.args.getIndex(0).asFilePath();
-			key = 0;
+			relative = req.args.getIndex(0);
 		}
 
 		const resolved = await server.resolver.resolveEntryAssert(
 			{
 				...req.getResolverOptionsFromFlags(),
 				origin,
-				source: createAnyPath(relative),
+				source: relative.asFilePath(),
 			},
 			{
-				location: req.getDiagnosticLocationFromFlags({type: "arg", key}),
+				location: relative.getDiagnosticLocation(),
 			},
 		);
 		reporter.log(markup`${resolved.ref.real}`);

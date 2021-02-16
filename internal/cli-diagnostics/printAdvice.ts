@@ -42,7 +42,7 @@ import {MAX_CODE_LENGTH, MAX_CODE_LINES, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@internal/string-diff";
 import {removeCarriageReturn} from "@internal/string-utils";
 import {serializeCLIFlags} from "@internal/cli-flags";
-import {inferDiagnosticLanguageFromFilename} from "@internal/core/common/file-handlers";
+import {inferDiagnosticLanguageFromPath} from "@internal/core/common/file-handlers";
 
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;
@@ -351,10 +351,7 @@ function printFrame(
 			path,
 			input: sourceText,
 			sourceTypeJS: item.location.sourceTypeJS,
-			language: inferDiagnosticLanguageFromFilename(
-				path,
-				item.location.language,
-			),
+			language: inferDiagnosticLanguageFromPath(path, item.location.language),
 			highlight: opts.printer.shouldHighlight(),
 		});
 	} else if (path !== undefined) {
