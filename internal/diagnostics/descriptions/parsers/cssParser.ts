@@ -44,7 +44,7 @@ export const cssParser = createDiagnosticsCategory({
 			},
 		],
 	}),
-	UNKNOW_KEYFRAME_SELECTOR_NAME: {
+	UNKNOWN_KEYFRAME_SELECTOR_NAME: {
 		message: markup`The selector name of the keyframe is not correct.`,
 		advice: [
 			{

@@ -109,7 +109,7 @@ function parseKeyframeSelector(
 		);
 	} else {
 		parser.unexpectedDiagnostic({
-			description: descriptions.CSS_PARSER.UNKNOW_KEYFRAME_SELECTOR_NAME,
+			description: descriptions.CSS_PARSER.UNKNOWN_KEYFRAME_SELECTOR_NAME,
 			token: parser.getToken(),
 		});
 		nextToken(parser);

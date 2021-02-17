@@ -157,7 +157,6 @@ test(
 			`,
 		);
 
-		console.log(result);
 		t.is(result.suppressions.length, 4);
 		t.is(result.diagnostics.length, 1);
 

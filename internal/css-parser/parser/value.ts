@@ -7,7 +7,6 @@ import {parseFunction} from "@internal/css-parser/parser/function";
 import {parseUrl} from "@internal/css-parser/parser/url";
 
 export function parseComponentValue(parser: CSSParser): AnyCSSValue | undefined {
-	console.log("value", parser.getToken());
 	if (
 		matchToken(parser, "LeftCurlyBracket") ||
 		matchToken(parser, "LeftParen") ||
