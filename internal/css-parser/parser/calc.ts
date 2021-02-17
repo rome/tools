@@ -26,7 +26,6 @@ import {descriptions} from "@internal/diagnostics";
  * Following this logic, allows to not mess up the complex rule around the calc.
  */
 
-
 function tryParseNumberProduct(
 	parser: CSSParser,
 ): CSSCalcNumberProduct | undefined {
@@ -41,8 +40,6 @@ function tryParseNumberProduct(
 			}
 			const operation = tryParseOperator(parser);
 			if (operation) {
-
-
 				if (operation.value === "*") {
 					const numberValue = tryParseNumberValue(parser);
 					if (numberValue) {
@@ -82,7 +79,6 @@ function tryParseNumberSum(parser: CSSParser): CSSCalcNumberSum | undefined {
 	if (numberProduct) {
 		value = [numberProduct];
 		while (!matchToken(parser, "EOF")) {
-
 			if (matchToken(parser, "RightParen")) {
 				parser.eatToken("RightParen");
 				break;
