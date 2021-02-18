@@ -56,25 +56,27 @@ CSSRoot {
 						value: Array [
 							CSSCalcFunction {
 								name: "calc"
-								value: CSSCalcSum {
-									value: Array [
-										CSSCalcProduct {
-											value: Array [
-												CSSCalcValue {
-													value: CSSDimension {
-														value: 2
-														unit: "px"
-														loc: SourceLocation invalid/calc-space/input.css 2:13-2:13
-													}
-													loc: SourceLocation invalid/calc-space/input.css 2:13-2:16
-												}
-											]
-											loc: SourceLocation invalid/calc-space/input.css 2:16-2:16
-										}
-									]
-									loc: SourceLocation invalid/calc-space/input.css 2:13-2:16
-								}
 								loc: SourceLocation invalid/calc-space/input.css 2:13-2:20
+								params: Array [
+									CSSCalcSum {
+										value: Array [
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSDimension {
+															value: 2
+															unit: "px"
+															loc: SourceLocation invalid/calc-space/input.css 2:13-2:13
+														}
+														loc: SourceLocation invalid/calc-space/input.css 2:13-2:16
+													}
+												]
+												loc: SourceLocation invalid/calc-space/input.css 2:16-2:16
+											}
+										]
+										loc: SourceLocation invalid/calc-space/input.css 2:13-2:16
+									}
+								]
 							}
 							CSSRaw {
 								value: undefined

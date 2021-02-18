@@ -65,42 +65,44 @@ CSSRoot {
 						value: Array [
 							CSSCalcFunction {
 								name: "calc"
-								value: CSSCalcSum {
-									value: Array [
-										CSSCalcProduct {
-											value: Array [
-												CSSCalcValue {
-													value: CSSDimension {
-														value: 10
-														unit: "px"
-														loc: SourceLocation functions/input.css 4:17-4:17
-													}
-													loc: SourceLocation functions/input.css 4:17-4:21
-												}
-											]
-											loc: SourceLocation functions/input.css 4:21-4:22
-										}
-										CSSCalcOperation {
-											value: "+"
-											loc: SourceLocation functions/input.css 4:23-4:24
-										}
-										CSSCalcProduct {
-											value: Array [
-												CSSCalcValue {
-													value: CSSDimension {
-														value: 5
-														unit: "rem"
-														loc: SourceLocation functions/input.css 4:24-4:24
-													}
-													loc: SourceLocation functions/input.css 4:24-4:28
-												}
-											]
-											loc: SourceLocation functions/input.css 4:28-4:28
-										}
-									]
-									loc: SourceLocation functions/input.css 4:17-4:28
-								}
 								loc: SourceLocation functions/input.css 4:17-4:29
+								params: Array [
+									CSSCalcSum {
+										value: Array [
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSDimension {
+															value: 10
+															unit: "px"
+															loc: SourceLocation functions/input.css 4:17-4:17
+														}
+														loc: SourceLocation functions/input.css 4:17-4:21
+													}
+												]
+												loc: SourceLocation functions/input.css 4:21-4:22
+											}
+											CSSCalcOperation {
+												value: "+"
+												loc: SourceLocation functions/input.css 4:23-4:24
+											}
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSDimension {
+															value: 5
+															unit: "rem"
+															loc: SourceLocation functions/input.css 4:24-4:24
+														}
+														loc: SourceLocation functions/input.css 4:24-4:28
+													}
+												]
+												loc: SourceLocation functions/input.css 4:28-4:28
+											}
+										]
+										loc: SourceLocation functions/input.css 4:17-4:28
+									}
+								]
 							}
 						]
 						important: false

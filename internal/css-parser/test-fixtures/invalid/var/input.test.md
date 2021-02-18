@@ -72,42 +72,44 @@ CSSRoot {
 								params: Array [
 									CSSCalcFunction {
 										name: "calc"
-										value: CSSCalcSum {
-											value: Array [
-												CSSCalcProduct {
-													value: Array [
-														CSSCalcValue {
-															value: CSSDimension {
-																value: 10
-																unit: "px"
-																loc: SourceLocation invalid/var/input.css 3:18-3:18
-															}
-															loc: SourceLocation invalid/var/input.css 3:18-3:22
-														}
-													]
-													loc: SourceLocation invalid/var/input.css 3:22-3:23
-												}
-												CSSCalcOperation {
-													value: "+"
-													loc: SourceLocation invalid/var/input.css 3:24-3:25
-												}
-												CSSCalcProduct {
-													value: Array [
-														CSSCalcValue {
-															value: CSSDimension {
-																value: 10
-																unit: "px"
-																loc: SourceLocation invalid/var/input.css 3:25-3:25
-															}
-															loc: SourceLocation invalid/var/input.css 3:25-3:29
-														}
-													]
-													loc: SourceLocation invalid/var/input.css 3:29-3:29
-												}
-											]
-											loc: SourceLocation invalid/var/input.css 3:18-3:29
-										}
 										loc: SourceLocation invalid/var/input.css 3:18-3:30
+										params: Array [
+											CSSCalcSum {
+												value: Array [
+													CSSCalcProduct {
+														value: Array [
+															CSSCalcValue {
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:18-3:18
+																}
+																loc: SourceLocation invalid/var/input.css 3:18-3:22
+															}
+														]
+														loc: SourceLocation invalid/var/input.css 3:22-3:23
+													}
+													CSSCalcOperation {
+														value: "+"
+														loc: SourceLocation invalid/var/input.css 3:24-3:25
+													}
+													CSSCalcProduct {
+														value: Array [
+															CSSCalcValue {
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:25-3:25
+																}
+																loc: SourceLocation invalid/var/input.css 3:25-3:29
+															}
+														]
+														loc: SourceLocation invalid/var/input.css 3:29-3:29
+													}
+												]
+												loc: SourceLocation invalid/var/input.css 3:18-3:29
+											}
+										]
 									}
 								]
 							}

@@ -53,41 +53,43 @@ CSSRoot {
 						value: Array [
 							CSSCalcFunction {
 								name: "calc"
-								value: CSSCalcSum {
-									value: Array [
-										CSSCalcProduct {
-											value: Array [
-												CSSCalcValue {
-													value: CSSDimension {
-														value: 1
-														unit: "px"
-														loc: SourceLocation smoke/input.css 4:16-4:16
-													}
-													loc: SourceLocation smoke/input.css 4:16-4:19
-												}
-											]
-											loc: SourceLocation smoke/input.css 4:19-4:20
-										}
-										CSSCalcOperation {
-											value: "+"
-											loc: SourceLocation smoke/input.css 4:21-4:22
-										}
-										CSSCalcProduct {
-											value: Array [
-												CSSCalcValue {
-													value: CSSPercentage {
-														value: 2
-														loc: SourceLocation smoke/input.css 4:22-4:22
-													}
-													loc: SourceLocation smoke/input.css 4:22-4:24
-												}
-											]
-											loc: SourceLocation smoke/input.css 4:24-4:24
-										}
-									]
-									loc: SourceLocation smoke/input.css 4:16-4:24
-								}
 								loc: SourceLocation smoke/input.css 4:16-4:25
+								params: Array [
+									CSSCalcSum {
+										value: Array [
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSDimension {
+															value: 1
+															unit: "px"
+															loc: SourceLocation smoke/input.css 4:16-4:16
+														}
+														loc: SourceLocation smoke/input.css 4:16-4:19
+													}
+												]
+												loc: SourceLocation smoke/input.css 4:19-4:20
+											}
+											CSSCalcOperation {
+												value: "+"
+												loc: SourceLocation smoke/input.css 4:21-4:22
+											}
+											CSSCalcProduct {
+												value: Array [
+													CSSCalcValue {
+														value: CSSPercentage {
+															value: 2
+															loc: SourceLocation smoke/input.css 4:22-4:22
+														}
+														loc: SourceLocation smoke/input.css 4:22-4:24
+													}
+												]
+												loc: SourceLocation smoke/input.css 4:24-4:24
+											}
+										]
+										loc: SourceLocation smoke/input.css 4:16-4:24
+									}
+								]
 							}
 						]
 						important: false
@@ -163,41 +165,43 @@ CSSRoot {
 									value: Array [
 										CSSCalcFunction {
 											name: "calc"
-											value: CSSCalcSum {
-												value: Array [
-													CSSCalcProduct {
-														value: Array [
-															CSSCalcValue {
-																value: CSSDimension {
-																	value: 2
-																	unit: "px"
-																	loc: SourceLocation smoke/input.css 10:20-10:20
-																}
-																loc: SourceLocation smoke/input.css 10:20-10:23
-															}
-														]
-														loc: SourceLocation smoke/input.css 10:23-10:24
-													}
-													CSSCalcOperation {
-														value: "+"
-														loc: SourceLocation smoke/input.css 10:25-10:26
-													}
-													CSSCalcProduct {
-														value: Array [
-															CSSCalcValue {
-																value: CSSPercentage {
-																	value: 3
-																	loc: SourceLocation smoke/input.css 10:26-10:26
-																}
-																loc: SourceLocation smoke/input.css 10:26-10:28
-															}
-														]
-														loc: SourceLocation smoke/input.css 10:28-10:28
-													}
-												]
-												loc: SourceLocation smoke/input.css 10:20-10:28
-											}
 											loc: SourceLocation smoke/input.css 10:20-10:29
+											params: Array [
+												CSSCalcSum {
+													value: Array [
+														CSSCalcProduct {
+															value: Array [
+																CSSCalcValue {
+																	value: CSSDimension {
+																		value: 2
+																		unit: "px"
+																		loc: SourceLocation smoke/input.css 10:20-10:20
+																	}
+																	loc: SourceLocation smoke/input.css 10:20-10:23
+																}
+															]
+															loc: SourceLocation smoke/input.css 10:23-10:24
+														}
+														CSSCalcOperation {
+															value: "+"
+															loc: SourceLocation smoke/input.css 10:25-10:26
+														}
+														CSSCalcProduct {
+															value: Array [
+																CSSCalcValue {
+																	value: CSSPercentage {
+																		value: 3
+																		loc: SourceLocation smoke/input.css 10:26-10:26
+																	}
+																	loc: SourceLocation smoke/input.css 10:26-10:28
+																}
+															]
+															loc: SourceLocation smoke/input.css 10:28-10:28
+														}
+													]
+													loc: SourceLocation smoke/input.css 10:20-10:28
+												}
+											]
 										}
 									]
 									important: false
