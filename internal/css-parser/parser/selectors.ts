@@ -85,12 +85,21 @@ function parsePseudoSelector(
 		} else if (matchToken(parser, "Function")) {
 			const func = parseFunction(parser);
 			if (func) {
+				if (func.type !== "CSSCalcFunction") {
+					return parser.finishNode(
+						start,
+						{
+							type: "CSSPseudoClassSelector",
+							value: func.name,
+							params: func.params,
+						},
+					);
+				}
 				return parser.finishNode(
 					start,
 					{
 						type: "CSSPseudoClassSelector",
 						value: func.name,
-						params: func.params,
 					},
 				);
 			}

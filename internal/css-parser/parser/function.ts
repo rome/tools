@@ -1,5 +1,6 @@
 import {AnyCSSValue, CSSParser, Tokens} from "@internal/css-parser/types";
 import {
+	CSSCalcFunction,
 	CSSCustomProperty,
 	CSSFunction,
 	CSSUrlFunction,
@@ -8,42 +9,52 @@ import {
 import {matchToken, nextToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";
 import {parseComponentValue} from "@internal/css-parser/parser/value";
+import {parseCalcFunction} from "@internal/css-parser/parser/calc";
 
 export function parseFunction(
 	parser: CSSParser,
-): CSSFunction | CSSVarFunction | CSSUrlFunction | undefined {
+): CSSFunction | CSSVarFunction | CSSUrlFunction | CSSCalcFunction | undefined {
 	const start = parser.getPosition();
 	const token = parser.getToken() as Tokens["Function"];
 	const name = token.value;
 	const params: AnyCSSValue[] = [];
 	const isVarFunction = name === "var";
 	const isUrlFunction = name === "url";
+	const isCalcFunction = name === "calc";
 	parser.nextToken();
 
-	while (true) {
-		if (matchToken(parser, "RightParen")) {
-			nextToken(parser);
-			break;
+	if (isCalcFunction) {
+		const value = parseCalcFunction(parser);
+		if (value) {
+			return value;
 		}
-		if (matchToken(parser, "EOF")) {
-			parser.unexpectedDiagnostic({
-				description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
-				token: parser.getToken(),
-			});
-			break;
-		}
-		const parsedValue = parseComponentValue(parser);
-		if (parsedValue) {
-			if (!params.length && isVarFunction) {
-				if (parsedValue.type !== "CSSCustomProperty") {
-					parser.unexpectedDiagnostic({
-						description: descriptions.CSS_PARSER.INVALID_CUSTOM_PROPERTY,
-						token: parser.getToken(),
-					});
+	} else {
+		while (true) {
+			if (matchToken(parser, "RightParen")) {
+				nextToken(parser);
+				break;
+			}
+			if (matchToken(parser, "EOF")) {
+				parser.unexpectedDiagnostic({
+					description: descriptions.CSS_PARSER.UNTERMINATED_FUNCTION,
+					token: parser.getToken(),
+				});
+				break;
+			}
+
+			const parsedValue = parseComponentValue(parser);
+			if (parsedValue) {
+				if (!params.length && isVarFunction) {
+					if (parsedValue.type !== "CSSCustomProperty") {
+						parser.unexpectedDiagnostic({
+							description: descriptions.CSS_PARSER.INVALID_CUSTOM_PROPERTY,
+							token: parser.getToken(),
+						});
+					}
+					params.push(parsedValue);
+				} else {
+					params.push(parsedValue);
 				}
-				params.push(parsedValue);
-			} else {
-				params.push(parsedValue);
 			}
 		}
 	}

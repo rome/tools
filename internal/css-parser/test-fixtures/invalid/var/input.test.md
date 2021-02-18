@@ -70,23 +70,44 @@ CSSRoot {
 								name: "var"
 								loc: SourceLocation invalid/var/input.css 3:9-3:31
 								params: Array [
-									CSSFunction {
+									CSSCalcFunction {
 										name: "calc"
-										loc: SourceLocation invalid/var/input.css 3:13-3:30
+										loc: SourceLocation invalid/var/input.css 3:18-3:30
 										params: Array [
-											CSSDimension {
-												value: 10
-												unit: "px"
-												loc: SourceLocation invalid/var/input.css 3:18-3:22
-											}
-											CSSRaw {
-												value: "+"
-												loc: SourceLocation invalid/var/input.css 3:23-3:24
-											}
-											CSSDimension {
-												value: 10
-												unit: "px"
-												loc: SourceLocation invalid/var/input.css 3:25-3:29
+											CSSCalcSum {
+												value: Array [
+													CSSCalcProduct {
+														value: Array [
+															CSSCalcValue {
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:18-3:18
+																}
+																loc: SourceLocation invalid/var/input.css 3:18-3:22
+															}
+														]
+														loc: SourceLocation invalid/var/input.css 3:22-3:23
+													}
+													CSSCalcOperation {
+														value: "+"
+														loc: SourceLocation invalid/var/input.css 3:24-3:25
+													}
+													CSSCalcProduct {
+														value: Array [
+															CSSCalcValue {
+																value: CSSDimension {
+																	value: 10
+																	unit: "px"
+																	loc: SourceLocation invalid/var/input.css 3:25-3:25
+																}
+																loc: SourceLocation invalid/var/input.css 3:25-3:29
+															}
+														]
+														loc: SourceLocation invalid/var/input.css 3:29-3:29
+													}
+												]
+												loc: SourceLocation invalid/var/input.css 3:18-3:29
 											}
 										]
 									}

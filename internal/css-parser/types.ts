@@ -10,6 +10,7 @@ import {
 import {
 	CSSBlock,
 	CSSCalcFunction,
+	CSSCalcSum,
 	CSSComma,
 	CSSCustomProperty,
 	CSSDimension,
@@ -92,6 +93,7 @@ export type AnyCSSValue =
 	| CSSCustomProperty
 	| CSSUrlFunction
 	| CSSCalcFunction
+	| CSSCalcSum
 	| CSSRaw;
 
 export type AnyFunction = CSSFunction | CSSVarFunction | CSSUrlFunction;

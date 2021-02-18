@@ -1,9 +1,14 @@
 import {CSSCalcFunction} from "@internal/ast";
-import {Builder, Token} from "@internal/formatter";
+import {Builder, Token, concat} from "@internal/formatter";
 
 export default function CSSCalcFunction(
 	builder: Builder,
 	node: CSSCalcFunction,
 ): Token {
-	throw new Error("unimplemented");
+	return concat([
+		node.name,
+		"(",
+		concat(node.params.map((p) => builder.tokenize(p, node))),
+		")",
+	]);
 }

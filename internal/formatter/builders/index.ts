@@ -14,7 +14,7 @@ const builders: ExtendedMap<string, BuilderMethod<any>> = new ExtendedMap(
 );
 export default builders;
 
-/* GENERATED:START(hash:13058e273a7be279b16cad8e676f1f3519341196,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:2412c786d0e011248aff2fb8d31ef039e097322b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 import CommentBlock from "./common/comments/CommentBlock";
 builders.set("CommentBlock", CommentBlock);
 import CommentLine from "./common/comments/CommentLine";
@@ -29,6 +29,20 @@ import CSSBlock from "./css/core/CSSBlock";
 builders.set("CSSBlock", CSSBlock);
 import CSSCalcFunction from "./css/function/CSSCalcFunction";
 builders.set("CSSCalcFunction", CSSCalcFunction);
+import CSSCalcNumberProduct from "./css/calculations/CSSCalcNumberProduct";
+builders.set("CSSCalcNumberProduct", CSSCalcNumberProduct);
+import CSSCalcNumberSum from "./css/calculations/CSSCalcNumberSum";
+builders.set("CSSCalcNumberSum", CSSCalcNumberSum);
+import CSSCalcNumberValue from "./css/calculations/CSSCalcNumberValue";
+builders.set("CSSCalcNumberValue", CSSCalcNumberValue);
+import CSSCalcOperation from "./css/calculations/CSSCalcOperation";
+builders.set("CSSCalcOperation", CSSCalcOperation);
+import CSSCalcProduct from "./css/calculations/CSSCalcProduct";
+builders.set("CSSCalcProduct", CSSCalcProduct);
+import CSSCalcSum from "./css/calculations/CSSCalcSum";
+builders.set("CSSCalcSum", CSSCalcSum);
+import CSSCalcValue from "./css/calculations/CSSCalcValue";
+builders.set("CSSCalcValue", CSSCalcValue);
 import CSSClassSelector from "./css/selectors/CSSClassSelector";
 builders.set("CSSClassSelector", CSSClassSelector);
 import CSSCombinator from "./css/selectors/CSSCombinator";

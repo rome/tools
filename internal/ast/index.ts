@@ -11,7 +11,7 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:60365309ef30b861a86b701f6c0e4ae89d23ad6b,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:20817ba46111fce33ac6c9664817c55a1b937fc7,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
 export * from "./common/commit/CommitRoot";
@@ -19,6 +19,13 @@ export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
 export * from "./css/function/CSSCalcFunction";
+export * from "./css/calculations/CSSCalcNumberProduct";
+export * from "./css/calculations/CSSCalcNumberSum";
+export * from "./css/calculations/CSSCalcNumberValue";
+export * from "./css/calculations/CSSCalcOperation";
+export * from "./css/calculations/CSSCalcProduct";
+export * from "./css/calculations/CSSCalcSum";
+export * from "./css/calculations/CSSCalcValue";
 export * from "./css/selectors/CSSClassSelector";
 export * from "./css/selectors/CSSCombinator";
 export * from "./css/core/CSSComma";
@@ -290,6 +297,13 @@ export type AnyNode =
 	| n.CSSAttributeSelector
 	| n.CSSBlock
 	| n.CSSCalcFunction
+	| n.CSSCalcNumberProduct
+	| n.CSSCalcNumberSum
+	| n.CSSCalcNumberValue
+	| n.CSSCalcOperation
+	| n.CSSCalcProduct
+	| n.CSSCalcSum
+	| n.CSSCalcValue
 	| n.CSSClassSelector
 	| n.CSSCombinator
 	| n.CSSComma
