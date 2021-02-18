@@ -126,4 +126,9 @@ export const cssParser = createDiagnosticsCategory({
 	EXPECTED_ID_HASH: {
 		message: markup`Expected to use identifier after <emphasis>#</emphasis>.`,
 	},
+
+	MEDIA_QUERY_UNKNOWN_MEDIA_TYPES: {},
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURES: {},
+	MEDIA_QUERY_UNKNOWN_MEDIA_FEATURE_VALUE: {},
+	MALFORMED_MEDIA_QUERY: {},
 });

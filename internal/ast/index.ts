@@ -11,9 +11,10 @@ export * from "./unions";
 export {bindingKeys, nodeNames, visitorKeys} from "./utils";
 export type AnyNodes = AnyNode | (AnyNode[]);
 
-/* GENERATED:START(hash:15c5464073a967f4fb4a952323dc34b080a4be2a,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
+/* GENERATED:START(hash:c3a6f18fb4259866c5e3f3ed49918d1e87f972f5,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/ast` to update. */
 export * from "./common/comments/CommentBlock";
 export * from "./common/comments/CommentLine";
+export * from "./common/commit/CommitRoot";
 export * from "./css/core/CSSAtRule";
 export * from "./css/selectors/CSSAttributeSelector";
 export * from "./css/core/CSSBlock";
@@ -39,6 +40,16 @@ export * from "./css/keyframe/CSSKeyframe";
 export * from "./css/keyframe/CSSKeyframeBlock";
 export * from "./css/keyframe/CSSKeyframeName";
 export * from "./css/keyframe/CSSKeyframeSelector";
+export * from "./css/media/CSSMediaAnd";
+export * from "./css/media/CSSMediaCondition";
+export * from "./css/media/CSSMediaConditionWithoutOr";
+export * from "./css/media/CSSMediaFeature";
+export * from "./css/media/CSSMediaInParens";
+export * from "./css/media/CSSMediaNot";
+export * from "./css/media/CSSMediaOr";
+export * from "./css/media/CSSMediaQuery";
+export * from "./css/media/CSSMediaQueryList";
+export * from "./css/media/CSSMediaType";
 export * from "./css/core/CSSNumber";
 export * from "./css/core/CSSPercentage";
 export * from "./css/selectors/CSSPseudoClassSelector";
@@ -291,6 +302,7 @@ export * from "./js/typescript/TSVoidKeywordTypeAnnotation";
 export type AnyNode =
 	| n.CommentBlock
 	| n.CommentLine
+	| n.CommitRoot
 	| n.CSSAtRule
 	| n.CSSAttributeSelector
 	| n.CSSBlock
@@ -316,6 +328,16 @@ export type AnyNode =
 	| n.CSSKeyframeBlock
 	| n.CSSKeyframeName
 	| n.CSSKeyframeSelector
+	| n.CSSMediaAnd
+	| n.CSSMediaCondition
+	| n.CSSMediaConditionWithoutOr
+	| n.CSSMediaFeature
+	| n.CSSMediaInParens
+	| n.CSSMediaNot
+	| n.CSSMediaOr
+	| n.CSSMediaQuery
+	| n.CSSMediaQueryList
+	| n.CSSMediaType
 	| n.CSSNumber
 	| n.CSSPercentage
 	| n.CSSPseudoClassSelector
