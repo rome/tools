@@ -1,12 +1,18 @@
-
 // Source: https://www.w3.org/TR/css-values-3/#calc-syntax
 import {CSSParser, Tokens} from "@internal/css-parser/types";
 import {
 	CSSCalcNumberProduct,
 	CSSCalcNumberSum,
 	CSSCalcNumberValue,
-	CSSCalcOperation, CSSCalcProduct, CSSCalcProductValue, CSSCalcSum, CSSCalcSumValue,
-	CSSCalcValue, CSSDimension, CSSNumber, CSSPercentage
+	CSSCalcOperation,
+	CSSCalcProduct,
+	CSSCalcProductValue,
+	CSSCalcSum,
+	CSSCalcSumValue,
+	CSSCalcValue,
+	CSSDimension,
+	CSSNumber,
+	CSSPercentage,
 } from "@internal/ast";
 import {matchToken, readToken} from "@internal/css-parser/tokenizer";
 import {descriptions} from "@internal/diagnostics";

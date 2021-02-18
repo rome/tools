@@ -1,8 +1,5 @@
 import {CSSParser} from "@internal/css-parser/types";
-import {
-	CSSCalcFunction,
-
-} from "@internal/ast";
+import {CSSCalcFunction} from "@internal/ast";
 import {parseCalcSum} from "@internal/css-parser/parser/calculations";
 
 export function parseCalcFunction(

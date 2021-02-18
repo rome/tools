@@ -9,7 +9,8 @@ import {
 } from "@internal/parser-core";
 import {
 	CSSBlock,
-	CSSCalcFunction, CSSCalcSum,
+	CSSCalcFunction,
+	CSSCalcSum,
 	CSSComma,
 	CSSCustomProperty,
 	CSSDimension,

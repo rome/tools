@@ -26,7 +26,7 @@ export function parseFunction(
 	if (isCalcFunction) {
 		const value = parseCalcFunction(parser);
 		if (value) {
-			return value
+			return value;
 		}
 	} else {
 		while (true) {
