@@ -5,5 +5,7 @@ export default function CSSCalcFunction(
 	builder: Builder,
 	node: CSSCalcFunction,
 ): Token {
-	return concat([node.name, "(", builder.tokenize(node.value, node), ")"]);
+	return concat([node.name, "(", concat(
+		node.params.map(p => builder.tokenize(p, node))
+	) , ")"]);
 }

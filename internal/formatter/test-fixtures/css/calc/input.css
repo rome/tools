@@ -1,7 +1,0 @@
-.style {
-	padding-right: calc( 1px );
-	padding-bottom: calc(1px  - 2px);
-	padding-top: calc(1px + 2px);
-	padding: calc(2px + (1px - 2px) - 3px);
-	height: calc(1px - 2px + 3px);
-}

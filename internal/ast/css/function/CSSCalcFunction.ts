@@ -4,7 +4,7 @@ import {createBuilder} from "../../utils";
 export interface CSSCalcFunction extends NodeBaseWithComments {
 	readonly type: "CSSCalcFunction";
 	readonly name: string;
-	readonly value: CSSCalcSum;
+	readonly params: [CSSCalcSum];
 }
 
 export const cssCalcFunction = createBuilder<CSSCalcFunction>(
@@ -12,7 +12,7 @@ export const cssCalcFunction = createBuilder<CSSCalcFunction>(
 	{
 		bindingKeys: {},
 		visitorKeys: {
-			value: true,
+			params: true,
 		},
 	},
 );
