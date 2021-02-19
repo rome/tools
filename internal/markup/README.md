@@ -176,6 +176,8 @@ line | number
 markup`Error is <filelink target="test.ts" line="1" column="10">here</filelink>`
 ```
 
+*Doesn't seem to do anything?*
+
 ### Inverse
 ```ts
 markup`The <inverse>inverse</inverse> tag`
@@ -198,6 +200,11 @@ markup`The file is <filesize>1024</filesize>`
 Attribute | Type
 --- | ---
 approx | boolean
+
+```ts
+markup`<duration>1247</duration> <duration approx="true">1000</duration>`
+```
+![duration](https://user-images.githubusercontent.com/33844379/108449799-63b47900-7264-11eb-83ea-db7331e59d07.png)
 
 ### Italic
 ```ts
@@ -286,7 +293,8 @@ i | number
 legend | boolean
 
 ```ts
-markup`The <highlight fg="green" bg="white">highlight</color> tag`
+markup`The <highlight i="1" legend="true">highlight</highlight> tag
+The <highlight i="2">highlight</highlight> tag`
 ```
 ![highlight](https://user-images.githubusercontent.com/33844379/108430994-8cc41200-7242-11eb-99ab-6fd34d56000b.png)
 
