@@ -173,10 +173,9 @@ column | number
 line | number
 
 ```ts
-markup`Error is <filelink target="test.ts" line="1" column="10">here</filelink>`
+markup`Error at <filelink target="test.ts" line="6" column="10"/>`
 ```
-
-*Doesn't seem to do anything?*
+![filelink](https://user-images.githubusercontent.com/33844379/108555619-ffda9080-72f5-11eb-8811-8b545c30a130.png)
 
 ### Inverse
 ```ts
@@ -229,16 +228,7 @@ Attribute | Type
 --- | ---
 type | "boolean" \| "keyword" \| "number" \| "regex" \| "string" \| "comment" \| "operator" \| "punctuation" \| "variable" \| "attr-name" \| "function" \| "attr-value" \| "attr-equals" \| "tag"
 
-```ts
-markup`<token type="boolean">true</token> <token type="keyword">function</token> <token type="number">465</token>
-<token type="regex">/[abc]+(def).*/</token> <token type="string">hello world</token> <token type="comment">im a comment</token>
-<token type="operator">+</token> <token type="punctuation">,</token> <token type="variable">foo</token>
-<token type="attr-name">data</token> <token type="function">markup</token> <token type="attr-value">value</token>
-<token type="attr-equals">yes</token> <token type="tag">tag</token>`
-```
-![token](https://user-images.githubusercontent.com/33844379/108448934-e76d6600-7262-11eb-8305-f4d8544cb5f2.png)
-
-*Doesn't seem to do anything?*
+Used by `markup-syntax-highlight`, appears in the docs for previews.
 
 ### Error
 ```ts
@@ -256,6 +246,8 @@ markup`The <success>success</success> tag`
 Attribute | Type
 --- | ---
 id | string
+
+Not fully implemented.
 
 ### Warn
 ```ts
