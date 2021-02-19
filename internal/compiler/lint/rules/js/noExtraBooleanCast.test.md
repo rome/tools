@@ -12,9 +12,6 @@
 
   ✖ Avoid redundant double-negation.
 
-    if (Boolean(foo)) {}
-        ^^^^^^^^^^^^
-
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
   ℹ Safe fix
@@ -22,9 +19,6 @@
   - Boolean(foo)
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -44,9 +38,6 @@ if (foo) {
 
   ✖ Avoid redundant double-negation.
 
-    if (!!Boolean(foo)) {}
-        ^^^^^^^^^^^^^^
-
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
   ℹ Safe fix
@@ -65,9 +56,6 @@ if (foo) {
   - Boolean(foo)
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -87,9 +75,6 @@ if (foo) {
 
   ✖ Avoid redundant double-negation.
 
-    if (!Boolean(foo)) {}
-         ^^^^^^^^^^^^
-
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
   ℹ Safe fix
@@ -97,9 +82,6 @@ if (foo) {
   - Boolean(foo)
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -129,9 +111,6 @@ if (!foo) {
   - !!foo
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -162,9 +141,6 @@ while (foo) {}
   - Boolean(x)
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -186,9 +162,6 @@ do {
 
   ✖ Avoid redundant double-negation.
 
-    for (; !!foo; ) {}
-           ^^^^^
-
   ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
   ℹ Safe fix
@@ -196,9 +169,6 @@ do {
   - !!foo
   + foo
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -227,9 +197,6 @@ while (foo) {}
   - !!x
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -258,9 +225,6 @@ new Boolean(x);
   - !!x
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -289,9 +253,6 @@ new Boolean(x);
   - Boolean(x)
   + x
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -305,7 +266,6 @@ new Boolean(x);
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -319,7 +279,6 @@ Boolean(!x);
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -333,7 +292,6 @@ Boolean(!x);
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 

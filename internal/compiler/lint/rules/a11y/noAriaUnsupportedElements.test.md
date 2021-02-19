@@ -18,9 +18,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -45,9 +42,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -72,9 +66,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -99,9 +90,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -126,9 +114,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -153,9 +138,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -180,9 +162,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -207,9 +186,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -223,7 +199,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -237,7 +212,6 @@
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -251,7 +225,6 @@
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -265,7 +238,6 @@
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -290,9 +262,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -317,9 +286,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -344,9 +310,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -372,9 +335,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -400,9 +360,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -428,9 +385,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -456,9 +410,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -484,9 +435,6 @@
 
   ℹ Using roles on elements that do not support them can cause issues with screen readers.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -501,7 +449,6 @@
 ### `20`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -515,7 +462,6 @@
 ### `21`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -530,7 +476,6 @@
 ### `22`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -545,7 +490,6 @@
 ### `23`
 
 ```
-✔ No known problems!
 
 ```
 

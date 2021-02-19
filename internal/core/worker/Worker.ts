@@ -30,8 +30,6 @@ import {
 	AnyPath,
 	MixedPathMap,
 	UIDPath,
-	createAbsoluteFilePath,
-	createAnyPath,
 } from "@internal/path";
 import {
 	FSReadStream,
@@ -444,8 +442,7 @@ export default class Worker {
 		ref: FileReference,
 		options: WorkerParseOptions,
 	): Promise<WorkerParseResult> {
-		const path = createAbsoluteFilePath(ref.real);
-
+		const path = ref.real;
 		const {project: projectId, uid} = ref;
 		const project = this.getProject(projectId);
 
@@ -516,7 +513,7 @@ export default class Worker {
 
 		const {sourceText, astModifiedFromSource, ast} = await handler.parse({
 			sourceTypeJS,
-			path: createAnyPath(uid),
+			path: uid,
 			manifestPath,
 			integrity,
 			mtimeNs,

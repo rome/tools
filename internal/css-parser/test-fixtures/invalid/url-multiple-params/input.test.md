@@ -10,14 +10,14 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/url-multiple-params/input.css 1:0-3:1
-	path: RelativeFilePath<invalid/url-multiple-params/input.css>
+	path: RelativePath<invalid/url-multiple-params/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The function <emphasis>url()</emphasis> can only accept one parameter."}
 			}
 			location: Object {
@@ -25,7 +25,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:17
-				path: RelativeFilePath<invalid/url-multiple-params/input.css>
+				path: RelativePath<invalid/url-multiple-params/input.css>
 				start: Position 2:13
 			}
 		}

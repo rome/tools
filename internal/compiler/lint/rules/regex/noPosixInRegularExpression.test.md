@@ -17,9 +17,6 @@
 
   ℹ This functionality is not supported in JavaScript regular expressions.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@ const pattern = /[[:alpha:]\]/;
 
   ℹ This functionality is not supported in JavaScript regular expressions.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 

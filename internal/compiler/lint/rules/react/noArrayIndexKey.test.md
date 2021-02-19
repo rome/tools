@@ -12,11 +12,6 @@
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.map(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/1/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
@@ -25,9 +20,6 @@
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -49,11 +41,6 @@ React.Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.map(this.props.children, function (child, index) {
-  > 2 │   return React.cloneElement(child, { key: index })
-      │          ^^^^^^^^^^^^^^^^^^
-    3 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/2/file.tsx:2:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
@@ -62,9 +49,6 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -88,12 +72,6 @@ React.Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.map(this.props.children, function (child, index) {
-  > 2 │   const foo = React.cloneElement(child, { key: index })
-      │               ^^^^^^^^^^^^^^^^^^
-    3 │   return foo;
-    4 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/3/file.tsx:2:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
@@ -102,9 +80,6 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -129,16 +104,8 @@ React.Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.map(this.props.children, (child, index) => (
-  > 2 │   cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -160,16 +127,8 @@ Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.map(this.props.children, function (child, index) {
-  > 2 │   return cloneElement(child, { key: index })
-      │          ^^^^^^^^^^^^
-    3 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -193,17 +152,8 @@ Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.map(this.props.children, function (child, index) {
-  > 2 │   const foo = cloneElement(child, { key: index })
-      │               ^^^^^^^^^^^^
-    3 │   return foo;
-    4 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -228,11 +178,6 @@ Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.map(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/7/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
@@ -241,9 +186,6 @@ Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -265,16 +207,8 @@ Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.map(this.props.children, (child, index) => (
-  > 2 │   cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -296,11 +230,6 @@ React.Children.map(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.forEach(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/9/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
@@ -309,9 +238,6 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -333,11 +259,6 @@ React.Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.forEach(this.props.children, function (child, index) {
-  > 2 │   return React.cloneElement(child, { key: index })
-      │          ^^^^^^^^^^^^^^^^^^
-    3 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/10/file.tsx:2:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
@@ -346,9 +267,6 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -372,12 +290,6 @@ React.Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.forEach(this.props.children, function (child, index) {
-  > 2 │   const foo = React.cloneElement(child, { key: index })
-      │               ^^^^^^^^^^^^^^^^^^
-    3 │   return foo;
-    4 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/11/file.tsx:2:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
@@ -386,9 +298,6 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -413,16 +322,8 @@ React.Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.forEach(this.props.children, (child, index) => (
-  > 2 │   cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -444,16 +345,8 @@ Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.forEach(this.props.children, function (child, index) {
-  > 2 │   return cloneElement(child, { key: index })
-      │          ^^^^^^^^^^^^
-    3 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -477,17 +370,8 @@ Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.forEach(this.props.children, function (child, index) {
-  > 2 │   const foo = cloneElement(child, { key: index })
-      │               ^^^^^^^^^^^^
-    3 │   return foo;
-    4 │ })
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -512,11 +396,6 @@ Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ Children.forEach(this.props.children, (child, index) => (
-  > 2 │   React.cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/15/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
@@ -525,9 +404,6 @@ Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -549,16 +425,8 @@ Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ React.Children.forEach(this.props.children, (child, index) => (
-  > 2 │   cloneElement(child, { key: index })
-      │   ^^^^^^^^^^^^
-    3 │ ))
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -580,16 +448,8 @@ React.Children.forEach(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.map((thing, index) => (
-  > 2 │   <Hello key={index} />
-      │   ^^^^^^^^^^^^^^^^^^^^^
-    3 │ ));
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -608,16 +468,8 @@ things.map((thing, index) => <Hello key={index} />);
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.map(function(thing, index) {
-  > 2 │   return (<Hello key={index} />);
-      │           ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -638,11 +490,6 @@ things.map(function(thing, index) {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.map((thing, index) => (
-  > 2 │   React.cloneElement(thing, { key: index })
-      │   ^^^^^^^^^^^^^^^^^^
-    3 │ ));
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
  lint/react/noArrayIndexKey/reject/19/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
@@ -651,9 +498,6 @@ things.map(function(thing, index) {
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -672,16 +516,8 @@ things.map((thing, index) => React.cloneElement(thing, {key: index}));
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.map((thing, index) => (
-  > 2 │   cloneElement(thing, { key: index })
-      │   ^^^^^^^^^^^^
-    3 │ ));
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -700,16 +536,8 @@ things.map((thing, index) => cloneElement(thing, {key: index}));
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.map(function(thing, index){
-  > 2 │   return cloneElement(thing, { key: index })
-      │          ^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -730,16 +558,8 @@ things.map(function(thing, index) {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.forEach((thing, index) => {
-  > 2 │   otherThings.push(<Hello key={index} />);
-      │                    ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -760,16 +580,8 @@ things.forEach((thing, index) => {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.forEach(function(thing, index) {
-  > 2 │   otherThings.push(<Hello key={index} />);
-      │                    ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -790,16 +602,8 @@ things.forEach(function(thing, index) {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.filter((thing, index) => {
-  > 2 │   otherThings.push(<Hello key={index} />);
-      │                    ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -820,16 +624,8 @@ things.filter((thing, index) => {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.some((thing, index) => {
-  > 2 │   otherThings.push(<Hello key={index} />);
-      │                    ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -850,16 +646,8 @@ things.some((thing, index) => {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.every((thing, index) => {
-  > 2 │   otherThings.push(<Hello key={index} />);
-      │                    ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -880,16 +668,8 @@ things.every((thing, index) => {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.find((thing, index) => {
-  > 2 │   otherThings.push(<Hello key={index} />);
-      │                    ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -910,16 +690,8 @@ things.find((thing, index) => {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.findIndex((thing, index) => {
-  > 2 │   otherThings.push(<Hello key={index} />);
-      │                    ^^^^^^^^^^^^^^^^^^^^^
-    3 │ });
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -940,16 +712,8 @@ things.findIndex((thing, index) => {
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.reduce((collection, thing, index) => (
-  > 2 │   collection.concat(<Hello key={index} />)
-      │                     ^^^^^^^^^^^^^^^^^^^^^
-    3 │ ), []);
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -971,16 +735,8 @@ things.reduce(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.reduce(function(collection, thing, index) {
-  > 2 │   return collection.concat(<Hello key={index} />)
-      │                            ^^^^^^^^^^^^^^^^^^^^^
-    3 │ }, []);
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -1004,16 +760,8 @@ things.reduce(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.reduceRight((collection, thing, index) => (
-  > 2 │   collection.concat(<Hello key={index} />)
-      │                     ^^^^^^^^^^^^^^^^^^^^^
-    3 │ ), []);
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -1035,16 +783,8 @@ things.reduceRight(
 
   ✖ Avoid using array index as key property in an element.
 
-    1 │ things.reduceRight(function(collection, thing, index) {
-  > 2 │   return collection.concat(<Hello key={index} />)
-      │                            ^^^^^^^^^^^^^^^^^^^^^
-    3 │ }, []);
-
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -1063,7 +803,6 @@ things.reduceRight(
 ### `32`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1077,7 +816,6 @@ things.map((thing) => <Hello key={thing.id} />);
 ### `33`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1093,7 +831,6 @@ things.map(function(thing) {
 ### `34`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1107,7 +844,6 @@ things.map((thing) => React.cloneElement(thing, {key: thing.id}));
 ### `35`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1123,7 +859,6 @@ things.map(function(thing) {
 ### `36`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1139,7 +874,6 @@ things.forEach((thing) => {
 ### `37`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1155,7 +889,6 @@ things.forEach(function(thing) {
 ### `38`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1171,7 +904,6 @@ things.filter((thing) => {
 ### `39`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1187,7 +919,6 @@ things.filter(function(thing) {
 ### `40`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1203,7 +934,6 @@ things.some((thing) => {
 ### `41`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1219,7 +949,6 @@ things.some(function(thing) {
 ### `42`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1235,7 +964,6 @@ things.every((thing) => {
 ### `43`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1251,7 +979,6 @@ things.every(function(thing) {
 ### `44`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1267,7 +994,6 @@ things.find((thing) => {
 ### `45`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1283,7 +1009,6 @@ things.find(function(thing) {
 ### `46`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1299,7 +1024,6 @@ things.findIndex((thing) => {
 ### `47`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1315,7 +1039,6 @@ things.findIndex(function(thing) {
 ### `48`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1332,7 +1055,6 @@ things.reduce(
 ### `49`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1351,7 +1073,6 @@ things.reduce(
 ### `50`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -1368,7 +1089,6 @@ things.reduceRight(
 ### `51`
 
 ```
-✔ No known problems!
 
 ```
 

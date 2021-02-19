@@ -16,9 +16,6 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
     let foo = /([abc]+)=\18/;foo;
                         ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -42,9 +39,6 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
     let foo = /([abc]+)=\49/;foo;
                         ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -68,9 +62,6 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
     let foo = /([abc]+)=\78/;foo;
                         ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -94,9 +85,6 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
     let foo = /([abc]+)=\99/;foo;
                         ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -125,9 +113,9 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
 
   ✖ Avoid nonexistent group names. Check the 28 group.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    let foo = /(([abc])\19)+=\28/;foo;
+                             ^^^
 
-✖ Found 2 problems
 
 ```
 
@@ -151,9 +139,6 @@ lint/regex/noReferenceToNonExistingGroup ━━━━━━━━━━━━━
     let foo = /([abc]+)=\199/;foo;
                         ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -168,7 +153,6 @@ foo;
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -183,7 +167,6 @@ foo;
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -198,7 +181,6 @@ foo;
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -213,7 +195,6 @@ foo;
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -228,7 +209,6 @@ foo;
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -243,7 +223,6 @@ foo;
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -258,7 +237,6 @@ foo;
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -273,7 +251,6 @@ foo;
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 

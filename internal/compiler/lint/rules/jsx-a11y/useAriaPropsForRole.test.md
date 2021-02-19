@@ -12,14 +12,8 @@
 
   ✖ The element with the checkbox ARIA role does not have the required ARIA attributes.
 
-    <span role='checkbox'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-checked
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -38,14 +32,8 @@
 
   ✖ The element with the switch ARIA role does not have the required ARIA attributes.
 
-    <span role='switch'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-checked
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -64,18 +52,12 @@
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
-    <span role='spinbutton'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -94,16 +76,10 @@
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
-    <span role='spinbutton' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -122,16 +98,10 @@
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
-    <span role='spinbutton' aria-valuemin='0'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -150,14 +120,8 @@
 
   ✖ The element with the spinbutton ARIA role does not have the required ARIA attributes.
 
-    <span role='spinbutton' aria-valuemin='0' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -176,16 +140,10 @@
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
-    <span role='slider' aria-valuemin='0'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -204,16 +162,10 @@
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
-    <span role='slider' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -232,14 +184,8 @@
 
   ✖ The element with the slider ARIA role does not have the required ARIA attributes.
 
-    <span role='slider' aria-valuemin='0' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -258,16 +204,10 @@
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
-    <span role='separator' aria-valuemin='0'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -286,16 +226,10 @@
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
-    <span role='separator' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -314,14 +248,8 @@
 
   ✖ The element with the separator ARIA role does not have the required ARIA attributes.
 
-    <span role='separator' aria-valuemin='0' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuenow
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -340,9 +268,6 @@
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
-    <span role='scrollbar' aria-valuemin='0'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemax
 
   ℹ Missing aria attribute: aria-valuenow
@@ -351,9 +276,6 @@
 
   ℹ Missing aria attribute: aria-controls
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -372,9 +294,6 @@
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
-    <span role='scrollbar' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuemin
 
   ℹ Missing aria attribute: aria-valuenow
@@ -383,9 +302,6 @@
 
   ℹ Missing aria attribute: aria-controls
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -404,18 +320,12 @@
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
-    <span role='scrollbar' aria-valuemin='0' aria-valuemax='100'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuenow
 
   ℹ Missing aria attribute: aria-orientation
 
   ℹ Missing aria attribute: aria-controls
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -434,17 +344,10 @@
 
   ✖ The element with the scrollbar ARIA role does not have the required ARIA attributes.
 
-    <span role='scrollbar' aria-valuemin='0' aria-valuemax='100'
-    aria-orientation='horizontal'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-valuenow
 
   ℹ Missing aria attribute: aria-controls
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -466,14 +369,8 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the radio ARIA role does not have the required ARIA attributes.
 
-    <span role='radio'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-checked
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -492,14 +389,8 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the option ARIA role does not have the required ARIA attributes.
 
-    <span role='option'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-selected
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -523,9 +414,6 @@ aria-orientation="horizontal" />;
 
   ℹ Missing aria attribute: aria-level
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -544,16 +432,10 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
-    <span role='combobox'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-controls
 
   ℹ Missing aria attribute: aria-expanded
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -572,14 +454,8 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
-    <span role='combobox' aria-expanded='true'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-controls
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -598,14 +474,8 @@ aria-orientation="horizontal" />;
 
   ✖ The element with the combobox ARIA role does not have the required ARIA attributes.
 
-    <span role='combobox' aria-controls='true'></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
   ℹ Missing aria attribute: aria-expanded
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -629,9 +499,6 @@ aria-orientation="horizontal" />;
 
   ℹ Missing aria attribute: aria-checked
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -655,9 +522,6 @@ aria-orientation="horizontal" />;
 
   ℹ Missing aria attribute: aria-checked
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -671,7 +535,6 @@ aria-orientation="horizontal" />;
 ### `24`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -685,7 +548,6 @@ aria-orientation="horizontal" />;
 ### `25`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -699,7 +561,6 @@ aria-orientation="horizontal" />;
 ### `26`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -716,7 +577,6 @@ aria-valuenow="50" />;
 ### `27`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -730,7 +590,6 @@ aria-valuenow="50" />;
 ### `28`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -747,7 +606,6 @@ aria-valuenow="50" />;
 ### `29`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -766,7 +624,6 @@ aria-controls="123" />;
 ### `30`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -780,7 +637,6 @@ aria-controls="123" />;
 ### `31`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -794,7 +650,6 @@ aria-controls="123" />;
 ### `32`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -808,7 +663,6 @@ aria-controls="123" />;
 ### `33`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -822,7 +676,6 @@ aria-controls="123" />;
 ### `34`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -836,7 +689,6 @@ aria-controls="123" />;
 ### `35`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -850,7 +702,6 @@ aria-controls="123" />;
 ### `36`
 
 ```
-✔ No known problems!
 
 ```
 

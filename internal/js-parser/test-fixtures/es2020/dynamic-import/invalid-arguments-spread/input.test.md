@@ -41,8 +41,8 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Spread is not allowed in import()"}
 			}
 			location: Object {
@@ -69,8 +69,5 @@ JSRoot {
     import(...[1])
            ^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

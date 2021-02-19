@@ -6,9 +6,9 @@
  */
 
 import {Consumer, consume, consumeUnknown} from "@internal/consume";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 import url = require("url");
-
-import {ob1Coerce0, ob1Number0, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {AnyPath, UNKNOWN_PATH} from "@internal/path";
 
 export type ConsumableUrl = {
@@ -22,13 +22,17 @@ export function consumeUrl(
 ): ConsumableUrl {
 	const parts = url.parse(rawUrl, true);
 
-	const query = consumeUnknown({...parts.query}, "parse", "urlquery");
+	const query = consumeUnknown(
+		{...parts.query},
+		DIAGNOSTIC_CATEGORIES.parse,
+		"urlquery",
+	);
 
 	const href = consume({
 		path,
 		value: parts.pathname,
 		context: {
-			category: "parse",
+			category: DIAGNOSTIC_CATEGORIES.parse,
 			categoryValue: "url",
 			getDiagnosticLocation() {
 				return {
@@ -37,14 +41,14 @@ export function consumeUrl(
 					sourceText: rawUrl,
 					path: href.path,
 					start: {
-						index: ob1Number0,
-						line: ob1Number1,
-						column: ob1Number0,
+						index: new ZeroIndexed(),
+						line: new OneIndexed(),
+						column: new ZeroIndexed(),
 					},
 					end: {
-						index: ob1Coerce0(rawUrl.length - 1),
-						line: ob1Number1,
-						column: ob1Coerce0(rawUrl.length - 1),
+						index: new ZeroIndexed(rawUrl.length - 1),
+						line: new OneIndexed(),
+						column: new ZeroIndexed(rawUrl.length - 1),
 					},
 				};
 			},

@@ -6,7 +6,7 @@
  */
 
 import {Mapping} from "@internal/codec-source-map";
-import {Number0, Number1, ob1Inc, ob1Number0, ob1Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {Token} from "./tokens";
 
 export type PrinterOptions = {
@@ -26,9 +26,9 @@ type State = {
 	indent: Box<number>;
 	pendingIndent: Box<number>;
 	pendingSpaces: Box<number>;
-	generatedIndex: Box<Number0>;
-	generatedLine: Box<Number1>;
-	generatedColumn: Box<Number0>;
+	generatedIndex: Box<ZeroIndexed>;
+	generatedLine: Box<OneIndexed>;
+	generatedColumn: Box<ZeroIndexed>;
 	buffer: string[];
 	mappings: Mapping[];
 	lineSuffixes: [Token, State][];
@@ -92,13 +92,13 @@ function forkState(parent: State, callback: (state: State) => void): void {
 
 function write(str: string, state: State, options: PrinterOptions): void {
 	for (const ch of str) {
-		state.generatedIndex.value = ob1Inc(state.generatedIndex.value);
+		state.generatedIndex.value = state.generatedIndex.value.increment();
 		if (ch === "\n") {
-			state.generatedLine.value = ob1Inc(state.generatedLine.value);
-			state.generatedColumn.value = ob1Number0;
+			state.generatedLine.value = state.generatedLine.value.increment();
+			state.generatedColumn.value = new ZeroIndexed();
 			state.lineWidth.value = 0;
 		} else {
-			state.generatedColumn.value = ob1Inc(state.generatedColumn.value);
+			state.generatedColumn.value = state.generatedColumn.value.increment();
 			if (ch === "\t") {
 				state.lineWidth.value += options.tabWidth;
 			} else {
@@ -304,9 +304,9 @@ export function printTokenToString(
 		indent: new Box(options.rootIndent),
 		pendingSpaces: new Box(0),
 		pendingIndent: new Box(0),
-		generatedIndex: new Box(ob1Number0),
-		generatedLine: new Box(ob1Number1),
-		generatedColumn: new Box(ob1Number0),
+		generatedIndex: new Box(new ZeroIndexed()),
+		generatedLine: new Box(new OneIndexed()),
+		generatedColumn: new Box(new ZeroIndexed()),
 		buffer: [],
 		mappings: [],
 		lineSuffixes: [],

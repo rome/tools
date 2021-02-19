@@ -41,8 +41,8 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid rest operator's argument"}
 			}
 			location: Object {
@@ -69,8 +69,5 @@ JSRoot {
     ({...[]} = {})
          ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

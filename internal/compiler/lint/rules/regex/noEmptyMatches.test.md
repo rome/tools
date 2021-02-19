@@ -17,9 +17,6 @@
 
   ℹ Strengthen the regular expression so that empty matches are not possible.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@ let a = /a*/;
 
   ℹ Strengthen the regular expression so that empty matches are not possible.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +53,6 @@ let b = /a*(abc)?[1,2,3]*/;
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -73,7 +66,6 @@ let a = /a*(abc)+[1,2,3]?/;
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

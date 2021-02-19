@@ -23,8 +23,8 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid parenthesized binding"}
 			}
 			location: Object {
@@ -75,8 +75,5 @@ parse(js) ━━━━━━━━━━━━━━━━━━━━━━━�
     [(((x)))] = t;
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

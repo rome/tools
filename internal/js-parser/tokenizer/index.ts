@@ -46,17 +46,7 @@ import {TokContext, types as ct} from "./context";
 import {ASCII_NAMES, UNICODE_MISTAKES} from "./unicodeMistakes";
 import * as charCodes from "@internal/string-charcodes";
 import {descriptions} from "@internal/diagnostics";
-import {
-	Number0,
-	ob1Add,
-	ob1Coerce0,
-	ob1Dec,
-	ob1Get0,
-	ob1Inc,
-	ob1Number0,
-	ob1Number0Neg1,
-	ob1Sub,
-} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {removeCarriageReturn} from "@internal/string-utils";
 
 const HEX_NUMBER = /^[\da-fA-F]+$/;
@@ -163,15 +153,6 @@ export class NumberTokenValue {
 }
 
 // ## Tokenizer
-function bumpIndex(parser: JSParser): Number0 {
-	const index = ob1Inc(parser.state.index);
-	parser.state.index = index;
-	return index;
-}
-
-function getIndex(parser: JSParser): number {
-	return ob1Get0(parser.state.index);
-}
 
 function codePointToString(code: number): string {
 	// UTF-16 Decoding
@@ -196,11 +177,9 @@ export function setStrict(parser: JSParser, isStrict: boolean): void {
 
 	parser.state.index = parser.state.startIndex;
 	while (parser.state.index < parser.state.lineStartIndex) {
-		parser.state.lineStartIndex = ob1Coerce0(
-			parser.input.lastIndexOf("\n", ob1Get0(parser.state.lineStartIndex) - 2) +
-			1,
-		);
-		parser.state.curLine = ob1Inc(parser.state.curLine);
+		parser.state.lineStartIndex =
+			parser.input.lastIndexOf("\n", parser.state.lineStartIndex - 2) + 1;
+		parser.state.curLine = parser.state.curLine + 1;
 	}
 	nextToken(parser);
 }
@@ -271,7 +250,7 @@ function readJSXToken(parser: JSParser, code: number): boolean {
 		}
 
 		if (code === charCodes.greaterThan) {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.jsxTagEnd);
 			return true;
 		}
@@ -288,9 +267,10 @@ function readJSXToken(parser: JSParser, code: number): boolean {
 	if (
 		code === charCodes.lessThan &&
 		parser.state.exprAllowed &&
-		parser.input.charCodeAt(getIndex(parser) + 1) !== charCodes.exclamationMark
+		parser.input.charCodeAt(parser.state.index + 1) !==
+		charCodes.exclamationMark
 	) {
-		bumpIndex(parser);
+		++parser.state.index;
 		finishToken(parser, tt.jsxTagStart);
 		return true;
 	}
@@ -309,7 +289,7 @@ function readNormalToken(parser: JSParser, code: number): void {
 }
 
 function fullCharCodeAtPos(parser: JSParser): number {
-	return getFullCharCodeAt(parser.input, getIndex(parser));
+	return getFullCharCodeAt(parser.input, parser.state.index);
 }
 
 function pushComment(
@@ -362,15 +342,15 @@ function pushComment(
 function skipBlockComment(parser: JSParser): void {
 	const startPos = getPositionFromState(parser);
 	const startIndex = parser.state.index;
-	parser.state.index = ob1Add(parser.state.index, 2);
+	parser.state.index = parser.state.index + 2;
 
-	const endIndex = ob1Coerce0(parser.input.indexOf("*/", getIndex(parser)));
+	const endIndex = parser.input.indexOf("*/", parser.state.index);
 
-	if (endIndex === ob1Number0Neg1) {
+	if (endIndex === -1) {
 		unexpectedDiagnostic(
 			parser,
 			{
-				end: parser.getPositionFromIndex(ob1Sub(parser.state.index, 2)),
+				end: parser.getPositionFromIndex(parser.state.index - 2),
 				description: descriptions.JS_PARSER.UNTERMINATED_BLOCK_COMMENT,
 			},
 		);
@@ -378,25 +358,25 @@ function skipBlockComment(parser: JSParser): void {
 	}
 
 	// Skip */
-	parser.state.index = ob1Add(endIndex, 2);
+	parser.state.index = endIndex + 2;
 
-	lineBreakG.lastIndex = ob1Get0(startIndex);
+	lineBreakG.lastIndex = startIndex;
 
 	let match;
 	while (
 		(match = lineBreakG.exec(parser.input)) &&
-		match.index < ob1Get0(parser.state.index)
+		match.index < parser.state.index
 	) {
-		parser.state.curLine = ob1Inc(parser.state.curLine);
+		parser.state.curLine = parser.state.curLine + 1;
 		resetTokenizerLine(parser);
-		parser.state.lineStartIndex = ob1Coerce0(match.index + match[0].length);
+		parser.state.lineStartIndex = match.index + match[0].length;
 	}
 
 	pushComment(
 		parser,
 		{
 			block: true,
-			text: parser.getRawInput(ob1Add(startIndex, 2), endIndex),
+			text: parser.getRawInput(startIndex + 2, endIndex),
 			startPos,
 			endPos: getPositionFromState(parser),
 		},
@@ -413,24 +393,21 @@ function parseLineComment(
 } {
 	const startIndex = parser.state.index;
 	const startPos = getPositionFromState(parser);
-	parser.state.index = ob1Add(parser.state.index, startSkip);
-	let ch = parser.input.charCodeAt(getIndex(parser));
+	parser.state.index = parser.state.index + startSkip;
+	let ch = parser.input.charCodeAt(parser.state.index);
 	if (parser.state.index < parser.length) {
 		while (
 			ch !== charCodes.lineFeed &&
 			ch !== charCodes.carriageReturn &&
 			ch !== charCodes.lineSeparator &&
 			ch !== charCodes.paragraphSeparator &&
-			bumpIndex(parser) < parser.length
+			++parser.state.index < parser.length
 		) {
-			ch = parser.input.charCodeAt(getIndex(parser));
+			ch = parser.input.charCodeAt(parser.state.index);
 		}
 	}
 	const endPos = getPositionFromState(parser);
-	const text = parser.getRawInput(
-		ob1Add(startIndex, startSkip),
-		parser.state.index,
-	);
+	const text = parser.getRawInput(startIndex + startSkip, parser.state.index);
 
 	return {
 		startPos,
@@ -469,11 +446,11 @@ export function skipInterpreterDirective(
 // whitespace and comments, and.
 function skipSpace(parser: JSParser): void {
 	loop: while (parser.state.index < parser.length) {
-		const ch = parser.input.charCodeAt(getIndex(parser));
+		const ch = parser.input.charCodeAt(parser.state.index);
 
 		if (parser.state.lineStart) {
 			if (ch === charCodes.space || ch === charCodes.tab) {
-				parser.state.indentLevel = ob1Inc(parser.state.indentLevel);
+				parser.state.indentLevel = parser.state.indentLevel + 1;
 			} else {
 				parser.state.lineStart = false;
 			}
@@ -481,16 +458,15 @@ function skipSpace(parser: JSParser): void {
 
 		if (
 			ch === charCodes.carriageReturn &&
-			parser.input.charCodeAt(ob1Get0(parser.state.index) + 1) ===
-			charCodes.lineFeed
+			parser.input.charCodeAt(parser.state.index + 1) === charCodes.lineFeed
 		) {
-			bumpIndex(parser);
+			++parser.state.index;
 		}
 
 		switch (ch) {
 			case charCodes.space:
 			case charCodes.nonBreakingSpace: {
-				bumpIndex(parser);
+				++parser.state.index;
 				break;
 			}
 
@@ -498,19 +474,21 @@ function skipSpace(parser: JSParser): void {
 			case charCodes.lineFeed:
 			case charCodes.lineSeparator:
 			case charCodes.paragraphSeparator: {
-				bumpIndex(parser);
-				parser.state.curLine = ob1Inc(parser.state.curLine);
+				++parser.state.index;
+				parser.state.curLine = parser.state.curLine + 1;
 				resetTokenizerLine(parser);
 				break;
 			}
 
 			case charCodes.slash: {
-				switch (parser.input.charCodeAt(getIndex(parser) + 1)) {
+				switch (parser.input.charCodeAt(parser.state.index + 1)) {
 					case charCodes.asterisk: {
 						// Break the loop and don't consume Flow comment code
 						if (
-							parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.colon &&
-							parser.input.charCodeAt(getIndex(parser) + 3) === charCodes.colon
+							parser.input.charCodeAt(parser.state.index + 2) ===
+							charCodes.colon &&
+							parser.input.charCodeAt(parser.state.index + 3) ===
+							charCodes.colon
 						) {
 							break loop;
 						}
@@ -536,7 +514,7 @@ function skipSpace(parser: JSParser): void {
 					(ch >= charCodes.oghamSpaceMark &&
 					nonASCIIwhitespace.test(String.fromCharCode(ch)))
 				) {
-					bumpIndex(parser);
+					++parser.state.index;
 				} else {
 					break loop;
 				}
@@ -564,34 +542,34 @@ export function finishToken(
 }
 
 function readTokenDot(parser: JSParser): void {
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
 	if (next >= charCodes.digit0 && next <= charCodes.digit9) {
 		readNumber(parser, true);
 		return undefined;
 	}
 
-	const next2 = parser.input.charCodeAt(getIndex(parser) + 2);
+	const next2 = parser.input.charCodeAt(parser.state.index + 2);
 	if (next === charCodes.dot && next2 === charCodes.dot) {
-		parser.state.index = ob1Add(parser.state.index, 3);
+		parser.state.index = parser.state.index + 3;
 		finishToken(parser, tt.ellipsis);
 	} else {
-		bumpIndex(parser);
+		++parser.state.index;
 		finishToken(parser, tt.dot);
 	}
 }
 
 function readTokenSlash(parser: JSParser): void {
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
 
 	// If this starts with /*:: then it's a Flow comment
 
 	// TODO Flow also allows "flow-include" in place of "::"
 	if (
 		next === charCodes.asterisk &&
-		parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.colon &&
-		parser.input.charCodeAt(getIndex(parser) + 3) === charCodes.colon
+		parser.input.charCodeAt(parser.state.index + 2) === charCodes.colon &&
+		parser.input.charCodeAt(parser.state.index + 3) === charCodes.colon
 	) {
-		parser.state.index = ob1Add(parser.state.index, 4);
+		parser.state.index = parser.state.index + 4;
 		pushScope(parser, "FLOW_COMMENT");
 		nextToken(parser);
 		return;
@@ -599,7 +577,7 @@ function readTokenSlash(parser: JSParser): void {
 
 	// '/'
 	if (parser.state.exprAllowed) {
-		bumpIndex(parser);
+		++parser.state.index;
 		readRegexp(parser);
 		return;
 	}
@@ -612,7 +590,7 @@ function readTokenSlash(parser: JSParser): void {
 }
 
 function readTokenMultModulo(parser: JSParser, code: number): void {
-	let next = parser.input.charCodeAt(getIndex(parser) + 1);
+	let next = parser.input.charCodeAt(parser.state.index + 1);
 
 	// */ Is the end of a Flow comment
 	if (
@@ -621,7 +599,7 @@ function readTokenMultModulo(parser: JSParser, code: number): void {
 		next === charCodes.slash
 	) {
 		popScope(parser, "FLOW_COMMENT");
-		parser.state.index = ob1Add(parser.state.index, 2);
+		parser.state.index = parser.state.index + 2;
 		nextToken(parser);
 		return;
 	}
@@ -638,7 +616,7 @@ function readTokenMultModulo(parser: JSParser, code: number): void {
 	// Exponentiation operator **
 	if (code === charCodes.asterisk && next === charCodes.asterisk) {
 		width++;
-		next = parser.input.charCodeAt(getIndex(parser) + 2);
+		next = parser.input.charCodeAt(parser.state.index + 2);
 		type = tt.exponent;
 	}
 
@@ -652,7 +630,7 @@ function readTokenMultModulo(parser: JSParser, code: number): void {
 
 function readTokenPipeAmp(parser: JSParser, code: number): void {
 	// '|&'
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
 
 	if (next === code) {
 		finishOp(
@@ -683,7 +661,7 @@ function readTokenPipeAmp(parser: JSParser, code: number): void {
 
 function readTokenCaret(parser: JSParser): void {
 	// '^'
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
 	if (next === charCodes.equalsTo) {
 		finishOp(parser, tt.assign, 2);
 	} else {
@@ -693,14 +671,14 @@ function readTokenCaret(parser: JSParser): void {
 
 function readTokenPlusMin(parser: JSParser, code: number): void {
 	// '+-'
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
 
 	if (next === code) {
 		if (
 			next === charCodes.dash &&
 			!parser.meta.inModule &&
-			parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.greaterThan &&
-			(parser.state.lastEndIndex === ob1Number0 ||
+			parser.input.charCodeAt(parser.state.index + 2) === charCodes.greaterThan &&
+			(parser.state.lastEndIndex === 0 ||
 			lineBreak.test(
 				parser.getRawInput(parser.state.lastEndIndex, parser.state.index),
 			))
@@ -724,17 +702,20 @@ function readTokenPlusMin(parser: JSParser, code: number): void {
 
 function readTokenLtGt(parser: JSParser, code: number): void {
 	// '<>'
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
 	let size = 1;
 
 	// we need to check if we're in a type to avoid interpreting the >> in Array<Array<string>> as a bitshift
 	if (next === code && !inScope(parser, "TYPE")) {
 		size =
 			code === charCodes.greaterThan &&
-			parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.greaterThan
+			parser.input.charCodeAt(parser.state.index + 2) === charCodes.greaterThan
 				? 3
 				: 2;
-		if (parser.input.charCodeAt(getIndex(parser) + size) === charCodes.equalsTo) {
+		if (
+			parser.input.charCodeAt(parser.state.index + size) ===
+			charCodes.equalsTo
+		) {
 			finishOp(parser, tt.assign, size + 1);
 			return undefined;
 		}
@@ -746,8 +727,8 @@ function readTokenLtGt(parser: JSParser, code: number): void {
 		code === charCodes.lessThan &&
 		next === charCodes.exclamationMark &&
 		!parser.meta.inModule &&
-		parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.dash &&
-		parser.input.charCodeAt(getIndex(parser) + 3) === charCodes.dash
+		parser.input.charCodeAt(parser.state.index + 2) === charCodes.dash &&
+		parser.input.charCodeAt(parser.state.index + 3) === charCodes.dash
 	) {
 		// `<!--`, an XML-style comment that should be interpreted as a line comment
 		skipLineComment(parser, 4);
@@ -766,12 +747,12 @@ function readTokenLtGt(parser: JSParser, code: number): void {
 
 function readTokenEqExcl(parser: JSParser, code: number): void {
 	// '=!'
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
 	if (next === charCodes.equalsTo) {
 		finishOp(
 			parser,
 			tt.equality,
-			parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.equalsTo
+			parser.input.charCodeAt(parser.state.index + 2) === charCodes.equalsTo
 				? 3
 				: 2,
 		);
@@ -779,7 +760,7 @@ function readTokenEqExcl(parser: JSParser, code: number): void {
 	}
 	if (code === charCodes.equalsTo && next === charCodes.greaterThan) {
 		// '=>'
-		parser.state.index = ob1Add(parser.state.index, 2);
+		parser.state.index = parser.state.index + 2;
 		finishToken(parser, tt.arrow);
 		return undefined;
 	}
@@ -787,8 +768,8 @@ function readTokenEqExcl(parser: JSParser, code: number): void {
 }
 
 function readTokenQuestion(parser: JSParser): void {
-	const next = parser.input.charCodeAt(getIndex(parser) + 1);
-	const next2 = parser.input.charCodeAt(getIndex(parser) + 2);
+	const next = parser.input.charCodeAt(parser.state.index + 1);
+	const next2 = parser.input.charCodeAt(parser.state.index + 2);
 	if (next === charCodes.questionMark && !inScope(parser, "TYPE")) {
 		if (next2 === charCodes.equalsTo) {
 			// '??='
@@ -802,19 +783,19 @@ function readTokenQuestion(parser: JSParser): void {
 		!(next2 >= charCodes.digit0 && next2 <= charCodes.digit9)
 	) {
 		// '.' not followed by a number
-		parser.state.index = ob1Add(parser.state.index, 2);
+		parser.state.index = parser.state.index + 2;
 		finishToken(parser, tt.questionDot);
 	} else {
 		// '?'
-		bumpIndex(parser);
+		++parser.state.index;
 		finishToken(parser, tt.question);
 	}
 }
 
 function readTokenNumberSign(parser: JSParser): void {
 	// Only tokenize a hash if we're inside of a class, or if we're the first character in the file (hashbang indicator)
-	if (ob1Get0(parser.state.classLevel) > 0 || parser.state.index === ob1Number0) {
-		bumpIndex(parser);
+	if (parser.state.classLevel > 0 || parser.state.index === 0) {
+		++parser.state.index;
 		finishToken(parser, tt.hash);
 		return undefined;
 	}
@@ -824,17 +805,17 @@ function readTokenNumberSign(parser: JSParser): void {
 		parser,
 		{
 			description: descriptions.JS_PARSER.UNEXPECTED_HASH(
-				parser.input[getIndex(parser) + 1] === "!",
+				parser.input[parser.state.index + 1] === "!",
 			),
 		},
 	);
-	bumpIndex(parser);
+	++parser.state.index;
 	nextToken(parser);
 }
 
 function getTokenFromCode(parser: JSParser, code: number): void {
 	if (code === charCodes.digit0) {
-		const next = parser.input.charCodeAt(getIndex(parser) + 1);
+		const next = parser.input.charCodeAt(parser.state.index + 1);
 
 		// '0x', '0X' - hex number
 		if (next === charCodes.lowercaseX || next === charCodes.uppercaseX) {
@@ -869,65 +850,65 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 
 		// Punctuation tokens.
 		case charCodes.leftParenthesis: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.parenL);
 			return undefined;
 		}
 
 		case charCodes.rightParenthesis: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.parenR);
 			return undefined;
 		}
 
 		case charCodes.semicolon: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.semi);
 			return undefined;
 		}
 
 		case charCodes.comma: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.comma);
 			return undefined;
 		}
 
 		case charCodes.leftSquareBracket: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.bracketL);
 			return undefined;
 		}
 
 		case charCodes.rightSquareBracket: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.bracketR);
 			return undefined;
 		}
 
 		case charCodes.leftCurlyBrace: {
 			if (
-				parser.input.charCodeAt(getIndex(parser) + 1) ===
+				parser.input.charCodeAt(parser.state.index + 1) ===
 				charCodes.verticalBar
 			) {
 				finishOp(parser, tt.braceBarL, 2);
 			} else {
-				bumpIndex(parser);
+				++parser.state.index;
 				finishToken(parser, tt.braceL);
 			}
 			return undefined;
 		}
 
 		case charCodes.rightCurlyBrace: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.braceR);
 			return undefined;
 		}
 
 		case charCodes.colon: {
-			if (parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.colon) {
+			if (parser.input.charCodeAt(parser.state.index + 1) === charCodes.colon) {
 				finishOp(parser, tt.doubleColon, 2);
 			} else {
-				bumpIndex(parser);
+				++parser.state.index;
 				finishToken(parser, tt.colon);
 			}
 			return undefined;
@@ -940,19 +921,19 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 
 		case charCodes.atSign: {
 			// The token @@ is the start of a Flow iterator name
-			const next = parser.input.charCodeAt(getIndex(parser) + 1);
+			const next = parser.input.charCodeAt(parser.state.index + 1);
 			if (next === charCodes.atSign) {
 				parser.state.isIterator = true;
 				readWord(parser);
 			} else {
-				bumpIndex(parser);
+				++parser.state.index;
 				finishToken(parser, tt.at);
 			}
 			return undefined;
 		}
 
 		case charCodes.graveAccent: {
-			bumpIndex(parser);
+			++parser.state.index;
 			finishToken(parser, tt.backQuote);
 			return undefined;
 		}
@@ -1034,7 +1015,7 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 		}
 	}
 
-	const char = parser.input[getIndex(parser)];
+	const char = parser.input[parser.state.index];
 	const unicodeMistake = UNICODE_MISTAKES.get(char);
 	if (unicodeMistake !== undefined) {
 		const [unicodeName, equivalentChar] = unicodeMistake;
@@ -1070,16 +1051,13 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 	);
 
 	// Skip unknown characters
-	bumpIndex(parser);
+	++parser.state.index;
 	nextToken(parser);
 }
 
 function finishOp(parser: JSParser, type: TokenTypes, size: number): void {
-	const str = parser.getRawInput(
-		parser.state.index,
-		ob1Add(parser.state.index, size),
-	);
-	parser.state.index = ob1Add(parser.state.index, size);
+	const str = parser.getRawInput(parser.state.index, parser.state.index + size);
+	parser.state.index = parser.state.index + size;
 	finishToken(parser, type, str);
 }
 
@@ -1099,22 +1077,22 @@ export function readRegexp(parser: JSParser): void {
 			break;
 		}
 
-		const ch = parser.input.charAt(getIndex(parser));
+		const ch = parser.input.charAt(parser.state.index);
 		if (lineBreak.test(ch)) {
 			if (
-				parser.input.charAt(getIndex(parser) - 2) ===
+				parser.input.charAt(parser.state.index - 2) ===
 				String.fromCharCode(charCodes.backslash) ||
-				parser.input.charAt(getIndex(parser) - 3) ===
+				parser.input.charAt(parser.state.index - 3) ===
 				String.fromCharCode(charCodes.backslash)
 			) {
-				const line = parser.input.slice(0, getIndex(parser));
+				const line = parser.input.slice(0, parser.state.index);
 				const backslashIndex = line.lastIndexOf(
 					String.fromCharCode(charCodes.backslash),
 				);
 				unexpectedDiagnostic(
 					parser,
 					{
-						end: parser.getPositionFromIndex(ob1Coerce0(backslashIndex)),
+						end: parser.getPositionFromIndex(new ZeroIndexed(backslashIndex)),
 						description: descriptions.JS_PARSER.DANGLING_BACKSLASH_IN_REGEX,
 					},
 				);
@@ -1144,11 +1122,11 @@ export function readRegexp(parser: JSParser): void {
 			escaped = ch === "\\";
 		}
 
-		bumpIndex(parser);
+		++parser.state.index;
 	}
 
 	const content = parser.getRawInput(start, parser.state.index);
-	bumpIndex(parser);
+	++parser.state.index;
 
 	const rawMods = readWord1(parser);
 	if (parser.state.escapePosition !== undefined) {
@@ -1166,9 +1144,8 @@ export function readRegexp(parser: JSParser): void {
 			unexpectedDiagnostic(
 				parser,
 				{
-					index: ob1Add(
-						ob1Coerce0(getIndex(parser) - rawMods.length),
-						flagPosition,
+					index: new ZeroIndexed(
+						parser.state.index - rawMods.length + flagPosition,
 					),
 					description: metadata,
 				},
@@ -1207,11 +1184,11 @@ function readInt(
 	let total = 0;
 
 	for (let i = 0, e = len === undefined ? Infinity : len; i < e; ++i) {
-		const code = parser.input.charCodeAt(getIndex(parser));
+		const code = parser.input.charCodeAt(parser.state.index);
 		let val;
 
-		const prev = parser.input.charCodeAt(getIndex(parser) - 1);
-		const next = parser.input.charCodeAt(getIndex(parser) + 1);
+		const prev = parser.input.charCodeAt(parser.state.index - 1);
+		const next = parser.input.charCodeAt(parser.state.index + 1);
 		if (code === charCodes.underscore) {
 			if (allowedSiblings.indexOf(next) === -1) {
 				unexpectedDiagnostic(
@@ -1236,7 +1213,7 @@ function readInt(
 			}
 
 			// Ignore this _ character
-			bumpIndex(parser);
+			++parser.state.index;
 			continue;
 		}
 
@@ -1254,13 +1231,13 @@ function readInt(
 			break;
 		}
 
-		bumpIndex(parser);
+		++parser.state.index;
 		total = total * radix + val;
 	}
 
 	if (
 		parser.state.index === start ||
-		(len !== undefined && getIndex(parser) - ob1Get0(start) !== len)
+		(len !== undefined && parser.state.index - start !== len)
 	) {
 		return undefined;
 	}
@@ -1276,21 +1253,21 @@ function readRadixNumber(
 	const start = parser.state.index;
 	let isBigInt = false;
 
-	parser.state.index = ob1Add(parser.state.index, 2); // 0x
+	parser.state.index = parser.state.index + 2; // 0x
 	let val = readInt(parser, radix);
 	if (val === undefined) {
 		unexpectedDiagnostic(
 			parser,
 			{
-				index: ob1Add(start, 2),
+				index: start + 2,
 				description: descriptions.JS_PARSER.EXPECTED_NUMBER_IN_RADIX(radix),
 			},
 		);
 		val = 0;
 	}
 
-	if (parser.input.charCodeAt(getIndex(parser)) === charCodes.lowercaseN) {
-		bumpIndex(parser);
+	if (parser.input.charCodeAt(parser.state.index) === charCodes.lowercaseN) {
+		++parser.state.index;
 		isBigInt = true;
 	}
 
@@ -1331,8 +1308,8 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 	}
 
 	let isOctal =
-		ob1Get0(parser.state.index) - ob1Get0(start) >= 2 &&
-		parser.input.charCodeAt(ob1Get0(start)) === charCodes.digit0;
+		parser.state.index - start >= 2 &&
+		parser.input.charCodeAt(start) === charCodes.digit0;
 	if (isOctal) {
 		if (inScope(parser, "STRICT")) {
 			unexpectedDiagnostic(
@@ -1349,21 +1326,21 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 		}
 	}
 
-	let next = parser.input.charCodeAt(getIndex(parser));
+	let next = parser.input.charCodeAt(parser.state.index);
 	if (next === charCodes.dot && !isOctal) {
-		bumpIndex(parser);
+		++parser.state.index;
 		readInt(parser, 10);
 		isFloat = true;
-		next = parser.input.charCodeAt(getIndex(parser));
+		next = parser.input.charCodeAt(parser.state.index);
 	}
 
 	const isScientific =
 		(next === charCodes.uppercaseE || next === charCodes.lowercaseE) && !isOctal;
 	if (isScientific) {
-		next = parser.input.charCodeAt(ob1Get0(bumpIndex(parser)));
+		next = parser.input.charCodeAt(++parser.state.index);
 
 		if (next === charCodes.plusSign || next === charCodes.dash) {
-			bumpIndex(parser);
+			++parser.state.index;
 		}
 
 		if (readInt(parser, 10) === undefined) {
@@ -1377,7 +1354,7 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 		}
 
 		isFloat = true;
-		next = parser.input.charCodeAt(getIndex(parser));
+		next = parser.input.charCodeAt(parser.state.index);
 	}
 
 	if (next === charCodes.lowercaseN) {
@@ -1402,11 +1379,11 @@ function readNumber(parser: JSParser, startsWithDot: boolean): void {
 			);
 		}
 
-		bumpIndex(parser);
+		++parser.state.index;
 		isBigInt = true;
 	}
 
-	if (isIdentifierStart(parser.input.codePointAt(getIndex(parser)))) {
+	if (isIdentifierStart(parser.input.codePointAt(parser.state.index))) {
 		unexpectedDiagnostic(
 			parser,
 			{
@@ -1443,18 +1420,18 @@ function readCodePoint(
 	parser: JSParser,
 	throwOnInvalid: boolean,
 ): number | undefined {
-	const ch = parser.input.charCodeAt(getIndex(parser));
+	const ch = parser.input.charCodeAt(parser.state.index);
 	let code;
 
 	if (ch === charCodes.leftCurlyBrace) {
 		const codePos = parser.state.index;
-		bumpIndex(parser);
+		++parser.state.index;
 		code = readHexChar(
 			parser,
-			parser.input.indexOf("}", getIndex(parser)) - getIndex(parser),
+			parser.input.indexOf("}", parser.state.index) - parser.state.index,
 			throwOnInvalid,
 		);
-		bumpIndex(parser);
+		++parser.state.index;
 		if (code === undefined) {
 			// @ts-ignore
 			parser.state.invalidTemplateEscapePosition--; // to point to the '\'' instead of the 'u'
@@ -1468,7 +1445,7 @@ function readCodePoint(
 					},
 				);
 			} else {
-				parser.state.invalidTemplateEscapePosition = ob1Sub(codePos, 2);
+				parser.state.invalidTemplateEscapePosition = codePos - 2;
 				return undefined;
 			}
 		}
@@ -1480,7 +1457,7 @@ function readCodePoint(
 
 function readString(parser: JSParser, quote: number): void {
 	let out = "";
-	let chunkStart = bumpIndex(parser);
+	let chunkStart = ++parser.state.index;
 
 	while (true) {
 		if (parser.state.index >= parser.length) {
@@ -1494,7 +1471,7 @@ function readString(parser: JSParser, quote: number): void {
 			break;
 		}
 
-		const ch = parser.input.charCodeAt(getIndex(parser));
+		const ch = parser.input.charCodeAt(parser.state.index);
 		if (ch === quote) {
 			break;
 		}
@@ -1507,8 +1484,8 @@ function readString(parser: JSParser, quote: number): void {
 			ch === charCodes.lineSeparator ||
 			ch === charCodes.paragraphSeparator
 		) {
-			bumpIndex(parser);
-			parser.state.curLine = ob1Inc(parser.state.curLine);
+			++parser.state.index;
+			parser.state.curLine = parser.state.curLine + 1;
 		} else {
 			if (isNewLine(ch)) {
 				unexpectedDiagnostic(
@@ -1519,12 +1496,12 @@ function readString(parser: JSParser, quote: number): void {
 					},
 				);
 			}
-			bumpIndex(parser);
+			++parser.state.index;
 		}
 	}
 
 	out += parser.getRawInput(chunkStart, parser.state.index);
-	bumpIndex(parser);
+	++parser.state.index;
 	finishToken(parser, tt.string, out);
 }
 
@@ -1546,22 +1523,23 @@ export function readTemplateToken(parser: JSParser): void {
 			break;
 		}
 
-		const ch = parser.input.charCodeAt(getIndex(parser));
+		const ch = parser.input.charCodeAt(parser.state.index);
 		if (
 			ch === charCodes.graveAccent ||
 			(ch === charCodes.dollarSign &&
-			parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.leftCurlyBrace)
+			parser.input.charCodeAt(parser.state.index + 1) ===
+			charCodes.leftCurlyBrace)
 		) {
 			if (
 				parser.state.index === parser.state.startIndex &&
 				match(parser, tt.template)
 			) {
 				if (ch === charCodes.dollarSign) {
-					parser.state.index = ob1Add(parser.state.index, 2);
+					parser.state.index = parser.state.index + 2;
 					finishToken(parser, tt.dollarBraceL);
 					return undefined;
 				} else {
-					bumpIndex(parser);
+					++parser.state.index;
 					finishToken(parser, tt.backQuote);
 					return undefined;
 				}
@@ -1582,13 +1560,13 @@ export function readTemplateToken(parser: JSParser): void {
 			chunkStart = parser.state.index;
 		} else if (isNewLine(ch)) {
 			out += parser.getRawInput(chunkStart, parser.state.index);
-			bumpIndex(parser);
+			++parser.state.index;
 
 			if (
 				ch === charCodes.carriageReturn &&
-				parser.input.charCodeAt(getIndex(parser)) === charCodes.lineFeed
+				parser.input.charCodeAt(parser.state.index) === charCodes.lineFeed
 			) {
-				bumpIndex(parser);
+				++parser.state.index;
 			}
 
 			switch (ch) {
@@ -1604,11 +1582,11 @@ export function readTemplateToken(parser: JSParser): void {
 				}
 			}
 
-			parser.state.curLine = ob1Inc(parser.state.curLine);
+			parser.state.curLine = parser.state.curLine + 1;
 			resetTokenizerLine(parser);
 			chunkStart = parser.state.index;
 		} else {
-			bumpIndex(parser);
+			++parser.state.index;
 		}
 	}
 }
@@ -1619,14 +1597,14 @@ function readEscapedChar(
 	inTemplate: boolean,
 ): string | undefined {
 	const throwOnInvalid = !inTemplate;
-	const ch = parser.input.charCodeAt(ob1Get0(bumpIndex(parser)));
-	bumpIndex(parser);
+	const ch = parser.input.charCodeAt(++parser.state.index);
+	++parser.state.index;
 
 	if (
 		ch === charCodes.carriageReturn &&
-		parser.input.charCodeAt(getIndex(parser)) === charCodes.lineFeed
+		parser.input.charCodeAt(parser.state.index) === charCodes.lineFeed
 	) {
-		bumpIndex(parser);
+		++parser.state.index;
 	}
 
 	switch (ch) {
@@ -1660,15 +1638,15 @@ function readEscapedChar(
 
 		case charCodes.carriageReturn:
 		case charCodes.lineFeed: {
-			parser.state.curLine = ob1Inc(parser.state.curLine);
+			parser.state.curLine = parser.state.curLine + 1;
 			resetTokenizerLine(parser);
 			return "";
 		}
 
 		default: {
 			if (ch >= charCodes.digit0 && ch <= charCodes.digit7) {
-				const codePos = ob1Dec(parser.state.index);
-				const octalMatches = parser.input.substr(getIndex(parser) - 1, 3).match(
+				const codePos = parser.state.index - 1;
+				const octalMatches = parser.input.substr(parser.state.index - 1, 3).match(
 					/^[0-7]+/,
 				)!;
 
@@ -1699,7 +1677,7 @@ function readEscapedChar(
 					}
 				}
 
-				parser.state.index = ob1Add(parser.state.index, octalStr.length - 1);
+				parser.state.index = parser.state.index + (octalStr.length - 1);
 				return String.fromCharCode(octal);
 			}
 
@@ -1730,8 +1708,8 @@ function readHexChar(
 		}
 
 		const codePos = parser.state.index;
-		parser.state.index = ob1Dec(codePos);
-		parser.state.invalidTemplateEscapePosition = ob1Dec(codePos);
+		parser.state.index = codePos - 1;
+		parser.state.invalidTemplateEscapePosition = codePos - 1;
 	}
 
 	return n;
@@ -1752,18 +1730,15 @@ function readWord1(parser: JSParser): string {
 		const ch = fullCharCodeAtPos(parser);
 
 		if (isIdentifierChar(ch)) {
-			parser.state.index = ob1Add(parser.state.index, ch <= 65_535 ? 1 : 2);
+			parser.state.index = parser.state.index + (ch <= 65_535 ? 1 : 2);
 		} else if (parser.state.isIterator && ch === charCodes.atSign) {
-			bumpIndex(parser);
+			++parser.state.index;
 		} else if (ch === charCodes.backslash) {
 			parser.state.escapePosition = parser.state.index;
 
 			word += parser.getRawInput(chunkStart, parser.state.index);
 
-			if (
-				parser.input.charCodeAt(ob1Get0(bumpIndex(parser))) !==
-				charCodes.lowercaseU
-			) {
+			if (parser.input.charCodeAt(++parser.state.index) !== charCodes.lowercaseU) {
 				unexpectedDiagnostic(
 					parser,
 					{
@@ -1773,7 +1748,7 @@ function readWord1(parser: JSParser): string {
 				);
 			}
 
-			bumpIndex(parser);
+			++parser.state.index;
 
 			const esc = readCodePoint(parser, true);
 			if (esc === undefined) {
@@ -1935,12 +1910,12 @@ function readTokenJsx(parser: JSParser): void {
 			break;
 		}
 
-		const code = parser.input.charCodeAt(getIndex(parser));
+		const code = parser.input.charCodeAt(parser.state.index);
 
 		if (code === charCodes.lessThan || code === charCodes.leftCurlyBrace) {
 			if (parser.state.index === parser.state.startIndex) {
 				if (code === charCodes.lessThan && parser.state.exprAllowed) {
-					bumpIndex(parser);
+					++parser.state.index;
 					return finishToken(parser, tt.jsxTagStart);
 				}
 
@@ -1963,34 +1938,34 @@ function readTokenJsx(parser: JSParser): void {
 			out += readTokenJsxNewLine(parser, true);
 			chunkStart = parser.state.index;
 		} else {
-			bumpIndex(parser);
+			++parser.state.index;
 		}
 	}
 }
 
 function readTokenJsxNewLine(parser: JSParser, normalizeCRLF: boolean): string {
-	const ch = parser.input.charCodeAt(getIndex(parser));
+	const ch = parser.input.charCodeAt(parser.state.index);
 	let out;
-	bumpIndex(parser);
+	++parser.state.index;
 
 	if (
 		ch === charCodes.carriageReturn &&
-		parser.input.charCodeAt(getIndex(parser)) === charCodes.lineFeed
+		parser.input.charCodeAt(parser.state.index) === charCodes.lineFeed
 	) {
-		bumpIndex(parser);
+		++parser.state.index;
 		out = normalizeCRLF ? "\n" : "\r\n";
 	} else {
 		out = String.fromCharCode(ch);
 	}
 
-	parser.state.curLine = ob1Inc(parser.state.curLine);
+	parser.state.curLine = parser.state.curLine + 1;
 	resetTokenizerLine(parser);
 	return out;
 }
 
 function readTokenJsxString(parser: JSParser, quote: number): void {
 	let out = "";
-	let chunkStart = bumpIndex(parser);
+	let chunkStart = ++parser.state.index;
 	while (true) {
 		if (parser.state.index >= parser.length) {
 			unexpectedDiagnostic(
@@ -2003,7 +1978,7 @@ function readTokenJsxString(parser: JSParser, quote: number): void {
 			break;
 		}
 
-		const ch = parser.input.charCodeAt(getIndex(parser));
+		const ch = parser.input.charCodeAt(parser.state.index);
 		if (ch === quote) {
 			break;
 		}
@@ -2017,12 +1992,12 @@ function readTokenJsxString(parser: JSParser, quote: number): void {
 			out += readTokenJsxNewLine(parser, false);
 			chunkStart = parser.state.index;
 		} else {
-			bumpIndex(parser);
+			++parser.state.index;
 		}
 	}
 
 	out += parser.getRawInput(chunkStart, parser.state.index);
-	bumpIndex(parser);
+	++parser.state.index;
 	return finishToken(parser, tt.string, out);
 }
 
@@ -2030,13 +2005,13 @@ function readTokenJsxEntity(parser: JSParser): string {
 	let str = "";
 	let count = 0;
 	let entity;
-	let ch = parser.input[getIndex(parser)];
+	let ch = parser.input[parser.state.index];
 
-	const startIndex = bumpIndex(parser);
+	const startIndex = ++parser.state.index;
 
 	while (parser.state.index < parser.length && count++ < 10) {
-		ch = parser.input[getIndex(parser)];
-		bumpIndex(parser);
+		ch = parser.input[parser.state.index];
+		++parser.state.index;
 		if (ch === ";") {
 			if (str[0] === "#") {
 				if (str[1] === "x") {
@@ -2076,7 +2051,7 @@ function readTokenJsxWord(parser: JSParser): void {
 	let ch;
 	const start = parser.state.index;
 	do {
-		ch = parser.input.charCodeAt(ob1Get0(bumpIndex(parser)));
+		ch = parser.input.charCodeAt(++parser.state.index);
 	} while (isIdentifierChar(ch) || ch === charCodes.dash);
 	return finishToken(
 		parser,

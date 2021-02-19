@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected keyword <emphasis>typeof</emphasis>"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,15 +34,6 @@ JSRoot {
 				end: Position 1:15
 				path: UIDPath<es2015/modules/import-invalid-keyword-typeof/input.js>
 				start: Position 1:9
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected keyword "}
-					"typeof"
-				]
 			}
 		}
 	]
@@ -83,8 +80,5 @@ JSRoot {
     import { typeof } from "foo";
              ^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

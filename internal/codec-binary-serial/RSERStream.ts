@@ -1,9 +1,9 @@
-import RSERBufferWriter from "./RSERBufferWriter";
+import RSERWriterMaterial from "./RSERWriterMaterial";
 import {Event} from "@internal/events";
 import {RSERValue} from "./types";
 import RSERBufferParser from "./RSERBufferParser";
 import {encodeValueToRSERMessage} from "@internal/codec-binary-serial/index";
-import RSERBufferAssembler from "./RSERBufferAssembler";
+import RSERWriterCounter from "./RSERWriterCounter";
 
 type State = {
 	// INIT: Waiting on stream header
@@ -11,7 +11,7 @@ type State = {
 	// READ: Know the length, need to read whole content
 	// INCOMPATIBLE: Read stream header and we have a version mismatch
 	type: "INIT" | "IDLE" | "READ" | "INCOMPATIBLE";
-	writer: RSERBufferWriter;
+	writer: RSERWriterMaterial;
 	reader: RSERBufferParser;
 };
 
@@ -27,7 +27,7 @@ const MAX_MESSAGE_HEADER_SIZE = MAX_INT_SIZE + 1;
 
 function createState(type: State["type"], size: number): State {
 	// Max possible size of a message header
-	const writer = RSERBufferWriter.allocate(size);
+	const writer = RSERWriterMaterial.allocate(size);
 
 	return {
 		type,
@@ -121,7 +121,7 @@ export default class RSERStream {
 				arr = arr.slice(0, remaining);
 			}
 
-			writer.appendBytes(arr);
+			writer.writeBytes(arr);
 			this.process();
 		} catch (err) {
 			this.errorEvent.send(err);
@@ -157,7 +157,7 @@ export default class RSERStream {
 					this.overflow.shift();
 				}
 
-				writer.appendBytes(entry);
+				writer.writeBytes(entry);
 
 				this.process();
 			}
@@ -174,12 +174,12 @@ export default class RSERStream {
 
 	// Send stream header
 	public sendStreamHeader() {
-		const assembler = new RSERBufferAssembler();
-		assembler.encodeStreamHeader();
+		const counter = new RSERWriterCounter();
+		counter.encodeStreamHeader();
 
-		const buf = new RSERBufferWriter(
-			new ArrayBuffer(assembler.totalSize),
-			assembler,
+		const buf = new RSERWriterMaterial(
+			new ArrayBuffer(counter.totalSize),
+			counter,
 		);
 		buf.encodeStreamHeader();
 		this.sendBuffer(buf.buffer);

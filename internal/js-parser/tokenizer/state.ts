@@ -10,7 +10,6 @@ import {Position, SourceLocation} from "@internal/parser-core";
 import {TokContext} from "./context";
 import {TokenTypes} from "./types";
 import {Token} from "..";
-import {Number0, Number1} from "@internal/ob1";
 
 type Scopes = {[K in ScopeType]?: unknown[]};
 
@@ -18,17 +17,17 @@ export type State = {
 	isIterator: boolean;
 	tokens: Token[];
 	hasHoistedVars: boolean;
-	indentLevel: Number0;
+	indentLevel: number;
 	lineStart: boolean;
 
 	// Used to signify the start of a potential arrow function
-	potentialArrowAt: Number0;
+	potentialArrowAt: number;
 
 	// Used to signify the start of an expression which looks like a
 	// typed arrow function, but it isn't
 	// e.g. a ? (b) : c => d
 	//          ^
-	noArrowAt: Number0[];
+	noArrowAt: number[];
 
 	// Used to signify the start of an expression whose params, if it looks like
 	// an arrow function, shouldn't be converted to assignable nodes.
@@ -36,7 +35,7 @@ export type State = {
 	// conditional expressions.
 	// e.g. a ? (b) : c => d
 	//          ^
-	noArrowParamsConversionAt: Number0[];
+	noArrowParamsConversionAt: number[];
 
 	// Flags to track whether we are in a function, a generator.
 	maybeInArrowParameters: boolean;
@@ -45,14 +44,14 @@ export type State = {
 	// A comma after "...a" is only allowed in spread, but not in rest.
 	// Since we parse destructuring patterns as array/object literals
 	// and then convert them, we need to track it.
-	commaAfterSpreadAt: Number0;
+	commaAfterSpreadAt: number;
 
 	// Positions to delayed-check that yield/await does not exist in default parameters.
-	yieldPos: Number0;
-	awaitPos: Number0;
+	yieldPos: number;
+	awaitPos: number;
 
 	// Check whether we are in a (nested) class or not.
-	classLevel: Number0;
+	classLevel: number;
 
 	// Labels in scope.
 	labels: Label[];
@@ -63,9 +62,9 @@ export type State = {
 	yieldInPossibleArrowParameters: undefined | Position;
 
 	// The current position of the tokenizer in the input.
-	index: Number0;
-	lineStartIndex: Number0;
-	curLine: Number1;
+	index: number;
+	lineStartIndex: number;
+	curLine: number;
 
 	// Token type
 	tokenType: TokenTypes;
@@ -75,15 +74,15 @@ export type State = {
 
 	// Current token offsets
 	startPos: Position;
-	startIndex: Number0;
+	startIndex: number;
 	endPos: Position;
-	endIndex: Number0;
+	endIndex: number;
 
 	// Position information for the previous token
 	lastEndPos: Position;
-	lastEndIndex: Number0;
+	lastEndIndex: number;
 	lastStartPos: Position;
-	lastStartIndex: Number0;
+	lastStartIndex: number;
 
 	// The context stack is used to superficially track syntactic
 	// context to predict whether a regular expression is allowed in a
@@ -94,16 +93,16 @@ export type State = {
 	// Used to signal to callers of `readWord1` whether the word
 	// contained any escape sequences. This is needed because words with
 	// escape sequences must not be interpreted as keywords.
-	escapePosition: undefined | Number0;
+	escapePosition: undefined | number;
 
 	//
 	containsOctal: boolean;
-	octalPosition: undefined | Number0;
+	octalPosition: undefined | number;
 
 	// Names of exports store. `default` is stored as a name for both
 	// `export default foo;` and `export { foo as default };`.
 	exportedIdentifiers: Map<string, SourceLocation>;
-	invalidTemplateEscapePosition: undefined | Number0;
+	invalidTemplateEscapePosition: undefined | number;
 	scopes: Scopes;
 };
 
@@ -113,5 +112,5 @@ export type Label = {
 	kind: LabelKind;
 	loc?: SourceLocation;
 	name?: string;
-	statementStart?: Number0;
+	statementStart?: number;
 };

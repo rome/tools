@@ -5,7 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from "./errors";
+export * from "./error-wrappers";
+
+export * from "./node-errors";
 
 export * from "./types";
 

@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:17
+				end: Position 1:6
 				path: UIDPath<es2017/async-functions/invalid-escape-export-async-function/input.js>
 				start: Position 1:7
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"{"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\\\</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening export specifiers character <emphasis>{</emphasis>"}
+					}
 				]
 			}
 		}
@@ -146,13 +148,12 @@ JSRoot {
 
  es2017/async-functions/invalid-escape-export-async-function/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected {
+  ✖ Unexpected character \
 
     export \u0061sync function y() { await x }
-           ^^^^^^^^^^
+           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening export specifiers character {
 
-✖ Found 1 problem
 
 ```

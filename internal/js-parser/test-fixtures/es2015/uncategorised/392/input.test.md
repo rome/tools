@@ -23,8 +23,8 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "ES2015 named imports do not destructure. Use another statement for destructuring after the import."}
 			}
 			location: Object {
@@ -142,8 +142,5 @@ JSRoot {
     import foo, { bar: { a } } from 'my-module';
                        ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

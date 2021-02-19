@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an yield argument"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,15 +34,6 @@ JSRoot {
 				end: Position 1:21
 				path: UIDPath<esprima/es2015-generator/incomplete-yield-delegate/input.js>
 				start: Position 1:22
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"yield argument"
-				]
 			}
 		}
 	]
@@ -98,8 +95,5 @@ JSRoot {
     (function*() { yield* })
                           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

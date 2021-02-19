@@ -11,13 +11,13 @@ import {AnyVisitors, TransformRequest} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
 import {Cache} from "@internal/compiler";
 import CompilerContext from "../lib/CompilerContext";
-import {AnyPath} from "@internal/path";
+import {AbsoluteFilePath} from "@internal/path";
 
-type TransformResult = {
+export type TransformResult = {
 	ast: AnyRoot;
 	suppressions: DiagnosticSuppressions;
 	diagnostics: Diagnostics;
-	cacheDependencies: AnyPath[];
+	cacheDependencies: AbsoluteFilePath[];
 };
 
 const transformCaches: Cache<TransformResult>[] = stageOrder.map(() =>
@@ -44,7 +44,7 @@ export default async function transform(
 	}
 
 	let prevStageDiagnostics: Diagnostics = [];
-	let prevStageCacheDeps: AnyPath[] = [];
+	let prevStageCacheDeps: AbsoluteFilePath[] = [];
 	let suppressions: undefined | DiagnosticSuppressions;
 
 	// Run the previous stage

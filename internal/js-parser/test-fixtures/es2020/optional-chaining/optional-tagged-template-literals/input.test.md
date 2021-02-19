@@ -23,8 +23,8 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Tagged Template Literals are not allowed in optionalChain"}
 			}
 			location: Object {
@@ -87,8 +87,5 @@ JSRoot {
     a?.b`foo`
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {AnyPath} from "@internal/path";
 import {
 	DiagnosticCategory,
@@ -55,17 +55,17 @@ export type ParserCoreImplementation<Types extends ParserCoreTypes> = {
 	getInitialState?: (parser: ParserCore<Types>) => Types["state"];
 	tokenize?: (
 		parser: ParserCore<Types>,
-		index: Number0,
+		index: ZeroIndexed,
 	) => undefined | TokenValues<Types["tokens"]>;
 	normalizeInput?: (input: string) => string;
 	tokenizeWithState?: (
 		parser: ParserCore<Types>,
-		index: Number0,
+		index: ZeroIndexed,
 		state: Types["state"],
 	) => undefined | ParserCoreTokenizeState<Types>;
 	overrides?: {
 		getPosition: (parser: ParserCore<Types>) => Position;
-		getIndex: (parser: ParserCore<Types>) => Number0;
+		getIndex: (parser: ParserCore<Types>) => ZeroIndexed;
 		getLastEndPosition: (parser: ParserCore<Types>) => Position;
 	};
 	parseTemplate?: (opts: ParserOptions) => unknown;
@@ -99,8 +99,8 @@ export type ValueNode<Type extends string, Value> = NodeBase & {
 //# Token types
 export type TokenBase = {
 	type: string;
-	start: Number0;
-	end: Number0;
+	start: ZeroIndexed;
+	end: ZeroIndexed;
 };
 
 export type TokensShape = {
@@ -149,13 +149,13 @@ export type SourceLocation = {
 };
 
 export type Position = {
-	line: Number1;
-	column: Number0;
+	line: OneIndexed;
+	column: ZeroIndexed;
 };
 
 export const UNKNOWN_POSITION: Position = {
-	line: ob1Coerce1(-1),
-	column: ob1Number0Neg1,
+	line: new OneIndexed(-1),
+	column: new ZeroIndexed(-1),
 };
 
 export type ParserOptions = {
@@ -164,6 +164,7 @@ export type ParserOptions = {
 	input?: string;
 	sourceText?: string;
 	offsetPosition?: Position;
+	includeSourceTextInDiagnostics?: boolean;
 };
 
 export type ParserUnexpectedOptions = {
@@ -172,9 +173,9 @@ export type ParserUnexpectedOptions = {
 	start?: Position;
 	end?: Position;
 	token?: TokenBase;
-	index?: Number0;
-	startIndex?: Number0;
-	endIndex?: Number0;
+	index?: number | ZeroIndexed;
+	startIndex?: number | ZeroIndexed;
+	endIndex?: number | ZeroIndexed;
 	location?: DiagnosticLocation;
 };
 

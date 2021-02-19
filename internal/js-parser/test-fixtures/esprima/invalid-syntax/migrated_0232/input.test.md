@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "let is a reserved word"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,15 +34,6 @@ JSRoot {
 				end: Position 1:40
 				path: UIDPath<esprima/invalid-syntax/migrated_0232/input.js>
 				start: Position 1:37
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"let"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
 			}
 		}
 	]
@@ -102,8 +99,5 @@ JSRoot {
     function hello() { "use strict"; var let; }
                                          ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

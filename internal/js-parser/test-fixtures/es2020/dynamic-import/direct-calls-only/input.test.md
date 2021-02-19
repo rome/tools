@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The only valid meta property for import is import.meta"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,19 +34,6 @@ JSRoot {
 				end: Position 2:20
 				path: UIDPath<es2020/dynamic-import/direct-calls-only/input.js>
 				start: Position 2:16
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "The only valid meta property for "}
-					"import"
-					RAW_MARKUP {value: " is "}
-					"import"
-					RAW_MARKUP {value: "."}
-					"meta"
-				]
 			}
 		}
 	]
@@ -104,8 +97,5 @@ JSRoot {
       │                 ^^^^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

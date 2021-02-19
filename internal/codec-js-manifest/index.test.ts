@@ -2,6 +2,7 @@ import {test} from "rome";
 import {normalizeManifest} from ".";
 import {consumeUnknown} from "@internal/consume";
 import {AbsoluteFilePath} from "@internal/path";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 const PATH = {} as AbsoluteFilePath;
 
@@ -21,7 +22,7 @@ test(
 					"./foo": "./bar",
 				},
 			},
-			"parse",
+			DIAGNOSTIC_CATEGORIES.parse,
 			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
@@ -40,7 +41,7 @@ test(
 					},
 				},
 			},
-			"parse",
+			DIAGNOSTIC_CATEGORIES.parse,
 			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));
@@ -59,7 +60,7 @@ test(
 					},
 				},
 			},
-			"parse",
+			DIAGNOSTIC_CATEGORIES.parse,
 			"manifest",
 		);
 		t.snapshot(await normalizeManifest(PATH, manifest, []));

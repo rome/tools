@@ -6,7 +6,7 @@
  */
 
 import SourceMapConsumer from "./SourceMapConsumer";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {ResolvedLocation} from "./types";
 import {AnyPath, MixedPathMap} from "@internal/path";
 
@@ -35,8 +35,8 @@ export default class SourceMapConsumerCollection {
 
 	private normalizeResolved(
 		source: AnyPath,
-		line: Number1,
-		column: Number0,
+		line: OneIndexed,
+		column: ZeroIndexed,
 		loc: undefined | ResolvedLocation,
 	): ResolvedLocation {
 		if (loc === undefined) {
@@ -54,8 +54,8 @@ export default class SourceMapConsumerCollection {
 
 	public assertApproxOriginalPositionFor(
 		path: AnyPath,
-		line: Number1,
-		column: Number0,
+		line: OneIndexed,
+		column: ZeroIndexed,
 	): ResolvedLocation {
 		return this.normalizeResolved(
 			path,
@@ -67,8 +67,8 @@ export default class SourceMapConsumerCollection {
 
 	public assertExactOriginalPositionFor(
 		path: AnyPath,
-		line: Number1,
-		column: Number0,
+		line: OneIndexed,
+		column: ZeroIndexed,
 	): ResolvedLocation {
 		return this.normalizeResolved(
 			path,
@@ -80,8 +80,8 @@ export default class SourceMapConsumerCollection {
 
 	public approxOriginalPositionFor(
 		path: AnyPath,
-		line: Number1,
-		column: Number0,
+		line: OneIndexed,
+		column: ZeroIndexed,
 	): undefined | ResolvedLocation {
 		const map = this.get(path);
 		if (map === undefined) {
@@ -93,8 +93,8 @@ export default class SourceMapConsumerCollection {
 
 	public exactOriginalPositionFor(
 		path: AnyPath,
-		line: Number1,
-		column: Number0,
+		line: OneIndexed,
+		column: ZeroIndexed,
 	): undefined | ResolvedLocation {
 		const map = this.get(path);
 		if (map === undefined) {

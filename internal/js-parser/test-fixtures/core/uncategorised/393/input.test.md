@@ -30,12 +30,14 @@ JSRoot {
 				start: Position 1:16
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>{</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
 				]
 			}
 		}
@@ -105,13 +107,12 @@ JSRoot {
 
  core/uncategorised/393/input.js:1:16 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character {
 
     ({ set: s(a, b) { } })
                     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

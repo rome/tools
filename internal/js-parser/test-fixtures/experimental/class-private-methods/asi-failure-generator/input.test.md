@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown start to an class property value"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,15 +34,6 @@ JSRoot {
 				end: Position 3:3
 				path: UIDPath<experimental/class-private-methods/asi-failure-generator/input.js>
 				start: Position 3:3
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown start to an "}
-					"class property value"
-				]
 			}
 		}
 	]
@@ -146,8 +143,5 @@ JSRoot {
       │    ^
     4 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

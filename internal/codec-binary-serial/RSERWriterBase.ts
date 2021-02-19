@@ -10,12 +10,11 @@ import {
 import {
 	Position,
 	SourceLocation,
-	isPosition,
+	isPositionish,
 	isSourceLocation,
 } from "@internal/parser-core";
 import {
 	AnyRSERPathMap,
-	IntSize,
 	RSERArray,
 	RSERMap,
 	RSERObject,
@@ -23,6 +22,7 @@ import {
 	RSERValue,
 	RSERValueObjects,
 } from "./types";
+import {IntSize} from "./int";
 import {UnionToIntersection, isPlainObject} from "@internal/typescript-helpers";
 import {
 	AnyPath,
@@ -36,56 +36,49 @@ import {
 import {getErrorStructure} from "@internal/v8";
 import {pretty} from "@internal/pretty-format";
 import {utf8Count} from "./utf8";
-import {ob1Get} from "@internal/ob1";
+import {
+	AnyIndexedNumber,
+	OneIndexed,
+	ZeroIndexed,
+	isIndexedNumberish,
+} from "@internal/math";
 
 const MAX_INT8 = 127;
 const MAX_INT16 = 32_767;
 const MAX_INT32 = 2_147_483_647;
 
-export type RSERBufferAssemblerReferences = Map<RSERValue, number>;
+export type RSERWriterBaseReferences = Map<RSERValue, number>;
 
-export default class RSERBufferAssembler {
+export default abstract class RSERWriterBase {
 	constructor() {
-		this.totalSize = 0;
 		this.seenReferenceable = new Set();
 		this.references = new Map();
 	}
 
-	public totalSize: number;
-	public references: RSERBufferAssemblerReferences;
+	public references: RSERWriterBaseReferences;
 	private seenReferenceable: Set<RSERValue>;
 
-	protected writeCode(code: number) {
-		this.totalSize += 1;
-		code;
+	protected abstract writeByte(value: number): void;
+	protected abstract writeInt(value: bigint | number, size: IntSize): void;
+	protected abstract writeFloat(value: number): void;
+	protected abstract writeString(buf: string, size: number): void;
+	protected abstract writeBytes(buf: Uint8Array): void;
+
+	// Allow subclasses to opt out of inserting preallocation sizes
+	protected encodeSize(value: number): void {
+		this.encodeInt(value);
 	}
 
-	protected writeByte(value: number) {
-		this.totalSize += 1;
-		value;
-	}
-
-	protected writeInt(value: bigint | number, size: IntSize) {
-		this.totalSize += size;
+	protected encodeStringValue(val: string) {
+		const byteLength = utf8Count(val);
+		this.encodeSize(byteLength);
+		this.writeString(val, byteLength);
 	}
 
 	// When we are writing the buffer, we will insert a header before all values that will be referenced
 	// We need to account for that here since we do it after the fact
 	protected onReferenceCreate(id: number) {
 		this.encodeDeclareReferenceHead(id);
-	}
-
-	protected writeFloat(value: number) {
-		value;
-		this.totalSize += 8;
-	}
-
-	protected appendString(buf: string, size: number) {
-		this.totalSize += size;
-	}
-
-	public appendBytes(buf: Uint8Array) {
-		this.totalSize += buf.byteLength;
 	}
 
 	public encodeStreamHeader() {
@@ -99,7 +92,7 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeBigInt(val: bigint) {
-		this.writeCode(VALUE_CODES.INT64);
+		this.writeByte(VALUE_CODES.INT64);
 		this.writeInt(val, 8);
 	}
 
@@ -109,30 +102,30 @@ export default class RSERBufferAssembler {
 		}
 
 		if (Object.is(val, -0)) {
-			return this.writeCode(VALUE_CODES.NEGATIVE_ZERO);
+			return this.writeByte(VALUE_CODES.NEGATIVE_ZERO);
 		}
 
 		if (val === 0) {
-			return this.writeCode(VALUE_CODES.POSITIVE_ZERO);
+			return this.writeByte(VALUE_CODES.POSITIVE_ZERO);
 		}
 
 		if (val === 1) {
-			return this.writeCode(VALUE_CODES.POSITIVE_ONE);
+			return this.writeByte(VALUE_CODES.POSITIVE_ONE);
 		}
 
 		if (val === -1) {
-			return this.writeCode(VALUE_CODES.NEGATIVE_ONE);
+			return this.writeByte(VALUE_CODES.NEGATIVE_ONE);
 		}
 
 		const abs = Math.abs(val);
 		if (abs <= MAX_INT8) {
-			this.writeCode(VALUE_CODES.INT8);
+			this.writeByte(VALUE_CODES.INT8);
 			this.writeInt(val, 1);
 		} else if (abs <= MAX_INT16) {
-			this.writeCode(VALUE_CODES.INT16);
+			this.writeByte(VALUE_CODES.INT16);
 			this.writeInt(val, 2);
 		} else if (abs <= MAX_INT32) {
-			this.writeCode(VALUE_CODES.INT32);
+			this.writeByte(VALUE_CODES.INT32);
 			this.writeInt(val, 4);
 		} else {
 			this.encodeFloat(val);
@@ -143,17 +136,17 @@ export default class RSERBufferAssembler {
 		UnionToIntersection<Value>>(arr: Value[]) {
 		// More compact form
 		if (arr.length === 0) {
-			this.writeCode(VALUE_CODES.ARRAY);
-			this.encodeInt(0);
+			this.writeByte(VALUE_CODES.ARRAY);
+			this.writeByte(VALUE_CODES.POSITIVE_ZERO);
 			return;
 		}
 
-		this.writeCode(VALUE_CODES.TEMPLATED_OBJECT_ARRAY);
-		this.encodeInt(arr.length);
+		this.writeByte(VALUE_CODES.TEMPLATED_OBJECT_ARRAY);
+		this.encodeSize(arr.length);
 
 		// Encode keys
 		const keys: string[] = Object.keys(arr[0]);
-		this.encodeInt(keys.length);
+		this.encodeSize(keys.length);
 		for (const key of keys) {
 			this.encodeStringValue(key);
 		}
@@ -168,24 +161,35 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeArray(val: RSERArray) {
-		this.writeCode(VALUE_CODES.ARRAY);
-		this.encodeInt(val.length);
+		this.writeByte(VALUE_CODES.ARRAY);
+		this.encodeSize(val.length);
 		for (let i = 0; i < val.length; ++i) {
 			this.encodeValue(val[i]);
 		}
 	}
 
+	private encodeIndexedNumber(num: AnyIndexedNumber) {
+		if (num instanceof OneIndexed) {
+			this.writeByte(VALUE_CODES.ONE_INDEXED_NUMBER);
+		} else if (num instanceof ZeroIndexed) {
+			this.writeByte(VALUE_CODES.ZERO_INDEXED_NUMBER);
+		} else {
+			throw new Error("Unknown indexed number");
+		}
+		this.encodeInt(num.valueOf());
+	}
+
 	private encodeSet(set: RSERSet) {
-		this.writeCode(VALUE_CODES.SET);
-		this.encodeInt(set.size);
+		this.writeByte(VALUE_CODES.SET);
+		this.encodeSize(set.size);
 		for (const elem of set) {
 			this.encodeValue(elem);
 		}
 	}
 
 	private encodeMap(map: RSERMap) {
-		this.writeCode(VALUE_CODES.MAP);
-		this.encodeInt(map.size);
+		this.writeByte(VALUE_CODES.MAP);
+		this.encodeSize(map.size);
 		for (const [key, value] of map) {
 			this.encodeValue(key);
 			this.encodeValue(value);
@@ -194,16 +198,16 @@ export default class RSERBufferAssembler {
 
 	private encodePathMap(map: AnyRSERPathMap) {
 		if (map instanceof MixedPathMap) {
-			this.writeCode(VALUE_CODES.MIXED_PATH_MAP);
-			this.encodeInt(map.size);
+			this.writeByte(VALUE_CODES.MIXED_PATH_MAP);
+			this.encodeSize(map.size);
 			for (const [path, value] of map) {
 				this.encodePath(path);
 				this.encodeValue(value);
 			}
 		} else {
-			this.writeCode(VALUE_CODES.PATH_MAP);
+			this.writeByte(VALUE_CODES.PATH_MAP);
 			this.writeByte(pathMapToCode(map));
-			this.encodeInt(map.size);
+			this.encodeSize(map.size);
 			for (const [path, value] of map) {
 				this.encodeStringValue(path.join());
 				this.encodeValue(value);
@@ -213,15 +217,15 @@ export default class RSERBufferAssembler {
 
 	private encodePathSet(set: PathSet) {
 		if (set instanceof MixedPathSet) {
-			this.writeCode(VALUE_CODES.MIXED_PATH_SET);
-			this.encodeInt(set.size);
+			this.writeByte(VALUE_CODES.MIXED_PATH_SET);
+			this.encodeSize(set.size);
 			for (const path of set) {
 				this.encodePath(path);
 			}
 		} else {
-			this.writeCode(VALUE_CODES.PATH_SET);
+			this.writeByte(VALUE_CODES.PATH_SET);
 			this.writeByte(pathSetToCode(set));
-			this.encodeInt(set.size);
+			this.encodeSize(set.size);
 			for (const path of set) {
 				this.encodeStringValue(path.join());
 			}
@@ -233,19 +237,19 @@ export default class RSERBufferAssembler {
 			return;
 		}
 
-		this.writeCode(VALUE_CODES.PATH);
+		this.writeByte(VALUE_CODES.PATH);
 		this.writeByte(pathToCode(path));
 		this.encodeStringValue(path.join());
 	}
 
 	private encodeDate(val: Date) {
-		this.writeCode(VALUE_CODES.DATE);
+		this.writeByte(VALUE_CODES.DATE);
 		this.encodeInt(val.valueOf());
 	}
 
 	private encodeError(val: Error) {
-		this.writeCode(VALUE_CODES.ERROR);
-		this.writeCode(instanceToErrorCode(val));
+		this.writeByte(VALUE_CODES.ERROR);
+		this.writeByte(instanceToErrorCode(val));
 
 		const struct = getErrorStructure(val, 0, false);
 		this.encodeStringValue(struct.message ?? "");
@@ -255,35 +259,35 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeNull() {
-		this.writeCode(VALUE_CODES.NULL);
+		this.writeByte(VALUE_CODES.NULL);
 	}
 
 	private encodeRegExp(regex: RegExp) {
-		this.writeCode(VALUE_CODES.REGEXP);
+		this.writeByte(VALUE_CODES.REGEXP);
 		this.encodeStringValue(regex.source);
 		this.encodeStringValue(regex.flags);
 	}
 
 	private encodeReference(id: number) {
-		this.writeCode(VALUE_CODES.REFERENCE);
+		this.writeByte(VALUE_CODES.REFERENCE);
 		this.encodeInt(id);
 	}
 
-	private encodeDeclareReferenceHead(id: number) {
-		this.writeCode(VALUE_CODES.DECLARE_REFERENCE);
+	protected encodeDeclareReferenceHead(id: number) {
+		this.writeByte(VALUE_CODES.DECLARE_REFERENCE);
 		this.encodeInt(id);
 	}
 
 	private encodeArrayBuffer(val: ArrayBuffer) {
-		this.writeCode(VALUE_CODES.ARRAY_BUFFER);
-		this.encodeInt(val.byteLength);
-		this.appendBytes(new Uint8Array(val));
+		this.writeByte(VALUE_CODES.ARRAY_BUFFER);
+		this.encodeSize(val.byteLength);
+		this.writeBytes(new Uint8Array(val));
 	}
 
 	private encodeArrayBufferView(val: ArrayBufferView) {
-		this.writeCode(VALUE_CODES.ARRAY_BUFFER_VIEW);
+		this.writeByte(VALUE_CODES.ARRAY_BUFFER_VIEW);
 		this.writeByte(instanceToArrayBufferViewCode(val));
-		this.encodeInt(val.byteLength);
+		this.encodeSize(val.byteLength);
 		this.encodeInt(val.byteOffset);
 		this.encodeArrayBuffer(val.buffer);
 	}
@@ -325,12 +329,17 @@ export default class RSERBufferAssembler {
 			return;
 		}
 
-		if (val instanceof ArrayBuffer) {
-			return this.encodeArrayBuffer(val);
+		if (Array.isArray(val)) {
+			return this.encodeArray(val);
 		}
 
-		if (ArrayBuffer.isView(val)) {
-			return this.encodeArrayBufferView(val);
+		// Weird duck typing for cross-realm objects
+		if (
+			isPlainObject(val) &&
+			val.constructor !== undefined &&
+			val.constructor.name === "Object"
+		) {
+			return this.encodePlainObject(val);
 		}
 
 		if (val instanceof Set) {
@@ -341,14 +350,6 @@ export default class RSERBufferAssembler {
 			return this.encodeMap(val);
 		}
 
-		if (val instanceof Error) {
-			return this.encodeError(val);
-		}
-
-		if (val instanceof RegExp) {
-			return this.encodeRegExp(val);
-		}
-
 		if (isPathMap(val)) {
 			return this.encodePathMap(val);
 		}
@@ -357,37 +358,44 @@ export default class RSERBufferAssembler {
 			return this.encodePathSet(val);
 		}
 
-		if (Array.isArray(val)) {
-			return this.encodeArray(val);
+		if (isIndexedNumberish(val)) {
+			return this.encodeIndexedNumber(val);
 		}
 
 		if (val instanceof Date) {
 			return this.encodeDate(val);
 		}
 
-		if (isPlainObject(val)) {
-			this.encodePlainObject(val);
-		} else {
-			throw new Error(
-				pretty`Don't know how to serialize the object ${val} to RSER`,
-			);
+		if (val instanceof Error) {
+			return this.encodeError(val);
 		}
+
+		if (val instanceof RegExp) {
+			return this.encodeRegExp(val);
+		}
+
+		if (val instanceof ArrayBuffer) {
+			return this.encodeArrayBuffer(val);
+		}
+
+		if (ArrayBuffer.isView(val)) {
+			return this.encodeArrayBufferView(val);
+		}
+
+		throw new Error(
+			pretty`Don't know how to serialize the object ${val} to RSER`,
+		);
 	}
 
 	private encodePosition(pos: Position) {
-		this.writeCode(VALUE_CODES.POSITION);
-		this.encodeInt(ob1Get(pos.line));
-		this.encodeInt(ob1Get(pos.column));
+		this.writeByte(VALUE_CODES.POSITION);
+		this.encodeInt(pos.line.valueOf());
+		this.encodeInt(pos.column.valueOf());
 	}
 
 	private encodeSourceLocation(loc: SourceLocation) {
-		this.writeCode(VALUE_CODES.SOURCE_LOCATION);
-
-		if (loc.path === undefined) {
-			this.encodeUndefined();
-		} else {
-			this.encodePath(loc.path);
-		}
+		this.writeByte(VALUE_CODES.SOURCE_LOCATION);
+		this.encodePath(loc.path);
 
 		// We don't use encodeValue here as we want to allow identifierName to use our reference table
 		if (loc.identifierName === undefined) {
@@ -396,17 +404,17 @@ export default class RSERBufferAssembler {
 			this.encodeString(loc.identifierName, true);
 		}
 
-		this.encodeInt(ob1Get(loc.start.line));
-		this.encodeInt(ob1Get(loc.start.column));
-		this.encodeInt(ob1Get(loc.end.line));
-		this.encodeInt(ob1Get(loc.end.column));
+		this.encodeInt(loc.start.line.valueOf());
+		this.encodeInt(loc.start.column.valueOf());
+		this.encodeInt(loc.end.line.valueOf());
+		this.encodeInt(loc.end.column.valueOf());
 	}
 
 	private encodePlainObject(val: RSERObject) {
 		const keys = Object.keys(val);
 
 		// Dedicated types for common object shapes
-		if (keys.length === 2 && isPosition(val)) {
+		if (keys.length === 2 && isPositionish(val)) {
 			return this.encodePosition(val);
 		}
 		if (keys.length <= 4 && isSourceLocation(val)) {
@@ -423,8 +431,8 @@ export default class RSERBufferAssembler {
 			}
 		}
 
-		this.writeCode(VALUE_CODES.OBJECT);
-		this.encodeInt(numKeys);
+		this.writeByte(VALUE_CODES.OBJECT);
+		this.encodeSize(numKeys);
 
 		for (let i = 0; i < keys.length; ++i) {
 			const key = keys[i];
@@ -440,7 +448,7 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeUndefined() {
-		this.writeCode(VALUE_CODES.UNDEFINED);
+		this.writeByte(VALUE_CODES.UNDEFINED);
 	}
 
 	private encodeString(val: string, allowReference?: boolean) {
@@ -448,25 +456,19 @@ export default class RSERBufferAssembler {
 			return;
 		}
 
-		this.writeCode(VALUE_CODES.STRING);
+		this.writeByte(VALUE_CODES.STRING);
 		this.encodeStringValue(val);
-	}
-
-	private encodeStringValue(val: string) {
-		const byteLength = utf8Count(val);
-		this.encodeInt(byteLength);
-		this.appendString(val, byteLength);
 	}
 
 	private encodeNumber(val: bigint | number) {
 		// +Infinity
 		if (val === Number.POSITIVE_INFINITY) {
-			return this.writeCode(VALUE_CODES.POSITIVE_INFINITY);
+			return this.writeByte(VALUE_CODES.POSITIVE_INFINITY);
 		}
 
 		// -Infinity
 		if (val === Number.NEGATIVE_INFINITY) {
-			return this.writeCode(VALUE_CODES.NEGATIVE_INFINITY);
+			return this.writeByte(VALUE_CODES.NEGATIVE_INFINITY);
 		}
 
 		if (typeof val === "bigint" || Number.isSafeInteger(val)) {
@@ -477,7 +479,7 @@ export default class RSERBufferAssembler {
 	}
 
 	private encodeFloat(val: number) {
-		this.writeCode(VALUE_CODES.FLOAT);
+		this.writeByte(VALUE_CODES.FLOAT);
 		this.writeFloat(val);
 	}
 
@@ -487,7 +489,7 @@ export default class RSERBufferAssembler {
 			case "number": {
 				// NaN
 				if (typeof val === "number" && isNaN(val)) {
-					return this.writeCode(VALUE_CODES.NAN);
+					return this.writeByte(VALUE_CODES.NAN);
 				}
 
 				return this.encodeNumber(val);
@@ -503,7 +505,7 @@ export default class RSERBufferAssembler {
 				return this.writeByte(val ? VALUE_CODES.TRUE : VALUE_CODES.FALSE);
 
 			case "symbol": {
-				this.writeCode(VALUE_CODES.SYMBOL);
+				this.writeByte(VALUE_CODES.SYMBOL);
 				const key = Symbol.keyFor(val);
 				if (key === undefined) {
 					throw new Error("Not a global symbol");

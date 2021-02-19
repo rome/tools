@@ -10,7 +10,31 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/keyframe-keyword/input.css 1:0-7:1
-	path: RelativeFilePath<invalid/keyframe-keyword/input.css>
+	path: RelativePath<invalid/keyframe-keyword/input.css>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			location: Object {
+				integrity: undefined
+				language: "css"
+				sourceText: undefined
+				end: Position 2:5
+				path: RelativePath<invalid/keyframe-keyword/input.css>
+				start: Position 2:1
+			}
+			description: Object {
+				categoryValue: "css"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "The keyword <emphasis>form</emphasis> is not accepted as valid keyframe name."}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Did you mean <emphasis>from</emphasis> or <emphasis>to</emphasis>?"}
+					}
+				]
+			}
+		}
+	]
 	body: Array [
 		CSSAtRule {
 			name: "keyframes"
@@ -42,40 +66,6 @@ CSSRoot {
 				}
 				value: Array []
 				loc: SourceLocation invalid/keyframe-keyword/input.css 5:10-7:1
-			}
-		}
-	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "css"
-				sourceText: undefined
-				end: Position 2:5
-				path: RelativeFilePath<invalid/keyframe-keyword/input.css>
-				start: Position 2:1
-			}
-			description: Object {
-				category: "parse"
-				categoryValue: "css"
-				message: Array [
-					RAW_MARKUP {value: "The keyword <emphasis>"}
-					"form"
-					RAW_MARKUP {value: "</emphasis> is not accepted as valid keyframe name."}
-				]
-				advice: Array [
-					log {
-						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Did you mean <emphasis>"}
-							"from"
-							RAW_MARKUP {value: "</emphasis> or <emphasis>"}
-							"to"
-							RAW_MARKUP {value: "</emphasis>?"}
-						]
-					}
-				]
 			}
 		}
 	]

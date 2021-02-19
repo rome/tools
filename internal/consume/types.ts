@@ -14,6 +14,8 @@ import Consumer from "./Consumer";
 import {AnyPath} from "@internal/path";
 import {StaticMarkup} from "@internal/markup";
 
+export type ConsumerMapCallback<T> = (c: Consumer, i: number) => T;
+
 export type ConsumeProtectedFunction = (...args: unknown[]) => Consumer;
 
 export type ConsumeKey = number | string;
@@ -33,7 +35,7 @@ export type ConsumeContext = {
 	getDiagnosticLocation?: (
 		keys: ConsumePath,
 		target: ConsumeSourceLocationRequestTarget,
-	) => DiagnosticLocation;
+	) => undefined | DiagnosticLocation;
 	getOriginalValue?: (path: ConsumePath) => unknown;
 };
 
@@ -43,7 +45,7 @@ export type ConsumePropertyMetadata = {
 	alternateName?: string;
 	getDiagnosticLocation?: (
 		target: ConsumeSourceLocationRequestTarget,
-	) => DiagnosticLocation;
+	) => undefined | DiagnosticLocation;
 };
 
 type ConsumePropertyDefinitionBase = {

@@ -46,21 +46,13 @@ JSRoot {
 				start: Position 1:1
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>"}
-					"something"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Expected a corresponding JSX closing tag for <emphasis>something</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-							"something"
-							RAW_MARKUP {value: "</emphasis>"}
-						]
+						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>something</emphasis>"}
 					}
 					frame {location: SourceLocation jsx/errors/wrong-opening-tag-fragment/input.jsx 1:1-1:10}
 				]
@@ -83,8 +75,5 @@ JSRoot {
     <something></>
      ^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

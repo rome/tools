@@ -1,5 +1,6 @@
 import {Consumer, consumeUnknown} from "@internal/consume";
 import {data, regions} from "@internal/browsers-db";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export interface BrowserProps {
 	id: string;
@@ -23,7 +24,7 @@ export abstract class Browser {
 	}
 
 	protected getDataConsumer(): Consumer {
-		return consumeUnknown(data, "parse");
+		return consumeUnknown(data, DIAGNOSTIC_CATEGORIES.parse);
 	}
 
 	protected getAgentConsumer(): Consumer {
@@ -119,9 +120,9 @@ export abstract class Browser {
 	 * @param region check internal/browsers-db/README.md for more info
 	 */
 	public getRegionUsage(region: string): number | undefined {
-		return consumeUnknown(regions, "parse").get(region).get("data").get(
-			this.getId(),
-		).get(this.getVersion()).asNumberOrVoid();
+		return consumeUnknown(regions, DIAGNOSTIC_CATEGORIES.parse).get(region).get(
+			"data",
+		).get(this.getId()).get(this.getVersion()).asNumberOrVoid();
 	}
 }
 

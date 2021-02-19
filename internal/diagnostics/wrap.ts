@@ -7,7 +7,7 @@
 
 import {DiagnosticOrigin, Diagnostics} from "./types";
 import {addOriginsToDiagnostics} from "./derive";
-import {DiagnosticsError, getDiagnosticsFromError} from "./errors";
+import {DiagnosticsError, getDiagnosticsFromError} from "./error-wrappers";
 import DiagnosticsProcessor from "./DiagnosticsProcessor";
 
 type WrapResult<T> =

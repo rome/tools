@@ -24,23 +24,20 @@ export type AsyncCallback<Return, Args extends unknown[] = []> = Args extends []
 
 export type ErrorCallback<Err extends Error = Error> = (err: Err) => void;
 
-// rome-ignore lint/js/noUndeclaredVariables(K): don't yet support scope tracking `infer`
 export type MapKey<T> = T extends Map<infer K, unknown> ? K : never;
 
-// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
 export type MapValue<T> = T extends Map<unknown, infer V> ? V : never;
 
-// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
 export type SetValue<T> = T extends Set<infer V> ? V : never;
 
-// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables(I): future cleanup
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 export type UnionToIntersection<U> = (U extends any ? (k: U) => void : never) extends ((
 	k: infer I,
 ) => void)
 	? I
 	: never;
 
-// rome-ignore lint/ts/noExplicitAny lint/js/noUndeclaredVariables(R): future cleanup
+// rome-ignore lint/ts/noExplicitAny: future cleanup
 type ClassConstructorParams<T> = T extends {
 	new (
 		...args: infer R
@@ -123,4 +120,25 @@ export function mergeObjects<A extends object>(
 	}
 
 	return newObj;
+}
+
+export function equalArray<A extends unknown[], B extends unknown[]>(
+	a: A | B,
+	b: B,
+): a is B {
+	if (a.length !== b.length) {
+		return false;
+	}
+
+	if (a === b) {
+		return true;
+	}
+
+	for (let i = 0; i < a.length; i++) {
+		if (a[i] !== b[i]) {
+			return false;
+		}
+	}
+
+	return true;
 }

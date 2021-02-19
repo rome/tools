@@ -4,10 +4,10 @@ import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	descriptions,
-	isValidDiagnosticCategoryName,
-	joinCategoryName,
+	formatCategoryDescription,
+	splitPossibleCategoryName,
 } from "@internal/diagnostics";
-import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {
 	BaseTokens,
 	ParserCore,
@@ -69,13 +69,17 @@ type ParserTypes = {
 
 type SuppressionCommentParser = ParserCore<ParserTypes>;
 
-function isStringValueChar(char: string, index: Number0, input: string): boolean {
+function isStringValueChar(
+	char: string,
+	index: ZeroIndexed,
+	input: string,
+): boolean {
 	return !(char === '"' && !isEscaped(index, input));
 }
 
 function isCategoryValueChar(
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
 	return !(char === ")" && !isEscaped(index, input));
@@ -98,13 +102,13 @@ const suppressionCommentParser = createParser<ParserTypes>({
 
 	tokenizeWithState(
 		parser: SuppressionCommentParser,
-		index: Number0,
+		index: ZeroIndexed,
 		state: State,
 	): ParserCoreTokenizeState<ParserTypes> {
 		if (state.searching) {
 			// Ignore leading stars
 			if (parser.getInputCharOnly(index) === "*") {
-				return parser.lookahead(ob1Inc(index));
+				return parser.lookahead(index.increment());
 			}
 
 			// Get the first word
@@ -132,7 +136,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 					state,
 					parser.finishToken(
 						"BadPrefixMissingSpace",
-						ob1Add(index, SUPPRESSION_START.length),
+						index.add(SUPPRESSION_START.length),
 					),
 				];
 			}
@@ -149,7 +153,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 			// If the current character is a colon then we're an explanation
 			if (char === ":") {
 				const [rawExplanation, end] = parser.readInputFrom(
-					ob1Inc(index),
+					index.increment(),
 					isntLineBreak,
 				);
 				const explanation = rawExplanation.trim();
@@ -172,7 +176,9 @@ const suppressionCommentParser = createParser<ParserTypes>({
 				let value = "";
 				let valueEnd;
 
-				const [nextChar, innerValueStringStart] = parser.getInputChar(index, 1);
+				const [nextChar, innerValueStringStart] = parser.getInputChar(
+					index.increment(),
+				);
 				if (nextChar === '"') {
 					// String value we need to escape
 					const [rawValue, innerValueEnd] = parser.readInputFrom(
@@ -191,7 +197,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 						(metadata, strIndex) => {
 							throw parser.unexpected({
 								description: metadata,
-								start: parser.getPositionFromIndex(ob1Add(index, strIndex)),
+								start: parser.getPositionFromIndex(index.add(strIndex)),
 							});
 						},
 					);
@@ -199,7 +205,7 @@ const suppressionCommentParser = createParser<ParserTypes>({
 				} else {
 					// Otherwise we can just safely read this until the closing )
 					[value, valueEnd] = parser.readInputFrom(
-						ob1Inc(index),
+						index.increment(),
 						isCategoryValueChar,
 					);
 				}
@@ -214,16 +220,18 @@ const suppressionCommentParser = createParser<ParserTypes>({
 			}
 
 			// Read a category name!
-			const [categoryName, end] = parser.readInputFrom(
+			const [strCategoryName, end] = parser.readInputFrom(
 				index,
 				isCategoryNameChar,
 			);
 
+			const categoryName = splitPossibleCategoryName(strCategoryName);
+
 			let token;
-			if (isValidDiagnosticCategoryName(categoryName)) {
-				token = parser.finishValueToken("Category", categoryName, end);
+			if (categoryName === undefined) {
+				token = parser.finishValueToken("InvalidCategory", strCategoryName, end);
 			} else {
-				token = parser.finishValueToken("InvalidCategory", categoryName, end);
+				token = parser.finishValueToken("Category", categoryName, end);
 			}
 
 			return [state, token];
@@ -308,7 +316,6 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 					break;
 				}
 
-				const start = parser.getPosition();
 				parser.nextToken();
 				const startLine = targetNode.loc.start.line;
 				const endLine = targetNode.loc.end.line;
@@ -330,41 +337,40 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 				}
 
 				for (const [categoryToken, categoryValueToken] of categories) {
-					const category = categoryToken.value;
 					let categoryValue = categoryValueToken?.value;
-
 					if (categoryValue === "") {
 						categoryValue = undefined;
 					}
 
-					const dupeKey = joinCategoryName({category, categoryValue});
+					const loc = parser.finishLocAt(
+						parser.getPositionFromIndex(categoryToken.start),
+						parser.getPositionFromIndex(
+							(categoryValueToken ?? categoryToken).end,
+						),
+					);
 
-					if (suppressedCategories.has(dupeKey)) {
+					if (categoryToken.type === "InvalidCategory") {
 						parser.unexpectedDiagnostic({
-							token: categoryToken,
-							description: descriptions.SUPPRESSIONS.DUPLICATE(dupeKey),
+							description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
+								categoryToken.value,
+							),
+							location: loc,
 						});
 					} else {
-						suppressedCategories.add(dupeKey);
+						const category = categoryToken.value;
+						const dupeKey = formatCategoryDescription({category, categoryValue});
 
-						const loc = parser.finishLocAt(
-							parser.getPositionFromIndex(categoryToken.start),
-							parser.getPositionFromIndex(
-								(categoryValueToken ?? categoryToken).end,
-							),
-						);
-
-						if (categoryToken.type === "InvalidCategory") {
+						if (suppressedCategories.has(dupeKey)) {
 							parser.unexpectedDiagnostic({
-								description: descriptions.SUPPRESSIONS.INVALID_CATEGORY_NAME(
-									category,
-								),
-								location: loc,
+								token: categoryToken,
+								description: descriptions.SUPPRESSIONS.DUPLICATE(dupeKey),
 							});
 						} else {
+							suppressedCategories.add(dupeKey);
+
 							suppressions.push({
 								path: parser.path,
-								category: categoryToken.value,
+								category,
 								categoryValue,
 								loc,
 								startLine,
@@ -376,7 +382,6 @@ export function parseCommentSuppressions(opts: Options): ExtractedSuppressions {
 
 				if (requireExplanations && !parser.eatToken("Explanation")) {
 					parser.unexpectedDiagnostic({
-						start,
 						description: descriptions.SUPPRESSIONS.MISSING_EXPLANATION,
 					});
 				}

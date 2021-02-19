@@ -45,7 +45,7 @@ const tests: Test[] = [
 	{
 		before: dedent`
 			let namedBackReference = "";
-			let namedBackReferenceIndex = ob1Get0(index) + 2;
+			let namedBackReferenceIndex = index.toNumber() + 2;
 			let namedBackReferenceChar = input[namedBackReferenceIndex];
 			if (namedBackReferenceChar === "<") {
 				namedBackReferenceChar = input[namedBackReferenceIndex];
@@ -67,7 +67,7 @@ const tests: Test[] = [
 						value: namedBackReference,
 						escaped: true,
 					},
-					ob1Coerce0(namedBackReferenceIndex),
+					new ZeroIndexedNumber(namedBackReferenceIndex),
 				);
 			}
 		`,
@@ -78,7 +78,7 @@ const tests: Test[] = [
 			if (char === "<") {
 				while (!this.isEOF(next)) {
 					value += char;
-					[char, next] = this.getInputChar(index, 1);
+					[char, next] = this.getInputChar(index.increment());
 
 					if (char === ">") {
 						break;

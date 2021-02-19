@@ -30,13 +30,9 @@ JSRoot {
 				start: Position 1:4
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Argument <emphasis>"}
-					"a"
-					RAW_MARKUP {value: "</emphasis> name clash in strict mode"}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
 						category: "info"
@@ -94,8 +90,5 @@ JSRoot {
     (a, a) => 42
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

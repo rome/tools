@@ -10,7 +10,7 @@
 Object {
 	corrupt: false
 	diagnostics: Array []
-	path: RelativeFilePath<0.test>
+	path: RelativePath<0.test>
 	comments: Array [
 		CommentLine {
 			id: "0"
@@ -22,47 +22,47 @@ Object {
 		Object {
 			loc: SourceLocation 0.test 1:0-1:13
 			snapshot: Object {
-				nextTokenIndex: 13
+				nextTokenIndex: ZeroIndexedNumber<13>
 				prevToken: SOF {
-					end: 0
-					start: 0
+					end: ZeroIndexedNumber<0>
+					start: ZeroIndexedNumber<0>
 				}
 				currentToken: String {
 					value: "im a string"
-					end: 13
-					start: 0
+					end: ZeroIndexedNumber<13>
+					start: ZeroIndexedNumber<0>
 				}
 			}
 		}
 		Object {
 			loc: SourceLocation 0.test 3:0-3:1
 			snapshot: Object {
-				nextTokenIndex: 16
+				nextTokenIndex: ZeroIndexedNumber<16>
 				currentToken: Number {
 					value: 4
-					end: 16
-					start: 15
+					end: ZeroIndexedNumber<16>
+					start: ZeroIndexedNumber<15>
 				}
 				prevToken: String {
 					value: "im a string"
-					end: 13
-					start: 0
+					end: ZeroIndexedNumber<13>
+					start: ZeroIndexedNumber<0>
 				}
 			}
 		}
 		Object {
 			loc: SourceLocation 0.test 5:0-5:10
 			snapshot: Object {
-				nextTokenIndex: 28
+				nextTokenIndex: ZeroIndexedNumber<28>
 				currentToken: Comment {
 					value: " Comment"
-					end: 28
-					start: 18
+					end: ZeroIndexedNumber<28>
+					start: ZeroIndexedNumber<18>
 				}
 				prevToken: Number {
 					value: 4
-					end: 16
-					start: 15
+					end: ZeroIndexedNumber<16>
+					start: ZeroIndexedNumber<15>
 				}
 			}
 		}
@@ -76,20 +76,20 @@ Object {
 Object {
 	comments: Array []
 	corrupt: false
-	path: RelativeFilePath<1.test>
+	path: RelativePath<1.test>
 	parsed: Array [
 		Object {
 			loc: SourceLocation 1.test 1:0-1:1
 			snapshot: Object {
-				nextTokenIndex: 1
+				nextTokenIndex: ZeroIndexedNumber<1>
 				prevToken: SOF {
-					end: 0
-					start: 0
+					end: ZeroIndexedNumber<0>
+					start: ZeroIndexedNumber<0>
 				}
 				currentToken: Invalid {
 					value: "a"
-					end: 1
-					start: 0
+					end: ZeroIndexedNumber<1>
+					start: ZeroIndexedNumber<0>
 				}
 			}
 		}
@@ -99,8 +99,8 @@ Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "unknown"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid token"}
 			}
 			location: Object {
@@ -108,7 +108,7 @@ Object {
 				language: "unknown"
 				sourceText: undefined
 				end: Position 1:0
-				path: RelativeFilePath<1.test>
+				path: RelativePath<1.test>
 				start: Position 1:0
 			}
 		}
@@ -122,20 +122,20 @@ Object {
 Object {
 	comments: Array []
 	corrupt: false
-	path: RelativeFilePath<2.test>
+	path: RelativePath<2.test>
 	parsed: Array [
 		Object {
 			loc: SourceLocation 2.test 1:0-1:28
 			snapshot: Object {
-				nextTokenIndex: 28
+				nextTokenIndex: ZeroIndexedNumber<28>
 				prevToken: SOF {
-					end: 0
-					start: 0
+					end: ZeroIndexedNumber<0>
+					start: ZeroIndexedNumber<0>
 				}
 				currentToken: String {
 					value: "i'm an unterminated string"
-					end: 28
-					start: 0
+					end: ZeroIndexedNumber<28>
+					start: ZeroIndexedNumber<0>
 				}
 			}
 		}
@@ -145,8 +145,8 @@ Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "unknown"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unterminated string"}
 			}
 			location: Object {
@@ -154,7 +154,7 @@ Object {
 				language: "unknown"
 				sourceText: undefined
 				end: Position 1:0
-				path: RelativeFilePath<2.test>
+				path: RelativePath<2.test>
 				start: Position 1:0
 			}
 		}

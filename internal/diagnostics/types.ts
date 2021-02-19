@@ -8,7 +8,7 @@
 import {Position, SourceLocation} from "@internal/parser-core";
 import {Diffs} from "@internal/string-diff";
 import {ConstJSSourceType} from "@internal/ast";
-import {Number0, Number1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {JSONPropertyValue} from "@internal/codec-config";
 import {DiagnosticCategory} from "./categories";
 import {Dict} from "@internal/typescript-helpers";
@@ -16,20 +16,23 @@ import {ClientRequestFlags, CommandName} from "@internal/core";
 import {StaticMarkup} from "@internal/markup";
 import {AnyPath, MixedPathSet} from "@internal/path";
 
+export type DiagnosticCategoryDescription = {
+	category: DiagnosticCategory;
+	categoryValue?: string;
+};
+
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
 	message?: StaticMarkup;
 	path?: AnyPath;
 	start?: Position;
-	line?: Number1;
+	line?: OneIndexed;
 };
 
-export type DiagnosticSuppression = {
+export type DiagnosticSuppression = DiagnosticCategoryDescription & {
 	path: AnyPath;
-	category: DiagnosticCategory;
-	categoryValue: undefined | string;
-	startLine: Number1;
-	endLine: Number1;
+	startLine: OneIndexed;
+	endLine: OneIndexed;
 	loc: SourceLocation;
 };
 
@@ -109,9 +112,7 @@ export type DiagnosticIntegrity = {
 	hash: string;
 };
 
-export type DiagnosticDescription = {
-	category: DiagnosticCategory;
-	categoryValue?: string;
+export type DiagnosticDescription = DiagnosticCategoryDescription & {
 	message: StaticMarkup;
 	advice: DiagnosticAdvice;
 };
@@ -218,8 +219,8 @@ export type DiagnosticAdviceStackFrame = {
 	object?: string;
 	property?: string;
 	path?: AnyPath;
-	line?: Number1;
-	column?: Number0;
+	line?: OneIndexed;
+	column?: ZeroIndexed;
 	language: undefined | DiagnosticLanguage;
 	sourceText?: string;
 };

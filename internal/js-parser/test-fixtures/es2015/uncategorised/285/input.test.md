@@ -23,9 +23,9 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected token"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>}</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
@@ -74,13 +74,10 @@ JSRoot {
 
  es2015/uncategorised/285/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token
+  ✖ Unexpected character }
 
     ({ 5 }) => {}
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -19,9 +19,6 @@
 
   ℹ Safe fix
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -47,9 +44,6 @@ export default function foo() {}
 
   ℹ Safe fix
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -63,7 +57,6 @@ export default class Foo {}
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -77,7 +70,6 @@ export default function foo() {}
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -91,7 +83,6 @@ export default class Foo {}
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

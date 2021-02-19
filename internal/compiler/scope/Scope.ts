@@ -27,6 +27,7 @@ export type ScopeKind =
 	| "function"
 	| "block"
 	| "loop"
+	| "conditional-type"
 	| "type-generic"
 	| "class";
 
@@ -82,7 +83,9 @@ export default class Scope {
 	}
 
 	public getRootScope(): RootScope {
-		const {rootScope} = this;
+		const {
+			rootScope,
+		} = this;
 		if (rootScope === undefined) {
 			throw new Error("Expected rootScope");
 		}
@@ -177,7 +180,9 @@ export default class Scope {
 	}
 
 	public getBindingFromPath(path: Path): undefined | Binding {
-		const {node} = path;
+		const {
+			node,
+		} = path;
 		if (isVariableIdentifier(node)) {
 			// TODO we can do some isInTypeAnnotation magic to get the proper "type" binding
 			return this.getBinding(node.name);
@@ -192,7 +197,9 @@ export default class Scope {
 			return binding;
 		}
 
-		const {parentScope} = this;
+		const {
+			parentScope,
+		} = this;
 		if (parentScope !== undefined) {
 			return parentScope.getBinding(name);
 		}
@@ -281,7 +288,9 @@ export class RootScope extends Scope {
 	private parseGlobalComments(ast: AnyRoot): string[] {
 		const globals: string[] = [];
 
-		for (const {value} of ast.comments) {
+		for (const {
+			value,
+		} of ast.comments) {
 			// Check if comment starts with "global ", ignoring any leading whitespace
 			if (!GLOBAL_COMMENT_START.test(value)) {
 				continue;

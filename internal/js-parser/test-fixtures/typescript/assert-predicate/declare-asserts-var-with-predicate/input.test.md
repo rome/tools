@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:31
+				end: Position 1:16
 				path: UIDPath<typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts>
 				start: Position 1:17
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
+					}
 				]
 			}
 		}
@@ -128,13 +130,12 @@ JSRoot {
 
  typescript/assert-predicate/declare-asserts-var-with-predicate/input.ts:1:17 parse(js) ━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character a
 
     declare function assertIsString(value: unknown): asserts value is string;
-                     ^^^^^^^^^^^^^^
+                     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening function params character (
 
-✖ Found 1 problem
 
 ```

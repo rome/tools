@@ -35,6 +35,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in for-in statement"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -42,15 +48,6 @@ JSRoot {
 				end: Position 1:7
 				path: UIDPath<esprima/invalid-syntax/migrated_0126/input.js>
 				start: Position 1:5
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"for-in statement"
-				]
 			}
 		}
 	]
@@ -68,8 +65,5 @@ JSRoot {
     for (+i in {});
          ^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

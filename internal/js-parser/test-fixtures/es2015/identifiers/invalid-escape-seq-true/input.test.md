@@ -30,6 +30,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Escape sequence in keyword <emphasis>true</emphasis>"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -37,15 +43,6 @@ JSRoot {
 				end: Position 1:0
 				path: UIDPath<es2015/identifiers/invalid-escape-seq-true/input.js>
 				start: Position 1:0
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Escape sequence in keyword "}
-					"true"
-				]
 			}
 		}
 	]
@@ -63,8 +60,5 @@ JSRoot {
     \u0074rue
     ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -10,14 +10,14 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/selector2/input.css 1:0-1:11
-	path: RelativeFilePath<invalid/selector2/input.css>
+	path: RelativePath<invalid/selector2/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Expected a selector."}
 			}
 			location: Object {
@@ -25,7 +25,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 1:8
-				path: RelativeFilePath<invalid/selector2/input.css>
+				path: RelativePath<invalid/selector2/input.css>
 				start: Position 1:7
 			}
 		}

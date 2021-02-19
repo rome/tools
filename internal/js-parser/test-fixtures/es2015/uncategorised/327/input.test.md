@@ -18,6 +18,25 @@ JSRoot {
 	syntax: Array []
 	loc: SourceLocation es2015/uncategorised/327/input.js 1:0-1:13
 	path: UIDPath<es2015/uncategorised/327/input.js>
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>\u{2b81e}</emphasis>"}
+			}
+			location: Object {
+				integrity: undefined
+				language: "js"
+				sourceText: undefined
+				end: Position 1:3
+				path: UIDPath<es2015/uncategorised/327/input.js>
+				start: Position 1:4
+			}
+		}
+	]
 	body: Array [
 		JSVariableDeclarationStatement {
 			loc: SourceLocation es2015/uncategorised/327/input.js 1:0-1:13
@@ -41,29 +60,6 @@ JSRoot {
 			}
 		}
 	]
-	diagnostics: Array [
-		Object {
-			origins: Array [Object {category: "parse"}]
-			location: Object {
-				integrity: undefined
-				language: "js"
-				sourceText: undefined
-				end: Position 1:3
-				path: UIDPath<es2015/uncategorised/327/input.js>
-				start: Position 1:4
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected character <emphasis>"}
-					"\u{2b81e}"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
-			}
-		}
-	]
 }
 ```
 
@@ -78,8 +74,5 @@ JSRoot {
     var 𫠞_ = 12;
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

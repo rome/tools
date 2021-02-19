@@ -61,6 +61,5 @@ MarkdownRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -75,7 +75,7 @@ export default function JSObjectExpression(
 		node.loc !== undefined &&
 		props.length > 0 &&
 		props[0].loc !== undefined &&
-		props[0].loc.start.line !== node.loc.start.line;
+		!props[0].loc.start.line.equal(node.loc.start.line);
 
 	return group(
 		concat(["{", indent(concat([softline, concat(tokens)])), softline, "}"]),

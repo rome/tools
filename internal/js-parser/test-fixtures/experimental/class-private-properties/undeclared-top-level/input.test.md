@@ -23,9 +23,9 @@ JSRoot {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: RAW_MARKUP {value: "Unexpected character #"}
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>#</emphasis>"}
 			}
 			location: Object {
 				integrity: undefined
@@ -83,8 +83,5 @@ JSRoot {
     var prop = foo.#priv;
                    ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

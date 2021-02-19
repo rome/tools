@@ -47,20 +47,13 @@ JSRoot {
 				start: Position 1:8
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"class body"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>class body</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"}"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>}</emphasis> here"}
 					}
 					frame {location: SourceLocation esprima/invalid-syntax/migrated_0266/input.js 2:0-2:0}
 				]
@@ -78,12 +71,12 @@ JSRoot {
 
   ✖ Unclosed class body
 
+    class A {
+            ^
+
   ℹ We expected to find the closing character } here
 
     class A {
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

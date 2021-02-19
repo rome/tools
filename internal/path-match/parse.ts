@@ -14,7 +14,7 @@ import {
 	Tokens,
 } from "./types";
 import {ParserCore, ParserOptions, createParser} from "@internal/parser-core";
-import {Number0, ob1Add, ob1Get0, ob1Number0} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {descriptions} from "@internal/diagnostics";
 
 function isntNewline(char: string): boolean {
@@ -34,12 +34,12 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 	diagnosticLanguage: "path",
 	tokenize(parser, index) {
 		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index, 1);
+		const nextChar = parser.getInputCharOnly(index.increment());
 
 		switch (char) {
 			case "*": {
 				if (nextChar === "*") {
-					return parser.finishToken("DoubleStar", ob1Add(index, 2));
+					return parser.finishToken("DoubleStar", index.add(2));
 				} else {
 					return parser.finishToken("Star");
 				}
@@ -52,14 +52,14 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 				return parser.finishToken("Separator");
 
 			case "!": {
-				if (index === ob1Number0 || parser.getCurrentToken().type === "EOL") {
+				if (index.valueOf() === 0 || parser.getCurrentToken().type === "EOL") {
 					return parser.finishToken("Exclamation");
 				}
 				break;
 			}
 
 			case "#": {
-				if (parser.getPositionFromIndex(index).column === ob1Number0) {
+				if (parser.getPositionFromIndex(index).column.valueOf() === 0) {
 					const [value, end] = parser.readInputFrom(index, isntNewline);
 					return parser.finishValueToken("Comment", value, end);
 				}
@@ -68,7 +68,7 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 
 			case "\\": {
 				if (nextChar === "\\") {
-					return parser.finishToken("Separator", ob1Add(index, 2));
+					return parser.finishToken("Separator", index.add(2));
 				}
 				break;
 			}
@@ -85,11 +85,11 @@ const pathMatchParser = createParser<PatchMatchParserTypes>({
 function isWordCharacter(
 	parser: PatchMatchParser,
 	char: string,
-	index: Number0,
+	index: ZeroIndexed,
 	input: string,
 ): boolean {
-	const prevChar = input[ob1Get0(index) - 1];
-	const nextChar = input[ob1Get0(index) + 1];
+	const prevChar = input[index.valueOf() - 1];
+	const nextChar = input[index.valueOf() + 1];
 
 	if (char === "\n") {
 		return false;

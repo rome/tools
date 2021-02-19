@@ -18,10 +18,10 @@ import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,
 	AnyPath,
-	RelativeFilePath,
+	RelativePath,
 	URLPath,
 	createPathFromSegments,
-	createRelativeFilePath,
+	createRelativePath,
 } from "@internal/path";
 import {DiagnosticAdvice, DiagnosticLocation} from "@internal/diagnostics";
 import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
@@ -209,7 +209,7 @@ export type ResolverOptions = {
 
 type ExportAlias = {
 	key: Consumer;
-	value: RelativeFilePath;
+	value: RelativePath;
 };
 
 function attachExportAliasIfUnresolved(
@@ -240,7 +240,7 @@ function getExportsAlias(
 		platform,
 	}: {
 		manifest: Manifest;
-		relative: RelativeFilePath;
+		relative: RelativePath;
 		platform?: Platform;
 	},
 ): undefined | ExportAlias {
@@ -297,7 +297,7 @@ function getPreferredMainKey(
 ): undefined | ExportAlias {
 	const alias = getExportsAlias({
 		manifest,
-		relative: createRelativeFilePath("."),
+		relative: createRelativePath("."),
 		platform,
 	});
 	if (alias !== undefined) {
@@ -307,7 +307,7 @@ function getPreferredMainKey(
 	if (manifest.main !== undefined) {
 		return {
 			key: consumer.get("main"),
-			value: createRelativeFilePath(manifest.main),
+			value: createRelativePath(manifest.main),
 		};
 	}
 
@@ -641,6 +641,9 @@ export default class Resolver {
 		// Resolve the path heiarchy
 		const originDirectory = this.getOriginDirectory(query);
 		const resolvedOrigin = originDirectory.resolve(query.source);
+		if (!resolvedOrigin.isFilePath()) {
+			return QUERY_RESPONSE_MISSING;
+		}
 
 		// Check if this is an absolute filename
 		if (memoryFs.isFile(resolvedOrigin)) {

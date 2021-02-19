@@ -30,12 +30,14 @@ JSRoot {
 				start: Position 1:22
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>=</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
 				]
 			}
 		}
@@ -130,13 +132,12 @@ JSRoot {
 
  es2017/async-functions/object-default-params/input.js:1:22 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character =
 
     const b = async ({bar = "bar"}) => {}
                           ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

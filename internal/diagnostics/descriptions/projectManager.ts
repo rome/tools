@@ -3,10 +3,11 @@ import {DiagnosticLocation} from "../types";
 import {filePathToMarkup, markup} from "@internal/markup";
 import {buildSuggestionAdvice} from "../helpers";
 import {AbsoluteFilePath} from "@internal/path";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 export const projectManager = createDiagnosticsCategory({
 	NO_VCS: (rootConfigLocation: undefined | DiagnosticLocation) => ({
-		category: "projectManager/vscMissing",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/vscMissing"],
 		message: markup`Can't find any version control for this project`,
 		advice: rootConfigLocation === undefined
 			? [
@@ -34,7 +35,7 @@ export const projectManager = createDiagnosticsCategory({
 				],
 	}),
 	DUPLICATE_PACKAGE: (packageName: string, existing: string) => ({
-		category: "projectManager/nameCollision",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/nameCollision"],
 		message: markup`Duplicate package name <emphasis>${packageName}</emphasis>`,
 		advice: [
 			{
@@ -45,7 +46,7 @@ export const projectManager = createDiagnosticsCategory({
 		],
 	}),
 	MULTIPLE_CONFIGS: {
-		category: "projectManager/multipleConfigFiles",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/multipleConfigFiles"],
 		message: markup`Multiple config files were found`,
 		advice: [
 			{
@@ -56,7 +57,7 @@ export const projectManager = createDiagnosticsCategory({
 		],
 	},
 	NOT_FOUND: {
-		category: "projectManager/missing",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/missing"],
 		message: markup`Couldn't find a project`,
 		advice: [
 			{
@@ -67,7 +68,7 @@ export const projectManager = createDiagnosticsCategory({
 		],
 	},
 	INITING_SENSITIVE: (directory: AbsoluteFilePath) => ({
-		category: "projectManager/sensitiveDirectory",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/sensitiveDirectory"],
 		message: markup`Cannot create a project config in sensitive directory <emphasis>${filePathToMarkup(
 			directory,
 			true,
@@ -81,7 +82,7 @@ export const projectManager = createDiagnosticsCategory({
 		],
 	}),
 	LOADING_SENSITIVE: (directory: AbsoluteFilePath) => ({
-		category: "projectManager/sensitiveDirectory",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/sensitiveDirectory"],
 		message: markup`Cannot load a project config in sensitive directory <emphasis>${filePathToMarkup(
 			directory,
 			true,
@@ -95,12 +96,12 @@ export const projectManager = createDiagnosticsCategory({
 		],
 	}),
 	TYPO_CONFIG_FILENAME: (invalidFilename: string, validFilenames: string[]) => ({
-		category: "projectManager/typoConfigFilename",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/typoConfigFilename"],
 		message: markup`Invalid Rome config filename <emphasis>${invalidFilename}</emphasis>`,
 		advice: buildSuggestionAdvice(invalidFilename, validFilenames),
 	}),
 	MISPLACED_CONFIG: (misplacedName: string) => ({
-		category: "projectManager/misplacedConfig",
+		category: DIAGNOSTIC_CATEGORIES["projectManager/misplacedConfig"],
 		message: markup`Misplaced project config <emphasis>${misplacedName}</emphasis>`,
 		advice: [
 			{

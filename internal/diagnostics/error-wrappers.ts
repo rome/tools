@@ -14,10 +14,8 @@ import {
 	DeriveErrorDiagnosticOptions,
 	deriveDiagnosticFromError,
 } from "./derive";
-import {
-	NodeSystemError,
-	convertPossibleNodeErrorToDiagnostic,
-} from "@internal/node";
+import {convertPossibleNodeErrorToDiagnostic} from "./node-errors";
+import {NodeSystemError} from "@internal/node";
 
 // If printDiagnosticsToString throws a DiagnosticsError then we'll be trapped in a loop forever
 // since we'll continuously be trying to serialize diagnostics
@@ -72,7 +70,7 @@ export class DiagnosticsError extends Error implements NodeSystemError {
 			wrapErrors: true,
 		});
 		for (const diag of this.diagnostics) {
-			printer.printDiagnostic(diag);
+			printer.printDiagnostic(diag, reporter);
 		}
 		message += stream.read();
 		insideDiagnosticsErrorSerial = false;

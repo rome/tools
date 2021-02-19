@@ -17,9 +17,6 @@
 
   ℹ User-defined JSX components should be defined and referenced in PascalCase.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -43,9 +40,6 @@
 
   ℹ User-defined JSX components should be defined and referenced in PascalCase.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -59,7 +53,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -73,7 +66,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -87,7 +79,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -101,7 +92,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -115,7 +105,6 @@
 ### `6`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -129,7 +118,6 @@
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -143,7 +131,6 @@
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 

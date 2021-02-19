@@ -20,6 +20,7 @@ import {
 } from "@internal/browser-features/Browser";
 import {data} from "@internal/browsers-db";
 import {consumeUnknown} from "@internal/consume";
+import {DIAGNOSTIC_CATEGORIES} from "@internal/diagnostics";
 
 interface GetBrowserOptions {
 	name: BrowserIds | string;
@@ -53,7 +54,7 @@ const browserCache = new Map<string, Browser>();
 let aliases: Map<string, BrowserIds>;
 
 function loadAliases(): Map<string, BrowserIds> {
-	const agents = consumeUnknown(data, "parse").get("agents");
+	const agents = consumeUnknown(data, DIAGNOSTIC_CATEGORIES.parse).get("agents");
 	const abbr = new Map<string, BrowserIds>();
 	for (const key in agents.asUnknownObject()) {
 		abbr.set(

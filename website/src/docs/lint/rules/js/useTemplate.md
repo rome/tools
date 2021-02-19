@@ -17,7 +17,7 @@ require template literals instead of string concatenation
 **ESLint Equivalent:** [prefer-template](https://eslint.org/docs/rules/prefer-template)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:75edd8ead8ede983e01f1b21b4c111771a0a290c,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:d521e83d750bd9c2d76fd91d0e9204f213b54376,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -111,6 +111,9 @@ require template literals instead of string concatenation
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:18</span> <strong>lint/js/useTemplate</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;"><strong>Template literals</strong></span><span style="color: Tomato;"> are preferred over </span><span style="color: Tomato;"><strong>string concatenation</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">+</span> <span class="token string">&apos;foo&apos;</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">&apos;bar&apos;</span><span class="token punctuation">)</span>
+                      <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Safe fix</span>
 

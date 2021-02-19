@@ -1,3 +1,4 @@
+import {DiagnosticCategory} from "@internal/diagnostics";
 import {Dict} from "@internal/typescript-helpers";
 
 type Test = {
@@ -6,9 +7,12 @@ type Test = {
 	filename: string;
 };
 
-type Tests = Dict<Test | (Test[]) | (Test[][])>;
+type Tests = Dict<{
+	category: DiagnosticCategory;
+	cases: Test | (Test[]) | (Test[][]);
+}>;
 
-/* GENERATED:START(hash:62ad21b6efdfcda32aa6185b623728dc0e5b14eb,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
+/* GENERATED:START(hash:dc6d907fbe31d034b0e660cd5366c15b40b3c20f,id:main) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules` to update. */
 // @ts-ignore
 import noAriaUnsupportedElements from "./a11y/noAriaUnsupportedElements.test.rjson";
 // @ts-ignore
@@ -231,115 +235,445 @@ import noPosixInRegularExpression from "./regex/noPosixInRegularExpression.test.
 import preferShorthandArrayType from "./ts/preferShorthandArrayType.test.rjson";
 
 export const tests: Tests = {
-	"a11y/noAriaUnsupportedElements": noAriaUnsupportedElements,
-	"a11y/noDistractingElements": noDistractingElements,
-	"a11y/noNoninteractiveElementToInteractiveRole": noNoninteractiveElementToInteractiveRole,
-	"a11y/noNoninteractiveTabindex": noNoninteractiveTabindex,
-	"a11y/noSvgWithoutTitle": noSvgWithoutTitle,
-	"a11y/useAltText": useAltText,
-	"a11y/useAriaProptypes": useAriaProptypes,
-	"a11y/useHtmlLang": useHtmlLang,
-	"a11y/useMediaCaption": useMediaCaption,
-	"a11y/useValidLang": useValidLang,
-	"html/useClosingNonVoid": useClosingNonVoid,
-	"js/noArguments": noArguments,
-	"js/noAsyncPromiseExecutor": noAsyncPromiseExecutor,
-	"js/noCatchAssign": noCatchAssign,
-	"js/noCommaOperator": noCommaOperator,
-	"js/noCompareNegZero": noCompareNegZero,
-	"js/noCondAssign": noCondAssign,
-	"js/noDebugger": noDebugger,
-	"js/noDelete": noDelete,
-	"js/noDeleteVars": noDeleteVars,
-	"js/noDoubleEquals": noDoubleEquals,
-	"js/noDupeArgs": noDupeArgs,
-	"js/noDuplicateCase": noDuplicateCase,
-	"js/noDuplicateImportSource": noDuplicateImportSource,
-	"js/noDuplicateKeys": noDuplicateKeys,
-	"js/noEmptyBlocks": noEmptyBlocks,
-	"js/noExtraBooleanCast": noExtraBooleanCast,
-	"js/noFunctionAssign": noFunctionAssign,
-	"js/noGetterReturn": noGetterReturn,
-	"js/noImportAssign": noImportAssign,
-	"js/noLabelVar": noLabelVar,
-	"js/noNegationElse": noNegationElse,
-	"js/noNestedTernary": noNestedTernary,
-	"js/noRestrictedGlobals": noRestrictedGlobals,
-	"js/noSetterReturn": noSetterReturn,
-	"js/noShadowRestrictedNames": noShadowRestrictedNames,
-	"js/noShoutyConstants": noShoutyConstants,
-	"js/noSingleCharRegexAlternatives": noSingleCharRegexAlternatives,
-	"js/noSparseArray": noSparseArray,
-	"js/noTemplateCurlyInString": noTemplateCurlyInString,
-	"js/noUndeclaredVariables": noUndeclaredVariables,
-	"js/noUnnecessaryContinue": noUnnecessaryContinue,
-	"js/noUnsafeFinally": noUnsafeFinally,
-	"js/noUnsafeNegation": noUnsafeNegation,
-	"js/noUnusedTemplateLiteral": noUnusedTemplateLiteral,
-	"js/noUnusedVariables": noUnusedVariables,
-	"js/noVar": noVar,
-	"js/preferOptionalChaining": preferOptionalChaining,
-	"js/useBlockStatements": useBlockStatements,
-	"js/useDefaultExportBasename": useDefaultExportBasename,
-	"js/useDefaultImportBasename": useDefaultImportBasename,
-	"js/useFunctionDeclarations": useFunctionDeclarations,
-	"js/useSimplifiedLogicalExpression": useSimplifiedLogicalExpression,
-	"js/useSingleCaseStatement": useSingleCaseStatement,
-	"js/useSingleVarDeclarator": useSingleVarDeclarator,
-	"js/useSortedSpecifiers": useSortedSpecifiers,
-	"js/useTemplate": useTemplate,
-	"js/useWhile": useWhile,
-	"jsx-a11y/noAccessKey": noAccessKey,
-	"jsx-a11y/noAutofocus": noAutofocus,
-	"jsx-a11y/noHeaderScope": noHeaderScope,
-	"jsx-a11y/noOnChange": noOnChange,
-	"jsx-a11y/noPositiveTabindex": noPositiveTabindex,
-	"jsx-a11y/noRedundantAlt": noRedundantAlt,
-	"jsx-a11y/noRedundantRoles": noRedundantRoles,
-	"jsx-a11y/noTargetBlank": noTargetBlank,
-	"jsx-a11y/useAnchorContent": useAnchorContent,
-	"jsx-a11y/useAriaProps": useAriaProps,
-	"jsx-a11y/useAriaPropsForRole": useAriaPropsForRole,
-	"jsx-a11y/useHeadingContent": useHeadingContent,
-	"jsx-a11y/useIframeTitle": useIframeTitle,
-	"jsx-a11y/useKeyWithClickEvents": useKeyWithClickEvents,
-	"jsx-a11y/useKeyWithMouseEvents": useKeyWithMouseEvents,
-	"jsx-a11y/useValidAnchor": useValidAnchor,
-	"jsx/noCommentText": noCommentText,
-	"jsx/noDuplicateProps": noDuplicateProps,
-	"jsx/noImplicitBoolean": noImplicitBoolean,
-	"jsx/noPropSpreading": noPropSpreading,
-	"jsx/useJSXFileExtension": useJSXFileExtension,
-	"jsx/usePascalCase": usePascalCase,
-	"jsx/useSelfClosingElements": useSelfClosingElements,
-	"react/noAccessStateInSetState": noAccessStateInSetState,
-	"react/noArrayIndexKey": noArrayIndexKey,
-	"react/noChildrenProp": noChildrenProp,
-	"react/noDanger": noDanger,
-	"react/noDangerWithChildren": noDangerWithChildren,
-	"react/noDidMountSetState": noDidMountSetState,
-	"react/noDidUpdateSetState": noDidUpdateSetState,
-	"react/noDirectMutationState": noDirectMutationState,
-	"react/noFindDOMNode": noFindDOMNode,
-	"react/noRedundantShouldComponentUpdate": noRedundantShouldComponentUpdate,
-	"react/noRenderReturnValue": noRenderReturnValue,
-	"react/noStringRefs": noStringRefs,
-	"react/noThisInSFC": noThisInSFC,
-	"react/noUnsafe": noUnsafe,
-	"react/noUselessFragment": noUselessFragment,
-	"react/noVoidElementsWithChildren": noVoidElementsWithChildren,
-	"react/noWillUpdateSetState": noWillUpdateSetState,
-	"react/useButtonType": useButtonType,
-	"react/useFragmentSyntax": useFragmentSyntax,
-	"react/useKey": useKey,
-	"react/useRenderReturn": useRenderReturn,
-	"react/useSortComp": useSortComp,
-	"react/useStylePropObject": useStylePropObject,
-	"regex/noDuplicateGroupNamesInRegularExpressions": noDuplicateGroupNamesInRegularExpressions,
-	"regex/noEmptyCharacterClass": noEmptyCharacterClass,
-	"regex/noEmptyMatches": noEmptyMatches,
-	"regex/noMultipleSpacesInRegularExpressionLiterals": noMultipleSpacesInRegularExpressionLiterals,
-	"regex/noPosixInRegularExpression": noPosixInRegularExpression,
-	"ts/preferShorthandArrayType": preferShorthandArrayType,
+	"a11y/noAriaUnsupportedElements": {
+		category: ["lint", "a11y", "noAriaUnsupportedElements"],
+		cases: noAriaUnsupportedElements,
+	},
+	"a11y/noDistractingElements": {
+		category: ["lint", "a11y", "noDistractingElements"],
+		cases: noDistractingElements,
+	},
+	"a11y/noNoninteractiveElementToInteractiveRole": {
+		category: ["lint", "a11y", "noNoninteractiveElementToInteractiveRole"],
+		cases: noNoninteractiveElementToInteractiveRole,
+	},
+	"a11y/noNoninteractiveTabindex": {
+		category: ["lint", "a11y", "noNoninteractiveTabindex"],
+		cases: noNoninteractiveTabindex,
+	},
+	"a11y/noSvgWithoutTitle": {
+		category: ["lint", "a11y", "noSvgWithoutTitle"],
+		cases: noSvgWithoutTitle,
+	},
+	"a11y/useAltText": {
+		category: ["lint", "a11y", "useAltText"],
+		cases: useAltText,
+	},
+	"a11y/useAriaProptypes": {
+		category: ["lint", "a11y", "useAriaProptypes"],
+		cases: useAriaProptypes,
+	},
+	"a11y/useHtmlLang": {
+		category: ["lint", "a11y", "useHtmlLang"],
+		cases: useHtmlLang,
+	},
+	"a11y/useMediaCaption": {
+		category: ["lint", "a11y", "useMediaCaption"],
+		cases: useMediaCaption,
+	},
+	"a11y/useValidLang": {
+		category: ["lint", "a11y", "useValidLang"],
+		cases: useValidLang,
+	},
+	"html/useClosingNonVoid": {
+		category: ["lint", "html", "useClosingNonVoid"],
+		cases: useClosingNonVoid,
+	},
+	"js/noArguments": {
+		category: ["lint", "js", "noArguments"],
+		cases: noArguments,
+	},
+	"js/noAsyncPromiseExecutor": {
+		category: ["lint", "js", "noAsyncPromiseExecutor"],
+		cases: noAsyncPromiseExecutor,
+	},
+	"js/noCatchAssign": {
+		category: ["lint", "js", "noCatchAssign"],
+		cases: noCatchAssign,
+	},
+	"js/noCommaOperator": {
+		category: ["lint", "js", "noCommaOperator"],
+		cases: noCommaOperator,
+	},
+	"js/noCompareNegZero": {
+		category: ["lint", "js", "noCompareNegZero"],
+		cases: noCompareNegZero,
+	},
+	"js/noCondAssign": {
+		category: ["lint", "js", "noCondAssign"],
+		cases: noCondAssign,
+	},
+	"js/noDebugger": {
+		category: ["lint", "js", "noDebugger"],
+		cases: noDebugger,
+	},
+	"js/noDelete": {
+		category: ["lint", "js", "noDelete"],
+		cases: noDelete,
+	},
+	"js/noDeleteVars": {
+		category: ["lint", "js", "noDeleteVars"],
+		cases: noDeleteVars,
+	},
+	"js/noDoubleEquals": {
+		category: ["lint", "js", "noDoubleEquals"],
+		cases: noDoubleEquals,
+	},
+	"js/noDupeArgs": {
+		category: ["lint", "js", "noDupeArgs"],
+		cases: noDupeArgs,
+	},
+	"js/noDuplicateCase": {
+		category: ["lint", "js", "noDuplicateCase"],
+		cases: noDuplicateCase,
+	},
+	"js/noDuplicateImportSource": {
+		category: ["lint", "js", "noDuplicateImportSource"],
+		cases: noDuplicateImportSource,
+	},
+	"js/noDuplicateKeys": {
+		category: ["lint", "js", "noDuplicateKeys"],
+		cases: noDuplicateKeys,
+	},
+	"js/noEmptyBlocks": {
+		category: ["lint", "js", "noEmptyBlocks"],
+		cases: noEmptyBlocks,
+	},
+	"js/noExtraBooleanCast": {
+		category: ["lint", "js", "noExtraBooleanCast"],
+		cases: noExtraBooleanCast,
+	},
+	"js/noFunctionAssign": {
+		category: ["lint", "js", "noFunctionAssign"],
+		cases: noFunctionAssign,
+	},
+	"js/noGetterReturn": {
+		category: ["lint", "js", "noGetterReturn"],
+		cases: noGetterReturn,
+	},
+	"js/noImportAssign": {
+		category: ["lint", "js", "noImportAssign"],
+		cases: noImportAssign,
+	},
+	"js/noLabelVar": {
+		category: ["lint", "js", "noLabelVar"],
+		cases: noLabelVar,
+	},
+	"js/noNegationElse": {
+		category: ["lint", "js", "noNegationElse"],
+		cases: noNegationElse,
+	},
+	"js/noNestedTernary": {
+		category: ["lint", "js", "noNestedTernary"],
+		cases: noNestedTernary,
+	},
+	"js/noRestrictedGlobals": {
+		category: ["lint", "js", "noRestrictedGlobals"],
+		cases: noRestrictedGlobals,
+	},
+	"js/noSetterReturn": {
+		category: ["lint", "js", "noSetterReturn"],
+		cases: noSetterReturn,
+	},
+	"js/noShadowRestrictedNames": {
+		category: ["lint", "js", "noShadowRestrictedNames"],
+		cases: noShadowRestrictedNames,
+	},
+	"js/noShoutyConstants": {
+		category: ["lint", "js", "noShoutyConstants"],
+		cases: noShoutyConstants,
+	},
+	"js/noSingleCharRegexAlternatives": {
+		category: ["lint", "js", "noSingleCharRegexAlternatives"],
+		cases: noSingleCharRegexAlternatives,
+	},
+	"js/noSparseArray": {
+		category: ["lint", "js", "noSparseArray"],
+		cases: noSparseArray,
+	},
+	"js/noTemplateCurlyInString": {
+		category: ["lint", "js", "noTemplateCurlyInString"],
+		cases: noTemplateCurlyInString,
+	},
+	"js/noUndeclaredVariables": {
+		category: ["lint", "js", "noUndeclaredVariables"],
+		cases: noUndeclaredVariables,
+	},
+	"js/noUnnecessaryContinue": {
+		category: ["lint", "js", "noUnnecessaryContinue"],
+		cases: noUnnecessaryContinue,
+	},
+	"js/noUnsafeFinally": {
+		category: ["lint", "js", "noUnsafeFinally"],
+		cases: noUnsafeFinally,
+	},
+	"js/noUnsafeNegation": {
+		category: ["lint", "js", "noUnsafeNegation"],
+		cases: noUnsafeNegation,
+	},
+	"js/noUnusedTemplateLiteral": {
+		category: ["lint", "js", "noUnusedTemplateLiteral"],
+		cases: noUnusedTemplateLiteral,
+	},
+	"js/noUnusedVariables": {
+		category: ["lint", "js", "noUnusedVariables"],
+		cases: noUnusedVariables,
+	},
+	"js/noVar": {
+		category: ["lint", "js", "noVar"],
+		cases: noVar,
+	},
+	"js/preferOptionalChaining": {
+		category: ["lint", "js", "preferOptionalChaining"],
+		cases: preferOptionalChaining,
+	},
+	"js/useBlockStatements": {
+		category: ["lint", "js", "useBlockStatements"],
+		cases: useBlockStatements,
+	},
+	"js/useDefaultExportBasename": {
+		category: ["lint", "js", "useDefaultExportBasename"],
+		cases: useDefaultExportBasename,
+	},
+	"js/useDefaultImportBasename": {
+		category: ["lint", "js", "useDefaultImportBasename"],
+		cases: useDefaultImportBasename,
+	},
+	"js/useFunctionDeclarations": {
+		category: ["lint", "js", "useFunctionDeclarations"],
+		cases: useFunctionDeclarations,
+	},
+	"js/useSimplifiedLogicalExpression": {
+		category: ["lint", "js", "useSimplifiedLogicalExpression"],
+		cases: useSimplifiedLogicalExpression,
+	},
+	"js/useSingleCaseStatement": {
+		category: ["lint", "js", "useSingleCaseStatement"],
+		cases: useSingleCaseStatement,
+	},
+	"js/useSingleVarDeclarator": {
+		category: ["lint", "js", "useSingleVarDeclarator"],
+		cases: useSingleVarDeclarator,
+	},
+	"js/useSortedSpecifiers": {
+		category: ["lint", "js", "useSortedSpecifiers"],
+		cases: useSortedSpecifiers,
+	},
+	"js/useTemplate": {
+		category: ["lint", "js", "useTemplate"],
+		cases: useTemplate,
+	},
+	"js/useWhile": {
+		category: ["lint", "js", "useWhile"],
+		cases: useWhile,
+	},
+	"jsx-a11y/noAccessKey": {
+		category: ["lint", "jsx-a11y", "noAccessKey"],
+		cases: noAccessKey,
+	},
+	"jsx-a11y/noAutofocus": {
+		category: ["lint", "jsx-a11y", "noAutofocus"],
+		cases: noAutofocus,
+	},
+	"jsx-a11y/noHeaderScope": {
+		category: ["lint", "jsx-a11y", "noHeaderScope"],
+		cases: noHeaderScope,
+	},
+	"jsx-a11y/noOnChange": {
+		category: ["lint", "jsx-a11y", "noOnChange"],
+		cases: noOnChange,
+	},
+	"jsx-a11y/noPositiveTabindex": {
+		category: ["lint", "jsx-a11y", "noPositiveTabindex"],
+		cases: noPositiveTabindex,
+	},
+	"jsx-a11y/noRedundantAlt": {
+		category: ["lint", "jsx-a11y", "noRedundantAlt"],
+		cases: noRedundantAlt,
+	},
+	"jsx-a11y/noRedundantRoles": {
+		category: ["lint", "jsx-a11y", "noRedundantRoles"],
+		cases: noRedundantRoles,
+	},
+	"jsx-a11y/noTargetBlank": {
+		category: ["lint", "jsx-a11y", "noTargetBlank"],
+		cases: noTargetBlank,
+	},
+	"jsx-a11y/useAnchorContent": {
+		category: ["lint", "jsx-a11y", "useAnchorContent"],
+		cases: useAnchorContent,
+	},
+	"jsx-a11y/useAriaProps": {
+		category: ["lint", "jsx-a11y", "useAriaProps"],
+		cases: useAriaProps,
+	},
+	"jsx-a11y/useAriaPropsForRole": {
+		category: ["lint", "jsx-a11y", "useAriaPropsForRole"],
+		cases: useAriaPropsForRole,
+	},
+	"jsx-a11y/useHeadingContent": {
+		category: ["lint", "jsx-a11y", "useHeadingContent"],
+		cases: useHeadingContent,
+	},
+	"jsx-a11y/useIframeTitle": {
+		category: ["lint", "jsx-a11y", "useIframeTitle"],
+		cases: useIframeTitle,
+	},
+	"jsx-a11y/useKeyWithClickEvents": {
+		category: ["lint", "jsx-a11y", "useKeyWithClickEvents"],
+		cases: useKeyWithClickEvents,
+	},
+	"jsx-a11y/useKeyWithMouseEvents": {
+		category: ["lint", "jsx-a11y", "useKeyWithMouseEvents"],
+		cases: useKeyWithMouseEvents,
+	},
+	"jsx-a11y/useValidAnchor": {
+		category: ["lint", "jsx-a11y", "useValidAnchor"],
+		cases: useValidAnchor,
+	},
+	"jsx/noCommentText": {
+		category: ["lint", "jsx", "noCommentText"],
+		cases: noCommentText,
+	},
+	"jsx/noDuplicateProps": {
+		category: ["lint", "jsx", "noDuplicateProps"],
+		cases: noDuplicateProps,
+	},
+	"jsx/noImplicitBoolean": {
+		category: ["lint", "jsx", "noImplicitBoolean"],
+		cases: noImplicitBoolean,
+	},
+	"jsx/noPropSpreading": {
+		category: ["lint", "jsx", "noPropSpreading"],
+		cases: noPropSpreading,
+	},
+	"jsx/useJSXFileExtension": {
+		category: ["lint", "jsx", "useJSXFileExtension"],
+		cases: useJSXFileExtension,
+	},
+	"jsx/usePascalCase": {
+		category: ["lint", "jsx", "usePascalCase"],
+		cases: usePascalCase,
+	},
+	"jsx/useSelfClosingElements": {
+		category: ["lint", "jsx", "useSelfClosingElements"],
+		cases: useSelfClosingElements,
+	},
+	"react/noAccessStateInSetState": {
+		category: ["lint", "react", "noAccessStateInSetState"],
+		cases: noAccessStateInSetState,
+	},
+	"react/noArrayIndexKey": {
+		category: ["lint", "react", "noArrayIndexKey"],
+		cases: noArrayIndexKey,
+	},
+	"react/noChildrenProp": {
+		category: ["lint", "react", "noChildrenProp"],
+		cases: noChildrenProp,
+	},
+	"react/noDanger": {
+		category: ["lint", "react", "noDanger"],
+		cases: noDanger,
+	},
+	"react/noDangerWithChildren": {
+		category: ["lint", "react", "noDangerWithChildren"],
+		cases: noDangerWithChildren,
+	},
+	"react/noDidMountSetState": {
+		category: ["lint", "react", "noDidMountSetState"],
+		cases: noDidMountSetState,
+	},
+	"react/noDidUpdateSetState": {
+		category: ["lint", "react", "noDidUpdateSetState"],
+		cases: noDidUpdateSetState,
+	},
+	"react/noDirectMutationState": {
+		category: ["lint", "react", "noDirectMutationState"],
+		cases: noDirectMutationState,
+	},
+	"react/noFindDOMNode": {
+		category: ["lint", "react", "noFindDOMNode"],
+		cases: noFindDOMNode,
+	},
+	"react/noRedundantShouldComponentUpdate": {
+		category: ["lint", "react", "noRedundantShouldComponentUpdate"],
+		cases: noRedundantShouldComponentUpdate,
+	},
+	"react/noRenderReturnValue": {
+		category: ["lint", "react", "noRenderReturnValue"],
+		cases: noRenderReturnValue,
+	},
+	"react/noStringRefs": {
+		category: ["lint", "react", "noStringRefs"],
+		cases: noStringRefs,
+	},
+	"react/noThisInSFC": {
+		category: ["lint", "react", "noThisInSFC"],
+		cases: noThisInSFC,
+	},
+	"react/noUnsafe": {
+		category: ["lint", "react", "noUnsafe"],
+		cases: noUnsafe,
+	},
+	"react/noUselessFragment": {
+		category: ["lint", "react", "noUselessFragment"],
+		cases: noUselessFragment,
+	},
+	"react/noVoidElementsWithChildren": {
+		category: ["lint", "react", "noVoidElementsWithChildren"],
+		cases: noVoidElementsWithChildren,
+	},
+	"react/noWillUpdateSetState": {
+		category: ["lint", "react", "noWillUpdateSetState"],
+		cases: noWillUpdateSetState,
+	},
+	"react/useButtonType": {
+		category: ["lint", "react", "useButtonType"],
+		cases: useButtonType,
+	},
+	"react/useFragmentSyntax": {
+		category: ["lint", "react", "useFragmentSyntax"],
+		cases: useFragmentSyntax,
+	},
+	"react/useKey": {
+		category: ["lint", "react", "useKey"],
+		cases: useKey,
+	},
+	"react/useRenderReturn": {
+		category: ["lint", "react", "useRenderReturn"],
+		cases: useRenderReturn,
+	},
+	"react/useSortComp": {
+		category: ["lint", "react", "useSortComp"],
+		cases: useSortComp,
+	},
+	"react/useStylePropObject": {
+		category: ["lint", "react", "useStylePropObject"],
+		cases: useStylePropObject,
+	},
+	"regex/noDuplicateGroupNamesInRegularExpressions": {
+		category: ["lint", "regex", "noDuplicateGroupNamesInRegularExpressions"],
+		cases: noDuplicateGroupNamesInRegularExpressions,
+	},
+	"regex/noEmptyCharacterClass": {
+		category: ["lint", "regex", "noEmptyCharacterClass"],
+		cases: noEmptyCharacterClass,
+	},
+	"regex/noEmptyMatches": {
+		category: ["lint", "regex", "noEmptyMatches"],
+		cases: noEmptyMatches,
+	},
+	"regex/noMultipleSpacesInRegularExpressionLiterals": {
+		category: ["lint", "regex", "noMultipleSpacesInRegularExpressionLiterals"],
+		cases: noMultipleSpacesInRegularExpressionLiterals,
+	},
+	"regex/noPosixInRegularExpression": {
+		category: ["lint", "regex", "noPosixInRegularExpression"],
+		cases: noPosixInRegularExpression,
+	},
+	"ts/preferShorthandArrayType": {
+		category: ["lint", "ts", "preferShorthandArrayType"],
+		cases: preferShorthandArrayType,
+	},
 };
 /* GENERATED:END(id:main) */

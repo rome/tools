@@ -52,12 +52,14 @@ JSRoot {
 				start: Position 1:7
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					";"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>\\\\</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>;</emphasis>"}
+					}
 				]
 			}
 		}
@@ -71,13 +73,12 @@ JSRoot {
 
  es2015/for-of/invalid-escape-of/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ;
+  ✖ Unexpected character \
 
     for (x \u006ff y) {}
            ^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ;
 
-✖ Found 1 problem
 
 ```

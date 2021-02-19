@@ -55,17 +55,13 @@ JSRoot {
 				start: Position 1:13
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Unclosed JSX element"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "Originated from opening tag of <emphasis>"}
-							"div"
-							RAW_MARKUP {value: "</emphasis>"}
-						]
+						text: RAW_MARKUP {value: "Originated from opening tag of <emphasis>div</emphasis>"}
 					}
 					frame {location: SourceLocation jsx/errors/unclosed-jsx-element/input.jsx 1:1-1:4}
 				]
@@ -83,13 +79,13 @@ JSRoot {
 
   ✖ Unclosed JSX element
 
+    <div>() => {}
+                 ^
+
   ℹ Originated from opening tag of div
 
     <div>() => {}
      ^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -63,6 +63,5 @@ HTMLRoot {
 ### `diagnostics`
 
 ```
-✔ No known problems!
 
 ```

@@ -14,7 +14,7 @@ eleventyNavigation:
 MISSING DOCUMENTATION
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:5fe5dea0ef03a9c9ea79e8e39f9eb9fe28074485,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:fb61900ee54560fc35fd804aa9d0530a5c0b448b,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -25,6 +25,10 @@ MISSING DOCUMENTATION
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/noShoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
+
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">FOO</span> <span class="token operator">=</span> <span class="token string">&quot;FOO&quot;</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">FOO</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">You should avoid declaring constants with a string that&apos;s the same</span>
     <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessary</span>
@@ -54,6 +58,12 @@ MISSING DOCUMENTATION
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">FOO</span> <span class="token operator">=</span> <span class="token string">&quot;FOO&quot;</span><span class="token punctuation">;</span>
+  <strong>  2</strong><strong> │ </strong><span class="token keyword">function</span> <span class="token function">f</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">FOO</span><span class="token punctuation">;</span>
+     <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">You should avoid declaring constants with a string that&apos;s the same</span>
     <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessary</span>
     <span style="color: rgb(38, 148, 255);">indirection when it&apos;s only two additional characters to inline.</span>
@@ -80,6 +90,10 @@ MISSING DOCUMENTATION
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:2:12</span> <strong>lint/js/noShoutyConstants</strong> <span style="color: #000; background-color: #ddd;"> FIXABLE </span> ━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Redundant constant reference</span>
+
+  <strong>  1</strong><strong> │ </strong><span class="token keyword">const</span> <span class="token variable">FOO</span> <span class="token operator">=</span> <span class="token string">&quot;FOO&quot;</span><span class="token punctuation">,</span> <span class="token variable">BAR</span> <span class="token operator">=</span> <span class="token string">&quot;bar&quot;</span><span class="token punctuation">;</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong><span class="token variable">console</span><span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token variable">FOO</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>            <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">You should avoid declaring constants with a string that&apos;s the same</span>
     <span style="color: rgb(38, 148, 255);">value as the variable name. It introduces a level of unnecessary</span>

@@ -10,7 +10,12 @@ import CompilerContext from "./lib/CompilerContext";
 import {parseJS} from "@internal/js-parser";
 import {dedent} from "@internal/string-utils";
 import * as signals from "./signals";
-import {DiagnosticSuppressions, Diagnostics} from "@internal/diagnostics";
+import {
+	DIAGNOSTIC_CATEGORIES,
+	DiagnosticSuppressions,
+	Diagnostics,
+	equalCategoryNames,
+} from "@internal/diagnostics";
 
 function extractSuppressionsFromSource(
 	sourceText: string,
@@ -112,7 +117,12 @@ test(
 		t.is(result.suppressions.length, 4);
 		t.is(result.diagnostics.length, 3);
 		for (const diagnostic of result.diagnostics) {
-			t.is(diagnostic.description.category, "suppressions/duplicate");
+			t.true(
+				equalCategoryNames(
+					diagnostic.description.category,
+					DIAGNOSTIC_CATEGORIES["suppressions/duplicate"],
+				),
+			);
 		}
 
 		t.snapshot(result);
@@ -135,7 +145,12 @@ test(
 		t.is(result.suppressions.length, 2);
 		t.is(result.diagnostics.length, 1);
 		for (const diagnostic of result.diagnostics) {
-			t.is(diagnostic.description.category, "suppressions/overlap");
+			t.true(
+				equalCategoryNames(
+					diagnostic.description.category,
+					DIAGNOSTIC_CATEGORIES["suppressions/overlap"],
+				),
+			);
 		}
 
 		t.snapshot(result);
@@ -161,7 +176,12 @@ test(
 		t.is(result.diagnostics.length, 1);
 
 		for (const diagnostic of result.diagnostics) {
-			t.is(diagnostic.description.category, "suppressions/overlap");
+			t.true(
+				equalCategoryNames(
+					diagnostic.description.category,
+					DIAGNOSTIC_CATEGORIES["suppressions/overlap"],
+				),
+			);
 		}
 
 		t.snapshot(result);
@@ -187,7 +207,12 @@ test(
 		t.is(result.suppressions.length, 3);
 		t.is(result.diagnostics.length, 1);
 		for (const diagnostic of result.diagnostics) {
-			t.is(diagnostic.description.category, "suppressions/overlap");
+			t.true(
+				equalCategoryNames(
+					diagnostic.description.category,
+					DIAGNOSTIC_CATEGORIES["suppressions/overlap"],
+				),
+			);
 		}
 
 		t.snapshot(result);
@@ -214,7 +239,12 @@ test(
 		t.is(result.suppressions.length, 4);
 		t.is(result.diagnostics.length, 2);
 		for (const diagnostic of result.diagnostics) {
-			t.is(diagnostic.description.category, "suppressions/overlap");
+			t.true(
+				equalCategoryNames(
+					diagnostic.description.category,
+					DIAGNOSTIC_CATEGORIES["suppressions/overlap"],
+				),
+			);
 		}
 
 		t.snapshot(result);
@@ -252,9 +282,11 @@ test(
 		t.is(result.suppressions.length, 0);
 		t.is(result.diagnostics.length, 7);
 		for (const diagnostic of result.diagnostics) {
-			t.is(
-				diagnostic.description.category,
-				"suppressions/incorrectSuppressionStart",
+			t.true(
+				equalCategoryNames(
+					diagnostic.description.category,
+					DIAGNOSTIC_CATEGORIES["suppressions/incorrectSuppressionStart"],
+				),
 			);
 		}
 
@@ -278,7 +310,12 @@ test(
 		t.is(result.suppressions.length, 2);
 		t.is(result.diagnostics.length, 2);
 		for (const diagnostic of result.diagnostics) {
-			t.is(diagnostic.description.category, "suppressions/missingExplanation");
+			t.true(
+				equalCategoryNames(
+					diagnostic.description.category,
+					DIAGNOSTIC_CATEGORIES["suppressions/missingExplanation"],
+				),
+			);
 		}
 
 		t.snapshot(result);

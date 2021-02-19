@@ -17,9 +17,6 @@
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -44,9 +41,6 @@ age;
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -66,14 +60,8 @@ ages;
 
   ✖ Avoid using the any type.
 
-    const ages: Array<any> = ['seventeen'];ages;
-                      ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -98,9 +86,6 @@ ages;
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -125,9 +110,6 @@ greet();
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -147,14 +129,8 @@ greet();
 
   ✖ Avoid using the any type.
 
-    function greet(): Array<any> {};greet();
-                            ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -174,14 +150,8 @@ greet();
 
   ✖ Avoid using the any type.
 
-    function greet(): Array<Array<any>> {};greet();
-                                  ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -201,14 +171,8 @@ greet();
 
   ✖ Avoid using the any type.
 
-    function greet(param: Array<any>): string { return param; };greet();
-                                ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -230,9 +194,6 @@ greet();
 
   ✖ Avoid using the any type.
 
-    function greet(param: Array<any>): Array<any> { return param; };greet();
-                                ^^^
-
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
  lint/ts/noExplicitAny/reject/9/file.ts:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -241,9 +202,6 @@ greet();
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
 
 ```
 
@@ -260,7 +218,6 @@ greet();
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -275,7 +232,6 @@ age;
 ### `10`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -290,7 +246,6 @@ ages;
 ### `11`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -305,7 +260,6 @@ greet();
 ### `12`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -320,7 +274,6 @@ greet();
 ### `13`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -335,7 +288,6 @@ greet();
 ### `14`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -352,7 +304,6 @@ greet();
 ### `15`
 
 ```
-✔ No known problems!
 
 ```
 

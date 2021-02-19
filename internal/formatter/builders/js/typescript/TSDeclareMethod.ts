@@ -18,5 +18,6 @@ export default function TSDeclareMethod(
 		builder.tokenize(node.meta, node),
 		builder.tokenize(node.key, node),
 		printMethod(builder, node),
+		";",
 	]);
 }

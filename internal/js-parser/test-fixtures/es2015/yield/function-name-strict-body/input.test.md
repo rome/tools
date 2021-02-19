@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,15 +34,6 @@ JSRoot {
 				end: Position 1:14
 				path: UIDPath<es2015/yield/function-name-strict-body/input.js>
 				start: Position 1:9
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
 			}
 		}
 	]
@@ -84,8 +81,5 @@ JSRoot {
     function yield() { "use strict"; }
              ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -17,7 +17,7 @@ enforce no duplicate props
 **ESLint Equivalent:** [jsx-no-duplicate-props](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/jsx-no-duplicate-props.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:82e7a53d08ef38ec28807689063c18c72f12b924,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:4e8bafa76d9691d3fcb1400ce94e31d9d5b0d89d,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -27,6 +27,9 @@ enforce no duplicate props
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:1:7</span> <strong>lint/jsx/noDuplicateProps</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate component props. Check the </span><span style="color: Tomato;"><strong>foo</strong></span><span style="color: Tomato;"> prop.</span>
+
+    &lt;<span class="token variable">Hello</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token attr-name">foo</span><span class="token operator">=</span><span class="token string">&apos;baz&apos;</span> <span class="token operator">/</span>&gt;
+           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
@@ -43,6 +46,9 @@ enforce no duplicate props
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate component props. Check the </span><span style="color: Tomato;"><strong>style</strong></span><span style="color: Tomato;"> prop.</span>
 
+    &lt;<span class="token variable">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;
+         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
 
     &lt;<span class="token variable">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;
@@ -52,7 +58,13 @@ enforce no duplicate props
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid duplicate component props. Check the </span><span style="color: Tomato;"><strong>id</strong></span><span style="color: Tomato;"> prop.</span>
 
+    &lt;<span class="token variable">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;
+                               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Defined already here</span>
+
+    &lt;<span class="token variable">div</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">style</span><span class="token operator">=</span><span class="token string">&apos;{}&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;foo&apos;</span> <span class="token attr-name">id</span><span class="token operator">=</span><span class="token string">&apos;bar&apos;</span> <span class="token operator">/</span>&gt;
+                                        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
 </code></pre>{% endraw %}
 

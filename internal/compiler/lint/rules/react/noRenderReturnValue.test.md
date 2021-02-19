@@ -15,9 +15,6 @@
     const foo = ReactDOM.render(<div />, document.body);
                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -36,12 +33,6 @@ const foo = ReactDOM.render(<div />, document.body);
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    const foo = bar && ReactDOM.render(<div />, document.body);
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -60,12 +51,6 @@ const foo = bar && ReactDOM.render(<div />, document.body);
 
   ✖ Do not depend on the return value from ReactDOM.render().
 
-    const foo = bar ? ReactDOM.render(<div />, document.body) : null
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -87,9 +72,6 @@ const foo = bar ? ReactDOM.render(<div />, document.body) : null;
     const foo = () => ReactDOM.render(<div />, document.body);
                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -115,9 +97,6 @@ function foo() {
       │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ };
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -142,9 +121,6 @@ const foo = {
   > 2 │ foo = ReactDOM.render(<div />, document.body);
       │       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -169,9 +145,6 @@ foo = ReactDOM.render(<div />, document.body);
       │          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
     3 │ }
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -187,7 +160,6 @@ function render() {
 ### `7`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -201,7 +173,6 @@ ReactDOM.render(<div />, document.body);
 ### `8`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -217,7 +188,6 @@ function render() {
 ### `9`
 
 ```
-✔ No known problems!
 
 ```
 

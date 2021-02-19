@@ -30,12 +30,14 @@ JSRoot {
 				start: Position 1:14
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>x</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
 				]
 			}
 		}
@@ -118,13 +120,12 @@ JSRoot {
 
  es2017/async-functions/invalid-escape-async-obj-method/input.js:1:14 parse(js) ━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character x
 
     ({ \u0061sync x() { await x } })
                   ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

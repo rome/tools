@@ -27,12 +27,18 @@ import {
 	DiagnosticSuppressions,
 	DiagnosticsProcessor,
 	descriptions,
-	joinCategoryName,
+	equalCategoryNames,
+	formatCategoryDescription,
 } from "@internal/diagnostics";
 import Record from "./Record";
 import {RootScope} from "../scope/Scope";
 import {reduceNode} from "../methods/reduce";
-import {AnyPath, MixedPathSet, equalPaths} from "@internal/path";
+import {
+	AbsoluteFilePath,
+	AbsoluteFilePathSet,
+	AnyPath,
+	equalPaths,
+} from "@internal/path";
 import {
 	AnyVisitor,
 	CompilerProject,
@@ -71,7 +77,6 @@ export type ContextArg = {
 
 type AddDiagnosticResult = {
 	loc: undefined | DiagnosticLocation;
-	diagnostic: undefined | Diagnostic;
 	suppressed: boolean;
 };
 
@@ -112,7 +117,7 @@ export default class CompilerContext {
 		this.project = CompilerContext.normalizeProject(project);
 		this.options = options;
 		this.origin = origin;
-		this.cacheDependencies = new MixedPathSet();
+		this.cacheDependencies = new AbsoluteFilePathSet();
 		this.language = inferDiagnosticLanguageFromRootAST(ast);
 		this.sourceTypeJS = ast.type === "JSRoot" ? ast.sourceType : undefined;
 		this.rootScope = new RootScope(this, ast);
@@ -142,7 +147,7 @@ export default class CompilerContext {
 	private ast: AnyRoot;
 
 	public comments: CommentsConsumer;
-	private cacheDependencies: MixedPathSet;
+	private cacheDependencies: AbsoluteFilePathSet;
 	public records: Record[];
 
 	public diagnostics: DiagnosticsProcessor;
@@ -188,7 +193,7 @@ export default class CompilerContext {
 		const nonOverlapSuppressions = new Map();
 
 		for (const suppression of this.suppressions) {
-			const key = joinCategoryName(suppression);
+			const key = formatCategoryDescription(suppression);
 
 			if (!nonOverlapSuppressions.has(key)) {
 				nonOverlapSuppressions.set(key, suppression);
@@ -231,11 +236,11 @@ export default class CompilerContext {
 		return false;
 	}
 
-	public getCacheDependencies(): AnyPath[] {
+	public getCacheDependencies(): AbsoluteFilePath[] {
 		return Array.from(this.cacheDependencies);
 	}
 
-	public addCacheDependency(path: AnyPath) {
+	public addCacheDependency(path: AbsoluteFilePath) {
 		this.cacheDependencies.add(path);
 	}
 
@@ -371,7 +376,7 @@ export default class CompilerContext {
 			};
 		}
 
-		const diagnostic = this.diagnostics.addDiagnostic({
+		this.diagnostics.addDiagnostic({
 			...diag,
 			tags,
 			description: {
@@ -403,7 +408,7 @@ export default class CompilerContext {
 			);
 			for (const {category, categoryValue, action} of decisions) {
 				if (
-					category === diagCategory &&
+					equalCategoryNames(category, diagCategory) &&
 					action === "fix" &&
 					categoryValue === diagCategoryValue
 				) {
@@ -414,7 +419,6 @@ export default class CompilerContext {
 
 		return {
 			loc,
-			diagnostic,
 			suppressed,
 		};
 	}

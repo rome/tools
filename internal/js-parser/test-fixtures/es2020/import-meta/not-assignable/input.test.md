@@ -38,6 +38,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Invalid left-hand side in assignment expression"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -45,15 +51,6 @@ JSRoot {
 				end: Position 1:11
 				path: UIDPath<es2020/import-meta/not-assignable/input.js>
 				start: Position 1:0
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Invalid left-hand side in "}
-					"assignment expression"
-				]
 			}
 		}
 	]
@@ -71,8 +68,5 @@ JSRoot {
     import.meta = true;
     ^^^^^^^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

@@ -3,7 +3,6 @@ import {
 	ExtensionHandlerMethodInfo,
 	PartialExtensionHandler,
 } from "@internal/core/common/file-handlers/types";
-import {createAnyPath} from "@internal/path";
 import {consumeConfig, json, stringifyConfig} from "@internal/codec-config";
 import {parseJS} from "@internal/js-parser";
 
@@ -20,24 +19,22 @@ export const configHandler: PartialExtensionHandler = {
 		info: ExtensionHandlerMethodInfo,
 	): Promise<ExtensionCustomLintResult> {
 		const {file, integrity, mtimeNs, worker} = info;
-		const {uid} = file;
 
 		const sourceText = await worker.readFileText(file);
-		const path = createAnyPath(uid);
 
 		let formatted: string = sourceText;
 
 		if (sourceText.length > 50_000) {
 			// Fast path for big files
 			consumeConfig({
-				path,
+				path: file.uid,
 				input: sourceText,
 				integrity,
 			});
 		} else {
 			formatted = stringifyConfig(
 				consumeConfig({
-					path,
+					path: file.uid,
 					input: sourceText,
 					integrity,
 				}),
@@ -58,7 +55,7 @@ export const configHandler: PartialExtensionHandler = {
 
 		// Parse the JSON to make sure it's valid
 		const obj = consumeConfig({
-			path: createAnyPath(file.uid),
+			path: file.uid,
 			input: src,
 		}).consumer.asUnknown();
 

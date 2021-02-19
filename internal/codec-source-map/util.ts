@@ -12,7 +12,6 @@
  */
 
 import {Mapping} from "./types";
-import {ob1Get0, ob1Get1} from "@internal/ob1";
 
 function strcmp(a: undefined | string, b: undefined | string): number {
 	if (a === b) {
@@ -43,12 +42,13 @@ export function compareByGeneratedPositionsInflated(
 	mappingB: Mapping,
 ): number {
 	let cmp: number =
-		ob1Get1(mappingA.generated.line) - ob1Get1(mappingB.generated.line);
+		mappingA.generated.line.valueOf() - mappingB.generated.line.valueOf();
 	if (cmp !== 0) {
 		return cmp;
 	}
 
-	cmp = ob1Get0(mappingA.generated.column) - ob1Get0(mappingB.generated.column);
+	cmp =
+		mappingA.generated.column.valueOf() - mappingB.generated.column.valueOf();
 	if (cmp !== 0) {
 		return cmp;
 	}
@@ -65,12 +65,13 @@ export function compareByGeneratedPositionsInflated(
 	} else if (mappingB.original == null) {
 		return -1;
 	} else {
-		cmp = ob1Get1(mappingA.original.line) - ob1Get1(mappingB.original.line);
+		cmp = mappingA.original.line.valueOf() - mappingB.original.line.valueOf();
 		if (cmp !== 0) {
 			return cmp;
 		}
 
-		cmp = ob1Get0(mappingA.original.column) - ob1Get0(mappingB.original.column);
+		cmp =
+			mappingA.original.column.valueOf() - mappingB.original.column.valueOf();
 		if (cmp !== 0) {
 			return cmp;
 		}

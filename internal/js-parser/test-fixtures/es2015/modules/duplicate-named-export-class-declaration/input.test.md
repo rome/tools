@@ -30,13 +30,9 @@ JSRoot {
 				start: Position 2:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "`"}
-					"Foo"
-					RAW_MARKUP {value: "` has already been exported. Exported identifiers must be unique."}
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "`Foo` has already been exported. Exported identifiers must be unique."}
 				advice: Array [
 					log {
 						category: "info"
@@ -99,14 +95,15 @@ JSRoot {
 
   ✖ `Foo` has already been exported. Exported identifiers must be unique.
 
+    1 │ export { Foo };
+  > 2 │ export class Foo {};
+      │        ^^^^^^^^^^^^
+
   ℹ Defined already here
 
   > 1 │ export { Foo };
       │          ^^^
     2 │ export class Foo {};
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

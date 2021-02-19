@@ -11,7 +11,7 @@ CSSRoot {
 	diagnostics: Array []
 	integrity: undefined
 	loc: SourceLocation selectors/input.css 1:0-39:1
-	path: RelativeFilePath<selectors/input.css>
+	path: RelativePath<selectors/input.css>
 	body: Array [
 		CSSRule {
 			loc: SourceLocation selectors/input.css 1:0-3:1

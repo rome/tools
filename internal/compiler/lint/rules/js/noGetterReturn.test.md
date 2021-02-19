@@ -22,9 +22,6 @@
 
   ℹ Getters that do not return values are either typos or should not be getters.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -57,9 +54,6 @@ class p {
 
   ℹ Getters that do not return values are either typos or should not be getters.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -77,7 +71,6 @@ let p = {
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 

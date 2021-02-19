@@ -9,11 +9,7 @@ import {ManifestDependencies} from "./dependencies";
 import {SPDXExpressionNode} from "@internal/codec-spdx-license";
 import {SemverVersionNode} from "@internal/codec-semver";
 import {Consumer} from "@internal/consume";
-import {
-	AbsoluteFilePath,
-	RelativeFilePath,
-	RelativeFilePathMap,
-} from "@internal/path";
+import {AbsoluteFilePath, RelativePath, RelativePathMap} from "@internal/path";
 import {JSONObject, JSONPropertyValue} from "@internal/codec-config";
 import {Dict} from "@internal/typescript-helpers";
 import {PathPatterns} from "@internal/path-match";
@@ -50,12 +46,12 @@ export type ManifestBugs = {
 	email: MString;
 };
 
-export type ManifestExports = RelativeFilePathMap<ManifestExportConditions>;
+export type ManifestExports = RelativePathMap<ManifestExportConditions>;
 
 export type ManifestExportRelativeCondition = {
 	type: "relative";
 	consumer: Consumer;
-	relative: RelativeFilePath;
+	relative: RelativePath;
 };
 
 export type ManifestExportNestedCondition = {

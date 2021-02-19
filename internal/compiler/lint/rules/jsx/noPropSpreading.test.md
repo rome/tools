@@ -12,15 +12,9 @@
 
   ✖ Avoid using property spreading in JSX components.
 
-    <App {...props} />
-         ^^^^^^^^^^
-
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -39,15 +33,9 @@
 
   ✖ Avoid using property spreading in JSX components.
 
-    <MyCustomComponent {...props} some_other_prop={some_other_prop} />
-                       ^^^^^^^^^^
-
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -66,15 +54,9 @@
 
   ✖ Avoid using property spreading in JSX components.
 
-    <MyCustomComponent some_other_prop={some_other_prop} {...props} />
-                                                         ^^^^^^^^^^
-
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -93,15 +75,9 @@
 
   ✖ Avoid using property spreading in JSX components.
 
-    <img {...props} />
-         ^^^^^^^^^^
-
   ℹ Explicit JSX attributes enhance the readability of code by clearly indicating which props are
     accepted by a given element.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -115,7 +91,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -129,7 +104,6 @@
 ### `5`
 
 ```
-✔ No known problems!
 
 ```
 

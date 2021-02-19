@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:16
+				end: Position 1:11
 				path: UIDPath<esprima/es2015-import-declaration/invalid-import-specifiers/input.js>
 				start: Position 1:12
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"{"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>f</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening import specifiers character <emphasis>{</emphasis>"}
+					}
 				]
 			}
 		}
@@ -118,13 +120,12 @@ JSRoot {
 
  esprima/es2015-import-declaration/invalid-import-specifiers/input.js:1:12 parse(js) ━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected {
+  ✖ Unexpected character f
 
     import foo, from "bar";
-                ^^^^
+                ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening import specifiers character {
 
-✖ Found 1 problem
 
 ```

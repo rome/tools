@@ -10,14 +10,14 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/calc-division/input.css 1:0-3:1
-	path: RelativeFilePath<invalid/calc-division/input.css>
+	path: RelativePath<invalid/calc-division/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Incorrect character, expected a number or a parenthesis"}
 			}
 			location: Object {
@@ -25,7 +25,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:20
-				path: RelativeFilePath<invalid/calc-division/input.css>
+				path: RelativePath<invalid/calc-division/input.css>
 				start: Position 2:17
 			}
 		}

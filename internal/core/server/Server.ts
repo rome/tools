@@ -13,6 +13,7 @@ import {
 	VERSION,
 } from "@internal/core";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	DiagnosticOrigin,
 	Diagnostics,
 	DiagnosticsProcessor,
@@ -57,7 +58,7 @@ import {
 	ClientRequestFlags,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
 } from "../common/types/client";
-import {AbsoluteFilePath, createAnyPath, createUIDPath} from "@internal/path";
+import {AbsoluteFilePath, createUIDPath} from "@internal/path";
 import {Dict, mergeObjects} from "@internal/typescript-helpers";
 import LSPServer from "./lsp/LSPServer";
 import ServerReporter from "./ServerReporter";
@@ -240,8 +241,7 @@ export default class Server {
 			{
 				markupOptions: {
 					userConfig: this.userConfig,
-					humanizeFilename: (filename) => {
-						const path = createAnyPath(filename);
+					humanizeFilename: (path) => {
 						if (path.isAbsolute()) {
 							const remote = this.projectManager.getRemoteFromLocalPath(
 								path.assertAbsolute(),
@@ -439,7 +439,7 @@ export default class Server {
 
 	public createDiagnosticsPrinterFileHandler(): DiagnosticsFileHandler {
 		return {
-			readAbsolute: async (path) => {
+			read: async (path) => {
 				const virtualContents = this.virtualModules.getPossibleVirtualFileContents(
 					path,
 				);
@@ -450,7 +450,7 @@ export default class Server {
 				}
 			},
 			exists: async (path) => {
-				if (this.virtualModules.isVirtualPath(path)) {
+				if (path.isAbsolute() && this.virtualModules.isVirtualPath(path)) {
 					return true;
 				} else {
 					return undefined;
@@ -471,12 +471,7 @@ export default class Server {
 	public createDisconnectedDiagnosticsProcessor(
 		origins: DiagnosticOrigin[],
 	): DiagnosticsProcessor {
-		return this.createDiagnosticsProcessor({
-			onDiagnostics: (diagnostics: Diagnostics) => {
-				this.fatalErrorHandler.wrapPromise(
-					this.handleDisconnectedDiagnostics(diagnostics),
-				);
-			},
+		const processor = this.createDiagnosticsProcessor({
 			origins: [
 				...origins,
 				{
@@ -485,6 +480,16 @@ export default class Server {
 				},
 			],
 		});
+
+		processor.insertDiagnosticsEvent.subscribe(() => {
+			if (processor.hasDiagnostics()) {
+				this.fatalErrorHandler.wrapPromise(
+					this.handleDisconnectedDiagnostics(processor.getDiagnostics()),
+				);
+			}
+		});
+
+		return processor;
 	}
 
 	private maybeSetupGlobalErrorHandlers() {
@@ -910,7 +915,7 @@ export default class Server {
 				},
 				objectPath: [],
 				context: {
-					category: "flags/invalid",
+					category: DIAGNOSTIC_CATEGORIES["flags/invalid"],
 					getOriginalValue: () => {
 						return undefined;
 					},

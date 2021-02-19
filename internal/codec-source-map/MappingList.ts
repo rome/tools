@@ -13,7 +13,7 @@
 
 import {Mapping} from "./types";
 import {compareByGeneratedPositionsInflated} from "./util";
-import {ob1Number0, ob1Number1Neg1} from "@internal/ob1";
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 
 /**
  * Determine whether mappingB is after mappingA with respect to generated
@@ -42,9 +42,13 @@ export default class MappingList {
 		this.array = [];
 		this.sorted = true;
 		this.last = {
-			generated: {index: ob1Number0, line: ob1Number1Neg1, column: ob1Number0},
+			generated: {
+				index: new ZeroIndexed(),
+				line: new OneIndexed(-1),
+				column: new ZeroIndexed(),
+			},
 			// TODO: original: undefined
-			original: {line: ob1Number1Neg1, column: ob1Number0},
+			original: {line: new OneIndexed(-1), column: new ZeroIndexed()},
 			source: undefined,
 			name: undefined,
 		};

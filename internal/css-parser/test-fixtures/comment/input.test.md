@@ -10,7 +10,7 @@ CSSRoot {
 	diagnostics: Array []
 	integrity: undefined
 	loc: SourceLocation comment/input.css 1:0-11:1
-	path: RelativeFilePath<comment/input.css>
+	path: RelativePath<comment/input.css>
 	comments: Array [
 		CommentBlock {
 			id: "0"

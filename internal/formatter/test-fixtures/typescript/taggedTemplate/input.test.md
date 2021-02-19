@@ -7,7 +7,6 @@
 ### `Diagnostics`
 
 ```
-✔ No known problems!
 
 ```
 

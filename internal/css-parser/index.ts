@@ -12,7 +12,7 @@ import {
 	isHexDigit,
 } from "@internal/parser-core";
 import {descriptions} from "@internal/diagnostics";
-import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {
 	Symbols,
 	hexToUtf8,
@@ -30,21 +30,21 @@ import {parseRules} from "@internal/css-parser/parser/rules";
 export const cssParser = createParser<CSSParserTypes>({
 	diagnosticLanguage: "css",
 	ignoreWhitespaceTokens: false,
-	tokenize(parser: CSSParser, index: Number0): AnyCSSToken {
+	tokenize(parser: CSSParser, index: ZeroIndexed): AnyCSSToken {
 		const char = parser.getInputCharOnly(index);
 
-		if (char === "/" && parser.getInputCharOnly(index, 1) === "*") {
-			index = ob1Add(index, 2);
+		if (char === "/" && parser.getInputCharOnly(index.increment()) === "*") {
+			index = index.add(2);
 			let value = "";
 			while (
 				parser.getInputCharOnly(index) !== "*" &&
-				parser.getInputCharOnly(index, 1) !== "/" &&
+				parser.getInputCharOnly(index.increment()) !== "/" &&
 				!parser.isEOF(index)
 			) {
 				value += parser.getInputCharOnly(index);
-				index = ob1Add(index, 1);
+				index = index.add(1);
 			}
-			return parser.finishValueToken("Comment", value, ob1Add(index, 2));
+			return parser.finishValueToken("Comment", value, index.add(2));
 		}
 
 		if (isWhitespace(char)) {
@@ -57,16 +57,16 @@ export const cssParser = createParser<CSSParserTypes>({
 		}
 
 		if (char === "#") {
-			const nextChar = parser.getInputCharOnly(index, 1);
+			const nextChar = parser.getInputCharOnly(index.increment());
 			if (
 				isName(nextChar) ||
-				isValidEscape(nextChar, parser.getInputCharOnly(index, 2))
+				isValidEscape(nextChar, parser.getInputCharOnly(index.add(2)))
 			) {
-				const [value, endIndex] = consumeName(parser, ob1Inc(index));
+				const [value, endIndex] = consumeName(parser, index.increment());
 				const isIdent = isIdentifierStart(
-					parser.getInputCharOnly(index, 1),
-					parser.getInputCharOnly(index, 2),
-					parser.getInputCharOnly(index, 3),
+					parser.getInputCharOnly(index.increment()),
+					parser.getInputCharOnly(index.add(2)),
+					parser.getInputCharOnly(index.add(3)),
 				);
 				return parser.finishComplexToken(
 					"Hash",
@@ -96,8 +96,8 @@ export const cssParser = createParser<CSSParserTypes>({
 			if (
 				isNumberStart(
 					char,
-					parser.getInputCharOnly(index, 1),
-					parser.getInputCharOnly(index, 2),
+					parser.getInputCharOnly(index.increment()),
+					parser.getInputCharOnly(index.add(2)),
 				)
 			) {
 				return consumeNumberToken(parser, index);
@@ -114,25 +114,25 @@ export const cssParser = createParser<CSSParserTypes>({
 			if (
 				isNumberStart(
 					char,
-					parser.getInputCharOnly(index, 1),
-					parser.getInputCharOnly(index, 2),
+					parser.getInputCharOnly(index.increment()),
+					parser.getInputCharOnly(index.add(2)),
 				)
 			) {
 				return consumeNumberToken(parser, index);
 			}
 
 			if (
-				parser.getInputCharOnly(index, 1) === "-" &&
-				parser.getInputCharOnly(index, 2) === ">"
+				parser.getInputCharOnly(index.increment()) === "-" &&
+				parser.getInputCharOnly(index.add(2)) === ">"
 			) {
-				return parser.finishToken("CDC", ob1Add(index, 3));
+				return parser.finishToken("CDC", index.add(3));
 			}
 
 			if (
 				isIdentifierStart(
 					char,
-					parser.getInputCharOnly(index, 1),
-					parser.getInputCharOnly(index, 2),
+					parser.getInputCharOnly(index.increment()),
+					parser.getInputCharOnly(index.add(2)),
 				)
 			) {
 				return consumeIdentLikeToken(parser, index);
@@ -145,8 +145,8 @@ export const cssParser = createParser<CSSParserTypes>({
 			if (
 				isNumberStart(
 					char,
-					parser.getInputCharOnly(index, 1),
-					parser.getInputCharOnly(index, 2),
+					parser.getInputCharOnly(index.increment()),
+					parser.getInputCharOnly(index.add(2)),
 				)
 			) {
 				return consumeNumberToken(parser, index);
@@ -165,11 +165,11 @@ export const cssParser = createParser<CSSParserTypes>({
 
 		if (char === "<") {
 			if (
-				parser.getInputCharOnly(index, 1) === "!" &&
-				parser.getInputCharOnly(index, 2) === "-" &&
-				parser.getInputCharOnly(index, 3) === "-"
+				parser.getInputCharOnly(index.increment()) === "!" &&
+				parser.getInputCharOnly(index.add(2)) === "-" &&
+				parser.getInputCharOnly(index.add(3)) === "-"
 			) {
-				return parser.finishToken("CDO", ob1Add(index, 4));
+				return parser.finishToken("CDO", index.add(4));
 			}
 			return parser.finishValueToken("Delim", char);
 		}
@@ -177,12 +177,12 @@ export const cssParser = createParser<CSSParserTypes>({
 		if (char === "@") {
 			if (
 				isIdentifierStart(
-					parser.getInputCharOnly(index, 1),
-					parser.getInputCharOnly(index, 2),
-					parser.getInputCharOnly(index, 3),
+					parser.getInputCharOnly(index.increment()),
+					parser.getInputCharOnly(index.add(2)),
+					parser.getInputCharOnly(index.add(3)),
 				)
 			) {
-				const [value, endIndex] = consumeName(parser, ob1Inc(index));
+				const [value, endIndex] = consumeName(parser, index.increment());
 				return parser.finishValueToken("AtKeyword", value, endIndex);
 			}
 			return parser.finishValueToken("Delim", char);
@@ -193,7 +193,7 @@ export const cssParser = createParser<CSSParserTypes>({
 		}
 
 		if (char === "\\") {
-			if (isValidEscape(char, parser.getInputCharOnly(index, 1))) {
+			if (isValidEscape(char, parser.getInputCharOnly(index.increment()))) {
 				return consumeIdentLikeToken(parser, index);
 			}
 
@@ -227,10 +227,10 @@ export const cssParser = createParser<CSSParserTypes>({
 	},
 });
 
-function getNewlineLength(parser: CSSParser, index: Number0): number {
+function getNewlineLength(parser: CSSParser, index: ZeroIndexed): number {
 	if (
 		parser.getInputCharOnly(index) === Symbols.CarriageReturn &&
-		parser.getInputCharOnly(index, 1) === Symbols.LineFeed
+		parser.getInputCharOnly(index.increment()) === Symbols.LineFeed
 	) {
 		return 2;
 	}
@@ -238,43 +238,46 @@ function getNewlineLength(parser: CSSParser, index: Number0): number {
 	return 1;
 }
 
-function consumeBadURL(parser: CSSParser, index: Number0): Number0 {
+function consumeBadURL(parser: CSSParser, index: ZeroIndexed): ZeroIndexed {
 	while (!parser.isEOF(index)) {
 		if (parser.getInputCharOnly(index) === ")") {
-			return ob1Inc(index);
+			return index.increment();
 		}
 
 		if (
 			isValidEscape(
 				parser.getInputCharOnly(index),
-				parser.getInputCharOnly(index, 1),
+				parser.getInputCharOnly(index.increment()),
 			)
 		) {
 			index = consumeEscaped(parser, index)[1];
 		} else {
-			index = ob1Inc(index);
+			index = index.increment();
 		}
 	}
 	return index;
 }
 
-function consumeEscaped(parser: CSSParser, index: Number0): [string, Number0] {
+function consumeEscaped(
+	parser: CSSParser,
+	index: ZeroIndexed,
+): [string, ZeroIndexed] {
 	let value = "";
-	index = ob1Add(index, 2);
-	const lastChar = parser.getInputCharOnly(index, -1);
+	index = index.add(2);
+	const lastChar = parser.getInputCharOnly(index.decrement());
 
 	if (isHexDigit(lastChar)) {
 		let hexString = lastChar;
 		let utf8Value = "";
 
-		const [possibleHex] = parser.getInputRange(index, 5);
+		const possibleHex = parser.getRawInput(index, index.add(5));
 		for (const char of possibleHex) {
 			if (!isHexDigit(char)) {
 				break;
 			}
 
 			hexString += char;
-			index = ob1Inc(index);
+			index = index.increment();
 		}
 
 		const hexNumber = parseInt(hexString, 16);
@@ -290,23 +293,26 @@ function consumeEscaped(parser: CSSParser, index: Number0): [string, Number0] {
 		value += utf8Value;
 
 		if (isWhitespace(parser.getInputCharOnly(index))) {
-			index = ob1Add(index, getNewlineLength(parser, index));
+			index = index.add(getNewlineLength(parser, index));
 		}
 	}
 
 	return [value, index];
 }
 
-function consumeName(parser: CSSParser, index: Number0): [string, Number0] {
+function consumeName(
+	parser: CSSParser,
+	index: ZeroIndexed,
+): [string, ZeroIndexed] {
 	let value = "";
 
 	while (!parser.isEOF(index)) {
 		const char1 = parser.getInputCharOnly(index);
-		const char2 = parser.getInputCharOnly(index, 1);
+		const char2 = parser.getInputCharOnly(index.increment());
 
 		if (isName(char1)) {
 			value += char1;
-			index = ob1Inc(index);
+			index = index.increment();
 			continue;
 		}
 
@@ -325,64 +331,64 @@ function consumeName(parser: CSSParser, index: Number0): [string, Number0] {
 
 function consumeNumber(
 	parser: CSSParser,
-	index: Number0,
-): [Number0, number, string, string] {
+	index: ZeroIndexed,
+): [ZeroIndexed, number, string, string] {
 	const char = parser.getInputCharOnly(index);
 	let value = "";
 	let type = "integer";
 
 	if (char === "+" || char === "-") {
 		value += char;
-		index = ob1Inc(index);
+		index = index.increment();
 	}
 
 	while (isDigit(parser.getInputCharOnly(index))) {
 		value += parser.getInputCharOnly(index);
-		index = ob1Inc(index);
+		index = index.increment();
 	}
 
 	if (
 		parser.getInputCharOnly(index) === "." &&
-		isDigit(parser.getInputCharOnly(index, 1))
+		isDigit(parser.getInputCharOnly(index.increment()))
 	) {
 		value += parser.getInputCharOnly(index);
-		index = ob1Inc(index);
+		index = index.increment();
 
 		value += parser.getInputCharOnly(index);
-		index = ob1Inc(index);
+		index = index.increment();
 
 		type = "number";
 
 		while (isDigit(parser.getInputCharOnly(index))) {
 			value += parser.getInputCharOnly(index);
-			index = ob1Inc(index);
+			index = index.increment();
 		}
 	}
 
 	const char1 = parser.getInputCharOnly(index);
-	const char2 = parser.getInputCharOnly(index, 1);
-	const char3 = parser.getInputCharOnly(index, 2);
+	const char2 = parser.getInputCharOnly(index.increment());
+	const char3 = parser.getInputCharOnly(index.add(2));
 
 	if (char1 === "E" || char1 === "e") {
 		if (isDigit(char2)) {
 			value += parser.getInputCharOnly(index);
-			index = ob1Inc(index);
+			index = index.increment();
 
 			value += parser.getInputCharOnly(index);
-			index = ob1Inc(index);
+			index = index.increment();
 		} else if ((char2 === "-" || char2 === "+") && isDigit(char3)) {
 			value += parser.getInputCharOnly(index);
-			index = ob1Inc(index);
+			index = index.increment();
 
 			value += parser.getInputCharOnly(index);
-			index = ob1Inc(index);
+			index = index.increment();
 
 			value += parser.getInputCharOnly(index);
-			index = ob1Inc(index);
+			index = index.increment();
 
 			while (isDigit(parser.getInputCharOnly(index))) {
 				value += parser.getInputCharOnly(index);
-				index = ob1Inc(index);
+				index = index.increment();
 			}
 		}
 	}
@@ -392,20 +398,20 @@ function consumeNumber(
 
 function consumeIdentLikeToken(
 	parser: CSSParser,
-	index: Number0,
+	index: ZeroIndexed,
 ): Tokens["Function"] | Tokens["Ident"] | Tokens["URL"] | Tokens["BadURL"] {
 	const [name, newIndex] = consumeName(parser, index);
 	index = newIndex;
 	let value = name;
 
 	if (/url/gi.test(value) && parser.getInputCharOnly(index) === "(") {
-		index = ob1Inc(index);
+		index = index.increment();
 
 		while (
 			isWhitespace(parser.getInputCharOnly(index)) &&
-			isWhitespace(parser.getInputCharOnly(index, 1))
+			isWhitespace(parser.getInputCharOnly(index.increment()))
 		) {
-			index = ob1Inc(index);
+			index = index.increment();
 		}
 
 		if (
@@ -417,17 +423,17 @@ function consumeIdentLikeToken(
 
 		if (
 			isWhitespace(parser.getInputCharOnly(index)) &&
-			(parser.getInputCharOnly(index, 1) === '"' ||
-			parser.getInputCharOnly(index, 1) === "'")
+			(parser.getInputCharOnly(index.increment()) === '"' ||
+			parser.getInputCharOnly(index.increment()) === "'")
 		) {
-			return parser.finishValueToken("Function", value, ob1Add(index, 1));
+			return parser.finishValueToken("Function", value, index.add(1));
 		}
 
 		return consumeURLToken(parser, index);
 	}
 
 	if (parser.getInputCharOnly(index) === "(") {
-		return parser.finishValueToken("Function", value, ob1Inc(index));
+		return parser.finishValueToken("Function", value, index.increment());
 	}
 
 	return parser.finishValueToken("Ident", value, index);
@@ -435,7 +441,7 @@ function consumeIdentLikeToken(
 
 function consumeStringToken(
 	parser: CSSParser,
-	index: Number0,
+	index: ZeroIndexed,
 	endChar?: string,
 ): Tokens["String"] | Tokens["BadString"] {
 	let value = "";
@@ -446,26 +452,26 @@ function consumeStringToken(
 
 	while (!parser.isEOF(index)) {
 		const char = parser.getInputCharOnly(index);
-		const nextChar = parser.getInputCharOnly(index, 1);
+		const nextChar = parser.getInputCharOnly(index.increment());
 
 		if (char === endChar) {
-			return parser.finishValueToken("String", value, ob1Inc(index));
+			return parser.finishValueToken("String", value, index.increment());
 		} else if (parser.isEOF(index)) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_STRING,
 			});
-			return parser.finishValueToken("String", value, ob1Inc(index));
+			return parser.finishValueToken("String", value, index.increment());
 		} else if (isNewline(char)) {
 			parser.unexpectedDiagnostic({
 				description: descriptions.CSS_PARSER.UNTERMINATED_STRING,
 			});
 			return parser.finishToken("BadString", index);
 		} else if (char === "\\") {
-			if (parser.isEOF(ob1Inc(index))) {
+			if (parser.isEOF(index.increment())) {
 				continue;
 			}
 			if (isNewline(nextChar)) {
-				index = ob1Add(index, getNewlineLength(parser, ob1Inc(index)));
+				index = index.add(getNewlineLength(parser, index.increment()));
 			} else if (isValidEscape(char, nextChar)) {
 				const [newValue, newIndex] = consumeEscaped(parser, index);
 				value += newValue;
@@ -473,7 +479,7 @@ function consumeStringToken(
 			}
 		} else {
 			value += char;
-			index = ob1Inc(index);
+			index = index.increment();
 		}
 	}
 
@@ -482,7 +488,7 @@ function consumeStringToken(
 
 function consumeNumberToken(
 	parser: CSSParser,
-	index: Number0,
+	index: ZeroIndexed,
 ): Tokens["Percentage"] | Tokens["Dimension"] | Tokens["Number"] {
 	const [newIndex, numberValue, numberType, raw] = consumeNumber(parser, index);
 	index = newIndex;
@@ -490,8 +496,8 @@ function consumeNumberToken(
 	if (
 		isIdentifierStart(
 			parser.getInputCharOnly(index),
-			parser.getInputCharOnly(index, 1),
-			parser.getInputCharOnly(index, 2),
+			parser.getInputCharOnly(index.increment()),
+			parser.getInputCharOnly(index.add(2)),
 		)
 	) {
 		const [unit, endIndex] = consumeName(parser, index);
@@ -507,7 +513,7 @@ function consumeNumberToken(
 	}
 
 	if (parser.getInputCharOnly(index) === "%") {
-		return parser.finishValueToken("Percentage", numberValue, ob1Add(index, 1));
+		return parser.finishValueToken("Percentage", numberValue, index.add(1));
 	}
 
 	return parser.finishComplexToken(
@@ -523,17 +529,17 @@ function consumeNumberToken(
 
 function consumeURLToken(
 	parser: CSSParser,
-	index: Number0,
+	index: ZeroIndexed,
 ): Tokens["URL"] | Tokens["BadURL"] {
 	let value = "";
 
 	while (isWhitespace(parser.getInputCharOnly(index))) {
-		index = ob1Inc(index);
+		index = index.increment();
 	}
 
 	while (!parser.isEOF(index)) {
 		if (parser.getInputCharOnly(index) === ")") {
-			return parser.finishValueToken("URL", value, ob1Inc(index));
+			return parser.finishValueToken("URL", value, index.increment());
 		}
 
 		if (parser.isEOF(index)) {
@@ -545,11 +551,11 @@ function consumeURLToken(
 
 		if (isWhitespace(parser.getInputCharOnly(index))) {
 			while (isWhitespace(parser.getInputCharOnly(index))) {
-				index = ob1Inc(index);
+				index = index.increment();
 			}
 
 			if (parser.getInputCharOnly(index) === ")") {
-				return parser.finishValueToken("URL", value, ob1Inc(index));
+				return parser.finishValueToken("URL", value, index.increment());
 			}
 
 			if (parser.isEOF(index)) {
@@ -596,7 +602,7 @@ function consumeURLToken(
 		}
 
 		value += parser.getInputCharOnly(index);
-		index = ob1Inc(index);
+		index = index.increment();
 	}
 
 	throw new Error("Unrecoverable state due to bad URL");

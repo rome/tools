@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:19
+				end: Position 1:17
 				path: UIDPath<esprima/invalid-syntax/migrated_0264/input.js>
 				start: Position 1:18
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"{"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>+</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening class body character <emphasis>{</emphasis>"}
+					}
 				]
 			}
 		}
@@ -93,13 +95,12 @@ JSRoot {
 
  esprima/invalid-syntax/migrated_0264/input.js:1:18 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected {
+  ✖ Unexpected character +
 
     class A extends a + b {}
                       ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening class body character {
 
-✖ Found 1 problem
 
 ```

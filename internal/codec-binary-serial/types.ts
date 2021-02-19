@@ -1,14 +1,13 @@
+import {AnyIndexedNumber} from "@internal/math";
 import {
 	AbsoluteFilePathMap,
 	AnyPath,
 	MixedPathMap,
 	PathSet,
-	RelativeFilePathMap,
+	RelativePathMap,
 	UIDPathMap,
 	URLPathMap,
 } from "@internal/path";
-
-export type IntSize = 0 | 1 | 2 | 4 | 8;
 
 export type EqualShapeObjects<Value> = {[key in keyof Value]: Value[key]};
 
@@ -29,6 +28,7 @@ export type RSERValue =
 	| RegExp
 	| Error
 	| ArrayBuffer
+	| AnyIndexedNumber
 	| RSERArrayBufferView
 	| AnyPath
 	| PathSet
@@ -41,7 +41,7 @@ export type RSERValue =
 export type AnyRSERPathMap =
 	| RSERMixedPathMap
 	| AbsoluteFilePathMap<RSERValue>
-	| RelativeFilePathMap<RSERValue>
+	| RelativePathMap<RSERValue>
 	| URLPathMap<RSERValue>
 	| UIDPathMap<RSERValue>;
 

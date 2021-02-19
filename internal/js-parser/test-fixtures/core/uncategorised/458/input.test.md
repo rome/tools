@@ -52,12 +52,14 @@ JSRoot {
 				start: Position 1:9
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"while"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>*</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>while</emphasis>"}
+					}
 				]
 			}
 		}
@@ -71,13 +73,12 @@ JSRoot {
 
  core/uncategorised/458/input.js:1:9 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected while
+  ✖ Unexpected character *
 
     do { x } *
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character while
 
-✖ Found 1 problem
 
 ```

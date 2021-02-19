@@ -25,17 +25,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 3:25
+				end: Position 3:23
 				path: UIDPath<typescript/export/export-type-declaration/input.ts>
 				start: Position 3:24
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>a</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening function params character <emphasis>(</emphasis>"}
+					}
 				]
 			}
 		}
@@ -176,7 +178,7 @@ JSRoot {
 
  typescript/export/export-type-declaration/input.ts:3:24 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character a
 
     1 │ export type A = 2;
     2 │ export interface B {}
@@ -184,8 +186,7 @@ JSRoot {
       │                         ^
     4 │ export declare var b: string;
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening function params character (
 
-✖ Found 1 problem
 
 ```

@@ -17,6 +17,7 @@ import {
 	descriptions,
 } from "@internal/diagnostics";
 import {
+	Dict,
 	UnknownFunction,
 	UnknownObject,
 	VoidCallback,
@@ -40,25 +41,24 @@ import {
 	ConsumeProtectedFunction,
 	ConsumeSourceLocationRequestTarget,
 	ConsumerHandleUnexpected,
+	ConsumerMapCallback,
 	ConsumerOnDefinition,
 	ConsumerOptions,
 } from "./types";
 import {SourceLocation, UNKNOWN_POSITION} from "@internal/parser-core";
 import {
 	AnyIndexedNumber,
-	Number0,
-	Number1,
-	ob1Add,
-	ob1Coerce0,
-	ob1Coerce1,
-	ob1Get,
-} from "@internal/ob1";
+	OneIndexed,
+	ZeroIndexed,
+	isIndexedNumberish,
+} from "@internal/math";
 import {isValidIdentifierName} from "@internal/js-ast-utils";
 import {escapeJSString} from "@internal/string-escape";
 import {
 	AbsoluteFilePath,
+	AnyFilePath,
 	AnyPath,
-	RelativeFilePath,
+	RelativePath,
 	URLPath,
 	createAbsoluteFilePath,
 	createAnyPath,
@@ -214,13 +214,16 @@ export default class Consumer {
 		}
 
 		const getDiagnosticLocation = this.context.getDiagnosticLocation;
-		if (getDiagnosticLocation === undefined) {
-			return {
-				path: this.path,
-			};
-		} else {
-			return getDiagnosticLocation(this.keyPath, target);
+		if (getDiagnosticLocation !== undefined) {
+			const loc = getDiagnosticLocation(this.keyPath, target);
+			if (loc !== undefined) {
+				return loc;
+			}
 		}
+
+		return {
+			path: this.path,
+		};
 	}
 
 	public getLocation(
@@ -247,8 +250,8 @@ export default class Consumer {
 	}
 
 	public getLocationRange(
-		startIndex: Number0,
-		endIndex: Number0 = startIndex,
+		startIndex: ZeroIndexed,
+		endIndex: ZeroIndexed = startIndex,
 		target?: ConsumeSourceLocationRequestTarget,
 	): SourceLocation {
 		const loc = this.getLocation(target);
@@ -267,11 +270,11 @@ export default class Consumer {
 			...loc,
 			start: {
 				...start,
-				column: ob1Add(start.column, startIndex),
+				column: start.column.add(startIndex),
 			},
 			end: {
 				...start,
-				column: ob1Add(start.column, endIndex),
+				column: start.column.add(endIndex),
 			},
 		};
 	}
@@ -299,10 +302,7 @@ export default class Consumer {
 
 	public wasInSource(): boolean {
 		const loc = this.getDiagnosticLocation();
-		return (
-			loc.path !== undefined &&
-			(loc.start !== undefined || loc.end !== undefined)
-		);
+		return loc.start !== undefined || loc.end !== undefined;
 	}
 
 	public getKeyPathString(path: ConsumePath = this.keyPath): string {
@@ -822,6 +822,14 @@ export default class Consumer {
 		return value;
 	}
 
+	public asMappedObject<T>(callback: (c: Consumer, key: string) => T): Dict<T> {
+		const obj: Dict<T> = {};
+		for (const [key, value] of this.asMap()) {
+			obj[key] = callback(value, key);
+		}
+		return obj;
+	}
+
 	public asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
 		this.declareDefinition({
 			type: "object",
@@ -869,7 +877,7 @@ export default class Consumer {
 		});
 	}
 
-	public asMappedArray<T>(callback: (c: Consumer) => T): T[] {
+	public asMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
 		return Array.from(this.asIterable(), callback);
 	}
 
@@ -877,11 +885,11 @@ export default class Consumer {
 		return this.asImplicitMappedArray((c) => c);
 	}
 
-	public asImplicitMappedArray<T>(callback: (c: Consumer) => T): T[] {
+	public asImplicitMappedArray<T>(callback: ConsumerMapCallback<T>): T[] {
 		if (Array.isArray(this.asUnknown())) {
 			return this.asMappedArray(callback);
 		} else if (this.exists()) {
-			return [callback(this)];
+			return [callback(this, 0)];
 		} else {
 			return [];
 		}
@@ -1167,6 +1175,26 @@ export default class Consumer {
 		}
 	}
 
+	public asFilePath(def?: string): AnyFilePath {
+		const path = this.asAnyPath(def);
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this.unexpected(descriptions.CONSUME.EXPECTED_FILE_PATH);
+			return path.toExplicitRelative();
+		}
+	}
+
+	public asFilePathOrVoid(): undefined | AnyFilePath {
+		const path = this.asAnyPath();
+		if (path.isFilePath()) {
+			return path.assertFilePath();
+		} else {
+			this._declareOptionalPath();
+			return undefined;
+		}
+	}
+
 	public asAbsoluteFilePath(
 		def?: string,
 		cwd?: AbsoluteFilePath,
@@ -1193,7 +1221,7 @@ export default class Consumer {
 		}
 	}
 
-	public asRelativeFilePath(def?: string): RelativeFilePath {
+	public asRelativePath(def?: string): RelativePath {
 		const path = this.asAnyPath(def);
 		if (path.isRelative()) {
 			return path.assertRelative();
@@ -1203,17 +1231,17 @@ export default class Consumer {
 		}
 	}
 
-	public asRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asRelativePathOrVoid(): undefined | RelativePath {
 		if (this.exists()) {
-			return this.asRelativeFilePath();
+			return this.asRelativePath();
 		} else {
 			this._declareOptionalPath();
 			return undefined;
 		}
 	}
 
-	public asExplicitRelativeFilePath(def?: string): RelativeFilePath {
-		const path = this.asRelativeFilePath(def);
+	public asExplicitRelativePath(def?: string): RelativePath {
+		const path = this.asRelativePath(def);
 
 		if (path.isExplicitRelative()) {
 			return path;
@@ -1223,9 +1251,9 @@ export default class Consumer {
 		}
 	}
 
-	public asExplicitRelativeFilePathOrVoid(): undefined | RelativeFilePath {
+	public asExplicitRelativePathOrVoid(): undefined | RelativePath {
 		if (this.exists()) {
-			return this.asExplicitRelativeFilePath();
+			return this.asExplicitRelativePath();
 		} else {
 			this._declareOptionalPath();
 			return undefined;
@@ -1246,22 +1274,22 @@ export default class Consumer {
 		}
 	}
 
-	public asZeroIndexedNumber(def?: number): Number0 {
-		return ob1Coerce0(this.asNumber(def));
+	public asZeroIndexedNumber(def?: number): ZeroIndexed {
+		return new ZeroIndexed(this.asNumber(def));
 	}
 
-	public asOneIndexedNumber(def?: number): Number1 {
-		return ob1Coerce1(this.asNumber(def));
+	public asOneIndexedNumber(def?: number): OneIndexed {
+		return new OneIndexed(this.asNumber(def));
 	}
 
-	public asZeroIndexedNumberOrVoid(): undefined | Number0 {
+	public asZeroIndexedNumberOrVoid(): undefined | ZeroIndexed {
 		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : ob1Coerce0(num);
+		return num === undefined ? undefined : new ZeroIndexed(num);
 	}
 
-	public asOneIndexedNumberOrVoid(): undefined | Number1 {
+	public asOneIndexedNumberOrVoid(): undefined | OneIndexed {
 		const num = this.asNumberOrVoid();
-		return num === undefined ? undefined : ob1Coerce1(num);
+		return num === undefined ? undefined : new OneIndexed(num);
 	}
 
 	public asNumber(def?: number): number {
@@ -1271,7 +1299,10 @@ export default class Consumer {
 			required: def === undefined,
 		});
 
-		const value = this.getValue(def);
+		let value = this.getValue(def);
+		if (isIndexedNumberish(value)) {
+			value = value.valueOf();
+		}
 		if (typeof value !== "number") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
 			return 0;
@@ -1285,23 +1316,23 @@ export default class Consumer {
 			max?: number;
 			default?: number;
 		},
-	): number
+	): number;
 
 	public asNumberInRange(
 		opts: {
-			min: Number0;
-			max?: Number0;
-			default?: Number0;
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
 		},
-	): Number0
+	): OneIndexed;
 
 	public asNumberInRange(
 		opts: {
-			min: Number1;
-			max?: Number1;
-			default?: Number1;
+			min: OneIndexed;
+			max?: OneIndexed;
+			default?: OneIndexed;
 		},
-	): Number1
+	): OneIndexed;
 
 	public asNumberInRange(
 		opts: {
@@ -1310,9 +1341,9 @@ export default class Consumer {
 			default?: number | AnyIndexedNumber;
 		},
 	): number | AnyIndexedNumber {
-		const min = ob1Get(opts.min);
-		const max = ob1Get(opts.max);
-		const def = ob1Get(opts.default);
+		const min = opts.min === undefined ? undefined : opts.min.valueOf();
+		const max = opts.max === undefined ? undefined : opts.max.valueOf();
+		const def = opts.default === undefined ? undefined : opts.default.valueOf();
 
 		this.declareDefinition({
 			type: "number",
@@ -1327,15 +1358,22 @@ export default class Consumer {
 		// Nice error message when both min and max are specified
 		if (min !== undefined && max !== undefined && (num < min || num > max)) {
 			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_BETWEEN(min, max));
-			return num;
+		} else {
+			if (min !== undefined && num < min) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
+			}
+
+			if (max !== undefined && num > max) {
+				this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
+			}
 		}
 
-		if (min !== undefined && num < min) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_HIGHER(min));
+		if (opts.min instanceof OneIndexed) {
+			return new OneIndexed(num);
 		}
 
-		if (max !== undefined && num > max) {
-			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER_LOWER(max));
+		if (opts.min instanceof ZeroIndexed) {
+			return new ZeroIndexed(num);
 		}
 
 		return num;

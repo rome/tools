@@ -19,9 +19,6 @@
   ℹ Actions triggered using mouse events should have corresponding keyboard events to account for
     keyboard-only navigation.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -35,7 +32,6 @@
 ### `1`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -49,7 +45,6 @@
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -63,7 +58,6 @@
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -77,7 +71,6 @@
 ### `4`
 
 ```
-✔ No known problems!
 
 ```
 

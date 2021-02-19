@@ -22,9 +22,6 @@ lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━
   ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides
     no benefit.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -55,9 +52,6 @@ lint/react/noRedundantShouldComponentUpdate ━━━━━━━━━━━━
   ℹ When the shouldComponentUpdate method is implemented, extending React.PureComponent provides
     no benefit.
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
 
@@ -73,7 +67,6 @@ class Hello extends PureComponent {
 ### `2`
 
 ```
-✔ No known problems!
 
 ```
 
@@ -89,7 +82,6 @@ class Hello extends React.PureComponent {
 ### `3`
 
 ```
-✔ No known problems!
 
 ```
 

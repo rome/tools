@@ -1,12 +1,13 @@
-import {IntSize} from "./types";
-import RSERBufferAssembler from "./RSERBufferAssembler";
+import {IntSize, writeInt} from "./int";
+import RSERWriterBase from "./RSERWriterBase";
 import {utf8Encode} from "./utf8";
 import {RSERBufferParser} from ".";
+import RSERWriterCounter from "./RSERWriterCounter";
 
-export default class RSERBufferWriter extends RSERBufferAssembler {
-	constructor(buffer: ArrayBuffer, assembler: RSERBufferAssembler) {
+export default class RSERWriterMaterial extends RSERWriterBase {
+	constructor(buffer: ArrayBuffer, counter: RSERWriterCounter) {
 		super();
-		this.references = assembler.references;
+		this.references = counter.references;
 		this.totalSize = buffer.byteLength;
 		this.writeOffset = 0;
 		this.buffer = buffer;
@@ -14,15 +15,16 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		this.view = new DataView(buffer);
 	}
 
+	public totalSize: number;
 	public writeOffset: number;
 	public bytes: Uint8Array;
 	public buffer: ArrayBuffer;
 	public view: DataView;
 
-	static allocate(size: number): RSERBufferWriter {
-		return new RSERBufferWriter(
+	static allocate(size: number): RSERWriterMaterial {
+		return new RSERWriterMaterial(
 			new ArrayBuffer(size),
-			new RSERBufferAssembler(),
+			new RSERWriterCounter(),
 		);
 	}
 
@@ -50,7 +52,7 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		}
 	}
 
-	public appendBytes(buf: Uint8Array) {
+	public writeBytes(buf: Uint8Array) {
 		if (buf.byteLength === 0) {
 			return;
 		}
@@ -59,17 +61,13 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 		this.bytes.set(buf, offset);
 	}
 
-	protected appendString(text: string, size: number) {
+	protected writeString(text: string, size: number) {
 		if (size === 0) {
 			return;
 		}
 
 		const offset = this.assertWritableSize(size);
 		utf8Encode(text, this.bytes, offset, size);
-	}
-
-	protected writeCode(code: number) {
-		this.writeByte(code);
 	}
 
 	protected writeByte(value: number) {
@@ -79,35 +77,7 @@ export default class RSERBufferWriter extends RSERBufferAssembler {
 
 	protected writeInt(value: bigint | number, size: IntSize) {
 		const offset = this.assertWritableSize(size);
-
-		if (typeof value === "bigint") {
-			if (size === 8) {
-				this.view.setBigInt64(offset, value);
-				return;
-			} else {
-				throw new Error(`Expected size 8 for bigint but got ${size}`);
-			}
-		}
-
-		switch (size) {
-			case 1: {
-				this.view.setInt8(offset, value);
-				break;
-			}
-
-			case 2: {
-				this.view.setInt16(offset, value);
-				break;
-			}
-
-			case 4: {
-				this.view.setInt32(offset, value);
-				break;
-			}
-
-			default:
-				throw new Error(`Unsupported integer size ${size}`);
-		}
+		writeInt(value, size, offset, this.view);
 	}
 
 	protected writeFloat(value: number) {

@@ -10,14 +10,14 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/var/input.css 1:0-5:1
-	path: RelativeFilePath<invalid/var/input.css>
+	path: RelativePath<invalid/var/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Invalid custom property found inside the \"var\" function."}
 			}
 			location: Object {
@@ -25,7 +25,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:18
-				path: RelativeFilePath<invalid/var/input.css>
+				path: RelativePath<invalid/var/input.css>
 				start: Position 2:17
 			}
 		}

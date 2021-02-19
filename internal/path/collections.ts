@@ -5,15 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {MappedKeyMap, MappedSet} from "@internal/collections";
 import {
 	AbsoluteFilePath,
 	AnyPath,
-	RelativeFilePath,
+	RelativePath,
 	UIDPath,
 	URLPath,
 	createAbsoluteFilePath,
 	createAnyPath,
-	createRelativeFilePath,
+	createRelativePath,
 	createUIDPath,
 	createURLPath,
 } from "./index";
@@ -33,168 +34,34 @@ function concat<FilePath extends AnyPath>(
 // to speed up the usage of FilePaths in these scenarios.
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
-export abstract class BasePathMap<FilePath extends AnyPath, Value> {
-	constructor(entries?: [FilePath, Value][]) {
-		this.joinedToValue = new Map();
-		this.joinedToPath = new Map();
-		this.size = 0;
-
-		if (entries !== undefined) {
-			for (const [key, value] of entries) {
-				this.set(key, value);
-			}
-		}
+export abstract class BasePathMap<Path extends AnyPath, Value>
+	extends MappedKeyMap<Path, string, Value> {
+	constructor(entries?: [Path, Value][]) {
+		super(
+			(path) => {
+				const uniq = path.getUnique();
+				return [uniq.join(), uniq as Path];
+			},
+			entries,
+		);
+		this[Symbol.toStringTag] = "BasePathMap";
 	}
 
-	public abstract createKey(str: string): FilePath
+	public abstract createKey(str: string): Path;
 
-	private joinedToValue: Map<string, Value>;
-	public joinedToPath: Map<string, FilePath>;
-	public size: number;
-
-	public _updateSize() {
-		this.size = this.joinedToValue.size;
-	}
-
-	public *[Symbol.iterator](): IterableIterator<[FilePath, Value]> {
-		for (const [joined, value] of this.joinedToValue) {
-			const path = this.joinedToPath.get(joined)!;
-			yield [path, value];
-		}
-	}
-
-	public clear() {
-		this.joinedToValue.clear();
-		this.joinedToPath.clear();
-		this._updateSize();
-	}
-
-	public entries(): IterableIterator<[FilePath, Value]> {
-		return this[Symbol.iterator]();
-	}
-
-	public keys(): IterableIterator<FilePath> {
-		return this.joinedToPath.values();
-	}
-
-	public values(): IterableIterator<Value> {
-		return this.joinedToValue.values();
-	}
-
-	public delete(path: FilePath): boolean {
-		const joined = path.getUnique().join();
-		if (!this.joinedToValue.has(joined)) {
-			return false;
-		}
-
-		this.joinedToValue.delete(joined);
-		this.joinedToPath.delete(joined);
-		this._updateSize();
-		return true;
-	}
-
-	public has(path: FilePath): boolean {
-		return this.joinedToValue.has(path.getUnique().join());
-	}
-
-	public assert(path: FilePath): Value {
-		const item = this.get(path);
-		if (item === undefined) {
-			throw new Error(`Could not find element for ${path.join()}`);
-		} else {
-			return item;
-		}
-	}
-
-	public get(path: FilePath): undefined | Value {
-		return this.joinedToValue.get(path.getUnique().join());
-	}
+	public [Symbol.toStringTag]: string;
 
 	public setString(path: string, value: Value) {
 		this.set(this.createKey(path), value);
-	}
-
-	public set(path: FilePath, value: Value): this {
-		const uniq = path.getUnique() as FilePath;
-		const joined = uniq.join();
-		this.joinedToValue.set(joined, value);
-		this.joinedToPath.set(joined, uniq);
-		this._updateSize();
-		return this;
-	}
-}
-
-abstract class BasePathSet<
-	Path extends AnyPath,
-	PathMap extends BasePathMap<Path, void> = BasePathMap<Path, void>
-> {
-	constructor(entries?: Iterable<Path>) {
-		this.map = this.createMap();
-		this.size = 0;
-
-		if (entries !== undefined) {
-			for (const path of entries) {
-				this.add(path);
-			}
-		}
-	}
-
-	abstract createMap(): PathMap
-
-	private map: PathMap;
-	public size: number;
-
-	public createKey(str: string): Path {
-		return this.map.createKey(str);
-	}
-
-	public _updateSize() {
-		this.size = this.map.size;
-	}
-
-	public [Symbol.iterator](): IterableIterator<Path> {
-		return this.map.keys()[Symbol.iterator]();
-	}
-
-	public toJoined(
-		callback: (path: string) => string = (filename) => filename,
-	): string[] {
-		return Array.from(this.map.joinedToPath.keys(), callback);
-	}
-
-	public has(path: Path) {
-		return this.map.has(path);
-	}
-
-	public add(path: Path): this {
-		this.map.set(path);
-		this._updateSize();
-		return this;
-	}
-
-	public addString(str: string) {
-		this.add(this.createKey(str));
-	}
-
-	public delete(path: Path): boolean {
-		if (this.map.has(path)) {
-			this.map.delete(path);
-			this._updateSize();
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public clear() {
-		this.map.clear();
-		this._updateSize();
 	}
 }
 
 export class AbsoluteFilePathMap<Value>
 	extends BasePathMap<AbsoluteFilePath, Value> {
-	public type: "absolute" = "absolute";
+	constructor(entries?: [AbsoluteFilePath, Value][]) {
+		super(entries);
+		this[Symbol.toStringTag] = "AbsoluteFilePathMap";
+	}
 
 	public createKey(str: string): AbsoluteFilePath {
 		return createAbsoluteFilePath(str);
@@ -205,21 +72,26 @@ export class AbsoluteFilePathMap<Value>
 	}
 }
 
-export class RelativeFilePathMap<Value>
-	extends BasePathMap<RelativeFilePath, Value> {
-	public type: "relative" = "relative";
-
-	public createKey(str: string): RelativeFilePath {
-		return createRelativeFilePath(str);
+export class RelativePathMap<Value> extends BasePathMap<RelativePath, Value> {
+	constructor(entries?: [RelativePath, Value][]) {
+		super(entries);
+		this[Symbol.toStringTag] = "RelativePathMap";
 	}
 
-	public keysToSet(): RelativeFilePathSet {
-		return new RelativeFilePathSet(this.keys());
+	public createKey(str: string): RelativePath {
+		return createRelativePath(str);
+	}
+
+	public keysToSet(): RelativePathSet {
+		return new RelativePathSet(this.keys());
 	}
 }
 
 export class URLPathMap<Value> extends BasePathMap<URLPath, Value> {
-	public type: "url" = "url";
+	constructor(entries?: [URLPath, Value][]) {
+		super(entries);
+		this[Symbol.toStringTag] = "URLPathMap";
+	}
 
 	public createKey(str: string): URLPath {
 		return createURLPath(str);
@@ -231,7 +103,10 @@ export class URLPathMap<Value> extends BasePathMap<URLPath, Value> {
 }
 
 export class UIDPathMap<Value> extends BasePathMap<UIDPath, Value> {
-	public type: "uid" = "uid";
+	constructor(entries?: [UIDPath, Value][]) {
+		super(entries);
+		this[Symbol.toStringTag] = "UIDPathMap";
+	}
 
 	public createKey(str: string): UIDPath {
 		return createUIDPath(str);
@@ -243,7 +118,10 @@ export class UIDPathMap<Value> extends BasePathMap<UIDPath, Value> {
 }
 
 export class MixedPathMap<Value> extends BasePathMap<AnyPath, Value> {
-	public type: "mixed" = "mixed";
+	constructor(entries?: [AnyPath, Value][]) {
+		super(entries);
+		this[Symbol.toStringTag] = "MixedPathMap";
+	}
 
 	public createKey(str: string): AnyPath {
 		return createAnyPath(str);
@@ -254,11 +132,38 @@ export class MixedPathMap<Value> extends BasePathMap<AnyPath, Value> {
 	}
 }
 
-export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath> {
-	public type: "absolute" = "absolute";
+abstract class BasePathSet<
+	Path extends AnyPath,
+	PathMap extends BasePathMap<Path, Path> = BasePathMap<Path, Path>
+> extends MappedSet<Path, string> {
+	constructor(entries?: Iterable<Path>) {
+		super(
+			(path) => {
+				const uniq = path.getUnique();
+				return [path.join(), uniq as Path];
+			},
+			entries,
+		);
+	}
 
-	createMap(): AbsoluteFilePathMap<void> {
-		return new AbsoluteFilePathMap();
+	abstract addString(str: string): void;
+
+	public addSet(set: BasePathSet<Path, PathMap>): this {
+		for (const path of set) {
+			this.add(path);
+		}
+		return this;
+	}
+}
+
+export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath> {
+	constructor(entries?: Iterable<AbsoluteFilePath>) {
+		super(entries);
+		this[Symbol.toStringTag] = "AbsoluteFilePathMap";
+	}
+
+	public addString(str: string): void {
+		this.add(createAbsoluteFilePath(str));
 	}
 
 	public concat(...items: Iterable<AbsoluteFilePath>[]): AbsoluteFilePathSet {
@@ -266,23 +171,29 @@ export class AbsoluteFilePathSet extends BasePathSet<AbsoluteFilePath> {
 	}
 }
 
-export class RelativeFilePathSet extends BasePathSet<RelativeFilePath> {
-	public type: "relative" = "relative";
-
-	createMap(): RelativeFilePathMap<void> {
-		return new RelativeFilePathMap();
+export class RelativePathSet extends BasePathSet<RelativePath> {
+	constructor(entries?: Iterable<RelativePath>) {
+		super(entries);
+		this[Symbol.toStringTag] = "RelativePathSet";
 	}
 
-	public concat(...items: Iterable<RelativeFilePath>[]): RelativeFilePathSet {
-		return new RelativeFilePathSet(concat(items));
+	public addString(str: string): void {
+		this.add(createRelativePath(str));
+	}
+
+	public concat(...items: Iterable<RelativePath>[]): RelativePathSet {
+		return new RelativePathSet(concat(items));
 	}
 }
 
 export class URLPathSet extends BasePathSet<URLPath> {
-	public type: "url" = "url";
+	constructor(entries?: Iterable<URLPath>) {
+		super(entries);
+		this[Symbol.toStringTag] = "URLPathSet";
+	}
 
-	createMap(): URLPathMap<void> {
-		return new URLPathMap();
+	public addString(str: string): void {
+		this.add(createURLPath(str));
 	}
 
 	public concat(...items: Iterable<URLPath>[]): URLPathSet {
@@ -291,10 +202,13 @@ export class URLPathSet extends BasePathSet<URLPath> {
 }
 
 export class UIDPathSet extends BasePathSet<UIDPath> {
-	public type: "uid" = "uid";
+	constructor(entries?: Iterable<UIDPath>) {
+		super(entries);
+		this[Symbol.toStringTag] = "UIDPathSet";
+	}
 
-	createMap(): UIDPathMap<void> {
-		return new UIDPathMap();
+	public addString(str: string): void {
+		this.add(createUIDPath(str));
 	}
 
 	public concat(...items: Iterable<UIDPath>[]): UIDPathSet {
@@ -303,10 +217,13 @@ export class UIDPathSet extends BasePathSet<UIDPath> {
 }
 
 export class MixedPathSet extends BasePathSet<AnyPath> {
-	public type: "mixed" = "mixed";
+	constructor(entries?: Iterable<AnyPath>) {
+		super(entries);
+		this[Symbol.toStringTag] = "MixedPathSet";
+	}
 
-	createMap(): MixedPathMap<void> {
-		return new MixedPathMap();
+	public addString(str: string): void {
+		this.add(createAnyPath(str));
 	}
 
 	public concat(...items: Iterable<AnyPath>[]): MixedPathSet {
@@ -316,7 +233,7 @@ export class MixedPathSet extends BasePathSet<AnyPath> {
 
 export type PathSet =
 	| AbsoluteFilePathSet
-	| RelativeFilePathSet
+	| RelativePathSet
 	| URLPathSet
 	| UIDPathSet
 	| MixedPathSet;
@@ -324,7 +241,7 @@ export type PathSet =
 export function isPathSet(val: unknown): val is PathSet {
 	return (
 		val instanceof AbsoluteFilePathSet ||
-		val instanceof RelativeFilePathSet ||
+		val instanceof RelativePathSet ||
 		val instanceof URLPathSet ||
 		val instanceof UIDPathSet ||
 		val instanceof MixedPathSet
@@ -333,7 +250,7 @@ export function isPathSet(val: unknown): val is PathSet {
 
 export type PathMap<Value> =
 	| AbsoluteFilePathMap<Value>
-	| RelativeFilePathMap<Value>
+	| RelativePathMap<Value>
 	| URLPathMap<Value>
 	| UIDPathMap<Value>
 	| MixedPathMap<Value>;
@@ -341,14 +258,13 @@ export type PathMap<Value> =
 export function isPathMap(val: unknown): val is PathMap<unknown> {
 	return (
 		val instanceof AbsoluteFilePathMap ||
-		val instanceof RelativeFilePathMap ||
+		val instanceof RelativePathMap ||
 		val instanceof URLPathMap ||
 		val instanceof UIDPathMap ||
 		val instanceof MixedPathMap
 	);
 }
 
-// rome-ignore lint/js/noUndeclaredVariables(V): don't yet support scope tracking `infer`
 export type PathMapValue<T> = T extends BasePathMap<AnyPath, infer V>
 	? V
 	: never;

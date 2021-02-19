@@ -16,6 +16,6 @@ CommitRoot {
 	rawBody: "commit with a fix commit type"
 	scope: ""
 	loc: SourceLocation fix/input.txt 1:0-1:33
-	path: RelativeFilePath<fix/input.txt>
+	path: RelativePath<fix/input.txt>
 }
 ```

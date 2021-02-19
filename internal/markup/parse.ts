@@ -22,7 +22,7 @@ import {
 	Tokens,
 } from "./types";
 import {isEscaped} from "@internal/string-utils";
-import {Number0, ob1Add, ob1Dec, ob1Get0, ob1Inc} from "@internal/ob1";
+import {ZeroIndexed} from "@internal/math";
 import {descriptions} from "@internal/diagnostics";
 import {
 	AnyMarkup,
@@ -40,7 +40,11 @@ import {
 } from "./tags";
 
 //
-function isStringValueChar(char: string, index: Number0, input: string): boolean {
+function isStringValueChar(
+	char: string,
+	index: ZeroIndexed,
+	input: string,
+): boolean {
 	if (char === '"' && !isEscaped(index, input)) {
 		return false;
 	}
@@ -48,12 +52,12 @@ function isStringValueChar(char: string, index: Number0, input: string): boolean
 	return true;
 }
 
-function isTextChar(char: string, index: Number0, input: string): boolean {
+function isTextChar(char: string, index: ZeroIndexed, input: string): boolean {
 	return !isTagStartChar(index, input);
 }
 
-export function isTagStartChar(index: Number0, input: string): boolean {
-	const i = ob1Get0(index);
+export function isTagStartChar(index: ZeroIndexed, input: string): boolean {
+	const i = index.valueOf();
 	return input[i] === "<" && !isEscaped(index, input);
 }
 
@@ -79,7 +83,7 @@ const stringMarkupParser = createParser<MarkupParserTypes>({
 
 		if (!escaped && state.inTagHead) {
 			if (char === " ") {
-				return parser.lookahead(ob1Inc(index));
+				return parser.lookahead(index.increment());
 			}
 
 			if (char === "=") {
@@ -97,7 +101,7 @@ const stringMarkupParser = createParser<MarkupParserTypes>({
 
 			if (char === '"') {
 				const [value, stringValueEnd, unclosed] = parser.readInputFrom(
-					ob1Inc(index),
+					index.increment(),
 					isStringValueChar,
 				);
 
@@ -108,7 +112,7 @@ const stringMarkupParser = createParser<MarkupParserTypes>({
 					});
 				}
 
-				const end = ob1Add(stringValueEnd, 1);
+				const end = stringValueEnd.add(1);
 				return [
 					state,
 					parser.finishValueToken("String", unescapeTextValue(value), end),
@@ -278,8 +282,8 @@ function parseTag(
 								} else {
 									// Remove string quotes
 									return parser.getDiagnosticLocation({
-										startIndex: ob1Inc(keyToken.start),
-										endIndex: ob1Dec(valueToken.end),
+										startIndex: keyToken.start.increment(),
+										endIndex: valueToken.end.decrement(),
 									});
 								}
 

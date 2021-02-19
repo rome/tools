@@ -10,14 +10,14 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/url-not-string/input.css 1:0-3:1
-	path: RelativeFilePath<invalid/url-not-string/input.css>
+	path: RelativePath<invalid/url-not-string/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
 			description: Object {
 				advice: Array []
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "The function <emphasis>url()</emphasis> can only accept strings."}
 			}
 			location: Object {
@@ -25,7 +25,7 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:20
-				path: RelativeFilePath<invalid/url-not-string/input.css>
+				path: RelativePath<invalid/url-not-string/input.css>
 				start: Position 2:13
 			}
 		}

@@ -17,7 +17,7 @@ disallow reassigning exceptions in `catch` clauses
 **ESLint Equivalent:** [no-ex-assign](https://eslint.org/docs/rules/no-ex-assign)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:6ee84ab1591cfec81eb86e64d0c72bb20b8e85c1,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:a89cc6da890515495c52459e4383977a7a5d77ea,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -81,6 +81,9 @@ disallow reassigning exceptions in `catch` clauses
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.ts:1:52</span> <strong>lint/js/noCatchAssign</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Do not </span><span style="color: Tomato;"><strong>reassign catch parameters</strong></span><span style="color: Tomato;">.</span>
+
+    <span class="token keyword">try</span> <span class="token punctuation">{</span> <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token punctuation">{</span><span class="token variable">message</span><span class="token punctuation">,</span> <span class="token variable">name</span><span class="token punctuation">}</span><span class="token punctuation">)</span> <span class="token punctuation">{</span> <span class="token variable">message</span> <span class="token operator">=</span> <span class="token string">&apos;test&apos;</span><span class="token punctuation">;</span> <span class="token variable">name</span> <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span> <span class="token punctuation">}</span>
+                                                        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
 
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">Use a local variable instead.</span>
 

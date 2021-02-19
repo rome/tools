@@ -30,12 +30,14 @@ JSRoot {
 				start: Position 1:5
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					","
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>{</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected character <emphasis>,</emphasis>"}
+					}
 				]
 			}
 		}
@@ -115,13 +117,12 @@ JSRoot {
 
  esprima/invalid-syntax/migrated_0083/input.js:1:5 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected ,
+  ✖ Unexpected character {
 
     ({get{a}:0})
          ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected character ,
 
-✖ Found 1 problem
 
 ```

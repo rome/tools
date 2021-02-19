@@ -30,20 +30,13 @@ JSRoot {
 				start: Position 1:7
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"property name"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>property name</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"]"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>]</emphasis> here"}
 					}
 					frame {location: SourceLocation es2015/uncategorised/255/input.js 1:9-1:9}
 				]
@@ -104,13 +97,13 @@ JSRoot {
 
   ✖ Unclosed property name
 
+    void { [1, 2]: 3 };
+           ^
+
   ℹ We expected to find the closing character ] here
 
     void { [1, 2]: 3 };
              ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

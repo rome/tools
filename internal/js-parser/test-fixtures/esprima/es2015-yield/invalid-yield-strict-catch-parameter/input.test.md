@@ -26,6 +26,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "yield is a reserved word"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -33,15 +39,6 @@ JSRoot {
 				end: Position 1:33
 				path: UIDPath<esprima/es2015-yield/invalid-yield-strict-catch-parameter/input.js>
 				start: Position 1:28
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"yield"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
 			}
 		}
 	]
@@ -82,8 +79,5 @@ JSRoot {
     "use strict"; try {} catch (yield) {}
                                 ^^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

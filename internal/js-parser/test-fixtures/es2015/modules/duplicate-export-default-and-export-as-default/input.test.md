@@ -30,8 +30,8 @@ JSRoot {
 				start: Position 2:9
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "Only one default export allowed per module."}
 				advice: Array [
 					log {
@@ -101,14 +101,15 @@ JSRoot {
 
   ✖ Only one default export allowed per module.
 
+    1 │ export default function() {};
+  > 2 │ export { foo as default };
+      │          ^^^^^^^^^^^^^^
+
   ℹ Defined already here
 
   > 1 │ export default function() {};
       │                ^^^^^^^^^^^^^
     2 │ export { foo as default };
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

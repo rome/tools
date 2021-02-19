@@ -21,6 +21,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unknown label <emphasis>x</emphasis>"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -28,16 +34,6 @@ JSRoot {
 				end: Position 1:33
 				path: UIDPath<core/uncategorised/462/input.js>
 				start: Position 1:33
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unknown label <emphasis>"}
-					"x"
-					RAW_MARKUP {value: "</emphasis>"}
-				]
 			}
 		}
 	]
@@ -108,8 +104,5 @@ JSRoot {
     x: while (true) { (function () { continue x; }); }
                                      ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

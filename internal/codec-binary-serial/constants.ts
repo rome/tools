@@ -4,9 +4,9 @@ import {
 	AbsoluteFilePathSet,
 	AnyPath,
 	PathSet,
-	RelativeFilePath,
-	RelativeFilePathMap,
-	RelativeFilePathSet,
+	RelativePath,
+	RelativePathMap,
+	RelativePathSet,
 	UIDPath,
 	UIDPathMap,
 	UIDPathSet,
@@ -14,7 +14,7 @@ import {
 	URLPathMap,
 	URLPathSet,
 	createAbsoluteFilePath,
-	createRelativeFilePath,
+	createRelativePath,
 	createUIDPath,
 	createURLPath,
 } from "@internal/path";
@@ -62,6 +62,9 @@ export enum VALUE_CODES {
 	INT64,
 	FLOAT,
 	NAN,
+
+	ZERO_INDEXED_NUMBER,
+	ONE_INDEXED_NUMBER,
 
 	POSITIVE_INFINITY,
 	NEGATIVE_INFINITY,
@@ -122,12 +125,15 @@ export function validateValueCode(code: number): VALUE_CODES {
 		case VALUE_CODES.REFERENCE:
 		case VALUE_CODES.ARRAY_BUFFER_VIEW:
 		case VALUE_CODES.ARRAY_BUFFER:
-		case VALUE_CODES.STREAM_HEADER:
 		case VALUE_CODES.POSITION:
 		case VALUE_CODES.SOURCE_LOCATION:
 		case VALUE_CODES.NEGATIVE_ONE:
 		case VALUE_CODES.POSITIVE_ZERO:
 		case VALUE_CODES.POSITIVE_ONE:
+		case VALUE_CODES.ZERO_INDEXED_NUMBER:
+		case VALUE_CODES.ONE_INDEXED_NUMBER:
+		case VALUE_CODES.MIXED_PATH_SET:
+		case VALUE_CODES.MIXED_PATH_MAP:
 			return code;
 
 		default:
@@ -342,7 +348,7 @@ export function validateFileCode(code: number): TYPED_PATH_CODES {
 }
 
 export function pathMapToCode(map: AnyRSERPathMap): TYPED_PATH_CODES {
-	if (map instanceof RelativeFilePathMap) {
+	if (map instanceof RelativePathMap) {
 		return TYPED_PATH_CODES.RELATIVE;
 	} else if (map instanceof AbsoluteFilePathMap) {
 		return TYPED_PATH_CODES.ABSOLUTE;
@@ -356,7 +362,7 @@ export function pathMapToCode(map: AnyRSERPathMap): TYPED_PATH_CODES {
 }
 
 export function pathSetToCode(set: PathSet): TYPED_PATH_CODES {
-	if (set instanceof RelativeFilePathSet) {
+	if (set instanceof RelativePathSet) {
 		return TYPED_PATH_CODES.RELATIVE;
 	} else if (set instanceof AbsoluteFilePathSet) {
 		return TYPED_PATH_CODES.ABSOLUTE;
@@ -370,7 +376,7 @@ export function pathSetToCode(set: PathSet): TYPED_PATH_CODES {
 }
 
 export function pathToCode(path: AnyPath): TYPED_PATH_CODES {
-	if (path instanceof RelativeFilePath) {
+	if (path instanceof RelativePath) {
 		return TYPED_PATH_CODES.RELATIVE;
 	} else if (path instanceof AbsoluteFilePath) {
 		return TYPED_PATH_CODES.ABSOLUTE;
@@ -386,7 +392,7 @@ export function pathToCode(path: AnyPath): TYPED_PATH_CODES {
 export function pathFromCode(code: TYPED_PATH_CODES, filename: string): AnyPath {
 	switch (code) {
 		case TYPED_PATH_CODES.RELATIVE:
-			return createRelativeFilePath(filename);
+			return createRelativePath(filename);
 
 		case TYPED_PATH_CODES.ABSOLUTE:
 			return createAbsoluteFilePath(filename);
@@ -402,7 +408,7 @@ export function pathFromCode(code: TYPED_PATH_CODES, filename: string): AnyPath 
 export function pathMapFromCode(code: TYPED_PATH_CODES): AnyRSERPathMap {
 	switch (code) {
 		case TYPED_PATH_CODES.RELATIVE:
-			return new RelativeFilePathMap();
+			return new RelativePathMap();
 
 		case TYPED_PATH_CODES.ABSOLUTE:
 			return new AbsoluteFilePathMap();
@@ -421,7 +427,7 @@ export function pathMapFromCode(code: TYPED_PATH_CODES): AnyRSERPathMap {
 export function pathSetFromCode(code: TYPED_PATH_CODES): PathSet {
 	switch (code) {
 		case TYPED_PATH_CODES.RELATIVE:
-			return new RelativeFilePathSet();
+			return new RelativePathSet();
 
 		case TYPED_PATH_CODES.ABSOLUTE:
 			return new AbsoluteFilePathSet();

@@ -1,5 +1,4 @@
 import {
-	StructuredNodeSystemErrorProperties,
 	getDiagnosticLocationFromErrorFrame,
 	getErrorStructure,
 	setErrorFrames,
@@ -7,6 +6,7 @@ import {
 } from "@internal/v8";
 import {StaticMarkup, markup} from "@internal/markup";
 import {
+	DIAGNOSTIC_CATEGORIES,
 	Diagnostic,
 	DiagnosticAdvice,
 	DiagnosticCategory,
@@ -18,6 +18,7 @@ import {
 import {prettyFormatEager} from "@internal/pretty-format";
 import {UNKNOWN_PATH, createAbsoluteFilePath} from "@internal/path";
 import {lstatSync} from "@internal/fs";
+import {NodeSystemError} from "@internal/node";
 
 function getPathFromNodeError(err: NodeSystemError): undefined | string {
 	return err.path ?? err.address;
@@ -116,9 +117,9 @@ export function convertPossibleNodeErrorToDiagnostic(
 		location = getDiagnosticLocationFromErrorFrame(struct.frames[0]);
 	}
 
-	let category: DiagnosticCategory = "internalError/fatal";
+	let category: DiagnosticCategory = DIAGNOSTIC_CATEGORIES["internalError/fatal"];
 	if (err.path !== undefined) {
-		category = "internalError/fs";
+		category = DIAGNOSTIC_CATEGORIES["internalError/fs"];
 	} else {
 		// TODO probably others
 	}
@@ -192,7 +193,3 @@ export function convertPossibleNodeErrorToDiagnostic(
 
 	return diagErr;
 }
-
-// https://nodejs.org/api/errors.html#errors_class_systemerror
-export type NodeSystemError = Error &
-	Partial<StructuredNodeSystemErrorProperties>;

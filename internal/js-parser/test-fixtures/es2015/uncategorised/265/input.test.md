@@ -43,17 +43,19 @@ JSRoot {
 				integrity: undefined
 				language: "js"
 				sourceText: undefined
-				end: Position 1:8
+				end: Position 1:6
 				path: UIDPath<es2015/uncategorised/265/input.js>
 				start: Position 1:7
 			}
 			description: Object {
-				advice: Array []
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unexpected token, expected "}
-					"("
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unexpected character <emphasis>`</emphasis>"}
+				advice: Array [
+					log {
+						category: "info"
+						text: RAW_MARKUP {value: "Expected the opening switch discriminant character <emphasis>(</emphasis>"}
+					}
 				]
 			}
 		}
@@ -67,13 +69,12 @@ JSRoot {
 
  es2015/uncategorised/265/input.js:1:7 parse(js) ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unexpected token, expected (
+  ✖ Unexpected character `
 
     switch `test`
            ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  ℹ Expected the opening switch discriminant character (
 
-✖ Found 1 problem
 
 ```

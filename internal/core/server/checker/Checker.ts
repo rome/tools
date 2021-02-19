@@ -7,17 +7,14 @@
 
 import {Server, ServerRequest} from "@internal/core";
 import {LINTABLE_EXTENSIONS} from "@internal/core/common/file-handlers";
-import {
-	DiagnosticSuppressions,
-	Diagnostics,
-	DiagnosticsProcessor,
-} from "@internal/diagnostics";
+import {Diagnostics, DiagnosticsProcessor} from "@internal/diagnostics";
 import {EventSubscription} from "@internal/events";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	AnyPath,
+	MixedPathMap,
 } from "@internal/path";
 import {DiagnosticsPrinter} from "@internal/cli-diagnostics";
 import DependencyGraph from "../dependencies/DependencyGraph";
@@ -31,33 +28,25 @@ import {
 	LintCompilerOptionsDecisions,
 	areAnalyzeDependencyResultsEqual,
 } from "@internal/compiler";
-import {markup} from "@internal/markup";
+import {StaticMarkup, markup} from "@internal/markup";
 import {Dict, VoidCallback} from "@internal/typescript-helpers";
 import {FileNotFound} from "@internal/fs";
 import {WatchFilesEvent} from "../fs/glob";
 import {WorkerIntegrationTimings} from "@internal/core/worker/types";
 import {ExtendedMap} from "@internal/collections";
 import {humanizeDuration} from "@internal/string-utils";
+import {ServerRequestGlobArgs} from "../ServerRequest";
 
-type CheckWatchChange =
-	| {
-			type: "absolute";
-			path: AbsoluteFilePath;
-			diagnostics: Diagnostics;
-		}
-	| {
-			type: "unknown";
-			path: undefined | AnyPath;
-			diagnostics: Diagnostics;
-		};
-
-type CheckWatchChanges = CheckWatchChange[];
+type CheckWatchChange = {
+	path: AnyPath;
+	diagnostics: Diagnostics;
+};
 
 export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
 
 export type CheckerOptions = {
 	apply?: boolean;
-	args?: string[];
+	args?: ServerRequestGlobArgs;
 	hasDecisions?: boolean;
 	formatOnly?: boolean;
 	globalDecisions?: LintCompilerOptionsDecisions;
@@ -70,87 +59,18 @@ type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
 type WatchEvents = {
 	onRunStart: VoidCallback;
 	createProgress: ProgressFactory;
-	onChanges: (result: WatchResults) => Promise<void> | void;
+	onRunEnd: (result: RunResult) => Promise<void> | void;
+	onChange: (result: CheckWatchChange) => Promise<void> | void;
 };
 
-type WatchResults = {
+type RunResult = {
 	runner: CheckRunner;
 	evictedPaths: AbsoluteFilePathSet;
-	changes: CheckWatchChanges;
-	savedCount: number;
+	savedPaths: AbsoluteFilePathSet;
 	totalCount: number;
 };
 
-function createDiagnosticsPrinter(
-	runner: CheckRunner,
-	request: ServerRequest,
-	processor: DiagnosticsProcessor,
-	totalCount: number,
-	savedCount: number,
-): DiagnosticsPrinter {
-	const printer = request.createDiagnosticsPrinter(processor);
-
-	printer.onFooterPrint(async (reporter, isError) => {
-		if (isError) {
-			let hasPendingFixes = false;
-
-			for (const {tags} of processor.getDiagnostics()) {
-				if (tags?.fixable) {
-					hasPendingFixes = true;
-				}
-			}
-
-			if (hasPendingFixes) {
-				reporter.info(
-					markup`Fixes available. To apply safe fixes and formatting run`,
-				);
-				reporter.command("rome check --apply");
-				reporter.info(markup`To choose fix suggestions run`);
-				reporter.command("rome check --review");
-				reporter.br();
-			}
-		}
-
-		if (savedCount > 0) {
-			reporter.success(
-				markup`<number emphasis>${String(savedCount)}</number> <grammarNumber plural="files" singular="file">${String(
-					savedCount,
-				)}</grammarNumber> updated`,
-			);
-			reporter.info(
-				markup`You can revert these changes with the <code>rome recover pop</code> command`,
-			);
-			reporter.br();
-		}
-
-		if (!isError) {
-			if (totalCount === 0) {
-				reporter.warn(markup`No files linted`);
-			} else {
-				reporter.info(
-					markup`<number emphasis>${String(totalCount)}</number> <grammarNumber plural="files" singular="file">${String(
-						totalCount,
-					)}</grammarNumber> linted`,
-				);
-			}
-		}
-
-		const timings = runner.processIntegrationTimings();
-		for (const timing of timings.total.values()) {
-			if (timing.took > 0n) {
-				const ms = Number(timing.took / 1000000n);
-				reporter.warn(
-					markup`Spent <emphasis>${humanizeDuration(
-						ms,
-						{longform: true, allowMilliseconds: true},
-					)}</emphasis> running ${timing.displayName}`,
-				);
-			}
-		}
-	});
-
-	return printer;
-}
+const FLUSH_CHANGES_TIMEOUT = 200;
 
 class CheckRunner {
 	constructor(
@@ -169,23 +89,50 @@ class CheckRunner {
 		this.request = checker.request;
 		this.options = checker.options;
 		this.events = events;
-		this.compilerDiagnosticsCache = new AbsoluteFilePathMap();
 		this.hadDependencyValidationErrors = new AbsoluteFilePathMap();
 		this.timingsByWorker = new ExtendedMap("timingsByWorker", () => new Map());
+
+		this.pendingChanges = new MixedPathMap();
+		this.flushChangesTimer = undefined;
+
+		this.compilerProcessor = this.createDiagnosticsProcessor();
+		this.dependencyProcessor = this.createDiagnosticsProcessor();
+		this.processors = [this.compilerProcessor, this.dependencyProcessor];
 	}
 
+	public events: WatchEvents;
+
 	private hadDependencyValidationErrors: AbsoluteFilePathMap<boolean>;
-	private compilerDiagnosticsCache: AbsoluteFilePathMap<{
-		diagnostics: Diagnostics;
-		suppressions: DiagnosticSuppressions;
-	}>;
 	private checker: Checker;
-	private events: WatchEvents;
 	private server: Server;
 	private request: ServerRequest;
 	private graph: DependencyGraph;
 	private options: CheckerOptions;
 	private timingsByWorker: ExtendedMap<number, WorkerIntegrationTimings>;
+
+	private compilerProcessor: DiagnosticsProcessor;
+	private dependencyProcessor: DiagnosticsProcessor;
+	private processors: DiagnosticsProcessor[];
+	private pendingChanges: MixedPathMap<{
+		guaranteed: boolean;
+	}>;
+	private flushChangesTimer: undefined | NodeJS.Timeout;
+
+	private createDiagnosticsProcessor(): DiagnosticsProcessor {
+		const processor = this.checker.createDiagnosticsProcessor();
+
+		processor.guaranteedDiagnosticsEvent.subscribe((diags) => {
+			for (const diag of diags) {
+				this.queueChanges(diag.location.path, true);
+			}
+		});
+
+		processor.modifiedDiagnosticsForPathEvent.subscribe((path) => {
+			this.queueChanges(path, false);
+		});
+
+		return processor;
+	}
 
 	public processIntegrationTimings(): {
 		slowest: WorkerIntegrationTimings;
@@ -220,18 +167,7 @@ class CheckRunner {
 		return {slowest, total};
 	}
 
-	public hasCompilerDiagnostics(path: AbsoluteFilePath): boolean {
-		return this.compilerDiagnosticsCache.has(path);
-	}
-
-	private clearCompilerDiagnosticsForPath(path: AbsoluteFilePath) {
-		this.compilerDiagnosticsCache.set(path, {suppressions: [], diagnostics: []});
-	}
-
-	private async runLint(
-		{paths}: WatchFilesEvent,
-		processor: DiagnosticsProcessor,
-	): Promise<void> {
+	private async runCompiler({paths}: WatchFilesEvent): Promise<void> {
 		const {server} = this.request;
 		const {
 			lintCompilerOptionsPerFile = {},
@@ -268,6 +204,8 @@ class CheckRunner {
 					}
 				}
 
+				this.compilerProcessor.removePath(path);
+
 				const res = await FileNotFound.allowMissing(
 					path,
 					() =>
@@ -293,9 +231,8 @@ class CheckRunner {
 					save,
 					timingsNs,
 				} = res.value;
-				processor.addSuppressions(suppressions);
-				processor.addDiagnostics(diagnostics);
-				this.compilerDiagnosticsCache.set(path, {suppressions, diagnostics});
+				this.compilerProcessor.addSuppressions(suppressions);
+				this.compilerProcessor.addDiagnostics(diagnostics);
 				if (save !== undefined) {
 					this.request.queueSaveFile(path, save);
 				}
@@ -336,19 +273,44 @@ class CheckRunner {
 		progress.end();
 	}
 
-	private filterCheckDependenciesEnabled(
-		set: AbsoluteFilePathSet,
-	): AbsoluteFilePath[] {
-		return Array.from(set).filter((path) => {
+	private async seedGraph(
+		{progressText, paths}: {
+			progressText: StaticMarkup;
+			paths: AbsoluteFilePathSet;
+		},
+	) {
+		const filteredPaths: AbsoluteFilePath[] = [];
+		for (const path of paths) {
 			const project = this.server.projectManager.assertProjectExisting(path);
-			return project.config.check.dependencies;
+			if (project.config.check.dependencies) {
+				filteredPaths.push(path);
+				this.dependencyProcessor.removePath(path);
+
+				// Take compiler suppressions for path if they exist
+				const suppressions = this.compilerProcessor.getSuppressionsForPath(path);
+				if (suppressions !== undefined) {
+					this.compilerProcessor.addSuppressions(suppressions);
+				}
+			}
+		}
+		if (filteredPaths.length === 0) {
+			return;
+		}
+
+		const progress = this.events.createProgress({
+			title: progressText,
 		});
+		await this.graph.seed({
+			allowFileNotFound: true,
+			paths: filteredPaths,
+			diagnosticsProcessor: this.dependencyProcessor,
+			validate: false,
+			analyzeProgress: progress,
+		});
+		progress.end();
 	}
 
-	private async runGraph(
-		event: WatchFilesEvent,
-		processor: DiagnosticsProcessor,
-	): Promise<AbsoluteFilePathSet> {
+	private async runGraph(event: WatchFilesEvent): Promise<void> {
 		const {graph} = this;
 		const evictedPaths = event.paths;
 
@@ -363,19 +325,12 @@ class CheckRunner {
 		}
 
 		// Refresh only the evicted paths
-		const progress = this.events.createProgress({
-			title: event.initial
+		await this.seedGraph({
+			paths: evictedPaths,
+			progressText: event.initial
 				? markup`Analyzing files`
 				: markup`Analyzing changed files`,
 		});
-		await graph.seed({
-			allowFileNotFound: true,
-			paths: this.filterCheckDependenciesEnabled(evictedPaths),
-			diagnosticsProcessor: processor,
-			validate: false,
-			analyzeProgress: progress,
-		});
-		progress.end();
 
 		// Maintain a list of all the dependencies we revalidated
 		const validatedDependencyPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
@@ -417,141 +372,114 @@ class CheckRunner {
 
 		// Revalidate dependents
 		if (validatedDependencyPathDependents.size > 0) {
-			const progress = this.events.createProgress({
-				title: markup`Analyzing dependents`,
+			await this.seedGraph({
+				progressText: markup`Analyzing dependents`,
+				paths: validatedDependencyPaths,
 			});
-
-			await graph.seed({
-				paths: this.filterCheckDependenciesEnabled(validatedDependencyPaths),
-				diagnosticsProcessor: processor,
-				validate: false,
-				analyzeProgress: progress,
-			});
-
-			progress.end();
 		}
 
 		// Validate connections
 		for (const path of validatedDependencyPaths) {
-			const hasValidationErrors = graph.validate(graph.getNode(path), processor);
-			this.hadDependencyValidationErrors.set(path, hasValidationErrors);
+			graph.validate(graph.getNode(path), this.dependencyProcessor);
+			this.hadDependencyValidationErrors.set(
+				path,
+				this.dependencyProcessor.hasDiagnosticsForPath(path),
+			);
 		}
-
-		return validatedDependencyPaths;
 	}
 
-	private computeChanges(
-		{paths: evictedPaths}: WatchFilesEvent,
-		processor: DiagnosticsProcessor,
-		validatedDependencyPaths: AbsoluteFilePathSet,
-	): CheckWatchChanges {
-		const {server} = this;
-		const changes: CheckWatchChanges = [];
+	public getDiagnosticsForPath(
+		path: AnyPath,
+		guaranteedOnly: boolean,
+	): Diagnostics {
+		const processor = new DiagnosticsProcessor();
 
-		const updatedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet([
-			...validatedDependencyPaths,
-		]);
-
-		// Deleted paths or those with check.dependencies disabled wont show up in validatedDependencyPaths so we need to readd them
-		for (const path of evictedPaths) {
-			updatedPaths.add(path);
-
-			if (!server.memoryFs.exists(path)) {
-				this.clearCompilerDiagnosticsForPath(path);
+		for (const subprocessor of this.processors) {
+			const diagnostics = subprocessor.getDiagnosticsForPath(path, false);
+			if (diagnostics !== undefined) {
+				processor.addDiagnostics(
+					guaranteedOnly ? diagnostics.guaranteed : diagnostics.complete,
+				);
+				processor.addSuppressions(diagnostics.suppressions);
 			}
 		}
 
-		const diagnosticsByPath = processor.getDiagnosticsByPath();
+		return processor.getDiagnostics();
+	}
 
-		// In case we pushed on any diagnostics that aren't from the input paths, try to resolve them
-		const includedPathsInDiagnostics = server.projectManager.categorizePaths(
-			diagnosticsByPath.map.keys(),
-		);
-		for (const path of includedPathsInDiagnostics.absolutes) {
-			updatedPaths.add(path);
+	private flushChanges() {
+		if (this.flushChangesTimer !== undefined) {
+			clearTimeout(this.flushChangesTimer);
+			this.flushChangesTimer = undefined;
 		}
 
-		// validatedDependencyPaths can include paths that weren't changed, but needed to be recomputed
-		// as they were dependents of one of the files that was
-		// In that case we need to push their previous compiler diagnostics
-		for (const path of validatedDependencyPaths) {
-			if (!evictedPaths.has(path)) {
-				const compilerDiagnostics = this.compilerDiagnosticsCache.get(path);
-				if (compilerDiagnostics !== undefined) {
-					processor.addSuppressions(compilerDiagnostics.suppressions);
-					processor.addDiagnostics(compilerDiagnostics.diagnostics);
+		const {pendingChanges} = this;
+		this.pendingChanges = new MixedPathMap();
+
+		for (const [path, {guaranteed}] of pendingChanges) {
+			this.events.onChange({
+				path,
+				diagnostics: this.getDiagnosticsForPath(path, guaranteed),
+			});
+		}
+	}
+
+	private queueChanges(path: AnyPath, guaranteed: boolean) {
+		const existing = this.pendingChanges.get(path);
+		if (existing !== undefined && !existing.guaranteed) {
+			return;
+		}
+
+		this.pendingChanges.set(path, {guaranteed});
+
+		if (this.flushChangesTimer === undefined) {
+			this.flushChangesTimer = setTimeout(
+				() => this.flushChanges(),
+				FLUSH_CHANGES_TIMEOUT,
+			);
+		}
+	}
+
+	public async run(event: WatchFilesEvent): Promise<void> {
+		this.events.onRunStart();
+
+		// Remove deleted paths
+		for (const path of event.paths) {
+			if (!this.server.memoryFs.exists(path)) {
+				this.compilerProcessor.removePath(path);
+				this.dependencyProcessor.removePath(path);
+			}
+		}
+
+		// Run compiler lint
+		await this.runCompiler(event);
+
+		// Update dependency graph
+		await this.runGraph(event);
+
+		// Flush saved files
+		const savedPaths = await this.request.flushFiles();
+
+		// Queue complete diagnostics if they are different than guaranteed
+		for (const processor of this.processors) {
+			for (const path of processor.getPaths()) {
+				const diagnostics = processor.getDiagnosticsForPath(path);
+				if (diagnostics !== undefined) {
+					if (diagnostics.complete.length !== diagnostics.guaranteed.length) {
+						this.queueChanges(path, false);
+					}
 				}
 			}
 		}
 
-		// We can't just use getDiagnosticFilenames as we need to produce empty arrays for removed diagnostics
-		for (const path of updatedPaths) {
-			// Could have been a UID that we turned into an absolute path so turn it back
-			const diagnostics = [
-				...(diagnosticsByPath.map.get(path) || []),
-				...(diagnosticsByPath.map.get(
-					this.server.projectManager.getUid(path, true),
-				) || []),
-			];
+		this.flushChanges();
 
-			changes.push({
-				type: "absolute",
-				path,
-				diagnostics,
-			});
-		}
-
-		// We can produce diagnostics that don't actually point at a file. For LSP we will just throw these away,
-		// otherwise inside of Rome we can display them.
-		// These filenames may be relative or undefined
-		for (const path of includedPathsInDiagnostics.unknowns) {
-			changes.push({
-				type: "unknown",
-				path,
-				diagnostics: diagnosticsByPath.map.get(path) || [],
-			});
-		}
-
-		if (includedPathsInDiagnostics.hasUndefined) {
-			changes.push({
-				type: "unknown",
-				path: undefined,
-				diagnostics: diagnosticsByPath.pathless,
-			});
-		}
-
-		return changes;
-	}
-
-	public async run(
-		event: WatchFilesEvent,
-		processor: DiagnosticsProcessor,
-	): Promise<WatchResults> {
-		this.events.onRunStart();
-
-		// Run compiler lint
-		await this.runLint(event, processor);
-
-		// Update dependency graph
-		const validatedDependencyPaths = await this.runGraph(event, processor);
-
-		// Computed diagnostic changes
-		const changes = await this.computeChanges(
-			event,
-			processor,
-			validatedDependencyPaths,
-		);
-
-		// Flush saved files
-		const savedCount = await this.request.flushFiles();
-
-		return {
+		await this.events.onRunEnd({
 			evictedPaths: event.paths,
-			changes,
-			savedCount,
+			savedPaths,
 			totalCount: event.paths.size,
 			runner: this,
-		};
+		});
 	}
 }
 
@@ -575,7 +503,7 @@ export default class Checker {
 		return apply || hasDecisions || this.shouldOnlyFormat();
 	}
 
-	private createDiagnosticsProcessor(): DiagnosticsProcessor {
+	public createDiagnosticsProcessor(): DiagnosticsProcessor {
 		const processor = this.request.createDiagnosticsProcessor({
 			origins: [
 				{
@@ -590,15 +518,95 @@ export default class Checker {
 		return processor;
 	}
 
-	public async watch(events: WatchEvents): Promise<EventSubscription> {
+	private createDiagnosticsPrinter(
+		{runner, getStats, streaming}: {
+			streaming: boolean;
+			runner: CheckRunner;
+			getStats: () => {
+				totalCount: number;
+				savedCount: number;
+			};
+		},
+	): DiagnosticsPrinter {
+		const {request} = this;
+		const processor = this.createDiagnosticsProcessor();
+		const printer = request.createDiagnosticsPrinter(processor, {streaming});
+
+		printer.onFooterPrint(async (reporter, isError) => {
+			if (isError) {
+				let hasPendingFixes = false;
+
+				for (const {tags} of processor.getDiagnostics()) {
+					if (tags?.fixable) {
+						hasPendingFixes = true;
+					}
+				}
+
+				if (hasPendingFixes) {
+					reporter.info(
+						markup`Fixes available. To apply safe fixes and formatting run`,
+					);
+					reporter.command("rome check --apply");
+					reporter.info(markup`To choose fix suggestions run`);
+					reporter.command("rome check --review");
+					reporter.br();
+				}
+			}
+
+			const {savedCount, totalCount} = getStats();
+
+			if (savedCount > 0) {
+				reporter.success(
+					markup`<number emphasis>${String(savedCount)}</number> <grammarNumber plural="files" singular="file">${String(
+						savedCount,
+					)}</grammarNumber> updated`,
+				);
+				reporter.info(
+					markup`You can revert these changes with the <code>rome recover pop</code> command`,
+				);
+				reporter.br();
+			}
+
+			if (!isError) {
+				if (totalCount === 0) {
+					reporter.warn(markup`No files linted`);
+				} else {
+					reporter.info(
+						markup`<number emphasis>${String(totalCount)}</number> <grammarNumber plural="files" singular="file">${String(
+							totalCount,
+						)}</grammarNumber> linted`,
+					);
+				}
+			}
+
+			const timings = runner.processIntegrationTimings();
+			for (const timing of timings.total.values()) {
+				if (timing.took > 0n) {
+					const ms = Number(timing.took / 1000000n);
+					reporter.warn(
+						markup`Spent <emphasis>${humanizeDuration(
+							ms,
+							{longform: true, allowMilliseconds: true},
+						)}</emphasis> running ${timing.displayName}`,
+					);
+				}
+			}
+		});
+
+		return printer;
+	}
+
+	public createRunner(events: WatchEvents): CheckRunner {
 		const graph = new DependencyGraph(
 			this.request,
 			this.request.getResolverOptionsFromFlags(),
 			{shallow: true},
 		);
 
-		const runner = new CheckRunner(this, {events, graph});
+		return new CheckRunner(this, {events, graph});
+	}
 
+	public async watch(runner: CheckRunner): Promise<EventSubscription> {
 		const globber = await this.request.glob({
 			args: this.options.args,
 			noun: "lint",
@@ -608,9 +616,7 @@ export default class Checker {
 		});
 
 		return globber.watch(async (event) => {
-			const processor = this.createDiagnosticsProcessor();
-			const result = await runner.run(event, processor);
-			await events.onChanges(result);
+			await runner.run(event);
 		});
 	}
 
@@ -618,45 +624,42 @@ export default class Checker {
 		const {request} = this;
 		const {reporter} = request;
 
-		const diagnosticsByFilename: Map<undefined | string, Diagnostics> = new Map();
+		const diagnosticsByPath: MixedPathMap<Diagnostics> = new MixedPathMap();
 
-		await this.watch({
+		const runner = this.createRunner({
 			onRunStart: () => {
 				reporter.clearScreen();
 			},
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
-			onChanges: async ({changes, totalCount, savedCount, runner}) => {
-				const printer = createDiagnosticsPrinter(
-					runner,
-					request,
-					this.createDiagnosticsProcessor(),
-					totalCount,
-					savedCount,
-				);
-
-				// Update our diagnostics with the changes
-				for (const {path, diagnostics} of changes) {
-					const filename = path === undefined ? undefined : path.join();
-					if (diagnostics.length === 0) {
-						diagnosticsByFilename.delete(filename);
-					} else {
-						diagnosticsByFilename.set(filename, diagnostics);
-					}
+			onChange: ({path, diagnostics}) => {
+				if (diagnostics.length === 0) {
+					diagnosticsByPath.delete(path);
+				} else {
+					diagnosticsByPath.set(path, diagnostics);
 				}
+			},
+			onRunEnd: async ({totalCount, savedPaths, runner}) => {
+				const printer = this.createDiagnosticsPrinter({
+					streaming: true,
+					runner,
+					getStats: () => ({
+						totalCount,
+						savedCount: savedPaths.size,
+					}),
+				});
 
 				// Print all diagnostics
-				for (const diagnostics of diagnosticsByFilename.values()) {
+				for (const diagnostics of diagnosticsByPath.values()) {
 					printer.processor.addDiagnostics(diagnostics);
 				}
 
 				reporter.clearScreen();
 				await printer.print();
-				await printer.footer();
 			},
 		});
-
+		await this.watch(runner);
 		await request.endEvent.wait();
 	}
 
@@ -666,50 +669,58 @@ export default class Checker {
 	}> {
 		const {request} = this;
 		const {reporter} = request;
-		const diagnosticsByFilename: Map<undefined | string, Diagnostics> = new Map();
 
-		let savedCount = 0;
+		const diagnosticsByPath: MixedPathMap<Diagnostics> = new MixedPathMap();
+
+		let savedPaths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 		let paths: AbsoluteFilePathSet = new AbsoluteFilePathSet();
-		let runner: undefined | CheckRunner;
 
-		const watchEvent = await this.watch({
+		// If we aren't saving then we can print diagnostics as we receive them.
+		// When we are saving, we may have diagnostics that eventually get cleared once we fix or format a file
+		const streaming = !this.shouldSave();
+
+		const runner = this.createRunner({
 			onRunStart: () => {},
 			createProgress: (opts) => {
 				return reporter.progress(opts);
 			},
-			onChanges: (res) => {
-				// Update counts
-				savedCount += res.savedCount;
-				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
-				runner = res.runner;
-
-				// Update our diagnostics with the changes
-				for (const {path, diagnostics} of res.changes) {
-					const filename = path === undefined ? undefined : path.join();
+			onChange: ({path, diagnostics}) => {
+				if (streaming) {
+					printer.processor.addDiagnostics(diagnostics);
+				} else {
 					if (diagnostics.length === 0) {
-						diagnosticsByFilename.delete(filename);
+						diagnosticsByPath.delete(path);
 					} else {
-						diagnosticsByFilename.set(filename, diagnostics);
+						diagnosticsByPath.set(path, diagnostics);
 					}
 				}
 			},
+			onRunEnd: (res) => {
+				// Update counts
+				savedPaths.addSet(res.savedPaths);
+				paths = new AbsoluteFilePathSet([...paths, ...res.evictedPaths]);
+			},
 		});
 
+		const printer = this.createDiagnosticsPrinter({
+			streaming,
+			runner,
+			getStats: () => ({
+				totalCount: paths.size,
+				savedCount: savedPaths.size,
+			}),
+		});
+
+		const watchEvent = await this.watch(runner);
 		await watchEvent.unsubscribe();
 
-		const printer = createDiagnosticsPrinter(
-			runner!,
-			request,
-			this.createDiagnosticsProcessor(),
-			paths.size,
-			savedCount,
-		);
-
-		for (const diagnostics of diagnosticsByFilename.values()) {
-			printer.processor.addDiagnostics(diagnostics);
+		if (!streaming) {
+			for (const diagnostics of diagnosticsByPath.values()) {
+				printer.processor.addDiagnostics(diagnostics);
+			}
 		}
 
-		return {printer, savedCount};
+		return {printer, savedCount: savedPaths.size};
 	}
 
 	public async throwSingle() {

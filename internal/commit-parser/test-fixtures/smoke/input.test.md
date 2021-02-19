@@ -16,6 +16,6 @@ CommitRoot {
 	rawBody: "everything included!"
 	scope: "some scope"
 	loc: SourceLocation smoke/input.txt 1:0-1:40
-	path: RelativeFilePath<smoke/input.txt>
+	path: RelativePath<smoke/input.txt>
 }
 ```

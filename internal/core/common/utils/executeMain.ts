@@ -9,7 +9,7 @@ import {UnknownObject} from "@internal/typescript-helpers";
 import {SourceMapConsumer} from "@internal/codec-source-map";
 import {sourceMapManager} from "@internal/v8";
 import vm = require("vm");
-
+import {OneIndexed, ZeroIndexed} from "@internal/math";
 import {
 	Diagnostic,
 	descriptions,
@@ -17,7 +17,6 @@ import {
 } from "@internal/diagnostics";
 import {AbsoluteFilePath} from "@internal/path";
 import {Position} from "@internal/parser-core";
-import {ob1Coerce1, ob1Number0} from "@internal/ob1";
 import {getRequire} from "../IntegrationLoader";
 
 type ExecuteMainOptions = {
@@ -87,8 +86,8 @@ export default async function executeMain(
 			const line = Number(lineMatch[2]);
 
 			const pos: Position = {
-				column: ob1Number0,
-				line: ob1Coerce1(line),
+				column: new ZeroIndexed(),
+				line: new OneIndexed(line),
 			};
 
 			const syntaxError: Diagnostic = {

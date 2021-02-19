@@ -14,7 +14,6 @@ import {
 import {tryParseWithOptionalOffsetPosition} from "@internal/parser-core";
 import {AnyPath, createAnyPath} from "@internal/path";
 import {manifestNameToString, normalizeName} from "./name";
-import {ob1Add} from "@internal/ob1";
 import {descriptions} from "@internal/diagnostics";
 import {ManifestName} from "./types";
 
@@ -384,8 +383,8 @@ function parseNpm(
 					loc: start === undefined
 						? undefined
 						: consumer.getLocationRange(
-								ob1Add(start, offset),
-								end === undefined ? undefined : ob1Add(end, offset),
+								start.add(offset),
+								end === undefined ? undefined : end.add(offset),
 								"inner-value",
 							),
 				},
@@ -410,7 +409,7 @@ function parseNpm(
 					const pos = consumer.getLocation("inner-value").start;
 					return {
 						...pos,
-						column: ob1Add(pos.column, offset),
+						column: pos.column.add(offset),
 					};
 				},
 				parse: (opts) => parseSemverRange(opts),

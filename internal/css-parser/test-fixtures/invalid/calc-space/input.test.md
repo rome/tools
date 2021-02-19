@@ -10,7 +10,7 @@ CSSRoot {
 	corrupt: false
 	integrity: undefined
 	loc: SourceLocation invalid/calc-space/input.css 1:0-3:1
-	path: RelativeFilePath<invalid/calc-space/input.css>
+	path: RelativePath<invalid/calc-space/input.css>
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
@@ -19,12 +19,12 @@ CSSRoot {
 				language: "css"
 				sourceText: undefined
 				end: Position 2:20
-				path: RelativeFilePath<invalid/calc-space/input.css>
+				path: RelativePath<invalid/calc-space/input.css>
 				start: Position 2:16
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "css"
+				category: Array ["parse"]
 				message: RAW_MARKUP {value: "An operator is needed."}
 				advice: Array [
 					log {

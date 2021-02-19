@@ -30,20 +30,13 @@ JSRoot {
 				start: Position 1:2
 			}
 			description: Object {
-				category: "parse"
 				categoryValue: "js"
-				message: Array [
-					RAW_MARKUP {value: "Unclosed "}
-					"property name"
-				]
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "Unclosed <emphasis>property name</emphasis>"}
 				advice: Array [
 					log {
 						category: "info"
-						text: Array [
-							RAW_MARKUP {value: "We expected to find the closing character <emphasis>"}
-							"]"
-							RAW_MARKUP {value: "</emphasis> here"}
-						]
+						text: RAW_MARKUP {value: "We expected to find the closing character <emphasis>]</emphasis> here"}
 					}
 					frame {location: SourceLocation esprima/invalid-syntax/migrated_0080/input.js 1:4-1:4}
 				]
@@ -121,13 +114,13 @@ JSRoot {
 
   ✖ Unclosed property name
 
+    ({[a,b]:0})
+      ^
+
   ℹ We expected to find the closing character ] here
 
     ({[a,b]:0})
         ^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```

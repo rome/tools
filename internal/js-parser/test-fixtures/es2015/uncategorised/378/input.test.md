@@ -38,6 +38,12 @@ JSRoot {
 	diagnostics: Array [
 		Object {
 			origins: Array [Object {category: "parse"}]
+			description: Object {
+				advice: Array []
+				categoryValue: "js"
+				category: Array ["parse"]
+				message: RAW_MARKUP {value: "enum is a reserved word"}
+			}
 			location: Object {
 				integrity: undefined
 				language: "js"
@@ -45,15 +51,6 @@ JSRoot {
 				end: Position 1:10
 				path: UIDPath<es2015/uncategorised/378/input.js>
 				start: Position 1:6
-			}
-			description: Object {
-				advice: Array []
-				category: "parse"
-				categoryValue: "js"
-				message: Array [
-					"enum"
-					RAW_MARKUP {value: " is a reserved word"}
-				]
 			}
 		}
 	]
@@ -71,8 +68,5 @@ JSRoot {
     class enum {}
           ^^^^
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
 
 ```
