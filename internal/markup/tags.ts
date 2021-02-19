@@ -46,8 +46,6 @@ tags.set(
 	"number",
 	new Map([
 		["approx", booleanValidator],
-		["pluralSuffix", stringValidator],
-		["singularSuffix", stringValidator],
 	]),
 );
 tags.set("indent", new Map());
