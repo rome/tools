@@ -15,8 +15,6 @@
 
   ℹ See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -40,8 +38,6 @@ class Hello extends React.Component {
 
   ℹ See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -64,8 +60,6 @@ class Hello extends React.Component {
     componentDidUpdate method instead.
 
   ℹ See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

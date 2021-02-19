@@ -62,8 +62,6 @@ ages;
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -133,8 +131,6 @@ greet();
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -156,8 +152,6 @@ greet();
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -178,8 +172,6 @@ greet();
   ✖ Avoid using the any type.
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -204,15 +196,11 @@ greet();
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/ts/noExplicitAny/reject/9/file.ts:1:41 lint/ts/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using the any type.
 
   ℹ Using nonspecific types defeats the purpose of using TypeScript.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

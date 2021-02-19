@@ -14,8 +14,6 @@
 
   ℹ Setting content using code can expose users to cross-site scripting (XSS) attacks.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 

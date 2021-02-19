@@ -17,7 +17,7 @@ prevent usage of Array index in keys
 **ESLint Equivalent:** [no-array-index-key](https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/no-array-index-key.md)
 <!-- GENERATED:END(id:description) -->
 
-<!-- GENERATED:START(hash:0db20c265c239d6e318d47b34c94bb97f998d2a9,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
+<!-- GENERATED:START(hash:673102ef4d0265b029880c8c069e1c217035f120,id:examples) Everything below is automatically generated. DO NOT MODIFY. Run `./rome run scripts/generated-files/lint-rules-docs` to update. -->
 ## Examples
 
 ### Invalid
@@ -30,19 +30,25 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -56,19 +62,27 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -83,19 +97,29 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -109,10 +133,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -126,10 +153,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -144,10 +174,14 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -161,19 +195,25 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -187,10 +227,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -204,19 +247,25 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -230,19 +279,27 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong><span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:14</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong><span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>               <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -257,19 +314,29 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong><span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:19</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span>
+    <span style="opacity: 0.8;">&rarr;</span><strong> │ </strong><span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -283,10 +350,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -300,10 +370,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -318,10 +391,14 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token keyword">function</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">const</span> <span class="token variable">foo</span> <span class="token operator">=</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>              <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">foo</span><span class="token punctuation">;</span>
+  <strong>  4</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -335,19 +412,25 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -361,10 +444,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">React</span><span class="token punctuation">.</span><span class="token variable">Children</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token variable">props</span><span class="token punctuation">.</span><span class="token variable">children</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">child</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -378,10 +464,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  &lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -395,10 +484,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>          <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -412,19 +504,25 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
  <span style="text-decoration-style: dashed; text-decoration-line: underline;">file.tsx:2:7</span> <strong>lint/react/noArrayIndexKey</strong> ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">React</span><span class="token punctuation">.</span><span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>        <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -438,10 +536,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>  <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -455,10 +556,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token function">cloneElement</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token punctuation">{</span> <span class="token variable">key</span><span class="token punctuation">:</span> <span class="token variable">index</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+     <strong> │ </strong>         <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -472,10 +576,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -489,10 +596,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">forEach</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -506,10 +616,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -523,10 +636,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">some</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -540,10 +656,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">every</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -557,10 +676,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">find</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -574,10 +696,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">findIndex</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">otherThings</span><span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span><span class="token punctuation">;</span>
+     <strong> │ </strong>                   <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -591,10 +716,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
+     <strong> │ </strong>                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -608,10 +736,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduce</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
+     <strong> │ </strong>                           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -625,10 +756,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduceRight</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">(</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
+     <strong> │ </strong>                    <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 
@@ -642,10 +776,13 @@ prevent usage of Array index in keys
 
   <strong><span style="color: Tomato;">✖ </span></strong><span style="color: Tomato;">Avoid using array index as key property in an element.</span>
 
+  <strong>  1</strong><strong> │ </strong><span class="token variable">things</span><span class="token punctuation">.</span><span class="token function">reduceRight</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token variable">collection</span><span class="token punctuation">,</span> <span class="token variable">thing</span><span class="token punctuation">,</span> <span class="token variable">index</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <strong><span style="color: Tomato;">&gt;</span></strong><strong> 2</strong><strong> │ </strong>  <span class="token keyword">return</span> <span class="token variable">collection</span><span class="token punctuation">.</span><span class="token function">concat</span><span class="token punctuation">(</span>&lt;<span class="token variable">Hello</span> <span class="token attr-name">key</span><span class="token operator">=</span><span class="token punctuation">{</span><span class="token variable">index</span><span class="token punctuation">}</span> <span class="token operator">/</span>&gt;<span class="token punctuation">)</span>
+     <strong> │ </strong>                           <span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span><span style="color: Tomato;"><strong>^</strong></span>
+  <strong>  3</strong><strong> │ </strong><span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
   <strong><span style="color: rgb(38, 148, 255);">ℹ </span></strong><span style="color: rgb(38, 148, 255);">See </span><span style="color: rgb(38, 148, 255);"><a href="https://reactjs.org/docs/lists-and-keys.html#keys">https://reactjs.org/docs/lists-and-keys.html#keys</a></span><span style="color: rgb(38, 148, 255);"> for more</span>
     <span style="color: rgb(38, 148, 255);">information.</span>
-
-  <strong><span style="color: Orange;">⚠ </span></strong><span style="color: Orange;">This diagnostic refers to a file that does not exist</span>
 
 </code></pre>{% endraw %}
 

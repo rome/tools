@@ -511,16 +511,22 @@ function formatObjectish(val: null | Objectish, opts: FormatOptions): AnyMarkup 
 		return markupTag("color", str, {fg: "magenta"});
 	}
 
+	// TODO boxed primitives
+	// TODO TypedArray/ArrayBuffer/DataView
+	// TODO WeakSet/WeakMap
+	// TODO prototypes that differ from constructor
+	// TODO promise
+
 	let labelKeys: string[] = [];
 
 	let label = markup`null`;
 
-	if (val.constructor !== undefined) {
+	if (typeof val[Symbol.toStringTag] === "string") {
+		label = markup`${String(val[Symbol.toStringTag])}`;
+	} else if (val.constructor !== undefined) {
 		label = markup`${val.constructor.name}`;
 
-		if (typeof val[Symbol.toStringTag] === "string") {
-			label = markup`${String(val[Symbol.toStringTag])}`;
-		} else if (val.constructor.name === "Object") {
+		if (val.constructor.name === "Object") {
 			if (typeof val.type === "string") {
 				label = markup`${val.type}`;
 				labelKeys.push("type");

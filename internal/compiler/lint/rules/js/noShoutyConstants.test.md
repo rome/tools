@@ -99,14 +99,10 @@ function f() {
 
   ℹ This constant is declared here
 
-  ⚠ Cannot render frame as lint/js/noShoutyConstants/reject/3/file.ts does not exist
-
   ℹ Safe fix
 
   - FOO
   + "FOO"
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

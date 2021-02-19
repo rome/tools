@@ -106,8 +106,6 @@ undefined
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -134,8 +132,6 @@ class MyComponent extends Component {
   ✖ Avoid using this.state within a this.setState call.
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -164,8 +160,6 @@ class MyComponent extends Component {
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -191,8 +185,6 @@ class MyComponent extends Component {
   ✖ Avoid using this.state within a this.setState call.
 
   ℹ Batched state calls could result in unexpected errors due to stale state data.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

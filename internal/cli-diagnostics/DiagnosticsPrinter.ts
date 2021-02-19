@@ -252,6 +252,16 @@ export default class DiagnosticsPrinter extends Error {
 		return false;
 	}
 
+	private async checkMissing(path: AnyPath): Promise<void> {
+		let exists: undefined | boolean = await this.fileHandler.exists(path);
+		if (exists === undefined && path.isUID()) {
+			exists = true;
+		}
+		if (!exists) {
+			this.missingFileSources.add(path);
+		}
+	}
+
 	private async addFileSource(dep: FileDependency) {
 		const {path} = dep;
 
@@ -260,14 +270,8 @@ export default class DiagnosticsPrinter extends Error {
 
 		// If we don't need the source then just do an existence check
 		if (!(needsSource || needsHash)) {
-			let exists: undefined | boolean = await this.fileHandler.exists(path);
-			if (exists === undefined && path.isUID()) {
-				exists = true;
-			}
-			if (!exists) {
-				this.missingFileSources.add(path);
-				return;
-			}
+			await this.checkMissing(path);
+			return;
 		}
 
 		// Fetch the source
@@ -322,7 +326,8 @@ export default class DiagnosticsPrinter extends Error {
 				}
 			}
 			if (sourceText === undefined) {
-				this.missingFileSources.add(path);
+				// Perform an explicit exists test
+				await this.checkMissing(path);
 				return;
 			}
 
@@ -673,30 +678,25 @@ export default class DiagnosticsPrinter extends Error {
 
 		// Check for outdated files
 		const outdatedAdvice: DiagnosticAdvice = [];
-		const {outdatedPaths: outdatedFiles} = this.getDiagnosticDependencyMeta(
-			diag,
-		);
+		const {outdatedPaths} = this.getDiagnosticDependencyMeta(diag);
 
 		// Check if this file doesn't even exist
-		if (path !== undefined) {
-			const normalPath = this.normalizePath(path);
-			const isMissing = this.missingFileSources.has(normalPath);
-			if (isMissing) {
-				outdatedAdvice.push({
-					type: "log",
-					category: "warn",
-					text: markup`This diagnostic refers to a file that does not exist`,
-				});
-				// Don't need to duplicate this path
-				outdatedFiles.delete(normalPath);
-				skipFrame = true;
-			}
+		const isMissing = this.missingFileSources.has(path);
+		if (isMissing) {
+			outdatedAdvice.push({
+				type: "log",
+				category: "warn",
+				text: markup`This diagnostic refers to a file that does not exist`,
+			});
+			// Don't need to duplicate this path
+			outdatedPaths.delete(path);
+			skipFrame = true;
 		}
 
 		// List outdated
-		const isOutdated = outdatedFiles.size > 0;
+		const isOutdated = outdatedPaths.size > 0;
 		if (isOutdated) {
-			const outdatedFilesArr = Array.from(outdatedFiles);
+			const outdatedFilesArr = Array.from(outdatedPaths);
 
 			if (outdatedFilesArr.length === 1 && outdatedFilesArr[0].equal(path)) {
 				outdatedAdvice.push({

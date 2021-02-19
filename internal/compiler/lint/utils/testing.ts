@@ -128,6 +128,15 @@ async function testLintExpect(
 		await printDiagnosticsToString({
 			diagnostics,
 			suppressions: res.suppressions,
+			printerOptions: {
+				fileHandlers: [
+					{
+						async exists() {
+							return true;
+						},
+					},
+				],
+			},
 		}),
 		undefined,
 		{filename: snapshotFilename},

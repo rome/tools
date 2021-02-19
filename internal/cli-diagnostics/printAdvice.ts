@@ -357,14 +357,18 @@ function printFrame(
 	} else if (path !== undefined) {
 		const source = opts.fileSources.get(path);
 		if (source === undefined) {
-			return printLog(
-				{
-					type: "log",
-					category: "warn",
-					text: markup`Cannot render frame as ${path} does not exist`,
-				},
-				opts,
-			);
+			if (opts.missingFileSources.has(path)) {
+				return printLog(
+					{
+						type: "log",
+						category: "warn",
+						text: markup`Cannot render frame as ${path} does not exist`,
+					},
+					opts,
+				);
+			} else {
+				return DID_NOT_PRINT;
+			}
 		} else {
 			lines = source.lines;
 			sourceText = source.sourceText;

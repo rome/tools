@@ -62,8 +62,6 @@ foo;
 
   ℹ Empty character classes are usually typos.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 

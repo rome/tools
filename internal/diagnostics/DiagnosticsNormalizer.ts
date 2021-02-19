@@ -67,7 +67,7 @@ export default class DiagnosticsNormalizer {
 		this.sourceMaps = sourceMaps;
 		this.inlineSourceText = new MixedPathMap();
 		this.options = normalizeOptions;
-		this.inlinedSourceTextFilenames = new MixedPathSet();
+		this.inlinedSourceTextPaths = new MixedPathSet();
 		this.markupOptions = this.createMarkupOptions(markupOptions);
 	}
 
@@ -77,11 +77,11 @@ export default class DiagnosticsNormalizer {
 	private markupOptions: MarkupFormatNormalizeOptions;
 
 	private inlineSourceText: MixedPathMap<string>;
-	private inlinedSourceTextFilenames: MixedPathSet;
+	private inlinedSourceTextPaths: MixedPathSet;
 
 	public removePath(path: AnyPath) {
 		this.inlineSourceText.delete(path);
-		this.inlinedSourceTextFilenames.delete(path);
+		this.inlinedSourceTextPaths.delete(path);
 	}
 
 	private createMarkupOptions(
@@ -157,14 +157,14 @@ export default class DiagnosticsNormalizer {
 
 	public normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
 		const {sourceMaps} = this;
-		if (sourceMaps === undefined) {
+		if (!this.hasNormalize()) {
 			return location;
 		}
 
 		let {marker, path, start, end, integrity} = location;
 		let origPath = path;
 
-		if (path !== undefined && origPath !== undefined && sourceMaps !== undefined) {
+		if (sourceMaps !== undefined && sourceMaps.hasAny()) {
 			if (start !== undefined) {
 				const resolved = sourceMaps.approxOriginalPositionFor(
 					origPath,
@@ -208,7 +208,7 @@ export default class DiagnosticsNormalizer {
 		// Inline sourceText. We keep track of filenames we've already inlined to avoid duplicating sourceText
 		// During printing we'll fill it back in
 		let {sourceText} = location;
-		if (path !== undefined && !this.inlinedSourceTextFilenames.has(path)) {
+		if (!this.inlinedSourceTextPaths.has(path)) {
 			sourceText =
 				sourceText ??
 				this.inlineSourceText.get(path) ??
@@ -230,11 +230,7 @@ export default class DiagnosticsNormalizer {
 
 			// Register filename as inlined if necessary
 			if (sourceText !== undefined) {
-				this.inlinedSourceTextFilenames.add(path);
-
-				if (normalizedPath !== undefined) {
-					this.inlinedSourceTextFilenames.add(normalizedPath);
-				}
+				this.inlinedSourceTextPaths.add(normalizedPath);
 			}
 		}
 

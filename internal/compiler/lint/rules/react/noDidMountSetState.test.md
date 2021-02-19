@@ -14,8 +14,6 @@
 
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -41,8 +39,6 @@ class Hello extends React.Component {
   ✖ Avoid calling this.setState in the componentDidMount method.
 
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -71,8 +67,6 @@ class Hello extends React.Component {
 
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -98,8 +92,6 @@ class Hello extends Component {
   ✖ Avoid calling this.setState in the componentDidMount method.
 
   ℹ Updating state after mounting causes a second render that can cause visual layout thrashing.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

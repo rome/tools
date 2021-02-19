@@ -14,15 +14,11 @@
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/1/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -47,15 +43,11 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/2/file.tsx:2:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -82,15 +74,11 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/3/file.tsx:2:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -118,8 +106,6 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -142,8 +128,6 @@ Children.map(
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -169,8 +153,6 @@ Children.map(
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -198,15 +180,11 @@ Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/7/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -231,8 +209,6 @@ Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -256,15 +232,11 @@ React.Children.map(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/9/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -289,15 +261,11 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/10/file.tsx:2:14 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -324,15 +292,11 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/11/file.tsx:2:19 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -360,8 +324,6 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -384,8 +346,6 @@ Children.forEach(
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -411,8 +371,6 @@ Children.forEach(
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -440,15 +398,11 @@ Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/15/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -473,8 +427,6 @@ Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -498,8 +450,6 @@ React.Children.forEach(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -519,8 +469,6 @@ things.map((thing, index) => <Hello key={index} />);
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -544,15 +492,11 @@ things.map(function(thing, index) {
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noArrayIndexKey/reject/19/file.tsx:2:7 lint/react/noArrayIndexKey ━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -574,8 +518,6 @@ things.map((thing, index) => React.cloneElement(thing, {key: index}));
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -595,8 +537,6 @@ things.map((thing, index) => cloneElement(thing, {key: index}));
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -620,8 +560,6 @@ things.map(function(thing, index) {
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -643,8 +581,6 @@ things.forEach((thing, index) => {
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -668,8 +604,6 @@ things.forEach(function(thing, index) {
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -691,8 +625,6 @@ things.filter((thing, index) => {
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -716,8 +648,6 @@ things.some((thing, index) => {
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -739,8 +669,6 @@ things.every((thing, index) => {
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -764,8 +692,6 @@ things.find((thing, index) => {
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -787,8 +713,6 @@ things.findIndex((thing, index) => {
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -812,8 +736,6 @@ things.reduce(
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -840,8 +762,6 @@ things.reduce(
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -864,8 +784,6 @@ things.reduceRight(
   ✖ Avoid using array index as key property in an element.
 
   ℹ See https://reactjs.org/docs/lists-and-keys.html#keys for more information.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

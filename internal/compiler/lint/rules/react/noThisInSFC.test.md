@@ -341,8 +341,6 @@ function Foo(props) {
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -366,8 +364,6 @@ React.memo(function Foo(props) {
   ✖ Avoid using this in stateless functional components.
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -393,8 +389,6 @@ React.forwardRef((props, ref) =>
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -418,8 +412,6 @@ const Foo = React.forwardRef((props, ref) =>
   ✖ Avoid using this in stateless functional components.
 
   ℹ The this keyword has no binding in functional components. Use hooks instead.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

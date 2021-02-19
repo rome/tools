@@ -12,8 +12,6 @@
 
   ✖ The value of the ARIA attribute aria-checked is not correct.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -33,8 +31,6 @@
   ✖ The value of the ARIA attribute aria-autocomplete is not correct.
 
   ℹ The supported values for the aria-autocomplete attribute are: "inline", "list", "both", "none"
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -56,8 +52,6 @@
 
   ℹ The supported values for the aria-invalid attribute are: "grammar", false, "spelling", true
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -75,8 +69,6 @@
  lint/a11y/useAriaProptypes/reject/4/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-errormessage is not correct.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -99,8 +91,6 @@
   ℹ The supported values for the aria-relevant attribute are: "additions", "all", "removals",
     "text"
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -118,8 +108,6 @@
  lint/a11y/useAriaProptypes/reject/6/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -139,8 +127,6 @@
 
   ✖ The value of the ARIA attribute aria-labelledby is not correct.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -158,8 +144,6 @@
  lint/a11y/useAriaProptypes/reject/8/file.tsx:1:6 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-details is not correct.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -425,8 +409,6 @@
  lint/a11y/useAriaProptypes/reject/1/file.html:1:22 lint/a11y/useAriaProptypes ━━━━━━━━━━━━━━━━━━━━━
 
   ✖ The value of the ARIA attribute aria-checked is not correct.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

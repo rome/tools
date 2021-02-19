@@ -15,8 +15,6 @@
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -43,8 +41,6 @@ class Hello extends React.Component {
 
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -74,8 +70,6 @@ class Hello extends React.Component {
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -102,8 +96,6 @@ class Hello extends Component {
 
   ℹ Updating state immediately after a previous update causes a second render that can cause
     visual layout thrashing.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

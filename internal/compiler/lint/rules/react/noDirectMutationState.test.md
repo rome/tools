@@ -15,8 +15,6 @@
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -45,8 +43,6 @@ class Hello extends React.Component {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -77,8 +73,6 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -107,8 +101,6 @@ class Hello extends React.Component {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -139,8 +131,6 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -169,16 +159,12 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
  lint/react/noDirectMutationState/reject/6/file.tsx:4:4 lint/react/noDirectMutationState ━━━━━━━━━━━
 
   ✖ Avoid mutating this.state directly.
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -209,8 +195,6 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -238,8 +222,6 @@ class Hello extends React.Component {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -269,8 +251,6 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -295,8 +275,6 @@ class Hello extends React.Component {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -323,8 +301,6 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -349,8 +325,6 @@ class Hello extends React.Component {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -377,8 +351,6 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -403,8 +375,6 @@ class Hello extends React.Component {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -431,8 +401,6 @@ class Hello extends React.Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -457,8 +425,6 @@ class Hello extends React.Component {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
@@ -485,8 +451,6 @@ class Hello extends Component {
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -511,8 +475,6 @@ class Hello extends React.PureComponent {
 
   ℹ Calling setState() after mutating this.state directly may replace the mutation you made. The
     only place you may set this.state directly is in a constructor of a react class component.
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```

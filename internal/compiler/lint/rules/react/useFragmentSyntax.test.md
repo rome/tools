@@ -93,8 +93,6 @@
     4   │ - </Fragment>
       4 │ + </>
 
-  ⚠ This diagnostic refers to a file that does not exist
-
 
 ```
 
@@ -126,8 +124,6 @@ const Hello = <div>
     3 3 │   → <Foo·/>
     4   │ - </React.Fragment>
       4 │ + </>
-
-  ⚠ This diagnostic refers to a file that does not exist
 
 
 ```
