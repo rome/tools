@@ -25,11 +25,11 @@ CSSRoot {
 			description: Object {
 				categoryValue: "css"
 				category: Array ["parse"]
-				message: RAW_MARKUP {value: "The identifier <emphasis>initial</emphasis> can't be used here"}
+				message: RAW_MARKUP {value: "The identifier <emphasis>initial</emphasis> can't be used here."}
 				advice: Array [
 					log {
 						category: "info"
-						text: RAW_MARKUP {value: "In this position, the words <emphasis>unset</emphasis>, <emphasis>initial</emphasis>, <emphasis>inherit</emphasis>,  are CSS-wide keywords, so they are reserved"}
+						text: RAW_MARKUP {value: "In this position, the words <emphasis>unset</emphasis>, <emphasis>initial</emphasis>, <emphasis>inherit</emphasis>,  are CSS-wide keywords, so they are reserved."}
 					}
 				]
 			}
