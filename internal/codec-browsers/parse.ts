@@ -10,6 +10,7 @@ import {
 import {Number0, ob1Add, ob1Inc} from "@internal/ob1";
 import {markup} from "@internal/markup";
 import {AnyTargetBrowser} from "@internal/codec-browsers/resolve";
+import {descriptions} from "@internal/diagnostics";
 
 type BrowserQueryTokens = BaseTokens & {
 	String: ValueToken<"String", string>;
@@ -29,7 +30,10 @@ type BrowserQueryTokens = BaseTokens & {
 	Unreleased: SimpleToken<"Unreleased">;
 	Percentage: ValueToken<"Percentage", number>;
 	In: SimpleToken<"In">;
-	Modern: SimpleToken<"Modern">
+	Modern: SimpleToken<"Modern">;
+	Cover: SimpleToken<"Cover">;
+	Since: SimpleToken<"Since">;
+	VersionsKeyword: SimpleToken<"VersionsKeyword">
 };
 
 type BrowserQueryParserTypes = {
@@ -45,6 +49,18 @@ const browserQueryParser = createParser<BrowserQueryParserTypes>({
 
 	tokenize(parser: ParserCore<BrowserQueryParserTypes>, index: Number0): TokenValues<BrowserQueryTokens> | undefined {
 		const char = parser.getInputCharOnly(index);
+
+		if (parser.getInputRange(index, 8)[0] === "versions") {
+			return parser.finishToken("VersionsKeyword", ob1Add(index, 8));
+		}
+
+		if (parser.getInputRange(index, 5)[0] === "cover") {
+			return parser.finishToken("Cover", ob1Add(index, 5));
+		}
+
+		if (parser.getInputRange(index, 5)[0] === "since") {
+			return parser.finishToken("Since", ob1Add(index, 5));
+		}
 
 		if (parser.getInputRange(index, 6)[0] === "modern") {
 			return parser.finishToken("Modern", ob1Add(index, 6));
@@ -150,67 +166,234 @@ const browserQueryParser = createParser<BrowserQueryParserTypes>({
 	},
 });
 
-function parseBrowserQuery(options: ParserOptions) {
+export function parseBrowserQuery(options: ParserOptions): AnyTargetBrowser[] {
 	const targets: AnyTargetBrowser[] = [];
+
+	let combination = false;
+	let inverted = false;
 
 	const parser = browserQueryParser.create(options);
 
 	while (!parser.matchToken("EOF")) {
+		let newTarget: AnyTargetBrowser|undefined = undefined;
+
 		switch (parser.getToken().type) {
 			case "String":
-				const name = (parser.getToken() as BrowserQueryTokens["String"]).value;
+				const browser = (parser.getToken() as BrowserQueryTokens["String"]).value;
 
 				parser.nextToken();
-				// if (parser.getToken().type !== "GT" || parser.getToken().type !== "") {
-				// 	parser.unexpectedDiagnostic({
-				// 		description: {message: markup`Expected a `},
-				// 	});
-				// }
+
+				switch (parser.getToken().type) {
+					case "GT":
+					case "LT":
+					case "GE":
+					case "LE":
+						parser.nextToken();
+
+						if (parser.getToken().type !== "Number") {
+							parser.unexpectedDiagnostic({
+								description: descriptions.BROWSERQUERY.EXPECTED_VERSION,
+								loc: parser.finishLocFromToken(parser.getToken())
+							});
+							break;
+						}
+
+						newTarget = {
+							type: "TargetBrowserRangeOperator",
+							browser,
+							version: (parser.getToken() as BrowserQueryTokens["Number"]).value,
+							operator: parser.getPreviousToken().type as "GT" | "LT" | "GE" | "LE"
+						};
+						break;
+
+					case "Number":
+						const version = (parser.getToken() as BrowserQueryTokens["Number"]).value;
+
+						if (parser.lookaheadToken().type !== "Hyphen") {
+							newTarget = {
+								type: "TargetBrowser",
+								browser,
+								version,
+							};
+							break;
+						}
+
+						// Skip Hyphen
+						parser.nextToken();
+						parser.nextToken();
+
+						if (parser.lookaheadToken().type !== "Number") {
+							parser.unexpectedDiagnostic({
+								description: descriptions.BROWSERQUERY.EXPECTED_VERSION,
+								loc: parser.finishLocFromToken(parser.getToken())
+							});
+							break;
+						}
+
+						newTarget = {
+							type: "TargetBrowserRange",
+							browser,
+							version,
+							to: (parser.getToken() as BrowserQueryTokens["Number"]).value,
+						};
+						break;
+
+					default:
+						parser.unexpectedDiagnostic({
+							description: descriptions.BROWSERQUERY.EXPECTED_OPERATOR_OR_VERSION,
+							loc: parser.finishLocFromToken(parser.getToken())
+						});
+						break;
+				}
 
 				break;
-			case "Maintained":
-				break;
-			case "Or":
-				parser.nextToken();
-				continue;
-			case "Dead":
-				break;
-			case "Percentage":
-				break;
-			case "In":
-				break;
-			case "Hyphen":
-				break;
-			case "LT":
-				break;
-			case "GT":
-				break;
+
 			case "Modern":
+			case "Dead":
+				newTarget = {
+					type: "TargetBrowserPreset",
+					preset: parser.getToken().type.toLowerCase() as "modern" | "dead"
+				}
 				break;
-			case "Not":
+
+			case "Cover":
+				break;
+			case "Since":
 				break;
 			case "Last":
 				break;
-			case "Number":
-				break;
-			case "And":
-				break;
+
+			case "Maintained":
 			case "Unreleased":
-				break;
-			case "LE":
-				break;
 			case "Current":
+				if (parser.lookaheadToken().type !== "String") {
+					newTarget = {
+						type: "TargetBrowserState",
+						state: parser.getToken().type.toLowerCase() as "current" | "unreleased" | "maintained"
+					}
+					break;
+				}
+
+				parser.nextToken();
+
+				newTarget = {
+					type: "TargetBrowserState",
+					browser: (parser.getToken() as BrowserQueryTokens["String"]).value,
+					state: parser.getToken().type.toLowerCase() as "current" | "unreleased" | "maintained"
+				}
 				break;
+
+			case "LT":
+			case "GT":
+			case "LE":
 			case "GE":
+				const operator = parser.getToken().type as "LT" | "GT" | "LE" | "GE";
+
+				parser.nextToken();
+
+				if (parser.getToken().type !== "Percentage") {
+					parser.unexpectedDiagnostic({
+						description: descriptions.BROWSERQUERY.EXPECTED_PERCENTAGE,
+						loc: parser.finishLocFromToken(parser.getToken())
+					});
+					break;
+				}
+
+				const coverage = (parser.getToken() as BrowserQueryTokens["Percentage"]).value;
+
+				if (parser.lookaheadToken().type !== "In") {
+					newTarget = {
+						type: "TargetBrowserCoverage",
+						coverage,
+						operator
+					}
+				}
+
+				// Skip In
+				parser.nextToken();
+				parser.nextToken();
+
+				if (parser.getToken().type !== "String") {
+					parser.unexpectedDiagnostic({
+						description: descriptions.BROWSERQUERY.EXPECTED_REGION,
+						loc: parser.finishLocFromToken(parser.getToken())
+					});
+					break;
+				}
+
+				newTarget = {
+					type: "TargetBrowserCoverage",
+					coverage,
+					operator,
+					region: (parser.getToken() as BrowserQueryTokens["String"]).value
+				}
+
+				break;
+
+			case "And":
+				combination = true;
+				break;
+
+			case "Not":
+				inverted = !inverted;
+				break;
+
+			// Don't care about them
+			case "Or":
+			case "VersionsKeyword":
+				break;
+
+			case "In":
+			case "Number":
+			case "Percentage":
+			case "Hyphen":
+				parser.unexpectedDiagnostic({
+					description: descriptions.BROWSERQUERY.EXPECTED_NEW_QUERY,
+					loc: parser.finishLocFromToken(parser.getToken())
+				});
 				break;
 
 			case "Invalid": {
 				parser.unexpectedDiagnostic({
 					description: {message: markup`Invalid token`},
+					loc: parser.finishLocFromToken(parser.getToken())
 				});
 				break;
 			}
 		}
+		if (newTarget != null) {
+			if (inverted) {
+				newTarget = {
+					type: "TargetBrowserInversion",
+					target: newTarget,
+				}
+			}
+
+			if (combination) {
+				if (targets.length === 0) {
+					parser.unexpectedDiagnostic({
+						description: descriptions.BROWSERQUERY.AND_WITHOUT_TARGET,
+						loc: parser.finishLocFromToken(parser.getToken())
+					});
+					break;
+				}
+
+				newTarget = {
+					type: "TargetBrowserCombination",
+					target: targets.pop()!,
+					and: newTarget
+				}
+			}
+
+			targets.push(newTarget);
+
+			// Reset special attributes
+			combination = false;
+			inverted = false;
+		}
+
 		parser.nextToken();
 	}
+
+	return targets;
 }
